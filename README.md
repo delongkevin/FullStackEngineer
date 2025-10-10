@@ -1,1 +1,3 @@
 "# FullStackEngineer" 
+
+npm run build
