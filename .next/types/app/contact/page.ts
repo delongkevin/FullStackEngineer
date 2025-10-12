@@ -1,4 +1,4 @@
-// File: C:\Users\kevidelo\Desktop\Personal\website\portfolio\kevin-portfolio\app\contact\page.tsx
+// File: /Users/kevin/Documents/Website-fullstack/FullStackEngineer/app/contact/page.tsx
 import * as entry from '../../../../app/contact/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

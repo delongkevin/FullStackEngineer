@@ -57,20 +57,10 @@ export default function AboutPage() {
               <h2 className="text-2xl font-bold text-gray-900 mb-6">My Journey</h2>
               <div className="space-y-4 text-gray-600">
                 <p>
-                  Hello! I'm Kevin Delong, a full-stack developer specializing in building 
-                  exceptional digital experiences. My journey in web development started 
-                  over 5 years ago, and I've been passionate about creating efficient, 
-                  scalable solutions ever since.
-                </p>
+                 I’m Kevin Douglas Delong, a dedicated software engineer with expertise in backend (e.g., Node.js, Python) and front-end (e.g., React, Flutter) development. I build scalable web, mobile, and desktop applications, focusing on user-friendly designs and efficient code. Passionate about innovative solutions—let’s connect!
+               </p>
                 <p>
-                  I specialize in the React ecosystem, with extensive experience in Next.js, 
-                  TypeScript, and modern CSS frameworks. On the backend, I work with Node.js, 
-                  various databases, and cloud platforms to deliver complete solutions.
-                </p>
-                <p>
-                  When I'm not coding, you can find me exploring new technologies, 
-                  contributing to open-source projects, or sharing knowledge with 
-                  the developer community.
+                  When I'm not coding, you can find me exploring new technologies, contributing to open-source projects, or sharing knowledge with the developer community.
                 </p>
               </div>
             </div>

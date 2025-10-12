@@ -2,10 +2,26 @@ import { Github, Linkedin, Mail, Twitter } from 'lucide-react';
 
 export default function Footer() {
   const socialLinks = [
-    { icon: Github, href: 'https://github.com/delongkevin/2025-Portfolio-SoftwareEngineer', label: 'GitHub' },
-    { icon: Linkedin, href: 'https://www.linkedin.com/in/kevin-delong-50726135b/', label: 'LinkedIn' },
-    { icon: Twitter, href: 'https://x.com/delongkevin1446', label: 'X' },
-    { icon: Mail, href: 'mailto:delong.kevin@gmail.com', label: 'Email' },
+    { 
+      icon: Github, 
+      href: 'https://github.com/delongkevin/2025-Portfolio-SoftwareEngineer', 
+      label: 'GitHub' 
+    },
+    { 
+      icon: Linkedin, 
+      href: 'https://www.linkedin.com/in/kevin-delong-50726135b/', 
+      label: 'LinkedIn' 
+    },
+    { 
+      icon: Twitter, 
+      href: 'https://x.com/delongkevin1446', 
+      label: 'Twitter' 
+    },
+    { 
+      icon: Mail, 
+      href: 'mailto:delong.kevin@gmail.com', 
+      label: 'Email' 
+    },
   ];
 
   return (
@@ -24,6 +40,8 @@ export default function Footer() {
                 href={social.href}
                 className="text-gray-400 hover:text-white transition-colors"
                 aria-label={social.label}
+                target="_blank"
+                rel="noopener noreferrer"
               >
                 <social.icon size={24} />
               </a>
@@ -33,6 +51,7 @@ export default function Footer() {
         
         <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
           <p>&copy; {new Date().getFullYear()} Kevin Douglas Delong. All rights reserved.</p>
+          <p className="mt-2 text-sm">Phone: (810) 287-7409 | Email: delong.kevin@gmail.com</p>
         </div>
       </div>
     </footer>

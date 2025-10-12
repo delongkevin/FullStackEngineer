@@ -1,21 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export', // Critical for Netlify static deployment
-  trailingSlash: true, // Better Netlify compatibility
+  output: 'export',
+  trailingSlash: true,
   images: {
-    unoptimized: true, // Required for static exports
+    unoptimized: true,
   },
-  experimental: {
-    appDir: true,
-  },
-  // Disable TypeScript errors during build
-  typescript: {
-    ignoreBuildErrors: false,
-  },
-  // Disable ESLint during build
-  eslint: {
-    ignoreDuringBuilds: false,
-  },
+  // Remove the experimental and headers sections
 }
 
 module.exports = nextConfig

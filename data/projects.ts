@@ -8,123 +8,116 @@ export interface Project {
   liveUrl: string;
   githubUrl: string;
   featured: boolean;
-  category: 'frontend' | 'fullstack' | 'mobile';
+  category: 'frontend' | 'fullstack' | 'mobile' | 'interactive';
   features: string[];
+  embeddable?: boolean;
+  projectPath?: string;
 }
-
 export const projects: Project[] = [
   {
     id: 1,
-    title: "E-Commerce Analytics Dashboard",
-    description: "Real-time sales dashboard with interactive charts and product management",
-    fullDescription: "A comprehensive analytics dashboard for e-commerce businesses providing real-time insights into sales performance, customer behavior, and inventory management. Features interactive data visualizations and automated reporting.",
-    image: "/images/dashboard-project.jpg",
-    tech: ["React", "TypeScript", "Chart.js", "Node.js", "MongoDB", "Tailwind CSS"],
-    liveUrl: "https://dashboard-demo.vercel.app",
-    githubUrl: "https://github.com/yourusername/ecommerce-dashboard",
+    title: "Blackjack Game",
+    description: "Interactive Blackjack card game with realistic gameplay and scoring",
+    fullDescription: "A fully functional Blackjack game built with React, featuring realistic card gameplay, dealer AI, score tracking, and smooth animations.",
+    image: "/images/projects/blackjack.jpg",
+    tech: ["React", "JavaScript", "HTML5", "CSS3"],
+    liveUrl: "/projects/blackjack",
+    githubUrl: "https://github.com/delongkevin/2025-Portfolio-SoftwareEngineer",
     featured: true,
-    category: "fullstack",
+    category: "interactive",
     features: [
-      "Real-time sales analytics",
-      "Interactive data visualizations",
-      "Product inventory management",
-      "Customer behavior insights",
-      "Automated reporting system"
-    ]
+      "Realistic card gameplay",
+      "Dealer AI with hit/stand logic",
+      "Score tracking system",
+      "Responsive design",
+      "Smooth animations"
+    ],
+    embeddable: true,
+    projectPath: "/projects/blackjack"
   },
   {
     id: 2,
-    title: "Travel Planning App",
-    description: "Interactive travel planner with map integration and itinerary builder",
-    fullDescription: "A modern travel planning application that helps users create detailed itineraries, discover points of interest, and collaborate with travel companions. Features real-time map integration and social sharing capabilities.",
-    image: "/images/travel-app.jpg",
-    tech: ["Next.js", "Mapbox GL JS", "Firebase", "Framer Motion", "Tailwind CSS"],
-    liveUrl: "https://travel-planner.vercel.app",
-    githubUrl: "https://github.com/yourusername/travel-planner",
+    title: "Circle Clicker Game",
+    description: "Fast-paced reflex testing game with combo multipliers and level progression",
+    fullDescription: "An engaging reflex game where players click appearing circles to score points, featuring combo multipliers, progressive difficulty, and performance tracking.",
+    image: "/images/projects/circle-clicker.jpg",
+    tech: ["JavaScript", "HTML5", "CSS3", "Game Development"],
+    liveUrl: "/projects/circle-clicker",
+    githubUrl: "https://github.com/delongkevin/2025-Portfolio-SoftwareEngineer",
     featured: true,
-    category: "frontend",
+    category: "interactive",
     features: [
-      "Interactive map integration",
-      "Smart itinerary builder",
-      "Collaborative planning",
-      "Offline functionality",
-      "Social sharing features"
-    ]
+      "Progressive difficulty levels",
+      "Combo multiplier system",
+      "Real-time scoring",
+      "Performance analytics",
+      "Mobile-responsive design"
+    ],
+    embeddable: true,
+    projectPath: "/projects/circle-clicker"
   },
   {
     id: 3,
-    title: "URL Shortener SaaS",
-    description: "Custom URL shortener with analytics and team management",
-    fullDescription: "A full-stack URL shortening service with advanced analytics, custom domains, and team collaboration features. Built with scalability and performance in mind.",
-    image: "/images/url-shortener.jpg",
-    tech: ["Next.js", "PostgreSQL", "Prisma", "NextAuth", "Tailwind CSS"],
-    liveUrl: "https://linkshort.vercel.app",
-    githubUrl: "https://github.com/yourusername/url-shortener",
-    featured: true,
-    category: "fullstack",
+    title: "Color Match Challenge",
+    description: "Color matching game with timed challenges and progressive difficulty",
+    fullDescription: "A challenging color matching game that tests perception and speed, featuring timed rounds, progressive difficulty, and accuracy tracking.",
+    image: "/images/projects/color-match.jpg",
+    tech: ["JavaScript", "HTML5", "CSS3", "Color Theory"],
+    liveUrl: "/projects/color-match",
+    githubUrl: "https://github.com/delongkevin/2025-Portfolio-SoftwareEngineer",
+    featured: false,
+    category: "interactive",
     features: [
-      "Custom short URLs",
-      "Advanced click analytics",
-      "Team collaboration",
-      "API access",
-      "Bulk URL shortening"
-    ]
+      "Timed challenges",
+      "Progressive difficulty",
+      "Accuracy tracking",
+      "Color theory implementation",
+      "Responsive gameplay"
+    ],
+    embeddable: true,
+    projectPath: "/projects/color-match"
   },
   {
     id: 4,
-    title: "Real-time Chat Application",
-    description: "Modern chat app with rooms, emojis, and file sharing",
-    fullDescription: "A real-time chat application supporting multiple rooms, direct messaging, file sharing, and rich media messages. Features typing indicators and online status.",
-    image: "/images/chat-app.jpg",
-    tech: ["React", "Socket.io", "Node.js", "Express", "MongoDB"],
-    liveUrl: "https://chat-demo.vercel.app",
-    githubUrl: "https://github.com/yourusername/chat-app",
+    title: "RideShare Entertainment Center",
+    description: "In-car entertainment system with games, climate control, and AI assistant",
+    fullDescription: "A comprehensive in-vehicle entertainment platform featuring multiple games, climate control interface, music player, and AI-powered ride assistance.",
+    image: "/images/projects/ride-sharing.jpg",
+    tech: ["JavaScript", "HTML5", "CSS3", "AI Integration"],
+    liveUrl: "/projects/ride-sharing",
+    githubUrl: "https://github.com/delongkevin/2025-Portfolio-SoftwareEngineer",
     featured: false,
-    category: "fullstack",
+    category: "interactive",
     features: [
-      "Real-time messaging",
-      "Multiple chat rooms",
-      "File sharing",
-      "Typing indicators",
-      "User presence"
-    ]
+      "Multiple mini-games",
+      "Climate control simulation",
+      "AI ride assistant",
+      "Music player integration",
+      "Real-time ride information"
+    ],
+    embeddable: true,
+    projectPath: "/projects/ride-sharing"
   },
   {
     id: 5,
-    title: "Task Management System",
-    description: "Kanban-style task manager with drag & drop functionality",
-    fullDescription: "A collaborative task management system with Kanban boards, drag-and-drop functionality, and team collaboration features. Perfect for agile development teams.",
-    image: "/images/task-manager.jpg",
-    tech: ["React", "Redux", "Express", "MongoDB", "React DnD"],
-    liveUrl: "https://tasks-demo.vercel.app",
-    githubUrl: "https://github.com/yourusername/task-manager",
+    title: "Tic Tac Toe Pro",
+    description: "Professional Tic Tac Toe with scoring system and winning animations",
+    fullDescription: "A polished Tic Tac Toe game built with React, featuring score tracking, winning animations, and a clean, professional interface.",
+    image: "/images/projects/tic-tac-toe.jpg",
+    tech: ["React", "JavaScript", "HTML5", "CSS3"],
+    liveUrl: "/projects/tic-tac-toe",
+    githubUrl: "https://github.com/delongkevin/2025-Portfolio-SoftwareEngineer",
     featured: false,
-    category: "fullstack",
+    category: "interactive",
     features: [
-      "Drag and drop interface",
-      "Team collaboration",
-      "Progress tracking",
-      "File attachments",
-      "Due date reminders"
-    ]
-  },
-  {
-    id: 6,
-    title: "Weather Dashboard",
-    description: "Beautiful weather app with forecasts and severe weather alerts",
-    fullDescription: "A responsive weather dashboard providing detailed forecasts, severe weather alerts, and historical data. Features beautiful data visualizations and location-based services.",
-    image: "/images/weather-app.jpg",
-    tech: ["React", "Chart.js", "Weather API", "Geolocation API", "CSS3"],
-    liveUrl: "https://weather-demo.vercel.app",
-    githubUrl: "https://github.com/yourusername/weather-app",
-    featured: false,
-    category: "frontend",
-    features: [
-      "7-day forecasts",
-      "Severe weather alerts",
-      "Interactive charts",
-      "Location search",
-      "Favorite locations"
-    ]
+      "Score tracking system",
+      "Winning move animations",
+      "Responsive design",
+      "Game state persistence",
+      "Professional UI/UX"
+    ],
+    embeddable: true,
+    projectPath: "/projects/tic-tac-toe"
   }
+  // Add any other projects you have with sequential IDs
 ];
