@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import { Mail, Phone, MapPin, Send, Loader2, Linkedin, Github, Twitter } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Loader2, Linkedin, Github, Twitter, Heart } from 'lucide-react';
 
 export default function ContactPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -48,7 +48,7 @@ export default function ContactPage() {
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               Have a project in mind or want to collaborate? I'd love to hear from you. 
               Send me a message and I'll respond as soon as possible.
-            </p>
+             </p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
@@ -89,12 +89,36 @@ export default function ContactPage() {
                     <p className="text-sm text-gray-500">Available for remote work worldwide</p>
                   </div>
                 </div>
-              </div>
+              <div className="flex items-start">
+                <div className="bg-pink-100 p-3 rounded-full mr-4">
+                  <Heart className="text-pink-600" size={30} />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-gray-900">Support My Work</h3>
+                  <p className="text-gray-600 text-sm mb-2">
+                    Support my open-source projects and development work!
+                  </p>
+                  <a
+                    href="https://account.venmo.com/u/KDelong147"
+                    className="inline-flex items-center gap-2 text-pink-600 hover:text-pink-700 font-medium transition-colors"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M19.5 3C21.4 3 23 4.6 23 6.5S21.4 10 19.5 10H18v7.5c0 .8-.7 1.5-1.5 1.5h-9c-.8 0-1.5-.7-1.5-1.5V10H4.5C2.6 10 1 8.4 1 6.5S2.6 3 4.5 3h15zM6 10v7h12v-7H6z"/>
+                    </svg>
+                    Find me on Venmo
+                  </a>
+                </div>
+          </div>
+          </div>
+          
 
               {/* Social Links */}
+          
               <div className="mt-8">
                 <h3 className="font-semibold text-gray-900 mb-4">Follow Me</h3>
-                <div className="flex space-x-4">
+          <div className="flex space-x-4">
                   <a
                     href="https://www.linkedin.com/in/kevin-delong-50726135b/"
                     className="bg-gray-100 text-gray-600 hover:bg-blue-100 hover:text-blue-600 w-10 h-10 rounded-full flex items-center justify-center transition-colors"
@@ -132,7 +156,7 @@ export default function ContactPage() {
                 data-netlify="true"
                 className="bg-white rounded-2xl shadow-lg p-8"
               >
-                <input type="hidden" name="form-name" value="contact" />
+                <input type="hidden" name="form-name" value="contact"/>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                   <div>
