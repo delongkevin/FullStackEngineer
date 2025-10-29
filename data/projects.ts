@@ -64,7 +64,7 @@ export const projects: Project[] = [
     image: "/images/color-match.jpg",
     tech: ["JavaScript", "HTML5", "CSS3", "Color Theory"],
     liveUrl: "/projects/color-match",
-    githubUrl: "https://github.com/delongkevin/2025-Portfolio-SoftwareEngineer",
+    githubUrl: "https://github.com/delongkevin/FullStackEngineer",
     featured: false,
     category: "mobile",
     features: [
@@ -85,7 +85,7 @@ export const projects: Project[] = [
     image: "/images/ride-sharing.jpg",
     tech: ["JavaScript", "HTML5", "CSS3", "AI Integration"],
     liveUrl: "/projects/ride-sharing",
-    githubUrl: "https://github.com/delongkevin/2025-Portfolio-SoftwareEngineer",
+    githubUrl: "https://github.com/delongkevin/FullStackEngineer",
     featured: false,
     category: "mobile",
     features: [
@@ -127,7 +127,7 @@ export const projects: Project[] = [
     image: "/images/can_analyzer.jpg",
     tech: ["CAN", "Python", "HTML5", "CSS3"],
     liveUrl: "/projects/can_analyzer",
-    githubUrl: "https://github.com/delongkevin/2025-Portfolio-SoftwareEngineer",
+    githubUrl: "https://github.com/delongkevin/FullStackEngineer",
     featured: true,
     category: "Automotive",
     features: [
@@ -146,7 +146,7 @@ export const projects: Project[] = [
     image: "/images/object_detection.jpg",
     tech: ["Python", "Flutter", "CSS3"],
     liveUrl: "/projects/ObjectDetection/object_detection.py",
-    githubUrl: "https://github.com/delongkevin/2025-Portfolio-SoftwareEngineer",
+    githubUrl: "https://github.com/delongkevin/FullStackEngineer",
     featured: true,
     category: "Automotive",
     features: [
@@ -165,7 +165,7 @@ export const projects: Project[] = [
     image: "/images/pokerapp.jpg",
     tech: ["React-Native", "JavaScript", "CSS3", "Android", "IOS"],
     liveUrl: "/projects/PokerApp/PokerApp.html",
-    githubUrl: "https://github.com/delongkevin/2025-Portfolio-SoftwareEngineer",
+    githubUrl: "https://github.com/delongkevin/FullStackEngineer",
     featured: true,
     category: "mobile",
     features: [
@@ -180,3 +180,4 @@ export const projects: Project[] = [
   }
   // Add any other projects you have with sequential IDs
 ];
+
