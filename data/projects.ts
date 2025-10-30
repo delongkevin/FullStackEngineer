@@ -8,7 +8,7 @@ export interface Project {
   liveUrl: string;
   githubUrl: string;
   featured: boolean;
-  category: 'frontend' | 'fullstack' | 'mobile' | 'Automotive';
+  category: 'Web' | 'fullstack' | 'mobile' | 'Automotive' | 'all';
   features: string[];
   embeddable?: boolean;
   projectPath?: string;
@@ -126,7 +126,7 @@ export const projects: Project[] = [
     fullDescription: "Python application that will connect to a CAN-driver for CAN-bus applications!",
     image: "/images/can_analyzer.jpg",
     tech: ["CAN", "Python", "HTML5", "CSS3"],
-    liveUrl: "/projects/can_analyzer",
+    liveUrl: "/projects/can_analyzer/dist/CAN_Analyzer.exe",
     githubUrl: "https://github.com/delongkevin/FullStackEngineer",
     featured: true,
     category: "Automotive",
@@ -135,8 +135,8 @@ export const projects: Project[] = [
       "Responsive design",
       "Professional UI/UX"
     ],
-    embeddable: true,
-    projectPath: "/projects/can_analyzer"
+    embeddable: false,
+    projectPath: "/projects/can_analyzer/dist/CAN_Analyzer.exe"
   },
   {
     id: 7,
@@ -154,8 +154,8 @@ export const projects: Project[] = [
 	  "Flutter",
       "Responsive design"
     ],
-    embeddable: true,
-    projectPath: "/projects/ObjectDetection"
+    embeddable: false,
+    projectPath: "/projects/ObjectDetection/object_detection.py"
   },
     {
     id: 8,

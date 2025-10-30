@@ -7,9 +7,7 @@ import { projects } from '../../data/projects';
 import { useState } from 'react';
 
 export default function ProjectsPage() {
-  //const [filter, setFilter] = useState<'all' | 'frontend' | 'fullstack' | 'mobile'>('all');
-    const [filter, setFilter] = useState<'all' | 'mobile'>('all');
-    
+	const [filter, setFilter] = useState<'all' | 'Automotive' | 'Web' | 'mobile'>('all');
     const filteredProjects = filter === 'all'
     ? projects
     : projects.filter(project => project.category === filter);
