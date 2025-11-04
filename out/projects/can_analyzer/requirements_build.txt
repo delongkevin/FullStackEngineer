@@ -1,0 +1,5 @@
+PyInstaller>=5.0
+PyQt5>=5.15.0
+python-can>=4.0.0
+cantools>=36.0.0
+pyserial>=3.5

@@ -1,0 +1,7 @@
+PyQt5>=5.15.0
+python-can>=4.0.0
+cantools>=36.0.0
+pyserial>=3.5
+pdfkit>=1.0.0
+wkhtmltopdf>=0.2
+Jinja2>=3.0.0
