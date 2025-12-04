@@ -10,11 +10,16 @@ interface ProjectCardProps {
 export default function ProjectCard({ project }: ProjectCardProps) {
   return (
     <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:transform hover:scale-105 group">
-      {/* Project Image */}
+      {/* Project Image - FIXED: Using actual image */}
       <div className="h-48 relative overflow-hidden">
-        <div className="w-full h-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-xl font-bold">
-          {project.title}
-        </div>
+        {/* Replace the gradient div with Image component */}
+          <Image
+			src={project.image}
+			alt={project.title}
+			fill
+			className="object-cover group-hover:scale-105 transition-transform duration-300"
+			sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+		  />
         
         {/* Overlay with project info */}
         <div className="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
@@ -32,7 +37,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         
         {/* Featured Badge */}
         {project.featured && (
-          <div className="absolute top-4 right-4 bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+          <div className="absolute top-4 right-4 bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full text-sm font-medium flex items-center z-10">
             <Star size={14} className="mr-1 fill-current" />
             Featured
           </div>
@@ -40,12 +45,13 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         
         {/* Interactive Badge */}
         {project.embeddable && (
-          <div className="absolute top-4 left-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+          <div className="absolute top-4 left-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium z-10">
             Interactive
           </div>
         )}
       </div>
       
+      {/* Rest of the component remains the same */}
       <div className="p-6">
         <h3 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-blue-600 transition-colors">
           {project.title}
