@@ -57,8 +57,8 @@ export default function ContactPage() {
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Contact Information</h2>
               
               <div className="space-y-6">
-                <div className="flex items-start">
-                  <div className="bg-blue-100 p-3 rounded-full mr-4">
+                                <div className="flex items-start">
+                  <div className="bg-blue-100 p-3 rounded-full mr-4" aria-hidden="true">
                     <Mail className="text-blue-600" size={20} />
                   </div>
                   <div>
@@ -68,8 +68,8 @@ export default function ContactPage() {
                   </div>
                 </div>
 
-                <div className="flex items-start">
-                  <div className="bg-green-100 p-3 rounded-full mr-4">
+                                <div className="flex items-start">
+                  <div className="bg-green-100 p-3 rounded-full mr-4" aria-hidden="true">
                     <Phone className="text-green-600" size={20} />
                   </div>
                   <div>
@@ -79,8 +79,8 @@ export default function ContactPage() {
                   </div>
                 </div>
 
-                <div className="flex items-start">
-                  <div className="bg-purple-100 p-3 rounded-full mr-4">
+                                <div className="flex items-start">
+                  <div className="bg-purple-100 p-3 rounded-full mr-4" aria-hidden="true">
                     <MapPin className="text-purple-600" size={20} />
                   </div>
                   <div>
@@ -89,8 +89,8 @@ export default function ContactPage() {
                     <p className="text-sm text-gray-500">Available for remote work worldwide</p>
                   </div>
                 </div>
-              <div className="flex items-start">
-                <div className="bg-pink-100 p-3 rounded-full mr-4">
+                            <div className="flex items-start">
+                <div className="bg-pink-100 p-3 rounded-full mr-4" aria-hidden="true">
                   <Heart className="text-pink-600" size={30} />
                 </div>
                 <div>
@@ -104,7 +104,7 @@ export default function ContactPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                                        <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                       <path d="M19.5 3C21.4 3 23 4.6 23 6.5S21.4 10 19.5 10H18v7.5c0 .8-.7 1.5-1.5 1.5h-9c-.8 0-1.5-.7-1.5-1.5V10H4.5C2.6 10 1 8.4 1 6.5S2.6 3 4.5 3h15zM6 10v7h12v-7H6z"/>
                     </svg>
                     Find me on Venmo
@@ -119,29 +119,32 @@ export default function ContactPage() {
               <div className="mt-8">
                 <h3 className="font-semibold text-gray-900 mb-4">Follow Me</h3>
           <div className="flex space-x-4">
-                  <a
+                                    <a
                     href="https://www.linkedin.com/in/kevin-delong-50726135b/"
                     className="bg-gray-100 text-gray-600 hover:bg-blue-100 hover:text-blue-600 w-10 h-10 rounded-full flex items-center justify-center transition-colors"
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label="LinkedIn profile"
                   >
-                    <Linkedin size={20} />
+                    <Linkedin size={20} aria-hidden="true" />
                   </a>
-                  <a
+                                    <a
                     href="https://github.com/delongkevin/2025-Portfolio-SoftwareEngineer"
                     className="bg-gray-100 text-gray-600 hover:bg-gray-800 hover:text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors"
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label="GitHub profile"
                   >
-                    <Github size={20} />
+                    <Github size={20} aria-hidden="true" />
                   </a>
-                  <a
+                                    <a
                     href="https://x.com/delongkevin1446"
                     className="bg-gray-100 text-gray-600 hover:bg-black hover:text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors"
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label="Twitter profile"
                   >
-                    <Twitter size={20} />
+                    <Twitter size={20} aria-hidden="true" />
                   </a>
                 </div>
               </div>
@@ -216,13 +219,17 @@ export default function ContactPage() {
                   ></textarea>
                 </div>
 
-                {/* Success/Error Message */}
+                                {/* Success/Error Message */}
                 {message && (
-                  <div className={`mb-6 p-4 rounded-lg ${
-                    message.includes('Thank you') 
-                      ? 'bg-green-100 text-green-700 border border-green-200' 
-                      : 'bg-red-100 text-red-700 border border-red-200'
-                  }`}>
+                  <div 
+                    className={`mb-6 p-4 rounded-lg ${
+                      message.includes('Thank you') 
+                        ? 'bg-green-100 text-green-700 border border-green-200' 
+                        : 'bg-red-100 text-red-700 border border-red-200'
+                    }`}
+                    role="alert"
+                    aria-live="polite"
+                  >
                     {message}
                   </div>
                 )}
@@ -232,14 +239,14 @@ export default function ContactPage() {
                   disabled={isLoading}
                   className="btn-primary w-full flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {isLoading ? (
+                                    {isLoading ? (
                     <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
                       Sending...
                     </>
                   ) : (
                     <>
-                      Send Message <Send className="ml-2" size={18} />
+                      Send Message <Send className="ml-2" size={18} aria-hidden="true" />
                     </>
                   )}
                 </button>
