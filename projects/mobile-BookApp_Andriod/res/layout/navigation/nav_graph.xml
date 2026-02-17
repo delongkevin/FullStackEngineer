@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/bookListFragment">
+
+    <fragment
+        android:id="@+id/bookListFragment"
+        android:name="com.yourname.bookstore.ui.BookListFragment"
+        android:label="Books"
+        tools:layout="@layout/fragment_book_list" />
+        
+    <fragment
+        android:id="@+id/cartFragment"
+        android:name="com.yourname.bookstore.ui.CartFragment"
+        android:label="Cart"
+        tools:layout="@layout/fragment_cart" />
+        
+    <fragment
+        android:id="@+id/checkoutFragment"
+        android:name="com.yourname.bookstore.ui.CheckoutFragment"
+        android:label="Checkout"
+        tools:layout="@layout/fragment_checkout" />
+        
+    <fragment
+        android:id="@+id/orderConfirmationFragment"
+        android:name="com.yourname.bookstore.ui.OrderConfirmationFragment"
+        android:label="Order Confirmation"
+        tools:layout="@layout/fragment_order_confirmation">
+        
+        <argument
+            android:name="orderId"
+            app:argType="string" />
+        <argument
+            android:name="totalAmount"
+            app:argType="float" />
+    </fragment>
+
+    <action
+        android:id="@+id/action_cartFragment_to_checkoutFragment"
+        app:destination="@id/checkoutFragment" />
+        
+    <action
+        android:id="@+id/action_checkoutFragment_to_orderConfirmationFragment"
+        app:destination="@id/orderConfirmationFragment"
+        app:popUpTo="@id/bookListFragment"
+        app:popUpToInclusive="true" />
+
+</navigation>
