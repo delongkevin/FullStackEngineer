@@ -12,7 +12,7 @@ export default function Home() {
       <Header />
       
             {/* Hero Section */}
-      <main>
+      <main id="main-content">
       <section className="pt-24 pb-16 px-4 sm:px-6 lg:px-8" aria-labelledby="hero-heading">
         <div className="max-w-6xl mx-auto">
           <div className="text-center">

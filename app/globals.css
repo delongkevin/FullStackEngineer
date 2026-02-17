@@ -20,6 +20,19 @@
   .btn-secondary {
     @apply border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white font-medium py-3 px-6 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg;
   }
+  
+  .skip-link {
+    @apply absolute -top-24 left-0 bg-black text-white px-6 py-3 z-[9999] font-semibold no-underline rounded-br-lg;
+  }
+  
+  .skip-link:focus {
+    @apply top-0 outline outline-[3px] outline-blue-500 outline-offset-2;
+  }
+  
+  .visually-hidden {
+    @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
+    clip: rect(0, 0, 0, 0);
+  }
 }
 
 @layer utilities {
@@ -36,5 +49,13 @@
   
   .animate-fade-in {
     animation: fade-in 0.6s ease-out;
+  }
+  
+  /* Ensure minimum touch target size on touch devices */
+  @media (pointer: coarse) {
+    a, button, [role="button"], input[type="submit"], input[type="button"] {
+      min-height: 44px;
+      min-width: 44px;
+    }
   }
 }

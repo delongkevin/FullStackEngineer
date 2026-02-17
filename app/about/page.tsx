@@ -40,7 +40,7 @@ export default function AboutPage() {
     <>
       <Header />
       
-      <main className="pt-24 pb-16 min-h-screen">
+      <main id="main-content" className="pt-24 pb-16 min-h-screen">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Hero Section */}
           <div className="text-center mb-16">
@@ -72,7 +72,7 @@ export default function AboutPage() {
               <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-8">
                 {skillIcons.map((item) => (
                   <div key={item.label} className="text-center">
-                    <div className={`bg-gray-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3 ${item.color}`}>
+                    <div className={`bg-gray-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3 ${item.color}`} aria-hidden="true">
                       <item.icon size={32} />
                     </div>
                     <span className="text-sm font-medium text-gray-700">{item.label}</span>
@@ -94,10 +94,18 @@ export default function AboutPage() {
                             <span>{skill.name}</span>
                             <span>{skill.level}%</span>
                           </div>
-                          <div className="w-full bg-gray-200 rounded-full h-2">
+                          <div 
+                            className="w-full bg-gray-200 rounded-full h-2"
+                            role="progressbar"
+                            aria-valuenow={skill.level}
+                            aria-valuemin={0}
+                            aria-valuemax={100}
+                            aria-label={`${skill.name} proficiency: ${skill.level}%`}
+                          >
                             <div 
                               className="bg-blue-600 h-2 rounded-full transition-all duration-500"
                               style={{ width: `${skill.level}%` }}
+                              aria-hidden="true"
                             ></div>
                           </div>
                         </div>

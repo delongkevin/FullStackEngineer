@@ -4,18 +4,18 @@ interface AppEmbedProps {
     appUrl: string;
     width?: string;
     height?: string;
-    title?: string;
+    title: string; // Make required for accessibility
 }
 
-const AppEmbed: React.FC<AppEmbedProps> = ({ appUrl, width = '100%', height = '500px', title = 'Embedded Application' }) => {
+const AppEmbed: React.FC<AppEmbedProps> = ({ appUrl, width = '100%', height = '500px', title }) => {
     return (
         <iframe 
             src={appUrl} 
             width={width} 
             height={height} 
             style={{ border: 'none' }} 
-            title={title}
-            aria-label={title}
+            title={`Interactive demo: ${title}`}
+            loading="lazy"
         />
     );
 };
