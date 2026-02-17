@@ -1,4 +1,4 @@
-'use client'; // Add this at the top
+'use client';
 
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
@@ -7,15 +7,14 @@ import Link from 'next/link';
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    // In the navItems array, add:
-    const navItems = [
-      { name: 'Home', href: '/' },
-      { name: 'Projects', href: '/projects' },
-      { name: 'Resume', href: '/resume' }, // Add this line
-      { name: 'About', href: '/about' },
-      { name: 'Contact', href: '/contact' },
-    ];
-    
+  const navItems = [
+    { name: 'Home', href: '/' },
+    { name: 'Projects', href: '/projects' },
+    { name: 'Resume', href: '/resume' },
+    { name: 'About', href: '/about' },
+    { name: 'Contact', href: '/contact' },
+  ];
+
   return (
     <header className="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b border-gray-200">
       <nav className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">

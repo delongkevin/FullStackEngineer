@@ -1,5 +1,7 @@
 export interface Project {
   id: number;
+  // Optional slug for clean URLs (e.g., /projects/blackjack)
+  slug?: string;
   title: string;
   description: string;
   fullDescription: string;

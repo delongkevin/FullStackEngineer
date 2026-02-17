@@ -1,18 +1,31 @@
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-import './globals.css'
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import './globals.css';
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Kevin Douglas Delong - Full Stack Developer',
-  description: 'Portfolio of Kevin Douglas Delong - Software Engineer',
-}
+  title: 'Kevin Delong | Full-Stack Engineer',
+  description: 'Portfolio showcasing full-stack projects, automotive integrations, and mobile apps.',
+  openGraph: {
+    title: 'Kevin Delong | Full-Stack Engineer',
+    description: 'Portfolio showcasing full-stack projects, automotive integrations, and mobile apps.',
+    url: 'https://delongkevin.github.io/FullStackEngineer',
+    type: 'website',
+    images: ['/images/og-cover.jpg'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Kevin Delong | Full-Stack Engineer',
+    description: 'Portfolio showcasing full-stack projects, automotive integrations, and mobile apps.',
+    images: ['/images/og-cover.jpg'],
+  },
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
@@ -22,5 +35,5 @@ export default function RootLayout({
         </div>
       </body>
     </html>
-  )
+  );
 }
