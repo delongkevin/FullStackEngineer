@@ -27,4 +27,27 @@ describe('embedAppsConfig', () => {
     expect(embedAppsConfig.app1.url).toMatch(/^https?:\/\//);
     expect(embedAppsConfig.app2.url).toMatch(/^https?:\/\//);
   });
+
+  it('should not use placeholder API keys or example URLs in production', () => {
+    if (process.env.NODE_ENV !== 'production') {
+      // In non-production environments we allow placeholder values.
+      return;
+    }
+
+    const placeholderKeyPattern = /^YOUR_API_KEY_\d+$/;
+
+    expect(embedAppsConfig.app1.apiKey).toBeDefined();
+    expect(embedAppsConfig.app2.apiKey).toBeDefined();
+
+    expect(embedAppsConfig.app1.apiKey).not.toEqual('YOUR_API_KEY_1');
+    expect(embedAppsConfig.app2.apiKey).not.toEqual('YOUR_API_KEY_2');
+    expect(embedAppsConfig.app1.apiKey).not.toMatch(placeholderKeyPattern);
+    expect(embedAppsConfig.app2.apiKey).not.toMatch(placeholderKeyPattern);
+
+    expect(embedAppsConfig.app1.url).toBeDefined();
+    expect(embedAppsConfig.app2.url).toBeDefined();
+
+    expect(embedAppsConfig.app1.url).not.toContain('example.com');
+    expect(embedAppsConfig.app2.url).not.toContain('example.com');
+  });
 });

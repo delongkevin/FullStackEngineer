@@ -52,7 +52,7 @@ npm run web
 
 ## 🔧 Configuration
 
-1. Create an `enviroment.env` file with your API keys:
+1. Create an `environment.env` file with your API keys:
 ```env
 STRIPE_PUBLISHABLE_KEY=pk_test_your_key_here
 API_BASE_URL=https://your-api-url.com

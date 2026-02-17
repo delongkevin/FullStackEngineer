@@ -230,13 +230,13 @@
         <div id="gameArea"></div>
     </div>
     
-    <div class="game-over-overlay" id="gameOverOverlay">
+    <div class="game-over-overlay" id="gameOverOverlay" role="dialog" aria-modal="true" aria-labelledby="gameOverTitle">
         <div class="game-over-content">
-            <h2>🎮 Game Over!</h2>
+            <h2 id="gameOverTitle">🎮 Game Over!</h2>
             <p>Your Score: <span id="finalScore">0</span></p>
             <p>Level Reached: <span id="finalLevel">1</span></p>
             <div class="high-score" id="highScoreDisplay"></div>
-            <button id="playAgainButton" style="margin-top: 20px;">Play Again</button>
+            <button id="playAgainButton" style="margin-top: 20px;" aria-label="Play game again">Play Again</button>
         </div>
     </div>
 
@@ -247,7 +247,7 @@
         let timer;
         let spawnRate = 1000;
         let spawnInterval;
-        let highScore = localStorage.getItem('circleClickerHighScore') || 0;
+        let highScore = parseInt(localStorage.getItem('circleClickerHighScore'), 10) || 0;
         const gameArea = document.getElementById('gameArea');
         const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f7dc6f', '#bb8fce', '#f8b500', '#ff5252'];
 
@@ -257,6 +257,24 @@
             document.getElementById('gameOverOverlay').style.display = 'none';
             resetGame();
         };
+
+        // Add keyboard accessibility
+        document.addEventListener('keydown', (e) => {
+            // Close game over modal with Escape key
+            if (e.key === 'Escape' && document.getElementById('gameOverOverlay').style.display === 'flex') {
+                document.getElementById('gameOverOverlay').style.display = 'none';
+                resetGame();
+            }
+            
+            // Start game with Enter/Space when start button is visible
+            if ((e.key === 'Enter' || e.key === ' ') && !gameState.gameActive) {
+                const startBtn = document.getElementById('startButton');
+                if (startBtn.style.display !== 'none') {
+                    e.preventDefault();
+                    startGame();
+                }
+            }
+        });
 
         function startGame() {
             document.getElementById('startButton').style.display = 'none';
