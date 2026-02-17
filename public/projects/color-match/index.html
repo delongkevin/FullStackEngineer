@@ -3,83 +3,503 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Color Match Game</title>
+    <title>🎨 Color Match Challenge - Test Your Color Vision</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; }
-        .color-option { width: 100px; height: 100px; display: inline-block; margin: 20px; cursor: pointer; }
-        .hidden { display: none; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        .main-container {
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
+            padding: clamp(30px, 5vw, 50px);
+            max-width: 700px;
+            width: 100%;
+            animation: slideInUp 0.6s ease;
+        }
+        
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+        
+        .subtitle {
+            color: #888;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 35px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .game-section {
+            margin-bottom: 35px;
+        }
+        
+        .section-title {
+            color: #333;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #667eea;
+        }
+        
+        .target-color-display {
+            width: 100%;
+            height: 200px;
+            border-radius: 20px;
+            border: 5px solid #667eea;
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.3), inset 0 0 20px rgba(255, 255, 255, 0.5);
+            margin-bottom: 25px;
+            transition: transform 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+        
+        .target-color-display:hover {
+            transform: scale(1.02);
+        }
+        
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 15px 40px rgba(102, 126, 234, 0.3), inset 0 0 20px rgba(255, 255, 255, 0.5); }
+            50% { box-shadow: 0 15px 50px rgba(102, 126, 234, 0.5), inset 0 0 30px rgba(255, 255, 255, 0.7); }
+        }
+        
+        .color-options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .color-option-btn {
+            aspect-ratio: 1;
+            border-radius: 15px;
+            border: 4px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            color: white;
+            font-size: 0.95rem;
+            user-select: none;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .color-option-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.2), transparent);
+            pointer-events: none;
+        }
+        
+        .color-option-btn:hover:not(:disabled) {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .color-option-btn:active:not(:disabled) {
+            transform: translateY(-3px);
+        }
+        
+        .color-option-btn:disabled {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+        
+        .color-option-btn.correct {
+            border-color: #4CAF50;
+            box-shadow: 0 0 30px rgba(76, 175, 80, 0.8);
+            animation: correctFlash 0.6s ease;
+        }
+        
+        .color-option-btn.incorrect {
+            border-color: #f44336;
+            box-shadow: 0 0 30px rgba(244, 67, 54, 0.8);
+            animation: incorrectShake 0.6s ease;
+        }
+        
+        @keyframes correctFlash {
+            0%, 100% { box-shadow: 0 0 30px rgba(76, 175, 80, 0.8); }
+            50% { box-shadow: 0 0 50px rgba(76, 175, 80, 1); }
+        }
+        
+        @keyframes incorrectShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+        
+        .message-display {
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 25px;
+            min-height: 40px;
+            border-radius: 10px;
+            animation: messageSlide 0.4s ease;
+        }
+        
+        @keyframes messageSlide {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .message-display.success {
+            color: #4CAF50;
+            background: rgba(76, 175, 80, 0.1);
+        }
+        
+        .message-display.error {
+            color: #f44336;
+            background: rgba(244, 67, 54, 0.1);
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+        
+        .btn {
+            padding: clamp(12px, 2vw, 15px) clamp(25px, 4vw, 35px);
+            font-size: clamp(0.95rem, 2vw, 1.1rem);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            user-select: none;
+            touch-action: manipulation;
+        }
+        
+        .btn-start {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+            min-width: 150px;
+        }
+        
+        .btn-start:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.5);
+        }
+        
+        .btn-start:active:not(:disabled) {
+            transform: translateY(-1px);
+        }
+        
+        .btn-start:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .btn-reset {
+            background: #f0f0f0;
+            color: #333;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-reset:hover {
+            background: #e0e0e0;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn-reset:active {
+            transform: translateY(-1px);
+        }
+        
+        .game-over-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .game-over-modal.show {
+            display: flex;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 50px;
+            border-radius: 25px;
+            text-align: center;
+            max-width: 500px;
+            animation: scaleIn 0.4s ease;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+        }
+        
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .modal-content h2 {
+            font-size: 3rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 25px;
+        }
+        
+        .modal-stat {
+            font-size: 1.3rem;
+            margin: 15px 0;
+            color: #333;
+        }
+        
+        .modal-stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .modal-feedback {
+            font-size: 1.5rem;
+            margin: 30px 0;
+            font-weight: 600;
+            color: #666;
+        }
+        
+        .button-group-modal {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        @media (max-width: 480px) {
+            .main-container {
+                padding: 20px;
+            }
+            
+            .title {
+                font-size: 2rem;
+            }
+            
+            .color-options-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+            
+            .modal-content {
+                padding: 30px 20px;
+                margin: 20px;
+            }
+            
+            .modal-content h2 {
+                font-size: 2rem;
+            }
+        }
     </style>
 </head>
 <body>
-    <h1>Color Match Game</h1>
-    <div id="game">
-        <div id="target-color" style="font-size: 24px; margin-bottom: 20px;"></div>
-        <div id="options"></div>
-        <button id="start-btn">Start Game</button>
-        <div id="score-display">Score: 0</div>
-        <div id="lives-display">Lives: 3</div>
-        <div id="round-display">Round: 1</div>
-        <div id="game-over" class="hidden">Game Over!</div>
+    <div class="main-container">
+        <div class="header">
+            <div class="title">🎨 Color Match</div>
+            <div class="subtitle">Test Your Color Vision Skills</div>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Score</div>
+                <div class="stat-value" id="scoreDisplay">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Round</div>
+                <div class="stat-value" id="roundDisplay">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Lives</div>
+                <div class="stat-value" id="livesDisplay">3</div>
+            </div>
+        </div>
+        
+        <div class="game-section">
+            <div class="section-title">Find The Matching Color</div>
+            <div class="target-color-display" id="targetColorBox"></div>
+            
+            <div class="color-options-grid" id="colorOptionsGrid"></div>
+            
+            <div class="message-display" id="messageDisplay"></div>
+        </div>
+        
+        <div class="button-group">
+            <button class="btn btn-start" id="startBtn" onclick="startGame()">Start Game</button>
+            <button class="btn btn-reset" onclick="resetGame()">Reset</button>
+        </div>
     </div>
+    
+    <div class="game-over-modal" id="gameOverModal">
+        <div class="modal-content">
+            <h2>🎉 Game Over!</h2>
+            <div class="modal-stat">
+                Final Score: <span class="modal-stat-value" id="finalScore">0</span>
+            </div>
+            <div class="modal-stat">
+                Rounds Completed: <span class="modal-stat-value" id="finalRound">0</span>
+            </div>
+            <div class="modal-feedback" id="feedbackMessage"></div>
+            <div class="button-group-modal">
+                <button class="btn btn-start" onclick="startGame()">Play Again</button>
+                <button class="btn btn-reset" onclick="resetGame()">Back to Menu</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        let score = 0;
-        let lives = 3;
-        let round = 1;
+        const gameState = {
+            score: 0,
+            round: 0,
+            lives: 3,
+            gameActive: false,
+            targetColor: '',
+            colors: [],
+            answered: false
+        };
 
-        function startGame() {
-            score = 0;
-            lives = 3;
-            round = 1;
-            document.getElementById('game-over').classList.add('hidden');
-            document.getElementById('start-btn').style.display = 'none';
-            nextRound();
-        }
+        const DOM = {
+            scoreDisplay: document.getElementById('scoreDisplay'),
+            roundDisplay: document.getElementById('roundDisplay'),
+            livesDisplay: document.getElementById('livesDisplay'),
+            targetColorBox: document.getElementById('targetColorBox'),
+            colorOptionsGrid: document.getElementById('colorOptionsGrid'),
+            messageDisplay: document.getElementById('messageDisplay'),
+            startBtn: document.getElementById('startBtn'),
+            gameOverModal: document.getElementById('gameOverModal'),
+            finalScore: document.getElementById('finalScore'),
+            finalRound: document.getElementById('finalRound'),
+            feedbackMessage: document.getElementById('feedbackMessage')
+        };
 
-        function nextRound() {
-            if (lives <= 0) {
-                endGame();
-                return;
-            }
-            round++;
-            document.getElementById('round-display').innerText = 'Round: ' + round;
-            generateColors();
-        }
-
-        function generateColors() {
-            const targetColor = getRandomColor();
-            document.getElementById('target-color').innerText = targetColor;
-            document.getElementById('options').innerHTML = '';
-
-            for (let i = 0; i < 4; i++) {
-                const color = getRandomColor();
-                const colorOption = document.createElement('div');
-                colorOption.classList.add('color-option');
-                colorOption.style.backgroundColor = color;
-                colorOption.addEventListener('click', function() { checkAnswer(color, targetColor); });
-                document.getElementById('options').appendChild(colorOption);
-            }
-
-            document.getElementById('options').children[Math.floor(Math.random() * 4)].style.backgroundColor = targetColor; // Ensure one correct option
-        }
-
-        function checkAnswer(selectedColor, targetColor) {
-            if (selectedColor === targetColor) {
-                score += 10;
-                document.getElementById('score-display').innerText = 'Score: ' + score;
-                nextRound();
-            } else {
-                lives--;
-                document.getElementById('lives-display').innerText = 'Lives: ' + lives;
-                nextRound();
-            }
-        }
-
-        function endGame() {
-            document.getElementById('game-over').classList.remove('hidden');
-            document.getElementById('start-btn').style.display = 'block';
-        }
-
-        function getRandomColor() {
+        function generateRandomColor() {
             const letters = '0123456789ABCDEF';
             let color = '#';
             for (let i = 0; i < 6; i++) {
@@ -88,7 +508,151 @@
             return color;
         }
 
-        document.getElementById('start-btn').addEventListener('click', startGame);
+        function generateColorSet() {
+            const colors = [];
+            const targetColor = generateRandomColor();
+            colors.push(targetColor);
+
+            while (colors.length < 4) {
+                const newColor = generateRandomColor();
+                if (!colors.includes(newColor)) {
+                    colors.push(newColor);
+                }
+            }
+
+            return {
+                target: targetColor,
+                options: colors.sort(() => Math.random() - 0.5)
+            };
+        }
+
+        function displayNewRound() {
+            gameState.round++;
+            gameState.answered = false;
+
+            const colorSet = generateColorSet();
+            gameState.targetColor = colorSet.target;
+            gameState.colors = colorSet.options;
+
+            DOM.roundDisplay.textContent = gameState.round;
+            DOM.targetColorBox.style.backgroundColor = gameState.targetColor;
+            DOM.messageDisplay.textContent = '';
+            DOM.messageDisplay.className = 'message-display';
+
+            renderColorOptions();
+        }
+
+        function renderColorOptions() {
+            DOM.colorOptionsGrid.innerHTML = '';
+
+            gameState.colors.forEach((color) => {
+                const button = document.createElement('button');
+                button.className = 'color-option-btn';
+                button.style.backgroundColor = color;
+                button.setAttribute('data-color', color);
+                button.onclick = (e) => {
+                    e.preventDefault();
+                    selectColor(color, button);
+                };
+                DOM.colorOptionsGrid.appendChild(button);
+            });
+        }
+
+        function selectColor(selectedColor, buttonElement) {
+            if (!gameState.gameActive || gameState.answered) return;
+
+            gameState.answered = true;
+            const buttons = document.querySelectorAll('.color-option-btn');
+            buttons.forEach(btn => btn.disabled = true);
+
+            if (selectedColor === gameState.targetColor) {
+                gameState.score += 10;
+                buttonElement.classList.add('correct');
+                DOM.messageDisplay.textContent = '✓ Correct! +10 Points';
+                DOM.messageDisplay.className = 'message-display success';
+                DOM.scoreDisplay.textContent = gameState.score;
+
+                setTimeout(() => {
+                    buttons.forEach(btn => btn.disabled = false);
+                    displayNewRound();
+                }, 1500);
+            } else {
+                gameState.lives--;
+                buttonElement.classList.add('incorrect');
+                DOM.messageDisplay.textContent = '✗ Wrong! -1 Life';
+                DOM.messageDisplay.className = 'message-display error';
+                DOM.livesDisplay.textContent = gameState.lives;
+
+                if (gameState.lives <= 0) {
+                    setTimeout(() => {
+                        endGame();
+                    }, 1500);
+                } else {
+                    setTimeout(() => {
+                        buttons.forEach(btn => btn.disabled = false);
+                        displayNewRound();
+                    }, 1500);
+                }
+            }
+        }
+
+        function startGame() {
+            gameState.score = 0;
+            gameState.round = 0;
+            gameState.lives = 3;
+            gameState.gameActive = true;
+            gameState.answered = false;
+
+            DOM.scoreDisplay.textContent = '0';
+            DOM.roundDisplay.textContent = '0';
+            DOM.livesDisplay.textContent = '3';
+            DOM.messageDisplay.textContent = '';
+            DOM.gameOverModal.classList.remove('show');
+            DOM.startBtn.disabled = true;
+
+            displayNewRound();
+        }
+
+        function endGame() {
+            gameState.gameActive = false;
+
+            DOM.finalScore.textContent = gameState.score;
+            DOM.finalRound.textContent = gameState.round;
+
+            let feedback = '';
+            if (gameState.score >= 100) {
+                feedback = '🏆 Outstanding! You\'re a color master!';
+            } else if (gameState.score >= 70) {
+                feedback = '⭐ Excellent! Great color vision!';
+            } else if (gameState.score >= 40) {
+                feedback = '👍 Good! Nice color matching skills!';
+            } else if (gameState.score >= 10) {
+                feedback = '💪 Keep practicing! You\'re improving!';
+            } else {
+                feedback = '👀 Better luck next time! Try again!';
+            }
+
+            DOM.feedbackMessage.textContent = feedback;
+            DOM.gameOverModal.classList.add('show');
+            DOM.startBtn.disabled = false;
+            DOM.colorOptionsGrid.innerHTML = '';
+        }
+
+        function resetGame() {
+            gameState.score = 0;
+            gameState.round = 0;
+            gameState.lives = 3;
+            gameState.gameActive = false;
+            gameState.answered = false;
+
+            DOM.scoreDisplay.textContent = '0';
+            DOM.roundDisplay.textContent = '0';
+            DOM.livesDisplay.textContent = '3';
+            DOM.messageDisplay.textContent = '';
+            DOM.gameOverModal.classList.remove('show');
+            DOM.startBtn.disabled = false;
+            DOM.colorOptionsGrid.innerHTML = '';
+        }
     </script>
 </body>
 </html>
