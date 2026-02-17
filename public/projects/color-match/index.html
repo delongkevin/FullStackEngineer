@@ -5,456 +5,90 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Color Match Challenge</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        html, body {
-            width: 100%;
-            height: 100%;
-            overflow-x: hidden;
-        }
-        
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #1a2a6c 0%, #b21f1f 50%, #fdbb2d 100%);
-            padding: 20px;
-        }
-        
-        .game-container {
-            background-color: rgba(255, 255, 255, 0.98);
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-            padding: clamp(20px, 5vw, 40px);
-            max-width: 700px;
-            width: 100%;
-            text-align: center;
-            position: relative;
-            z-index: 1000;
-        }
-        
-        h1 {
-            color: #333;
-            margin-bottom: 20px;
-            font-size: clamp(1.8rem, 4vw, 2.8rem);
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-            background: linear-gradient(to right, #1a2a6c, #b21f1f);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .game-info {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 25px;
-            font-size: clamp(1rem, 2vw, 1.3rem);
-            font-weight: bold;
-            background: linear-gradient(to right, #f5f7fa, #c3cfe2);
-            padding: 15px;
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .info-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            flex: 1;
-            min-width: 100px;
-        }
-        
-        .info-value {
-            font-size: clamp(1.5rem, 3vw, 2.2rem);
-            color: #1a2a6c;
-            margin-top: 5px;
-            font-weight: bold;
-        }
-        
-        .target-color {
-            width: clamp(120px, 25vw, 200px);
-            height: clamp(80px, 15vw, 120px);
-            margin: 20px auto;
-            border-radius: 15px;
-            border: 4px solid #333;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
-        }
-        
-        .target-color:hover {
-            transform: scale(1.05);
-        }
-        
-        .color-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(clamp(80px, 20vw, 120px), 1fr));
-            gap: clamp(10px, 2vw, 15px);
-            margin: 30px 0;
-        }
-        
-        .color-option {
-            aspect-ratio: 1 / 1;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s, border 0.2s;
-            border: 4px solid transparent;
-            min-height: 80px;
-            touch-action: manipulation;
-            user-select: none;
-        }
-        
-        .color-option:hover {
-            transform: scale(1.08);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
-        }
-        
-        .color-option:active {
-            transform: scale(0.95);
-        }
-        
-        .color-option.correct {
-            border-color: #4CAF50;
-            box-shadow: 0 0 20px rgba(76, 175, 80, 0.6);
-        }
-        
-        .color-option.incorrect {
-            border-color: #f44336;
-            box-shadow: 0 0 20px rgba(244, 67, 54, 0.6);
-        }
-        
-        .controls {
-            margin-top: 25px;
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        button {
-            background: linear-gradient(to right, #4CAF50, #45a049);
-            border: none;
-            color: white;
-            padding: clamp(10px, 2vw, 15px) clamp(20px, 4vw, 30px);
-            text-align: center;
-            font-size: clamp(0.9rem, 2vw, 1.1rem);
-            cursor: pointer;
-            border-radius: 50px;
-            transition: all 0.3s ease;
-            font-weight: bold;
-            touch-action: manipulation;
-            user-select: none;
-        }
-        
-        button:hover:not(:disabled) {
-            background: linear-gradient(to right, #45a049, #3d8b40);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-        }
-        
-        button:active:not(:disabled) {
-            transform: translateY(0);
-        }
-        
-        button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-        
-        .message {
-            margin-top: 20px;
-            font-size: clamp(1rem, 2vw, 1.3rem);
-            font-weight: bold;
-            min-height: 30px;
-            transition: all 0.3s ease;
-        }
-        
-        .message.correct-msg {
-            color: #4CAF50;
-        }
-        
-        .message.incorrect-msg {
-            color: #f44336;
-        }
-        
-        .game-over {
-            margin-top: 30px;
-            padding: 20px;
-            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
-            border-radius: 15px;
-            display: none;
-        }
-        
-        .game-over.show {
-            display: block;
-            animation: slideIn 0.3s ease;
-        }
-        
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .game-over h2 {
-            font-size: clamp(1.5rem, 3vw, 2rem);
-            color: #333;
-            margin-bottom: 15px;
-        }
-        
-        .game-over p {
-            font-size: clamp(1rem, 2vw, 1.2rem);
-            color: #555;
-            margin: 10px 0;
-        }
-        
-        @media (max-width: 480px) {
-            .game-container {
-                padding: 20px;
-            }
-            
-            .color-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            
-            .game-info {
-                flex-direction: column;
-            }
-            
-            .info-item {
-                width: 100%;
-            }
-        }
-        
-        @media (max-width: 360px) {
-            h1 {
-                font-size: 1.5rem;
-            }
-            
-            .color-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            button {
-                padding: 10px 15px;
-                font-size: 0.9rem;
-            }
-        }
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; text-align: center; }
+        #color-box { width: 200px; height: 200px; margin: 20px auto; border: 2px solid #ccc; }
+        .button { padding: 10px 20px; font-size: 16px; margin: 5px; cursor: pointer; }
+        .correct { border-color: green; }
+        .incorrect { border-color: red; }
     </style>
 </head>
 <body>
-    <div class="game-container">
-        <h1>🎨 Color Match Challenge</h1>
-        
-        <div class="game-info">
-            <div class="info-item">
-                <span>Round</span>
-                <div class="info-value" id="round">1</div>
-            </div>
-            <div class="info-item">
-                <span>Score</span>
-                <div class="info-value" id="score">0</div>
-            </div>
-            <div class="info-item">
-                <span>Accuracy</span>
-                <div class="info-value" id="accuracy">0%</div>
-            </div>
-        </div>
-        
-        <p style="font-size: clamp(0.9rem, 2vw, 1.1rem); color: #666; margin-bottom: 15px;">
-            Click the color that matches the target above:
-        </p>
-        
-        <div class="target-color" id="targetColor"></div>
-        
-        <div class="color-grid" id="colorGrid"></div>
-        
-        <div class="message" id="message"></div>
-        
-        <div class="controls">
-            <button id="nextBtn" onclick="nextRound()" style="display: none;">Next Round</button>
-            <button id="resetBtn" onclick="resetGame()">Reset Game</button>
-        </div>
-        
-        <div class="game-over" id="gameOver">
-            <h2>Game Over!</h2>
-            <p>Final Score: <strong id="finalScore">0</strong>/5</p>
-            <p>Accuracy: <strong id="finalAccuracy">0%</strong></p>
-            <p id="feedback"></p>
-        </div>
+    <h1>Color Match Challenge</h1>
+    <div id="color-box"></div>
+    <div id="score-panel">
+        <p>Score: <span id="score">0</span></p>
+        <p>Accuracy: <span id="accuracy">0</span>%</p>
     </div>
-
+    <button id="start-button" class="button">Start Game</button>
+    <button id="next-button" class="button" style="display:none;">Next</button>
+    <button id="reset-button" class="button" style="display:none;">Reset</button>
+    <div id="message"></div>
     <script>
-        const CONFIG = {
-            TOTAL_ROUNDS: 5,
-            COLOR_OPTIONS: 6
-        };
+        let score = 0;
+        let rounds = 5;
+        let currentRound = 0;
+        let correctColor = '';
+        let userSelections = [];
 
-        let gameState = {
-            round: 1,
-            score: 0,
-            attempts: 0,
-            targetColor: '',
-            colors: [],
-            gameActive: true
-        };
-
-        function generateRandomColor() {
-            const letters = '0123456789ABCDEF';
-            let color = '#';
-            for (let i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color;
-        }
-
-        function generateColors() {
-            const colors = new Set();
-            const targetColor = generateRandomColor();
-            colors.add(targetColor);
-            
-            while (colors.size < CONFIG.COLOR_OPTIONS) {
-                colors.add(generateRandomColor());
-            }
-            
-            return {
-                target: targetColor,
-                options: Array.from(colors).sort(() => Math.random() - 0.5)
-            };
-        }
-
-        function initializeGame() {
-            gameState = {
-                round: 1,
-                score: 0,
-                attempts: 0,
-                targetColor: '',
-                colors: [],
-                gameActive: true
-            };
-            document.getElementById('gameOver').classList.remove('show');
-            document.getElementById('nextBtn').style.display = 'none';
-            displayRound();
-        }
-
-        function displayRound() {
-            if (gameState.round > CONFIG.TOTAL_ROUNDS) {
-                endGame();
-                return;
-            }
-
-            const colorData = generateColors();
-            gameState.targetColor = colorData.target;
-            gameState.colors = colorData.options;
-            gameState.gameActive = true;
-
-            document.getElementById('round').textContent = gameState.round;
-            document.getElementById('targetColor').style.backgroundColor = gameState.targetColor;
-            document.getElementById('message').textContent = '';
-            document.getElementById('message').className = 'message';
-            document.getElementById('nextBtn').style.display = 'none';
-
-            const colorGrid = document.getElementById('colorGrid');
-            colorGrid.innerHTML = '';
-
-            gameState.colors.forEach((color, index) => {
-                const colorBox = document.createElement('div');
-                colorBox.className = 'color-option';
-                colorBox.style.backgroundColor = color;
-                colorBox.setAttribute('data-color', color);
-                colorBox.onclick = (e) => checkColor(e, color);
-                colorGrid.appendChild(colorBox);
-            });
-        }
-
-        function checkColor(event, selectedColor) {
-            if (!gameState.gameActive) return;
-
-            gameState.attempts++;
-            gameState.gameActive = false;
-
-            const isCorrect = selectedColor === gameState.targetColor;
-            const messageEl = document.getElementById('message');
-            const optionEl = event.target;
-
-            if (isCorrect) {
-                gameState.score++;
-                optionEl.classList.add('correct');
-                messageEl.textContent = '✓ Correct!';
-                messageEl.className = 'message correct-msg';
-            } else {
-                optionEl.classList.add('incorrect');
-                const correctOption = document.querySelector(`[data-color="${gameState.targetColor}"]`);
-                if (correctOption) {
-                    correctOption.classList.add('correct');
-                }
-                messageEl.textContent = '✗ Wrong! Try again.';
-                messageEl.className = 'message incorrect-msg';
-            }
-
-            updateScore();
-            document.getElementById('nextBtn').style.display = 'inline-block';
-        }
-
-        function updateScore() {
-            const accuracy = gameState.attempts > 0 
-                ? Math.round((gameState.score / gameState.attempts) * 100) 
-                : 0;
-            document.getElementById('score').textContent = gameState.score;
-            document.getElementById('accuracy').textContent = accuracy + '%';
+        function startGame() {
+            score = 0;
+            currentRound = 0;
+            userSelections = [];
+            document.getElementById('score').innerText = score;
+            document.getElementById('accuracy').innerText = '0';
+            document.getElementById('next-button').style.display = 'none';
+            document.getElementById('reset-button').style.display = 'none';
+            document.getElementById('message').innerText = '';
+            nextRound();
         }
 
         function nextRound() {
-            gameState.round++;
-            displayRound();
-        }
-
-        function endGame() {
-            gameState.gameActive = false;
-            const accuracy = gameState.attempts > 0 
-                ? Math.round((gameState.score / gameState.attempts) * 100) 
-                : 0;
-            
-            let feedback = '';
-            if (gameState.score === 5) {
-                feedback = '🎉 Perfect! You got them all!';
-            } else if (gameState.score >= 4) {
-                feedback = '🌟 Great job! Almost perfect!';
-            } else if (gameState.score >= 3) {
-                feedback = '👍 Good effort! Keep practicing!';
-            } else if (gameState.score >= 1) {
-                feedback = '💪 Not bad! Try again!';
+            if (currentRound < rounds) {
+                currentRound++;
+                generateColor();
             } else {
-                feedback = '👀 Keep trying! You\'ll get better!';
+                gameOver();
             }
-
-            document.getElementById('finalScore').textContent = gameState.score;
-            document.getElementById('finalAccuracy').textContent = accuracy + '%';
-            document.getElementById('feedback').textContent = feedback;
-            document.getElementById('gameOver').classList.add('show');
-            document.getElementById('colorGrid').innerHTML = '';
         }
 
-        function resetGame() {
-            initializeGame();
+        function generateColor() {
+            const randomColor = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+            correctColor = randomColor;
+            document.getElementById('color-box').style.backgroundColor = correctColor;
+            document.getElementById('message').innerText = `Round ${currentRound}: Select the matching color!`;
         }
 
-        // Initialize game on load
-        window.addEventListener('load', () => {
-            initializeGame();
-        });
+        function selectColor(color) {
+            userSelections.push(color);
+            if (color === correctColor) {
+                score++;
+                document.getElementById('color-box').classList.add('correct');
+                document.getElementById('message').innerText = 'Correct!';
+            } else {
+                document.getElementById('color-box').classList.add('incorrect');
+                document.getElementById('message').innerText = 'Incorrect!';
+            }
+            updateScore();
+            setTimeout(() => {
+                document.getElementById('color-box').classList.remove('correct', 'incorrect');
+                nextRound();
+            }, 1000);
+        }
+
+        function updateScore() {
+            document.getElementById('score').innerText = score;
+            document.getElementById('accuracy').innerText = ((score / currentRound) * 100).toFixed(2);
+        }
+
+        function gameOver() {
+            document.getElementById('message').innerText = `Game Over! Final Score: ${score}. Accuracy: ${((score / rounds) * 100).toFixed(2)}%`;
+            document.getElementById('next-button').style.display = 'none';
+            document.getElementById('reset-button').style.display = 'block';
+        }
+
+        document.getElementById('start-button').onclick = startGame;
+        document.getElementById('next-button').onclick = nextRound;
+        document.getElementById('reset-button').onclick = startGame;
     </script>
 </body>
 </html>
