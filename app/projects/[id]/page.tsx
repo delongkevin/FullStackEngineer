@@ -109,8 +109,9 @@ export default function ProjectDetail({ params }: PageProps) {
               <div className="bg-gray-100 rounded-lg p-6 min-h-[600px] flex items-center justify-center">
                 <iframe
                   src={project.liveUrl}
-                  className="w-full h-[600px] border-0 rounded-lg"
+                  className="w-full h-[600px] border-0 rounded-lg bg-white"
                   title={project.title}
+                  style={{ minHeight: '600px' }}
                 />
               </div>
             </div>

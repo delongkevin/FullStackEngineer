@@ -7,7 +7,7 @@ import { projects } from '../../data/projects';
 import { useState } from 'react';
 
 export default function ProjectsPage() {
-	const [filter, setFilter] = useState<'all' | 'Automotive' | 'Web' | 'mobile'>('all');
+	const [filter, setFilter] = useState<'all' | 'Automotive' | 'Web' | 'mobile' | 'fullstack'>('all');
     const filteredProjects = filter === 'all'
     ? projects
     : projects.filter(project => project.category === filter);
@@ -29,17 +29,17 @@ export default function ProjectsPage() {
 
           {/* Filter Buttons */}
           <div className="flex flex-wrap justify-center gap-4 mb-12">
-            {['all', 'mobile'].map((category) => (
+            {(['all', 'mobile', 'Automotive', 'Web', 'fullstack'] as const).map((category) => (
               <button
                 key={category}
-                onClick={() => setFilter(category as any)}
+                onClick={() => setFilter(category)}
                 className={`px-6 py-2 rounded-full font-medium transition-all ${
                   filter === category
                     ? 'bg-blue-600 text-white shadow-lg'
                     : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                 }`}
               >
-                {category.charAt(0).toUpperCase() + category.slice(1)}
+                {category === 'fullstack' ? 'Full Stack' : category.charAt(0).toUpperCase() + category.slice(1)}
                 {category !== 'all' && (
                   <span className="ml-2 bg-white/20 px-2 py-1 rounded-full text-sm">
                     {projects.filter(p => p.category === category).length}

@@ -5,33 +5,287 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Circle Clicker Game</title>
     <style>
-        body { font-family: Arial, sans-serif; }
-        #gameArea { position: relative; width: 100%; height: 400px; border: 1px solid #000; overflow: hidden; }
-        .circle { position: absolute; border-radius: 50%; background-color: red; }
-        #score { font-size: 24px; }
-        #level { font-size: 24px; }
-        #timer { font-size: 24px; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        h1 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .game-container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
+            width: 100%;
+        }
+        
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            gap: 15px;
+        }
+        
+        .stat-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            text-align: center;
+            flex: 1;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+        
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+        
+        .button-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        button {
+            flex: 1;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        #startButton {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+        }
+        
+        #startButton:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        #resetButton {
+            background: linear-gradient(135deg, #ee0979 0%, #ff6a00 100%);
+            color: white;
+        }
+        
+        #resetButton:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        #gameArea {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.1s ease;
+            animation: fadeIn 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        .circle:hover {
+            transform: scale(1.1);
+        }
+        
+        .circle:focus {
+            outline: 3px solid #667eea;
+            outline-offset: 3px;
+            transform: scale(1.1);
+        }
+        
+        .circle:active {
+            transform: scale(0.9);
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(0); opacity: 0; }
+        }
+        
+        .game-over-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        
+        .game-over-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        .game-over-content h2 {
+            color: #667eea;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .game-over-content p {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #555;
+        }
+        
+        .high-score {
+            color: #11998e;
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin: 20px 0;
+        }
+        
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .stat-value {
+                font-size: 1.5rem;
+            }
+            
+            #gameArea {
+                height: 400px;
+            }
+        }
     </style>
 </head>
 <body>
-    <h1>Circle Clicker Game</h1>
-    <div id="score">Score: 0</div>
-    <div id="level">Level: 1</div>
-    <div id="timer">Time: 30</div>
-    <button id="startButton">Start</button>
-    <button id="resetButton" style="display: none;">Reset</button>
-    <div id="gameArea"></div>
+    <h1>🎯 Circle Clicker Game</h1>
+    
+    <div class="game-container">
+        <div class="stats-container">
+            <div class="stat-box">
+                <div class="stat-label">Score</div>
+                <div class="stat-value" id="score">0</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Level</div>
+                <div class="stat-value" id="level">1</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Time</div>
+                <div class="stat-value" id="timer">30</div>
+            </div>
+        </div>
+        
+        <div class="button-container">
+            <button id="startButton">Start Game</button>
+            <button id="resetButton" style="display: none;">Reset Game</button>
+        </div>
+        
+        <div id="gameArea"></div>
+    </div>
+    
+    <div class="game-over-overlay" id="gameOverOverlay" role="dialog" aria-modal="true" aria-labelledby="gameOverTitle">
+        <div class="game-over-content">
+            <h2 id="gameOverTitle">🎮 Game Over!</h2>
+            <p>Your Score: <span id="finalScore">0</span></p>
+            <p>Level Reached: <span id="finalLevel">1</span></p>
+            <div class="high-score" id="highScoreDisplay"></div>
+            <button id="playAgainButton" style="margin-top: 20px;" aria-label="Play game again">Play Again</button>
+        </div>
+    </div>
 
     <script>
         let score = 0;
         let level = 1;
         let timeLeft = 30;
         let timer;
-        let spawnRate = 1000; // milliseconds
+        let spawnRate = 1000;
+        let spawnInterval;
+        let highScore = parseInt(localStorage.getItem('circleClickerHighScore'), 10) || 0;
         const gameArea = document.getElementById('gameArea');
+        const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f7dc6f', '#bb8fce', '#f8b500', '#ff5252'];
 
         document.getElementById('startButton').onclick = startGame;
         document.getElementById('resetButton').onclick = resetGame;
+        document.getElementById('playAgainButton').onclick = () => {
+            document.getElementById('gameOverOverlay').style.display = 'none';
+            resetGame();
+        };
+
+        // Add keyboard accessibility
+        document.addEventListener('keydown', (e) => {
+            // Don't handle if typing in an input field
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+                return;
+            }
+            
+            // Close game over modal with Escape key
+            if (e.key === 'Escape' && document.getElementById('gameOverOverlay').style.display === 'flex') {
+                document.getElementById('gameOverOverlay').style.display = 'none';
+                resetGame();
+            }
+            
+            // Start game with Enter/Space when start button is visible
+            if ((e.key === 'Enter' || e.key === ' ') && !gameState.gameActive) {
+                const startBtn = document.getElementById('startButton');
+                if (startBtn.style.display !== 'none') {
+                    e.preventDefault();
+                    startGame();
+                }
+            }
+        });
 
         function startGame() {
             document.getElementById('startButton').style.display = 'none';
@@ -40,57 +294,110 @@
             level = 1;
             timeLeft = 30;
             spawnRate = 1000;
-            document.getElementById('score').innerText = `Score: ${score}`;
-            document.getElementById('level').innerText = `Level: ${level}`;
-            document.getElementById('timer').innerText = `Time: ${timeLeft}`;
+            gameArea.innerHTML = '';
+            updateDisplay();
             timer = setInterval(updateTimer, 1000);
-            spawnCircle();
+            spawnInterval = setInterval(spawnCircle, spawnRate);
         }
 
         function resetGame() {
             clearInterval(timer);
+            clearInterval(spawnInterval);
+            gameArea.innerHTML = '';
             startGame();
+        }
+
+        function updateDisplay() {
+            document.getElementById('score').innerText = score;
+            document.getElementById('level').innerText = level;
+            document.getElementById('timer').innerText = timeLeft;
         }
 
         function updateTimer() {
             timeLeft--;
-            document.getElementById('timer').innerText = `Time: ${timeLeft}`;
+            document.getElementById('timer').innerText = timeLeft;
             if (timeLeft <= 0) {
-                clearInterval(timer);
-                alert('Game over! Your score: ' + score);
-                resetGame();
+                endGame();
             }
         }
 
+        function endGame() {
+            clearInterval(timer);
+            clearInterval(spawnInterval);
+            gameArea.innerHTML = '';
+            
+            document.getElementById('finalScore').innerText = score;
+            document.getElementById('finalLevel').innerText = level;
+            
+            if (score > highScore) {
+                highScore = score;
+                localStorage.setItem('circleClickerHighScore', highScore);
+                document.getElementById('highScoreDisplay').innerText = `🏆 New High Score: ${highScore}!`;
+            } else {
+                document.getElementById('highScoreDisplay').innerText = `High Score: ${highScore}`;
+            }
+            
+            document.getElementById('gameOverOverlay').style.display = 'flex';
+            document.getElementById('startButton').style.display = 'block';
+            document.getElementById('resetButton').style.display = 'none';
+        }
+
         function spawnCircle() {
+            if (timeLeft <= 0) return;
+            
             const circle = document.createElement('div');
             circle.className = 'circle';
-            const size = Math.random() * (50 - 20) + 20; // random size between 20 and 50
+            circle.setAttribute('role', 'button');
+            circle.setAttribute('tabindex', '0');
+            circle.setAttribute('aria-label', 'Circle target, click or press Enter to score point');
+            
+            const size = Math.max(30, 70 - level * 3);
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            
             circle.style.width = circle.style.height = `${size}px`;
+            circle.style.backgroundColor = randomColor;
             circle.style.top = `${Math.random() * (gameArea.clientHeight - size)}px`;
             circle.style.left = `${Math.random() * (gameArea.clientWidth - size)}px`;
-            circle.onclick = () => {
+            
+            const handleCircleClick = () => {
                 score++;
-                document.getElementById('score').innerText = `Score: ${score}`;
-                gameArea.removeChild(circle);
+                updateDisplay();
+                circle.style.animation = 'pop 0.3s ease';
+                setTimeout(() => {
+                    if (gameArea.contains(circle)) {
+                        gameArea.removeChild(circle);
+                    }
+                }, 300);
                 checkLevel();
-                spawnCircle();
             };
+            
+            circle.onclick = handleCircleClick;
+            circle.onkeydown = (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleCircleClick();
+                }
+            };
+            
             gameArea.appendChild(circle);
 
-            // Increase spawn rate with level
+            const lifetime = Math.max(1000, 2500 - level * 100);
             setTimeout(() => {
-                if (document.body.contains(circle)) {
+                if (gameArea.contains(circle)) {
                     gameArea.removeChild(circle);
                 }
-            }, spawnRate);
+            }, lifetime);
         }
 
         function checkLevel() {
-            if (score > level * 5) {
-                level++;
-                document.getElementById('level').innerText = `Level: ${level}`;
-                spawnRate *= 0.9; // Increase spawn rate (decrease duration)
+            const newLevel = Math.floor(score / 10) + 1;
+            if (newLevel > level) {
+                level = newLevel;
+                updateDisplay();
+                
+                clearInterval(spawnInterval);
+                spawnRate = Math.max(300, 1000 - level * 50);
+                spawnInterval = setInterval(spawnCircle, spawnRate);
             }
         }
     </script>
