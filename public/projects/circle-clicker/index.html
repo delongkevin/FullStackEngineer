@@ -3,99 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Circle Clicker Game</title>
+    <title>Circle Clicker</title>
     <style>
         body {
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh;
-            margin: 0;
             background-color: #f0f0f0;
             font-family: Arial, sans-serif;
         }
-        .game-container {
-            text-align: center;
-            padding: 20px;
-            border-radius: 8px;
-            background-color: #ffffff;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-        }
-        .circle {
-            width: clamp(50px, 10vw, 100px);
-            height: clamp(50px, 10vw, 100px);
+        #circle {
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             background-color: red;
-            margin: 20px auto;
+            position: absolute;
             cursor: pointer;
         }
-        h1, h2 {
-            font-size: clamp(1.5rem, 2vw, 2.5rem);
+        #score {
+            font-size: 24px;
+            margin-bottom: 20px;
         }
-        @media (max-width: 480px) {
-            .game-container {
-                width: 90%;
-            }
-            .circle {
-                width: clamp(40px, 15vw, 80px);
-                height: clamp(40px, 15vw, 80px);
-            }
-        }
-        @media (max-width: 360px) {
-            h1, h2 {
-                font-size: clamp(1.2rem, 2vw, 2rem);
-            }
+        #timer {
+            font-size: 24px;
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
-    <div class="game-container">
-        <h1>Circle Clicker Game</h1>
-        <div class="circle" id="circle"></div>
-        <h2 id="score">Score: 0</h2>
-        <h2 id="misses">Misses: 0</h2>
-        <h2 id="time">Time: 30</h2>
-    </div>
+    <div id="score">Score: 0</div>
+    <div id="level">Level: 1</div>
+    <div id="timer">Time Left: 30</div>
     <script>
-        const circle = document.getElementById('circle');
-        const scoreDisplay = document.getElementById('score');
-        const missesDisplay = document.getElementById('misses');
-        const timeDisplay = document.getElementById('time');
         let score = 0;
-        let misses = 0;
-        let time = 30;
-        let timer;
+        let level = 1;
+        let timeLeft = 30;
+        let spawnRate = 1000; // milliseconds
+        let countdown;
+
+        const scoreDisplay = document.getElementById('score');
+        const levelDisplay = document.getElementById('level');
+        const timerDisplay = document.getElementById('timer');
 
         function startGame() {
-            timer = setInterval(() => {
-                time--;
-                timeDisplay.innerText = `Time: ${time}`;
-                if (time <= 0) {
-                    clearInterval(timer);
-                    alert(`Game Over! Your score is ${score}.`);
-                }
-            }, 1000);
-            moveCircle();
+            countdown = setInterval(updateTimer, 1000);
+            spawnCircle();
         }
 
-        function moveCircle() {
-            const randomX = Math.random() * (window.innerWidth - 100);
-            const randomY = Math.random() * (window.innerHeight - 100);
-            circle.style.transform = `translate(${randomX}px, ${randomY}px)`;
-        }
-
-        circle.addEventListener('click', () => {
-            score++;
-            scoreDisplay.innerText = `Score: ${score}`;
-            moveCircle();
-        });
-
-        document.addEventListener('click', (event) => {
-            if (event.target !== circle) {
-                misses++;
-                missesDisplay.innerText = `Misses: ${misses}`;
+        function updateTimer() {
+            timeLeft--;
+            timerDisplay.textContent = `Time Left: ${timeLeft}`;
+            if (timeLeft <= 0) {
+                clearInterval(countdown);
+                alert(`Game Over! Final Score: ${score}`);
             }
-        });
+        }
+
+        function spawnCircle() {
+            const circle = document.createElement('div');
+            circle.id = 'circle';
+            circle.style.top = Math.random() * (window.innerHeight - 50) + 'px';
+            circle.style.left = Math.random() * (window.innerWidth - 50) + 'px';
+            circle.addEventListener('click', () => {
+                score += 1;
+                scoreDisplay.textContent = `Score: ${score}`;
+                circle.remove();
+                if (score % 5 === 0) {
+                    levelUp();
+                }
+                spawnCircle();
+            });
+            document.body.appendChild(circle);
+        }
+
+        function levelUp() {
+            level += 1;
+            levelDisplay.textContent = `Level: ${level}`;
+            spawnRate = Math.max(200, spawnRate - 100); // Decrease spawn rate
+            clearInterval(countdown);
+            timeLeft += 5; // add 5 seconds for level up
+            timeLeft = Math.min(timeLeft, 30); // limit max time to 30 seconds
+            countdown = setInterval(updateTimer, 1000);
+            setTimeout(spawnCircle, spawnRate);
+        }
 
         startGame();
     </script>
