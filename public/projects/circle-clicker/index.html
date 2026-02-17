@@ -207,24 +207,37 @@
                 height: 400px;
             }
         }
+        
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
     </style>
 </head>
 <body>
     <h1>🎯 Circle Clicker Game</h1>
     
     <div class="game-container">
+        <h2 class="visually-hidden">Game Statistics</h2>
         <div class="stats-container">
             <div class="stat-box">
                 <div class="stat-label">Score</div>
-                <div class="stat-value" id="score">0</div>
+                <div class="stat-value" id="score" aria-live="polite" aria-atomic="true">0</div>
             </div>
             <div class="stat-box">
                 <div class="stat-label">Level</div>
-                <div class="stat-value" id="level">1</div>
+                <div class="stat-value" id="level" aria-live="polite" aria-atomic="true">1</div>
             </div>
             <div class="stat-box">
                 <div class="stat-label">Time</div>
-                <div class="stat-value" id="timer">30</div>
+                <div class="stat-value" id="timer" aria-live="assertive" aria-atomic="true">30</div>
             </div>
         </div>
         
@@ -256,6 +269,7 @@
         let highScore = parseInt(localStorage.getItem('circleClickerHighScore'), 10) || 0;
         const gameArea = document.getElementById('gameArea');
         const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f7dc6f', '#bb8fce', '#f8b500', '#ff5252'];
+        let gameState = { gameActive: false };
 
         document.getElementById('startButton').onclick = startGame;
         document.getElementById('resetButton').onclick = resetGame;
@@ -288,6 +302,7 @@
         });
 
         function startGame() {
+            gameState.gameActive = true;
             document.getElementById('startButton').style.display = 'none';
             document.getElementById('resetButton').style.display = 'block';
             score = 0;
@@ -301,6 +316,7 @@
         }
 
         function resetGame() {
+            gameState.gameActive = false;
             clearInterval(timer);
             clearInterval(spawnInterval);
             gameArea.innerHTML = '';
@@ -322,6 +338,7 @@
         }
 
         function endGame() {
+            gameState.gameActive = false;
             clearInterval(timer);
             clearInterval(spawnInterval);
             gameArea.innerHTML = '';
@@ -337,7 +354,12 @@
                 document.getElementById('highScoreDisplay').innerText = `High Score: ${highScore}`;
             }
             
-            document.getElementById('gameOverOverlay').style.display = 'flex';
+            const overlay = document.getElementById('gameOverOverlay');
+            overlay.style.display = 'flex';
+            // Focus the Play Again button for keyboard users
+            setTimeout(() => {
+                document.getElementById('playAgainButton').focus();
+            }, 100);
             document.getElementById('startButton').style.display = 'block';
             document.getElementById('resetButton').style.display = 'none';
         }

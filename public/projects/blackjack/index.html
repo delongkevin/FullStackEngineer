@@ -73,7 +73,7 @@
         }
         
         .score-pushes {
-            color: #dddddd;
+            color: #ffffff;
         }
         
         .hands-container {
@@ -515,7 +515,8 @@
                 <div className="game-container">
                     <h1>Blackjack</h1>
                     
-                    <div className="score-board">
+                    <h2 style={{position: 'absolute', width: '1px', height: '1px', padding: '0', margin: '-1px', overflow: 'hidden', clip: 'rect(0,0,0,0)', whiteSpace: 'nowrap', border: '0'}}>Score Board</h2>
+                    <div className="score-board" aria-live="polite" aria-atomic="false">
                         <div className="score score-wins">Wins: {score.wins}</div>
                         <div className="score score-losses">Losses: {score.losses}</div>
                         <div className="score score-pushes">Pushes: {score.pushes}</div>
@@ -537,7 +538,7 @@
                         />
                     </div>
                     
-                    <div className="message">{message}</div>
+                    <div className="message" role="status" aria-live="assertive" aria-atomic="true">{message}</div>
                     
                     <div className="controls">
                         {gameStatus === 'waiting' ? (
@@ -561,7 +562,7 @@
                     </div>
                     
                     <div className="instructions">
-                        <h3>How to Play:</h3>
+                        <h2>How to Play:</h2>
                         <ul>
                             <li>Try to get as close to 21 as possible without going over</li>
                             <li>Dealer must hit until they reach at least 17</li>
