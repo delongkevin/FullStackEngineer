@@ -269,7 +269,7 @@
         let highScore = parseInt(localStorage.getItem('circleClickerHighScore'), 10) || 0;
         const gameArea = document.getElementById('gameArea');
         const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f7dc6f', '#bb8fce', '#f8b500', '#ff5252'];
-        let gameState = { gameActive: false };
+        let gameActive = false;
 
         document.getElementById('startButton').onclick = startGame;
         document.getElementById('resetButton').onclick = resetGame;
@@ -292,7 +292,7 @@
             }
             
             // Start game with Enter/Space when start button is visible
-            if ((e.key === 'Enter' || e.key === ' ') && !gameState.gameActive) {
+            if ((e.key === 'Enter' || e.key === ' ') && !gameActive) {
                 const startBtn = document.getElementById('startButton');
                 if (startBtn.style.display !== 'none') {
                     e.preventDefault();
@@ -302,7 +302,7 @@
         });
 
         function startGame() {
-            gameState.gameActive = true;
+            gameActive = true;
             document.getElementById('startButton').style.display = 'none';
             document.getElementById('resetButton').style.display = 'block';
             score = 0;
@@ -316,7 +316,7 @@
         }
 
         function resetGame() {
-            gameState.gameActive = false;
+            gameActive = false;
             clearInterval(timer);
             clearInterval(spawnInterval);
             gameArea.innerHTML = '';
@@ -338,7 +338,7 @@
         }
 
         function endGame() {
-            gameState.gameActive = false;
+            gameActive = false;
             clearInterval(timer);
             clearInterval(spawnInterval);
             gameArea.innerHTML = '';

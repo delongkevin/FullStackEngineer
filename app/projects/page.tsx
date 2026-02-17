@@ -18,7 +18,11 @@ export default function ProjectsPage() {
     const count = category === 'all' 
       ? projects.length 
       : projects.filter(p => p.category === category).length;
-    const categoryName = category === 'fullstack' ? 'Full Stack' : category.charAt(0).toUpperCase() + category.slice(1);
+    const categoryName = category === 'all' 
+      ? 'all categories' 
+      : category === 'fullstack' 
+      ? 'Full Stack' 
+      : category.charAt(0).toUpperCase() + category.slice(1);
     setAnnouncement(`Showing ${count} ${categoryName} projects`);
   };
 

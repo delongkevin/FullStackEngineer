@@ -213,6 +213,18 @@
             padding: 10px;
             border-top: 1px solid #555;
         }
+        
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
     </style>
 </head>
 <body>
@@ -318,7 +330,7 @@
                 <div className="game-container">
                     <h1>Tic Tac Toe</h1>
                     
-                    <h2 style={{position: 'absolute', width: '1px', height: '1px', padding: '0', margin: '-1px', overflow: 'hidden', clip: 'rect(0,0,0,0)', whiteSpace: 'nowrap', border: '0'}}>Current Turn</h2>
+                    <h2 className="visually-hidden">Current Turn</h2>
                     <div className="turns-indicator">
                         <div className={`player-indicator ${isXNext && !winner ? 'active-player' : ''}`}>
                             Player X
@@ -346,7 +358,7 @@
                         {winner ? 'New Game' : 'Reset Board'}
                     </button>
                     
-                    <h2 style={{position: 'absolute', width: '1px', height: '1px', padding: '0', margin: '-1px', overflow: 'hidden', clip: 'rect(0,0,0,0)', whiteSpace: 'nowrap', border: '0'}}>Score Board</h2>
+                    <h2 className="visually-hidden">Score Board</h2>
                     <div className="score-board" aria-live="polite" aria-atomic="false">
                         <div className="score score-x">X: {scores.X}</div>
                         <div className="score draws">Draws: {scores.draws}</div>
