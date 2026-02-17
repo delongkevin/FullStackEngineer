@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const metadata = {
   title: "Texas Hold'em Poker | Kevin Delong Portfolio",
   description: "Texas Hold'em poker demo",

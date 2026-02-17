@@ -1,5 +1,3 @@
-import React from 'react';
-
 export const metadata = {
   title: 'Blackjack Game | Kevin Delong Portfolio',
   description: 'Interactive Blackjack card game demo',
