@@ -111,7 +111,6 @@ export default function ProjectDetail({ params }: PageProps) {
                   src={project.liveUrl}
                   className="w-full h-[600px] border-0 rounded-lg bg-white"
                   title={project.title}
-                  sandbox="allow-scripts allow-same-origin allow-forms"
                   style={{ minHeight: '600px' }}
                 />
               </div>
