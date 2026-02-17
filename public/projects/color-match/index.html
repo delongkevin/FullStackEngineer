@@ -3,92 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Color Match Challenge</title>
+    <title>Color Match Game</title>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f4f4; text-align: center; }
-        #color-box { width: 200px; height: 200px; margin: 20px auto; border: 2px solid #ccc; }
-        .button { padding: 10px 20px; font-size: 16px; margin: 5px; cursor: pointer; }
-        .correct { border-color: green; }
-        .incorrect { border-color: red; }
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .color-option { width: 100px; height: 100px; display: inline-block; margin: 20px; cursor: pointer; }
+        .hidden { display: none; }
     </style>
 </head>
 <body>
-    <h1>Color Match Challenge</h1>
-    <div id="color-box"></div>
-    <div id="score-panel">
-        <p>Score: <span id="score">0</span></p>
-        <p>Accuracy: <span id="accuracy">0</span>%</p>
+    <h1>Color Match Game</h1>
+    <div id="game">
+        <div id="target-color" style="font-size: 24px; margin-bottom: 20px;"></div>
+        <div id="options"></div>
+        <button id="start-btn">Start Game</button>
+        <div id="score-display">Score: 0</div>
+        <div id="lives-display">Lives: 3</div>
+        <div id="round-display">Round: 1</div>
+        <div id="game-over" class="hidden">Game Over!</div>
     </div>
-    <button id="start-button" class="button">Start Game</button>
-    <button id="next-button" class="button" style="display:none;">Next</button>
-    <button id="reset-button" class="button" style="display:none;">Reset</button>
-    <div id="message"></div>
     <script>
         let score = 0;
-        let rounds = 5;
-        let currentRound = 0;
-        let correctColor = '';
-        let userSelections = [];
+        let lives = 3;
+        let round = 1;
 
         function startGame() {
             score = 0;
-            currentRound = 0;
-            userSelections = [];
-            document.getElementById('score').innerText = score;
-            document.getElementById('accuracy').innerText = '0';
-            document.getElementById('next-button').style.display = 'none';
-            document.getElementById('reset-button').style.display = 'none';
-            document.getElementById('message').innerText = '';
+            lives = 3;
+            round = 1;
+            document.getElementById('game-over').classList.add('hidden');
+            document.getElementById('start-btn').style.display = 'none';
             nextRound();
         }
 
         function nextRound() {
-            if (currentRound < rounds) {
-                currentRound++;
-                generateColor();
-            } else {
-                gameOver();
+            if (lives <= 0) {
+                endGame();
+                return;
             }
+            round++;
+            document.getElementById('round-display').innerText = 'Round: ' + round;
+            generateColors();
         }
 
-        function generateColor() {
-            const randomColor = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
-            correctColor = randomColor;
-            document.getElementById('color-box').style.backgroundColor = correctColor;
-            document.getElementById('message').innerText = `Round ${currentRound}: Select the matching color!`;
+        function generateColors() {
+            const targetColor = getRandomColor();
+            document.getElementById('target-color').innerText = targetColor;
+            document.getElementById('options').innerHTML = '';
+
+            for (let i = 0; i < 4; i++) {
+                const color = getRandomColor();
+                const colorOption = document.createElement('div');
+                colorOption.classList.add('color-option');
+                colorOption.style.backgroundColor = color;
+                colorOption.addEventListener('click', function() { checkAnswer(color, targetColor); });
+                document.getElementById('options').appendChild(colorOption);
+            }
+
+            document.getElementById('options').children[Math.floor(Math.random() * 4)].style.backgroundColor = targetColor; // Ensure one correct option
         }
 
-        function selectColor(color) {
-            userSelections.push(color);
-            if (color === correctColor) {
-                score++;
-                document.getElementById('color-box').classList.add('correct');
-                document.getElementById('message').innerText = 'Correct!';
-            } else {
-                document.getElementById('color-box').classList.add('incorrect');
-                document.getElementById('message').innerText = 'Incorrect!';
-            }
-            updateScore();
-            setTimeout(() => {
-                document.getElementById('color-box').classList.remove('correct', 'incorrect');
+        function checkAnswer(selectedColor, targetColor) {
+            if (selectedColor === targetColor) {
+                score += 10;
+                document.getElementById('score-display').innerText = 'Score: ' + score;
                 nextRound();
-            }, 1000);
+            } else {
+                lives--;
+                document.getElementById('lives-display').innerText = 'Lives: ' + lives;
+                nextRound();
+            }
         }
 
-        function updateScore() {
-            document.getElementById('score').innerText = score;
-            document.getElementById('accuracy').innerText = ((score / currentRound) * 100).toFixed(2);
+        function endGame() {
+            document.getElementById('game-over').classList.remove('hidden');
+            document.getElementById('start-btn').style.display = 'block';
         }
 
-        function gameOver() {
-            document.getElementById('message').innerText = `Game Over! Final Score: ${score}. Accuracy: ${((score / rounds) * 100).toFixed(2)}%`;
-            document.getElementById('next-button').style.display = 'none';
-            document.getElementById('reset-button').style.display = 'block';
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
         }
 
-        document.getElementById('start-button').onclick = startGame;
-        document.getElementById('next-button').onclick = nextRound;
-        document.getElementById('reset-button').onclick = startGame;
+        document.getElementById('start-btn').addEventListener('click', startGame);
     </script>
 </body>
 </html>
