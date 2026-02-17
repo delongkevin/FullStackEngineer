@@ -28,7 +28,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             <div className="text-sm opacity-90 capitalize">{project.category}</div>
             {project.embeddable && (
               <div className="mt-2 flex items-center justify-center gap-1 text-sm">
-                <Play size={16} />
+                <Play size={16} aria-hidden="true" />
                 Playable Demo
               </div>
             )}
@@ -38,7 +38,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         {/* Featured Badge */}
         {project.featured && (
           <div className="absolute top-4 right-4 bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full text-sm font-medium flex items-center z-10">
-            <Star size={14} className="mr-1 fill-current" />
+            <Star size={14} className="mr-1 fill-current" aria-hidden="true" />
             Featured
           </div>
         )}
@@ -83,7 +83,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           >
             {project.embeddable ? (
               <>
-                <Play size={18} />
+                <Play size={18} aria-hidden="true" />
                 Play Demo
               </>
             ) : (
@@ -96,16 +96,18 @@ export default function ProjectCard({ project }: ProjectCardProps) {
               className="flex items-center gap-2 text-gray-600 hover:text-gray-700 transition-colors"
               target={project.liveUrl.startsWith('http') ? '_blank' : '_self'}
               rel={project.liveUrl.startsWith('http') ? 'noopener noreferrer' : ''}
+              aria-label={`View live demo of ${project.title}`}
             >
-              <ExternalLink size={18} />
+              <ExternalLink size={18} aria-hidden="true" />
             </a>
             <a
               href={project.githubUrl}
               className="flex items-center gap-2 text-gray-600 hover:text-gray-700 transition-colors"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label={`View source code for ${project.title} on GitHub`}
             >
-              <Github size={18} />
+              <Github size={18} aria-hidden="true" />
             </a>
           </div>
         </div>

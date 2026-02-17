@@ -42,8 +42,9 @@ export default function ProjectDetail({ params }: PageProps) {
           <Link
             href="/projects"
             className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-6"
+            aria-label="Back to all projects"
           >
-            <ArrowLeft size={20} />
+            <ArrowLeft size={20} aria-hidden="true" />
             Back to Projects
           </Link>
 
@@ -81,8 +82,9 @@ export default function ProjectDetail({ params }: PageProps) {
                     className="btn-primary inline-flex items-center gap-2"
                     target={project.liveUrl.startsWith('http') ? '_blank' : '_self'}
                     rel={project.liveUrl.startsWith('http') ? 'noopener noreferrer' : ''}
+                    aria-label={project.embeddable ? `Play ${project.title} game` : `View live demo of ${project.title}`}
                   >
-                    <ExternalLink size={20} />
+                    <ExternalLink size={20} aria-hidden="true" />
                     {project.embeddable ? 'Play Game' : 'View Live'}
                   </a>
                   <a
@@ -90,8 +92,9 @@ export default function ProjectDetail({ params }: PageProps) {
                     className="btn-secondary inline-flex items-center gap-2"
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label={`View source code for ${project.title} on GitHub`}
                   >
-                    <Github size={20} />
+                    <Github size={20} aria-hidden="true" />
                     View Code
                   </a>
                 </div>
@@ -110,7 +113,8 @@ export default function ProjectDetail({ params }: PageProps) {
                 <iframe
                   src={project.liveUrl}
                   className="w-full h-[600px] border-0 rounded-lg bg-white"
-                  title={project.title}
+                  title={`Interactive demo of ${project.title}`}
+                  aria-label={`Play ${project.title} - Interactive game demo`}
                   style={{ minHeight: '600px' }}
                 />
               </div>
