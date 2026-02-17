@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Quick Reflex: Circle Clicker</title>
     <style>
         * {
@@ -13,32 +12,43 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+        
         body {
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-            padding: 20px;
-            overflow: hidden;
+            padding: 10px;
+            overflow-y: auto;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
         }
         
         .game-container {
             background-color: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-            padding: 30px;
-            max-width: 800px;
+            padding: clamp(15px, 5vw, 30px);
             width: 100%;
+            max-width: 800px;
+            max-height: 95vh;
+            overflow-y: auto;
             text-align: center;
             position: relative;
-            overflow: hidden;
         }
         
         h1 {
             color: #333;
             margin-bottom: 15px;
-            font-size: 2.8rem;
+            font-size: clamp(1.8rem, 5vw, 2.8rem);
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
             background: linear-gradient(to right, #6a11cb, #2575fc);
             -webkit-background-clip: text;
@@ -48,29 +58,36 @@
         .game-info {
             display: flex;
             justify-content: space-around;
+            flex-wrap: wrap;
             margin-bottom: 20px;
-            font-size: 1.3rem;
+            font-size: clamp(0.9rem, 3vw, 1.3rem);
             font-weight: bold;
             background: linear-gradient(to right, #f5f7fa, #c3cfe2);
-            padding: 15px;
+            padding: clamp(10px, 2vw, 15px);
             border-radius: 15px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            gap: 10px;
         }
         
         .info-item {
             display: flex;
             flex-direction: column;
             align-items: center;
+            flex: 1;
+            min-width: 80px;
         }
         
         .info-value {
-            font-size: 2rem;
+            font-size: clamp(1.2rem, 4vw, 2rem);
             color: #6a11cb;
             margin-top: 5px;
         }
         
         .game-area {
-            height: 400px;
+            width: 100%;
+            aspect-ratio: 1.5 / 1;
+            min-height: 300px;
+            max-height: 500px;
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             border-radius: 15px;
             margin: 20px 0;
@@ -84,7 +101,6 @@
             position: absolute;
             border-radius: 50%;
             cursor: pointer;
-            transition: transform 0.1s;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             background: radial-gradient(circle at 30% 30%, #ff9a9e, #fad0c4);
             display: flex;
@@ -92,429 +108,208 @@
             align-items: center;
             color: white;
             font-weight: bold;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-        }
-        
-        .target:hover {
-            transform: scale(1.05);
-        }
-        
-        .target:active {
-            transform: scale(0.95);
+            font-size: clamp(12px, 2vw, 20px);
+            user-select: none;
+            touch-action: none;
         }
         
         .controls {
             margin-top: 20px;
             display: flex;
+            gap: 10px;
             justify-content: center;
-            gap: 15px;
+            flex-wrap: wrap;
         }
         
         button {
-            background: linear-gradient(to right, #6a11cb, #2575fc);
+            background: linear-gradient(to right, #4CAF50, #45a049);
             border: none;
             color: white;
-            padding: 14px 35px;
-            text-align: center;
-            text-decoration: none;
-            font-size: 1.1rem;
-            font-weight: bold;
+            padding: clamp(10px, 2vw, 15px) clamp(20px, 5vw, 30px);
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
             cursor: pointer;
             border-radius: 50px;
             transition: all 0.3s;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-            letter-spacing: 1px;
         }
         
         button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
         }
         
         button:active {
-            transform: translateY(1px);
-        }
-        
-        button:disabled {
-            background: linear-gradient(to right, #cccccc, #999999);
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-        
-        #start-btn {
-            background: linear-gradient(to right, #00b09b, #96c93d);
-        }
-        
-        #reset-btn {
-            background: linear-gradient(to right, #ff5e62, #ff9966);
+            transform: translateY(0);
         }
         
         .message {
-            font-size: 1.5rem;
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            margin-top: 15px;
             font-weight: bold;
-            margin: 20px 0;
-            min-height: 40px;
-            padding: 10px;
-            border-radius: 10px;
-            transition: all 0.3s;
+            min-height: 30px;
         }
         
-        .game-start {
-            color: #00b09b;
-            background-color: rgba(0, 176, 155, 0.1);
+        .success {
+            color: #4CAF50;
         }
         
-        .correct {
-            color: #00b09b;
-            background-color: rgba(0, 176, 155, 0.1);
+        .error {
+            color: #f44336;
         }
         
-        .game-over {
-            font-size: 2.2rem;
-            color: #ff5e62;
-            background-color: rgba(255, 94, 98, 0.1);
-            padding: 15px;
-            margin: 20px 0;
-        }
-        
-        .instructions {
-            background: linear-gradient(to right, #f5f7fa, #c3cfe2);
-            padding: 20px;
-            border-radius: 15px;
-            margin-top: 25px;
-            text-align: left;
-            font-size: 1rem;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        
-        .instructions h3 {
-            color: #6a11cb;
-            margin-bottom: 10px;
-            text-align: center;
-        }
-        
-        .instructions ul {
-            padding-left: 20px;
-        }
-        
-        .instructions li {
-            margin-bottom: 8px;
-        }
-        
-        .combo {
-            position: absolute;
-            font-size: 2rem;
-            font-weight: bold;
-            color: #ff5e62;
-            animation: floatUp 1s ease-out forwards;
-            pointer-events: none;
-        }
-        
-        @keyframes floatUp {
-            0% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(-50px);
-            }
-        }
-        
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 2.2rem;
-            }
-            
-            .game-info {
-                flex-direction: column;
-                gap: 10px;
+        @media (max-width: 480px) {
+            .game-container {
+                padding: 12px;
+                border-radius: 15px;
             }
             
             .game-area {
-                height: 300px;
+                min-height: 250px;
+                max-height: 400px;
             }
             
-            .controls {
-                flex-direction: column;
-                align-items: center;
+            .info-item {
+                min-width: 70px;
+            }
+        }
+        
+        @media (max-width: 360px) {
+            h1 {
+                font-size: 1.5rem;
             }
             
-            button {
-                width: 80%;
+            .game-area {
+                min-height: 200px;
+                max-height: 300px;
             }
         }
     </style>
 </head>
 <body>
     <div class="game-container">
-        <h1>Quick Reflex: Circle Clicker</h1>
+        <h1>⚡ Quick Reflex</h1>
+        <p style="color: #666; margin-bottom: 15px;">Click the circles as fast as you can!</p>
         
         <div class="game-info">
             <div class="info-item">
-                <div>Score</div>
+                <span>Score</span>
                 <div class="info-value" id="score">0</div>
             </div>
             <div class="info-item">
-                <div>Time</div>
-                <div class="info-value" id="time">30</div>
+                <span>Time</span>
+                <div class="info-value" id="time">30s</div>
             </div>
             <div class="info-item">
-                <div>Level</div>
-                <div class="info-value" id="level">1</div>
-            </div>
-            <div class="info-item">
-                <div>Combo</div>
-                <div class="info-value" id="combo">1x</div>
+                <span>Misses</span>
+                <div class="info-value" id="misses">0</div>
             </div>
         </div>
         
-        <div class="message" id="message">Click Start to begin the game!</div>
-        
-        <div class="game-area" id="game-area">
-            <!-- Circles will be generated here -->
-        </div>
+        <div class="game-area" id="gameArea"></div>
         
         <div class="controls">
-            <button id="start-btn">Start Game</button>
-            <button id="reset-btn">Reset Game</button>
+            <button onclick="startGame()">Start Game</button>
+            <button onclick="resetGame()">Reset</button>
         </div>
         
-        <div class="instructions">
-            <h3>How to Play:</h3>
-            <ul>
-                <li>Click on the circles as quickly as possible before they disappear</li>
-                <li>Each circle gives you points based on its size and your current combo</li>
-                <li>Smaller circles are worth more points but harder to click</li>
-                <li>Click circles consecutively to build your combo multiplier</li>
-                <li>The game gets faster as you level up!</li>
-            </ul>
-        </div>
+        <div class="message" id="message"></div>
     </div>
 
     <script>
-        // Game variables
         let score = 0;
+        let misses = 0;
         let timeLeft = 30;
-        let level = 1;
         let gameActive = false;
-        let timer;
-        let circleInterval;
-        let combo = 1;
-        let circlesClicked = 0;
-        let circlesMissed = 0;
-        
-        // DOM elements
-        const scoreElement = document.getElementById('score');
-        const timeElement = document.getElementById('time');
-        const levelElement = document.getElementById('level');
-        const comboElement = document.getElementById('combo');
-        const gameArea = document.getElementById('game-area');
-        const messageElement = document.getElementById('message');
-        const startButton = document.getElementById('start-btn');
-        const resetButton = document.getElementById('reset-btn');
-        
-        // Initialize the game
-        function initGame() {
-            score = 0;
-            timeLeft = 30;
-            level = 1;
-            gameActive = false;
-            combo = 1;
-            circlesClicked = 0;
-            circlesMissed = 0;
-            
-            scoreElement.textContent = score;
-            timeElement.textContent = timeLeft;
-            levelElement.textContent = level;
-            comboElement.textContent = combo + 'x';
-            messageElement.textContent = 'Click Start to begin the game!';
-            messageElement.className = 'message';
-            
-            clearInterval(timer);
-            clearInterval(circleInterval);
-            gameArea.innerHTML = '';
-            
-            startButton.disabled = false;
-        }
-        
-        // Create a new circle
-        function createCircle() {
-            if (!gameActive) return;
-            
-            const circle = document.createElement('div');
-            circle.className = 'target';
-            
-            // Random size based on level (smaller circles are harder to click)
-            const minSize = Math.max(40, 70 - level * 5);
-            const maxSize = Math.max(60, 90 - level * 5);
-            const size = Math.floor(Math.random() * (maxSize - minSize + 1)) + minSize;
-            
-            circle.style.width = `${size}px`;
-            circle.style.height = `${size}px`;
-            
-            // Random position within game area
-            const maxX = gameArea.offsetWidth - size;
-            const maxY = gameArea.offsetHeight - size;
-            const x = Math.floor(Math.random() * maxX);
-            const y = Math.floor(Math.random() * maxY);
-            
-            circle.style.left = `${x}px`;
-            circle.style.top = `${y}px`;
-            
-            // Points based on size (smaller circles = more points)
-            const points = Math.floor(100 / (size / 50)) * combo;
-            circle.dataset.points = points;
-            
-            // Display points on circle
-            circle.textContent = points;
-            
-            // Random color gradient
-            const color1 = `hsl(${Math.random() * 360}, 70%, 65%)`;
-            const color2 = `hsl(${Math.random() * 360}, 70%, 55%)`;
-            circle.style.background = `radial-gradient(circle at 30% 30%, ${color1}, ${color2})`;
-            
-            // Circle disappears after a time based on level
-            const disappearTime = Math.max(1000, 2500 - level * 150);
-            
-            circle.addEventListener('click', () => {
-                if (gameActive) {
-                    circleClicked(circle, points);
-                }
-            });
-            
-            gameArea.appendChild(circle);
-            
-            // Remove circle after time if not clicked
-            setTimeout(() => {
-                if (circle.parentNode) {
-                    circle.parentNode.removeChild(circle);
-                    circleMissed();
-                }
-            }, disappearTime);
-        }
-        
-        // Handle circle click
-        function circleClicked(circle, points) {
-            // Add to score
-            score += points;
-            scoreElement.textContent = score;
-            
-            // Increase combo
-            combo++;
-            comboElement.textContent = combo + 'x';
-            circlesClicked++;
-            
-            // Show combo text
-            const comboText = document.createElement('div');
-            comboText.className = 'combo';
-            comboText.textContent = `+${points} (${combo}x Combo!)`;
-            comboText.style.left = circle.style.left;
-            comboText.style.top = circle.style.top;
-            gameArea.appendChild(comboText);
-            
-            // Remove combo text after animation
-            setTimeout(() => {
-                if (comboText.parentNode) {
-                    comboText.parentNode.removeChild(comboText);
-                }
-            }, 1000);
-            
-            // Remove circle
-            circle.parentNode.removeChild(circle);
-            
-            // Level up every 500 points
-            if (score >= level * 500) {
-                levelUp();
-            }
-            
-            // Positive feedback message
-            if (combo % 5 === 0) {
-                messageElement.textContent = `Awesome! ${combo}x Combo!`;
-                messageElement.className = 'message correct';
-            }
-        }
-        
-        // Handle missed circle
-        function circleMissed() {
-            circlesMissed++;
-            
-            // Reset combo when missing a circle
-            if (combo > 1) {
-                messageElement.textContent = `Combo broken!`;
-                messageElement.className = 'message incorrect';
-            }
-            
-            combo = 1;
-            comboElement.textContent = combo + 'x';
-        }
-        
-        // Level up
-        function levelUp() {
-            level++;
-            levelElement.textContent = level;
-            messageElement.textContent = `Level ${level}! Circles are getting smaller and faster!`;
-            messageElement.className = 'message correct';
-            
-            // Increase game speed
-            clearInterval(circleInterval);
-            const interval = Math.max(300, 1000 - level * 80);
-            circleInterval = setInterval(createCircle, interval);
-        }
-        
-        // Start the game
+        let timerInterval;
+
         function startGame() {
             if (gameActive) return;
             
+            score = 0;
+            misses = 0;
+            timeLeft = 30;
             gameActive = true;
-            startButton.disabled = true;
-            messageElement.textContent = 'Click the circles quickly!';
-            messageElement.className = 'message game-start';
             
-            // Start the timer
-            timer = setInterval(() => {
+            updateDisplay();
+            showMessage('', '');
+            spawnTarget();
+            
+            timerInterval = setInterval(() => {
                 timeLeft--;
-                timeElement.textContent = timeLeft;
+                updateDisplay();
                 
                 if (timeLeft <= 0) {
                     endGame();
                 }
             }, 1000);
-            
-            // Start generating circles
-            const initialInterval = 1000;
-            circleInterval = setInterval(createCircle, initialInterval);
-            
-            // Create first circle immediately
-            setTimeout(createCircle, 300);
         }
-        
-        // End the game
+
+        function spawnTarget() {
+            if (!gameActive) return;
+            
+            const gameArea = document.getElementById('gameArea');
+            const existingTarget = gameArea.querySelector('.target');
+            if (existingTarget) existingTarget.remove();
+            
+            const size = Math.random() * 40 + 30;
+            const maxX = gameArea.clientWidth - size;
+            const maxY = gameArea.clientHeight - size;
+            
+            const target = document.createElement('div');
+            target.className = 'target';
+            target.style.width = size + 'px';
+            target.style.height = size + 'px';
+            target.style.left = Math.random() * maxX + 'px';
+            target.style.top = Math.random() * maxY + 'px';
+            target.textContent = Math.floor(Math.random() * 9) + 1;
+            
+            target.onclick = (e) => {
+                e.stopPropagation();
+                score++; 
+                updateDisplay();
+                spawnTarget();
+            };
+            
+            gameArea.appendChild(target);
+        }
+
+        function updateDisplay() {
+            document.getElementById('score').textContent = score;
+            document.getElementById('time').textContent = timeLeft + 's';
+            document.getElementById('misses').textContent = misses;
+        }
+
         function endGame() {
             gameActive = false;
-            clearInterval(timer);
-            clearInterval(circleInterval);
-            startButton.disabled = false;
-            
-            const accuracy = circlesClicked + circlesMissed > 0
-                ? Math.round((circlesClicked / (circlesClicked + circlesMissed)) * 100)
-                : 0;
-            
-            messageElement.innerHTML = `
-                Game Over!<br>
-                Final Score: ${score}<br>
-                Accuracy: ${accuracy}%
-            `;
-            messageElement.className = 'message game-over';
+            clearInterval(timerInterval);
+            const gameArea = document.getElementById('gameArea');
+            gameArea.querySelector('.target')?.remove();
+            showMessage(`Game Over! Final Score: ${score}`, 'success');
         }
-        
-        // Event listeners
-        startButton.addEventListener('click', startGame);
-        resetButton.addEventListener('click', initGame);
-        
-        // Initialize the game on load
-        window.onload = initGame;
+
+        function resetGame() {
+            gameActive = false;
+            clearInterval(timerInterval);
+            score = 0;
+            misses = 0;
+            timeLeft = 30;
+            updateDisplay();
+            document.getElementById('gameArea').innerHTML = '';
+            showMessage('Ready to play?', '');
+        }
+
+        function showMessage(text, className) {
+            const msg = document.getElementById('message');
+            msg.textContent = text;
+            msg.className = className;
+        }
+
+        document.getElementById('gameArea').addEventListener('click', function() {
+            if (gameActive) {
+                misses++;
+                updateDisplay();
+                spawnTarget();
+            }
+        });
     </script>
 </body>
 </html>
