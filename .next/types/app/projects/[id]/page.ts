@@ -1,4 +1,4 @@
-// File: D:\FullStackEngineer\app\projects\[id]\page.tsx
+// File: /home/runner/work/FullStackEngineer/FullStackEngineer/app/projects/[id]/page.tsx
 import * as entry from '../../../../../app/projects/[id]/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
