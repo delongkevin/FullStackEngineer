@@ -260,6 +260,11 @@
 
         // Add keyboard accessibility
         document.addEventListener('keydown', (e) => {
+            // Don't handle if typing in an input field
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+                return;
+            }
+            
             // Close game over modal with Escape key
             if (e.key === 'Escape' && document.getElementById('gameOverOverlay').style.display === 'flex') {
                 document.getElementById('gameOverOverlay').style.display = 'none';

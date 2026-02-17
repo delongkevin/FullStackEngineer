@@ -39,8 +39,6 @@ describe('embedAppsConfig', () => {
     expect(embedAppsConfig.app1.apiKey).toBeDefined();
     expect(embedAppsConfig.app2.apiKey).toBeDefined();
 
-    expect(embedAppsConfig.app1.apiKey).not.toEqual('YOUR_API_KEY_1');
-    expect(embedAppsConfig.app2.apiKey).not.toEqual('YOUR_API_KEY_2');
     expect(embedAppsConfig.app1.apiKey).not.toMatch(placeholderKeyPattern);
     expect(embedAppsConfig.app2.apiKey).not.toMatch(placeholderKeyPattern);
 
