@@ -15,6 +15,8 @@ export default function BlackjackPage() {
           src="/projects/blackjack/index.html"
           title="Blackjack Game Demo"
           className="w-full h-[800px] rounded-lg"
+          sandbox="allow-scripts allow-same-origin"
+          loading="lazy"
         />
       </div>
     </main>

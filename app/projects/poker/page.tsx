@@ -15,6 +15,8 @@ export default function PokerPage() {
           src="/projects/PokerApp/PokerApp.html"
           title="Poker App Demo"
           className="w-full h-[800px] rounded-lg"
+          sandbox="allow-scripts allow-same-origin"
+          loading="lazy"
         />
       </div>
     </main>
