@@ -7,7 +7,7 @@ import { projects } from '../../data/projects';
 import { useState } from 'react';
 
 export default function ProjectsPage() {
-	const [filter, setFilter] = useState<'all' | 'Automotive' | 'Web' | 'mobile'>('all');
+	const [filter, setFilter] = useState<'all' | 'Automotive' | 'Web' | 'mobile' | 'fullstack'>('all');
     const filteredProjects = filter === 'all'
     ? projects
     : projects.filter(project => project.category === filter);
@@ -29,7 +29,7 @@ export default function ProjectsPage() {
 
           {/* Filter Buttons */}
           <div className="flex flex-wrap justify-center gap-4 mb-12">
-            {['all', 'mobile'].map((category) => (
+            {['all', 'mobile', 'Automotive', 'Web', 'fullstack'].map((category) => (
               <button
                 key={category}
                 onClick={() => setFilter(category as any)}
