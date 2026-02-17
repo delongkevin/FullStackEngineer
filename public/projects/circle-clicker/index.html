@@ -127,6 +127,12 @@
             transform: scale(1.1);
         }
         
+        .circle:focus {
+            outline: 3px solid #667eea;
+            outline-offset: 3px;
+            transform: scale(1.1);
+        }
+        
         .circle:active {
             transform: scale(0.9);
         }
@@ -291,7 +297,6 @@
             gameArea.innerHTML = '';
             updateDisplay();
             timer = setInterval(updateTimer, 1000);
-            spawnCircle();
             spawnInterval = setInterval(spawnCircle, spawnRate);
         }
 
@@ -342,6 +347,9 @@
             
             const circle = document.createElement('div');
             circle.className = 'circle';
+            circle.setAttribute('role', 'button');
+            circle.setAttribute('tabindex', '0');
+            circle.setAttribute('aria-label', `Click circle to score`);
             
             const size = Math.max(30, 70 - level * 3);
             const randomColor = colors[Math.floor(Math.random() * colors.length)];
@@ -351,7 +359,7 @@
             circle.style.top = `${Math.random() * (gameArea.clientHeight - size)}px`;
             circle.style.left = `${Math.random() * (gameArea.clientWidth - size)}px`;
             
-            circle.onclick = () => {
+            const handleCircleClick = () => {
                 score++;
                 updateDisplay();
                 circle.style.animation = 'pop 0.3s ease';
@@ -361,6 +369,14 @@
                     }
                 }, 300);
                 checkLevel();
+            };
+            
+            circle.onclick = handleCircleClick;
+            circle.onkeydown = (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleCircleClick();
+                }
             };
             
             gameArea.appendChild(circle);

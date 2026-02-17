@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { projects, Project } from './projects';
+import { projects } from './projects';
 
 describe('projects data', () => {
   describe('structure validation', () => {

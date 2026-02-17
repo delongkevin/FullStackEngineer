@@ -8,7 +8,7 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
       include: ['data/**/*.ts', 'config/**/*.ts'],
-      exclude: ['node_modules', '**/*.test.ts'],
+      exclude: ['node_modules', '**/*.test.ts', 'vitest.config.ts'],
     },
   },
 });
