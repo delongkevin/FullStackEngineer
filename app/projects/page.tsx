@@ -8,15 +8,29 @@ import { useState } from 'react';
 
 export default function ProjectsPage() {
 	const [filter, setFilter] = useState<'all' | 'Automotive' | 'Web' | 'mobile' | 'fullstack'>('all');
+	const [announcement, setAnnouncement] = useState('');
     const filteredProjects = filter === 'all'
     ? projects
     : projects.filter(project => project.category === filter);
+
+  const handleFilterChange = (category: 'all' | 'Automotive' | 'Web' | 'mobile' | 'fullstack') => {
+    setFilter(category);
+    const count = category === 'all' 
+      ? projects.length 
+      : projects.filter(p => p.category === category).length;
+    const categoryName = category === 'all' 
+      ? 'all categories' 
+      : category === 'fullstack' 
+      ? 'Full Stack' 
+      : category.charAt(0).toUpperCase() + category.slice(1);
+    setAnnouncement(`Showing ${count} ${categoryName} projects`);
+  };
 
   return (
     <>
       <Header />
       
-      <main className="pt-24 pb-16 min-h-screen">
+      <main id="main-content" className="pt-24 pb-16 min-h-screen">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-12">
@@ -29,10 +43,14 @@ export default function ProjectsPage() {
 
           {/* Filter Buttons */}
           <div className="flex flex-wrap justify-center gap-4 mb-12">
+            {/* Live region for filter announcements */}
+            <div className="visually-hidden" role="status" aria-live="polite" aria-atomic="true">
+              {announcement}
+            </div>
             {(['all', 'mobile', 'Automotive', 'Web', 'fullstack'] as const).map((category) => (
               <button
                 key={category}
-                onClick={() => setFilter(category)}
+                onClick={() => handleFilterChange(category)}
                 className={`px-6 py-2 rounded-full font-medium transition-all ${
                   filter === category
                     ? 'bg-blue-600 text-white shadow-lg'

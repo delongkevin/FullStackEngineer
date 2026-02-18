@@ -213,6 +213,18 @@
             padding: 10px;
             border-top: 1px solid #555;
         }
+        
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
     </style>
 </head>
 <body>
@@ -318,6 +330,7 @@
                 <div className="game-container">
                     <h1>Tic Tac Toe</h1>
                     
+                    <h2 className="visually-hidden">Current Turn</h2>
                     <div className="turns-indicator">
                         <div className={`player-indicator ${isXNext && !winner ? 'active-player' : ''}`}>
                             Player X
@@ -327,7 +340,7 @@
                         </div>
                     </div>
                     
-                    <div className="status">{getStatus()}</div>
+                    <div className="status" role="status" aria-live="polite" aria-atomic="true">{getStatus()}</div>
                     
                     <div className="board">
                         {renderSquare(0)}
@@ -345,7 +358,8 @@
                         {winner ? 'New Game' : 'Reset Board'}
                     </button>
                     
-                    <div className="score-board">
+                    <h2 className="visually-hidden">Score Board</h2>
+                    <div className="score-board" aria-live="polite" aria-atomic="false">
                         <div className="score score-x">X: {scores.X}</div>
                         <div className="score draws">Draws: {scores.draws}</div>
                         <div className="score score-o">O: {scores.O}</div>

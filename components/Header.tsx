@@ -1,11 +1,33 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import Link from 'next/link';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (isMenuOpen && menuRef.current) {
+      // Focus first menu item when opened
+      const firstLink = menuRef.current.querySelector('a');
+      firstLink?.focus();
+    }
+  }, [isMenuOpen]);
+
+  // Handle Escape key
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isMenuOpen) {
+        setIsMenuOpen(false);
+        menuButtonRef.current?.focus();
+      }
+    };
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [isMenuOpen]);
 
   const navItems = [
     { name: 'Home', href: '/' },
@@ -44,6 +66,7 @@ export default function Header() {
           {/* Mobile menu button */}
           <div className="md:hidden">
             <button
+              ref={menuButtonRef}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="text-gray-700 hover:text-blue-600 p-2"
               aria-expanded={isMenuOpen}
@@ -57,7 +80,7 @@ export default function Header() {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden" id="mobile-menu" role="navigation" aria-label="Mobile navigation">
+          <div ref={menuRef} className="md:hidden" id="mobile-menu" role="navigation" aria-label="Mobile navigation">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200">
               {navItems.map((item) => (
                 <Link

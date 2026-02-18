@@ -40,7 +40,7 @@ export default function ContactPage() {
     <>
       <Header />
       
-      <main className="pt-24 pb-16 min-h-screen">
+      <main id="main-content" className="pt-24 pb-16 min-h-screen">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-12">
@@ -171,6 +171,7 @@ export default function ContactPage() {
                       id="name"
                       name="name"
                       required
+                      aria-required="true"
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                       placeholder="Enter your name"
                     />
@@ -185,6 +186,7 @@ export default function ContactPage() {
                       id="email"
                       name="email"
                       required
+                      aria-required="true"
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                       placeholder="Enter your email"
                     />
@@ -200,6 +202,7 @@ export default function ContactPage() {
                     id="subject"
                     name="subject"
                     required
+                    aria-required="true"
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                     placeholder="What's this about?"
                   />
@@ -213,6 +216,7 @@ export default function ContactPage() {
                     id="message"
                     name="message"
                     required
+                    aria-required="true"
                     rows={6}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-vertical"
                     placeholder="Tell me about your project..."
