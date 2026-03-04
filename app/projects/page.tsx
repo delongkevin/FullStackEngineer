@@ -51,6 +51,7 @@ export default function ProjectsPage() {
               <button
                 key={category}
                 onClick={() => handleFilterChange(category)}
+                aria-pressed={filter === category}
                 className={`px-6 py-2 rounded-full font-medium transition-all ${
                   filter === category
                     ? 'bg-blue-600 text-white shadow-lg'

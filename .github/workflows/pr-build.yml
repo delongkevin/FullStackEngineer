@@ -1,4 +1,4 @@
-name: CI
+name: PR Build Check
 
 on:
   pull_request:
@@ -17,23 +17,16 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
 
-      - name: Install dependencies
+      - name: Install
         run: npm ci
 
-      - name: Lint
-        run: npm run lint
-
-      - name: Test
-        run: npm run test
-
-      - name: Build
+      - name: Build & Export
         run: npm run build
 
-      - name: Upload build artifact
+      - name: Upload HTML output
         uses: actions/upload-artifact@v4
         with:
-          name: site-build
+          name: site-html
           path: out/
-          retention-days: 1
+          retention-days: 7

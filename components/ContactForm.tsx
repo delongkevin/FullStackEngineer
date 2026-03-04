@@ -5,6 +5,7 @@ import { Send, Loader2 } from 'lucide-react';
 
 export default function ContactForm() {
   const [isLoading, setIsLoading] = useState(false);
+  const [statusMessage, setStatusMessage] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -43,7 +44,7 @@ export default function ContactForm() {
     await new Promise(resolve => setTimeout(resolve, 2000));
     
     console.log('Form submitted:', formData);
-    alert('Thank you for your message! I will get back to you soon.');
+    setStatusMessage('Thank you for your message! I will get back to you soon.');
     setFormData({ name: '', email: '', subject: '', message: '' });
     setErrors({});
     setIsLoading(false);
@@ -53,12 +54,12 @@ export default function ContactForm() {
     <form onSubmit={handleSubmit} className="space-y-6" noValidate>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="cf-name" className="block text-sm font-medium text-gray-700 mb-2">
             Your Name *
           </label>
           <input
             type="text"
-            id="name"
+            id="cf-name"
             name="name"
             value={formData.name}
             onChange={handleChange}
@@ -77,12 +78,12 @@ export default function ContactForm() {
         </div>
         
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="cf-email" className="block text-sm font-medium text-gray-700 mb-2">
             Email Address *
           </label>
           <input
             type="email"
-            id="email"
+            id="cf-email"
             name="email"
             value={formData.email}
             onChange={handleChange}
@@ -102,12 +103,12 @@ export default function ContactForm() {
       </div>
 
       <div>
-        <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
+        <label htmlFor="cf-subject" className="block text-sm font-medium text-gray-700 mb-2">
           Subject *
         </label>
         <input
           type="text"
-          id="subject"
+          id="cf-subject"
           name="subject"
           value={formData.subject}
           onChange={handleChange}
@@ -126,11 +127,11 @@ export default function ContactForm() {
       </div>
 
       <div>
-        <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+        <label htmlFor="cf-message" className="block text-sm font-medium text-gray-700 mb-2">
           Message *
         </label>
         <textarea
-          id="message"
+          id="cf-message"
           name="message"
           value={formData.message}
           onChange={handleChange}

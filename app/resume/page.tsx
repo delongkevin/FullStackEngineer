@@ -5,10 +5,10 @@ import Image from 'next/image';
 
 export default function ResumePage() {
   const contactInfo = [
-    { icon: Mail, text: 'delong.kevin@gmail.com', href: 'mailto:delong.kevin@gmail.com' },
-    { icon: Phone, text: '(810) 287-7409', href: 'tel:810-287-7409' },
-    { icon: MapPin, text: 'Grand Blanc, Michigan, United States', href: '#' },
-    { icon: ExternalLink, text: 'kevindouglasdelong.net', href: 'https://kevindouglasdelong.net' }
+    { icon: Mail, text: 'delong.kevin@gmail.com', href: 'mailto:delong.kevin@gmail.com', label: 'Send email to delong.kevin@gmail.com' },
+    { icon: Phone, text: '(810) 287-7409', href: 'tel:810-287-7409', label: 'Call (810) 287-7409' },
+    { icon: MapPin, text: 'Grand Blanc, Michigan, United States', href: '#', label: 'Location: Grand Blanc, Michigan, United States' },
+    { icon: ExternalLink, text: 'kevindouglasdelong.net', href: 'https://kevindouglasdelong.net', label: 'Visit kevindouglasdelong.net' }
   ];
 
   const skills = {
@@ -154,8 +154,9 @@ export default function ResumePage() {
                       key={index}
                       href={item.href}
                       className="flex items-center gap-3 text-gray-600 hover:text-blue-600 transition-colors"
+                      aria-label={item.label}
                     >
-                      <item.icon size={18} className="flex-shrink-0" />
+                      <item.icon size={18} className="flex-shrink-0" aria-hidden="true" />
                       <span className="text-sm">{item.text}</span>
                     </a>
                   ))}

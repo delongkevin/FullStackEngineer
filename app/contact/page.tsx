@@ -168,6 +168,7 @@ export default function ContactPage() {
                 name="contact"
                 method="POST"
                 data-netlify="true"
+                noValidate
                 className="bg-white rounded-2xl shadow-lg p-8"
                 noValidate
               >
@@ -264,19 +265,20 @@ export default function ContactPage() {
                 </div>
 
                                 {/* Success/Error Message */}
-                {message && (
-                  <div 
-                    className={`mb-6 p-4 rounded-lg ${
-                      message.includes('Thank you') 
-                        ? 'bg-green-100 text-green-700 border border-green-200' 
-                        : 'bg-red-100 text-red-700 border border-red-200'
-                    }`}
-                    role="alert"
-                    aria-live="polite"
-                  >
-                    {message}
-                  </div>
-                )}
+                <div
+                  role="status"
+                  aria-live="polite"
+                  aria-atomic="true"
+                  className={`mb-6 p-4 rounded-lg transition-opacity ${
+                    message
+                      ? (message.includes('Thank you')
+                          ? 'bg-green-100 text-green-700 border border-green-200'
+                          : 'bg-red-100 text-red-700 border border-red-200')
+                      : 'opacity-0 pointer-events-none'
+                  }`}
+                >
+                  {message || '\u00A0'}
+                </div>
 
                 <button
                   type="submit"
