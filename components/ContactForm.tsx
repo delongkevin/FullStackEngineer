@@ -11,16 +11,32 @@ export default function ContactForm() {
     subject: '',
     message: ''
   });
+  const [errors, setErrors] = useState<{ name?: string; email?: string; subject?: string; message?: string }>({});
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+    if (errors[name as keyof typeof errors]) {
+      setErrors(prev => ({ ...prev, [name]: undefined }));
+    }
+  };
+
+  const validate = () => {
+    const newErrors: typeof errors = {};
+    if (!formData.name.trim()) newErrors.name = 'Name is required.';
+    if (!formData.email.trim()) newErrors.email = 'Email address is required.';
+    if (!formData.subject.trim()) newErrors.subject = 'Subject is required.';
+    if (!formData.message.trim()) newErrors.message = 'Message is required.';
+    return newErrors;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const newErrors = validate();
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
     setIsLoading(true);
     
     // Simulate form submission
@@ -29,11 +45,12 @@ export default function ContactForm() {
     console.log('Form submitted:', formData);
     alert('Thank you for your message! I will get back to you soon.');
     setFormData({ name: '', email: '', subject: '', message: '' });
+    setErrors({});
     setIsLoading(false);
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-6" noValidate>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
@@ -46,9 +63,17 @@ export default function ContactForm() {
             value={formData.name}
             onChange={handleChange}
             required
+            aria-required="true"
+            aria-invalid={errors.name ? "true" : "false"}
+            aria-describedby={errors.name ? "name-error" : undefined}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
             placeholder="Enter your name"
           />
+          {errors.name && (
+            <span id="name-error" role="alert" className="text-red-600 text-sm mt-1 block">
+              {errors.name}
+            </span>
+          )}
         </div>
         
         <div>
@@ -62,9 +87,17 @@ export default function ContactForm() {
             value={formData.email}
             onChange={handleChange}
             required
+            aria-required="true"
+            aria-invalid={errors.email ? "true" : "false"}
+            aria-describedby={errors.email ? "email-error" : undefined}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
             placeholder="Enter your email"
           />
+          {errors.email && (
+            <span id="email-error" role="alert" className="text-red-600 text-sm mt-1 block">
+              {errors.email}
+            </span>
+          )}
         </div>
       </div>
 
@@ -79,9 +112,17 @@ export default function ContactForm() {
           value={formData.subject}
           onChange={handleChange}
           required
+          aria-required="true"
+          aria-invalid={errors.subject ? "true" : "false"}
+          aria-describedby={errors.subject ? "subject-error" : undefined}
           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
           placeholder="What's this about?"
         />
+        {errors.subject && (
+          <span id="subject-error" role="alert" className="text-red-600 text-sm mt-1 block">
+            {errors.subject}
+          </span>
+        )}
       </div>
 
       <div>
@@ -94,10 +135,18 @@ export default function ContactForm() {
           value={formData.message}
           onChange={handleChange}
           required
+          aria-required="true"
+          aria-invalid={errors.message ? "true" : "false"}
+          aria-describedby={errors.message ? "message-error" : undefined}
           rows={6}
           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-vertical"
           placeholder="Tell me about your project..."
         ></textarea>
+        {errors.message && (
+          <span id="message-error" role="alert" className="text-red-600 text-sm mt-1 block">
+            {errors.message}
+          </span>
+        )}
       </div>
 
       <button
@@ -107,12 +156,12 @@ export default function ContactForm() {
       >
         {isLoading ? (
           <>
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
             Sending...
           </>
         ) : (
           <>
-            Send Message <Send className="ml-2" size={18} />
+            Send Message <Send className="ml-2" size={18} aria-hidden="true" />
           </>
         )}
       </button>

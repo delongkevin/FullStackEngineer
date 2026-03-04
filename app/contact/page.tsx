@@ -8,13 +8,24 @@ import { Mail, Phone, MapPin, Send, Loader2, Linkedin, Github, Twitter, Heart } 
 export default function ContactPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState('');
+  const [errors, setErrors] = useState<{ name?: string; email?: string; subject?: string; message?: string }>({});
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsLoading(true);
-    
     const form = e.currentTarget;
     const formData = new FormData(form);
+
+    const newErrors: typeof errors = {};
+    if (!formData.get('name')?.toString().trim()) newErrors.name = 'Name is required.';
+    if (!formData.get('email')?.toString().trim()) newErrors.email = 'Email address is required.';
+    if (!formData.get('subject')?.toString().trim()) newErrors.subject = 'Subject is required.';
+    if (!formData.get('message')?.toString().trim()) newErrors.message = 'Message is required.';
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+    setErrors({});
+    setIsLoading(true);
     
     try {
       const response = await fetch('/', {
@@ -158,6 +169,7 @@ export default function ContactPage() {
                 method="POST"
                 data-netlify="true"
                 className="bg-white rounded-2xl shadow-lg p-8"
+                noValidate
               >
                 <input type="hidden" name="form-name" value="contact"/>
                 
@@ -172,9 +184,16 @@ export default function ContactPage() {
                       name="name"
                       required
                       aria-required="true"
+                      aria-invalid={errors.name ? "true" : "false"}
+                      aria-describedby={errors.name ? "name-error" : undefined}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                       placeholder="Enter your name"
                     />
+                    {errors.name && (
+                      <span id="name-error" role="alert" className="text-red-600 text-sm mt-1 block">
+                        {errors.name}
+                      </span>
+                    )}
                   </div>
                   
                   <div>
@@ -187,9 +206,16 @@ export default function ContactPage() {
                       name="email"
                       required
                       aria-required="true"
+                      aria-invalid={errors.email ? "true" : "false"}
+                      aria-describedby={errors.email ? "email-error" : undefined}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                       placeholder="Enter your email"
                     />
+                    {errors.email && (
+                      <span id="email-error" role="alert" className="text-red-600 text-sm mt-1 block">
+                        {errors.email}
+                      </span>
+                    )}
                   </div>
                 </div>
 
@@ -203,9 +229,16 @@ export default function ContactPage() {
                     name="subject"
                     required
                     aria-required="true"
+                    aria-invalid={errors.subject ? "true" : "false"}
+                    aria-describedby={errors.subject ? "subject-error" : undefined}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                     placeholder="What's this about?"
                   />
+                  {errors.subject && (
+                    <span id="subject-error" role="alert" className="text-red-600 text-sm mt-1 block">
+                      {errors.subject}
+                    </span>
+                  )}
                 </div>
 
                 <div className="mb-6">
@@ -217,10 +250,17 @@ export default function ContactPage() {
                     name="message"
                     required
                     aria-required="true"
+                    aria-invalid={errors.message ? "true" : "false"}
+                    aria-describedby={errors.message ? "message-error" : undefined}
                     rows={6}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-vertical"
                     placeholder="Tell me about your project..."
                   ></textarea>
+                  {errors.message && (
+                    <span id="message-error" role="alert" className="text-red-600 text-sm mt-1 block">
+                      {errors.message}
+                    </span>
+                  )}
                 </div>
 
                                 {/* Success/Error Message */}
