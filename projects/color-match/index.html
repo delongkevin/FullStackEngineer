@@ -105,14 +105,13 @@
         }
         
         .section-title {
-            color: #333;
             font-size: 1.1rem;
             font-weight: 600;
             margin-bottom: 20px;
             text-align: center;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: #667eea;
+            color: #4338ca;
         }
         
         .target-color-display {
@@ -199,6 +198,31 @@
             opacity: 0.7;
         }
         
+        .color-option-btn:focus {
+            outline: 3px solid #4338ca;
+            outline-offset: 3px;
+        }
+        
+        .color-option-btn.correct::after {
+            content: '✓';
+            position: absolute;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+            pointer-events: none;
+        }
+        
+        .color-option-btn.incorrect::after {
+            content: '✗';
+            position: absolute;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+            pointer-events: none;
+        }
+        
         .color-option-btn.correct {
             border-color: #4CAF50;
             box-shadow: 0 0 30px rgba(76, 175, 80, 0.8);
@@ -247,12 +271,12 @@
         }
         
         .message-display.success {
-            color: #4CAF50;
+            color: #2e7d32;
             background: rgba(76, 175, 80, 0.1);
         }
         
         .message-display.error {
-            color: #f44336;
+            color: #b71c1c;
             background: rgba(244, 67, 54, 0.1);
         }
         
@@ -276,6 +300,11 @@
             text-transform: uppercase;
             user-select: none;
             touch-action: manipulation;
+        }
+        
+        .btn:focus {
+            outline: 3px solid #4338ca;
+            outline-offset: 3px;
         }
         
         .btn-start {
@@ -473,7 +502,7 @@
             
             <div class="color-options-grid" id="colorOptionsGrid" role="group" aria-label="Color options"></div>
             
-            <div class="message-display" id="messageDisplay" role="status" aria-live="polite" aria-atomic="true"></div>
+            <div class="message-display" id="messageDisplay" role="status" aria-live="assertive" aria-atomic="true"></div>
         </div>
         
         <div class="button-group">
@@ -575,7 +604,7 @@
                 button.className = 'color-option-btn';
                 button.style.backgroundColor = color;
                 button.setAttribute('data-color', color);
-                button.setAttribute('aria-label', `Color option ${index + 1}: ${color}`);
+                button.setAttribute('aria-label', `Color option ${index + 1} of ${gameState.colors.length}`);
                 button.onclick = (e) => {
                     e.preventDefault();
                     selectColor(color, button);
