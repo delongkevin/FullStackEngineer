@@ -123,7 +123,7 @@ export default function ResumePage() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Download size={20} />
+              <Download size={20} aria-hidden="true" />
               Download PDF Version
             </a>
           </div>          </div>
@@ -155,7 +155,7 @@ export default function ResumePage() {
                       href={item.href}
                       className="flex items-center gap-3 text-gray-600 hover:text-blue-600 transition-colors"
                     >
-                      <item.icon size={18} className="flex-shrink-0" />
+                      <item.icon size={18} className="flex-shrink-0" aria-hidden="true" />
                       <span className="text-sm">{item.text}</span>
                     </a>
                   ))}
