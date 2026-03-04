@@ -16,10 +16,9 @@ export default function ContactForm() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData(prev => ({ ...prev, [name]: value }));
     if (errors[name as keyof typeof errors]) {
-      const { [name as keyof typeof errors]: _, ...rest } = errors;
-      setErrors(rest);
+      setErrors(prev => ({ ...prev, [name]: undefined }));
     }
   };
 
@@ -52,20 +51,7 @@ export default function ContactForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      {/* Accessible Status Message */}
-      <div
-        role="status"
-        aria-live="polite"
-        aria-atomic="true"
-        className={`p-4 rounded-lg transition-opacity ${
-          statusMessage
-            ? 'bg-green-100 text-green-700 border border-green-200'
-            : 'opacity-0 pointer-events-none'
-        }`}
-      >
-        {statusMessage || '\u00A0'}
-      </div>
+    <form onSubmit={handleSubmit} className="space-y-6" noValidate>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label htmlFor="cf-name" className="block text-sm font-medium text-gray-700 mb-2">
@@ -79,11 +65,13 @@ export default function ContactForm() {
             onChange={handleChange}
             required
             aria-required="true"
+            aria-invalid={errors.name ? "true" : "false"}
+            aria-describedby={errors.name ? "name-error" : undefined}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
             placeholder="Enter your name"
           />
           {errors.name && (
-            <span id="cf-name-error" role="alert" className="text-red-600 text-sm mt-1 block">
+            <span id="name-error" role="alert" className="text-red-600 text-sm mt-1 block">
               {errors.name}
             </span>
           )}
@@ -101,11 +89,13 @@ export default function ContactForm() {
             onChange={handleChange}
             required
             aria-required="true"
+            aria-invalid={errors.email ? "true" : "false"}
+            aria-describedby={errors.email ? "email-error" : undefined}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
             placeholder="Enter your email"
           />
           {errors.email && (
-            <span id="cf-email-error" role="alert" className="text-red-600 text-sm mt-1 block">
+            <span id="email-error" role="alert" className="text-red-600 text-sm mt-1 block">
               {errors.email}
             </span>
           )}
@@ -124,11 +114,13 @@ export default function ContactForm() {
           onChange={handleChange}
           required
           aria-required="true"
+          aria-invalid={errors.subject ? "true" : "false"}
+          aria-describedby={errors.subject ? "subject-error" : undefined}
           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
           placeholder="What's this about?"
         />
         {errors.subject && (
-          <span id="cf-subject-error" role="alert" className="text-red-600 text-sm mt-1 block">
+          <span id="subject-error" role="alert" className="text-red-600 text-sm mt-1 block">
             {errors.subject}
           </span>
         )}
@@ -145,12 +137,14 @@ export default function ContactForm() {
           onChange={handleChange}
           required
           aria-required="true"
+          aria-invalid={errors.message ? "true" : "false"}
+          aria-describedby={errors.message ? "message-error" : undefined}
           rows={6}
           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-vertical"
           placeholder="Tell me about your project..."
         ></textarea>
         {errors.message && (
-          <span id="cf-message-error" role="alert" className="text-red-600 text-sm mt-1 block">
+          <span id="message-error" role="alert" className="text-red-600 text-sm mt-1 block">
             {errors.message}
           </span>
         )}

@@ -10,30 +10,16 @@ export default function ContactPage() {
   const [message, setMessage] = useState('');
   const [errors, setErrors] = useState<{ name?: string; email?: string; subject?: string; message?: string }>({});
 
-  const validate = (formData: FormData) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
     const newErrors: typeof errors = {};
     if (!formData.get('name')?.toString().trim()) newErrors.name = 'Name is required.';
     if (!formData.get('email')?.toString().trim()) newErrors.email = 'Email address is required.';
     if (!formData.get('subject')?.toString().trim()) newErrors.subject = 'Subject is required.';
     if (!formData.get('message')?.toString().trim()) newErrors.message = 'Message is required.';
-    return newErrors;
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name } = e.target;
-    if (errors[name as keyof typeof errors]) {
-      const { [name as keyof typeof errors]: _, ...rest } = errors;
-      setErrors(rest);
-    }
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setMessage('');
-    
-    const form = e.currentTarget;
-    const formData = new FormData(form);
-    const newErrors = validate(formData);
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
       return;
@@ -184,6 +170,7 @@ export default function ContactPage() {
                 data-netlify="true"
                 noValidate
                 className="bg-white rounded-2xl shadow-lg p-8"
+                noValidate
               >
                 <input type="hidden" name="form-name" value="contact"/>
                 
@@ -200,7 +187,6 @@ export default function ContactPage() {
                       aria-required="true"
                       aria-invalid={errors.name ? "true" : "false"}
                       aria-describedby={errors.name ? "name-error" : undefined}
-                      onChange={handleChange}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                       placeholder="Enter your name"
                     />
@@ -223,7 +209,6 @@ export default function ContactPage() {
                       aria-required="true"
                       aria-invalid={errors.email ? "true" : "false"}
                       aria-describedby={errors.email ? "email-error" : undefined}
-                      onChange={handleChange}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                       placeholder="Enter your email"
                     />
@@ -247,7 +232,6 @@ export default function ContactPage() {
                     aria-required="true"
                     aria-invalid={errors.subject ? "true" : "false"}
                     aria-describedby={errors.subject ? "subject-error" : undefined}
-                    onChange={handleChange}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                     placeholder="What's this about?"
                   />
@@ -269,7 +253,6 @@ export default function ContactPage() {
                     aria-required="true"
                     aria-invalid={errors.message ? "true" : "false"}
                     aria-describedby={errors.message ? "message-error" : undefined}
-                    onChange={handleChange}
                     rows={6}
                     className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-vertical"
                     placeholder="Tell me about your project..."
