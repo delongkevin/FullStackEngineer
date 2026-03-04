@@ -5,6 +5,7 @@ import { Send, Loader2 } from 'lucide-react';
 
 export default function ContactForm() {
   const [isLoading, setIsLoading] = useState(false);
+  const [statusMessage, setStatusMessage] = useState('');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -44,14 +45,27 @@ export default function ContactForm() {
     await new Promise(resolve => setTimeout(resolve, 2000));
     
     console.log('Form submitted:', formData);
-    alert('Thank you for your message! I will get back to you soon.');
+    setStatusMessage('Thank you for your message! I will get back to you soon.');
     setFormData({ name: '', email: '', subject: '', message: '' });
     setErrors({});
     setIsLoading(false);
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+    <form onSubmit={handleSubmit} className="space-y-6">
+      {/* Accessible Status Message */}
+      <div
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+        className={`p-4 rounded-lg transition-opacity ${
+          statusMessage
+            ? 'bg-green-100 text-green-700 border border-green-200'
+            : 'opacity-0 pointer-events-none'
+        }`}
+      >
+        {statusMessage || '\u00A0'}
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <label htmlFor="cf-name" className="block text-sm font-medium text-gray-700 mb-2">
@@ -65,8 +79,6 @@ export default function ContactForm() {
             onChange={handleChange}
             required
             aria-required="true"
-            aria-invalid={errors.name ? "true" : "false"}
-            aria-describedby={errors.name ? "cf-name-error" : undefined}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
             placeholder="Enter your name"
           />
@@ -89,8 +101,6 @@ export default function ContactForm() {
             onChange={handleChange}
             required
             aria-required="true"
-            aria-invalid={errors.email ? "true" : "false"}
-            aria-describedby={errors.email ? "cf-email-error" : undefined}
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
             placeholder="Enter your email"
           />
@@ -114,8 +124,6 @@ export default function ContactForm() {
           onChange={handleChange}
           required
           aria-required="true"
-          aria-invalid={errors.subject ? "true" : "false"}
-          aria-describedby={errors.subject ? "cf-subject-error" : undefined}
           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
           placeholder="What's this about?"
         />
@@ -137,8 +145,6 @@ export default function ContactForm() {
           onChange={handleChange}
           required
           aria-required="true"
-          aria-invalid={errors.message ? "true" : "false"}
-          aria-describedby={errors.message ? "cf-message-error" : undefined}
           rows={6}
           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-vertical"
           placeholder="Tell me about your project..."

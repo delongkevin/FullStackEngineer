@@ -5,10 +5,10 @@ import Image from 'next/image';
 
 export default function ResumePage() {
   const contactInfo = [
-    { icon: Mail, text: 'delong.kevin@gmail.com', href: 'mailto:delong.kevin@gmail.com' },
-    { icon: Phone, text: '(810) 287-7409', href: 'tel:810-287-7409' },
-    { icon: MapPin, text: 'Grand Blanc, Michigan, United States', href: '#' },
-    { icon: ExternalLink, text: 'kevindouglasdelong.net', href: 'https://kevindouglasdelong.net' }
+    { icon: Mail, text: 'delong.kevin@gmail.com', href: 'mailto:delong.kevin@gmail.com', label: 'Email: delong.kevin@gmail.com' },
+    { icon: Phone, text: '(810) 287-7409', href: 'tel:810-287-7409', label: 'Phone: (810) 287-7409' },
+    { icon: MapPin, text: 'Grand Blanc, Michigan, United States', href: 'https://www.google.com/maps/search/?api=1&query=Grand+Blanc%2C+Michigan%2C+United+States', label: 'Location: Grand Blanc, Michigan, United States' },
+    { icon: ExternalLink, text: 'kevindouglasdelong.net', href: 'https://kevindouglasdelong.net', label: 'Website: kevindouglasdelong.net' }
   ];
 
   const skills = {
@@ -110,8 +110,8 @@ export default function ResumePage() {
       <main id="main-content" className="pt-24 pb-16 min-h-screen bg-gray-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
-          <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">Resume</h1>
+          <section aria-labelledby="resume-heading" className="text-center mb-12">
+            <h1 id="resume-heading" className="text-4xl font-bold text-gray-900 mb-4">Resume</h1>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               Full Stack Developer specializing in modern web technologies and scalable solutions.
             </p>
@@ -123,10 +123,10 @@ export default function ResumePage() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Download size={20} />
+              <Download size={20} aria-hidden="true" />
               Download PDF Version
             </a>
-          </div>          </div>
+          </div>          </section>
 
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Sidebar */}
@@ -146,25 +146,26 @@ export default function ResumePage() {
               <p className="text-blue-600 font-medium">Full Stack Developer</p>
             </div>
           {/* Contact Info */}
-              <div className="bg-white rounded-xl shadow-lg p-6">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">Contact</h2>
+              <section aria-labelledby="contact-heading" className="bg-white rounded-xl shadow-lg p-6">
+                <h2 id="contact-heading" className="text-xl font-bold text-gray-900 mb-4">Contact</h2>
                 <div className="space-y-3">
                   {contactInfo.map((item, index) => (
                     <a
                       key={index}
                       href={item.href}
                       className="flex items-center gap-3 text-gray-600 hover:text-blue-600 transition-colors"
+                      aria-label={item.label ?? item.text}
                     >
-                      <item.icon size={18} className="flex-shrink-0" />
+                      <item.icon size={18} className="flex-shrink-0" aria-hidden="true" />
                       <span className="text-sm">{item.text}</span>
                     </a>
                   ))}
                 </div>
-              </div>
+              </section>
 
               {/* Skills */}
-              <div className="bg-white rounded-xl shadow-lg p-6">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">Skills</h2>
+              <section aria-labelledby="sidebar-skills-heading" className="bg-white rounded-xl shadow-lg p-6">
+                <h2 id="sidebar-skills-heading" className="text-xl font-bold text-gray-900 mb-4">Skills</h2>
                 <div className="space-y-4">
                   {Object.entries(skills).map(([category, skillList]) => (
                     <div key={category}>
@@ -182,21 +183,21 @@ export default function ResumePage() {
                     </div>
                   ))}
                 </div>
-              </div>
+              </section>
             </div>
 
             {/* Main Content */}
             <div className="lg:col-span-3 space-y-8">
               {/* Summary */}
-              <div className="bg-white rounded-xl shadow-lg p-6">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">Professional Summary</h2>
+              <section aria-labelledby="summary-heading" className="bg-white rounded-xl shadow-lg p-6">
+                <h2 id="summary-heading" className="text-2xl font-bold text-gray-900 mb-4">Professional Summary</h2>
                 <p className="text-gray-700 leading-relaxed">
                 Results-oriented Software Engineer with 10+ years in automotive infotainment systems, specializing in backend automation, frontend UI development, and full-stack integration for web, mobile, and embedded applications. Proven track record in C++, Python, and AutoSAR architecture, collaborating on CI/CD pipelines to deliver high-quality, secure software. Excel at debugging complex SOC/IOC issues, fuzz testing protocols (CAN/Ethernet), and leading cross-functional teams to exceed milestones—reducing defects by 25% through optimized test automation. Eager to drive innovative solutions in scalable software environments.                </p>
-              </div>
+              </section>
 
               {/* Experience */}
-              <div className="bg-white rounded-xl shadow-lg p-6">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Work Experience</h2>
+              <section aria-labelledby="experience-heading" className="bg-white rounded-xl shadow-lg p-6">
+                <h2 id="experience-heading" className="text-2xl font-bold text-gray-900 mb-6">Work Experience</h2>
                 <div className="space-y-8">
                   {experience.map((job, index) => (
                     <div key={index} className="border-l-4 border-blue-500 pl-6">
@@ -219,11 +220,11 @@ export default function ResumePage() {
                     </div>
                   ))}
                 </div>
-              </div>
+              </section>
 
               {/* Projects */}
-              <div className="bg-white rounded-xl shadow-lg p-6">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Featured Projects</h2>
+              <section aria-labelledby="projects-heading" className="bg-white rounded-xl shadow-lg p-6">
+                <h2 id="projects-heading" className="text-2xl font-bold text-gray-900 mb-6">Featured Projects</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {projects.map((project, index) => (
                     <div key={index} className="border border-gray-200 rounded-lg p-4">
@@ -242,11 +243,11 @@ export default function ResumePage() {
                     </div>
                   ))}
                 </div>
-              </div>
+              </section>
 
               {/* Education */}
-              <div className="bg-white rounded-xl shadow-lg p-6">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Education</h2>
+              <section aria-labelledby="education-heading" className="bg-white rounded-xl shadow-lg p-6">
+                <h2 id="education-heading" className="text-2xl font-bold text-gray-900 mb-6">Education</h2>
                 <div className="space-y-6">
                   {education.map((edu, index) => (
                     <div key={index} className="border-l-4 border-green-500 pl-6">
@@ -261,7 +262,7 @@ export default function ResumePage() {
                     </div>
                   ))}
                 </div>
-              </div>
+              </section>
             </div>
           </div>
         </div>
