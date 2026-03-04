@@ -188,15 +188,15 @@ export default function ResumePage() {
             {/* Main Content */}
             <div className="lg:col-span-3 space-y-8">
               {/* Summary */}
-              <div className="bg-white rounded-xl shadow-lg p-6">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">Professional Summary</h2>
+              <section aria-labelledby="summary-heading" className="bg-white rounded-xl shadow-lg p-6">
+                <h2 id="summary-heading" className="text-2xl font-bold text-gray-900 mb-4">Professional Summary</h2>
                 <p className="text-gray-700 leading-relaxed">
                 Results-oriented Software Engineer with 10+ years in automotive infotainment systems, specializing in backend automation, frontend UI development, and full-stack integration for web, mobile, and embedded applications. Proven track record in C++, Python, and AutoSAR architecture, collaborating on CI/CD pipelines to deliver high-quality, secure software. Excel at debugging complex SOC/IOC issues, fuzz testing protocols (CAN/Ethernet), and leading cross-functional teams to exceed milestones—reducing defects by 25% through optimized test automation. Eager to drive innovative solutions in scalable software environments.                </p>
-              </div>
+              </section>
 
               {/* Experience */}
-              <div className="bg-white rounded-xl shadow-lg p-6">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Work Experience</h2>
+              <section aria-labelledby="experience-heading" className="bg-white rounded-xl shadow-lg p-6">
+                <h2 id="experience-heading" className="text-2xl font-bold text-gray-900 mb-6">Work Experience</h2>
                 <div className="space-y-8">
                   {experience.map((job, index) => (
                     <div key={index} className="border-l-4 border-blue-500 pl-6">
@@ -219,11 +219,11 @@ export default function ResumePage() {
                     </div>
                   ))}
                 </div>
-              </div>
+              </section>
 
               {/* Projects */}
-              <div className="bg-white rounded-xl shadow-lg p-6">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Featured Projects</h2>
+              <section aria-labelledby="resume-projects-heading" className="bg-white rounded-xl shadow-lg p-6">
+                <h2 id="resume-projects-heading" className="text-2xl font-bold text-gray-900 mb-6">Featured Projects</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {projects.map((project, index) => (
                     <div key={index} className="border border-gray-200 rounded-lg p-4">
@@ -242,11 +242,11 @@ export default function ResumePage() {
                     </div>
                   ))}
                 </div>
-              </div>
+              </section>
 
               {/* Education */}
-              <div className="bg-white rounded-xl shadow-lg p-6">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Education</h2>
+              <section aria-labelledby="education-heading" className="bg-white rounded-xl shadow-lg p-6">
+                <h2 id="education-heading" className="text-2xl font-bold text-gray-900 mb-6">Education</h2>
                 <div className="space-y-6">
                   {education.map((edu, index) => (
                     <div key={index} className="border-l-4 border-green-500 pl-6">
@@ -261,7 +261,7 @@ export default function ResumePage() {
                     </div>
                   ))}
                 </div>
-              </div>
+              </section>
             </div>
           </div>
         </div>
