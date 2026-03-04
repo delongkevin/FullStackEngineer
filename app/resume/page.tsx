@@ -146,8 +146,8 @@ export default function ResumePage() {
               <p className="text-blue-600 font-medium">Full Stack Developer</p>
             </div>
           {/* Contact Info */}
-              <div className="bg-white rounded-xl shadow-lg p-6">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">Contact</h2>
+              <section aria-labelledby="contact-heading" className="bg-white rounded-xl shadow-lg p-6">
+                <h2 id="contact-heading" className="text-xl font-bold text-gray-900 mb-4">Contact</h2>
                 <div className="space-y-3">
                   {contactInfo.map((item, index) => (
                     <a
@@ -160,11 +160,11 @@ export default function ResumePage() {
                     </a>
                   ))}
                 </div>
-              </div>
+              </section>
 
               {/* Skills */}
-              <div className="bg-white rounded-xl shadow-lg p-6">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">Skills</h2>
+              <section aria-labelledby="sidebar-skills-heading" className="bg-white rounded-xl shadow-lg p-6">
+                <h2 id="sidebar-skills-heading" className="text-xl font-bold text-gray-900 mb-4">Skills</h2>
                 <div className="space-y-4">
                   {Object.entries(skills).map(([category, skillList]) => (
                     <div key={category}>
@@ -182,7 +182,7 @@ export default function ResumePage() {
                     </div>
                   ))}
                 </div>
-              </div>
+              </section>
             </div>
 
             {/* Main Content */}
