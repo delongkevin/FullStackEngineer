@@ -79,7 +79,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         <div className="flex justify-between items-center pt-4 border-t border-gray-100">
           <Link
             href={`/projects/${project.id}`}
-            className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium transition-colors"
+            className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium transition-colors min-h-[44px]"
           >
             {project.embeddable ? (
               <>
@@ -93,7 +93,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           <div className="flex gap-4">
             <a
               href={project.liveUrl}
-              className="flex items-center gap-2 text-gray-600 hover:text-gray-700 transition-colors"
+              className="flex items-center gap-2 text-gray-600 hover:text-gray-700 transition-colors p-2 min-h-[44px] min-w-[44px] justify-center"
               target={project.liveUrl.startsWith('http') ? '_blank' : '_self'}
               rel={project.liveUrl.startsWith('http') ? 'noopener noreferrer' : ''}
               aria-label={`View live demo of ${project.title}`}
@@ -102,7 +102,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             </a>
             <a
               href={project.githubUrl}
-              className="flex items-center gap-2 text-gray-600 hover:text-gray-700 transition-colors"
+              className="flex items-center gap-2 text-gray-600 hover:text-gray-700 transition-colors p-2 min-h-[44px] min-w-[44px] justify-center"
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`View source code for ${project.title} on GitHub`}

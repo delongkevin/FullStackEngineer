@@ -51,7 +51,7 @@ export default function ProjectsPage() {
               <button
                 key={category}
                 onClick={() => handleFilterChange(category)}
-                className={`px-6 py-2 rounded-full font-medium transition-all ${
+                className={`px-6 py-3 rounded-full font-medium transition-all min-h-[44px] ${
                   filter === category
                     ? 'bg-blue-600 text-white shadow-lg'
                     : 'bg-gray-200 text-gray-700 hover:bg-gray-300'

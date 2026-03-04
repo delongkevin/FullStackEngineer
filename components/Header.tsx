@@ -55,7 +55,7 @@ export default function Header() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+                  className="text-gray-700 hover:text-blue-600 px-4 py-3 rounded-md text-sm font-medium transition-colors min-h-[44px] flex items-center"
                 >
                   {item.name}
                 </Link>
@@ -86,7 +86,7 @@ export default function Header() {
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="text-gray-700 hover:text-blue-600 block px-3 py-2 rounded-md text-base font-medium"
+                  className="text-gray-700 hover:text-blue-600 block px-3 py-3 rounded-md text-base font-medium min-h-[44px] flex items-center"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.name}
