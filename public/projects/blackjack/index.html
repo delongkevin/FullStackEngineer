@@ -183,6 +183,11 @@
             min-width: 120px;
         }
         
+        .btn:focus {
+            outline: 3px solid #7a9fff;
+            outline-offset: 3px;
+        }
+        
         .btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3);
@@ -191,6 +196,18 @@
         
         .btn:active {
             transform: translateY(1px);
+        }
+        
+        .btn:focus,
+        button:focus {
+            outline: 3px solid #4f46e5;
+            outline-offset: 2px;
+        }
+        
+        .btn:focus-visible,
+        button:focus-visible {
+            outline: 3px solid #4f46e5;
+            outline-offset: 2px;
         }
         
         .btn-hit {
