@@ -91,6 +91,18 @@
             transform: translateY(1px);
         }
         
+        .square:focus,
+        .reset-btn:focus {
+            outline: 3px solid #4f46e5;
+            outline-offset: 2px;
+        }
+        
+        .square:focus-visible,
+        .reset-btn:focus-visible {
+            outline: 3px solid #4f46e5;
+            outline-offset: 2px;
+        }
+        
         .square.X {
             color: #ff7a7a;
             text-shadow: 0 0 10px rgba(255, 122, 122, 0.5);
@@ -233,11 +245,13 @@
     <script type="text/babel">
         const { useState, useEffect } = React;
 
-        const Square = ({ value, onClick, isWinning }) => {
+        const Square = ({ value, onClick, isWinning, index, winner }) => {
             return (
                 <button 
                     className={`square ${value} ${isWinning ? 'winning-square' : ''}`} 
                     onClick={onClick}
+                    aria-label={`Square ${index + 1}, ${value || 'empty'}`}
+                    disabled={!!value || !!winner}
                 >
                     {value}
                 </button>
@@ -312,6 +326,8 @@
                         value={squares[i]}
                         onClick={() => handleClick(i)}
                         isWinning={winningLine.includes(i)}
+                        index={i}
+                        winner={winner}
                     />
                 );
             };
