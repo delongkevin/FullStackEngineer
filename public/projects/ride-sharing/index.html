@@ -67,6 +67,7 @@
             font-size: 1.8rem;
             font-weight: 700;
             color: var(--dark);
+            margin: 0;
         }
         
         .ride-info {
@@ -613,6 +614,18 @@
                 grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             }
         }
+
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
     </style>
 </head>
 <body>
@@ -620,7 +633,7 @@
         <header>
             <div class="logo">
                 <div class="logo-icon">🚗</div>
-                <div class="logo-text">RideShare Entertainment</div>
+                <h1 class="logo-text">RideShare Entertainment</h1>
             </div>
             <div class="ride-info">
                 <div class="info-item">
@@ -712,10 +725,10 @@
                     <div id="climate" class="tab-pane">
                         <div class="climate-controls">
                             <div class="control-panel">
-                                <div class="control-title">
+                                <h2 class="control-title">
                                     <span class="control-icon">🌡️</span>
                                     Temperature
-                                </div>
+                                </h2>
                                 <div class="temp-display" id="current-temp">72°F</div>
                                 <div class="temp-controls">
                                     <button class="temp-btn" id="temp-down">-</button>
@@ -728,20 +741,20 @@
                             </div>
                             
                             <div class="control-panel">
-                                <div class="control-title">
+                                <h2 class="control-title">
                                     <span class="control-icon">💨</span>
                                     Fan Speed
-                                </div>
+                                </h2>
                                 <div class="fan-controls">
                                     <div class="fan-speed">
                                         <button class="speed-btn active">Low</button>
                                         <button class="speed-btn">Medium</button>
                                         <button class="speed-btn">High</button>
                                     </div>
-                                    <div class="control-title">
+                                    <h3 class="control-title">
                                         <span class="control-icon">🌀</span>
                                         Air Circulation
-                                    </div>
+                                    </h3>
                                     <div class="fan-speed">
                                         <button class="speed-btn active">Internal</button>
                                         <button class="speed-btn">External</button>
@@ -770,7 +783,7 @@
                         </div>
                         
                         <div class="faq-section">
-                            <div class="faq-title">Frequently Asked Questions</div>
+                            <h2 class="faq-title">Frequently Asked Questions</h2>
                             <div class="faq-item">
                                 <div class="faq-question">How long will the ride take? <span>+</span></div>
                                 <div class="faq-answer">Based on current traffic conditions, your estimated arrival time is 15 minutes.</div>
@@ -794,10 +807,10 @@
             
             <div class="sidebar">
                 <div class="widget">
-                    <div class="widget-title">
+                    <h2 class="widget-title">
                         <span class="widget-icon">🎵</span>
                         Music Player
-                    </div>
+                    </h2>
                     <div class="music-player">
                         <div id="now-playing">Now Playing: Chill Vibes Playlist</div>
                         <div class="music-controls">
@@ -814,10 +827,10 @@
                 </div>
                 
                 <div class="widget">
-                    <div class="widget-title">
+                    <h2 class="widget-title">
                         <span class="widget-icon">📰</span>
-                        News & Updates
-                    </div>
+                        News &amp; Updates
+                    </h2>
                     <div class="news-item">
                         <div class="news-title">Local Event This Weekend</div>
                         <div class="news-date">Sep 15, 2023</div>
@@ -833,10 +846,10 @@
                 </div>
                 
                 <div class="widget">
-                    <div class="widget-title">
+                    <h2 class="widget-title">
                         <span class="widget-icon">⭐</span>
                         Rate Your Ride
-                    </div>
+                    </h2>
                     <div style="text-align: center; padding: 10px 0;">
                         <div style="font-size: 2rem; margin-bottom: 10px;">
                             <span class="star" data-rating="1">☆</span>
