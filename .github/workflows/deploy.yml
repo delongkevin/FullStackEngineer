@@ -21,6 +21,8 @@ jobs:
         run: npm ci
       - name: Build & Export
         run: npm run build
+      - name: Check key pages exist in build output
+        run: bash scripts/check-pages.sh
       - name: Deploy to Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
