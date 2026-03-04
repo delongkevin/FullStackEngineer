@@ -110,11 +110,17 @@ export default function ProjectDetail({ params }: PageProps) {
             <div className="bg-white rounded-xl shadow-lg p-6">
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Play the Game</h2>
               <div className="bg-gray-100 rounded-lg p-6 min-h-[600px] flex items-center justify-center">
+                <p id="demo-description" className="sr-only">
+                  This interactive demo allows you to try {project.title}.
+                  Use keyboard navigation to interact with the embedded content.
+                </p>
                 <iframe
                   src={project.liveUrl}
                   className="w-full h-[600px] border-0 rounded-lg bg-white"
-                  title={`Interactive demo of ${project.title}`}
-                  aria-label={`Play ${project.title} - Interactive game demo`}
+                  title={`Interactive demo of ${project.title} - ${project.category} project`}
+                  aria-describedby="demo-description"
+                  loading="lazy"
+                  sandbox="allow-scripts allow-same-origin"
                   style={{ minHeight: '600px' }}
                 />
               </div>
