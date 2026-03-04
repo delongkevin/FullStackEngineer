@@ -182,6 +182,18 @@
             transform: translateY(-3px);
         }
         
+        .color-option-btn:focus,
+        .btn:focus {
+            outline: 3px solid #4f46e5;
+            outline-offset: 2px;
+        }
+        
+        .color-option-btn:focus-visible,
+        .btn:focus-visible {
+            outline: 3px solid #4f46e5;
+            outline-offset: 2px;
+        }
+        
         .color-option-btn:disabled {
             pointer-events: none;
             opacity: 0.7;
@@ -470,9 +482,9 @@
         </div>
     </div>
     
-    <div class="game-over-modal" id="gameOverModal">
+    <div class="game-over-modal" id="gameOverModal" role="dialog" aria-modal="true" aria-labelledby="gameOverTitle">
         <div class="modal-content">
-            <h2>🎉 Game Over!</h2>
+            <h2 id="gameOverTitle">🎉 Game Over!</h2>
             <div class="modal-stat">
                 Final Score: <span class="modal-stat-value" id="finalScore">0</span>
             </div>
@@ -558,17 +570,22 @@
         function renderColorOptions() {
             DOM.colorOptionsGrid.innerHTML = '';
 
-            gameState.colors.forEach((color) => {
+            gameState.colors.forEach((color, index) => {
                 const button = document.createElement('button');
                 button.className = 'color-option-btn';
                 button.style.backgroundColor = color;
                 button.setAttribute('data-color', color);
+                button.setAttribute('aria-label', `Color option ${index + 1}: ${color}`);
                 button.onclick = (e) => {
                     e.preventDefault();
                     selectColor(color, button);
                 };
                 DOM.colorOptionsGrid.appendChild(button);
             });
+
+            // Focus the first color option for keyboard users
+            const firstBtn = DOM.colorOptionsGrid.querySelector('.color-option-btn');
+            if (firstBtn) firstBtn.focus();
         }
 
         function selectColor(selectedColor, buttonElement) {
@@ -649,6 +666,11 @@
             DOM.gameOverModal.classList.add('show');
             DOM.startBtn.disabled = false;
             DOM.colorOptionsGrid.innerHTML = '';
+            // Delay focus to allow modal CSS transition to complete before shifting focus
+            setTimeout(() => {
+                const playAgainBtn = DOM.gameOverModal.querySelector('.btn-start');
+                if (playAgainBtn) playAgainBtn.focus();
+            }, 100);
         }
 
         function resetGame() {
