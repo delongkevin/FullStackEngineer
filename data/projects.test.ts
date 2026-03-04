@@ -100,6 +100,13 @@ describe('projects data', () => {
         expect(project.projectPath!.length).toBeGreaterThan(0);
       });
     });
+
+    it('should have embeddable projects with liveUrl pointing directly to an HTML file', () => {
+      const embeddableProjects = projects.filter((p) => p.embeddable);
+      embeddableProjects.forEach((project) => {
+        expect(project.liveUrl).toMatch(/\.html$/i);
+      });
+    });
   });
 
   describe('featured projects', () => {

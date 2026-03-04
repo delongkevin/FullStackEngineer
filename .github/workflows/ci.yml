@@ -37,3 +37,6 @@ jobs:
           name: site-build
           path: out/
           retention-days: 1
+
+      - name: Check key pages exist in build output
+        run: bash scripts/check-pages.sh
