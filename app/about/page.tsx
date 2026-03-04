@@ -43,18 +43,18 @@ export default function AboutPage() {
       <main id="main-content" className="pt-24 pb-16 min-h-screen">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Hero Section */}
-          <div className="text-center mb-16">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">About Me</h1>
+          <section aria-labelledby="about-heading" className="text-center mb-16">
+            <h1 id="about-heading" className="text-4xl font-bold text-gray-900 mb-4">About Me</h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Passionate full-stack developer with expertise in modern web technologies 
               and a focus on creating exceptional user experiences.
             </p>
-          </div>
+          </section>
 
           {/* About Content */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">My Journey</h2>
+            <section aria-labelledby="journey-heading">
+              <h2 id="journey-heading" className="text-2xl font-bold text-gray-900 mb-6">My Journey</h2>
               <div className="space-y-4 text-gray-600">
                 <p>
                  I’m Kevin Douglas Delong, a dedicated software engineer with expertise in backend (e.g., Node.js, Python) and front-end (e.g., React, Flutter) development. I build scalable web, mobile, and desktop applications, focusing on user-friendly designs and efficient code. Passionate about innovative solutions—let’s connect!
@@ -63,10 +63,10 @@ export default function AboutPage() {
                   When I'm not coding, you can find me exploring new technologies, contributing to open-source projects, or sharing knowledge with the developer community.
                 </p>
               </div>
-            </div>
+            </section>
 
-            <div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Skills & Technologies</h2>
+            <section aria-labelledby="skills-heading">
+              <h2 id="skills-heading" className="text-2xl font-bold text-gray-900 mb-6">Skills & Technologies</h2>
               
               {/* Skill Categories */}
               <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-8">
@@ -114,12 +114,12 @@ export default function AboutPage() {
                   </div>
                 ))}
               </div>
-            </div>
+            </section>
           </div>
 
           {/* Call to Action */}
-          <div className="text-center bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white">
-            <h2 className="text-2xl font-bold mb-4">Let's Work Together</h2>
+          <section aria-labelledby="cta-heading" className="text-center bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 text-white">
+            <h2 id="cta-heading" className="text-2xl font-bold mb-4">Let's Work Together</h2>
             <p className="mb-6 opacity-90">
               Interested in collaborating on a project? I'm always open to discussing 
               new opportunities and ideas.
@@ -127,7 +127,7 @@ export default function AboutPage() {
             <a href="/contact" className="btn-primary bg-white text-blue-600 hover:bg-gray-100">
               Get In Touch
             </a>
-          </div>
+          </section>
         </div>
       </main>
 

@@ -1,32 +1,32 @@
-name: CI Build Check
+name: CI - Build & Test
 
 on:
   pull_request:
     branches: [ main ]
 
-permissions:
-  contents: read
-
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
-      - name: Install
+
+      - name: Install dependencies
         run: npm ci
+
       - name: Lint
         run: npm run lint
-      - name: Build & Export
+
+      - name: Build
         run: npm run build
-      - name: Upload HTML artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: site-html
-          path: out/
-          retention-days: 7
+
+      - name: Test
+        run: npm run test
