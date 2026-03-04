@@ -10,6 +10,7 @@ permissions:
 
 jobs:
   build-preview:
+    name: Build & Preview
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -43,22 +44,16 @@ jobs:
               repo: context.repo.repo,
               issue_number: context.issue.number,
             });
-            const botComment = comments.find(c =>
-              c.user.type === 'Bot' && c.body.includes('<!-- pr-preview-comment -->')
-            );
-            const runUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const botComment = comments.find(c => c.user.type === 'Bot' && c.body.includes('<!-- pr-preview-comment -->'));
             const body = `<!-- pr-preview-comment -->
-            ### 🏗️ PR Preview Build
+            ## ✅ Preview Build Ready
 
-            The site has been compiled to static HTML successfully.
+            The site compiled successfully for PR #${{ github.event.number }}.
 
-            📦 **[Download HTML artifact](${runUrl})** (available under "Artifacts" in the workflow run — retained for 7 days)
+            **Artifact:** Download the \`site-preview-pr-${{ github.event.number }}\` artifact from the [Actions run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) to preview the HTML locally.
 
-            | Detail | Value |
-            |--------|-------|
-            | Commit | \`${context.sha.slice(0, 7)}\` |
-            | Run | [View build](${runUrl}) |
-            `;
+            > Open \`out/index.html\` in your browser after extracting the artifact.`;
+
             if (botComment) {
               await github.rest.issues.updateComment({
                 owner: context.repo.owner,

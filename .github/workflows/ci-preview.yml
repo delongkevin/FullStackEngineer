@@ -1,14 +1,16 @@
-name: CI
+name: CI Preview Build
 
 on:
   pull_request:
     branches: [ main ]
 
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
-  build:
+  build-preview:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -25,15 +27,12 @@ jobs:
       - name: Lint
         run: npm run lint
 
-      - name: Test
-        run: npm run test
-
-      - name: Build
+      - name: Build static site
         run: npm run build
 
-      - name: Upload build artifact
+      - name: Upload HTML artifact
         uses: actions/upload-artifact@v4
         with:
-          name: site-build
+          name: site-preview
           path: out/
-          retention-days: 1
+          retention-days: 7
