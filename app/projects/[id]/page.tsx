@@ -120,6 +120,7 @@ export default function ProjectDetail({ params }: PageProps) {
                   title={`Interactive demo of ${project.title} - ${project.category} project`}
                   aria-describedby="demo-description"
                   loading="lazy"
+                  sandbox="allow-scripts allow-same-origin"
                   style={{ minHeight: '600px' }}
                 />
               </div>

@@ -16,7 +16,7 @@ const AppEmbed: React.FC<AppEmbedProps> = ({ appUrl, width = '100%', height = '5
             style={{ border: 'none' }} 
             title={`Interactive demo: ${title}`}
             loading="lazy"
-            sandbox="allow-scripts allow-same-origin"
+            sandbox="allow-scripts"
         />
     );
 };
