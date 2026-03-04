@@ -73,7 +73,7 @@ export default function AboutPage() {
                 {skillIcons.map((item) => (
                   <div key={item.label} className="text-center">
                     <div className={`bg-gray-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3 ${item.color}`} aria-hidden="true">
-                      <item.icon size={32} />
+                      <item.icon size={32} aria-hidden="true" />
                     </div>
                     <span className="text-sm font-medium text-gray-700">{item.label}</span>
                   </div>
