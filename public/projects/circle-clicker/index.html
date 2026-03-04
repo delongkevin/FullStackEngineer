@@ -225,7 +225,8 @@
     <h1>🎯 Circle Clicker Game</h1>
     
     <div class="game-container">
-        <h2 class="visually-hidden">Game Statistics</h2>
+        <section aria-labelledby="game-stats">
+        <h2 id="game-stats" class="visually-hidden">Game Statistics</h2>
         <div class="stats-container">
             <div class="stat-box">
                 <div class="stat-label">Score</div>
@@ -241,12 +242,17 @@
             </div>
         </div>
         
+        </section>
+        
         <div class="button-container">
             <button id="startButton">Start Game</button>
             <button id="resetButton" style="display: none;">Reset Game</button>
         </div>
         
+        <section aria-labelledby="game-area-heading">
+        <h2 id="game-area-heading" class="visually-hidden">Game Area</h2>
         <div id="gameArea"></div>
+        </section>
     </div>
     
     <div class="game-over-overlay" id="gameOverOverlay" role="dialog" aria-modal="true" aria-labelledby="gameOverTitle">
