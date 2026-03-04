@@ -123,7 +123,7 @@ export default function ResumePage() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Download size={20} />
+              <Download size={20} aria-hidden="true" />
               Download PDF Version
             </a>
           </div>          </div>
