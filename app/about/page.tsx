@@ -65,15 +65,15 @@ export default function AboutPage() {
               </div>
             </section>
 
-            <section aria-labelledby="skills-technologies-heading">
-              <h2 id="skills-technologies-heading" className="text-2xl font-bold text-gray-900 mb-6">Skills & Technologies</h2>
+            <section aria-labelledby="skills-heading">
+              <h2 id="skills-heading" className="text-2xl font-bold text-gray-900 mb-6">Skills & Technologies</h2>
               
               {/* Skill Categories */}
               <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-8">
                 {skillIcons.map((item) => (
                   <div key={item.label} className="text-center">
                     <div className={`bg-gray-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3 ${item.color}`} aria-hidden="true">
-                      <item.icon size={32} />
+                      <item.icon size={32} aria-hidden={true} />
                     </div>
                     <span className="text-sm font-medium text-gray-700">{item.label}</span>
                   </div>
