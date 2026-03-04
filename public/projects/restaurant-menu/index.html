@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bistro Bliss — Menu</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --orange: #ea580c;
+      --orange-light: #fed7aa;
+      --bg: #fafaf8;
+      --card: #fff;
+      --text: #1c1917;
+      --muted: #78716c;
+      --border: #e7e5e4;
+      --badge-bg: #fff7ed;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+      color: #fff;
+      padding: 24px 20px 20px;
+      text-align: center;
+    }
+
+    header h1 { font-size: 2rem; font-weight: 700; letter-spacing: -0.03em; }
+    header p  { font-size: 0.9rem; opacity: 0.85; margin-top: 4px; }
+
+    /* ── CONTROLS ── */
+    .controls {
+      position: sticky;
+      top: 0;
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 16px;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 8px 14px;
+    }
+
+    .search-box input {
+      border: none;
+      background: transparent;
+      outline: none;
+      width: 100%;
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+
+    .search-box span { color: var(--muted); font-size: 1rem; }
+
+    .category-tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 2px;
+      scrollbar-width: none;
+    }
+    .category-tabs::-webkit-scrollbar { display: none; }
+
+    .tab {
+      flex-shrink: 0;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--muted);
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .tab:hover { border-color: var(--orange); color: var(--orange); }
+    .tab.active {
+      background: var(--orange);
+      border-color: var(--orange);
+      color: #fff;
+    }
+
+    .filters {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .filter-pill {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: all 0.15s;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .filter-pill.active { background: var(--badge-bg); border-color: var(--orange); color: var(--orange); }
+    .filter-pill input { display: none; }
+
+    /* ── MAIN ── */
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px 16px 40px;
+    }
+
+    .section-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--text);
+      margin: 24px 0 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: box-shadow 0.2s, transform 0.2s;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      transform: translateY(-2px);
+    }
+
+    .card-img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      font-size: 3.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+    }
+
+    .card-body { padding: 14px; }
+
+    .card-badges {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+
+    .badge {
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .badge-veg   { background: #dcfce7; color: #15803d; }
+    .badge-gf    { background: #fef9c3; color: #854d0e; }
+    .badge-spicy { background: #fee2e2; color: #b91c1c; }
+    .badge-new   { background: #ede9fe; color: #6d28d9; }
+    .badge-pop   { background: #fff7ed; color: #c2410c; }
+
+    .card-name { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+    .card-desc { font-size: 0.82rem; color: var(--muted); margin-bottom: 10px; line-height: 1.4; }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .price { font-size: 1.1rem; font-weight: 700; color: var(--orange); }
+
+    .add-btn {
+      background: var(--orange);
+      color: #fff;
+      border: none;
+      border-radius: 999px;
+      padding: 6px 16px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+    }
+    .add-btn:hover  { background: #c2410c; }
+    .add-btn:active { transform: scale(0.95); }
+    .add-btn.added  { background: #16a34a; }
+
+    /* ── CART TOAST ── */
+    #cart-bar {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #1c1917;
+      color: #fff;
+      border-radius: 999px;
+      padding: 12px 24px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: none;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+      z-index: 100;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    #cart-bar.visible { display: flex; }
+    #cart-bar .count {
+      background: var(--orange);
+      border-radius: 999px;
+      padding: 2px 8px;
+      font-size: 0.8rem;
+    }
+
+    /* ── CART MODAL ── */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 200;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+
+    .modal {
+      background: #fff;
+      border-radius: 24px 24px 0 0;
+      width: 100%;
+      max-width: 500px;
+      padding: 24px;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .modal-header h2 { font-size: 1.25rem; font-weight: 700; }
+
+    .close-btn {
+      background: var(--bg);
+      border: none;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .cart-item:last-child { border-bottom: none; }
+
+    .cart-item-name { font-weight: 600; font-size: 0.95rem; }
+    .cart-item-qty  { font-size: 0.8rem; color: var(--muted); }
+    .cart-item-price { font-weight: 700; color: var(--orange); font-size: 0.95rem; }
+
+    .remove-btn {
+      background: none; border: none; color: #ef4444; cursor: pointer;
+      font-size: 1rem; padding: 2px 6px;
+    }
+
+    .cart-total {
+      margin-top: 16px;
+      text-align: right;
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .checkout-btn {
+      width: 100%;
+      margin-top: 16px;
+      background: var(--orange);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 14px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .checkout-btn:hover { background: #c2410c; }
+
+    .empty-msg { text-align: center; color: var(--muted); padding: 20px 0; }
+    .no-results { text-align: center; color: var(--muted); padding: 40px 0; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🍽️ Bistro Bliss</h1>
+    <p>Fresh ingredients · Artisan recipes · Good vibes</p>
+  </header>
+
+  <div class="controls">
+    <div class="search-box">
+      <span>🔍</span>
+      <input id="search" type="search" placeholder="Search dishes…" aria-label="Search menu items" />
+    </div>
+    <div class="category-tabs" id="tabs"></div>
+    <div class="filters" id="filters">
+      <label class="filter-pill" id="pill-veg">
+        <input type="checkbox" value="veg" /> 🥦 Vegetarian
+      </label>
+      <label class="filter-pill" id="pill-gf">
+        <input type="checkbox" value="gf" /> 🌾 Gluten-Free
+      </label>
+      <label class="filter-pill" id="pill-spicy">
+        <input type="checkbox" value="spicy" /> 🌶️ Spicy
+      </label>
+    </div>
+  </div>
+
+  <main id="menu-root"></main>
+
+  <div id="cart-bar" role="button" aria-label="View cart" tabindex="0" onclick="openCart()">
+    <span>🛒 View Cart</span>
+    <span class="count" id="cart-count">0</span>
+    <span id="cart-total-bar">$0.00</span>
+  </div>
+
+  <div class="modal-overlay" id="cart-modal">
+    <div class="modal" role="dialog" aria-modal="true" aria-label="Shopping cart">
+      <div class="modal-header">
+        <h2>🛒 Your Cart</h2>
+        <button class="close-btn" onclick="closeCart()" aria-label="Close cart">✕</button>
+      </div>
+      <div id="cart-items"></div>
+      <div class="cart-total" id="modal-total"></div>
+      <button class="checkout-btn" onclick="checkout()">Place Order →</button>
+    </div>
+  </div>
+
+  <script>
+    // ── DATA ────────────────────────────────────────────────────────────────
+    const MENU = [
+      // Starters
+      { id: 1,  name: "Bruschetta Trio",        cat: "Starters",  price: 9.50,  emoji: "🍞", desc: "Toasted sourdough with tomato, pesto & mushroom toppings", tags: ["veg"] },
+      { id: 2,  name: "Spicy Calamari",         cat: "Starters",  price: 12.00, emoji: "🦑", desc: "Crispy fried squid rings with chipotle aioli", tags: ["spicy"] },
+      { id: 3,  name: "Soup of the Day",        cat: "Starters",  price: 7.50,  emoji: "🍲", desc: "Chef's seasonal creation, served with crusty bread", tags: ["veg","gf","new"] },
+      { id: 4,  name: "Shrimp Cocktail",        cat: "Starters",  price: 14.00, emoji: "🍤", desc: "Chilled jumbo shrimp with house cocktail sauce", tags: ["gf","pop"] },
+      // Mains
+      { id: 5,  name: "Grilled Salmon",         cat: "Mains",     price: 24.00, emoji: "🐟", desc: "Atlantic salmon with lemon butter, capers & asparagus", tags: ["gf","pop"] },
+      { id: 6,  name: "Filet Mignon",           cat: "Mains",     price: 38.00, emoji: "🥩", desc: "8 oz prime cut with red wine reduction & truffle fries", tags: ["gf"] },
+      { id: 7,  name: "Mushroom Risotto",       cat: "Mains",     price: 18.00, emoji: "🍚", desc: "Creamy arborio with wild mushrooms, parmesan & fresh herbs", tags: ["veg","gf","pop"] },
+      { id: 8,  name: "Spicy Thai Curry",       cat: "Mains",     price: 16.50, emoji: "🍛", desc: "Coconut curry with jasmine rice, vegetables & choice of protein", tags: ["veg","spicy","new"] },
+      { id: 9,  name: "Classic Beef Burger",    cat: "Mains",     price: 15.00, emoji: "🍔", desc: "8 oz smash patty, cheddar, lettuce, tomato & secret sauce", tags: ["pop"] },
+      { id: 10, name: "Margherita Pizza",       cat: "Mains",     price: 14.00, emoji: "🍕", desc: "San Marzano tomato, fresh mozzarella & basil on wood-fired crust", tags: ["veg"] },
+      // Salads
+      { id: 11, name: "Caesar Salad",           cat: "Salads",    price: 11.00, emoji: "🥗", desc: "Romaine, parmesan crisp, croutons & house Caesar dressing", tags: ["veg","pop"] },
+      { id: 12, name: "Watermelon Feta Salad",  cat: "Salads",    price: 13.00, emoji: "🍉", desc: "Fresh watermelon, feta, mint, arugula & balsamic glaze", tags: ["veg","gf","new"] },
+      { id: 13, name: "Spicy Tuna Poke Bowl",   cat: "Salads",    price: 17.00, emoji: "🐠", desc: "Ahi tuna, edamame, avocado, rice & sesame ginger dressing", tags: ["gf","spicy"] },
+      // Desserts
+      { id: 14, name: "Molten Lava Cake",       cat: "Desserts",  price: 9.00,  emoji: "🍫", desc: "Warm chocolate cake with vanilla bean ice cream", tags: ["pop"] },
+      { id: 15, name: "Crème Brûlée",           cat: "Desserts",  price: 8.50,  emoji: "🍮", desc: "Classic French custard with caramelised sugar crust", tags: ["veg","gf"] },
+      { id: 16, name: "Berry Sorbet",           cat: "Desserts",  price: 7.00,  emoji: "🍧", desc: "Three scoops of seasonal berry sorbets, dairy-free", tags: ["veg","gf","new"] },
+      // Drinks
+      { id: 17, name: "Craft Lemonade",         cat: "Drinks",    price: 4.50,  emoji: "🍋", desc: "House-squeezed with lavender or mint syrup", tags: ["veg","gf"] },
+      { id: 18, name: "Mango Lassi",            cat: "Drinks",    price: 5.00,  emoji: "🥭", desc: "Blended mango, yoghurt, cardamom & honey", tags: ["veg","gf","new"] },
+      { id: 19, name: "Sparkling Water",        cat: "Drinks",    price: 2.50,  emoji: "💧", desc: "San Pellegrino 750ml bottle", tags: ["veg","gf"] },
+      { id: 20, name: "Espresso Martini",       cat: "Drinks",    price: 12.00, emoji: "☕", desc: "Cold brew vodka, espresso, coffee liqueur & vanilla", tags: ["pop"] },
+    ];
+
+    const BADGE_MAP = {
+      veg:   { cls: 'badge-veg',   label: '🥦 Veg'   },
+      gf:    { cls: 'badge-gf',    label: 'GF'       },
+      spicy: { cls: 'badge-spicy', label: '🌶️ Spicy' },
+      new:   { cls: 'badge-new',   label: '✨ New'   },
+      pop:   { cls: 'badge-pop',   label: '🔥 Popular'},
+    };
+
+    // ── STATE ────────────────────────────────────────────────────────────────
+    let activeCategory = 'All';
+    let activeFilters  = new Set();
+    let searchQuery    = '';
+    const cart         = {};   // id -> { item, qty }
+
+    // ── INIT ─────────────────────────────────────────────────────────────────
+    const categories = ['All', ...new Set(MENU.map(i => i.cat))];
+
+    function buildTabs() {
+      const el = document.getElementById('tabs');
+      el.innerHTML = categories.map(c => `
+        <button class="tab ${c === activeCategory ? 'active' : ''}"
+                onclick="setCategory('${c}')">${c}</button>
+      `).join('');
+    }
+
+    function setCategory(c) {
+      activeCategory = c;
+      buildTabs();
+      render();
+    }
+
+    // ── FILTER PILLS ─────────────────────────────────────────────────────────
+    document.querySelectorAll('.filter-pill input').forEach(cb => {
+      cb.addEventListener('change', () => {
+        const pill = cb.closest('.filter-pill');
+        if (cb.checked) { activeFilters.add(cb.value); pill.classList.add('active'); }
+        else             { activeFilters.delete(cb.value); pill.classList.remove('active'); }
+        render();
+      });
+    });
+
+    // ── SEARCH ───────────────────────────────────────────────────────────────
+    document.getElementById('search').addEventListener('input', e => {
+      searchQuery = e.target.value.toLowerCase().trim();
+      render();
+    });
+
+    // ── RENDER ───────────────────────────────────────────────────────────────
+    function filteredItems() {
+      return MENU.filter(item => {
+        if (activeCategory !== 'All' && item.cat !== activeCategory) return false;
+        if (activeFilters.size > 0 && ![...activeFilters].every(f => item.tags.includes(f))) return false;
+        if (searchQuery && !item.name.toLowerCase().includes(searchQuery) &&
+            !item.desc.toLowerCase().includes(searchQuery)) return false;
+        return true;
+      });
+    }
+
+    function render() {
+      const root = document.getElementById('menu-root');
+      const items = filteredItems();
+
+      if (items.length === 0) {
+        root.innerHTML = '<div class="no-results">😕 No dishes match your search.</div>';
+        return;
+      }
+
+      const byCat = {};
+      items.forEach(i => { (byCat[i.cat] = byCat[i.cat] || []).push(i); });
+
+      root.innerHTML = Object.entries(byCat).map(([cat, its]) => `
+        <div>
+          <div class="section-title">${its[0].emoji} ${cat}</div>
+          <div class="menu-grid">
+            ${its.map(renderCard).join('')}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderCard(item) {
+      const badges = item.tags.map(t => {
+        const b = BADGE_MAP[t];
+        return b ? `<span class="badge ${b.cls}">${b.label}</span>` : '';
+      }).join('');
+      const inCart = cart[item.id];
+      return `
+        <div class="card" role="article">
+          <div class="card-img" style="background:${catColor(item.cat)}">${item.emoji}</div>
+          <div class="card-body">
+            <div class="card-badges">${badges}</div>
+            <div class="card-name">${item.name}</div>
+            <div class="card-desc">${item.desc}</div>
+            <div class="card-footer">
+              <span class="price">$${item.price.toFixed(2)}</span>
+              <button class="add-btn ${inCart ? 'added' : ''}"
+                      onclick="addToCart(${item.id})"
+                      aria-label="Add ${item.name} to cart">
+                ${inCart ? `✓ (${inCart.qty})` : '+ Add'}
+              </button>
+            </div>
+          </div>
+        </div>`;
+    }
+
+    function catColor(cat) {
+      const c = { Starters:'#fff7ed', Mains:'#f0fdf4', Salads:'#f0fdfa', Desserts:'#fdf4ff', Drinks:'#eff6ff' };
+      return c[cat] || '#f9fafb';
+    }
+
+    // ── CART ─────────────────────────────────────────────────────────────────
+    function addToCart(id) {
+      const item = MENU.find(i => i.id === id);
+      if (!item) return;
+      cart[id] = cart[id] ? { item, qty: cart[id].qty + 1 } : { item, qty: 1 };
+      updateCartBar();
+      render();
+    }
+
+    function removeFromCart(id) {
+      delete cart[id];
+      updateCartBar();
+      renderCartModal();
+      render();
+    }
+
+    function cartTotal() {
+      return Object.values(cart).reduce((s, e) => s + e.item.price * e.qty, 0);
+    }
+
+    function cartCount() {
+      return Object.values(cart).reduce((s, e) => s + e.qty, 0);
+    }
+
+    function updateCartBar() {
+      const bar = document.getElementById('cart-bar');
+      const count = cartCount();
+      document.getElementById('cart-count').textContent = count;
+      document.getElementById('cart-total-bar').textContent = '$' + cartTotal().toFixed(2);
+      bar.classList.toggle('visible', count > 0);
+    }
+
+    function openCart() {
+      renderCartModal();
+      document.getElementById('cart-modal').classList.add('open');
+    }
+
+    function closeCart() {
+      document.getElementById('cart-modal').classList.remove('open');
+    }
+
+    function renderCartModal() {
+      const entries = Object.values(cart);
+      const container = document.getElementById('cart-items');
+      const totalEl   = document.getElementById('modal-total');
+
+      if (entries.length === 0) {
+        container.innerHTML = '<div class="empty-msg">Your cart is empty.</div>';
+        totalEl.textContent  = '';
+        return;
+      }
+
+      container.innerHTML = entries.map(e => `
+        <div class="cart-item">
+          <div>
+            <div class="cart-item-name">${e.item.emoji} ${e.item.name}</div>
+            <div class="cart-item-qty">Qty: ${e.qty}</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span class="cart-item-price">$${(e.item.price * e.qty).toFixed(2)}</span>
+            <button class="remove-btn" onclick="removeFromCart(${e.item.id})" aria-label="Remove ${e.item.name}">✕</button>
+          </div>
+        </div>`).join('');
+      totalEl.innerHTML = `Total: <span style="color:var(--orange)">$${cartTotal().toFixed(2)}</span>`;
+    }
+
+    function checkout() {
+      const names = Object.values(cart).map(e => e.item.name).join(', ');
+      closeCart();
+      Object.keys(cart).forEach(k => delete cart[k]);
+      updateCartBar();
+      render();
+      alert(`✅ Order placed! Enjoy your: ${names}.\n\nThank you for dining at Bistro Bliss!`);
+    }
+
+    // Close modal when clicking overlay
+    document.getElementById('cart-modal').addEventListener('click', function(e) {
+      if (e.target === this) closeCart();
+    });
+
+    document.getElementById('cart-bar').addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') openCart();
+    });
+
+    // ── BOOT ─────────────────────────────────────────────────────────────────
+    buildTabs();
+    render();
+  </script>
+</body>
+</html>

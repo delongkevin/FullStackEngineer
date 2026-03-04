@@ -180,6 +180,91 @@ export const projects: Project[] = [
     embeddable: true,
     projectPath: "/projects/PokerApp/PokerApp.html"
   }
+  ,
+  {
+    id: 9,
+    title: "Calculator",
+    description: "Sleek web calculator with keyboard support, history log, and all standard operations",
+    fullDescription: "A polished browser-based calculator featuring arithmetic operations, percentage, sign toggle, a scrollable history log, and full keyboard input support — all in a single self-contained HTML file.",
+    image: "/images/calculator.png",
+    tech: ["HTML5", "CSS3", "JavaScript"],
+    liveUrl: "/projects/calculator/index.html",
+    githubUrl: "https://github.com/delongkevin/FullStackEngineer",
+    featured: false,
+    category: "Web",
+    features: [
+      "Addition, subtraction, multiplication, division",
+      "Percentage and sign-toggle",
+      "Scrollable history log (last 10 calculations)",
+      "Full keyboard support (0–9, operators, Enter, Backspace, Escape)",
+      "Responsive glassmorphism UI"
+    ],
+    embeddable: true,
+    projectPath: "/projects/calculator"
+  },
+  {
+    id: 10,
+    title: "Restaurant Menu Browser",
+    description: "Interactive restaurant menu with category filters, dietary tags, search, and a cart",
+    fullDescription: "A feature-rich restaurant menu web app showcasing Bistro Bliss. Browse 20 dishes across five categories, filter by Vegetarian / Gluten-Free / Spicy tags, live-search, add items to a slide-up cart, and place a mock order — all client-side.",
+    image: "/images/restaurant-menu.png",
+    tech: ["HTML5", "CSS3", "JavaScript"],
+    liveUrl: "/projects/restaurant-menu/index.html",
+    githubUrl: "https://github.com/delongkevin/FullStackEngineer",
+    featured: true,
+    category: "Web",
+    features: [
+      "20 menu items across 5 categories",
+      "Dietary-tag filters (Veg, GF, Spicy)",
+      "Live search by name or description",
+      "Slide-up shopping cart with order total",
+      "One-click order confirmation flow"
+    ],
+    embeddable: true,
+    projectPath: "/projects/restaurant-menu"
+  },
+  {
+    id: 11,
+    title: "Online Grocery Order System",
+    description: "Full-stack retail ordering app with product catalog, cart, checkout form, and order persistence",
+    fullDescription: "ShopQuick is a full-stack grocery ordering demo. Browse 22 products across six categories, manage quantities in a slide-out cart, complete a validated multi-field checkout form with payment fields, and see order confirmation — with order history stored in localStorage.",
+    image: "/images/order-system.png",
+    tech: ["HTML5", "CSS3", "JavaScript", "localStorage API"],
+    liveUrl: "/projects/order-system/index.html",
+    githubUrl: "https://github.com/delongkevin/FullStackEngineer",
+    featured: true,
+    category: "fullstack",
+    features: [
+      "22 products across 6 category tabs",
+      "Slide-out cart with quantity controls and free-delivery threshold",
+      "Multi-step checkout with client-side form validation",
+      "Payment field formatting (card number, expiry, CVV)",
+      "Order confirmation with receipt and localStorage persistence"
+    ],
+    embeddable: true,
+    projectPath: "/projects/order-system"
+  },
+  {
+    id: 12,
+    title: "Task Manager",
+    description: "Full-stack task management app with CRUD, priority levels, filters, search, and localStorage sync",
+    fullDescription: "TaskFlow is a complete task management application. Create, edit, and delete tasks with titles, descriptions, priorities (High / Medium / Low), and categories. Filter by status or priority, search, sort, and track completion progress — all persisted in localStorage.",
+    image: "/images/task-manager.png",
+    tech: ["HTML5", "CSS3", "JavaScript", "localStorage API"],
+    liveUrl: "/projects/task-manager/index.html",
+    githubUrl: "https://github.com/delongkevin/FullStackEngineer",
+    featured: false,
+    category: "fullstack",
+    features: [
+      "Create, edit, and delete tasks (full CRUD)",
+      "Priority levels: High, Medium, Low with color coding",
+      "Category labels: Work, Personal, Shopping, Health, Learning",
+      "Filter by All / Active / Completed / High-priority",
+      "Live search, sort options, progress bar, and localStorage sync"
+    ],
+    embeddable: true,
+    projectPath: "/projects/task-manager"
+  }
   // Add any other projects you have with sequential IDs
 ];
 
