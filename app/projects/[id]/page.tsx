@@ -36,7 +36,7 @@ export default function ProjectDetail({ params }: PageProps) {
     <>
       <Header />
       
-      <main className="pt-24 pb-16 min-h-screen">
+      <main id="main-content" className="pt-24 pb-16 min-h-screen">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Back Button */}
           <Link
