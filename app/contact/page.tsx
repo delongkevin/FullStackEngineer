@@ -170,7 +170,6 @@ export default function ContactPage() {
                 data-netlify="true"
                 noValidate
                 className="bg-white rounded-2xl shadow-lg p-8"
-                noValidate
               >
                 <input type="hidden" name="form-name" value="contact"/>
                 
