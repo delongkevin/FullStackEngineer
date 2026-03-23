@@ -271,7 +271,7 @@ export const projects: Project[] = [
     title: 'Medical IoT Device Monitor',
     description: 'Cross-platform medical IoT app showcasing BLE connectivity, real-time vitals, wearable support, and secure REST APIs — built for DornerWorks',
     fullDescription: 'MedIoT Connect is an interactive mobile app demo built to highlight Senior Mobile Developer competencies for DornerWorks. It demonstrates cross-platform development (iOS/Swift, Android/Kotlin, Flutter, React Native), real-time BLE 5.x device connectivity, live medical vitals monitoring, Apple Watch / Wear OS / Garmin wearable integrations, RESTful API communication, OAuth 2.0 security, and HIPAA-compliant data handling — all areas directly aligned with DornerWorks connected Medical and IoT products.',
-    image: '/images/dornerworks-iot.svg',
+    image: '/images/dornerworks-iot.png',
     tech: ['Swift', 'Kotlin', 'Flutter', 'React Native', 'TypeScript', 'BLE 5.x', 'NFC', 'REST API', 'OAuth 2.0', 'WatchKit', 'Wear OS'],
     liveUrl: '/projects/dornerworks-iot/index.html',
     githubUrl: 'https://github.com/delongkevin/FullStackEngineer',

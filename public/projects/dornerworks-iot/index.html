@@ -60,6 +60,7 @@
     .header-logo { display: flex; align-items: center; gap: 8px; }
     .header-logo svg { width: 28px; height: 28px; }
     .header-title { font-size: 17px; font-weight: 700; color: var(--text); }
+    .hidden { display: none !important; }
     .header-badge {
       background: var(--success);
       color: #fff;
@@ -563,10 +564,10 @@
 
 <div id="app">
   <!-- ═══ HEADER ═══════════════════════════════════════════════ -->
-  <header class="header" id="main-header">
+  <header class="header hidden" id="main-header" aria-label="Application header">
     <div class="header-logo">
       <!-- Heart-pulse icon -->
-      <svg viewBox="0 0 28 28" fill="none">
+      <svg viewBox="0 0 28 28" fill="none" aria-hidden="true">
         <rect width="28" height="28" rx="8" fill="#0a84ff"/>
         <path d="M4 15h3l2-5 3 9 3-12 3 8h6" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
@@ -574,7 +575,7 @@
     </div>
     <div class="header-right">
       <span class="header-badge">LIVE</span>
-      <button class="header-icon-btn" title="Notifications">🔔</button>
+      <button class="header-icon-btn" aria-label="Notifications">🔔</button>
     </div>
   </header>
 
@@ -588,8 +589,8 @@
         <div class="login-title">MedIoT Connect</div>
         <div class="login-sub">Secure Medical Device Platform</div>
 
-        <input class="login-field" type="email" placeholder="clinician@hospital.org" value="clinician@hospital.org" id="login-email" />
-        <input class="login-field" type="password" placeholder="Password" value="••••••••" id="login-pass" />
+        <input class="login-field" type="email" placeholder="clinician@hospital.org" value="clinician@hospital.org" id="login-email" aria-label="Email address" />
+        <input class="login-field" type="password" placeholder="Password" value="••••••••" id="login-pass" aria-label="Password" />
 
         <button class="login-btn" onclick="doLogin()">Sign In</button>
         <button class="biometric-btn" onclick="doLogin()">
@@ -1002,7 +1003,7 @@ function doLogin() {
   document.getElementById('screen-login').classList.remove('active');
   document.getElementById('screen-dashboard').classList.add('active');
   document.getElementById('bottom-nav').style.display = 'flex';
-  document.getElementById('main-header').style.display = 'flex';
+  document.getElementById('main-header').classList.remove('hidden');
   startLive();
 }
 
@@ -1019,14 +1020,19 @@ function goTo(id, btn) {
 function rand(min, max) { return Math.round(min + Math.random() * (max - min)); }
 function randF(min, max) { return (min + Math.random() * (max - min)).toFixed(1); }
 
+let liveStarted = false;
+const liveIntervals = { vitals: null, ecg: null, watchTime: null, watchMetrics: null };
+
 function startLive() {
+  if (liveStarted) return;
+  liveStarted = true;
   updateVitals();
   drawECG();
   updateWatchTime();
-  setInterval(updateVitals, 2500);
-  setInterval(drawECG, 80);
-  setInterval(updateWatchTime, 1000);
-  setInterval(updateWatchMetrics, 3000);
+  liveIntervals.vitals = setInterval(updateVitals, 2500);
+  liveIntervals.ecg = setInterval(drawECG, 80);
+  liveIntervals.watchTime = setInterval(updateWatchTime, 1000);
+  liveIntervals.watchMetrics = setInterval(updateWatchMetrics, 3000);
 
   // Show alert after 4 seconds for demo
   setTimeout(() => {
@@ -1079,9 +1085,10 @@ function drawECG() {
   const ctx = canvas.getContext('2d');
   const W = canvas.width, H = canvas.height;
 
-  // Shift existing image left
-  const img = ctx.getImageData(1, 0, W - 1, H);
-  ctx.putImageData(img, 0, 0);
+  // Shift existing image left by 1px using drawImage (GPU-accelerated, avoids
+  // the CPU pixel-by-pixel cost of getImageData/putImageData readback)
+  ctx.drawImage(canvas, -1, 0);
+  // Clear the right-most column that was just exposed
   ctx.clearRect(W - 1, 0, 1, H);
 
   // Background
@@ -1175,14 +1182,18 @@ const newDevices = [
   { icon: '⌚', bg: 'di-purple', name: 'Garmin Venu 3S (Pt.)', meta: 'Wearable · BLE 5.0 · ANT+', action: 'pair' },
 ];
 
+function stopScan() {
+  clearTimeout(scanTimer);
+  scanning = false;
+  document.getElementById('scan-btn').className = 'scan-btn';
+  document.getElementById('scan-text').textContent = 'Scan';
+  document.getElementById('scan-icon').textContent = '📡';
+  document.getElementById('scan-indicator').classList.remove('visible');
+}
+
 function toggleScan() {
   if (scanning) {
-    clearTimeout(scanTimer);
-    scanning = false;
-    document.getElementById('scan-btn').className = 'scan-btn';
-    document.getElementById('scan-text').textContent = 'Scan';
-    document.getElementById('scan-icon').textContent = '📡';
-    document.getElementById('scan-indicator').classList.remove('visible');
+    stopScan();
     return;
   }
   scanning = true;
@@ -1194,21 +1205,41 @@ function toggleScan() {
 
   function addNext() {
     if (!scanning || discoveredCount >= newDevices.length) {
-      if (scanning) { scanning = false; toggleScan(); }
+      if (scanning) stopScan();
       return;
     }
     const dev = newDevices[discoveredCount++];
     const list = document.getElementById('device-list');
     const el = document.createElement('div');
     el.className = 'device-item fade-in';
-    el.innerHTML = `
-      <div class="device-icon ${dev.bg}">${dev.icon}</div>
-      <div class="device-info">
-        <div class="device-name">${dev.name}</div>
-        <div class="device-meta">${dev.meta}</div>
-      </div>
-      <button class="device-action action-${dev.action}" onclick="toggleDevice(this)">${dev.action.charAt(0).toUpperCase() + dev.action.slice(1)}</button>
-    `;
+
+    const iconDiv = document.createElement('div');
+    iconDiv.className = 'device-icon ' + dev.bg;
+    iconDiv.textContent = dev.icon;
+
+    const infoDiv = document.createElement('div');
+    infoDiv.className = 'device-info';
+
+    const nameDiv = document.createElement('div');
+    nameDiv.className = 'device-name';
+    nameDiv.textContent = dev.name;
+
+    const metaDiv = document.createElement('div');
+    metaDiv.className = 'device-meta';
+    metaDiv.textContent = dev.meta;
+
+    infoDiv.appendChild(nameDiv);
+    infoDiv.appendChild(metaDiv);
+
+    const actionBtn = document.createElement('button');
+    actionBtn.className = 'device-action action-' + dev.action;
+    actionBtn.textContent = dev.action.charAt(0).toUpperCase() + dev.action.slice(1);
+    actionBtn.addEventListener('click', function () { toggleDevice(this); });
+
+    el.appendChild(iconDiv);
+    el.appendChild(infoDiv);
+    el.appendChild(actionBtn);
+
     list.appendChild(el);
     scanTimer = setTimeout(addNext, 1200);
   }
@@ -1254,7 +1285,9 @@ function addLog(type, msg) {
   log.appendChild(line);
   log.scrollTop = log.scrollHeight;
   logCount++;
-  if (logCount > 40) { log.firstChild && log.removeChild(log.firstChild); }
+  if (logCount > 40 && log.firstElementChild) {
+    log.removeChild(log.firstElementChild);
+  }
 }
 
 function simulateApiCall() {
