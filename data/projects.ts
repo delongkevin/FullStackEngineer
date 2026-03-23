@@ -264,7 +264,34 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: "/projects/task-manager"
-  }
+  },
+  {
+    id: 13,
+    slug: 'dornerworks-iot',
+    title: 'Medical IoT Device Monitor',
+    description: 'Cross-platform medical IoT app showcasing BLE connectivity, real-time vitals, wearable support, and secure REST APIs — built for DornerWorks',
+    fullDescription: 'MedIoT Connect is an interactive mobile app demo built to highlight Senior Mobile Developer competencies for DornerWorks. It demonstrates cross-platform development (iOS/Swift, Android/Kotlin, Flutter, React Native), real-time BLE 5.x device connectivity, live medical vitals monitoring, Apple Watch / Wear OS / Garmin wearable integrations, RESTful API communication, OAuth 2.0 security, and HIPAA-compliant data handling — all areas directly aligned with DornerWorks connected Medical and IoT products.',
+    image: '/images/dornerworks-iot.svg',
+    tech: ['Swift', 'Kotlin', 'Flutter', 'React Native', 'TypeScript', 'BLE 5.x', 'NFC', 'REST API', 'OAuth 2.0', 'WatchKit', 'Wear OS'],
+    liveUrl: '/projects/dornerworks-iot/index.html',
+    githubUrl: 'https://github.com/delongkevin/FullStackEngineer',
+    featured: true,
+    category: 'mobile',
+    features: [
+      'Cross-platform iOS (Swift/Xcode) & Android (Kotlin/Android Studio) development',
+      'Flutter & React Native cross-platform UI with native-feel navigation',
+      'Real-time BLE 5.x medical device connectivity (cardiac monitor, infusion pump, ventilator)',
+      'NFC patient wristband pairing and device management',
+      'Live ECG trace, heart rate, SpO₂, temperature & blood pressure monitoring',
+      'Apple Watch (WatchKit), Wear OS, and Garmin Connect IQ wearable support',
+      'RESTful API integration with JWT/OAuth 2.0 authentication and certificate pinning',
+      'HIPAA-compliant security: AES-256 encryption, biometric auth, App Transport Security',
+      'App Store / Play Store / enterprise (TestFlight, ad-hoc) distribution experience',
+      'Professional medical-grade UI/UX with real-time alerts and patient management',
+    ],
+    embeddable: true,
+    projectPath: '/projects/dornerworks-iot',
+  },
   // Add any other projects you have with sequential IDs
 ];
 
