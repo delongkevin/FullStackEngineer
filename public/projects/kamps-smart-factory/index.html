@@ -410,15 +410,16 @@
 
       <!-- Download links -->
       <div class="card">
-        <div class="card-title">📱 Mobile Apps</div>
+        <div class="card-title">📱 Mobile Apps <span class="badge badge-warning">Demo Placeholder</span></div>
         <div class="dl-row">
-          <a class="dl-btn android" href="#" onclick="showToast('Android APK download starting…');return false;">
+          <a class="dl-btn android" href="#" onclick="showToast('Demo: Android APK link (not yet published)');return false;" aria-label="Android APK — demo placeholder, not yet published">
             <span class="dl-icon">🤖</span> Android APK
           </a>
-          <a class="dl-btn ios" href="#" onclick="showToast('iOS TestFlight link copied!');return false;">
+          <a class="dl-btn ios" href="#" onclick="showToast('Demo: iOS TestFlight link (not yet published)');return false;" aria-label="iOS App — demo placeholder, not yet published">
             <span class="dl-icon">🍎</span> iOS App
           </a>
         </div>
+        <div style="font-size:11px;color:var(--sub);margin-top:8px;text-align:center;">APK &amp; TestFlight builds available upon request</div>
       </div>
     </div>
 
@@ -429,10 +430,10 @@
         <div class="section-sub">YOLOv8 · OpenCV · PyTorch · Real-time inference</div>
       </div>
 
-      <div class="toggle-wrap">
-        <button class="toggle-btn active" onclick="setVisionMode('detect',this)">🎯 Detection</button>
-        <button class="toggle-btn" onclick="setVisionMode('segment',this)">✂️ Segment</button>
-        <button class="toggle-btn" onclick="setVisionMode('class',this)">🏷️ Classify</button>
+      <div class="toggle-wrap" role="group" aria-label="Vision mode">
+        <button class="toggle-btn active" type="button" aria-pressed="true" onclick="setVisionMode('detect',this)">🎯 Detection</button>
+        <button class="toggle-btn" type="button" aria-pressed="false" onclick="setVisionMode('segment',this)">✂️ Segment</button>
+        <button class="toggle-btn" type="button" aria-pressed="false" onclick="setVisionMode('class',this)">🏷️ Classify</button>
       </div>
 
       <div class="vision-canvas-wrap">
@@ -620,7 +621,7 @@
       </div>
 
       <div class="card">
-        <div class="card-title">☸️ K3s Cluster · kamps-edge <span class="badge badge-success">3/3 Nodes</span></div>
+        <div class="card-title">☸️ K3s Cluster · kamps-edge <span class="badge badge-success">7/7 Pods</span></div>
         <div class="pod-grid">
           <div class="pod-card">
             <div class="pod-header"><div class="pod-name">vision-api</div><div class="pod-status running">Running</div></div>
@@ -657,6 +658,12 @@
             <div class="pod-meta">Grafana 10 · 8 boards</div>
             <div class="pod-cpu"><div class="pod-cpu-bar" style="width:12%"></div></div>
             <div class="pod-meta">CPU: 12% · Mem: 512 MB</div>
+          </div>
+          <div class="pod-card">
+            <div class="pod-header"><div class="pod-name">prometheus</div><div class="pod-status running">Running</div></div>
+            <div class="pod-meta">Prometheus · Metrics</div>
+            <div class="pod-cpu"><div class="pod-cpu-bar" style="width:10%"></div></div>
+            <div class="pod-meta">CPU: 10% · Mem: 256 MB</div>
           </div>
         </div>
       </div>
@@ -875,6 +882,16 @@ function showScreen(name, btn) {
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('screen-' + name).classList.add('active');
   btn.classList.add('active');
+
+  // Start or stop the Vision canvas animation based on active tab
+  if (name === 'vision') {
+    initCanvas();
+  } else {
+    if (animFrame) {
+      cancelAnimationFrame(animFrame);
+      animFrame = null;
+    }
+  }
 }
 
 /* ─── Toast ─────────────────────────────────────────── */
@@ -900,7 +917,7 @@ const throughputData = [78, 85, 62, 91, 88, 55, 94];
 
 /* ─── Vision Canvas (YOLO simulation) ───────────────── */
 const canvas = document.getElementById('visionCanvas');
-const ctx = canvas.getContext('2d');
+const ctx = canvas ? canvas.getContext('2d') : null;
 let visionMode = 'detect';
 let animFrame;
 
@@ -914,6 +931,7 @@ const PALLETS = [
 let scanY = 0;
 
 function drawVision() {
+  if (!ctx) return;
   const W = canvas.width, H = canvas.height;
   ctx.clearRect(0, 0, W, H);
   ctx.fillStyle = '#1e293b';
@@ -970,19 +988,52 @@ function drawVision() {
 
 function setVisionMode(mode, btn) {
   visionMode = mode;
-  document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
-  if (btn) btn.classList.add('active');
+  document.querySelectorAll('.toggle-btn').forEach(b => {
+    b.classList.remove('active');
+    b.setAttribute('aria-pressed', 'false');
+  });
+  if (btn) {
+    btn.classList.add('active');
+    btn.setAttribute('aria-pressed', 'true');
+  }
 }
 
 function initCanvas() {
+  if (!canvas || !ctx) return;
   const wrap = canvas.parentElement;
-  canvas.width = wrap.clientWidth;
-  canvas.height = Math.round(wrap.clientWidth * 0.75);
+  const width = wrap ? wrap.clientWidth : 0;
+  if (!wrap || !width) return; // wrapper is hidden or zero-width; ResizeObserver will retry
+  canvas.width = width;
+  canvas.height = Math.round(width * 0.75);
   if (animFrame) cancelAnimationFrame(animFrame);
   drawVision();
 }
+
+// Only start the canvas when/if the Vision screen is already the initial active screen.
+// (Normally the Dashboard is active on load, so this is a no-op until the user navigates.)
 initCanvas();
 window.addEventListener('resize', initCanvas);
+
+// ResizeObserver: fires when the canvas wrapper gains a real size (i.e. when the
+// Vision screen first becomes visible), ensuring the canvas initialises correctly.
+// Disconnects after the first successful init since ongoing resizes are handled
+// by the window 'resize' listener and showScreen().
+(function () {
+  if (!canvas || typeof ResizeObserver === 'undefined') return;
+  const wrap = canvas.parentElement;
+  if (!wrap) return;
+  const observer = new ResizeObserver(entries => {
+    for (const entry of entries) {
+      const rect = entry.contentRect;
+      if (rect && rect.width > 0 && rect.height > 0) {
+        initCanvas();
+        observer.disconnect(); // one-time: hand off to resize listener & showScreen()
+        return;
+      }
+    }
+  });
+  observer.observe(wrap);
+})();
 
 /* ─── Sparkline ─────────────────────────────────────── */
 let sparkData = Array.from({length: 30}, () => 400 + Math.random() * 400);
@@ -1032,7 +1083,25 @@ function addLog(lvl, source, msg) {
   const cls = { ok: 'lvl-ok', info: 'lvl-info', warn: 'lvl-warn', err: 'lvl-err' }[lvl] || 'lvl-info';
   const div = document.createElement('div');
   div.className = 'log-line';
-  div.innerHTML = '<span class="ts">' + ts + '</span><span class="' + cls + '">[' + lvl.toUpperCase() + ']</span> <strong>' + source + '</strong>: ' + msg;
+
+  const tsSpan = document.createElement('span');
+  tsSpan.className = 'ts';
+  tsSpan.textContent = ts;
+  div.appendChild(tsSpan);
+
+  const lvlSpan = document.createElement('span');
+  lvlSpan.className = cls;
+  lvlSpan.textContent = '[' + lvl.toUpperCase() + ']';
+  div.appendChild(document.createTextNode(' '));
+  div.appendChild(lvlSpan);
+  div.appendChild(document.createTextNode(' '));
+
+  const sourceStrong = document.createElement('strong');
+  sourceStrong.textContent = source;
+  div.appendChild(sourceStrong);
+
+  div.appendChild(document.createTextNode(': ' + msg));
+
   term.appendChild(div);
   if (term.children.length > 40) term.removeChild(term.firstChild);
   term.scrollTop = term.scrollHeight;

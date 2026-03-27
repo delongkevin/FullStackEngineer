@@ -307,7 +307,7 @@ export const projects: Project[] = [
     features: [
       'PLC integration: Allen-Bradley (Modbus TCP) & Siemens S7 (OPC-UA) with real-time sensor data via MQTT',
       'YOLOv8 / OpenCV / PyTorch / TensorFlow pallet vision AI with live bounding-box detection at 28 FPS',
-      'K3s cluster dashboard: 7 containerized microservices (vision-api, plc-bridge, api-gateway, postgres, mqtt, grafana, prometheus)',
+      'K3s cluster dashboard: 7 containerized microservices (vision-api, plc-bridge, api-gateway, postgres-16, mqtt-broker, grafana, prometheus)',
       'Grafana + Prometheus + OpenTelemetry observability with live request rate sparklines and distributed traces',
       'OAuth2 / JWT authentication with scoped tokens, REST API with live JSON responses, MQTT pub/sub feed',
       'Azure DevOps CI/CD pipeline: lint → unit tests → Docker build → K3s rolling deploy with 92% test coverage',
