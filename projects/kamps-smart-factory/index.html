@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kamps Smart Factory – Industry 4.0 Platform</title>
+  <style>
+    /* ── Variables ─────────────────────────────────────────────── */
+    :root {
+      --primary:   #1e40af;
+      --primary-l: #3b82f6;
+      --primary-d: #1e3a8a;
+      --success:   #16a34a;
+      --success-l: #22c55e;
+      --warning:   #d97706;
+      --warning-l: #f59e0b;
+      --danger:    #dc2626;
+      --danger-l:  #ef4444;
+      --info:      #0891b2;
+      --bg:        #f1f5f9;
+      --card:      #ffffff;
+      --text:      #0f172a;
+      --sub:       #64748b;
+      --border:    #e2e8f0;
+      --nav-h:     68px;
+      --header-h:  56px;
+      --radius:    12px;
+      --shadow:    0 2px 12px rgba(0,0,0,.10);
+    }
+
+    /* ── Reset ──────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Inter, sans-serif;
+      background: #1e293b;
+      color: var(--text);
+      overflow: hidden;
+    }
+
+    /* ── Shell ──────────────────────────────────────────────────── */
+    #app {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+      background: var(--bg);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 60px rgba(0,0,0,.5);
+    }
+
+    /* ── Header ─────────────────────────────────────────────────── */
+    .header {
+      height: var(--header-h);
+      background: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      flex-shrink: 0;
+      z-index: 10;
+    }
+    .header-logo { display: flex; align-items: center; gap: 10px; }
+    .header-logo .logo-icon {
+      width: 32px; height: 32px;
+      background: rgba(255,255,255,.2);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+    .header-title { font-size: 17px; font-weight: 700; color: #fff; }
+    .header-sub { font-size: 11px; color: rgba(255,255,255,.7); margin-top: 1px; }
+    .header-right { display: flex; align-items: center; gap: 10px; }
+    .status-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--success-l);
+      box-shadow: 0 0 0 3px rgba(34,197,94,.3);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%,100% { box-shadow: 0 0 0 3px rgba(34,197,94,.3); }
+      50% { box-shadow: 0 0 0 6px rgba(34,197,94,.1); }
+    }
+    .header-user {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: rgba(255,255,255,.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700; color: #fff;
+      cursor: pointer;
+    }
+
+    /* ── Screens ─────────────────────────────────────────────────── */
+    #screens { flex: 1; overflow: hidden; position: relative; }
+    .screen {
+      position: absolute; inset: 0;
+      overflow-y: auto; padding: 14px;
+      display: none; flex-direction: column; gap: 12px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .screen.active { display: flex; }
+
+    /* ── Bottom Nav ──────────────────────────────────────────────── */
+    .bottom-nav {
+      height: var(--nav-h); background: var(--card);
+      border-top: 1px solid var(--border);
+      display: flex; align-items: center;
+      justify-content: space-around; flex-shrink: 0; z-index: 10;
+    }
+    .nav-btn {
+      flex: 1; height: 100%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 4px; border: none; background: none;
+      cursor: pointer; color: var(--sub);
+      transition: color .15s; padding: 8px 4px;
+    }
+    .nav-btn.active { color: var(--primary); }
+    .nav-btn .nav-icon { font-size: 20px; line-height: 1; }
+    .nav-btn .nav-label { font-size: 10px; font-weight: 600; letter-spacing: .3px; }
+
+    /* ── Cards ───────────────────────────────────────────────────── */
+    .card { background: var(--card); border-radius: var(--radius); padding: 14px; box-shadow: var(--shadow); }
+    .card-title {
+      font-size: 13px; font-weight: 700; color: var(--sub);
+      text-transform: uppercase; letter-spacing: .6px; margin-bottom: 12px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .card-title .badge { font-size: 10px; padding: 2px 7px; border-radius: 20px; font-weight: 600; }
+    .badge-success { background: #dcfce7; color: var(--success); }
+    .badge-warning { background: #fef3c7; color: var(--warning); }
+    .badge-info    { background: #e0f2fe; color: var(--info); }
+    .badge-primary { background: #dbeafe; color: var(--primary); }
+
+    /* ── Metric Grid ─────────────────────────────────────────────── */
+    .metric-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .metric-box { background: var(--bg); border-radius: 10px; padding: 12px; text-align: center; }
+    .metric-val { font-size: 26px; font-weight: 800; color: var(--text); line-height: 1; }
+    .metric-label { font-size: 11px; color: var(--sub); margin-top: 4px; font-weight: 500; }
+    .metric-trend { font-size: 11px; font-weight: 600; margin-top: 4px; }
+    .trend-up   { color: var(--success); }
+    .trend-down { color: var(--danger); }
+
+    /* ── Progress Bar ────────────────────────────────────────────── */
+    .prog-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .prog-label { font-size: 12px; color: var(--text); font-weight: 500; min-width: 90px; }
+    .prog-bar-wrap { flex: 1; height: 8px; background: var(--bg); border-radius: 4px; overflow: hidden; }
+    .prog-bar { height: 100%; border-radius: 4px; transition: width 1s ease; }
+    .prog-bar.blue   { background: var(--primary-l); }
+    .prog-bar.green  { background: var(--success-l); }
+    .prog-bar.orange { background: var(--warning-l); }
+    .prog-val { font-size: 12px; font-weight: 700; color: var(--sub); min-width: 36px; text-align: right; }
+
+    /* ── Divider ─────────────────────────────────────────────────── */
+    .divider { height: 1px; background: var(--border); margin: 8px 0; }
+
+    /* ── List Row ────────────────────────────────────────────────── */
+    .list-row {
+      display: flex; align-items: center; padding: 10px 0; gap: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .list-row:last-child { border-bottom: none; }
+    .list-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+    .list-icon.blue   { background: #dbeafe; }
+    .list-icon.green  { background: #dcfce7; }
+    .list-icon.orange { background: #fef3c7; }
+    .list-icon.purple { background: #ede9fe; }
+    .list-info { flex: 1; min-width: 0; }
+    .list-name { font-size: 13px; font-weight: 600; color: var(--text); }
+    .list-sub  { font-size: 11px; color: var(--sub); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .list-right { text-align: right; flex-shrink: 0; }
+    .list-val  { font-size: 13px; font-weight: 700; color: var(--text); }
+    .list-time { font-size: 10px; color: var(--sub); margin-top: 2px; }
+
+    /* ── Chip Row ────────────────────────────────────────────────── */
+    .chip-row { display: flex; flex-wrap: wrap; gap: 6px; }
+    .chip { font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 20px; background: #dbeafe; color: var(--primary); }
+    .chip.green  { background: #dcfce7; color: var(--success); }
+    .chip.orange { background: #fef3c7; color: var(--warning); }
+    .chip.purple { background: #ede9fe; color: #7c3aed; }
+    .chip.gray   { background: #f1f5f9; color: var(--sub); }
+
+    /* ── Mini Chart ──────────────────────────────────────────────── */
+    .mini-chart-wrap { position: relative; height: 80px; }
+    .mini-chart { width: 100%; height: 100%; display: flex; align-items: flex-end; gap: 4px; padding: 0 2px; }
+    .bar { flex: 1; border-radius: 4px 4px 0 0; transition: height .5s ease; }
+    .bar.blue   { background: linear-gradient(180deg, #3b82f6, #1e40af); }
+    .bar.green  { background: linear-gradient(180deg, #22c55e, #16a34a); }
+
+    /* ── Sparkline ───────────────────────────────────────────────── */
+    .sparkline-wrap { height: 50px; }
+    .sparkline-wrap svg { width: 100%; height: 100%; overflow: visible; }
+
+    /* ── Toggle ──────────────────────────────────────────────────── */
+    .toggle-wrap { display: flex; background: var(--bg); border-radius: 8px; padding: 3px; gap: 3px; margin-bottom: 12px; }
+    .toggle-btn { flex: 1; padding: 7px; border: none; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; background: transparent; color: var(--sub); transition: all .15s; }
+    .toggle-btn.active { background: var(--primary); color: #fff; box-shadow: 0 2px 8px rgba(30,64,175,.3); }
+
+    /* ── Vision Canvas ───────────────────────────────────────────── */
+    .vision-canvas-wrap { position: relative; background: #1e293b; border-radius: 10px; overflow: hidden; aspect-ratio: 4/3; }
+    #visionCanvas { width: 100%; height: 100%; display: block; }
+    .vision-overlay { position: absolute; bottom: 10px; left: 10px; right: 10px; display: flex; gap: 8px; }
+    .vision-stat { flex: 1; background: rgba(0,0,0,.7); border-radius: 8px; padding: 8px; text-align: center; backdrop-filter: blur(4px); }
+    .vision-stat .vs-val { font-size: 20px; font-weight: 800; color: #22c55e; }
+    .vision-stat .vs-label { font-size: 10px; color: rgba(255,255,255,.7); margin-top: 2px; }
+
+    /* ── Log Terminal ────────────────────────────────────────────── */
+    .log-terminal { background: #0f172a; border-radius: 10px; padding: 12px; font-family: 'Courier New', monospace; font-size: 11px; color: #94a3b8; height: 130px; overflow-y: auto; }
+    .log-line { margin-bottom: 3px; }
+    .log-line .ts { color: #475569; margin-right: 6px; }
+    .log-line .lvl-info { color: #38bdf8; }
+    .log-line .lvl-warn { color: #fbbf24; }
+    .log-line .lvl-ok   { color: #34d399; }
+    .log-line .lvl-err  { color: #f87171; }
+
+    /* ── Kubernetes Pods ─────────────────────────────────────────── */
+    .pod-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .pod-card { background: var(--bg); border-radius: 8px; padding: 10px; display: flex; flex-direction: column; gap: 6px; }
+    .pod-header { display: flex; align-items: center; justify-content: space-between; }
+    .pod-name { font-size: 12px; font-weight: 700; color: var(--text); }
+    .pod-status { font-size: 10px; font-weight: 600; padding: 2px 6px; border-radius: 20px; }
+    .pod-status.running { background: #dcfce7; color: var(--success); }
+    .pod-meta { font-size: 11px; color: var(--sub); }
+    .pod-cpu { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+    .pod-cpu-bar { height: 100%; background: var(--primary-l); border-radius: 2px; }
+
+    /* ── Pipeline ────────────────────────────────────────────────── */
+    .pipeline { display: flex; align-items: center; overflow-x: auto; padding-bottom: 4px; }
+    .pipe-step { display: flex; flex-direction: column; align-items: center; gap: 6px; flex-shrink: 0; min-width: 68px; }
+    .pipe-icon-wrap { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+    .pipe-icon-wrap.success { background: #dcfce7; }
+    .pipe-icon-wrap.running { background: #dbeafe; }
+    .pipe-label { font-size: 10px; font-weight: 600; color: var(--sub); text-align: center; }
+    .pipe-time  { font-size: 9px; color: var(--sub); }
+    .pipe-connector { flex: 1; height: 2px; min-width: 16px; background: var(--border); align-self: center; margin-top: -20px; }
+    .pipe-connector.done { background: var(--success-l); }
+
+    /* ── API Response Box ────────────────────────────────────────── */
+    .api-box { background: #0f172a; border-radius: 10px; font-family: 'Courier New', monospace; font-size: 11px; color: #94a3b8; padding: 12px; max-height: 120px; overflow-y: auto; }
+    .api-key  { color: #7dd3fc; }
+    .api-str  { color: #86efac; }
+    .api-num  { color: #fbbf24; }
+
+    /* ── MQTT Messages ───────────────────────────────────────────── */
+    .mqtt-msg { background: #0f172a; border-radius: 8px; padding: 10px; margin-bottom: 8px; border-left: 3px solid var(--primary-l); }
+    .mqtt-topic { font-family: monospace; font-size: 11px; color: #38bdf8; margin-bottom: 4px; }
+    .mqtt-payload { font-family: monospace; font-size: 11px; color: #94a3b8; }
+    .mqtt-ts { font-size: 10px; color: #475569; margin-top: 4px; }
+
+    /* ── Download Buttons ────────────────────────────────────────── */
+    .dl-row { display: flex; gap: 10px; }
+    .dl-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; border-radius: 10px; font-size: 13px; font-weight: 700; cursor: pointer; border: none; text-decoration: none; transition: all .15s; }
+    .dl-btn.android { background: #1e3a8a; color: #fff; }
+    .dl-btn.ios     { background: #1e293b; color: #fff; }
+    .dl-btn:hover   { opacity: .85; transform: translateY(-1px); }
+    .dl-btn .dl-icon { font-size: 20px; }
+
+    /* ── Auth Card ───────────────────────────────────────────────── */
+    .auth-card { background: linear-gradient(135deg, #1e3a8a, #1e40af); border-radius: var(--radius); padding: 16px; color: #fff; }
+    .auth-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+    .auth-sub   { font-size: 12px; opacity: .8; }
+    .auth-row   { display: flex; align-items: center; justify-content: space-between; margin-top: 12px; }
+    .auth-token { font-family: monospace; font-size: 10px; background: rgba(255,255,255,.15); border-radius: 6px; padding: 4px 8px; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .auth-expire { font-size: 10px; opacity: .7; }
+
+    /* ── Section Title ───────────────────────────────────────────── */
+    .section-title { font-size: 16px; font-weight: 800; color: var(--text); margin-bottom: 4px; }
+    .section-sub   { font-size: 12px; color: var(--sub); margin-bottom: 10px; }
+
+    /* ── Gauge ───────────────────────────────────────────────────── */
+    .gauge-row { display: flex; gap: 10px; }
+    .gauge-item { flex: 1; text-align: center; }
+    .gauge-svg { width: 80px; height: 80px; margin: 0 auto; }
+    .gauge-label { font-size: 11px; color: var(--sub); margin-top: 4px; }
+
+    /* ── Scrollbar ───────────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    /* ── Animations ──────────────────────────────────────────────── */
+    @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
+    .blink { animation: blink 1.2s ease-in-out infinite; }
+
+    /* ── Toast ───────────────────────────────────────────────────── */
+    #toast { position: absolute; bottom: 80px; left: 50%; transform: translateX(-50%) translateY(20px); background: #0f172a; color: #fff; padding: 10px 20px; border-radius: 24px; font-size: 13px; font-weight: 600; opacity: 0; transition: all .3s; pointer-events: none; white-space: nowrap; z-index: 100; }
+    #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  </style>
+</head>
+<body>
+<div id="app">
+
+  <!-- ── Header ── -->
+  <div class="header">
+    <div class="header-logo">
+      <div class="logo-icon">🏭</div>
+      <div>
+        <div class="header-title">Kamps SmartFactory</div>
+        <div class="header-sub">Industry 4.0 Platform</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="status-dot" title="All systems operational"></div>
+      <div class="header-user" title="Kevin DeLong">KD</div>
+    </div>
+  </div>
+
+  <!-- ── Screens ── -->
+  <div id="screens">
+
+    <!-- ─────────────── DASHBOARD ─────────────── -->
+    <div class="screen active" id="screen-dashboard">
+      <div>
+        <div class="section-title">Factory Overview</div>
+        <div class="section-sub">Grand Rapids, MI · K3s Cluster · Live</div>
+      </div>
+
+      <div class="metric-grid">
+        <div class="metric-box">
+          <div class="metric-val" id="kpi-pallets">1,247</div>
+          <div class="metric-label">Pallets Processed</div>
+          <div class="metric-trend trend-up">↑ 8.2% today</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-val">99.4%</div>
+          <div class="metric-label">System Uptime</div>
+          <div class="metric-trend trend-up">↑ SLA met</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-val">0.3%</div>
+          <div class="metric-label">Defect Rate</div>
+          <div class="metric-trend trend-down">↓ Vision AI</div>
+        </div>
+        <div class="metric-box">
+          <div class="metric-val" id="kpi-temp">72.0°F</div>
+          <div class="metric-label">Facility Temp</div>
+          <div class="metric-trend">→ Optimal</div>
+        </div>
+      </div>
+
+      <!-- Throughput chart -->
+      <div class="card">
+        <div class="card-title">📊 Production Throughput <span class="badge badge-success">Live</span></div>
+        <div class="mini-chart-wrap">
+          <div class="mini-chart" id="throughput-chart"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:6px;">
+          <span style="font-size:10px;color:var(--sub)">Mon</span>
+          <span style="font-size:10px;color:var(--sub)">Tue</span>
+          <span style="font-size:10px;color:var(--sub)">Wed</span>
+          <span style="font-size:10px;color:var(--sub)">Thu</span>
+          <span style="font-size:10px;color:var(--sub)">Fri</span>
+          <span style="font-size:10px;color:var(--sub)">Sat</span>
+          <span style="font-size:10px;color:var(--sub)">Today</span>
+        </div>
+      </div>
+
+      <!-- PLC & Sensors -->
+      <div class="card">
+        <div class="card-title">⚙️ PLC / Line Sensors <span class="badge badge-success">All Online</span></div>
+        <div class="list-row">
+          <div class="list-icon green">🔧</div>
+          <div class="list-info">
+            <div class="list-name">Conveyor PLC A1</div>
+            <div class="list-sub">Allen-Bradley · Line 1 · Modbus TCP</div>
+          </div>
+          <div class="list-right">
+            <div class="list-val" style="color:var(--success)">● Running</div>
+            <div class="list-time" id="plc-a1-rpm">482 RPM</div>
+          </div>
+        </div>
+        <div class="list-row">
+          <div class="list-icon green">🔧</div>
+          <div class="list-info">
+            <div class="list-name">Sorter PLC B2</div>
+            <div class="list-sub">Siemens S7 · Line 2 · OPC-UA</div>
+          </div>
+          <div class="list-right">
+            <div class="list-val" style="color:var(--success)">● Running</div>
+            <div class="list-time" id="plc-b2-rate">310 p/hr</div>
+          </div>
+        </div>
+        <div class="list-row">
+          <div class="list-icon orange">🌡️</div>
+          <div class="list-info">
+            <div class="list-name">Temp Sensor T3</div>
+            <div class="list-sub">MQTT broker · Zone C</div>
+          </div>
+          <div class="list-right">
+            <div class="list-val" id="sensor-temp">71.8°F</div>
+            <div class="list-time">Updated 2s ago</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PostgreSQL -->
+      <div class="card">
+        <div class="card-title">🐘 PostgreSQL · Inventory Query</div>
+        <div class="api-box">
+          <span class="api-key">SELECT</span> id, sku, qty, location<br>
+          <span class="api-key">FROM</span> pallets<br>
+          <span class="api-key">WHERE</span> status = <span class="api-str">'active'</span><br>
+          <span class="api-key">ORDER BY</span> created_at <span class="api-key">DESC</span> <span class="api-key">LIMIT</span> <span class="api-num">50</span>;<br>
+          <br>
+          <span style="color:#34d399">-- ✓ Returned <span id="db-rows">1,247</span> rows in <span id="db-ms">12</span>ms</span>
+        </div>
+      </div>
+
+      <!-- Download links -->
+      <div class="card">
+        <div class="card-title">📱 Mobile Apps <span class="badge badge-warning">Demo Placeholder</span></div>
+        <div class="dl-row">
+          <a class="dl-btn android" href="#" onclick="showToast('Demo: Android APK link (not yet published)');return false;" aria-label="Android APK — demo placeholder, not yet published">
+            <span class="dl-icon">🤖</span> Android APK
+          </a>
+          <a class="dl-btn ios" href="#" onclick="showToast('Demo: iOS TestFlight link (not yet published)');return false;" aria-label="iOS App — demo placeholder, not yet published">
+            <span class="dl-icon">🍎</span> iOS App
+          </a>
+        </div>
+        <div style="font-size:11px;color:var(--sub);margin-top:8px;text-align:center;">APK &amp; TestFlight builds available upon request</div>
+      </div>
+    </div>
+
+    <!-- ─────────────── VISION AI ─────────────── -->
+    <div class="screen" id="screen-vision">
+      <div>
+        <div class="section-title">Pallet Vision AI</div>
+        <div class="section-sub">YOLOv8 · OpenCV · PyTorch · Real-time inference</div>
+      </div>
+
+      <div class="toggle-wrap" role="group" aria-label="Vision mode">
+        <button class="toggle-btn active" type="button" aria-pressed="true" onclick="setVisionMode('detect',this)">🎯 Detection</button>
+        <button class="toggle-btn" type="button" aria-pressed="false" onclick="setVisionMode('segment',this)">✂️ Segment</button>
+        <button class="toggle-btn" type="button" aria-pressed="false" onclick="setVisionMode('class',this)">🏷️ Classify</button>
+      </div>
+
+      <div class="vision-canvas-wrap">
+        <canvas id="visionCanvas"></canvas>
+        <div class="vision-overlay">
+          <div class="vision-stat">
+            <div class="vs-val" id="v-detected">4</div>
+            <div class="vs-label">Detected</div>
+          </div>
+          <div class="vision-stat">
+            <div class="vs-val" id="v-conf">94%</div>
+            <div class="vs-label">Avg Conf.</div>
+          </div>
+          <div class="vision-stat">
+            <div class="vs-val" id="v-fps">28</div>
+            <div class="vs-label">FPS</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🧠 Model Details</div>
+        <div class="chip-row">
+          <span class="chip">YOLOv8-nano</span>
+          <span class="chip green">OpenCV 4.9</span>
+          <span class="chip purple">PyTorch 2.2</span>
+          <span class="chip orange">TensorFlow 2.16</span>
+          <span class="chip">ONNX Runtime</span>
+        </div>
+        <div class="divider"></div>
+        <div class="prog-row">
+          <div class="prog-label">Inference</div>
+          <div class="prog-bar-wrap"><div class="prog-bar blue" id="bar-inf" style="width:35%"></div></div>
+          <div class="prog-val" id="bar-inf-v">35ms</div>
+        </div>
+        <div class="prog-row">
+          <div class="prog-label">Accuracy</div>
+          <div class="prog-bar-wrap"><div class="prog-bar green" style="width:94%"></div></div>
+          <div class="prog-val">94%</div>
+        </div>
+        <div class="prog-row">
+          <div class="prog-label">mAP@0.5</div>
+          <div class="prog-bar-wrap"><div class="prog-bar orange" style="width:89%"></div></div>
+          <div class="prog-val">0.89</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📦 Detected Classes</div>
+        <div class="list-row">
+          <div class="list-icon green">✅</div>
+          <div class="list-info"><div class="list-name">Grade A Pallet</div><div class="list-sub">Reusable · 4 detected</div></div>
+          <div class="list-right"><div class="list-val">96%</div></div>
+        </div>
+        <div class="list-row">
+          <div class="list-icon orange">⚠️</div>
+          <div class="list-info"><div class="list-name">Damaged Pallet</div><div class="list-sub">Recycling queue</div></div>
+          <div class="list-right"><div class="list-val">1</div></div>
+        </div>
+        <div class="list-row">
+          <div class="list-icon blue">♻️</div>
+          <div class="list-info"><div class="list-name">Byproduct</div><div class="list-sub">Sustainable processing</div></div>
+          <div class="list-right"><div class="list-val">87%</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─────────────── OBSERVABILITY ─────────────── -->
+    <div class="screen" id="screen-obs">
+      <div>
+        <div class="section-title">Observability</div>
+        <div class="section-sub">Grafana · Prometheus · OpenTelemetry</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🖥️ System Resources</div>
+        <div class="gauge-row">
+          <div class="gauge-item">
+            <svg class="gauge-svg" viewBox="0 0 80 80">
+              <circle cx="40" cy="40" r="30" fill="none" stroke="#e2e8f0" stroke-width="8"/>
+              <circle cx="40" cy="40" r="30" fill="none" stroke="#3b82f6" stroke-width="8"
+                stroke-dasharray="188.5" stroke-dashoffset="47" stroke-linecap="round"
+                transform="rotate(-90 40 40)" id="gauge-cpu-arc"/>
+              <text x="40" y="45" text-anchor="middle" font-size="14" font-weight="800" fill="#0f172a" id="gauge-cpu-val">75%</text>
+            </svg>
+            <div class="gauge-label">CPU</div>
+          </div>
+          <div class="gauge-item">
+            <svg class="gauge-svg" viewBox="0 0 80 80">
+              <circle cx="40" cy="40" r="30" fill="none" stroke="#e2e8f0" stroke-width="8"/>
+              <circle cx="40" cy="40" r="30" fill="none" stroke="#22c55e" stroke-width="8"
+                stroke-dasharray="188.5" stroke-dashoffset="75" stroke-linecap="round"
+                transform="rotate(-90 40 40)" id="gauge-mem-arc"/>
+              <text x="40" y="45" text-anchor="middle" font-size="14" font-weight="800" fill="#0f172a" id="gauge-mem-val">60%</text>
+            </svg>
+            <div class="gauge-label">Memory</div>
+          </div>
+          <div class="gauge-item">
+            <svg class="gauge-svg" viewBox="0 0 80 80">
+              <circle cx="40" cy="40" r="30" fill="none" stroke="#e2e8f0" stroke-width="8"/>
+              <circle cx="40" cy="40" r="30" fill="none" stroke="#f59e0b" stroke-width="8"
+                stroke-dasharray="188.5" stroke-dashoffset="113" stroke-linecap="round"
+                transform="rotate(-90 40 40)" id="gauge-disk-arc"/>
+              <text x="40" y="45" text-anchor="middle" font-size="14" font-weight="800" fill="#0f172a">40%</text>
+            </svg>
+            <div class="gauge-label">Disk</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🔥 Prometheus Metrics</div>
+        <div class="prog-row">
+          <div class="prog-label">http_req/s</div>
+          <div class="prog-bar-wrap"><div class="prog-bar blue" id="prom-req" style="width:68%"></div></div>
+          <div class="prog-val" id="prom-req-v">682</div>
+        </div>
+        <div class="prog-row">
+          <div class="prog-label">p99 latency</div>
+          <div class="prog-bar-wrap"><div class="prog-bar orange" id="prom-lat" style="width:24%"></div></div>
+          <div class="prog-val" id="prom-lat-v">48ms</div>
+        </div>
+        <div class="prog-row">
+          <div class="prog-label">Error rate</div>
+          <div class="prog-bar-wrap"><div class="prog-bar green" style="width:2%"></div></div>
+          <div class="prog-val">0.2%</div>
+        </div>
+        <div class="prog-row">
+          <div class="prog-label">DB pool</div>
+          <div class="prog-bar-wrap"><div class="prog-bar blue" id="prom-db" style="width:45%"></div></div>
+          <div class="prog-val" id="prom-db-v">9/20</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📈 Grafana · Request Rate (15 min) <span class="badge badge-info">Live</span></div>
+        <div class="sparkline-wrap">
+          <svg id="sparkline-svg" viewBox="0 0 300 50" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="sg" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#3b82f6" stop-opacity=".4"/>
+                <stop offset="100%" stop-color="#3b82f6" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <path id="sparkline-fill" fill="url(#sg)"/>
+            <path id="sparkline-line" fill="none" stroke="#3b82f6" stroke-width="2"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🔭 OpenTelemetry · Recent Traces</div>
+        <div class="list-row">
+          <div class="list-icon blue">📡</div>
+          <div class="list-info"><div class="list-name">POST /api/pallets</div><div class="list-sub">vision-service → db-service</div></div>
+          <div class="list-right"><div class="list-val">23ms</div><div class="list-time" style="color:var(--success)">200 OK</div></div>
+        </div>
+        <div class="list-row">
+          <div class="list-icon green">🔄</div>
+          <div class="list-info"><div class="list-name">MQTT publish event</div><div class="list-sub">plc-bridge → mqtt-broker</div></div>
+          <div class="list-right"><div class="list-val">4ms</div><div class="list-time" style="color:var(--success)">ACK</div></div>
+        </div>
+        <div class="list-row">
+          <div class="list-icon purple">🧠</div>
+          <div class="list-info"><div class="list-name">YOLO inference</div><div class="list-sub">vision-service · GPU</div></div>
+          <div class="list-right"><div class="list-val" id="otel-ms">35ms</div><div class="list-time" style="color:var(--success)">OK</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─────────────── INFRA & API ─────────────── -->
+    <div class="screen" id="screen-infra">
+      <div>
+        <div class="section-title">Infrastructure &amp; APIs</div>
+        <div class="section-sub">K3s · Docker · Microservices · REST · MQTT · OAuth2</div>
+      </div>
+
+      <div class="auth-card">
+        <div class="auth-title">🔐 OAuth2 · Bearer Token (JWT)</div>
+        <div class="auth-sub">Scope: factory:read factory:write</div>
+        <div class="auth-row">
+          <div class="auth-token">eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ1c2VyXzEyMyJ9</div>
+          <div class="auth-expire">Expires in <span id="auth-exp">14m 52s</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">☸️ K3s Cluster · kamps-edge <span class="badge badge-success">7/7 Pods</span></div>
+        <div class="pod-grid">
+          <div class="pod-card">
+            <div class="pod-header"><div class="pod-name">vision-api</div><div class="pod-status running">Running</div></div>
+            <div class="pod-meta">3 replicas · Python/FastAPI</div>
+            <div class="pod-cpu"><div class="pod-cpu-bar" id="pod-vision-cpu" style="width:62%"></div></div>
+            <div class="pod-meta">CPU: <span id="pod-vision-cpu-v">62%</span> · Mem: 1.2 GB</div>
+          </div>
+          <div class="pod-card">
+            <div class="pod-header"><div class="pod-name">plc-bridge</div><div class="pod-status running">Running</div></div>
+            <div class="pod-meta">1 replica · C#/.NET</div>
+            <div class="pod-cpu"><div class="pod-cpu-bar" style="width:18%"></div></div>
+            <div class="pod-meta">CPU: 18% · Mem: 256 MB</div>
+          </div>
+          <div class="pod-card">
+            <div class="pod-header"><div class="pod-name">api-gateway</div><div class="pod-status running">Running</div></div>
+            <div class="pod-meta">2 replicas · TypeScript</div>
+            <div class="pod-cpu"><div class="pod-cpu-bar" style="width:34%"></div></div>
+            <div class="pod-meta">CPU: 34% · Mem: 512 MB</div>
+          </div>
+          <div class="pod-card">
+            <div class="pod-header"><div class="pod-name">postgres-16</div><div class="pod-status running">Running</div></div>
+            <div class="pod-meta">StatefulSet · 50 GB PVC</div>
+            <div class="pod-cpu"><div class="pod-cpu-bar" style="width:28%"></div></div>
+            <div class="pod-meta">CPU: 28% · Mem: 4.1 GB</div>
+          </div>
+          <div class="pod-card">
+            <div class="pod-header"><div class="pod-name">mqtt-broker</div><div class="pod-status running">Running</div></div>
+            <div class="pod-meta">Mosquitto 2.0 · MQTT</div>
+            <div class="pod-cpu"><div class="pod-cpu-bar" style="width:8%"></div></div>
+            <div class="pod-meta">CPU: 8% · Conns: 14</div>
+          </div>
+          <div class="pod-card">
+            <div class="pod-header"><div class="pod-name">grafana</div><div class="pod-status running">Running</div></div>
+            <div class="pod-meta">Grafana 10 · 8 boards</div>
+            <div class="pod-cpu"><div class="pod-cpu-bar" style="width:12%"></div></div>
+            <div class="pod-meta">CPU: 12% · Mem: 512 MB</div>
+          </div>
+          <div class="pod-card">
+            <div class="pod-header"><div class="pod-name">prometheus</div><div class="pod-status running">Running</div></div>
+            <div class="pod-meta">Prometheus · Metrics</div>
+            <div class="pod-cpu"><div class="pod-cpu-bar" style="width:10%"></div></div>
+            <div class="pod-meta">CPU: 10% · Mem: 256 MB</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🌐 REST API · Live Response</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+          <span style="font-size:11px;font-weight:700;background:#dcfce7;color:var(--success);padding:3px 8px;border-radius:4px;">GET</span>
+          <span style="font-family:monospace;font-size:11px;color:var(--sub)">/api/v1/pallets?limit=3</span>
+          <button onclick="refreshAPI()" style="margin-left:auto;font-size:11px;padding:4px 10px;border-radius:6px;border:none;background:var(--primary);color:#fff;cursor:pointer;font-weight:600;">↺ Refresh</button>
+        </div>
+        <div class="api-box">
+          <span class="api-key">{"status"</span>: <span class="api-str">"success"</span>, <span class="api-key">"data"</span>: [<br>
+          &nbsp;&nbsp;{<span class="api-key">"id"</span>:<span class="api-num">1247</span>, <span class="api-key">"sku"</span>:<span class="api-str">"GR-A-001"</span>, <span class="api-key">"grade"</span>:<span class="api-str">"A"</span>},<br>
+          &nbsp;&nbsp;{<span class="api-key">"id"</span>:<span class="api-num">1246</span>, <span class="api-key">"sku"</span>:<span class="api-str">"GR-B-032"</span>, <span class="api-key">"grade"</span>:<span class="api-str">"B"</span>},<br>
+          &nbsp;&nbsp;{<span class="api-key">"id"</span>:<span class="api-num">1245</span>, <span class="api-key">"sku"</span>:<span class="api-str">"GR-A-002"</span>, <span class="api-key">"grade"</span>:<span class="api-str">"A"</span>}<br>
+          ], <span class="api-key">"latency_ms"</span>: <span class="api-num" id="api-lat">12</span>}
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📡 MQTT · Live Messages <span class="badge badge-success blink">● Live</span></div>
+        <div id="mqtt-feed">
+          <div class="mqtt-msg">
+            <div class="mqtt-topic">factory/line1/conveyor/speed</div>
+            <div class="mqtt-payload">{"rpm": 482, "status": "normal"}</div>
+            <div class="mqtt-ts">just now</div>
+          </div>
+          <div class="mqtt-msg">
+            <div class="mqtt-topic">factory/sensors/temperature/zone-c</div>
+            <div class="mqtt-payload">{"celsius": 22.1, "alert": false}</div>
+            <div class="mqtt-ts">3s ago</div>
+          </div>
+          <div class="mqtt-msg">
+            <div class="mqtt-topic">factory/vision/detection/result</div>
+            <div class="mqtt-payload">{"pallets": 4, "defects": 1, "confidence": 0.94}</div>
+            <div class="mqtt-ts">6s ago</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─────────────── CI/CD ─────────────── -->
+    <div class="screen" id="screen-cicd">
+      <div>
+        <div class="section-title">CI/CD Pipeline</div>
+        <div class="section-sub">Azure DevOps · Docker · K3s · Git · Agile</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🚀 Build #2847 · main <span class="badge badge-success">Passed</span></div>
+        <div class="pipeline">
+          <div class="pipe-step">
+            <div class="pipe-icon-wrap success">✅</div>
+            <div class="pipe-label">Checkout</div>
+            <div class="pipe-time">3s</div>
+          </div>
+          <div class="pipe-connector done"></div>
+          <div class="pipe-step">
+            <div class="pipe-icon-wrap success">🔍</div>
+            <div class="pipe-label">Lint &amp; Type</div>
+            <div class="pipe-time">28s</div>
+          </div>
+          <div class="pipe-connector done"></div>
+          <div class="pipe-step">
+            <div class="pipe-icon-wrap success">🧪</div>
+            <div class="pipe-label">Unit Tests</div>
+            <div class="pipe-time">1m 12s</div>
+          </div>
+          <div class="pipe-connector done"></div>
+          <div class="pipe-step">
+            <div class="pipe-icon-wrap success">🐳</div>
+            <div class="pipe-label">Docker Build</div>
+            <div class="pipe-time">2m 4s</div>
+          </div>
+          <div class="pipe-connector done"></div>
+          <div class="pipe-step">
+            <div class="pipe-icon-wrap success">☸️</div>
+            <div class="pipe-label">K3s Deploy</div>
+            <div class="pipe-time">45s</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🧪 Test Coverage</div>
+        <div class="prog-row">
+          <div class="prog-label">Unit Tests</div>
+          <div class="prog-bar-wrap"><div class="prog-bar green" style="width:92%"></div></div>
+          <div class="prog-val">92%</div>
+        </div>
+        <div class="prog-row">
+          <div class="prog-label">Integration</div>
+          <div class="prog-bar-wrap"><div class="prog-bar blue" style="width:84%"></div></div>
+          <div class="prog-val">84%</div>
+        </div>
+        <div class="prog-row">
+          <div class="prog-label">E2E Tests</div>
+          <div class="prog-bar-wrap"><div class="prog-bar orange" style="width:76%"></div></div>
+          <div class="prog-val">76%</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📋 Deployment History</div>
+        <div class="list-row">
+          <div class="list-icon green">🟢</div>
+          <div class="list-info"><div class="list-name">v2.8.1 · Production</div><div class="list-sub">vision-api + plc-bridge updated</div></div>
+          <div class="list-right"><div class="list-time">2h ago</div></div>
+        </div>
+        <div class="list-row">
+          <div class="list-icon green">🟢</div>
+          <div class="list-info"><div class="list-name">v2.8.0 · Production</div><div class="list-sub">YOLO model upgrade (v8 nano)</div></div>
+          <div class="list-right"><div class="list-time">1d ago</div></div>
+        </div>
+        <div class="list-row">
+          <div class="list-icon orange">🟡</div>
+          <div class="list-info"><div class="list-name">v2.7.9 · Rollback</div><div class="list-sub">MQTT broker memory leak fix</div></div>
+          <div class="list-right"><div class="list-time">3d ago</div></div>
+        </div>
+        <div class="list-row">
+          <div class="list-icon green">🟢</div>
+          <div class="list-info"><div class="list-name">v2.7.8 · Production</div><div class="list-sub">PostgreSQL index optimization</div></div>
+          <div class="list-right"><div class="list-time">4d ago</div></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🛠️ Languages, Frameworks &amp; Tools</div>
+        <div class="chip-row">
+          <span class="chip">TypeScript</span>
+          <span class="chip">Python</span>
+          <span class="chip gray">C# / .NET</span>
+          <span class="chip green">React / Remix</span>
+          <span class="chip purple">FastAPI</span>
+          <span class="chip">Docker</span>
+          <span class="chip green">K3s</span>
+          <span class="chip orange">Rancher</span>
+          <span class="chip">PostgreSQL</span>
+          <span class="chip purple">Azure DevOps</span>
+          <span class="chip">OpenCV</span>
+          <span class="chip orange">PyTorch</span>
+          <span class="chip green">TensorFlow</span>
+          <span class="chip">YOLOv8</span>
+          <span class="chip purple">Grafana</span>
+          <span class="chip">Prometheus</span>
+          <span class="chip orange">OpenTelemetry</span>
+          <span class="chip">MQTT</span>
+          <span class="chip green">OAuth2 / JWT</span>
+          <span class="chip">Microservices</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🏃 Agile Sprint 47 · Active</div>
+        <div class="prog-row">
+          <div class="prog-label">Progress</div>
+          <div class="prog-bar-wrap"><div class="prog-bar blue" style="width:68%"></div></div>
+          <div class="prog-val">68%</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:8px;">
+          <div style="text-align:center;background:var(--bg);border-radius:8px;padding:8px;">
+            <div style="font-size:20px;font-weight:800;color:var(--success)">14</div>
+            <div style="font-size:10px;color:var(--sub)">Done</div>
+          </div>
+          <div style="text-align:center;background:var(--bg);border-radius:8px;padding:8px;">
+            <div style="font-size:20px;font-weight:800;color:var(--warning)">5</div>
+            <div style="font-size:10px;color:var(--sub)">In Progress</div>
+          </div>
+          <div style="text-align:center;background:var(--bg);border-radius:8px;padding:8px;">
+            <div style="font-size:20px;font-weight:800;color:var(--sub)">3</div>
+            <div style="font-size:10px;color:var(--sub)">Backlog</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📟 System Log <span class="badge badge-info blink">● Streaming</span></div>
+        <div class="log-terminal" id="log-terminal"></div>
+      </div>
+    </div>
+
+  </div><!-- /screens -->
+
+  <!-- ── Bottom Nav ── -->
+  <nav class="bottom-nav" aria-label="Main navigation">
+    <button class="nav-btn active" onclick="showScreen('dashboard',this)" aria-label="Dashboard">
+      <span class="nav-icon">📊</span>
+      <span class="nav-label">Dashboard</span>
+    </button>
+    <button class="nav-btn" onclick="showScreen('vision',this)" aria-label="Vision AI">
+      <span class="nav-icon">👁️</span>
+      <span class="nav-label">Vision AI</span>
+    </button>
+    <button class="nav-btn" onclick="showScreen('obs',this)" aria-label="Observability">
+      <span class="nav-icon">📈</span>
+      <span class="nav-label">Observe</span>
+    </button>
+    <button class="nav-btn" onclick="showScreen('infra',this)" aria-label="Infrastructure">
+      <span class="nav-icon">☸️</span>
+      <span class="nav-label">Infra</span>
+    </button>
+    <button class="nav-btn" onclick="showScreen('cicd',this)" aria-label="CI/CD">
+      <span class="nav-icon">🚀</span>
+      <span class="nav-label">CI/CD</span>
+    </button>
+  </nav>
+
+  <div id="toast"></div>
+</div>
+
+<script>
+/* ─── Navigation ────────────────────────────────────── */
+function showScreen(name, btn) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('screen-' + name).classList.add('active');
+  btn.classList.add('active');
+
+  // Start or stop the Vision canvas animation based on active tab
+  if (name === 'vision') {
+    initCanvas();
+  } else {
+    if (animFrame) {
+      cancelAnimationFrame(animFrame);
+      animFrame = null;
+    }
+  }
+}
+
+/* ─── Toast ─────────────────────────────────────────── */
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+/* ─── Throughput Bar Chart ───────────────────────────── */
+const throughputData = [78, 85, 62, 91, 88, 55, 94];
+(function buildChart() {
+  const wrap = document.getElementById('throughput-chart');
+  throughputData.forEach((v, i) => {
+    const bar = document.createElement('div');
+    bar.className = 'bar ' + (i === throughputData.length - 1 ? 'blue' : 'green');
+    bar.style.height = '0%';
+    wrap.appendChild(bar);
+    setTimeout(() => { bar.style.height = v + '%'; }, 100 + i * 60);
+  });
+})();
+
+/* ─── Vision Canvas (YOLO simulation) ───────────────── */
+const canvas = document.getElementById('visionCanvas');
+const ctx = canvas ? canvas.getContext('2d') : null;
+let visionMode = 'detect';
+let animFrame;
+
+const PALLETS = [
+  { x: 0.08, y: 0.10, w: 0.30, h: 0.40, label: 'Grade A', conf: 0.97, color: '#22c55e' },
+  { x: 0.45, y: 0.08, w: 0.28, h: 0.38, label: 'Grade A', conf: 0.95, color: '#22c55e' },
+  { x: 0.10, y: 0.58, w: 0.32, h: 0.36, label: 'Damaged', conf: 0.88, color: '#ef4444' },
+  { x: 0.48, y: 0.55, w: 0.26, h: 0.38, label: 'Grade B', conf: 0.91, color: '#f59e0b' },
+];
+
+let scanY = 0;
+
+function drawVision() {
+  if (!ctx) return;
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#1e293b';
+  ctx.fillRect(0, 0, W, H);
+
+  PALLETS.forEach(p => {
+    const px = p.x * W, py = p.y * H, pw = p.w * W, ph = p.h * H;
+    if (visionMode === 'segment') {
+      ctx.fillStyle = p.color + '44';
+      ctx.fillRect(px, py, pw, ph);
+    }
+    ctx.strokeStyle = '#475569'; ctx.lineWidth = 1;
+    for (let i = 0; i <= 5; i++) {
+      const sy = py + (ph / 5) * i;
+      ctx.beginPath(); ctx.moveTo(px, sy); ctx.lineTo(px + pw, sy); ctx.stroke();
+    }
+    ctx.beginPath(); ctx.moveTo(px + pw * 0.33, py); ctx.lineTo(px + pw * 0.33, py + ph); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(px + pw * 0.67, py); ctx.lineTo(px + pw * 0.67, py + ph); ctx.stroke();
+  });
+
+  if (visionMode === 'detect') {
+    scanY = (scanY + 1.5) % H;
+    const sg = ctx.createLinearGradient(0, scanY - 20, 0, scanY + 20);
+    sg.addColorStop(0, 'rgba(59,130,246,0)');
+    sg.addColorStop(0.5, 'rgba(59,130,246,0.4)');
+    sg.addColorStop(1, 'rgba(59,130,246,0)');
+    ctx.fillStyle = sg;
+    ctx.fillRect(0, scanY - 20, W, 40);
+  }
+
+  PALLETS.forEach(p => {
+    const px = p.x * W, py = p.y * H, pw = p.w * W, ph = p.h * H;
+    if (visionMode === 'class') { ctx.fillStyle = p.color + '33'; ctx.fillRect(px, py, pw, ph); }
+    ctx.strokeStyle = p.color; ctx.lineWidth = 2;
+    ctx.strokeRect(px, py, pw, ph);
+    const cs = 10; ctx.lineWidth = 3;
+    [[px,py,1,1],[px+pw,py,-1,1],[px,py+ph,1,-1],[px+pw,py+ph,-1,-1]].forEach(([cx,cy,dx,dy]) => {
+      ctx.beginPath(); ctx.moveTo(cx, cy + dy * cs); ctx.lineTo(cx, cy); ctx.lineTo(cx + dx * cs, cy); ctx.stroke();
+    });
+    ctx.fillStyle = p.color;
+    ctx.fillRect(px, py - 22, 120, 22);
+    ctx.fillStyle = '#fff'; ctx.font = 'bold 11px sans-serif';
+    ctx.fillText(p.label + ' ' + Math.round(p.conf * 100) + '%', px + 5, py - 6);
+  });
+
+  if (visionMode === 'detect') {
+    ctx.strokeStyle = 'rgba(59,130,246,0.08)'; ctx.lineWidth = 0.5;
+    for (let x = 0; x < W; x += 32) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke(); }
+    for (let y = 0; y < H; y += 32) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); }
+  }
+
+  animFrame = requestAnimationFrame(drawVision);
+}
+
+function setVisionMode(mode, btn) {
+  visionMode = mode;
+  document.querySelectorAll('.toggle-btn').forEach(b => {
+    b.classList.remove('active');
+    b.setAttribute('aria-pressed', 'false');
+  });
+  if (btn) {
+    btn.classList.add('active');
+    btn.setAttribute('aria-pressed', 'true');
+  }
+}
+
+function initCanvas() {
+  if (!canvas || !ctx) return;
+  const wrap = canvas.parentElement;
+  const width = wrap ? wrap.clientWidth : 0;
+  if (!wrap || !width) return; // wrapper is hidden or zero-width; ResizeObserver will retry
+  canvas.width = width;
+  canvas.height = Math.round(width * 0.75);
+  if (animFrame) cancelAnimationFrame(animFrame);
+  drawVision();
+}
+
+// Only start the canvas when/if the Vision screen is already the initial active screen.
+// (Normally the Dashboard is active on load, so this is a no-op until the user navigates.)
+initCanvas();
+window.addEventListener('resize', initCanvas);
+
+// ResizeObserver: fires when the canvas wrapper gains a real size (i.e. when the
+// Vision screen first becomes visible), ensuring the canvas initialises correctly.
+// Disconnects after the first successful init since ongoing resizes are handled
+// by the window 'resize' listener and showScreen().
+(function () {
+  if (!canvas || typeof ResizeObserver === 'undefined') return;
+  const wrap = canvas.parentElement;
+  if (!wrap) return;
+  const observer = new ResizeObserver(entries => {
+    for (const entry of entries) {
+      const rect = entry.contentRect;
+      if (rect && rect.width > 0 && rect.height > 0) {
+        initCanvas();
+        observer.disconnect(); // one-time: hand off to resize listener & showScreen()
+        return;
+      }
+    }
+  });
+  observer.observe(wrap);
+})();
+
+/* ─── Sparkline ─────────────────────────────────────── */
+let sparkData = Array.from({length: 30}, () => 400 + Math.random() * 400);
+
+function drawSparkline() {
+  const W = 300, H = 50;
+  const min = Math.min(...sparkData), max = Math.max(...sparkData);
+  const pts = sparkData.map((v, i) => [
+    (i / (sparkData.length - 1)) * W,
+    H - ((v - min) / (max - min + 1)) * (H - 6) - 3
+  ]);
+  const lineD = pts.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
+  const fillD = 'M0,' + H + ' ' + lineD + ' L' + W + ',' + H + ' Z';
+  document.getElementById('sparkline-line').setAttribute('d', lineD);
+  document.getElementById('sparkline-fill').setAttribute('d', fillD);
+}
+drawSparkline();
+
+/* ─── API Refresh ────────────────────────────────────── */
+function refreshAPI() {
+  const lat = 8 + Math.floor(Math.random() * 20);
+  const el = document.getElementById('api-lat');
+  if (el) el.textContent = lat;
+  showToast('API refreshed · ' + lat + 'ms latency');
+}
+
+/* ─── System Log ─────────────────────────────────────── */
+const LOG_MESSAGES = [
+  ['ok',   'vision-api', 'Pallet detected: GR-A-001 conf=0.97'],
+  ['info', 'plc-bridge', 'Conveyor A1 RPM updated: 482 → 485'],
+  ['ok',   'mqtt',       'Published factory/line1/speed 48B'],
+  ['info', 'api-gw',     'GET /api/v1/pallets 200 12ms'],
+  ['ok',   'postgres',   'INSERT pallets: 1 row affected'],
+  ['warn', 'otel',       'Trace exported to collector: 35ms'],
+  ['ok',   'k3s',        'Deployment vision-api rolled out'],
+  ['info', 'grafana',    'Alert: CPU 75% — within threshold'],
+  ['ok',   'oauth2',     'Token refreshed: scope=factory:read,write'],
+  ['info', 'mqtt',       'Sub: factory/sensors/temperature/zone-c'],
+  ['ok',   'yolo',       'Inference 28fps avg confidence 94%'],
+  ['info', 'prometheus', 'Scrape complete: 142 metrics collected'],
+];
+
+function addLog(lvl, source, msg) {
+  const term = document.getElementById('log-terminal');
+  if (!term) return;
+  const ts = new Date().toTimeString().slice(0, 8);
+  const cls = { ok: 'lvl-ok', info: 'lvl-info', warn: 'lvl-warn', err: 'lvl-err' }[lvl] || 'lvl-info';
+  const div = document.createElement('div');
+  div.className = 'log-line';
+
+  const tsSpan = document.createElement('span');
+  tsSpan.className = 'ts';
+  tsSpan.textContent = ts;
+  div.appendChild(tsSpan);
+
+  const lvlSpan = document.createElement('span');
+  lvlSpan.className = cls;
+  lvlSpan.textContent = '[' + lvl.toUpperCase() + ']';
+  div.appendChild(document.createTextNode(' '));
+  div.appendChild(lvlSpan);
+  div.appendChild(document.createTextNode(' '));
+
+  const sourceStrong = document.createElement('strong');
+  sourceStrong.textContent = source;
+  div.appendChild(sourceStrong);
+
+  div.appendChild(document.createTextNode(': ' + msg));
+
+  term.appendChild(div);
+  if (term.children.length > 40) term.removeChild(term.firstChild);
+  term.scrollTop = term.scrollHeight;
+}
+
+for (let i = 0; i < 6; i++) {
+  const e = LOG_MESSAGES[i];
+  addLog(e[0], e[1], e[2]);
+}
+
+/* ─── Live Tick ──────────────────────────────────────── */
+let palletsCount = 1247;
+let authExpSecs = 892;
+
+function tick() {
+  palletsCount += Math.floor(Math.random() * 3);
+  setText('kpi-pallets', palletsCount.toLocaleString());
+  setText('db-rows', palletsCount.toLocaleString());
+  setText('db-ms', String(8 + Math.floor(Math.random() * 15)));
+
+  const rpm = 475 + Math.floor(Math.random() * 20);
+  setText('plc-a1-rpm', rpm + ' RPM');
+  setText('plc-b2-rate', (305 + Math.floor(Math.random() * 15)) + ' p/hr');
+
+  const temp = (71 + Math.random() * 2).toFixed(1);
+  setText('sensor-temp', temp + '°F');
+  setText('kpi-temp', temp + '°F');
+
+  const req = 600 + Math.floor(Math.random() * 200);
+  setStyle('prom-req', 'width', Math.min(req / 10, 100) + '%');
+  setText('prom-req-v', String(req));
+  const lat = 30 + Math.floor(Math.random() * 40);
+  setStyle('prom-lat', 'width', Math.min(lat, 100) + '%');
+  setText('prom-lat-v', lat + 'ms');
+  const db = 7 + Math.floor(Math.random() * 6);
+  setStyle('prom-db', 'width', (db / 20 * 100) + '%');
+  setText('prom-db-v', db + '/20');
+
+  setText('v-fps', String(24 + Math.floor(Math.random() * 8)));
+  setText('v-conf', (91 + Math.floor(Math.random() * 8)) + '%');
+
+  const cpu = 65 + Math.floor(Math.random() * 25);
+  const arc = document.getElementById('gauge-cpu-arc');
+  if (arc) arc.setAttribute('stroke-dashoffset', (188.5 * (1 - cpu / 100)).toFixed(1));
+  setText('gauge-cpu-val', cpu + '%');
+
+  const podCpu = 50 + Math.floor(Math.random() * 30);
+  setStyle('pod-vision-cpu', 'width', podCpu + '%');
+  setText('pod-vision-cpu-v', podCpu + '%');
+
+  authExpSecs = Math.max(0, authExpSecs - 1);
+  const m = Math.floor(authExpSecs / 60), s = authExpSecs % 60;
+  setText('auth-exp', m + 'm ' + (s < 10 ? '0' : '') + s + 's');
+
+  sparkData.push(400 + Math.random() * 400);
+  sparkData.shift();
+  drawSparkline();
+
+  const otelMs = 28 + Math.floor(Math.random() * 20);
+  setText('otel-ms', otelMs + 'ms');
+  setStyle('bar-inf', 'width', Math.min(otelMs * 2, 100) + '%');
+  setText('bar-inf-v', otelMs + 'ms');
+
+  const e = LOG_MESSAGES[Math.floor(Math.random() * LOG_MESSAGES.length)];
+  addLog(e[0], e[1], e[2]);
+}
+
+function setText(id, val) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = val;
+}
+
+function setStyle(id, prop, val) {
+  const el = document.getElementById(id);
+  if (el) el.style[prop] = val;
+}
+
+setInterval(tick, 1500);
+
+/* ─── MQTT Feed Rotation ─────────────────────────────── */
+const MQTT_TOPICS = [
+  ['factory/line1/conveyor/speed',      '{"rpm": RPM, "status": "normal"}'],
+  ['factory/sensors/temperature/zone-c','{"celsius": TEMP, "alert": false}'],
+  ['factory/vision/detection/result',   '{"pallets": 4, "defects": 1, "confidence": 0.94}'],
+  ['factory/plc/sorter/b2/status',      '{"rate": RATE, "errors": 0}'],
+  ['factory/alerts/system',             '{"level": "info", "msg": "All systems nominal"}'],
+];
+let mqttIdx = 0;
+setInterval(() => {
+  const feed = document.getElementById('mqtt-feed');
+  if (!feed) return;
+  const [topic, tmpl] = MQTT_TOPICS[mqttIdx++ % MQTT_TOPICS.length];
+  const payload = tmpl
+    .replace('RPM',  String(475 + Math.floor(Math.random() * 20)))
+    .replace('TEMP', (21 + Math.random() * 2).toFixed(1))
+    .replace('RATE', String(305 + Math.floor(Math.random() * 15)));
+  const msg = document.createElement('div');
+  msg.className = 'mqtt-msg';
+  msg.innerHTML = '<div class="mqtt-topic">' + topic + '</div><div class="mqtt-payload">' + payload + '</div><div class="mqtt-ts">just now</div>';
+  feed.insertBefore(msg, feed.firstChild);
+  if (feed.children.length > 5) feed.removeChild(feed.lastChild);
+  [...feed.querySelectorAll('.mqtt-ts')].forEach((el, i) => {
+    if (i > 0) el.textContent = (i * 3) + 's ago';
+  });
+}, 3000);
+</script>
+</body>
+</html>
