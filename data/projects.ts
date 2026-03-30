@@ -316,6 +316,9 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: '/projects/kamps-smart-factory',
+  },
+  {
+    id: 15,
     slug: 'embedded-video-engineer',
     title: 'Embedded Video Systems Engineer',
     description: 'Interactive embedded video systems dashboard — live H.265/AV1 pipeline, VPU metrics, codec tuning, and multi-platform mobile targets',
