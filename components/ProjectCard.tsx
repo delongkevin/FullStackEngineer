@@ -49,6 +49,19 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             Interactive
           </div>
         )}
+
+        {/* Mobile Platform Badges */}
+        {(project.androidUrl || project.iosUrl) && !project.embeddable && (
+          <div className="absolute top-4 left-4 bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-medium z-10">
+            📱 Mobile App
+          </div>
+        )}
+        {(project.androidUrl || project.iosUrl) && project.embeddable && (
+          <div className="absolute bottom-4 left-4 flex gap-1 z-10">
+            {project.androidUrl && <span className="bg-green-700 text-white px-2 py-0.5 rounded-full text-xs font-medium">🤖 APK</span>}
+            {project.iosUrl && <span className="bg-gray-800 text-white px-2 py-0.5 rounded-full text-xs font-medium">🍎 iOS</span>}
+          </div>
+        )}
       </div>
       
       {/* Rest of the component remains the same */}
