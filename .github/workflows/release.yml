@@ -143,10 +143,83 @@ jobs:
           path: release-apks/
           retention-days: 7
 
+  # ── Build iOS apps ────────────────────────────────────────────────────────
+  build-ios:
+    name: Build iOS Apps
+    needs: ci
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Resolve tag
+        run: |
+          TAG="${{ github.event.inputs.tag }}"
+          if [ -z "$TAG" ]; then
+            TAG="${{ github.ref_name }}"
+          fi
+          if [ -z "$TAG" ] || [ "$TAG" = "main" ]; then
+            TAG="v1.0.0"
+          fi
+          echo "TAG=$TAG" >> "$GITHUB_ENV"
+
+      - name: Generate Xcode projects and build
+        run: |
+          TAG="${{ env.TAG }}"
+          mkdir -p release-ios
+
+          declare -A APPS
+          APPS[book-app]="BookStore"
+          APPS[computer-store]="ComputerStore"
+          APPS[poker-app]="PokerApp"
+          APPS[kamps-factory]="KampsSmartFactory"
+          APPS[embedded-video]="EmbeddedVideoEngineer"
+
+          for dir in "${!APPS[@]}"; do
+            name="${APPS[$dir]}"
+            echo "▶ Generating $name.xcodeproj..."
+            (cd "ios/$dir" && xcodegen generate)
+
+            echo "▶ Building $name for simulator..."
+            xcodebuild \
+              -project "ios/$dir/$name.xcodeproj" \
+              -scheme "$name" \
+              -sdk iphonesimulator \
+              -configuration Debug \
+              -derivedDataPath "build/$dir" \
+              CODE_SIGNING_ALLOWED=NO \
+              build 2>&1 | tee build_log.txt | xcpretty; STATUS=${PIPESTATUS[0]}
+            if [ "$STATUS" -ne 0 ]; then
+              echo "::error::xcodebuild failed for $name (exit $STATUS)"
+              cat build_log.txt
+              exit "$STATUS"
+            fi
+
+            APP_PATH=$(find "build/$dir" -name "$name.app" -type d | head -1)
+            if [ -n "$APP_PATH" ]; then
+              ZIP_NAME="${name}-${TAG}-ios-sim.zip"
+              ditto -c -k --keepParent "$APP_PATH" "release-ios/$ZIP_NAME"
+              echo "Packaged: $ZIP_NAME"
+            fi
+          done
+
+          echo "iOS artifacts:"
+          ls -lh release-ios/ || echo "(none built)"
+
+      - name: Upload iOS artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-apps
+          path: release-ios/
+          retention-days: 7
+
   # ── Create GitHub Release with all artifacts ──────────────────────────────
   create-release:
     name: Create GitHub Release
-    needs: [deploy-pages, build-android]
+    needs: [deploy-pages, build-android, build-ios]
     runs-on: ubuntu-latest
     steps:
       - name: Resolve tag
@@ -171,6 +244,12 @@ jobs:
         with:
           name: android-apks
           path: release-apks/
+
+      - name: Download iOS artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: ios-apps
+          path: release-ios/
 
       - name: Zip web build
         run: zip -r "web-build-${{ env.TAG }}.zip" web-build/
@@ -201,15 +280,30 @@ jobs:
           | 🏭 Kamps Smart Factory | \`KampsSmartFactory-${TAG}.apk\` | Industrial IoT Smart Factory dashboard |
           | 📹 Embedded Video | \`EmbeddedVideoEngineer-${TAG}.apk\` | Embedded Video Systems reference app |
 
-          ### Installation Steps (Android)
+          #### Android Installation Steps
           1. Tap a \`.apk\` file below to download it
           2. Open the file on your Android device
           3. Allow installation from unknown sources when prompted
-          4. Tap **Install**"
+          4. Tap **Install**
+
+          ### 🍎 iOS Apps (Simulator Builds)
+          Simulator builds are provided as \`.zip\` archives containing \`.app\` bundles.
+          Drag a \`.app\` bundle into a running iOS Simulator to install it.
+
+          | App | Archive | Description |
+          |-----|---------|-------------|
+          | 📚 Book Store | \`BookStore-${TAG}-ios-sim.zip\` | SwiftUI bookstore — browse, cart & checkout |
+          | 🛒 Computer Store | \`ComputerStore-${TAG}-ios-sim.zip\` | SwiftUI computer & electronics e-commerce |
+          | ♠️ Poker App | \`PokerApp-${TAG}-ios-sim.zip\` | SwiftUI poker game with betting & chip count |
+          | 🏭 Kamps Smart Factory | \`KampsSmartFactory-${TAG}-ios-sim.zip\` | SwiftUI IoT Smart Factory dashboard |
+          | 📹 Embedded Video | \`EmbeddedVideoEngineer-${TAG}-ios-sim.zip\` | SwiftUI multi-camera embedded video viewer |"
 
           ASSETS=(web-build-${TAG}.zip)
           if ls release-apks/*.apk 1>/dev/null 2>&1; then
             ASSETS+=( release-apks/*.apk )
+          fi
+          if ls release-ios/*.zip 1>/dev/null 2>&1; then
+            ASSETS+=( release-ios/*.zip )
           fi
 
           if gh release view "$TAG" &>/dev/null; then

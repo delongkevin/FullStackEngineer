@@ -1,0 +1,15 @@
+name: BookStore
+options:
+  bundleIdPrefix: com.yourname
+  deploymentTarget:
+    iOS: "16.0"
+targets:
+  BookStore:
+    type: application
+    platform: iOS
+    sources: BookStore
+    settings:
+      base:
+        SWIFT_VERSION: 5.9
+        PRODUCT_BUNDLE_IDENTIFIER: com.yourname.bookstore
+        INFOPLIST_FILE: BookStore/Info.plist
