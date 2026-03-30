@@ -292,6 +292,30 @@ export const projects: Project[] = [
     embeddable: true,
     projectPath: '/projects/dornerworks-iot',
   },
+  {
+    id: 14,
+    slug: 'embedded-video-engineer',
+    title: 'Embedded Video Systems Engineer',
+    description: 'Interactive embedded video systems dashboard — live H.265/AV1 pipeline, VPU metrics, codec tuning, and multi-platform mobile targets',
+    fullDescription: 'EmbedVision is a full-stack demo built for an Embedded Systems Engineer (Video focus) role. It simulates a production-grade video pipeline running on an NXP i.MX8M Plus SoC: dual MIPI CSI-2 camera ingestion, ISP image processing, hardware-accelerated H.265/H.264/AV1 encoding via VPU, RTSP streaming over GigE, and real-time NPU object detection (YOLOv8). The interactive dashboard showcases ARM Cortex, FreeRTOS/Yocto Linux, GStreamer v4l2 driver stacks, codec parameter tuning, system diagnostics, and cross-platform mobile targets (iOS Swift, Android Kotlin, Flutter, React Native) — all directly aligned with the skills required by the job description.',
+    image: '/images/embedded-video-engineer.png',
+    tech: ['C/C++', 'Embedded Linux', 'RTOS', 'GStreamer', 'V4L2', 'H.265', 'H.264', 'AV1', 'ARM Cortex', 'VPU', 'MIPI CSI-2', 'Yocto', 'Flutter', 'React Native', 'Swift', 'Kotlin'],
+    liveUrl: '/projects/embedded-video-engineer/index.html',
+    githubUrl: 'https://github.com/delongkevin/FullStackEngineer',
+    featured: true,
+    category: 'Automotive',
+    features: [
+      'Live H.265/H.264/AV1/MJPEG codec configuration with bitrate, GOP, QP sliders',
+      'Animated 4K video feed with real-time bounding-box object detection overlay',
+      'NXP i.MX8M Plus SoC dashboard — CPU, GPU/VPU, temperature, memory & PCIe bandwidth',
+      'Full GStreamer + V4L2 driver stack status and kernel dmesg boot log simulation',
+      'MIPI CSI-2, HDMI 2.0, GigE RTSP, and USB 3.1 UVC hardware interface panel',
+      'Cross-platform mobile targets: iOS (AVFoundation), Android (MediaCodec), Flutter, React Native',
+      'Interactive resolution presets (720p → 8K) and HW acceleration toggles',
+    ],
+    embeddable: true,
+    projectPath: '/projects/embedded-video-engineer',
+  },
   // Add any other projects you have with sequential IDs
 ];
 
