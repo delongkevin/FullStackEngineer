@@ -1,0 +1,124 @@
+name: Release Android Apps
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag (e.g. v1.0.0)'
+        required: false
+        default: 'v1.0.0'
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: '8.4'
+
+      - name: Accept Android SDK licenses
+        run: yes | ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --licenses 2>/dev/null || true
+
+      - name: Build Book App APK
+        working-directory: android
+        run: gradle :book-app:assembleDebug --no-daemon
+
+      - name: Build Computer Store APK
+        working-directory: android
+        run: gradle :computer-store:assembleDebug --no-daemon
+
+      - name: Build Poker App APK
+        working-directory: android
+        run: gradle :poker-app:assembleDebug --no-daemon
+
+      - name: Build Kamps Factory APK
+        working-directory: android
+        run: gradle :kamps-factory:assembleDebug --no-daemon
+
+      - name: Build Embedded Video APK
+        working-directory: android
+        run: gradle :embedded-video:assembleDebug --no-daemon
+
+      - name: Collect and rename APKs
+        run: |
+          mkdir -p release-apks
+          find android -path "*/outputs/apk/debug/*.apk" | while read f; do
+            echo "Found APK: $f"
+            cp "$f" release-apks/
+          done
+          ls -la release-apks/
+          # Rename APKs to friendly names
+          for apk in release-apks/*.apk; do
+            base=$(basename "$apk" .apk)
+            case "$base" in
+              *book-app*) mv "$apk" "release-apks/BookStore-v1.0.0.apk" ;;
+              *computer-store*) mv "$apk" "release-apks/ComputerStore-v1.0.0.apk" ;;
+              *poker-app*) mv "$apk" "release-apks/PokerApp-v1.0.0.apk" ;;
+              *kamps-factory*) mv "$apk" "release-apks/KampsSmartFactory-v1.0.0.apk" ;;
+              *embedded-video*) mv "$apk" "release-apks/EmbeddedVideoEngineer-v1.0.0.apk" ;;
+            esac
+          done
+          echo "Final APKs:"
+          ls -la release-apks/
+
+      - name: Create or update GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="${{ github.event.inputs.tag }}"
+          if [ -z "$TAG" ]; then
+            TAG="${{ github.ref_name }}"
+          fi
+          if [ -z "$TAG" ] || [ "$TAG" = "main" ]; then
+            TAG="v1.0.0"
+          fi
+
+          NOTES="## 📱 Android App Downloads
+
+Download and install these APKs on your Android device.
+
+> **Note:** You may need to enable **Install from unknown sources** in your device settings (Settings → Security → Install unknown apps).
+
+### Available Apps
+
+| App | APK File | Description |
+|-----|----------|-------------|
+| 📚 Book Store | \`BookStore-v1.0.0.apk\` | Native Android bookstore — browse, cart & checkout (Kotlin + MVVM) |
+| 🛒 Computer Store | \`ComputerStore-v1.0.0.apk\` | Computer & electronics e-commerce app |
+| ♠️ Poker App | \`PokerApp-v1.0.0.apk\` | Interactive poker game with betting & UI |
+| 🏭 Kamps Smart Factory | \`KampsSmartFactory-v1.0.0.apk\` | Industrial IoT Smart Factory dashboard |
+| 📹 Embedded Video | \`EmbeddedVideoEngineer-v1.0.0.apk\` | Embedded Video Systems reference app |
+
+### Installation Steps
+1. Tap a \`.apk\` file below to download it
+2. Open the file on your Android device
+3. Allow installation from unknown sources when prompted
+4. Tap **Install**"
+
+          if gh release view "$TAG" &>/dev/null; then
+            echo "Release $TAG already exists — uploading APKs..."
+            gh release upload "$TAG" release-apks/*.apk --clobber
+          else
+            echo "Creating release $TAG..."
+            gh release create "$TAG" release-apks/*.apk \
+              --title "📱 Mobile Apps $TAG" \
+              --notes "$NOTES" \
+              --latest
+          fi
