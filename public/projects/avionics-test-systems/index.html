@@ -550,7 +550,7 @@
               <div class="sl-sub">API 26+ · Material Design · Gradle 8</div>
             </div>
             <a href="https://github.com/delongkevin/FullStackEngineer/releases/latest"
-               target="_blank" style="text-decoration:none;">
+               target="_blank" rel="noopener noreferrer" style="text-decoration:none;">
               <span class="sl-badge bg">↓ APK</span>
             </a>
           </div>
@@ -560,7 +560,7 @@
               <div class="sl-sub">iOS 15+ · TestFlight · Xcode 15</div>
             </div>
             <a href="https://github.com/delongkevin/FullStackEngineer/releases/latest"
-               target="_blank" style="text-decoration:none;">
+               target="_blank" rel="noopener noreferrer" style="text-decoration:none;">
               <span class="sl-badge bg">TestFlight</span>
             </a>
           </div>
@@ -652,6 +652,7 @@ function showScreen(idx, btn) {
 // ── KPI counters ────────────────────────────────────────────────────────────
 let passCount = 1247, failCount = 18;
 function updateKPI() {
+  if (document.hidden) return;
   const delta = Math.random() < .3 ? 1 : 0;
   if (Math.random() < .95) passCount += delta;
   else failCount += delta;
@@ -678,27 +679,43 @@ updateKPI();
 // ── Waveform canvas ─────────────────────────────────────────────────────────
 const wc = document.getElementById('waveCanvas');
 const wx = wc.getContext('2d');
-wc.width = wc.offsetWidth * devicePixelRatio || 400;
-wc.height = 60;
 let wOffset = 0;
-function drawWave() {
-  wc.width = wc.offsetWidth * (devicePixelRatio||1);
-  const W = wc.width, H = wc.height;
-  wx.fillStyle = '#060a10';
-  wx.fillRect(0, 0, W, H);
-  wx.strokeStyle = '#4da6ff';
-  wx.lineWidth = 1.5;
-  wx.beginPath();
-  for (let x = 0; x < W; x++) {
-    const t = (x + wOffset) / W;
-    const y = H/2 - (Math.sin(t * Math.PI * 14) * 0.6 + Math.sin(t * Math.PI * 3) * 0.25) * H * 0.38;
-    x === 0 ? wx.moveTo(x, y) : wx.lineTo(x, y);
-  }
-  wx.stroke();
-  wOffset = (wOffset + 1.2) % (W * 2);
-  requestAnimationFrame(drawWave);
+function resizeWaveCanvas() {
+  const dpr = window.devicePixelRatio || 1;
+  const logicalWidth = wc.offsetWidth || wc.clientWidth || 400;
+  wc.width = logicalWidth * dpr;
+  wc.height = 60;
 }
-drawWave();
+resizeWaveCanvas();
+window.addEventListener('resize', resizeWaveCanvas);
+window.addEventListener('orientationchange', resizeWaveCanvas);
+let waveRafId = null;
+function drawWave() {
+  if (!document.hidden) {
+    const W = wc.width, H = wc.height;
+    wx.fillStyle = '#060a10';
+    wx.fillRect(0, 0, W, H);
+    wx.strokeStyle = '#4da6ff';
+    wx.lineWidth = 1.5;
+    wx.beginPath();
+    for (let x = 0; x < W; x++) {
+      const t = (x + wOffset) / W;
+      const y = H/2 - (Math.sin(t * Math.PI * 14) * 0.6 + Math.sin(t * Math.PI * 3) * 0.25) * H * 0.38;
+      x === 0 ? wx.moveTo(x, y) : wx.lineTo(x, y);
+    }
+    wx.stroke();
+    wOffset = (wOffset + 1.2) % (W * 2);
+  }
+  waveRafId = requestAnimationFrame(drawWave);
+}
+waveRafId = requestAnimationFrame(drawWave);
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) {
+    if (waveRafId) { cancelAnimationFrame(waveRafId); waveRafId = null; }
+  } else {
+    if (!waveRafId) waveRafId = requestAnimationFrame(drawWave);
+  }
+});
 
 // ── Trend chart ──────────────────────────────────────────────────────────────
 const tc = document.getElementById('trendCanvas');
@@ -740,12 +757,14 @@ const labels = {
   150: {name:'Lat Acc',  unit:'g',   raw:'0x08FE22', decode: () => (0.03 + (Math.random()-.5)*.005).toFixed(3)},
 };
 function updateLabel() {
+  if (document.hidden) return;
   const lbl = document.getElementById('lblSel').value;
   const d = labels[lbl];
   document.getElementById('lbl-raw').textContent = d.raw;
   document.getElementById('lbl-dec').textContent = d.decode() + ' ' + d.unit;
 }
 setInterval(updateLabel, 1500);
+updateLabel();
 
 const arincLog = document.getElementById('arincLog');
 const arincWords = [
@@ -757,10 +776,13 @@ const arincWords = [
 ];
 let arincIdx = 0;
 function pushArinc() {
+  if (document.hidden) return;
   const [raw, lbl, name, val, st] = arincWords[arincIdx++ % arincWords.length];
   const cls = st === 'err' ? 'log-err' : 'log-ok';
-  arincLog.innerHTML += `<span class="${cls}">[ARINC429] Lbl ${lbl} (${name}): ${val}  raw=${raw}</span><br>`;
-  if (arincLog.children.length > 20) arincLog.removeChild(arincLog.firstChild);
+  const div = document.createElement('div');
+  div.innerHTML = `<span class="${cls}">[ARINC429] Lbl ${lbl} (${name}): ${val}  raw=${raw}</span>`;
+  arincLog.appendChild(div);
+  while (arincLog.children.length > 20) arincLog.removeChild(arincLog.firstChild);
   arincLog.scrollTop = arincLog.scrollHeight;
 }
 setInterval(pushArinc, 900);
@@ -776,8 +798,11 @@ const nmeaSentences = [
 ];
 let sIdx = 0;
 function pushSerial() {
-  serialLog.innerHTML += `<span class="log-inf">${nmeaSentences[sIdx++ % nmeaSentences.length]}</span><br>`;
-  if (serialLog.children.length > 15) serialLog.removeChild(serialLog.firstChild);
+  if (document.hidden) return;
+  const div = document.createElement('div');
+  div.innerHTML = `<span class="log-inf">${nmeaSentences[sIdx++ % nmeaSentences.length]}</span>`;
+  serialLog.appendChild(div);
+  while (serialLog.children.length > 15) serialLog.removeChild(serialLog.firstChild);
   serialLog.scrollTop = serialLog.scrollHeight;
 }
 setInterval(pushSerial, 1100);
@@ -793,12 +818,15 @@ const canFrames = [
 ];
 let cIdx = 0;
 function pushCAN() {
+  if (document.hidden) return;
   const [id, dlc, data, name] = canFrames[cIdx++ % canFrames.length];
   const load = Math.round(35 + Math.random() * 8);
   document.getElementById('can-load').textContent = load + '%';
   document.getElementById('can-load-bar').style.width = load + '%';
-  canLog.innerHTML += `<span class="log-ok">[CAN] ID=${id} DLC=${dlc} [${data}] &lt;${name}&gt;</span><br>`;
-  if (canLog.children.length > 20) canLog.removeChild(canLog.firstChild);
+  const div = document.createElement('div');
+  div.innerHTML = `<span class="log-ok">[CAN] ID=${id} DLC=${dlc} [${data}] &lt;${name}&gt;</span>`;
+  canLog.appendChild(div);
+  while (canLog.children.length > 20) canLog.removeChild(canLog.firstChild);
   canLog.scrollTop = canLog.scrollHeight;
 }
 setInterval(pushCAN, 800);
@@ -819,6 +847,7 @@ achDiv.innerHTML = achNames.map(([ch, name, unit, lo, hi]) =>
   </div>`
 ).join('');
 function updateAnalog() {
+  if (document.hidden) return;
   achNames.forEach(([ch, , unit, lo, hi]) => {
     const v = lo + Math.random() * (hi - lo);
     document.getElementById(`achv-${ch}`).textContent = v.toFixed(3) + ' ' + unit;
