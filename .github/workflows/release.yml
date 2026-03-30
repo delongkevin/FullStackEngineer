@@ -1,0 +1,314 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag (e.g. v1.2.0)'
+        required: true
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  # ── Gate: lint + test + build ──────────────────────────────────────────────
+  ci:
+    name: CI Gate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm run test
+
+      - name: Build static site
+        run: npm run build
+
+      - name: Check key pages exist in build output
+        run: bash scripts/check-pages.sh
+
+      - name: Upload site artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-build
+          path: out/
+          retention-days: 7
+
+  # ── Deploy web app to GitHub Pages ────────────────────────────────────────
+  deploy-pages:
+    name: Deploy to GitHub Pages
+    needs: ci
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download built site artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: web-build
+          path: out
+
+      - name: Deploy to Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./out
+
+  # ── Build Android APKs ────────────────────────────────────────────────────
+  build-android:
+    name: Build Android APKs
+    needs: ci
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v3
+        with:
+          gradle-version: '8.4'
+
+      - name: Accept Android SDK licenses
+        run: yes | ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --licenses 2>/dev/null || true
+
+      - name: Build all APKs
+        working-directory: android
+        run: gradle assembleDebug --no-daemon
+
+      - name: Collect and rename APKs
+        run: |
+          TAG="${{ github.event.inputs.tag }}"
+          if [ -z "$TAG" ]; then
+            TAG="${{ github.ref_name }}"
+          fi
+          if [ -z "$TAG" ] || [ "$TAG" = "main" ]; then
+            TAG="v1.0.0"
+          fi
+          echo "TAG=$TAG" >> "$GITHUB_ENV"
+
+          mkdir -p release-apks
+          find android -path "*/outputs/apk/debug/*.apk" | while read f; do
+            cp "$f" release-apks/
+          done
+
+          for apk in release-apks/*.apk; do
+            base=$(basename "$apk" .apk)
+            case "$base" in
+              *book-app*)      mv "$apk" "release-apks/BookStore-${TAG}.apk" ;;
+              *computer-store*) mv "$apk" "release-apks/ComputerStore-${TAG}.apk" ;;
+              *poker-app*)     mv "$apk" "release-apks/PokerApp-${TAG}.apk" ;;
+              *kamps-factory*) mv "$apk" "release-apks/KampsSmartFactory-${TAG}.apk" ;;
+              *embedded-video*) mv "$apk" "release-apks/EmbeddedVideoEngineer-${TAG}.apk" ;;
+            esac
+          done
+          echo "Final APKs:"
+          ls -la release-apks/
+
+      - name: Upload APK artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-apks
+          path: release-apks/
+          retention-days: 7
+
+  # ── Build iOS apps ────────────────────────────────────────────────────────
+  build-ios:
+    name: Build iOS Apps
+    needs: ci
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Resolve tag
+        run: |
+          TAG="${{ github.event.inputs.tag }}"
+          if [ -z "$TAG" ]; then
+            TAG="${{ github.ref_name }}"
+          fi
+          if [ -z "$TAG" ] || [ "$TAG" = "main" ]; then
+            TAG="v1.0.0"
+          fi
+          echo "TAG=$TAG" >> "$GITHUB_ENV"
+
+      - name: Install xcpretty
+        run: gem install xcpretty --no-document
+
+      - name: Generate Xcode projects and build
+        run: |
+          TAG="${{ env.TAG }}"
+          mkdir -p release-ios
+
+          declare -A APPS
+          APPS[book-app]="BookStore"
+          APPS[computer-store]="ComputerStore"
+          APPS[poker-app]="PokerApp"
+          APPS[kamps-factory]="KampsSmartFactory"
+          APPS[embedded-video]="EmbeddedVideoEngineer"
+
+          set -o pipefail
+          for dir in "${!APPS[@]}"; do
+            name="${APPS[$dir]}"
+            echo "▶ Generating $name.xcodeproj..."
+            (cd "ios/$dir" && xcodegen generate)
+
+            echo "▶ Building $name for simulator..."
+            xcodebuild \
+              -project "ios/$dir/$name.xcodeproj" \
+              -scheme "$name" \
+              -sdk iphonesimulator \
+              -configuration Debug \
+              -derivedDataPath "build/$dir" \
+              CODE_SIGNING_ALLOWED=NO \
+              build 2>&1 | xcpretty
+
+            APP_PATH=$(find "build/$dir" -name "$name.app" -type d | head -1)
+            if [ -z "$APP_PATH" ]; then
+              echo "::error::Failed to locate $name.app in build/$dir after successful build"
+              exit 1
+            fi
+
+            ZIP_NAME="${name}-${TAG}-ios-sim.zip"
+            ditto -c -k --keepParent "$APP_PATH" "release-ios/$ZIP_NAME"
+            echo "Packaged: $ZIP_NAME"
+          done
+          set +o pipefail
+
+          echo "iOS artifacts:"
+          ls -lh release-ios/
+
+      - name: Upload iOS artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-apps
+          path: release-ios/
+          retention-days: 7
+
+  # ── Create GitHub Release with all artifacts ──────────────────────────────
+  create-release:
+    name: Create GitHub Release
+    needs: [deploy-pages, build-android, build-ios]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Resolve tag
+        run: |
+          TAG="${{ github.event.inputs.tag }}"
+          if [ -z "$TAG" ]; then
+            TAG="${{ github.ref_name }}"
+          fi
+          if [ -z "$TAG" ] || [ "$TAG" = "main" ]; then
+            TAG="v1.0.0"
+          fi
+          echo "TAG=$TAG" >> "$GITHUB_ENV"
+
+      - name: Download web build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: web-build
+          path: web-build/
+
+      - name: Download Android APK artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: android-apks
+          path: release-apks/
+
+      - name: Download iOS artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: ios-apps
+          path: release-ios/
+
+      - name: Zip web build
+        run: zip -r "web-build-${{ env.TAG }}.zip" web-build/
+
+      - name: Create or update GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="${{ env.TAG }}"
+
+          NOTES="## 🚀 Release $TAG
+
+          ### 🌐 Web App
+          The portfolio site is deployed at: https://delongkevin.github.io/FullStackEngineer/
+
+          A static copy of the build is attached as \`web-build-${TAG}.zip\`.
+
+          ### 📱 Android Apps
+          Download and install these APKs on your Android device.
+
+          > **Note:** You may need to enable **Install from unknown sources** in your device settings (Settings → Security → Install unknown apps).
+
+          | App | APK File | Description |
+          |-----|----------|-------------|
+          | 📚 Book Store | \`BookStore-${TAG}.apk\` | Native Android bookstore — browse, cart & checkout (Kotlin + MVVM) |
+          | 🛒 Computer Store | \`ComputerStore-${TAG}.apk\` | Computer & electronics e-commerce app |
+          | ♠️ Poker App | \`PokerApp-${TAG}.apk\` | Interactive poker game with betting & UI |
+          | 🏭 Kamps Smart Factory | \`KampsSmartFactory-${TAG}.apk\` | Industrial IoT Smart Factory dashboard |
+          | 📹 Embedded Video | \`EmbeddedVideoEngineer-${TAG}.apk\` | Embedded Video Systems reference app |
+
+          #### Android Installation Steps
+          1. Tap a \`.apk\` file below to download it
+          2. Open the file on your Android device
+          3. Allow installation from unknown sources when prompted
+          4. Tap **Install**
+
+          ### 🍎 iOS Apps (Simulator Builds)
+          Simulator builds are provided as \`.zip\` archives containing \`.app\` bundles.
+          Drag a \`.app\` bundle into a running iOS Simulator to install it.
+
+          | App | Archive | Description |
+          |-----|---------|-------------|
+          | 📚 Book Store | \`BookStore-${TAG}-ios-sim.zip\` | SwiftUI bookstore — browse, cart & checkout |
+          | 🛒 Computer Store | \`ComputerStore-${TAG}-ios-sim.zip\` | SwiftUI computer & electronics e-commerce |
+          | ♠️ Poker App | \`PokerApp-${TAG}-ios-sim.zip\` | SwiftUI poker game with betting & chip count |
+          | 🏭 Kamps Smart Factory | \`KampsSmartFactory-${TAG}-ios-sim.zip\` | SwiftUI IoT Smart Factory dashboard |
+          | 📹 Embedded Video | \`EmbeddedVideoEngineer-${TAG}-ios-sim.zip\` | SwiftUI multi-camera embedded video viewer |"
+
+          ASSETS=(web-build-${TAG}.zip)
+          if ls release-apks/*.apk 1>/dev/null 2>&1; then
+            ASSETS+=( release-apks/*.apk )
+          fi
+          if ls release-ios/*.zip 1>/dev/null 2>&1; then
+            ASSETS+=( release-ios/*.zip )
+          fi
+
+          if gh release view "$TAG" &>/dev/null; then
+            echo "Release $TAG already exists — uploading assets..."
+            gh release upload "$TAG" "${ASSETS[@]}" --clobber
+          else
+            echo "Creating release $TAG..."
+            gh release create "$TAG" "${ASSETS[@]}" \
+              --title "🚀 Release $TAG" \
+              --notes "$NOTES" \
+              --latest
+          fi
