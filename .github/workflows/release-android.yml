@@ -79,25 +79,25 @@ jobs:
 
           NOTES="## 📱 Android App Downloads
 
-Download and install these APKs on your Android device.
+          Download and install these APKs on your Android device.
 
-> **Note:** You may need to enable **Install from unknown sources** in your device settings (Settings → Security → Install unknown apps).
+          > **Note:** You may need to enable **Install from unknown sources** in your device settings (Settings → Security → Install unknown apps).
 
-### Available Apps
+          ### Available Apps
 
-| App | APK File | Description |
-|-----|----------|-------------|
-| 📚 Book Store | \`BookStore-${TAG}.apk\` | Native Android bookstore — browse, cart & checkout (Kotlin + MVVM) |
-| 🛒 Computer Store | \`ComputerStore-${TAG}.apk\` | Computer & electronics e-commerce app |
-| ♠️ Poker App | \`PokerApp-${TAG}.apk\` | Interactive poker game with betting & UI |
-| 🏭 Kamps Smart Factory | \`KampsSmartFactory-${TAG}.apk\` | Industrial IoT Smart Factory dashboard |
-| 📹 Embedded Video | \`EmbeddedVideoEngineer-${TAG}.apk\` | Embedded Video Systems reference app |
+          | App | APK File | Description |
+          |-----|----------|-------------|
+          | 📚 Book Store | \`BookStore-${TAG}.apk\` | Native Android bookstore — browse, cart & checkout (Kotlin + MVVM) |
+          | 🛒 Computer Store | \`ComputerStore-${TAG}.apk\` | Computer & electronics e-commerce app |
+          | ♠️ Poker App | \`PokerApp-${TAG}.apk\` | Interactive poker game with betting & UI |
+          | 🏭 Kamps Smart Factory | \`KampsSmartFactory-${TAG}.apk\` | Industrial IoT Smart Factory dashboard |
+          | 📹 Embedded Video | \`EmbeddedVideoEngineer-${TAG}.apk\` | Embedded Video Systems reference app |
 
-### Installation Steps
-1. Tap a \`.apk\` file below to download it
-2. Open the file on your Android device
-3. Allow installation from unknown sources when prompted
-4. Tap **Install**"
+          ### Installation Steps
+          1. Tap a \`.apk\` file below to download it
+          2. Open the file on your Android device
+          3. Allow installation from unknown sources when prompted
+          4. Tap **Install**"
 
           if gh release view "$TAG" &>/dev/null; then
             echo "Release $TAG already exists — uploading APKs..."
