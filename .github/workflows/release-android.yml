@@ -36,43 +36,36 @@ jobs:
       - name: Accept Android SDK licenses
         run: yes | ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --licenses 2>/dev/null || true
 
-      - name: Build Book App APK
+      - name: Build all APKs
         working-directory: android
-        run: gradle :book-app:assembleDebug --no-daemon
-
-      - name: Build Computer Store APK
-        working-directory: android
-        run: gradle :computer-store:assembleDebug --no-daemon
-
-      - name: Build Poker App APK
-        working-directory: android
-        run: gradle :poker-app:assembleDebug --no-daemon
-
-      - name: Build Kamps Factory APK
-        working-directory: android
-        run: gradle :kamps-factory:assembleDebug --no-daemon
-
-      - name: Build Embedded Video APK
-        working-directory: android
-        run: gradle :embedded-video:assembleDebug --no-daemon
+        run: gradle assembleDebug --no-daemon
 
       - name: Collect and rename APKs
         run: |
+          TAG="${{ github.event.inputs.tag }}"
+          if [ -z "$TAG" ]; then
+            TAG="${{ github.ref_name }}"
+          fi
+          if [ -z "$TAG" ] || [ "$TAG" = "main" ]; then
+            TAG="v1.0.0"
+          fi
+          echo "TAG=$TAG" >> "$GITHUB_ENV"
+
           mkdir -p release-apks
           find android -path "*/outputs/apk/debug/*.apk" | while read f; do
             echo "Found APK: $f"
             cp "$f" release-apks/
           done
           ls -la release-apks/
-          # Rename APKs to friendly names
+          # Rename APKs to friendly names including version tag
           for apk in release-apks/*.apk; do
             base=$(basename "$apk" .apk)
             case "$base" in
-              *book-app*) mv "$apk" "release-apks/BookStore-v1.0.0.apk" ;;
-              *computer-store*) mv "$apk" "release-apks/ComputerStore-v1.0.0.apk" ;;
-              *poker-app*) mv "$apk" "release-apks/PokerApp-v1.0.0.apk" ;;
-              *kamps-factory*) mv "$apk" "release-apks/KampsSmartFactory-v1.0.0.apk" ;;
-              *embedded-video*) mv "$apk" "release-apks/EmbeddedVideoEngineer-v1.0.0.apk" ;;
+              *book-app*) mv "$apk" "release-apks/BookStore-${TAG}.apk" ;;
+              *computer-store*) mv "$apk" "release-apks/ComputerStore-${TAG}.apk" ;;
+              *poker-app*) mv "$apk" "release-apks/PokerApp-${TAG}.apk" ;;
+              *kamps-factory*) mv "$apk" "release-apks/KampsSmartFactory-${TAG}.apk" ;;
+              *embedded-video*) mv "$apk" "release-apks/EmbeddedVideoEngineer-${TAG}.apk" ;;
             esac
           done
           echo "Final APKs:"
@@ -82,13 +75,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          TAG="${{ github.event.inputs.tag }}"
-          if [ -z "$TAG" ]; then
-            TAG="${{ github.ref_name }}"
-          fi
-          if [ -z "$TAG" ] || [ "$TAG" = "main" ]; then
-            TAG="v1.0.0"
-          fi
+          TAG="${{ env.TAG }}"
 
           NOTES="## 📱 Android App Downloads
 
@@ -100,11 +87,11 @@ Download and install these APKs on your Android device.
 
 | App | APK File | Description |
 |-----|----------|-------------|
-| 📚 Book Store | \`BookStore-v1.0.0.apk\` | Native Android bookstore — browse, cart & checkout (Kotlin + MVVM) |
-| 🛒 Computer Store | \`ComputerStore-v1.0.0.apk\` | Computer & electronics e-commerce app |
-| ♠️ Poker App | \`PokerApp-v1.0.0.apk\` | Interactive poker game with betting & UI |
-| 🏭 Kamps Smart Factory | \`KampsSmartFactory-v1.0.0.apk\` | Industrial IoT Smart Factory dashboard |
-| 📹 Embedded Video | \`EmbeddedVideoEngineer-v1.0.0.apk\` | Embedded Video Systems reference app |
+| 📚 Book Store | \`BookStore-${TAG}.apk\` | Native Android bookstore — browse, cart & checkout (Kotlin + MVVM) |
+| 🛒 Computer Store | \`ComputerStore-${TAG}.apk\` | Computer & electronics e-commerce app |
+| ♠️ Poker App | \`PokerApp-${TAG}.apk\` | Interactive poker game with betting & UI |
+| 🏭 Kamps Smart Factory | \`KampsSmartFactory-${TAG}.apk\` | Industrial IoT Smart Factory dashboard |
+| 📹 Embedded Video | \`EmbeddedVideoEngineer-${TAG}.apk\` | Embedded Video Systems reference app |
 
 ### Installation Steps
 1. Tap a \`.apk\` file below to download it
