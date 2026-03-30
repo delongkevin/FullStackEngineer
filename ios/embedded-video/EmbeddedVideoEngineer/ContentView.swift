@@ -55,7 +55,7 @@ struct ContentView: View {
 }
 
 struct VideoStream: Identifiable, Hashable {
-    let id = UUID()
+    var id: String { name }
     let name: String
     let codec: String
     let resolution: String

@@ -14,7 +14,7 @@ struct ContentView: View {
     var message: String {
         switch gameState {
         case .idle:  return "Place your bet and deal!"
-        case .dealt: return "Cards dealt — tap New Hand to continue."
+        case .dealt: return "You've been dealt a hand — decide and tap New Hand."
         case .won:   return "🎉 You win \(bet) chips!"
         case .lost:  return "😔 You lost \(bet) chips."
         }
@@ -60,11 +60,14 @@ struct ContentView: View {
                         if chips <= 0 { chips = 1000 }
                     }
                     .buttonStyle(.borderedProminent)
-                    .disabled(gameState == .dealt)
+                    .disabled(gameState != .idle)
 
-                    Button("New Hand") { hand = []; gameState = .idle }
-                        .buttonStyle(.bordered)
-                        .disabled(gameState == .idle)
+                    Button("New Hand") {
+                        hand = []
+                        gameState = .idle
+                    }
+                    .buttonStyle(.bordered)
+                    .disabled(gameState == .idle)
                 }
             }
             .padding()
