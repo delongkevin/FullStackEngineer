@@ -424,12 +424,18 @@
                     const dealerDraw = () => {
                         if (currentDealerTotal < 17) {
                             setTimeout(() => {
-                                const newCard = currentDeck.pop();
-                                currentDealerHand.push(newCard);
-                                currentDealerTotal = calculateTotal(currentDealerHand);
+                                // Draw a card immutably: create new deck and dealer hand arrays
+                                const lastIndex = currentDeck.length - 1;
+                                const newCard = currentDeck[lastIndex];
+                                const nextDeck = currentDeck.slice(0, lastIndex);
+                                const nextDealerHand = [...currentDealerHand, newCard];
 
-                                setDeckSync(currentDeck);
-                                setDealerHandSync(currentDealerHand);
+                                currentDeck = nextDeck;
+                                currentDealerHand = nextDealerHand;
+                                currentDealerTotal = calculateTotal(nextDealerHand);
+
+                                setDeckSync(nextDeck);
+                                setDealerHandSync(nextDealerHand);
                                 setDealerTotal(currentDealerTotal);
 
                                 dealerDraw();

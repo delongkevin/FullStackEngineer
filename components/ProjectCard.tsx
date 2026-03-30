@@ -29,7 +29,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             {project.embeddable && (
               <div className="mt-2 flex items-center justify-center gap-1 text-sm">
                 <Play size={16} aria-hidden="true" />
-                Playable Demo
+                Live Demo
               </div>
             )}
           </div>
@@ -97,7 +97,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             {project.embeddable ? (
               <>
                 <Play size={18} aria-hidden="true" />
-                Play Demo
+                View Demo
               </>
             ) : (
               'View Details'

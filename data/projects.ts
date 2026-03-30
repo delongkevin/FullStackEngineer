@@ -388,7 +388,7 @@ export const projects: Project[] = [
     fullDescription: 'A native Android application built with Kotlin and Android Studio targeting Android 8.0+. Features a book catalog browsing experience with categories, a full shopping cart, checkout flow with order summary, and an order history screen. The app uses Jetpack components (ViewBinding, Navigation, LiveData, ViewModel) and Material Design 3 for a polished, accessible UI.',
     image: '/images/book-app-android.png',
     tech: ['Kotlin', 'Android', 'Jetpack', 'Material Design', 'Gradle', 'ViewModel', 'LiveData', 'Navigation'],
-    liveUrl: '/projects/mobile-BookApp_Andriod/index.html',
+    liveUrl: '/projects/mobile-BookApp_Android/index.html',
     githubUrl: 'https://github.com/delongkevin/FullStackEngineer',
     featured: false,
     category: 'mobile',
@@ -404,7 +404,7 @@ export const projects: Project[] = [
       'APK buildable directly in Android Studio or via Gradle',
     ],
     embeddable: true,
-    projectPath: '/projects/mobile-BookApp_Andriod',
+    projectPath: '/projects/mobile-BookApp_Android',
     androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/latest',
   },
   // Add any other projects you have with sequential IDs

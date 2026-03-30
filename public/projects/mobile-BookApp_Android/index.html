@@ -178,17 +178,17 @@
 
 <!-- Bottom Navigation -->
 <nav class="bottom-nav">
-  <button class="nav-item active" onclick="switchNav('books')">
+  <button class="nav-item active" onclick="switchNav('books', this)">
     <span class="nav-icon">📚</span>Books
   </button>
-  <button class="nav-item" onclick="switchNav('cart')" id="nav-cart" style="position:relative">
+  <button class="nav-item" onclick="switchNav('cart', this)" id="nav-cart" style="position:relative">
     <span class="nav-icon">🛒</span>Cart
     <span class="nav-badge" id="cart-badge" style="display:none">0</span>
   </button>
-  <button class="nav-item" onclick="switchNav('orders')">
+  <button class="nav-item" onclick="switchNav('orders', this)">
     <span class="nav-icon">📦</span>Orders
   </button>
-  <button class="nav-item" onclick="switchNav('download')">
+  <button class="nav-item" onclick="switchNav('download', this)">
     <span class="nav-icon">⬇️</span>Download
   </button>
 </nav>
@@ -318,11 +318,11 @@ function renderOrders() {
     </div>`).join('');
 }
 
-function switchNav(tab) {
+function switchNav(tab, el) {
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   document.getElementById('screen-'+tab).classList.add('active');
-  event.currentTarget.classList.add('active');
+  el.classList.add('active');
   if(tab==='cart') renderCart();
   if(tab==='orders') renderOrders();
 }

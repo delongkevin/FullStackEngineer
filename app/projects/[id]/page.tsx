@@ -82,10 +82,10 @@ export default function ProjectDetail({ params }: PageProps) {
                     className="btn-primary inline-flex items-center gap-2"
                     target={project.liveUrl.startsWith('http') ? '_blank' : '_self'}
                     rel={project.liveUrl.startsWith('http') ? 'noopener noreferrer' : ''}
-                    aria-label={project.embeddable ? `Play ${project.title} game` : `View live demo of ${project.title}`}
+                    aria-label={project.embeddable ? `Open interactive demo of ${project.title}` : `View live demo of ${project.title}`}
                   >
                     <ExternalLink size={20} aria-hidden="true" />
-                    {project.embeddable ? 'Play Game' : 'View Live'}
+                    {project.embeddable ? 'View Demo' : 'View Live'}
                   </a>
                   <a
                     href={project.githubUrl}
@@ -144,7 +144,7 @@ export default function ProjectDetail({ params }: PageProps) {
             <div className="lg:col-span-2">
           {project.embeddable ? (
             <div className="bg-white rounded-xl shadow-lg p-6">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Play the Game</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">Interactive Demo</h2>
               <div className="bg-gray-100 rounded-lg p-6 min-h-[600px] flex items-center justify-center">
                 <p id="demo-description" className="sr-only">
                   This interactive demo allows you to try {project.title}.
