@@ -1,7 +1,7 @@
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import { projects } from '../../../data/projects';
-import { ExternalLink, Github, ArrowLeft } from 'lucide-react';
+import { ExternalLink, Github, ArrowLeft, Smartphone, Download } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -82,10 +82,10 @@ export default function ProjectDetail({ params }: PageProps) {
                     className="btn-primary inline-flex items-center gap-2"
                     target={project.liveUrl.startsWith('http') ? '_blank' : '_self'}
                     rel={project.liveUrl.startsWith('http') ? 'noopener noreferrer' : ''}
-                    aria-label={project.embeddable ? `Play ${project.title} game` : `View live demo of ${project.title}`}
+                    aria-label={project.embeddable ? `Open interactive demo of ${project.title}` : `View live demo of ${project.title}`}
                   >
                     <ExternalLink size={20} aria-hidden="true" />
-                    {project.embeddable ? 'Play Game' : 'View Live'}
+                    {project.embeddable ? 'View Demo' : 'View Live'}
                   </a>
                   <a
                     href={project.githubUrl}
@@ -98,6 +98,42 @@ export default function ProjectDetail({ params }: PageProps) {
                     View Code
                   </a>
                 </div>
+
+                {/* App Store Download Buttons */}
+                {(project.androidUrl || project.iosUrl) && (
+                  <div className="mt-4 pt-4 border-t border-gray-200">
+                    <p className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+                      <Smartphone size={16} aria-hidden="true" />
+                      Download the App
+                    </p>
+                    <div className="flex flex-wrap gap-3">
+                      {project.androidUrl && (
+                        <a
+                          href={project.androidUrl}
+                          className="inline-flex items-center gap-2 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-700 transition-colors text-sm font-medium"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`Download ${project.title} for Android`}
+                        >
+                          <Download size={16} aria-hidden="true" />
+                          <span>🤖 Android APK</span>
+                        </a>
+                      )}
+                      {project.iosUrl && (
+                        <a
+                          href={project.iosUrl}
+                          className="inline-flex items-center gap-2 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-600 transition-colors text-sm font-medium"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`Download ${project.title} for iOS`}
+                        >
+                          <Download size={16} aria-hidden="true" />
+                          <span>🍎 iOS App</span>
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -108,7 +144,7 @@ export default function ProjectDetail({ params }: PageProps) {
             <div className="lg:col-span-2">
           {project.embeddable ? (
             <div className="bg-white rounded-xl shadow-lg p-6">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Play the Game</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">Interactive Demo</h2>
               <div className="bg-gray-100 rounded-lg p-6 min-h-[600px] flex items-center justify-center">
                 <p id="demo-description" className="sr-only">
                   This interactive demo allows you to try {project.title}.
@@ -160,9 +196,18 @@ export default function ProjectDetail({ params }: PageProps) {
                   <div>
                     <span className="text-sm text-gray-500">Type:</span>
                     <div className="font-medium text-gray-900">
-                      {project.embeddable ? 'Interactive Game' : 'Web Application'}
+                      {project.embeddable ? 'Interactive Demo' : 'Web Application'}
                     </div>
                   </div>
+                  {(project.androidUrl || project.iosUrl) && (
+                    <div>
+                      <span className="text-sm text-gray-500">Platforms:</span>
+                      <div className="font-medium text-gray-900 flex gap-2 mt-1">
+                        {project.androidUrl && <span className="text-xs px-2 py-1 bg-green-100 text-green-700 rounded-full">🤖 Android</span>}
+                        {project.iosUrl && <span className="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded-full">🍎 iOS</span>}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
               

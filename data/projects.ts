@@ -14,6 +14,10 @@ export interface Project {
   features: string[];
   embeddable?: boolean;
   projectPath?: string;
+  /** Direct APK download URL or Google Play Store link */
+  androidUrl?: string;
+  /** TestFlight invite URL or Apple App Store link */
+  iosUrl?: string;
 }
 export const projects: Project[] = [
   {
@@ -178,7 +182,9 @@ export const projects: Project[] = [
       "Professional UI/UX"
     ],
     embeddable: true,
-    projectPath: "/projects/PokerApp/PokerApp.html"
+    projectPath: "/projects/PokerApp/PokerApp.html",
+    androidUrl: "https://github.com/delongkevin/FullStackEngineer/releases/latest",
+    iosUrl: "https://github.com/delongkevin/FullStackEngineer/releases/latest",
   }
   ,
   {
@@ -316,6 +322,8 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: '/projects/kamps-smart-factory',
+    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/latest',
+    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/latest',
   },
   {
     id: 15,
@@ -340,6 +348,64 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: '/projects/embedded-video-engineer',
+    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/latest',
+    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/latest',
+  },
+  {
+    id: 16,
+    slug: 'computer-store-app',
+    title: 'Computer Store App',
+    description: 'Full-stack Expo/React Native e-commerce app for computers and electronics — with cart, Stripe payments, push notifications, and camera barcode scanning',
+    fullDescription: 'A production-ready cross-platform mobile app built with Expo and React Native. Browse a catalog of computers and peripherals, manage your cart, complete checkout with Stripe payments, scan barcodes with the device camera, receive push notifications for order updates, and authenticate securely with biometric support. Deployable as an Android APK or iOS IPA via Expo Application Services (EAS Build).',
+    image: '/images/computer-store-app.png',
+    tech: ['React Native', 'Expo', 'JavaScript', 'Stripe', 'Node.js', 'Express', 'SQLite', 'Android', 'iOS'],
+    liveUrl: '/projects/ComputerStoreApp/index.html',
+    githubUrl: 'https://github.com/delongkevin/FullStackEngineer',
+    featured: true,
+    category: 'mobile',
+    features: [
+      'Cross-platform: Android APK and iOS IPA built with Expo EAS Build',
+      'Product catalog with categories, search, and detail pages',
+      'Shopping cart with quantity controls and price totals',
+      'Stripe payment integration with card formatting and validation',
+      'Camera barcode/QR scanner using expo-camera',
+      'Push notifications for order confirmations via expo-notifications',
+      'Biometric authentication with expo-secure-store',
+      'React Navigation: stack + bottom-tab navigation',
+      'Server-side API built with Node.js/Express + SQLite',
+      'Lottie animation for checkout success',
+    ],
+    embeddable: true,
+    projectPath: '/projects/ComputerStoreApp',
+    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/latest',
+    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/latest',
+  },
+  {
+    id: 17,
+    slug: 'book-app-android',
+    title: 'Book App Android',
+    description: 'Native Android book-store app built with Kotlin — browse catalog, manage cart, checkout, and track orders with Material Design UI',
+    fullDescription: 'A native Android application built with Kotlin and Android Studio targeting Android 8.0+. Features a book catalog browsing experience with categories, a full shopping cart, checkout flow with order summary, and an order history screen. The app uses Jetpack components (ViewBinding, Navigation, LiveData, ViewModel) and Material Design 3 for a polished, accessible UI.',
+    image: '/images/book-app-android.png',
+    tech: ['Kotlin', 'Android', 'Jetpack', 'Material Design', 'Gradle', 'ViewModel', 'LiveData', 'Navigation'],
+    liveUrl: '/projects/mobile-BookApp_Android/index.html',
+    githubUrl: 'https://github.com/delongkevin/FullStackEngineer',
+    featured: false,
+    category: 'mobile',
+    features: [
+      'Native Android (Kotlin) targeting API 26+ (Android 8.0)',
+      'Book catalog with genre categories, cover art, and detail view',
+      'Shopping cart fragment with quantity controls and subtotal',
+      'Checkout screen with address and payment form validation',
+      'Order history and receipt persistence with SharedPreferences',
+      'Bottom navigation bar with Books, Cart, and Orders tabs',
+      'Material Design 3 components: CardView, RecyclerView, BottomNavigation',
+      'Jetpack ViewModel + LiveData for reactive UI state management',
+      'APK buildable directly in Android Studio or via Gradle',
+    ],
+    embeddable: true,
+    projectPath: '/projects/mobile-BookApp_Android',
+    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/latest',
   },
   // Add any other projects you have with sequential IDs
 ];

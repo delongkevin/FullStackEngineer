@@ -29,7 +29,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             {project.embeddable && (
               <div className="mt-2 flex items-center justify-center gap-1 text-sm">
                 <Play size={16} aria-hidden="true" />
-                Playable Demo
+                Live Demo
               </div>
             )}
           </div>
@@ -47,6 +47,19 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         {project.embeddable && (
           <div className="absolute top-4 left-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium z-10">
             Interactive
+          </div>
+        )}
+
+        {/* Mobile Platform Badges */}
+        {(project.androidUrl || project.iosUrl) && !project.embeddable && (
+          <div className="absolute top-4 left-4 bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-medium z-10">
+            📱 Mobile App
+          </div>
+        )}
+        {(project.androidUrl || project.iosUrl) && project.embeddable && (
+          <div className="absolute bottom-4 left-4 flex gap-1 z-10">
+            {project.androidUrl && <span className="bg-green-700 text-white px-2 py-0.5 rounded-full text-xs font-medium">🤖 APK</span>}
+            {project.iosUrl && <span className="bg-gray-800 text-white px-2 py-0.5 rounded-full text-xs font-medium">🍎 iOS</span>}
           </div>
         )}
       </div>
@@ -84,7 +97,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             {project.embeddable ? (
               <>
                 <Play size={18} aria-hidden="true" />
-                Play Demo
+                View Demo
               </>
             ) : (
               'View Details'

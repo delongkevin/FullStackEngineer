@@ -1042,7 +1042,6 @@
             }
             
             document.getElementById('ttt-status').textContent = "Your turn (X)";
-            document.getElementById('ttt-restart').addEventListener('click', initTicTacToe);
             
             ticTacToeState = {
                 board: Array(9).fill(''),
@@ -1114,7 +1113,6 @@
         
         function initTrivia() {
             showTriviaQuestion();
-            document.getElementById('trivia-next').addEventListener('click', nextTriviaQuestion);
         }
         
         function showTriviaQuestion() {
@@ -1194,7 +1192,6 @@
             };
             
             document.getElementById('memory-status').textContent = `Matches: 0/${symbols.length}`;
-            document.getElementById('memory-restart').addEventListener('click', initMemoryGame);
         }
         
         function flipMemoryCard(card) {
@@ -1235,6 +1232,11 @@
         
         // Initialize the first game state variables
         let ticTacToeState, memoryGameState;
+
+        // Register game button listeners once (prevents accumulation on re-init)
+        document.getElementById('ttt-restart').addEventListener('click', initTicTacToe);
+        document.getElementById('trivia-next').addEventListener('click', nextTriviaQuestion);
+        document.getElementById('memory-restart').addEventListener('click', initMemoryGame);
         
         // Initialize the app with Tic Tac Toe ready
         initTicTacToe();

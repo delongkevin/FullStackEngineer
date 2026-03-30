@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Computer Store App — Expo/React Native</title>
+  <style>
+    :root {
+      --bg: #0f172a; --card: #1e293b; --accent: #3b82f6; --accent2: #8b5cf6;
+      --text: #f1f5f9; --sub: #94a3b8; --green: #22c55e; --red: #ef4444;
+      --orange: #f97316; --border: #334155;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; min-height: 100vh; }
+
+    /* ── Header ── */
+    .header { background: var(--card); border-bottom: 1px solid var(--border); padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+    .header-logo { display: flex; align-items: center; gap: 10px; }
+    .logo-icon { width: 36px; height: 36px; border-radius: 10px; background: linear-gradient(135deg, var(--accent), var(--accent2)); display: flex; align-items: center; justify-content: center; font-size: 18px; }
+    .header-title { font-size: 17px; font-weight: 700; }
+    .header-sub { font-size: 12px; color: var(--sub); }
+    .badge { background: var(--accent); color: #fff; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 20px; }
+
+    /* ── Tab Bar ── */
+    .tab-bar { background: var(--card); border-top: 1px solid var(--border); display: flex; position: fixed; bottom: 0; left: 0; right: 0; z-index: 100; }
+    .tab { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 8px 4px; cursor: pointer; border: none; background: none; color: var(--sub); font-size: 11px; gap: 3px; transition: color .15s; }
+    .tab.active { color: var(--accent); }
+    .tab-icon { font-size: 20px; }
+    .tab-badge { background: var(--red); color: #fff; font-size: 9px; font-weight: 700; padding: 1px 4px; border-radius: 8px; min-width: 16px; text-align: center; position: absolute; top: 4px; right: calc(50% - 20px); }
+
+    /* ── Screens ── */
+    .screen { display: none; flex-direction: column; gap: 16px; padding: 16px; padding-bottom: 80px; animation: fadeIn .2s ease; }
+    .screen.active { display: flex; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+    /* ── Cards ── */
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 14px; }
+    .card-title { font-size: 14px; font-weight: 600; margin-bottom: 10px; color: var(--sub); text-transform: uppercase; letter-spacing: .5px; }
+
+    /* ── Search Bar ── */
+    .search-bar { display: flex; align-items: center; gap: 8px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; }
+    .search-bar input { flex: 1; background: none; border: none; outline: none; color: var(--text); font-size: 14px; }
+
+    /* ── Category Pills ── */
+    .cat-row { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+    .cat-pill { flex-shrink: 0; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; background: var(--card); color: var(--sub); border: 1px solid var(--border); transition: all .15s; }
+    .cat-pill.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+    /* ── Product Grid ── */
+    .product-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .product-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; cursor: pointer; transition: transform .15s; }
+    .product-card:hover { transform: scale(1.02); }
+    .product-img { height: 100px; display: flex; align-items: center; justify-content: center; font-size: 40px; }
+    .product-info { padding: 10px; }
+    .product-name { font-size: 13px; font-weight: 600; line-height: 1.3; margin-bottom: 4px; }
+    .product-price { font-size: 15px; font-weight: 700; color: var(--accent); }
+    .product-rating { font-size: 11px; color: var(--sub); }
+    .add-btn { width: 28px; height: 28px; background: var(--accent); color: #fff; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; float: right; transition: background .15s; }
+    .add-btn:hover { background: var(--accent2); }
+
+    /* ── Cart ── */
+    .cart-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+    .cart-img { width: 50px; height: 50px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 26px; background: var(--bg); flex-shrink: 0; }
+    .cart-info { flex: 1; }
+    .cart-name { font-size: 13px; font-weight: 600; }
+    .cart-price { font-size: 14px; color: var(--accent); font-weight: 700; }
+    .qty-row { display: flex; align-items: center; gap: 10px; margin-top: 4px; }
+    .qty-btn { width: 24px; height: 24px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+    .qty-val { font-size: 14px; font-weight: 600; min-width: 20px; text-align: center; }
+    .cart-total { display: flex; justify-content: space-between; padding: 12px 0; font-weight: 700; font-size: 16px; }
+    .checkout-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; font-size: 16px; font-weight: 700; border: none; border-radius: 12px; cursor: pointer; transition: opacity .15s; }
+    .checkout-btn:hover { opacity: .9; }
+
+    /* ── Download Section ── */
+    .dl-section { background: linear-gradient(135deg, #1e3a5f, #2d1b69); border: 1px solid #3b5998; border-radius: 14px; padding: 18px; text-align: center; }
+    .dl-title { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+    .dl-sub { font-size: 13px; color: var(--sub); margin-bottom: 14px; }
+    .dl-row { display: flex; gap: 10px; }
+    .dl-btn { flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 12px; border-radius: 10px; font-size: 13px; font-weight: 700; cursor: pointer; border: none; text-decoration: none; transition: all .15s; color: #fff; }
+    .dl-btn.android { background: #166534; }
+    .dl-btn.ios { background: #1e3a8a; }
+    .dl-btn:hover { opacity: .85; transform: translateY(-1px); }
+    .dl-icon { font-size: 18px; }
+
+    /* ── Profile / Settings ── */
+    .profile-header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+    .avatar { width: 60px; height: 60px; border-radius: 30px; background: linear-gradient(135deg, var(--accent), var(--accent2)); display: flex; align-items: center; justify-content: center; font-size: 28px; }
+    .profile-name { font-size: 18px; font-weight: 700; }
+    .profile-email { font-size: 13px; color: var(--sub); }
+    .setting-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border); }
+    .setting-row:last-child { border: none; }
+    .setting-label { font-size: 14px; }
+    .setting-val { font-size: 13px; color: var(--sub); }
+    .toggle { width: 42px; height: 24px; background: var(--green); border-radius: 12px; position: relative; cursor: pointer; }
+    .toggle::after { content: ''; position: absolute; width: 18px; height: 18px; background: #fff; border-radius: 9px; top: 3px; right: 3px; transition: right .2s; }
+
+    /* ── Toast ── */
+    .toast { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--green); color: #fff; padding: 10px 20px; border-radius: 20px; font-size: 14px; font-weight: 600; opacity: 0; transition: all .3s; pointer-events: none; white-space: nowrap; z-index: 200; }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-logo">
+    <div class="logo-icon">🖥️</div>
+    <div>
+      <div class="header-title">CompuShop</div>
+      <div class="header-sub">React Native · Expo · Full-Stack</div>
+    </div>
+  </div>
+  <span class="badge">Demo</span>
+</header>
+
+<!-- Screens -->
+
+<!-- 🏠 Home / Catalog -->
+<div class="screen active" id="screen-home">
+  <div class="search-bar">
+    <span>🔍</span>
+    <input type="text" placeholder="Search computers, accessories…" id="search-input" />
+  </div>
+  <div class="cat-row" id="cat-row">
+    <button class="cat-pill active" onclick="filterCat('All')">All</button>
+    <button class="cat-pill" onclick="filterCat('Laptops')">Laptops</button>
+    <button class="cat-pill" onclick="filterCat('Desktops')">Desktops</button>
+    <button class="cat-pill" onclick="filterCat('Accessories')">Accessories</button>
+    <button class="cat-pill" onclick="filterCat('Monitors')">Monitors</button>
+  </div>
+  <div class="product-grid" id="product-grid"></div>
+</div>
+
+<!-- 🛒 Cart -->
+<div class="screen" id="screen-cart">
+  <div class="card">
+    <div class="card-title">My Cart</div>
+    <div id="cart-items"></div>
+    <div class="cart-total"><span>Total</span><span id="cart-total">$0.00</span></div>
+    <button class="checkout-btn" onclick="checkout()">Proceed to Checkout →</button>
+  </div>
+</div>
+
+<!-- 📦 Orders -->
+<div class="screen" id="screen-orders">
+  <div class="card">
+    <div class="card-title">Recent Orders</div>
+    <div id="orders-list"></div>
+  </div>
+</div>
+
+<!-- 👤 Profile + Download -->
+<div class="screen" id="screen-profile">
+  <div class="card">
+    <div class="profile-header">
+      <div class="avatar">👤</div>
+      <div>
+        <div class="profile-name">Kevin Delong</div>
+        <div class="profile-email">kevin@compushop.app</div>
+      </div>
+    </div>
+    <div class="setting-row"><span class="setting-label">Push Notifications</span><div class="toggle"></div></div>
+    <div class="setting-row"><span class="setting-label">Biometric Login</span><div class="toggle"></div></div>
+    <div class="setting-row"><span class="setting-label">Dark Mode</span><div class="toggle" style="background:#475569"></div></div>
+    <div class="setting-row"><span class="setting-label">App Version</span><span class="setting-val">1.0.0 (Build 12)</span></div>
+  </div>
+
+  <div class="dl-section">
+    <div class="dl-title">📲 Download the App</div>
+    <div class="dl-sub">Built with Expo EAS — install on your device</div>
+    <div class="dl-row">
+      <a class="dl-btn android" href="#" onclick="showToast('Android APK — available via GitHub Releases');return false;" aria-label="Download Android APK">
+        <span class="dl-icon">🤖</span> Android APK
+      </a>
+      <a class="dl-btn ios" href="#" onclick="showToast('iOS TestFlight — invite link available on request');return false;" aria-label="Download iOS App">
+        <span class="dl-icon">🍎</span> iOS App
+      </a>
+    </div>
+    <div style="font-size:11px;color:var(--sub);margin-top:10px;text-align:center;">APK &amp; TestFlight builds available via <strong>Expo EAS Build</strong></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Build Commands</div>
+    <div style="font-size:12px;color:var(--sub);line-height:1.8;">
+      <code style="color:#60a5fa">eas build --platform android</code><br/>
+      <code style="color:#60a5fa">eas build --platform ios</code><br/>
+      <code style="color:#60a5fa">eas submit --platform android</code><br/>
+      <code style="color:#60a5fa">eas submit --platform ios</code>
+    </div>
+  </div>
+</div>
+
+<!-- Tab Bar -->
+<nav class="tab-bar">
+  <button class="tab active" onclick="switchTab('home', this)" style="position:relative">
+    <span class="tab-icon">🏠</span>Home
+  </button>
+  <button class="tab" onclick="switchTab('cart', this)" style="position:relative" id="cart-tab">
+    <span class="tab-icon">🛒</span>Cart
+    <span class="tab-badge" id="cart-badge" style="display:none">0</span>
+  </button>
+  <button class="tab" onclick="switchTab('orders', this)">
+    <span class="tab-icon">📦</span>Orders
+  </button>
+  <button class="tab" onclick="switchTab('profile', this)">
+    <span class="tab-icon">👤</span>Profile
+  </button>
+</nav>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const PRODUCTS = [
+  { id:1, name:'MacBook Pro 16"', price:2499, category:'Laptops', emoji:'💻', rating:'4.9 ⭐ (2.1k)' },
+  { id:2, name:'Dell XPS 15', price:1799, category:'Laptops', emoji:'💻', rating:'4.8 ⭐ (1.4k)' },
+  { id:3, name:'ASUS ROG Desktop', price:1299, category:'Desktops', emoji:'🖥️', rating:'4.7 ⭐ (890)' },
+  { id:4, name:'Mac Mini M2', price:699, category:'Desktops', emoji:'🖥️', rating:'4.9 ⭐ (3.2k)' },
+  { id:5, name:'USB-C Hub 7-in-1', price:49, category:'Accessories', emoji:'🔌', rating:'4.6 ⭐ (540)' },
+  { id:6, name:'Mechanical Keyboard', price:129, category:'Accessories', emoji:'⌨️', rating:'4.8 ⭐ (1.1k)' },
+  { id:7, name:'27" 4K Monitor', price:599, category:'Monitors', emoji:'🖥️', rating:'4.9 ⭐ (780)' },
+  { id:8, name:'34" Ultrawide', price:899, category:'Monitors', emoji:'🖥️', rating:'4.7 ⭐ (450)' },
+];
+
+const ORDERS = [
+  { id:'ORD-2025-001', date:'Mar 28, 2025', items:'MacBook Pro 16", USB-C Hub', total:'$2,548.00', status:'Delivered' },
+  { id:'ORD-2025-002', date:'Mar 15, 2025', items:'27" 4K Monitor', total:'$599.00', status:'Delivered' },
+  { id:'ORD-2025-003', date:'Feb 10, 2025', items:'Mechanical Keyboard', total:'$129.00', status:'Delivered' },
+];
+
+let cart = {};
+let currentCat = 'All';
+
+function renderProducts(filter = 'All', search = '') {
+  const grid = document.getElementById('product-grid');
+  const filtered = PRODUCTS.filter(p =>
+    (filter === 'All' || p.category === filter) &&
+    p.name.toLowerCase().includes(search.toLowerCase())
+  );
+  grid.innerHTML = filtered.map(p => `
+    <div class="product-card" onclick="addToCart(${p.id})">
+      <div class="product-img" style="background:linear-gradient(135deg,#1e3a5f,#2d1b69)">${p.emoji}</div>
+      <div class="product-info">
+        <div class="product-name">${p.name}</div>
+        <div class="product-rating">${p.rating}</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px;">
+          <div class="product-price">$${p.price.toLocaleString()}</div>
+          <button class="add-btn" onclick="addToCart(${p.id});event.stopPropagation()">+</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterCat(cat) {
+  currentCat = cat;
+  document.querySelectorAll('.cat-pill').forEach(el => el.classList.toggle('active', el.textContent === cat));
+  renderProducts(cat, document.getElementById('search-input').value);
+}
+
+document.getElementById('search-input').addEventListener('input', e => {
+  renderProducts(currentCat, e.target.value);
+});
+
+function addToCart(id) {
+  const p = PRODUCTS.find(p => p.id === id);
+  cart[id] = (cart[id] || 0) + 1;
+  updateCartBadge();
+  showToast(`${p.emoji} ${p.name} added to cart`);
+}
+
+function updateCartBadge() {
+  const total = Object.values(cart).reduce((a, b) => a + b, 0);
+  const badge = document.getElementById('cart-badge');
+  badge.textContent = total;
+  badge.style.display = total > 0 ? 'block' : 'none';
+}
+
+function renderCart() {
+  const el = document.getElementById('cart-items');
+  const totalEl = document.getElementById('cart-total');
+  if (Object.keys(cart).length === 0) {
+    el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--sub)">🛒<br/>Your cart is empty</div>';
+    totalEl.textContent = '$0.00';
+    return;
+  }
+  let total = 0;
+  el.innerHTML = Object.entries(cart).map(([id, qty]) => {
+    const p = PRODUCTS.find(p => p.id == id);
+    total += p.price * qty;
+    return `
+      <div class="cart-item">
+        <div class="cart-img">${p.emoji}</div>
+        <div class="cart-info">
+          <div class="cart-name">${p.name}</div>
+          <div class="cart-price">$${(p.price * qty).toLocaleString()}</div>
+          <div class="qty-row">
+            <button class="qty-btn" onclick="changeQty(${id},-1)">−</button>
+            <span class="qty-val">${qty}</span>
+            <button class="qty-btn" onclick="changeQty(${id},1)">+</button>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+  totalEl.textContent = '$' + total.toLocaleString('en-US', {minimumFractionDigits:2});
+}
+
+function changeQty(id, delta) {
+  cart[id] = (cart[id] || 0) + delta;
+  if (cart[id] <= 0) delete cart[id];
+  updateCartBadge();
+  renderCart();
+}
+
+function checkout() {
+  if (Object.keys(cart).length === 0) { showToast('Your cart is empty!'); return; }
+  showToast('✅ Order placed! Stripe payment processed.');
+  cart = {};
+  updateCartBadge();
+  renderCart();
+}
+
+function renderOrders() {
+  document.getElementById('orders-list').innerHTML = ORDERS.map(o => `
+    <div style="padding:12px 0;border-bottom:1px solid var(--border)">
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+        <span style="font-size:13px;font-weight:700">${o.id}</span>
+        <span style="font-size:12px;background:#166534;color:#fff;padding:2px 8px;border-radius:20px">${o.status}</span>
+      </div>
+      <div style="font-size:12px;color:var(--sub)">${o.items}</div>
+      <div style="display:flex;justify-content:space-between;margin-top:4px">
+        <span style="font-size:12px;color:var(--sub)">${o.date}</span>
+        <span style="font-size:13px;font-weight:700;color:var(--accent)">${o.total}</span>
+      </div>
+    </div>`).join('');
+}
+
+function switchTab(tab, el) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('screen-' + tab).classList.add('active');
+  el.classList.add('active');
+  if (tab === 'cart') renderCart();
+  if (tab === 'orders') renderOrders();
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+renderProducts();
+</script>
+</body>
+</html>
