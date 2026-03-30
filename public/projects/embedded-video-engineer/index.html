@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EmbedVision – Embedded Video Systems Engineer Demo</title>
+  <style>
+    :root {
+      --bg:        #0d1117;
+      --card:      #161b22;
+      --card2:     #1c2128;
+      --border:    #30363d;
+      --primary:   #58a6ff;
+      --success:   #3fb950;
+      --warning:   #d29922;
+      --danger:    #f85149;
+      --text:      #e6edf3;
+      --sub:       #8b949e;
+      --nav-h:     60px;
+      --radius:    10px;
+      --shadow:    0 4px 16px rgba(0,0,0,.5);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100%;
+      font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace;
+      background: var(--bg);
+      color: var(--text);
+      overflow: hidden;
+    }
+
+    /* ── Shell ── */
+    #app {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+      background: var(--bg);
+      position: relative;
+      overflow: hidden;
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+    }
+
+    /* ── Header ── */
+    .header {
+      height: 56px;
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      flex-shrink: 0;
+      z-index: 10;
+    }
+    .header-left { display: flex; align-items: center; gap: 10px; }
+    .header-icon { font-size: 22px; }
+    .header-title { font-size: 15px; font-weight: 700; color: var(--text); letter-spacing: .5px; }
+    .header-sub { font-size: 10px; color: var(--sub); margin-top: 1px; }
+    .status-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 6px var(--success);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+    .header-right { display: flex; align-items: center; gap: 8px; }
+    .badge {
+      font-size: 10px; font-weight: 700; padding: 2px 7px;
+      border-radius: 20px; letter-spacing: .3px;
+    }
+    .badge-green { background: rgba(63,185,80,.15); color: var(--success); border: 1px solid rgba(63,185,80,.3); }
+    .badge-blue  { background: rgba(88,166,255,.15); color: var(--primary); border: 1px solid rgba(88,166,255,.3); }
+    .badge-red   { background: rgba(248,81,73,.15);  color: var(--danger);  border: 1px solid rgba(248,81,73,.3); }
+
+    /* ── Screens ── */
+    #screens { flex: 1; overflow: hidden; position: relative; }
+    .screen {
+      position: absolute; inset: 0; overflow-y: auto;
+      padding: 14px; display: none; flex-direction: column; gap: 12px;
+    }
+    .screen.active { display: flex; }
+
+    /* ── Cards ── */
+    .card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 14px;
+    }
+    .card-title {
+      font-size: 11px; font-weight: 700; color: var(--sub);
+      text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px;
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    /* ── Metric Row ── */
+    .metric-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .metric {
+      background: var(--card2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 10px 12px;
+    }
+    .metric-label { font-size: 10px; color: var(--sub); margin-bottom: 4px; }
+    .metric-value { font-size: 20px; font-weight: 700; color: var(--text); }
+    .metric-unit { font-size: 11px; color: var(--sub); }
+    .metric-delta { font-size: 10px; margin-top: 2px; }
+    .delta-up   { color: var(--success); }
+    .delta-down { color: var(--danger); }
+
+    /* ── Progress Bar ── */
+    .bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+    .bar-label { font-size: 11px; color: var(--sub); width: 110px; flex-shrink: 0; }
+    .bar-track {
+      flex: 1; height: 6px; background: var(--card2);
+      border-radius: 3px; overflow: hidden;
+    }
+    .bar-fill { height: 100%; border-radius: 3px; transition: width .6s ease; }
+    .bar-val { font-size: 11px; color: var(--text); width: 38px; text-align: right; flex-shrink: 0; }
+
+    /* ── Video Feed ── */
+    .video-preview {
+      width: 100%; aspect-ratio: 16/9;
+      background: #000;
+      border-radius: 8px; overflow: hidden;
+      position: relative;
+    }
+    canvas.feed { width: 100%; height: 100%; display: block; }
+    .overlay-tag {
+      position: absolute; top: 8px; left: 8px;
+      background: rgba(0,0,0,.7); border: 1px solid var(--primary);
+      color: var(--primary); font-size: 10px; padding: 2px 6px; border-radius: 4px;
+    }
+    .overlay-rec {
+      position: absolute; top: 8px; right: 8px;
+      display: flex; align-items: center; gap: 4px;
+      background: rgba(0,0,0,.7); border-radius: 4px; padding: 2px 8px;
+      color: var(--danger); font-size: 10px; font-weight: 700;
+    }
+    .rec-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--danger); animation: pulse 1s infinite; }
+    .overlay-stats {
+      position: absolute; bottom: 8px; left: 8px; right: 8px;
+      background: rgba(0,0,0,.75); border-radius: 6px;
+      padding: 6px 10px;
+      display: flex; justify-content: space-between;
+      font-size: 10px; color: var(--sub);
+    }
+    .overlay-stats span { color: var(--text); }
+
+    /* ── Codec Panel ── */
+    .codec-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .codec-item {
+      background: var(--card2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 10px;
+    }
+    .codec-name { font-size: 13px; font-weight: 700; color: var(--primary); margin-bottom: 4px; }
+    .codec-detail { font-size: 10px; color: var(--sub); line-height: 1.5; }
+
+    /* ── Log ── */
+    .log-box {
+      background: #010409; border: 1px solid var(--border);
+      border-radius: 8px; padding: 10px; font-size: 10px;
+      font-family: 'SF Mono', Consolas, monospace;
+      height: 130px; overflow-y: auto; line-height: 1.6;
+    }
+    .log-box::-webkit-scrollbar { width: 4px; }
+    .log-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+    .log-line { margin-bottom: 2px; }
+    .log-ts   { color: var(--sub); }
+    .log-info { color: var(--primary); }
+    .log-ok   { color: var(--success); }
+    .log-warn { color: var(--warning); }
+    .log-err  { color: var(--danger); }
+
+    /* ── Pipeline ── */
+    .pipeline {
+      display: flex; align-items: center; gap: 0; overflow-x: auto;
+      padding: 4px 0; scrollbar-width: none;
+    }
+    .pipeline::-webkit-scrollbar { display: none; }
+    .pipe-stage {
+      background: var(--card2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 8px 10px; text-align: center;
+      flex-shrink: 0; min-width: 76px;
+    }
+    .pipe-stage.active-stage { border-color: var(--primary); background: rgba(88,166,255,.08); }
+    .pipe-stage.warn-stage   { border-color: var(--warning); background: rgba(210,153,34,.08); }
+    .pipe-icon { font-size: 18px; }
+    .pipe-name { font-size: 9px; color: var(--sub); margin-top: 3px; }
+    .pipe-arrow { color: var(--border); font-size: 16px; padding: 0 2px; flex-shrink: 0; }
+
+    /* ── Buttons ── */
+    .btn-row { display: flex; gap: 8px; flex-wrap: wrap; }
+    .btn {
+      flex: 1; min-width: 80px; padding: 9px 12px; border-radius: 8px;
+      border: 1px solid var(--border); background: var(--card2);
+      color: var(--text); font-size: 12px; font-family: inherit;
+      cursor: pointer; text-align: center; transition: all .2s;
+    }
+    .btn:hover { border-color: var(--primary); color: var(--primary); }
+    .btn.active { background: var(--primary); color: #000; border-color: var(--primary); font-weight: 700; }
+    .btn-danger { border-color: var(--danger); color: var(--danger); }
+    .btn-danger:hover { background: var(--danger); color: #fff; }
+
+    /* ── Toggle ── */
+    .toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 6px 0; }
+    .toggle-label { font-size: 12px; color: var(--text); }
+    .toggle-sub { font-size: 10px; color: var(--sub); }
+    .toggle {
+      width: 40px; height: 22px; border-radius: 11px;
+      background: var(--border); position: relative; cursor: pointer;
+      transition: background .3s; border: none; flex-shrink: 0;
+    }
+    .toggle.on { background: var(--primary); }
+    .toggle::after {
+      content: ''; position: absolute; top: 3px; left: 3px;
+      width: 16px; height: 16px; border-radius: 50%; background: #fff;
+      transition: left .3s;
+    }
+    .toggle.on::after { left: 21px; }
+
+    /* ── Slider ── */
+    .slider-row { margin-bottom: 10px; }
+    .slider-top { display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 4px; }
+    .slider-label { color: var(--sub); }
+    .slider-val   { color: var(--primary); font-weight: 700; }
+    input[type=range] {
+      width: 100%; height: 4px; border-radius: 2px;
+      background: var(--border); appearance: none; cursor: pointer;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      appearance: none; width: 14px; height: 14px; border-radius: 50%;
+      background: var(--primary); cursor: pointer;
+    }
+
+    /* ── Bottom Nav ── */
+    .bottom-nav {
+      height: var(--nav-h); background: var(--card);
+      border-top: 1px solid var(--border);
+      display: flex; align-items: stretch; flex-shrink: 0;
+    }
+    .nav-btn {
+      flex: 1; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 3px;
+      background: none; border: none; cursor: pointer;
+      color: var(--sub); font-family: inherit; transition: color .2s;
+    }
+    .nav-btn.active { color: var(--primary); }
+    .nav-btn:hover  { color: var(--text); }
+    .nav-icon { font-size: 20px; line-height: 1; }
+    .nav-label { font-size: 9px; text-transform: uppercase; letter-spacing: .5px; }
+
+    /* ── Misc ── */
+    .section-sep { height: 1px; background: var(--border); margin: 4px 0; }
+    .chip {
+      display: inline-block; font-size: 9px; padding: 2px 7px;
+      border-radius: 20px; margin: 2px; border: 1px solid;
+    }
+    .chip-blue { color: var(--primary); border-color: rgba(88,166,255,.4); background: rgba(88,166,255,.1); }
+    .chip-green { color: var(--success); border-color: rgba(63,185,80,.4); background: rgba(63,185,80,.1); }
+    .chip-gray  { color: var(--sub); border-color: var(--border); }
+    .chip-yellow { color: var(--warning); border-color: rgba(210,153,34,.4); background: rgba(210,153,34,.1); }
+
+    .row { display: flex; align-items: center; justify-content: space-between; }
+    .mt4 { margin-top: 4px; }
+    .mt8 { margin-top: 8px; }
+    .mb8 { margin-bottom: 8px; }
+    .text-sm { font-size: 11px; color: var(--sub); }
+    .text-right { text-align: right; }
+  </style>
+</head>
+<body>
+<div id="app">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <span class="header-icon">🎬</span>
+      <div>
+        <div class="header-title">EmbedVision</div>
+        <div class="header-sub">Embedded Video Systems</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="status-dot"></div>
+      <span class="badge badge-green">LIVE</span>
+    </div>
+  </div>
+
+  <!-- SCREENS -->
+  <div id="screens">
+
+    <!-- ── DASHBOARD ── -->
+    <div class="screen active" id="scr-dash">
+
+      <!-- Video Feed -->
+      <div class="card" style="padding:10px">
+        <div class="card-title">📡 Live Camera Feed — CSI-2 Lane 0</div>
+        <div class="video-preview">
+          <canvas id="feedCanvas" class="feed"></canvas>
+          <div class="overlay-tag">H.265 / 4K@30fps</div>
+          <div class="overlay-rec"><div class="rec-dot"></div> REC</div>
+          <div class="overlay-stats">
+            <span class="log-ts">Bitrate:</span> <span id="ovBitrate">18.4 Mbps</span>
+            <span class="log-ts">Latency:</span> <span id="ovLatency">12 ms</span>
+            <span class="log-ts">Frames:</span> <span id="ovFrames">0</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- KPI Metrics -->
+      <div class="metric-grid">
+        <div class="metric">
+          <div class="metric-label">CPU Load</div>
+          <div class="metric-value" id="mCPU">--</div>
+          <div class="metric-unit">% ARM Cortex-A55</div>
+          <div class="metric-delta delta-up" id="mCPUd"></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">GPU Encode</div>
+          <div class="metric-value" id="mGPU">--</div>
+          <div class="metric-unit">% VPU HW accel</div>
+          <div class="metric-delta" id="mGPUd"></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Frame Rate</div>
+          <div class="metric-value" id="mFPS">--</div>
+          <div class="metric-unit">fps</div>
+          <div class="metric-delta delta-up" id="mFPSd"></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">SoC Temp</div>
+          <div class="metric-value" id="mTemp">--</div>
+          <div class="metric-unit">°C</div>
+          <div class="metric-delta" id="mTempd"></div>
+        </div>
+      </div>
+
+      <!-- Pipeline -->
+      <div class="card">
+        <div class="card-title">⚙️ Video Pipeline</div>
+        <div class="pipeline">
+          <div class="pipe-stage active-stage"><div class="pipe-icon">📷</div><div class="pipe-name">Sensor</div></div>
+          <div class="pipe-arrow">›</div>
+          <div class="pipe-stage active-stage"><div class="pipe-icon">🔌</div><div class="pipe-name">CSI-2</div></div>
+          <div class="pipe-arrow">›</div>
+          <div class="pipe-stage active-stage"><div class="pipe-icon">🖼️</div><div class="pipe-name">ISP</div></div>
+          <div class="pipe-arrow">›</div>
+          <div class="pipe-stage active-stage"><div class="pipe-icon">⚡</div><div class="pipe-name">VPU Enc</div></div>
+          <div class="pipe-arrow">›</div>
+          <div class="pipe-stage active-stage"><div class="pipe-icon">📦</div><div class="pipe-name">Mux</div></div>
+          <div class="pipe-arrow">›</div>
+          <div class="pipe-stage active-stage"><div class="pipe-icon">🌐</div><div class="pipe-name">Network</div></div>
+        </div>
+      </div>
+
+      <!-- Memory + Bandwidth -->
+      <div class="card">
+        <div class="card-title">💾 Memory & Bandwidth</div>
+        <div class="bar-row">
+          <span class="bar-label">DDR4 (8 GB)</span>
+          <div class="bar-track"><div class="bar-fill" id="bMem" style="width:62%;background:var(--primary)"></div></div>
+          <span class="bar-val" id="bMemV">4.9 GB</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">Video BW</span>
+          <div class="bar-track"><div class="bar-fill" id="bBW" style="width:44%;background:var(--success)"></div></div>
+          <span class="bar-val" id="bBWV">3.5 GB/s</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">PCIE DMA</span>
+          <div class="bar-track"><div class="bar-fill" id="bPCI" style="width:28%;background:var(--warning)"></div></div>
+          <span class="bar-val" id="bPCIV">2.2 GB/s</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── CODEC ── -->
+    <div class="screen" id="scr-codec">
+
+      <!-- Active codec -->
+      <div class="card">
+        <div class="card-title">🎞️ Active Codec Config</div>
+        <div class="codec-grid">
+          <div class="codec-item">
+            <div class="codec-name">H.265 / HEVC</div>
+            <div class="codec-detail">Profile: Main 10<br>Level: 5.1<br>HW: VPU0</div>
+          </div>
+          <div class="codec-item">
+            <div class="codec-name">H.264 / AVC</div>
+            <div class="codec-detail">Profile: High<br>Level: 5.2<br>HW: VPU1</div>
+          </div>
+          <div class="codec-item">
+            <div class="codec-name">AV1</div>
+            <div class="codec-detail">Profile: Main<br>Level: 5.0<br>SW encode</div>
+          </div>
+          <div class="codec-item">
+            <div class="codec-name">MJPEG</div>
+            <div class="codec-detail">Quality: 85%<br>Subsampling: 4:2:0<br>HW: JPEG</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Encode params -->
+      <div class="card">
+        <div class="card-title">🔧 Encoder Parameters</div>
+        <div class="slider-row">
+          <div class="slider-top">
+            <span class="slider-label">Target Bitrate</span>
+            <span class="slider-val" id="sBitrate">18 Mbps</span>
+          </div>
+          <input type="range" min="2" max="100" value="18" oninput="document.getElementById('sBitrate').textContent=this.value+' Mbps'">
+        </div>
+        <div class="slider-row">
+          <div class="slider-top">
+            <span class="slider-label">GOP Size</span>
+            <span class="slider-val" id="sGOP">30</span>
+          </div>
+          <input type="range" min="1" max="120" value="30" oninput="document.getElementById('sGOP').textContent=this.value">
+        </div>
+        <div class="slider-row">
+          <div class="slider-top">
+            <span class="slider-label">QP (Quantization)</span>
+            <span class="slider-val" id="sQP">26</span>
+          </div>
+          <input type="range" min="1" max="51" value="26" oninput="document.getElementById('sQP').textContent=this.value">
+        </div>
+        <div class="toggle-row">
+          <div><div class="toggle-label">B-Frames</div><div class="toggle-sub">Bi-directional prediction</div></div>
+          <button class="toggle on" onclick="this.classList.toggle('on')"></button>
+        </div>
+        <div class="toggle-row">
+          <div><div class="toggle-label">Rate Control (CBR)</div><div class="toggle-sub">Constant bitrate mode</div></div>
+          <button class="toggle on" onclick="this.classList.toggle('on')"></button>
+        </div>
+        <div class="toggle-row">
+          <div><div class="toggle-label">HW Acceleration</div><div class="toggle-sub">VPU offload enabled</div></div>
+          <button class="toggle on" onclick="this.classList.toggle('on')"></button>
+        </div>
+      </div>
+
+      <!-- Resolution presets -->
+      <div class="card">
+        <div class="card-title">📐 Resolution Presets</div>
+        <div class="btn-row" id="resPresets">
+          <button class="btn" onclick="setRes(this,'1280×720')">720p</button>
+          <button class="btn" onclick="setRes(this,'1920×1080')">1080p</button>
+          <button class="btn active" onclick="setRes(this,'3840×2160')">4K</button>
+          <button class="btn" onclick="setRes(this,'7680×4320')">8K</button>
+        </div>
+        <div class="mt8 text-sm" id="resMeta">Resolution: 3840×2160 · Pixel fmt: YUV420 · Depth: 10-bit</div>
+      </div>
+    </div>
+
+    <!-- ── SYSTEM ── -->
+    <div class="screen" id="scr-sys">
+
+      <!-- SoC Info -->
+      <div class="card">
+        <div class="card-title">🖥️ SoC Platform</div>
+        <div class="row"><span class="text-sm">Chip</span><strong>i.MX 8M Plus (NXP)</strong></div>
+        <div class="section-sep mt4"></div>
+        <div class="row mt4"><span class="text-sm">Core</span><span>ARM Cortex-A53 (4×) + M4</span></div>
+        <div class="row mt4"><span class="text-sm">OS / RTOS</span><span>Yocto Linux + FreeRTOS</span></div>
+        <div class="row mt4"><span class="text-sm">Memory</span><span>8 GB LPDDR4X</span></div>
+        <div class="row mt4"><span class="text-sm">Storage</span><span>64 GB eMMC 5.1</span></div>
+        <div class="row mt4"><span class="text-sm">VPU</span><span>H.265/H.264/VP9 HW</span></div>
+        <div class="row mt4"><span class="text-sm">ISP</span><span>Dual CSI-2, 4K@30fps</span></div>
+        <div class="row mt4"><span class="text-sm">NPU</span><span>2.25 TOPS (ML inference)</span></div>
+        <div class="mt8">
+          <span class="chip chip-blue">ARM</span>
+          <span class="chip chip-blue">RTOS</span>
+          <span class="chip chip-green">Yocto</span>
+          <span class="chip chip-green">CSI-2</span>
+          <span class="chip chip-yellow">VPU</span>
+          <span class="chip chip-blue">NPU</span>
+          <span class="chip chip-gray">MIPI</span>
+          <span class="chip chip-gray">PCIe</span>
+        </div>
+      </div>
+
+      <!-- Driver stack -->
+      <div class="card">
+        <div class="card-title">⚙️ Kernel Driver Stack</div>
+        <div class="bar-row">
+          <span class="bar-label">V4L2 / Media</span>
+          <div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--success)"></div></div>
+          <span class="bar-val">OK</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">GStreamer</span>
+          <div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--success)"></div></div>
+          <span class="bar-val">OK</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">VPU Firmware</span>
+          <div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--success)"></div></div>
+          <span class="bar-val">OK</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">ISP Driver</span>
+          <div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--success)"></div></div>
+          <span class="bar-val">OK</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">Network (GigE)</span>
+          <div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--success)"></div></div>
+          <span class="bar-val">OK</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">UART Debug</span>
+          <div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--warning)"></div></div>
+          <span class="bar-val" style="color:var(--warning)">115K</span>
+        </div>
+      </div>
+
+      <!-- Interfaces -->
+      <div class="card">
+        <div class="card-title">🔗 Hardware Interfaces</div>
+        <div class="codec-grid">
+          <div class="codec-item">
+            <div class="codec-name" style="color:var(--success)">CSI-2 ×2</div>
+            <div class="codec-detail">4K MIPI lanes<br>IMX477 sensor<br>RAW12 / DPCM</div>
+          </div>
+          <div class="codec-item">
+            <div class="codec-name" style="color:var(--success)">HDMI 2.0</div>
+            <div class="codec-detail">4K@60 out<br>CEC support<br>EDID detect</div>
+          </div>
+          <div class="codec-item">
+            <div class="codec-name" style="color:var(--primary)">GigE ×1</div>
+            <div class="codec-detail">RTSP stream<br>UDP unicast<br>1 Gbps</div>
+          </div>
+          <div class="codec-item">
+            <div class="codec-name" style="color:var(--warning)">USB 3.1</div>
+            <div class="codec-detail">UVC camera<br>SuperSpeed<br>5 Gbps</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── LOG ── -->
+    <div class="screen" id="scr-log">
+      <div class="card">
+        <div class="card-title">🖥️ Serial Console / dmesg</div>
+        <div class="log-box" id="logBox"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">🚨 Alerts & Diagnostics</div>
+        <div id="alertList">
+          <div class="row mb8">
+            <span class="badge badge-green">OK</span>
+            <span class="text-sm" style="flex:1;margin-left:8px">VPU encoder healthy — 0 frame drops</span>
+          </div>
+          <div class="row mb8">
+            <span class="badge badge-green">OK</span>
+            <span class="text-sm" style="flex:1;margin-left:8px">ISP calibration loaded — AWB converged</span>
+          </div>
+          <div class="row mb8">
+            <span class="badge badge-blue">INFO</span>
+            <span class="text-sm" style="flex:1;margin-left:8px">Bitrate spike detected — CBR kicking in</span>
+          </div>
+          <div class="row mb8" id="alertTemp">
+            <span class="badge" id="alertTempBadge" style="background:rgba(63,185,80,.15);color:var(--success);border:1px solid rgba(63,185,80,.3)">OK</span>
+            <span class="text-sm" style="flex:1;margin-left:8px">SoC temperature within limits</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📋 Skills Demonstrated</div>
+        <div>
+          <span class="chip chip-blue">C / C++</span>
+          <span class="chip chip-blue">Embedded Linux</span>
+          <span class="chip chip-blue">RTOS (FreeRTOS)</span>
+          <span class="chip chip-green">GStreamer</span>
+          <span class="chip chip-green">V4L2</span>
+          <span class="chip chip-green">H.264 / H.265</span>
+          <span class="chip chip-green">AV1</span>
+          <span class="chip chip-blue">MIPI CSI-2</span>
+          <span class="chip chip-yellow">ARM Cortex</span>
+          <span class="chip chip-yellow">VPU / ISP</span>
+          <span class="chip chip-blue">Yocto / Buildroot</span>
+          <span class="chip chip-gray">Device Drivers</span>
+          <span class="chip chip-gray">RTSP / UDP</span>
+          <span class="chip chip-gray">DMA / PCIe</span>
+          <span class="chip chip-green">OpenCV</span>
+          <span class="chip chip-green">FFmpeg</span>
+          <span class="chip chip-blue">Flutter</span>
+          <span class="chip chip-blue">React Native</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">📱 Mobile App Targets</div>
+        <div class="codec-grid">
+          <div class="codec-item">
+            <div class="codec-name" style="font-size:11px">📱 iOS (Swift)</div>
+            <div class="codec-detail">AVFoundation<br>VideoToolbox<br>SwiftUI</div>
+          </div>
+          <div class="codec-item">
+            <div class="codec-name" style="font-size:11px">🤖 Android</div>
+            <div class="codec-detail">MediaCodec<br>Camera2 API<br>Kotlin</div>
+          </div>
+          <div class="codec-item">
+            <div class="codec-name" style="font-size:11px">🦋 Flutter</div>
+            <div class="codec-detail">camera plugin<br>video_player<br>Dart/FFI</div>
+          </div>
+          <div class="codec-item">
+            <div class="codec-name" style="font-size:11px">⚛️ React Native</div>
+            <div class="codec-detail">Vision Camera<br>ExoPlayer<br>TypeScript</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /screens -->
+
+  <!-- BOTTOM NAV -->
+  <div class="bottom-nav">
+    <button class="nav-btn active" id="nav-dash" onclick="switchTab('dash')">
+      <span class="nav-icon">📊</span><span class="nav-label">Dashboard</span>
+    </button>
+    <button class="nav-btn" id="nav-codec" onclick="switchTab('codec')">
+      <span class="nav-icon">🎞️</span><span class="nav-label">Codec</span>
+    </button>
+    <button class="nav-btn" id="nav-sys" onclick="switchTab('sys')">
+      <span class="nav-icon">🖥️</span><span class="nav-label">System</span>
+    </button>
+    <button class="nav-btn" id="nav-log" onclick="switchTab('log')">
+      <span class="nav-icon">📋</span><span class="nav-label">Log</span>
+    </button>
+  </div>
+
+</div><!-- /app -->
+
+<script>
+/* ── Navigation ── */
+function switchTab(tab) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('scr-' + tab).classList.add('active');
+  document.getElementById('nav-' + tab).classList.add('active');
+}
+
+/* ── Resolution presets ── */
+const resMeta = {
+  '1280×720':  '1280×720 · Pixel fmt: YUV420 · Depth: 8-bit',
+  '1920×1080': '1920×1080 · Pixel fmt: YUV420 · Depth: 8-bit',
+  '3840×2160': '3840×2160 · Pixel fmt: YUV420 · Depth: 10-bit',
+  '7680×4320': '7680×4320 · Pixel fmt: YUV420 · Depth: 12-bit',
+};
+function setRes(btn, res) {
+  document.querySelectorAll('#resPresets .btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('resMeta').textContent = 'Resolution: ' + resMeta[res];
+}
+
+/* ── Simulated live feed canvas ── */
+(function initFeed() {
+  const canvas = document.getElementById('feedCanvas');
+  const ctx    = canvas.getContext('2d');
+  let frame    = 0;
+  let lastTs   = performance.now();
+  let fps      = 30;
+  const W = 640, H = 360;
+  canvas.width = W; canvas.height = H;
+
+  // Palette of scene colours (simulate different video content)
+  const scenes = [
+    { sky: '#0a1628', fg: '#1e3a5f' },
+    { sky: '#1a0a28', fg: '#3d1f5a' },
+    { sky: '#0a2010', fg: '#1a5a2a' },
+    { sky: '#280a0a', fg: '#5a1a1a' },
+  ];
+  let sceneIdx = 0;
+
+  function draw(ts) {
+    const dt = ts - lastTs;
+    if (dt > 0) fps = Math.round(0.9 * fps + 0.1 * (1000 / dt));
+    lastTs = ts;
+    frame++;
+
+    if (frame % 180 === 0) sceneIdx = (sceneIdx + 1) % scenes.length;
+    const sc = scenes[sceneIdx];
+
+    // Background gradient
+    const grad = ctx.createLinearGradient(0, 0, 0, H);
+    grad.addColorStop(0, sc.sky);
+    grad.addColorStop(1, sc.fg);
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, W, H);
+
+    // Scan-line effect
+    ctx.fillStyle = 'rgba(0,0,0,0.05)';
+    for (let y = 0; y < H; y += 2) ctx.fillRect(0, y, W, 1);
+
+    // Moving grid (simulates video objects)
+    const t = frame / 60;
+    ctx.strokeStyle = 'rgba(88,166,255,0.15)';
+    ctx.lineWidth = 1;
+    for (let gx = 0; gx < W; gx += 40) {
+      ctx.beginPath();
+      ctx.moveTo((gx + t * 10) % W, 0);
+      ctx.lineTo((gx + t * 10) % W, H);
+      ctx.stroke();
+    }
+    for (let gy = 0; gy < H; gy += 30) {
+      ctx.beginPath();
+      ctx.moveTo(0, (gy + t * 5) % H);
+      ctx.lineTo(W, (gy + t * 5) % H);
+      ctx.stroke();
+    }
+
+    // Bounding-box overlay (object detection simulation)
+    const boxes = [
+      { x: 60 + Math.sin(t) * 20,  y: 80 + Math.cos(t) * 15,  w: 110, h: 140, label: 'Person 97%',   color: '#3fb950' },
+      { x: 280 + Math.cos(t) * 30, y: 120 + Math.sin(t) * 20, w: 90,  h: 80,  label: 'Vehicle 89%',  color: '#58a6ff' },
+      { x: 460 + Math.sin(t*1.3)*15, y: 60+Math.cos(t*0.7)*20, w: 100, h: 120, label: 'Cyclist 74%', color: '#d29922' },
+    ];
+    boxes.forEach(b => {
+      ctx.strokeStyle = b.color;
+      ctx.lineWidth = 2;
+      ctx.strokeRect(b.x, b.y, b.w, b.h);
+      ctx.fillStyle = b.color + 'cc';
+      ctx.fillRect(b.x, b.y - 16, ctx.measureText(b.label).width + 8, 16);
+      ctx.fillStyle = '#000';
+      ctx.font = '10px monospace';
+      ctx.fillText(b.label, b.x + 4, b.y - 4);
+    });
+
+    // ROI corner marks
+    const roi = { x: 30, y: 30, w: W - 60, h: H - 60 };
+    ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+    ctx.lineWidth = 1;
+    [[roi.x, roi.y], [roi.x+roi.w, roi.y], [roi.x, roi.y+roi.h], [roi.x+roi.w, roi.y+roi.h]].forEach(([cx,cy]) => {
+      ctx.beginPath();
+      ctx.moveTo(cx - 10, cy); ctx.lineTo(cx + 10, cy);
+      ctx.moveTo(cx, cy - 10); ctx.lineTo(cx, cy + 10);
+      ctx.stroke();
+    });
+
+    // Frame counter watermark
+    ctx.fillStyle = 'rgba(255,255,255,0.25)';
+    ctx.font = '9px monospace';
+    ctx.fillText('FRAME ' + String(frame).padStart(6, '0'), 4, H - 4);
+
+    // Update overlay stats
+    document.getElementById('ovFrames').textContent = frame;
+    document.getElementById('ovLatency').textContent = (10 + Math.random() * 5).toFixed(0) + ' ms';
+
+    const bitrateNow = (17 + Math.random() * 3).toFixed(1);
+    document.getElementById('ovBitrate').textContent = bitrateNow + ' Mbps';
+
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+})();
+
+/* ── Live metrics simulation ── */
+function randIn(lo, hi) { return lo + Math.random() * (hi - lo); }
+
+function updateMetrics() {
+  const cpu  = randIn(42, 68);
+  const gpu  = randIn(55, 85);
+  const fps  = randIn(28.5, 30.2);
+  const temp = randIn(62, 74);
+
+  const set = (id, val, unit, delta, cls) => {
+    document.getElementById(id).textContent       = val + (unit || '');
+    document.getElementById(id + 'd').textContent  = delta;
+    document.getElementById(id + 'd').className   = 'metric-delta ' + cls;
+  };
+
+  document.getElementById('mCPU').textContent  = cpu.toFixed(0);
+  document.getElementById('mGPU').textContent  = gpu.toFixed(0);
+  document.getElementById('mFPS').textContent  = fps.toFixed(1);
+  document.getElementById('mTemp').textContent = temp.toFixed(0);
+
+  document.getElementById('mCPUd').textContent  = '↑ ' + (cpu - 55).toFixed(0) + '% vs idle';
+  document.getElementById('mGPUd').textContent  = 'HW enc: VPU0';
+  document.getElementById('mFPSd').textContent  = 'target 30.0 fps';
+  document.getElementById('mTempd').textContent = temp > 70 ? '⚠ approaching limit' : '✓ within TDP';
+
+  // Memory bars
+  const memPct = randIn(58, 66);
+  document.getElementById('bMem').style.width = memPct + '%';
+  document.getElementById('bMemV').textContent = (memPct / 100 * 8).toFixed(1) + ' GB';
+
+  const bwPct  = randIn(38, 52);
+  document.getElementById('bBW').style.width = bwPct + '%';
+  document.getElementById('bBWV').textContent = (bwPct / 100 * 8).toFixed(1) + ' GB/s';
+
+  const pciPct = randIn(24, 36);
+  document.getElementById('bPCI').style.width = pciPct + '%';
+  document.getElementById('bPCIV').textContent = (pciPct / 100 * 8).toFixed(1) + ' GB/s';
+
+  // Alert for temp
+  if (temp > 71) {
+    document.getElementById('alertTempBadge').className = 'badge badge-red';
+    document.getElementById('alertTempBadge').textContent = 'WARN';
+  } else {
+    document.getElementById('alertTempBadge').className = 'badge badge-green';
+    document.getElementById('alertTempBadge').textContent = 'OK';
+  }
+}
+
+setInterval(updateMetrics, 1500);
+updateMetrics();
+
+/* ── System log ── */
+const logLines = [
+  ['ok',   '[    0.000000] Booting Linux on ARM Cortex-A53'],
+  ['info', '[    0.021300] NXP i.MX8M Plus SoC detected'],
+  ['ok',   '[    0.105200] DDR4 8GB LPDDR4X initialized'],
+  ['ok',   '[    0.234100] imx-vpu: VPU firmware v2.4.8 loaded'],
+  ['ok',   '[    0.312500] imx8-isi: ISP driver registered'],
+  ['info', '[    0.420000] mxc-mipi-csi2: 2 CSI-2 lanes active'],
+  ['ok',   '[    0.535000] imx477: camera sensor detected (12MP)'],
+  ['info', '[    0.601000] GStreamer 1.22 pipeline initialised'],
+  ['ok',   '[    0.712000] v4l2src → hantro_h265enc → rtpmp2tpay'],
+  ['ok',   '[    0.820000] RTSP server listening on :8554/stream'],
+  ['warn', '[    0.912000] CBR: bitrate spike 22.1 Mbps → adjusting'],
+  ['ok',   '[    1.001000] Stabilised at 18.4 Mbps target'],
+  ['info', '[    1.100000] NPU: ML inference pipeline active'],
+  ['ok',   '[    1.200000] Object detection model loaded (YOLOv8n)'],
+  ['info', '[    2.340000] HDMI 2.0: 4K@60 display connected'],
+  ['ok',   '[    2.500000] All subsystems nominal — EmbedVision ready'],
+];
+
+let logIdx = 0;
+const logBox = document.getElementById('logBox');
+
+function appendLog() {
+  if (logIdx >= logLines.length) {
+    // Loop with live runtime messages
+    const runtime = [
+      ['ok',   'VPU: 0 frame drops since start'],
+      ['info', 'ISP: AWB converged — CCT 5600K'],
+      ['warn', 'Thermal: CPU throttle margin 6°C'],
+      ['ok',   'Network: RTSP client connected 192.168.1.42'],
+      ['info', 'ML: 3 objects detected in last frame'],
+    ];
+    const l = runtime[Math.floor(Math.random() * runtime.length)];
+    const ts = '[' + (performance.now() / 1000).toFixed(3).padStart(10) + ']';
+    const cls = l[0] === 'ok' ? 'log-ok' : l[0] === 'warn' ? 'log-warn' : 'log-info';
+    const div = document.createElement('div');
+    div.className = 'log-line';
+    div.innerHTML = `<span class="log-ts">${ts}</span> <span class="${cls}">${l[1]}</span>`;
+    logBox.appendChild(div);
+    logBox.scrollTop = logBox.scrollHeight;
+    return;
+  }
+  const [type, msg] = logLines[logIdx++];
+  const cls = type === 'ok' ? 'log-ok' : type === 'warn' ? 'log-warn' : type === 'err' ? 'log-err' : 'log-info';
+  const div = document.createElement('div');
+  div.className = 'log-line';
+  div.innerHTML = `<span class="${cls}">${msg}</span>`;
+  logBox.appendChild(div);
+  logBox.scrollTop = logBox.scrollHeight;
+}
+
+// Dump initial log fast, then slow down
+let i = 0;
+function bootLog() {
+  if (i < logLines.length) {
+    appendLog();
+    i++;
+    setTimeout(bootLog, 80);
+  }
+}
+bootLog();
+setInterval(appendLog, 2800);
+</script>
+</body>
+</html>
