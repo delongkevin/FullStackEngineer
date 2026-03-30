@@ -343,6 +343,12 @@
             const [message, setMessage] = useState('Place your bet and deal cards');
             const [score, setScore] = useState({ wins: 0, losses: 0, pushes: 0 });
 
+            // Refs to always hold the latest values — avoids stale-closure bugs in setTimeouts
+            const playerHandRef = React.useRef([]);
+            const dealerHandRef = React.useRef([]);
+            const deckRef       = React.useRef([]);
+            const gameStatusRef = React.useRef('waiting');
+
             // Initialize a deck of cards
             const initializeDeck = () => {
                 const suits = ['heart', 'diamond', 'club', 'spade'];
@@ -393,150 +399,132 @@
                 return total;
             };
 
+            // Helper: update a hand ref and state together
+            const setPlayerHandSync = (hand) => { playerHandRef.current = hand; setPlayerHand(hand); };
+            const setDealerHandSync = (hand) => { dealerHandRef.current = hand; setDealerHand(hand); };
+            const setDeckSync       = (d)    => { deckRef.current = d;          setDeck(d); };
+            const setGameStatusSync = (s)    => { gameStatusRef.current = s;    setGameStatus(s); };
+
+            // Run the dealer's turn using ref values so no stale closures
+            const runDealerTurn = () => {
+                setGameStatusSync('dealer-turn');
+                setMessage("Dealer's turn");
+
+                setTimeout(() => {
+                    const newDealerTotal = calculateTotal(dealerHandRef.current);
+                    setDealerTotal(newDealerTotal);
+
+                    let currentDeck       = [...deckRef.current];
+                    let currentDealerHand = [...dealerHandRef.current];
+                    let currentDealerTotal = newDealerTotal;
+
+                    // Capture player total from ref (always up-to-date)
+                    const finalPlayerTotal = calculateTotal(playerHandRef.current);
+
+                    const dealerDraw = () => {
+                        if (currentDealerTotal < 17) {
+                            setTimeout(() => {
+                                const newCard = currentDeck.pop();
+                                currentDealerHand.push(newCard);
+                                currentDealerTotal = calculateTotal(currentDealerHand);
+
+                                setDeckSync(currentDeck);
+                                setDealerHandSync(currentDealerHand);
+                                setDealerTotal(currentDealerTotal);
+
+                                dealerDraw();
+                            }, 800);
+                        } else {
+                            setTimeout(() => {
+                                const finalDealerTotal = calculateTotal(currentDealerHand);
+
+                                if (finalDealerTotal > 21) {
+                                    setGameStatusSync('win');
+                                    setMessage('Dealer busts! You win!');
+                                    setScore(prev => ({ ...prev, wins: prev.wins + 1 }));
+                                } else if (finalDealerTotal > finalPlayerTotal) {
+                                    setGameStatusSync('lose');
+                                    setMessage('Dealer wins!');
+                                    setScore(prev => ({ ...prev, losses: prev.losses + 1 }));
+                                } else if (finalDealerTotal < finalPlayerTotal) {
+                                    setGameStatusSync('win');
+                                    setMessage('You win!');
+                                    setScore(prev => ({ ...prev, wins: prev.wins + 1 }));
+                                } else {
+                                    setGameStatusSync('push');
+                                    setMessage("It's a push!");
+                                    setScore(prev => ({ ...prev, pushes: prev.pushes + 1 }));
+                                }
+                            }, 500);
+                        }
+                    };
+
+                    dealerDraw();
+                }, 800);
+            };
+
             // Deal initial cards
             const dealCards = () => {
                 const newDeck = initializeDeck();
                 const playerCards = [newDeck.pop(), newDeck.pop()];
                 const dealerCards = [newDeck.pop(), newDeck.pop()];
                 
-                setDeck(newDeck);
-                setPlayerHand(playerCards);
-                setDealerHand(dealerCards);
+                setDeckSync(newDeck);
+                setPlayerHandSync(playerCards);
+                setDealerHandSync(dealerCards);
                 
                 const playerTotalValue = calculateTotal(playerCards);
                 const dealerTotalValue = calculateTotal([dealerCards[0]]); // Only show first card for dealer
                 
                 setPlayerTotal(playerTotalValue);
                 setDealerTotal(dealerTotalValue);
-                setGameStatus('player-turn');
+                setGameStatusSync('player-turn');
                 setMessage('Your turn! Hit or Stand?');
                 
-                // Check for blackjack
+                // Check for blackjack — use setTimeout so the UI updates first
                 if (playerTotalValue === 21) {
-                    setTimeout(stand, 1000);
+                    setMessage('Blackjack! Dealer plays...');
+                    setTimeout(runDealerTurn, 1000);
                 }
             };
 
             // Player draws a card
 			const hit = () => {
-				if (gameStatus !== 'player-turn') return;
+				if (gameStatusRef.current !== 'player-turn') return;
 				
-				const newDeck = [...deck];
+				const newDeck = [...deckRef.current];
 				const newCard = newDeck.pop();
-				const newPlayerHand = [...playerHand, newCard];
+				const newPlayerHand = [...playerHandRef.current, newCard];
 				const newPlayerTotal = calculateTotal(newPlayerHand);
 				
-				setDeck(newDeck);
-				setPlayerHand(newPlayerHand);
+				setDeckSync(newDeck);
+				setPlayerHandSync(newPlayerHand);
 				setPlayerTotal(newPlayerTotal);
 				
 				if (newPlayerTotal > 21) {
-					setGameStatus('lose');
+					setGameStatusSync('lose');
 					setMessage('Busted! You lose.');
-					setScore({ ...score, losses: score.losses + 1 });
+					setScore(prev => ({ ...prev, losses: prev.losses + 1 }));
 				} else if (newPlayerTotal === 21) {
-					setTimeout(stand, 500);
+					setMessage('21! Dealer plays...');
+					setTimeout(runDealerTurn, 500);
 				}
 			};
 
             // Player ends their turn
 			const stand = () => {
-				if (gameStatus !== 'player-turn') return;
-				
-				setGameStatus('dealer-turn');
-				setMessage("Dealer's turn");
-				
-				// Reveal dealer's hidden card after a short delay
-				setTimeout(() => {
-					const newDealerTotal = calculateTotal(dealerHand);
-					setDealerTotal(newDealerTotal);
-					
-					let currentDeck = [...deck];
-					let currentDealerHand = [...dealerHand];
-					let currentDealerTotal = newDealerTotal;
-					
-					// Dealer draws until they have at least 17
-					const dealerDraw = () => {
-						if (currentDealerTotal < 17) {
-							setTimeout(() => {
-								const newCard = currentDeck.pop();
-								currentDealerHand.push(newCard);
-								currentDealerTotal = calculateTotal(currentDealerHand);
-								
-								setDeck(currentDeck);
-								setDealerHand(currentDealerHand);
-								setDealerTotal(currentDealerTotal);
-								
-								dealerDraw();
-							}, 800);
-						} else {
-							// Determine winner after dealer finishes drawing
-							setTimeout(() => {
-								// Use the current hand values directly
-								const finalPlayerTotal = calculateTotal(playerHand);
-								const finalDealerTotal = calculateTotal(currentDealerHand);
-								
-								if (finalDealerTotal > 21) {
-									setGameStatus('win');
-									setMessage('Dealer busts! You win!');
-									setScore({ ...score, wins: score.wins + 1 });
-								} else if (finalDealerTotal > finalPlayerTotal) {
-									setGameStatus('lose');
-									setMessage('Dealer wins!');
-									setScore({ ...score, losses: score.losses + 1 });
-								} else if (finalDealerTotal < finalPlayerTotal) {
-									setGameStatus('win');
-									setMessage('You win!');
-									setScore({ ...score, wins: score.wins + 1 });
-								} else {
-									setGameStatus('push');
-									setMessage("It's a push!");
-									setScore({ ...score, pushes: score.pushes + 1 });
-								}
-							}, 500);
-						}
-					};
-					
-					dealerDraw();
-				}, 800);
-			};
-
-            // Determine the winner
-			const determineWinner = () => {
-				// Calculate current totals to ensure we have fresh values
-				const currentPlayerTotal = calculateTotal(playerHand);
-				const currentDealerTotal = calculateTotal(dealerHand);
-				
-				if (currentDealerTotal > 21) {
-					setGameStatus('win');
-					setMessage('Dealer busts! You win!');
-					setScore({ ...score, wins: score.wins + 1 });
-				} else if (currentPlayerTotal > 21) {
-					setGameStatus('lose');
-					setMessage('Busted! You lose.');
-					setScore({ ...score, losses: score.losses + 1 });
-				} else if (currentDealerTotal > currentPlayerTotal) {
-					setGameStatus('lose');
-					setMessage('Dealer wins!');
-					setScore({ ...score, losses: score.losses + 1 });
-				} else if (currentDealerTotal < currentPlayerTotal) {
-					setGameStatus('win');
-					setMessage('You win!');
-					setScore({ ...score, wins: score.wins + 1 });
-				} else {
-					setGameStatus('push');
-					setMessage("It's a push!");
-					setScore({ ...score, pushes: score.pushes + 1 });
-				}
+				if (gameStatusRef.current !== 'player-turn') return;
+				runDealerTurn();
 			};
 
             // Start a new game
             const newGame = () => {
-                setPlayerHand([]);
-                setDealerHand([]);
+                setPlayerHandSync([]);
+                setDealerHandSync([]);
+                setDeckSync([]);
                 setPlayerTotal(0);
                 setDealerTotal(0);
-                setGameStatus('waiting');
+                setGameStatusSync('waiting');
                 setMessage('Place your bet and deal cards');
             };
 

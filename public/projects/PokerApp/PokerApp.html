@@ -511,10 +511,10 @@
         // Game state with proper poker rules
         const gameState = {
             players: [
-                { id: 1, name: "You", stack: 1500, bet: 0, cards: [], isActive: true, isFolded: false, isAllIn: false, position: 0 },
-                { id: 2, name: "Player 2", stack: 1500, bet: 0, cards: [], isActive: false, isFolded: false, isAllIn: false, position: 1 },
-                { id: 3, name: "Player 3", stack: 1500, bet: 0, cards: [], isActive: false, isFolded: false, isAllIn: false, position: 2 },
-                { id: 4, name: "Player 4", stack: 1500, bet: 0, cards: [], isActive: false, isFolded: false, isAllIn: false, position: 3 }
+                { id: 1, name: "You", stack: 1500, bet: 0, cards: [], isActive: true, isFolded: false, isAllIn: false, hasActed: false, position: 0 },
+                { id: 2, name: "Player 2", stack: 1500, bet: 0, cards: [], isActive: false, isFolded: false, isAllIn: false, hasActed: false, position: 1 },
+                { id: 3, name: "Player 3", stack: 1500, bet: 0, cards: [], isActive: false, isFolded: false, isAllIn: false, hasActed: false, position: 2 },
+                { id: 4, name: "Player 4", stack: 1500, bet: 0, cards: [], isActive: false, isFolded: false, isAllIn: false, hasActed: false, position: 3 }
             ],
             communityCards: [],
             pot: 0,
@@ -646,10 +646,10 @@
         function resetGame() {
             // Reset game state completely
             gameState.players = [
-                { id: 1, name: "You", stack: 1500, bet: 0, cards: [], isActive: true, isFolded: false, isAllIn: false, position: 0 },
-                { id: 2, name: "Player 2", stack: 1500, bet: 0, cards: [], isActive: false, isFolded: false, isAllIn: false, position: 1 },
-                { id: 3, name: "Player 3", stack: 1500, bet: 0, cards: [], isActive: false, isFolded: false, isAllIn: false, position: 2 },
-                { id: 4, name: "Player 4", stack: 1500, bet: 0, cards: [], isActive: false, isFolded: false, isAllIn: false, position: 3 }
+                { id: 1, name: "You", stack: 1500, bet: 0, cards: [], isActive: true, isFolded: false, isAllIn: false, hasActed: false, position: 0 },
+                { id: 2, name: "Player 2", stack: 1500, bet: 0, cards: [], isActive: false, isFolded: false, isAllIn: false, hasActed: false, position: 1 },
+                { id: 3, name: "Player 3", stack: 1500, bet: 0, cards: [], isActive: false, isFolded: false, isAllIn: false, hasActed: false, position: 2 },
+                { id: 4, name: "Player 4", stack: 1500, bet: 0, cards: [], isActive: false, isFolded: false, isAllIn: false, hasActed: false, position: 3 }
             ];
             
             gameState.communityCards = [];
@@ -691,6 +691,7 @@
                 player.isFolded = false;
                 player.isAllIn = false;
                 player.isActive = false;
+                player.hasActed = false;
             });
             
             // Move dealer button
@@ -960,10 +961,15 @@
             if (totalBet > gameState.currentBet) {
                 gameState.lastRaiseAmount = totalBet - gameState.currentBet;
                 gameState.currentBet = totalBet;
+                // Reset hasActed for all other active players so they can respond
+                gameState.players.forEach((p, i) => {
+                    if (i !== 0 && !p.isFolded && !p.isAllIn) p.hasActed = false;
+                });
             }
             
             player.bet = totalBet;
             player.stack -= actualBet;
+            player.hasActed = true;
             gameState.pot += actualBet;
             
             addLogEntry(`${player.name} bets $${actualBet}`);
@@ -981,6 +987,7 @@
             const player = gameState.players[0];
             player.isFolded = true;
             player.isActive = false;
+            player.hasActed = true;
             
             addLogEntry(`${player.name} folds`);
             
@@ -997,6 +1004,7 @@
                 return;
             }
             
+            player.hasActed = true;
             addLogEntry(`${player.name} checks`);
             
             // Move to next player
@@ -1016,6 +1024,7 @@
             
             player.bet += actualCall;
             player.stack -= actualCall;
+            player.hasActed = true;
             gameState.pot += actualCall;
             
             addLogEntry(`${player.name} calls $${actualCall}`);
@@ -1039,6 +1048,7 @@
             const player = gameState.players[0];
             gameState.betAmount = player.stack;
             player.isAllIn = true;
+            player.hasActed = true;
             updateBetControls();
             
             addLogEntry(`${player.name} goes all in with $${player.stack}`);
@@ -1088,51 +1098,21 @@
         }
 
         function isBettingRoundComplete() {
-            let activeNonAllInPlayers = 0;
-            let playersMatchedBet = 0;
-            
-            // Count active players who can still act
-            for (const player of gameState.players) {
-                if (!player.isFolded && player.stack > 0) {
-                    if (!player.isAllIn) {
-                        activeNonAllInPlayers++;
-                        
-                        if (player.bet === gameState.currentBet) {
-                            playersMatchedBet++;
-                        }
-                    }
-                }
-            }
-            
-            console.log(`Betting round check: ${activeNonAllInPlayers} active players, ${playersMatchedBet} matched bet`);
-            
             // If only one player remains (others folded), betting round is complete
-            const activePlayers = gameState.players.filter(p => !p.isFolded && p.stack > 0).length;
-            if (activePlayers <= 1) {
-                console.log("Only one active player - betting round complete");
+            const activePlayers = gameState.players.filter(p => !p.isFolded && p.stack > 0);
+            if (activePlayers.length <= 1) {
                 return true;
             }
-            
-            // All non-all-in players have matched the current bet
-            // AND we've completed a full betting round (action has returned to the last raiser)
-            const allMatched = activeNonAllInPlayers === 0 || playersMatchedBet === activeNonAllInPlayers;
-            
-            // Additional check: make sure we've completed a full betting round
-            // The betting round is complete when action returns to the first player who hasn't folded
-            // and all players have had a chance to act
-            if (allMatched) {
-                console.log("All players have matched the bet - checking if betting round is complete");
-                
-                // Check if we've completed a full round of betting
-                // The round is complete when the action returns to the first player who hasn't folded
-                // and all players have had a chance to act
-                if (gameState.currentPlayerIndex === gameState.firstPlayerIndex) {
-                    console.log("Betting round complete - action returned to first player");
-                    return true;
-                }
+
+            // A betting round is complete when every active, non-all-in player:
+            //   1. has acted at least once this round (hasActed), AND
+            //   2. their bet matches the current bet (or they are all-in)
+            for (const player of gameState.players) {
+                if (player.isFolded || player.isAllIn || player.stack === 0) continue;
+                if (!player.hasActed) return false;
+                if (player.bet !== gameState.currentBet) return false;
             }
-            
-            return false;
+            return true;
         }
 
         function advanceGamePhase() {
@@ -1143,6 +1123,7 @@
             // Reset player bets for new betting round
             gameState.players.forEach(player => {
                 player.bet = 0;
+                player.hasActed = false;
             });
             
             // Check if we should skip to showdown (only one player remains)
@@ -1605,10 +1586,12 @@
                     case 'fold':
                         aiPlayer.isFolded = true;
                         aiPlayer.isActive = false;
+                        aiPlayer.hasActed = true;
                         addLogEntry(`${aiPlayer.name} folds`);
                         break;
                         
                     case 'check':
+                        aiPlayer.hasActed = true;
                         addLogEntry(`${aiPlayer.name} checks`);
                         break;
                         
@@ -1616,6 +1599,7 @@
                         const actualCall = Math.min(callAmount, aiPlayer.stack);
                         aiPlayer.bet += actualCall;
                         aiPlayer.stack -= actualCall;
+                        aiPlayer.hasActed = true;
                         gameState.pot += actualCall;
                         addLogEntry(`${aiPlayer.name} calls $${actualCall}`);
                         break;
@@ -1628,11 +1612,17 @@
                             maxRaise
                         );
                         
+                        const prevBet = aiPlayer.bet;
                         aiPlayer.bet += raiseAmount;
                         aiPlayer.stack -= raiseAmount;
                         gameState.pot += raiseAmount;
                         gameState.currentBet = aiPlayer.bet;
-                        gameState.lastRaiseAmount = raiseAmount;
+                        gameState.lastRaiseAmount = aiPlayer.bet - prevBet;
+                        aiPlayer.hasActed = true;
+                        // Reset hasActed for all other active players so they can respond
+                        gameState.players.forEach(p => {
+                            if (p !== aiPlayer && !p.isFolded && !p.isAllIn) p.hasActed = false;
+                        });
                         addLogEntry(`${aiPlayer.name} raises to $${aiPlayer.bet}`);
                         break;
                 }
