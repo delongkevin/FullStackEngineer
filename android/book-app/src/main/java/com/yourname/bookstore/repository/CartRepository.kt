@@ -7,9 +7,9 @@ class CartRepository {
     private val cartItems = mutableListOf<CartItem>()
 
     fun addToCart(book: Book) {
-        val existingItem = cartItems.find { it.book.id == book.id }
-        if (existingItem != null) {
-            existingItem.quantity++
+        val index = cartItems.indexOfFirst { it.book.id == book.id }
+        if (index >= 0) {
+            cartItems[index] = cartItems[index].copy(quantity = cartItems[index].quantity + 1)
         } else {
             cartItems.add(CartItem(book, 1))
         }
@@ -20,10 +20,13 @@ class CartRepository {
     }
 
     fun updateQuantity(bookId: String, quantity: Int) {
-        val item = cartItems.find { it.book.id == bookId }
-        item?.quantity = quantity
         if (quantity <= 0) {
             removeFromCart(bookId)
+            return
+        }
+        val index = cartItems.indexOfFirst { it.book.id == bookId }
+        if (index >= 0) {
+            cartItems[index] = cartItems[index].copy(quantity = quantity)
         }
     }
 
