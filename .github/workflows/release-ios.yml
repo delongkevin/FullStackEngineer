@@ -69,7 +69,7 @@ jobs:
 
             APP_PATH=$(find "build/$dir" -name "$name.app" -type d | head -1)
             if [ -z "$APP_PATH" ]; then
-              echo "::error::Failed to locate $name.app in build/$dir after successful build"
+              echo "::error::Failed to locate $name.app under build/$dir (derivedDataPath). This may indicate an xcodebuild failure or an unexpected build output location."
               exit 1
             fi
 
