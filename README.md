@@ -76,5 +76,4 @@ This site can be deployed to:
 - Any static hosting service
 
 ## 📝 License
-
-MIT License - Kevin Douglas Delong
+- Kevin Douglas Delong
