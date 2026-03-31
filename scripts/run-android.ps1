@@ -3,15 +3,10 @@
   Build and deploy an Android app from this repo to the Pixel_9a emulator.
 
 .DESCRIPTION
-  - Selects which app to build (book-app by default)
+  - Builds all Android apps in sequence
   - Starts the Pixel_9a AVD if it is not already running
   - Builds the debug APK using the Gradle wrapper
-  - Installs the APK via adb
-
-.PARAMETER App
-  Which sub-project to build. One of:
-    book-app | computer-store | poker-app | kamps-factory | embedded-video
-  Default: book-app
+  - Installs each APK via adb
 
 .PARAMETER AvdName
   Name of the Android Virtual Device to launch.
@@ -22,14 +17,10 @@
 
 .EXAMPLE
   .\scripts\run-android.ps1
-  .\scripts\run-android.ps1 -App poker-app
-  .\scripts\run-android.ps1 -App computer-store -Config release
+  .\scripts\run-android.ps1 -Config release
 #>
 
 param(
-    [ValidateSet("book-app", "computer-store", "poker-app", "kamps-factory", "embedded-video")]
-    [string]$App = "book-app",
-
     [string]$AvdName = "Pixel_9a",
 
     [ValidateSet("debug", "release")]
@@ -57,8 +48,7 @@ $MODULE_MAP = @{
     "kamps-factory"  = @{ Module = "kamps-factory";  ApkName = "KampsSmartFactory";    TaskPrefix = ":kamps-factory" }
     "embedded-video" = @{ Module = "embedded-video"; ApkName = "EmbeddedVideoEngineer"; TaskPrefix = ":embedded-video" }
 }
-
-$entry = $MODULE_MAP[$App]
+  $APP_ORDER = @("book-app", "computer-store", "poker-app", "kamps-factory", "embedded-video")
 
 # ─── Validation ───────────────────────────────────────────────────────────────
 foreach ($required in @($ADB, $EMULATOR, "$JAVA_HOME\bin\java.exe", "$ANDROID_DIR\gradlew.bat")) {
@@ -76,7 +66,7 @@ $env:PATH               = "$JAVA_HOME\bin;$SDK\platform-tools;$SDK\emulator;" + 
 
 Write-Host ""
 Write-Host "================================================" -ForegroundColor Cyan
-Write-Host "  Android Deploy: $App  [$Config]" -ForegroundColor Cyan
+Write-Host "  Android Deploy: all apps  [$Config]" -ForegroundColor Cyan
 Write-Host "  AVD            : $AvdName" -ForegroundColor Cyan
 Write-Host "================================================" -ForegroundColor Cyan
 Write-Host ""
@@ -114,38 +104,38 @@ if ($runningDevices) {
     Start-Sleep -Seconds 3
 }
 
-# ─── 2. Build APK ─────────────────────────────────────────────────────────────
-$variant    = (Get-Culture).TextInfo.ToTitleCase($Config)    # debug -> Debug
-$gradleTask = "$($entry.TaskPrefix):assemble$variant"
+# ─── 2-4. Build and install all APKs ─────────────────────────────────────────
+$variant = (Get-Culture).TextInfo.ToTitleCase($Config)    # debug -> Debug
+foreach ($appName in $APP_ORDER) {
+  $entry = $MODULE_MAP[$appName]
+  $gradleTask = "$($entry.TaskPrefix):assemble$variant"
 
-Write-Host ""
-Write-Host ">> Building $App ($gradleTask)..." -ForegroundColor Yellow
-Push-Location $ANDROID_DIR
-try {
+  Write-Host ""
+  Write-Host ">> Building $appName ($gradleTask)..." -ForegroundColor Yellow
+  Push-Location $ANDROID_DIR
+  try {
     cmd /c "gradlew.bat $gradleTask --no-daemon"
-    if ($LASTEXITCODE -ne 0) { Write-Host "ERROR: Gradle build failed (exit $LASTEXITCODE)" -ForegroundColor Red; exit 1 }
-} finally {
+    if ($LASTEXITCODE -ne 0) { Write-Host "ERROR: Gradle build failed for $appName (exit $LASTEXITCODE)" -ForegroundColor Red; exit 1 }
+  } finally {
     Pop-Location
-}
+  }
 
-# ─── 3. Locate APK ────────────────────────────────────────────────────────────
-$apkSearch = Join-Path $ANDROID_DIR "$($entry.Module)\build\outputs\apk\$Config\*.apk"
-$apkPath   = Get-ChildItem $apkSearch -ErrorAction SilentlyContinue | Select-Object -First 1 -ExpandProperty FullName
+  $apkSearch = Join-Path $ANDROID_DIR "$($entry.Module)\build\outputs\apk\$Config\*.apk"
+  $apkPath   = Get-ChildItem $apkSearch -ErrorAction SilentlyContinue | Select-Object -First 1 -ExpandProperty FullName
 
-if (-not $apkPath) {
-    Write-Host "ERROR: APK not found at $apkSearch. Check build output above." -ForegroundColor Red
+  if (-not $apkPath) {
+    Write-Host "ERROR: APK not found for $appName at $apkSearch. Check build output above." -ForegroundColor Red
     exit 1
+  }
+
+  Write-Host "  APK: $apkPath" -ForegroundColor Green
+  Write-Host ">> Installing $appName APK on emulator..." -ForegroundColor Yellow
+  & $ADB install -r $apkPath
+  if ($LASTEXITCODE -ne 0) { Write-Host "ERROR: adb install failed for $appName (exit $LASTEXITCODE)" -ForegroundColor Red; exit 1 }
+  Write-Host "  Installed: $appName" -ForegroundColor Green
 }
-Write-Host ""
-Write-Host "  APK: $apkPath" -ForegroundColor Green
-
-# ─── 4. Install APK ───────────────────────────────────────────────────────────
-Write-Host ""
-Write-Host ">> Installing APK on emulator..." -ForegroundColor Yellow
-& $ADB install -r $apkPath
-if ($LASTEXITCODE -ne 0) { Write-Host "ERROR: adb install failed (exit $LASTEXITCODE)" -ForegroundColor Red; exit 1 }
 
 Write-Host ""
-Write-Host "DONE: $App is installed on $AvdName." -ForegroundColor Green
-Write-Host "  Open the app from the emulator home screen." -ForegroundColor Green
+Write-Host "DONE: All apps are installed on $AvdName." -ForegroundColor Green
+Write-Host "  Open each app from the emulator home screen." -ForegroundColor Green
 Write-Host ""
