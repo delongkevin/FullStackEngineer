@@ -1,0 +1,104 @@
+name: Book App TestFlight Upload
+
+on:
+  workflow_run:
+    workflows:
+      - Book App iOS Build
+    types:
+      - completed
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  upload-testflight:
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'workflow_dispatch' }}
+    runs-on: macos-latest
+
+    steps:
+      - name: Detect IPA artifact in triggering run
+        id: detect_artifact
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          IPA_ARTIFACT_ID=$(gh api "repos/${{ github.repository }}/actions/runs/${{ github.event.workflow_run.id }}/artifacts" --jq '.artifacts[] | select(.name|test("^book-app-device-ipa-")) | .id' | head -1)
+          if [ -z "$IPA_ARTIFACT_ID" ]; then
+            echo "has_ipa_artifact=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_ipa_artifact=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Download device IPA artifact from triggering run
+        if: ${{ steps.detect_artifact.outputs.has_ipa_artifact == 'true' }}
+        uses: actions/download-artifact@v4
+        with:
+          run-id: ${{ github.event.workflow_run.id }}
+          pattern: book-app-device-ipa-*
+          path: dist
+          merge-multiple: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Skip upload when no IPA artifact exists
+        if: ${{ steps.detect_artifact.outputs.has_ipa_artifact != 'true' }}
+        run: echo "No device IPA artifact found in triggering run. Skipping TestFlight upload."
+
+      - name: Find IPA
+        if: ${{ steps.detect_artifact.outputs.has_ipa_artifact == 'true' }}
+        id: find_ipa
+        run: |
+          IPA_PATH=$(find dist -name '*.ipa' -type f | head -1)
+          if [ -z "$IPA_PATH" ]; then
+            echo "::error::No IPA found in downloaded artifact. Ensure Book App iOS Build ran with build_target=device-ipa."
+            exit 1
+          fi
+          echo "ipa_path=$IPA_PATH" >> "$GITHUB_OUTPUT"
+          ls -lah dist
+
+      - name: Validate App Store Connect secrets
+        if: ${{ steps.detect_artifact.outputs.has_ipa_artifact == 'true' }}
+        env:
+          APPSTORE_API_KEY_ID: ${{ secrets.APPSTORE_API_KEY_ID }}
+          APPSTORE_ISSUER_ID: ${{ secrets.APPSTORE_ISSUER_ID }}
+          APPSTORE_API_PRIVATE_KEY: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
+        run: |
+          missing=0
+          [ -z "$APPSTORE_API_KEY_ID" ] && echo "::error::Missing required secret: APPSTORE_API_KEY_ID" && missing=1
+          [ -z "$APPSTORE_ISSUER_ID" ] && echo "::error::Missing required secret: APPSTORE_ISSUER_ID" && missing=1
+          [ -z "$APPSTORE_API_PRIVATE_KEY" ] && echo "::error::Missing required secret: APPSTORE_API_PRIVATE_KEY" && missing=1
+          if [ "$missing" -ne 0 ]; then
+            echo "::error::Set required repository secrets for TestFlight upload."
+            exit 1
+          fi
+
+      - name: Upload IPA to TestFlight
+        if: ${{ steps.detect_artifact.outputs.has_ipa_artifact == 'true' }}
+        env:
+          APPSTORE_API_KEY_ID: ${{ secrets.APPSTORE_API_KEY_ID }}
+          APPSTORE_ISSUER_ID: ${{ secrets.APPSTORE_ISSUER_ID }}
+          APPSTORE_API_PRIVATE_KEY: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
+        run: |
+          mkdir -p "$HOME/.appstoreconnect/private_keys"
+          KEY_PATH="$HOME/.appstoreconnect/private_keys/AuthKey_${APPSTORE_API_KEY_ID}.p8"
+          printf '%s' "$APPSTORE_API_PRIVATE_KEY" > "$KEY_PATH"
+
+          xcrun altool \
+            --upload-app \
+            --type ios \
+            --file "${{ steps.find_ipa.outputs.ipa_path }}" \
+            --apiKey "$APPSTORE_API_KEY_ID" \
+            --apiIssuer "$APPSTORE_ISSUER_ID" \
+            --verbose
+
+      - name: Print TestFlight status links
+        if: ${{ steps.detect_artifact.outputs.has_ipa_artifact == 'true' }}
+        env:
+          APPSTORE_APP_ID: ${{ secrets.APPSTORE_APP_ID }}
+        run: |
+          if [ -n "$APPSTORE_APP_ID" ]; then
+            APP_URL="https://appstoreconnect.apple.com/apps/$APPSTORE_APP_ID/testflight/ios"
+            echo "::notice::Upload submitted. Track processing at: $APP_URL"
+          else
+            echo "::notice::Upload submitted. Track processing at: https://appstoreconnect.apple.com/apps"
+            echo "::notice::Tip: add secret APPSTORE_APP_ID to print a direct app-specific TestFlight URL."
+          fi
