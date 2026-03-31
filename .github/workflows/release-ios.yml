@@ -1,0 +1,124 @@
+name: Release iOS Apps
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag (e.g. v1.0.0)'
+        required: false
+        default: 'v1.0.0'
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Install xcpretty
+        run: gem install xcpretty --no-document
+
+      - name: Resolve tag
+        run: |
+          TAG="${{ github.event.inputs.tag }}"
+          if [ -z "$TAG" ]; then
+            TAG="${{ github.ref_name }}"
+          fi
+          if [ -z "$TAG" ] || [ "$TAG" = "main" ]; then
+            TAG="v1.0.0"
+          fi
+          echo "TAG=$TAG" >> "$GITHUB_ENV"
+
+      - name: Generate Xcode projects and build
+        run: |
+          TAG="${{ env.TAG }}"
+          mkdir -p release-ios
+
+          declare -A APPS
+          APPS[book-app]="BookStore"
+          APPS[computer-store]="ComputerStore"
+          APPS[poker-app]="PokerApp"
+          APPS[kamps-factory]="KampsSmartFactory"
+          APPS[embedded-video]="EmbeddedVideoEngineer"
+
+          set -o pipefail
+          for dir in "${!APPS[@]}"; do
+            name="${APPS[$dir]}"
+            echo "▶ Generating $name.xcodeproj..."
+            (cd "ios/$dir" && xcodegen generate)
+
+            echo "▶ Building $name for simulator..."
+            xcodebuild \
+              -project "ios/$dir/$name.xcodeproj" \
+              -scheme "$name" \
+              -sdk iphonesimulator \
+              -configuration Debug \
+              -derivedDataPath "build/$dir" \
+              CODE_SIGNING_ALLOWED=NO \
+              build 2>&1 | xcpretty
+
+            APP_PATH=$(find "build/$dir" -name "$name.app" -type d | head -1)
+            if [ -z "$APP_PATH" ]; then
+              echo "::error::Failed to locate $name.app under build/$dir (derivedDataPath). This may indicate an xcodebuild failure or an unexpected build output location."
+              exit 1
+            fi
+
+            ZIP_NAME="${name}-${TAG}-ios-sim.zip"
+            ditto -c -k --keepParent "$APP_PATH" "release-ios/$ZIP_NAME"
+            echo "Packaged: $ZIP_NAME"
+          done
+          set +o pipefail
+
+          echo "iOS artifacts:"
+          ls -lh release-ios/
+
+      - name: Create or update GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="${{ env.TAG }}"
+
+          NOTES="## 🍎 iOS App Downloads
+
+          Simulator builds are provided as \`.zip\` archives containing \`.app\` bundles.
+          Drag a \`.app\` bundle into a running iOS Simulator to install it.
+
+          > **Note:** These are simulator builds (x86_64 / arm64 simulator slice).
+          > Device (IPA) builds require an Apple Developer account and code-signing certificates.
+
+          ### Available Apps
+
+          | App | Archive | Description |
+          |-----|---------|-------------|
+          | 📚 Book Store | \`BookStore-${TAG}-ios-sim.zip\` | SwiftUI bookstore — browse, cart & checkout |
+          | 🛒 Computer Store | \`ComputerStore-${TAG}-ios-sim.zip\` | SwiftUI computer & electronics e-commerce |
+          | ♠️ Poker App | \`PokerApp-${TAG}-ios-sim.zip\` | SwiftUI poker game with betting & chip count |
+          | 🏭 Kamps Smart Factory | \`KampsSmartFactory-${TAG}-ios-sim.zip\` | SwiftUI IoT Smart Factory dashboard |
+          | 📹 Embedded Video | \`EmbeddedVideoEngineer-${TAG}-ios-sim.zip\` | SwiftUI multi-camera embedded video viewer |
+
+          ### Installation Steps (Simulator)
+          1. Download a \`.zip\` archive from the assets below
+          2. Unzip to extract the \`.app\` bundle
+          3. Open Xcode → Simulator → File → Open Simulator Device Log (or drag \`.app\` directly onto running simulator)
+          4. Alternatively: \`xcrun simctl install booted <path/to/App.app>\`"
+
+          if gh release view "$TAG" &>/dev/null; then
+            echo "Release $TAG already exists — uploading iOS archives..."
+            gh release upload "$TAG" release-ios/*.zip --clobber
+          else
+            echo "Creating release $TAG..."
+            gh release create "$TAG" release-ios/*.zip \
+              --title "🍎 iOS Apps $TAG" \
+              --notes "$NOTES" \
+              --latest
+          fi
