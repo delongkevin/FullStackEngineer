@@ -452,7 +452,7 @@ export const projects: Project[] = [
       'XML Ingestion Pipeline: 5-stage animated pipeline (Ingest → Parse → Validate → Transform → Load) using native DOMParser with real schema validation and error detection',
       'Batch Job Monitor: 8 scheduled ETL/archival jobs with status indicators, live rerun simulation, per-job execution logs, and 24-hour run history chart',
       'Data Reconciliation Engine: field-by-field source-vs-target comparison with MATCH/MISMATCH/MISSING/EXTRA classification and automated root-cause analysis',
-      'Splunk-style Live Log Stream: real-time log generation with ERROR/WARN/INFO severity filtering and searchable event viewer',
+      'Splunk-style Live Log Stream: real-time log generation with ERROR/WARN/INFO severity filtering in the event viewer',
       'System Monitor: animated CPU, memory, and DB connection charts with 60-second rolling history and Canvas API rendering',
       'Active Alert Management: danger/warning/info alert banners with timestamps for production incident awareness',
       'Data Governance Panel: audit trail, data retention policy, PII masking, and change-control compliance status',

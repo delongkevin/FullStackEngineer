@@ -276,7 +276,7 @@
           <button class="tab" onclick="loadQuery(3,this)">Recon</button>
           <button class="tab" onclick="loadQuery(4,this)">Perf</button>
         </div>
-        <textarea class="sql-editor" id="sql-input" spellcheck="false"></textarea>
+        <textarea class="sql-editor" id="sql-input" spellcheck="false" readonly aria-label="SQL query preview — select a tab above to switch queries" title="Pre-built query — select a tab above to switch queries"></textarea>
         <div class="btn-row" style="margin-top:8px;">
           <button class="btn btn-p" onclick="runSQL()">▶ Execute</button>
           <button class="btn btn-s" onclick="explainPlan()">📋 Explain</button>
@@ -424,7 +424,7 @@
         </div>
         <div class="btn-row" style="margin-top:4px;">
           <button class="btn btn-p" onclick="runRecon()">▶ Reconcile</button>
-          <button class="btn btn-s" onclick="exportReport()">⬇ Export</button>
+          <button class="btn btn-s" onclick="exportReport(event)">⬇ Export</button>
         </div>
       </div>
 
@@ -472,10 +472,10 @@
       <div class="card">
         <div class="c-title">📜 Live Log Stream</div>
         <div class="tabs" style="margin-bottom:8px;">
-          <button class="tab active" onclick="filterLogs('all',this)">All</button>
-          <button class="tab" onclick="filterLogs('ERROR',this)">Error</button>
-          <button class="tab" onclick="filterLogs('WARN',this)">Warn</button>
-          <button class="tab" onclick="filterLogs('INFO',this)">Info</button>
+          <button class="tab active" aria-pressed="true" onclick="filterLogs('all',this)">All</button>
+          <button class="tab" aria-pressed="false" onclick="filterLogs('ERROR',this)">Error</button>
+          <button class="tab" aria-pressed="false" onclick="filterLogs('WARN',this)">Warn</button>
+          <button class="tab" aria-pressed="false" onclick="filterLogs('INFO',this)">Info</button>
         </div>
         <div class="console" id="log-viewer" style="max-height:180px;"></div>
       </div>
@@ -507,12 +507,12 @@
   </div><!-- /screens -->
 
   <!-- Bottom Nav -->
-  <div id="nav">
-    <button class="nav-btn active" onclick="showScreen('s-sql',this)"><span class="nav-icon">⚙️</span>SQL</button>
-    <button class="nav-btn" onclick="showScreen('s-xml',this)"><span class="nav-icon">📄</span>XML</button>
-    <button class="nav-btn" onclick="showScreen('s-batch',this)"><span class="nav-icon">⚡</span>Batch</button>
-    <button class="nav-btn" onclick="showScreen('s-recon',this)"><span class="nav-icon">🔁</span>Recon</button>
-    <button class="nav-btn" onclick="showScreen('s-mon',this)"><span class="nav-icon">📊</span>Monitor</button>
+  <div id="nav" role="tablist" aria-label="Main navigation">
+    <button class="nav-btn active" role="tab" aria-selected="true" aria-controls="s-sql" onclick="showScreen('s-sql',this)"><span class="nav-icon">⚙️</span>SQL</button>
+    <button class="nav-btn" role="tab" aria-selected="false" aria-controls="s-xml" onclick="showScreen('s-xml',this)"><span class="nav-icon">📄</span>XML</button>
+    <button class="nav-btn" role="tab" aria-selected="false" aria-controls="s-batch" onclick="showScreen('s-batch',this)"><span class="nav-icon">⚡</span>Batch</button>
+    <button class="nav-btn" role="tab" aria-selected="false" aria-controls="s-recon" onclick="showScreen('s-recon',this)"><span class="nav-icon">🔁</span>Recon</button>
+    <button class="nav-btn" role="tab" aria-selected="false" aria-controls="s-mon" onclick="showScreen('s-mon',this)"><span class="nav-icon">📊</span>Monitor</button>
   </div>
 
 </div><!-- /app -->
@@ -524,8 +524,12 @@
 function showScreen(id, btn) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('#nav [role="tab"]').forEach(b => {
+    b.classList.remove('active');
+    b.setAttribute('aria-selected', 'false');
+  });
   btn.classList.add('active');
+  btn.setAttribute('aria-selected', 'true');
 }
 
 /* ────────────────────────────────────────────────
@@ -941,12 +945,11 @@ async function runXMLPipeline() {
   addLog('log-inf', 'Stage 2/5 — Parse: parsing XML document…');
   await delay(400);
 
-  let doc, parseOk = true;
+  let doc;
   try {
     doc = new DOMParser().parseFromString(raw, 'text/xml');
     const parseErr = doc.querySelector('parsererror');
     if (parseErr) {
-      parseOk = false;
       addLog('log-err', 'XML PARSE ERROR: ' + parseErr.textContent.trim().substring(0,80));
       setStage('ps-parse','err');
       document.getElementById('xml-errors').textContent = '1';
@@ -954,7 +957,6 @@ async function runXMLPipeline() {
       return;
     }
   } catch(e) {
-    parseOk = false;
     addLog('log-err', 'Fatal parse exception: ' + e.message);
     setStage('ps-parse','err');
     return;
@@ -996,7 +998,6 @@ async function runXMLPipeline() {
       if (hasCust && hasAmt && valid && hasTs) { validCount++; addLog('log-ok', `[${id}] OK`); }
     } else {
       const sev = r.getAttribute('severity');
-      const rows = r.querySelector('RowsAffected')?.textContent?.trim();
       if (!sev) { addLog('log-err', `Event ${i+1}: missing severity attribute`); errors++; }
       else { validCount++; addLog('log-ok', `[Event-${i+1}] severity=${sev} OK`); }
     }
@@ -1055,7 +1056,7 @@ async function runXMLPipeline() {
   if (tableRows.length > 0) {
     const cols = Object.keys(tableRows[0]);
     let html = '<table class="result-table"><thead><tr>' +
-      cols.map(c=>`<th>${c}</th>`).join('') + '</tr></thead><tbody>';
+      cols.map(c=>`<th>${escHtml(c)}</th>`).join('') + '</tr></thead><tbody>';
     tableRows.forEach(r => {
       html += '<tr>' + cols.map(c => {
         const v = r[c];
@@ -1065,7 +1066,7 @@ async function runXMLPipeline() {
           else if (['FAILED','ERROR'].includes(v)) cls='td-err';
           else if (['PENDING','WARN'].includes(v)) cls='td-wrn';
         }
-        return `<td class="${cls}">${v}</td>`;
+        return `<td class="${cls}">${escHtml(v)}</td>`;
       }).join('') + '</tr>';
     });
     html += '</tbody></table>';
@@ -1372,9 +1373,9 @@ function runRecon() {
   }
 }
 
-function exportReport() {
+function exportReport(evt) {
   const ts = new Date().toISOString().substr(0,19).replace(/[:T]/g,'-');
-  const btn = event.target;
+  const btn = evt.target;
   btn.textContent = '✓ Exported';
   btn.classList.remove('btn-s'); btn.classList.add('btn-g');
   setTimeout(()=>{ btn.textContent='⬇ Export'; btn.classList.remove('btn-g'); btn.classList.add('btn-s'); }, 2000);
@@ -1428,15 +1429,25 @@ function generateLog() {
 let logFilter = 'all';
 function filterLogs(f, btn) {
   logFilter = f;
-  document.querySelectorAll('#s-mon .tab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('#s-mon .tab').forEach(b => {
+    b.classList.remove('active');
+    b.setAttribute('aria-pressed', 'false');
+  });
   btn.classList.add('active');
+  btn.setAttribute('aria-pressed', 'true');
   renderLogs();
 }
 
 function renderLogs() {
   const el = document.getElementById('log-viewer');
   const visible = logFilter==='all' ? ALL_LOGS : ALL_LOGS.filter(l=>l.level===logFilter);
-  el.innerHTML = visible.slice(-40).map(l=>`<span class="${l.cls}">${l.text}\n</span>`).join('');
+  el.textContent = '';
+  visible.slice(-40).forEach(l => {
+    const span = document.createElement('span');
+    span.className = l.cls;
+    span.textContent = l.text + '\n';
+    el.appendChild(span);
+  });
   el.scrollTop = el.scrollHeight;
 }
 
