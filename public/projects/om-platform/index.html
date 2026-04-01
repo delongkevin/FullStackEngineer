@@ -911,12 +911,18 @@ function resetXMLPipeline() {
   document.getElementById('xml-table-card').style.display = 'none';
 }
 
+function escHtml(s) {
+  return String(s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
 async function runXMLPipeline() {
   const raw = document.getElementById('xml-input').value.trim();
   const log = document.getElementById('xml-log');
   const ts = () => new Date().toISOString().substr(11,12);
   const addLog = (cls, msg) => {
-    log.innerHTML += `<span class="${cls}">[${ts()}] ${msg}\n</span>`;
+    log.innerHTML += `<span class="${cls}">[${ts()}] ${escHtml(msg)}\n</span>`;
     log.scrollTop = log.scrollHeight;
   };
 
