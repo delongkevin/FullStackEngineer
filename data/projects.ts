@@ -297,6 +297,8 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: '/projects/dornerworks-iot',
+    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/latest',
+    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/latest',
   },
   {
     id: 14,
