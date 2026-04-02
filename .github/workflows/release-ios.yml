@@ -106,7 +106,7 @@ jobs:
           | ♠️ Poker App | \`PokerApp-${TAG}-ios-sim.zip\` | SwiftUI poker game with betting & chip count |
           | 🏭 Kamps Smart Factory | \`KampsSmartFactory-${TAG}-ios-sim.zip\` | SwiftUI IoT Smart Factory dashboard |
           | 📹 Embedded Video | \`EmbeddedVideoEngineer-${TAG}-ios-sim.zip\` | SwiftUI multi-camera embedded video viewer |
-          | 🏥 Medical IoT Monitor | \`MedicalIoTMonitor-${TAG}-ios-sim.zip\` | SwiftUI real-time medical device vitals & BLE |
+          | 🏥 Medical IoT Monitor | \`MedicalIoTMonitor-${TAG}-ios-sim.zip\` | SwiftUI simulated medical vitals dashboard — heart rate, SpO₂, BP & alerts |
 
           ### Installation Steps (Simulator)
           1. Download a \`.zip\` archive from the assets below

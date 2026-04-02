@@ -70,7 +70,7 @@ struct DashboardView: View {
                 }
 
                 Section("Connected Devices") {
-                    ForEach(["Cardiac Monitor (BLE)", "Infusion Pump (BLE)", "Pulse Oximeter (BLE)", "Ventilator (Wi-Fi)"], id: \.self) { device in
+                    ForEach(["Cardiac Monitor (BLE)", "Infusion Pump (BLE)", "Pulse Oximeter (BLE)", "Ventilator (Wi-Fi)", "BP Monitor (BLE)"], id: \.self) { device in
                         HStack {
                             Image(systemName: "checkmark.circle.fill").foregroundStyle(.green)
                             Text(device).font(.subheadline)
@@ -89,11 +89,11 @@ struct DashboardView: View {
 
 struct DevicesView: View {
     let devices: [MedDevice] = [
-        MedDevice(name: "Cardiac Monitor CM-900", type: "BLE 5.x", id: "CM-204-A", battery: 82),
-        MedDevice(name: "Infusion Pump IP-3000", type: "BLE 5.x", id: "IP-204-B", battery: 67),
-        MedDevice(name: "Pulse Oximeter PO-200", type: "BLE 5.x", id: "PO-204-C", battery: 91),
-        MedDevice(name: "Ventilator V-5000", type: "Wi-Fi", id: "VT-204-D", battery: 100),
-        MedDevice(name: "BP Monitor BPM-700", type: "BLE 5.x", id: "BP-204-E", battery: 55),
+        MedDevice(name: "Cardiac Monitor CM-900", type: "BLE 5.x", deviceId: "CM-204-A", battery: 82),
+        MedDevice(name: "Infusion Pump IP-3000", type: "BLE 5.x", deviceId: "IP-204-B", battery: 67),
+        MedDevice(name: "Pulse Oximeter PO-200", type: "BLE 5.x", deviceId: "PO-204-C", battery: 91),
+        MedDevice(name: "Ventilator V-5000", type: "Wi-Fi", deviceId: "VT-204-D", battery: 100),
+        MedDevice(name: "BP Monitor BPM-700", type: "BLE 5.x", deviceId: "BP-204-E", battery: 55),
     ]
 
     var body: some View {
@@ -187,10 +187,10 @@ struct MedDevice: Identifiable {
     let deviceId: String
     let battery: Int
 
-    init(name: String, type: String, id: String, battery: Int) {
+    init(name: String, type: String, deviceId: String, battery: Int) {
         self.name = name
         self.type = type
-        self.deviceId = id
+        self.deviceId = deviceId
         self.battery = battery
     }
 }
