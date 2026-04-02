@@ -492,7 +492,7 @@
   <div class="modal">
     <div class="modal-header">
       <h2 id="modal-plan-title">New Test Plan</h2>
-      <button class="modal-close" onclick="closeModal('modal-plan')">✕</button>
+      <button class="modal-close" onclick="closeModal('modal-plan')" aria-label="Close">✕</button>
     </div>
     <div class="form-grid">
       <div class="field" style="grid-column:1/-1">
@@ -548,7 +548,7 @@
   <div class="modal">
     <div class="modal-header">
       <h2 id="modal-case-title">New Test Case</h2>
-      <button class="modal-close" onclick="closeModal('modal-case')">✕</button>
+      <button class="modal-close" onclick="closeModal('modal-case')" aria-label="Close">✕</button>
     </div>
     <div class="form-grid">
       <div class="field" style="grid-column:1/-1">
@@ -611,6 +611,10 @@
 // ═══════════════════════════════════════════════════════
 //  DATA STORE
 // ═══════════════════════════════════════════════════════
+// XSS helper — escape any user-supplied string before HTML interpolation
+function esc(s) {
+  return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
 const KEY_PLANS  = 'sit_plans_v2';
 const KEY_CASES  = 'sit_cases_v2';
 const KEY_LOG    = 'sit_activity_v2';
@@ -634,7 +638,7 @@ function addActivity(msg, color = '#38bdf8') {
 
 // ─── SEED DATA ───────────────────────────────────────────
 function seed() {
-  if (plans.length) return; // already seeded
+  if (localStorage.getItem(KEY_PLANS) !== null) return; // already seeded (use key presence, not array length)
 
   plans = [
     { id:1, name:'Material Handling System – User Acceptance Test', type:'Acceptance', status:'In Progress', engineer:'Kevin DeLong', system:'Full MHS Line 1', start:'2025-06-01', end:'2025-06-30', desc:'End-to-end UAT covering all functional areas of the material handling system, validated against customer acceptance criteria.' },
@@ -769,14 +773,24 @@ function renderDashboard() {
   document.getElementById('dash-plans-progress').innerHTML = pp || '<div class="empty-state"><div class="empty-icon">📋</div>No plans yet</div>';
 
   // Activity
-  const html = actLog.slice(0,10).map(a=>`<div class="activity-item">
-    <div class="activity-dot" style="background:${a.color}"></div>
-    <div class="activity-content">
-      <div>${a.msg}</div>
-      <div class="activity-time">${a.ts}</div>
-    </div>
-  </div>`).join('');
-  document.getElementById('dash-activity').innerHTML = html || '<div class="empty-state">No activity yet</div>';
+  const actContainer = document.getElementById('dash-activity');
+  actContainer.textContent = '';
+  const acts = actLog.slice(0,10);
+  if (!acts.length) {
+    const em = document.createElement('div'); em.className = 'empty-state'; em.textContent = 'No activity yet';
+    actContainer.appendChild(em);
+  } else {
+    acts.forEach(a => {
+      const item = document.createElement('div'); item.className = 'activity-item';
+      const dot  = document.createElement('div'); dot.className = 'activity-dot'; dot.style.background = a.color;
+      const body = document.createElement('div'); body.className = 'activity-content';
+      const msg  = document.createElement('div'); msg.textContent = a.msg;
+      const ts2  = document.createElement('div'); ts2.className = 'activity-time'; ts2.textContent = a.ts;
+      body.appendChild(msg); body.appendChild(ts2);
+      item.appendChild(dot); item.appendChild(body);
+      actContainer.appendChild(item);
+    });
+  }
 }
 
 // ═══════════════════════════════════════════════════════
@@ -802,27 +816,28 @@ function renderPlans() {
     const ppassed = pc.filter(c=>c.status==='Pass').length;
     const pfail   = pc.filter(c=>c.status==='Fail').length;
     const pct2    = pc.length ? Math.round(ppassed/pc.length*100) : 0;
+    const barColor = p.status==='Completed'?'green': p.status==='On Hold'?'yellow':'';
     return `<div class="card mb-md">
       <div class="flex items-center gap-sm flex-wrap" style="justify-content:space-between;margin-bottom:.75rem">
         <div class="flex items-center gap-sm flex-wrap">
-          <h3>${p.name}</h3>
-          <span class="badge badge-${p.type.toLowerCase()}">${p.type}</span>
-          <span class="badge badge-${statusKey(p.status)}">${p.status}</span>
+          <h3>${esc(p.name)}</h3>
+          <span class="badge badge-${esc(p.type.toLowerCase())}">${esc(p.type)}</span>
+          <span class="badge badge-${statusKey(p.status)}">${esc(p.status)}</span>
         </div>
         <div class="flex gap-sm">
-          <button class="btn btn-secondary btn-sm" onclick="openPlanModal(${p.id})">✏ Edit</button>
-          <button class="btn btn-danger btn-sm" onclick="deletePlan(${p.id})">🗑</button>
+          <button class="btn btn-secondary btn-sm" onclick="openPlanModal(${p.id})" aria-label="Edit plan">✏ Edit</button>
+          <button class="btn btn-danger btn-sm" onclick="deletePlan(${p.id})" aria-label="Delete plan">🗑</button>
         </div>
       </div>
-      <p style="font-size:.82rem;color:var(--muted);margin-bottom:.75rem">${p.desc}</p>
+      <p style="font-size:.82rem;color:var(--muted);margin-bottom:.75rem">${esc(p.desc)}</p>
       <div class="grid-4" style="gap:.5rem;margin-bottom:.75rem">
-        <div class="card-sm"><div class="stat-label">Engineer</div><div style="font-size:.85rem;font-weight:600">${p.engineer||'—'}</div></div>
-        <div class="card-sm"><div class="stat-label">System</div><div style="font-size:.85rem;font-weight:600">${p.system||'—'}</div></div>
-        <div class="card-sm"><div class="stat-label">Start</div><div style="font-size:.85rem">${p.start||'—'}</div></div>
-        <div class="card-sm"><div class="stat-label">End</div><div style="font-size:.85rem">${p.end||'—'}</div></div>
+        <div class="card-sm"><div class="stat-label">Engineer</div><div style="font-size:.85rem;font-weight:600">${esc(p.engineer||'—')}</div></div>
+        <div class="card-sm"><div class="stat-label">System</div><div style="font-size:.85rem;font-weight:600">${esc(p.system||'—')}</div></div>
+        <div class="card-sm"><div class="stat-label">Start</div><div style="font-size:.85rem">${esc(p.start||'—')}</div></div>
+        <div class="card-sm"><div class="stat-label">End</div><div style="font-size:.85rem">${esc(p.end||'—')}</div></div>
       </div>
       <div class="flex items-center gap-sm" style="margin-bottom:.3rem">
-        <div class="progress" style="flex:1"><div class="progress-bar" style="width:${pct2}%"></div></div>
+        <div class="progress" style="flex:1"><div class="progress-bar ${barColor}" style="width:${pct2}%"></div></div>
         <span style="font-size:.75rem;color:var(--muted)">${pct2}% (${ppassed}/${pc.length} passed)</span>
       </div>
       <div class="flex gap-sm flex-wrap" style="font-size:.75rem;color:var(--muted)">
@@ -901,28 +916,84 @@ function renderCases() {
 
   const planName = id => { const p = plans.find(x=>x.id===id); return p ? p.name.split('–')[0].trim() : '—'; };
   const tbody = document.getElementById('cases-tbody');
+  tbody.textContent = '';
   if (!fc.length) {
-    tbody.innerHTML = `<tr><td colspan="8"><div class="empty-state"><div class="empty-icon">🧪</div>No test cases found.</div></td></tr>`;
+    const tr = document.createElement('tr');
+    const td = document.createElement('td'); td.colSpan = 8;
+    const em = document.createElement('div'); em.className = 'empty-state';
+    const ico = document.createElement('div'); ico.className = 'empty-icon'; ico.textContent = '🧪';
+    const txt = document.createElement('p'); txt.textContent = 'No test cases found.';
+    em.appendChild(ico); em.appendChild(txt); td.appendChild(em); tr.appendChild(td);
+    tbody.appendChild(tr);
     return;
   }
-  tbody.innerHTML = fc.map(c => `<tr>
-    <td><span style="font-size:.75rem;color:var(--muted)">TC-${String(c.id).padStart(3,'0')}</span></td>
-    <td style="max-width:260px">
-      <div style="font-weight:500;font-size:.82rem">${c.title}</div>
-      ${c.actual?`<div style="font-size:.72rem;color:var(--muted);margin-top:.15rem">${c.actual.substring(0,60)}${c.actual.length>60?'…':''}</div>`:''}
-    </td>
-    <td style="font-size:.75rem;color:var(--muted)">${planName(c.planId)}</td>
-    <td><span class="tag">${c.area}</span></td>
-    <td><span class="badge badge-${c.priority.toLowerCase()}">${c.priority}</span></td>
-    <td><span class="badge badge-${statusKey(c.status)}">${c.status}</span></td>
-    <td style="font-size:.8rem">${c.assigned||'—'}</td>
-    <td>
-      <div class="flex gap-sm">
-        <button class="btn btn-secondary btn-sm" onclick="openCaseModal(${c.id})">✏</button>
-        <button class="btn btn-danger btn-sm" onclick="deleteCase(${c.id})">🗑</button>
-      </div>
-    </td>
-  </tr>`).join('');
+  const frag = document.createDocumentFragment();
+  fc.forEach(c => {
+    const tr = document.createElement('tr');
+
+    // ID
+    const tdId = document.createElement('td');
+    const idSpan = document.createElement('span');
+    idSpan.style.cssText = 'font-size:.75rem;color:var(--muted)';
+    idSpan.textContent = 'TC-' + String(c.id).padStart(3,'0');
+    tdId.appendChild(idSpan); tr.appendChild(tdId);
+
+    // Title / actual
+    const tdTitle = document.createElement('td'); tdTitle.style.maxWidth = '260px';
+    const titleDiv = document.createElement('div');
+    titleDiv.style.cssText = 'font-weight:500;font-size:.82rem';
+    titleDiv.textContent = c.title; tdTitle.appendChild(titleDiv);
+    if (c.actual) {
+      const actDiv = document.createElement('div');
+      actDiv.style.cssText = 'font-size:.72rem;color:var(--muted);margin-top:.15rem';
+      actDiv.textContent = c.actual.substring(0,60) + (c.actual.length>60?'…':'');
+      tdTitle.appendChild(actDiv);
+    }
+    tr.appendChild(tdTitle);
+
+    // Plan
+    const tdPlan = document.createElement('td');
+    tdPlan.style.cssText = 'font-size:.75rem;color:var(--muted)';
+    tdPlan.textContent = planName(c.planId); tr.appendChild(tdPlan);
+
+    // Area
+    const tdArea = document.createElement('td');
+    const areaSpan = document.createElement('span'); areaSpan.className = 'tag';
+    areaSpan.textContent = c.area; tdArea.appendChild(areaSpan); tr.appendChild(tdArea);
+
+    // Priority
+    const tdPri = document.createElement('td');
+    const priSpan = document.createElement('span');
+    priSpan.className = 'badge badge-' + String(c.priority).toLowerCase();
+    priSpan.textContent = c.priority; tdPri.appendChild(priSpan); tr.appendChild(tdPri);
+
+    // Status
+    const tdSt = document.createElement('td');
+    const stSpan = document.createElement('span');
+    stSpan.className = 'badge badge-' + statusKey(c.status);
+    stSpan.textContent = c.status; tdSt.appendChild(stSpan); tr.appendChild(tdSt);
+
+    // Assigned
+    const tdAss = document.createElement('td'); tdAss.style.fontSize = '.8rem';
+    tdAss.textContent = c.assigned || '—'; tr.appendChild(tdAss);
+
+    // Actions
+    const tdAct = document.createElement('td');
+    const actDiv = document.createElement('div'); actDiv.className = 'flex gap-sm';
+    const editBtn = document.createElement('button');
+    editBtn.className = 'btn btn-secondary btn-sm'; editBtn.textContent = '✏';
+    editBtn.setAttribute('aria-label', 'Edit test case');
+    editBtn.addEventListener('click', () => openCaseModal(c.id));
+    const delBtn = document.createElement('button');
+    delBtn.className = 'btn btn-danger btn-sm'; delBtn.textContent = '🗑';
+    delBtn.setAttribute('aria-label', 'Delete test case');
+    delBtn.addEventListener('click', () => deleteCase(c.id));
+    actDiv.appendChild(editBtn); actDiv.appendChild(delBtn); tdAct.appendChild(actDiv);
+    tr.appendChild(tdAct);
+
+    frag.appendChild(tr);
+  });
+  tbody.appendChild(frag);
 }
 
 function populateCasePlanSelect(selectedId) {
@@ -1078,40 +1149,71 @@ async function startExecution() {
   await delay(300);
   logToConsole('All devices RUNNING. Beginning test sequence.', 'pass');
 
-  let passed=0, failed=0, blocked=0;
-  for (let i=0; i<toRun.length; i++) {
-    const tc = toRun[i];
-    const bar = document.getElementById('exec-progress-bar');
-    const pct = Math.round((i/toRun.length)*100);
-    bar.style.width = pct+'%';
+  // Shared counters (updated via closure for both modes)
+  let passed=0, failed=0, blocked=0, completed=0;
+  const total = toRun.length;
+
+  function updateMiniStats() {
+    document.getElementById('exec-mini-stats').innerHTML =
+      `<span class="text-green">✔ ${passed} Pass</span>&nbsp;&nbsp;<span class="text-red">✖ ${failed} Fail</span>&nbsp;&nbsp;<span class="text-yellow">⚠ ${blocked} Blocked</span>`;
+    const pct = Math.round((completed/total)*100);
+    document.getElementById('exec-progress-bar').style.width = pct+'%';
     document.getElementById('exec-pct').textContent = pct+'%';
+  }
 
-    logToConsole(`► TC-${String(tc.id).padStart(3,'0')}: ${tc.title.substring(0,60)}`, 'info');
-    await delay(200+Math.random()*400);
-
-    // Simulate result based on existing status (or random if not started)
+  // Per-case simulation: returns 'Pass'|'Fail'|'Blocked'
+  function simulateCase(tc) {
     let result = tc.status;
     if (result==='Not Started' || result==='In Progress') {
       const r = Math.random();
       result = r < 0.78 ? 'Pass' : r < 0.9 ? 'Fail' : 'Blocked';
     }
+    return result;
+  }
 
+  function applyResult(tc, result) {
+    completed++;
     if (result==='Pass') {
       passed++;
-      logToConsole(`  ✔ PASS — ${tc.expected?.substring(0,60)||'criteria met'}`, 'pass');
-      // update in store
+      logToConsole(`  ✔ PASS TC-${String(tc.id).padStart(3,'0')}: ${tc.title.substring(0,55)}`, 'pass');
       const idx = cases.findIndex(c=>c.id===tc.id);
-      if (cases[idx].status!=='Fail') { cases[idx].status='Pass'; cases[idx].actual = cases[idx].actual||'Passed via emulation run'; }
+      if (idx!==-1 && cases[idx].status!=='Fail') {
+        cases[idx].status='Pass';
+        cases[idx].actual = cases[idx].actual||'Passed via emulation run';
+      }
     } else if (result==='Fail') {
       failed++;
-      logToConsole(`  ✖ FAIL — assertion failed. Manual investigation required.`, 'fail');
+      logToConsole(`  ✖ FAIL TC-${String(tc.id).padStart(3,'0')}: ${tc.title.substring(0,55)}`, 'fail');
       addActivity(`TC-${String(tc.id).padStart(3,'0')} FAILED during emulation run`, '#ef4444');
+      const idx = cases.findIndex(c=>c.id===tc.id);
+      if (idx!==-1) {
+        cases[idx].status='Fail';
+        cases[idx].actual = cases[idx].actual||'Failed during emulation run';
+      }
     } else {
       blocked++;
-      logToConsole(`  ⚠ BLOCKED — prerequisite not met`, 'warn');
+      logToConsole(`  ⚠ BLOCKED TC-${String(tc.id).padStart(3,'0')}: ${tc.title.substring(0,55)}`, 'warn');
+      const idx = cases.findIndex(c=>c.id===tc.id);
+      if (idx!==-1) {
+        cases[idx].status='Blocked';
+        cases[idx].actual = cases[idx].actual||'Blocked during emulation run';
+      }
     }
-    document.getElementById('exec-mini-stats').innerHTML =
-      `<span class="text-green">✔ ${passed} Pass</span>&nbsp;&nbsp;<span class="text-red">✖ ${failed} Fail</span>&nbsp;&nbsp;<span class="text-yellow">⚠ ${blocked} Blocked</span>`;
+    updateMiniStats();
+  }
+
+  if (mode === 'Parallel') {
+    logToConsole(`Launching ${total} tests in parallel (Promise.allSettled)…`, 'info');
+    await Promise.allSettled(toRun.map(tc =>
+      delay(200 + Math.random()*600).then(() => applyResult(tc, simulateCase(tc)))
+    ));
+  } else {
+    // Sequential (also handles Smoke Only which already filtered toRun)
+    for (const tc of toRun) {
+      logToConsole(`► TC-${String(tc.id).padStart(3,'0')}: ${tc.title.substring(0,60)}`, 'info');
+      await delay(200+Math.random()*400);
+      applyResult(tc, simulateCase(tc));
+    }
   }
 
   // Final
@@ -1119,8 +1221,8 @@ async function startExecution() {
   document.getElementById('exec-pct').textContent = '100%';
   deviceState.forEach(d=>d.status='online'); renderDevices();
   await delay(200);
-  const prate = Math.round(passed/toRun.length*100);
-  logToConsole(`─── Execution Complete ─── ${toRun.length} tests | ✔ ${passed} Pass | ✖ ${failed} Fail | ⚠ ${blocked} Blocked | Pass Rate: ${prate}%`, prate>=80?'pass':'fail');
+  const prate = Math.round(passed/total*100);
+  logToConsole(`─── Execution Complete ─── ${total} tests | ✔ ${passed} Pass | ✖ ${failed} Fail | ⚠ ${blocked} Blocked | Pass Rate: ${prate}%`, prate>=80?'pass':'fail');
   addActivity(`Execution completed: ${plan?.name?.substring(0,40)} — ${prate}% pass rate`, prate>=80?'#22c55e':'#ef4444');
   save();
   execRunning=false; btn.disabled=false; btn.textContent='▶ Run Tests';
@@ -1149,9 +1251,9 @@ function generateReport() {
     const pb    = pc.filter(c=>c.status==='Blocked').length;
     const ppct  = pc.length ? Math.round(pp/pc.length*100) : 0;
     return `<tr>
-      <td>${p.name}</td>
-      <td><span class="badge badge-${p.type.toLowerCase()}">${p.type}</span></td>
-      <td><span class="badge badge-${statusKey(p.status)}">${p.status}</span></td>
+      <td>${esc(p.name)}</td>
+      <td><span class="badge badge-${esc(p.type.toLowerCase())}">${esc(p.type)}</span></td>
+      <td><span class="badge badge-${statusKey(p.status)}">${esc(p.status)}</span></td>
       <td>${pc.length}</td>
       <td class="text-green">${pp}</td>
       <td class="text-red">${pf}</td>
@@ -1165,12 +1267,12 @@ function generateReport() {
     const pn = plans.find(p=>p.id===c.planId)?.name?.split('–')[0]?.trim()||'—';
     return `<tr>
       <td>TC-${String(c.id).padStart(3,'0')}</td>
-      <td>${c.title}</td>
-      <td>${pn}</td>
-      <td><span class="tag">${c.area}</span></td>
-      <td><span class="badge badge-${c.priority.toLowerCase()}">${c.priority}</span></td>
-      <td><span class="badge badge-${statusKey(c.status)}">${c.status}</span></td>
-      <td style="font-size:.75rem">${c.actual||'—'}</td>
+      <td>${esc(c.title)}</td>
+      <td>${esc(pn)}</td>
+      <td><span class="tag">${esc(c.area)}</span></td>
+      <td><span class="badge badge-${esc(c.priority.toLowerCase())}">${esc(c.priority)}</span></td>
+      <td><span class="badge badge-${statusKey(c.status)}">${esc(c.status)}</span></td>
+      <td style="font-size:.75rem">${esc(c.actual||'—')}</td>
     </tr>`;
   }).join('');
 
@@ -1219,7 +1321,7 @@ function generateReport() {
           const ap = ac.filter(c=>c.status==='Pass').length;
           const pct2 = Math.round(ap/ac.length*100);
           return `<div class="card-sm" style="min-width:160px;flex:1">
-            <div style="font-size:.78rem;font-weight:600">${a}</div>
+            <div style="font-size:.78rem;font-weight:600">${esc(a)}</div>
             <div class="progress mt-sm"><div class="progress-bar" style="width:${pct2}%"></div></div>
             <div style="font-size:.72rem;color:var(--muted);margin-top:.2rem">${ap}/${ac.length} (${pct2}%)</div>
           </div>`;
