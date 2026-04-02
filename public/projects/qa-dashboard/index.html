@@ -296,6 +296,7 @@
       max-height: 380px;
       overflow-y: auto;
       color: #a0c4a0;
+      white-space: pre-wrap;
     }
     .terminal .t-time { color: #5a6a7a; }
     .terminal .t-ok   { color: var(--success); }
@@ -927,22 +928,67 @@ function renderTestCases() {
     (!suiteF  || t.suite  === suiteF) &&
     (!statusF || t.status === statusF)
   );
-  document.getElementById('tc-tbody').innerHTML = rows.map(t => `
-    <tr>
-      <td class="mono text-muted">${t.id}</td>
-      <td>${t.title}</td>
-      <td><span class="tag">${t.suite}</span></td>
-      <td>${priorityBadge(t.priority)}</td>
-      <td>${statusBadge(t.status)}</td>
-      <td>${t.assignee}</td>
-      <td class="text-muted" style="font-size:11px;">${t.lastRun}</td>
-      <td>
-        <div style="display:flex;gap:6px;">
-          <button class="btn btn-ghost btn-sm" onclick="runTestCase('${t.id}')">▶ Run</button>
-          <button class="btn btn-ghost btn-sm" onclick="cycleStatus('${t.id}')">⟳ Status</button>
-        </div>
-      </td>
-    </tr>`).join('');
+  const tbody = document.getElementById('tc-tbody');
+  tbody.innerHTML = '';
+  rows.forEach(t => {
+    const tr = document.createElement('tr');
+
+    const idTd = document.createElement('td');
+    idTd.className = 'mono text-muted';
+    idTd.textContent = t.id;
+    tr.appendChild(idTd);
+
+    const titleTd = document.createElement('td');
+    titleTd.textContent = t.title;
+    tr.appendChild(titleTd);
+
+    const suiteTd = document.createElement('td');
+    const suiteSpan = document.createElement('span');
+    suiteSpan.className = 'tag';
+    suiteSpan.textContent = t.suite;
+    suiteTd.appendChild(suiteSpan);
+    tr.appendChild(suiteTd);
+
+    const priorityTd = document.createElement('td');
+    priorityTd.innerHTML = priorityBadge(t.priority);
+    tr.appendChild(priorityTd);
+
+    const statusTd = document.createElement('td');
+    statusTd.innerHTML = statusBadge(t.status);
+    tr.appendChild(statusTd);
+
+    const assigneeTd = document.createElement('td');
+    assigneeTd.textContent = t.assignee;
+    tr.appendChild(assigneeTd);
+
+    const lastRunTd = document.createElement('td');
+    lastRunTd.className = 'text-muted';
+    lastRunTd.style.fontSize = '11px';
+    lastRunTd.textContent = t.lastRun;
+    tr.appendChild(lastRunTd);
+
+    const actionsTd = document.createElement('td');
+    const actionsDiv = document.createElement('div');
+    actionsDiv.style.display = 'flex';
+    actionsDiv.style.gap = '6px';
+
+    const runBtn = document.createElement('button');
+    runBtn.className = 'btn btn-ghost btn-sm';
+    runBtn.textContent = '▶ Run';
+    runBtn.addEventListener('click', function() { runTestCase(t.id); });
+    actionsDiv.appendChild(runBtn);
+
+    const cycleBtn = document.createElement('button');
+    cycleBtn.className = 'btn btn-ghost btn-sm';
+    cycleBtn.textContent = '⟳ Status';
+    cycleBtn.addEventListener('click', function() { cycleStatus(t.id); });
+    actionsDiv.appendChild(cycleBtn);
+
+    actionsTd.appendChild(actionsDiv);
+    tr.appendChild(actionsTd);
+
+    tbody.appendChild(tr);
+  });
 }
 
 function cycleStatus(id) {
@@ -996,29 +1042,75 @@ function addTestCase() {
 // ══════════════════════════════════════════════════════════════
 function renderKanban() {
   const cols = [
-    {key:'Open',      label:'Open',        color:'var(--danger)',  icon:'🔴'},
+    {key:'Open',       label:'Open',        color:'var(--danger)',  icon:'🔴'},
     {key:'In Progress',label:'In Progress', color:'var(--warning)', icon:'🟡'},
-    {key:'Resolved',  label:'Resolved',    color:'var(--success)', icon:'🟢'},
-    {key:'Closed',    label:'Closed',      color:'var(--muted)',   icon:'⚫'},
+    {key:'Resolved',   label:'Resolved',    color:'var(--success)', icon:'🟢'},
+    {key:'Closed',     label:'Closed',      color:'var(--muted)',   icon:'⚫'},
   ];
-  document.getElementById('kanban-board').innerHTML = cols.map(col => {
+  const board = document.getElementById('kanban-board');
+  board.innerHTML = '';
+
+  cols.forEach(col => {
+    const colEl = document.createElement('div');
+    colEl.className = 'kanban-col';
+
+    const titleEl = document.createElement('div');
+    titleEl.className = 'kanban-col-title';
+    titleEl.style.color = col.color;
+    titleEl.textContent = col.icon + ' ' + col.label + ' ';
+
+    const countSpan = document.createElement('span');
+    countSpan.className = 'col-count';
     const items = defects.filter(d => d.status === col.key);
-    const cards = items.map(d => `
-      <div class="defect-card" onclick="advanceDefect('${d.id}')">
-        <div class="dc-title">${d.title}</div>
-        <div class="dc-meta">
-          <span class="badge badge-${d.severity.toLowerCase()}">${d.severity}</span>
-          <span class="tag">${d.component}</span>
-          <span class="text-muted" style="font-size:10px;margin-left:auto;">${d.id}</span>
-        </div>
-      </div>`).join('');
-    return `<div class="kanban-col">
-      <div class="kanban-col-title" style="color:${col.color};">
-        ${col.icon} ${col.label} <span class="col-count">${items.length}</span>
-      </div>
-      ${cards || '<div class="text-muted" style="font-size:12px;padding:10px 0;">No items</div>'}
-    </div>`;
-  }).join('');
+    countSpan.textContent = String(items.length);
+    titleEl.appendChild(countSpan);
+    colEl.appendChild(titleEl);
+
+    if (items.length === 0) {
+      const emptyEl = document.createElement('div');
+      emptyEl.className = 'text-muted';
+      emptyEl.style.fontSize = '12px';
+      emptyEl.style.padding = '10px 0';
+      emptyEl.textContent = 'No items';
+      colEl.appendChild(emptyEl);
+    } else {
+      items.forEach(d => {
+        const cardEl = document.createElement('div');
+        cardEl.className = 'defect-card';
+        cardEl.addEventListener('click', function() { advanceDefect(d.id); });
+
+        const titleDiv = document.createElement('div');
+        titleDiv.className = 'dc-title';
+        titleDiv.textContent = d.title;
+        cardEl.appendChild(titleDiv);
+
+        const metaDiv = document.createElement('div');
+        metaDiv.className = 'dc-meta';
+
+        const severitySpan = document.createElement('span');
+        severitySpan.className = 'badge badge-' + d.severity.toLowerCase();
+        severitySpan.textContent = d.severity;
+        metaDiv.appendChild(severitySpan);
+
+        const componentSpan = document.createElement('span');
+        componentSpan.className = 'tag';
+        componentSpan.textContent = d.component;
+        metaDiv.appendChild(componentSpan);
+
+        const idSpan = document.createElement('span');
+        idSpan.className = 'text-muted';
+        idSpan.style.fontSize = '10px';
+        idSpan.style.marginLeft = 'auto';
+        idSpan.textContent = d.id;
+        metaDiv.appendChild(idSpan);
+
+        cardEl.appendChild(metaDiv);
+        colEl.appendChild(cardEl);
+      });
+    }
+
+    board.appendChild(colEl);
+  });
 }
 
 function advanceDefect(id) {
@@ -1079,7 +1171,7 @@ function runSQL() {
       document.getElementById('sql-result').innerHTML = `
         <div class="sql-result-wrap">
           <table>
-            <thead><tr>${cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead>
+            <thead><tr>${cols.map(c=>`<th>${esc(c)}</th>`).join('')}</tr></thead>
             <tbody>${result.map(r=>`<tr>${cols.map(c=>`<td>${esc(r[c]??'')}</td>`).join('')}</tr>`).join('')}</tbody>
           </table>
         </div>
@@ -1128,7 +1220,7 @@ function execSQL(sql) {
   // GROUP BY + aggregate
   const groupMatch = q.match(/GROUP BY\s+(.+?)(?:\s+ORDER BY|\s+LIMIT|$)/i);
   if (groupMatch) {
-    const groupCols = groupMatch[1].split(',').map(s=>s.trim().toLowerCase());
+    const groupCols = groupMatch[1].split(',').map(s=>s.trim().replace(/^\w+\./,'').toLowerCase());
     const groups = {};
     rows.forEach(r => {
       const key = groupCols.map(c => r[c]).join('|');
@@ -1180,12 +1272,27 @@ function execSQL(sql) {
   // ORDER BY
   const orderMatch = q.match(/ORDER BY\s+(.+?)(?:\s+LIMIT|$)/i);
   if (orderMatch) {
-    let orderStr = orderMatch[1];
+    const orderStr = orderMatch[1];
     const parts = orderStr.split(',').map(s=>s.trim());
     rows = [...rows].sort((a,b) => {
       for (const part of parts) {
-        const caseWhen = part.match(/CASE\s+(\w+)\s+WHEN/i);
-        const m = part.match(/^(\w+)\s*(ASC|DESC)?$/i);
+        // CASE col WHEN 'v' THEN n ... ELSE n END
+        const caseM = part.match(/CASE\s+(\w+)\s+((?:WHEN\s+'.+?'\s+THEN\s+\d+\s*)+)ELSE\s+(\d+)\s+END/i);
+        if (caseM) {
+          const caseCol = caseM[1].toLowerCase();
+          const elseVal = parseInt(caseM[3]);
+          const whenParts = [...caseM[2].matchAll(/WHEN\s+'([^']+)'\s+THEN\s+(\d+)/gi)];
+          const rank = (r) => {
+            const v = String(r[caseCol]);
+            const w = whenParts.find(wp => wp[1] === v);
+            return w ? parseInt(w[2]) : elseVal;
+          };
+          const cmp = rank(a) - rank(b);
+          if (cmp !== 0) return cmp;
+          continue;
+        }
+        // Simple col [ASC|DESC]
+        const m = part.match(/^(?:\w+\.)?(\w+)\s*(ASC|DESC)?$/i);
         if (m) {
           const [,col,dir] = m;
           const av = a[col.toLowerCase()], bv = b[col.toLowerCase()];
@@ -1209,10 +1316,11 @@ function execSQL(sql) {
       rows = rows.map(r => {
         const out = {};
         cols.forEach(c => {
-          const plain = c.replace(/\s+as\s+\S+/i,'').trim();
+          const noAlias = c.replace(/\s+as\s+\S+/i,'').trim();
+          const baseCol = noAlias.replace(/^\w+\./,''); // strip table qualifier
           const aliasM = c.match(/\s+as\s+(\S+)/i);
-          const key = aliasM ? aliasM[1] : plain;
-          out[key] = r[plain] !== undefined ? r[plain] : r[c] !== undefined ? r[c] : '';
+          const key = aliasM ? aliasM[1] : baseCol;
+          out[key] = r[baseCol] !== undefined ? r[baseCol] : r[noAlias] !== undefined ? r[noAlias] : '';
         });
         return out;
       });
@@ -1223,21 +1331,24 @@ function execSQL(sql) {
 }
 
 function evalWhere(row, cond) {
+  // Strip optional table-qualifier from column names (e.g. d.status → status)
+  const stripQ = c => c.replace(/^\w+\./,'');
   // Handle IN (...) with strings
-  const inMatch = cond.match(/(\w+)\s+IN\s*\((.+?)\)/i);
+  const inMatch = cond.match(/(?:\w+\.)?(\w+)\s+IN\s*\((.+?)\)/i);
   if (inMatch) {
-    const col = inMatch[1].toLowerCase();
+    const col = stripQ(inMatch[1].toLowerCase());
     const vals = inMatch[2].split(',').map(s => s.trim().replace(/^'|'$/g,''));
     return vals.includes(String(row[col]));
   }
   // Handle !=
-  const neq = cond.match(/(\w+)\s*!=\s*'([^']+)'/i);
-  if (neq) return String(row[neq[1].toLowerCase()]) !== neq[2];
-  // Standard = / < / >
-  const eqStr = cond.match(/(\w+)\s*=\s*'([^']+)'/i);
-  if (eqStr) return String(row[eqStr[1].toLowerCase()]) === eqStr[2];
-  const eqNum = cond.match(/(\w+)\s*=\s*(\d+)/i);
-  if (eqNum) return String(row[eqNum[1].toLowerCase()]) === eqNum[2];
+  const neq = cond.match(/(?:\w+\.)?(\w+)\s*!=\s*'([^']+)'/i);
+  if (neq) return String(row[stripQ(neq[1].toLowerCase())]) !== neq[2];
+  // Standard = with string
+  const eqStr = cond.match(/(?:\w+\.)?(\w+)\s*=\s*'([^']+)'/i);
+  if (eqStr) return String(row[stripQ(eqStr[1].toLowerCase())]) === eqStr[2];
+  // Standard = with number
+  const eqNum = cond.match(/(?:\w+\.)?(\w+)\s*=\s*(\d+)/i);
+  if (eqNum) return String(row[stripQ(eqNum[1].toLowerCase())]) === eqNum[2];
   // AND / OR (simple)
   if (/\s+AND\s+/i.test(cond)) return cond.split(/\s+AND\s+/i).every(c => evalWhere(row, c.trim()));
   if (/\s+OR\s+/i.test(cond)) return cond.split(/\s+OR\s+/i).some(c => evalWhere(row, c.trim()));
@@ -1586,7 +1697,6 @@ function triggerBuild() {
   const stages = PIPE_STAGES_DEF.map(s => ({...s, status:'skip'}));
   renderPipeline(stages);
 
-  let si = 0;
   const logLines = [
     [0,'info',`Build #${num} triggered — branch: main, SHA: ${Math.random().toString(16).slice(2,9)}`],
     [0,'info','Agent: ubuntu-latest (GitHub Actions / Azure DevOps)'],
