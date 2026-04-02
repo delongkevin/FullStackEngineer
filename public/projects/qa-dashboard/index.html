@@ -1080,7 +1080,7 @@ function runSQL() {
         <div class="sql-result-wrap">
           <table>
             <thead><tr>${cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead>
-            <tbody>${result.map(r=>`<tr>${cols.map(c=>`<td>${r[c]??''}</td>`).join('')}</tr>`).join('')}</tbody>
+            <tbody>${result.map(r=>`<tr>${cols.map(c=>`<td>${esc(r[c]??'')}</td>`).join('')}</tr>`).join('')}</tbody>
           </table>
         </div>
         <div class="sql-msg ok">✓ ${result.length} row(s) returned.</div>`;
@@ -1088,7 +1088,7 @@ function runSQL() {
   } catch(e) {
     document.getElementById('sql-timing').textContent = '';
     document.getElementById('sql-result').innerHTML =
-      `<div class="sql-msg err">✗ ${e.message}</div>`;
+      `<div class="sql-msg err">✗ ${esc(e.message)}</div>`;
   }
 }
 
