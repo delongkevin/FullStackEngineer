@@ -66,6 +66,7 @@ jobs:
               *poker-app*) mv "$apk" "release-apks/PokerApp-${TAG}.apk" ;;
               *kamps-factory*) mv "$apk" "release-apks/KampsSmartFactory-${TAG}.apk" ;;
               *embedded-video*) mv "$apk" "release-apks/EmbeddedVideoEngineer-${TAG}.apk" ;;
+              *medical-iot-monitor*) mv "$apk" "release-apks/MedicalIoTMonitor-${TAG}.apk" ;;
             esac
           done
           echo "Final APKs:"
@@ -92,6 +93,7 @@ jobs:
           | ♠️ Poker App | \`PokerApp-${TAG}.apk\` | Interactive poker game with betting & UI |
           | 🏭 Kamps Smart Factory | \`KampsSmartFactory-${TAG}.apk\` | Industrial IoT Smart Factory dashboard |
           | 📹 Embedded Video | \`EmbeddedVideoEngineer-${TAG}.apk\` | Embedded Video Systems reference app |
+          | 🏥 Medical IoT Monitor | \`MedicalIoTMonitor-${TAG}.apk\` | WebView medical device monitor with offline fallback |
 
           ### Installation Steps
           1. Tap a \`.apk\` file below to download it
