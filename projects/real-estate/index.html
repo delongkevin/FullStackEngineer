@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Real Estate Marketplace Demo</title>
+  <style>
+    :root {
+      --bg: #f4f8f4;
+      --ink: #0f172a;
+      --muted: #475569;
+      --green: #059669;
+      --panel: #ffffff;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(180deg, #ecfdf3, var(--bg));
+      color: var(--ink);
+      min-height: 100vh;
+    }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 24px; }
+    h1 { margin: 0 0 8px; font-size: 30px; }
+    p { margin: 0; color: var(--muted); }
+    .grid {
+      margin-top: 16px;
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid #dbe7dc;
+      border-radius: 14px;
+      padding: 14px;
+      box-shadow: 0 8px 18px rgba(2, 8, 23, 0.06);
+    }
+    .tag {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      color: #065f46;
+      background: #d1fae5;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Real Estate Marketplace</h1>
+    <p>Embedded portfolio overview for search, favorites, bookings, and profile flows.</p>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Property Search</h3>
+        <p>Filter by city, price, bedrooms, and property type with responsive listing cards.</p>
+        <span class="tag">Search</span>
+      </div>
+      <div class="card">
+        <h3>Favorites</h3>
+        <p>Save listings and manage favorites with quick-remove and detail navigation.</p>
+        <span class="tag">Engagement</span>
+      </div>
+      <div class="card">
+        <h3>Bookings</h3>
+        <p>Schedule tours, track status, and review upcoming appointments.</p>
+        <span class="tag">Scheduling</span>
+      </div>
+      <div class="card">
+        <h3>Profile</h3>
+        <p>User profile, account details, and session-aware authentication flow.</p>
+        <span class="tag">Identity</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

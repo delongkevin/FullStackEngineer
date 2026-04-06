@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Music Streaming App Demo</title>
+  <style>
+    :root {
+      --bg: #0b111f;
+      --panel: #121b31;
+      --panel-2: #1c2744;
+      --text: #f1f5f9;
+      --muted: #9aa7bd;
+      --accent: #22c55e;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      color: var(--text);
+      background: radial-gradient(circle at top right, #1f2c54 0%, var(--bg) 55%);
+      min-height: 100vh;
+    }
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    .hero {
+      background: linear-gradient(135deg, #142247, #233767);
+      border: 1px solid #32467a;
+      border-radius: 18px;
+      padding: 22px;
+      margin-bottom: 20px;
+    }
+    h1 { margin: 0 0 6px; font-size: 28px; }
+    p { margin: 0; color: var(--muted); }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    @media (min-width: 900px) {
+      .grid { grid-template-columns: 1.2fr 0.8fr; }
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid #273455;
+      border-radius: 16px;
+      padding: 16px;
+    }
+    .playlist {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .track {
+      background: var(--panel-2);
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .chip {
+      color: #081015;
+      background: var(--accent);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .player {
+      margin-top: 14px;
+      border-top: 1px solid #2a3a62;
+      padding-top: 14px;
+    }
+    .controls button {
+      margin-right: 8px;
+      border: 0;
+      border-radius: 10px;
+      padding: 8px 10px;
+      cursor: pointer;
+      color: #081015;
+      background: #86efac;
+      font-weight: 700;
+    }
+    .status {
+      margin-top: 10px;
+      color: #a7f3d0;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <h1>Music Streaming App</h1>
+      <p>Demo module embedded in portfolio: playlists, now-playing controls, and mobile-focused browsing UX.</p>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h2>Featured Playlist</h2>
+        <p>Late Night Coding Mix</p>
+        <div class="playlist" id="playlist"></div>
+      </article>
+
+      <aside class="card">
+        <h2>Now Playing</h2>
+        <p id="now">Select a track to play.</p>
+        <div class="player">
+          <div class="controls">
+            <button id="play">Play</button>
+            <button id="pause">Pause</button>
+            <button id="next">Next</button>
+          </div>
+          <div class="status" id="status">Status: Idle</div>
+        </div>
+      </aside>
+    </section>
+  </div>
+
+  <script>
+    const tracks = [
+      { title: 'Pixel Skyline', artist: 'Neon Drift', length: '3:42' },
+      { title: 'Refactor Dreams', artist: 'Loop Theory', length: '4:11' },
+      { title: 'Night Deploy', artist: 'Merge Request', length: '2:58' },
+      { title: 'Sapphire Terminal', artist: 'Cloud Echo', length: '3:27' }
+    ];
+
+    const playlist = document.getElementById('playlist');
+    const now = document.getElementById('now');
+    const status = document.getElementById('status');
+    let current = 0;
+
+    function render() {
+      playlist.innerHTML = '';
+      tracks.forEach((track, idx) => {
+        const row = document.createElement('div');
+        row.className = 'track';
+        row.innerHTML = '<div><strong>' + track.title + '</strong><br><small>' + track.artist + '</small></div><span class="chip">' + track.length + '</span>';
+        row.onclick = () => {
+          current = idx;
+          now.textContent = track.title + ' - ' + track.artist;
+          status.textContent = 'Status: Ready';
+        };
+        playlist.appendChild(row);
+      });
+    }
+
+    document.getElementById('play').onclick = () => {
+      const t = tracks[current];
+      now.textContent = t.title + ' - ' + t.artist;
+      status.textContent = 'Status: Playing';
+    };
+
+    document.getElementById('pause').onclick = () => {
+      status.textContent = 'Status: Paused';
+    };
+
+    document.getElementById('next').onclick = () => {
+      current = (current + 1) % tracks.length;
+      const t = tracks[current];
+      now.textContent = t.title + ' - ' + t.artist;
+      status.textContent = 'Status: Playing';
+    };
+
+    render();
+  </script>
+</body>
+</html>
