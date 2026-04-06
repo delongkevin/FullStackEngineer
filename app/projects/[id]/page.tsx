@@ -104,7 +104,9 @@ export default function ProjectDetail({ params }: PageProps) {
                   <div className="mt-4 pt-4 border-t border-gray-200">
                     <p className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
                       <Smartphone size={16} aria-hidden="true" />
-                      Download the App
+                      {project.androidUrl?.includes('/releases/') || project.iosUrl?.includes('/releases/')
+                        ? 'Download the App'
+                        : 'Mobile Source Code'}
                     </p>
                     <div className="flex flex-wrap gap-3">
                       {project.androidUrl && (
@@ -113,22 +115,42 @@ export default function ProjectDetail({ params }: PageProps) {
                           className="inline-flex items-center gap-2 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-700 transition-colors text-sm font-medium"
                           target="_blank"
                           rel="noopener noreferrer"
-                          aria-label={`Download ${project.title} for Android`}
+                          aria-label={`${project.androidUrl.includes('/releases/') ? 'Download' : 'View Android source for'} ${project.title}`}
                         >
-                          <Download size={16} aria-hidden="true" />
-                          <span>🤖 Android APK</span>
+                          {project.androidUrl.includes('/releases/') ? (
+                            <Download size={16} aria-hidden="true" />
+                          ) : (
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                          )}
+                          <span>🤖 {project.androidUrl.includes('/releases/') ? 'Android APK' : 'Android Source'}</span>
                         </a>
                       )}
-                      {project.iosUrl && (
+                      {project.iosUrl && project.iosUrl !== project.androidUrl && (
                         <a
                           href={project.iosUrl}
                           className="inline-flex items-center gap-2 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-600 transition-colors text-sm font-medium"
                           target="_blank"
                           rel="noopener noreferrer"
-                          aria-label={`Download ${project.title} for iOS`}
+                          aria-label={`${project.iosUrl.includes('/releases/') ? 'Download' : 'View iOS source for'} ${project.title}`}
                         >
-                          <Download size={16} aria-hidden="true" />
-                          <span>🍎 iOS App</span>
+                          {project.iosUrl.includes('/releases/') ? (
+                            <Download size={16} aria-hidden="true" />
+                          ) : (
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                          )}
+                          <span>🍎 {project.iosUrl.includes('/releases/') ? 'iOS App' : 'iOS Source'}</span>
+                        </a>
+                      )}
+                      {project.iosUrl && project.iosUrl === project.androidUrl && (
+                        <a
+                          href={project.iosUrl}
+                          className="inline-flex items-center gap-2 px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-500 transition-colors text-sm font-medium"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`View React Native source for ${project.title}`}
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                          <span>📱 React Native Source</span>
                         </a>
                       )}
                     </div>

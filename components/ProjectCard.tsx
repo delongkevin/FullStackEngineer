@@ -58,8 +58,22 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         )}
         {(project.androidUrl || project.iosUrl) && project.embeddable && (
           <div className="absolute bottom-4 left-4 flex gap-1 z-10">
-            {project.androidUrl && <span className="bg-green-700 text-white px-2 py-0.5 rounded-full text-xs font-medium">🤖 APK</span>}
-            {project.iosUrl && <span className="bg-gray-800 text-white px-2 py-0.5 rounded-full text-xs font-medium">🍎 iOS</span>}
+            {project.androidUrl && project.iosUrl && project.androidUrl === project.iosUrl ? (
+              <span className="bg-blue-700 text-white px-2 py-0.5 rounded-full text-xs font-medium">📱 RN Source</span>
+            ) : (
+              <>
+                {project.androidUrl && (
+                  <span className="bg-green-700 text-white px-2 py-0.5 rounded-full text-xs font-medium">
+                    🤖 {project.androidUrl.includes('/releases/') ? 'APK' : 'Android'}
+                  </span>
+                )}
+                {project.iosUrl && (
+                  <span className="bg-gray-800 text-white px-2 py-0.5 rounded-full text-xs font-medium">
+                    🍎 {project.iosUrl.includes('/releases/') ? 'iOS' : 'iOS Src'}
+                  </span>
+                )}
+              </>
+            )}
           </div>
         )}
       </div>

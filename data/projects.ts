@@ -183,8 +183,8 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: "/projects/PokerApp/PokerApp.html",
-    androidUrl: "https://github.com/delongkevin/FullStackEngineer/releases/latest",
-    iosUrl: "https://github.com/delongkevin/FullStackEngineer/releases/latest",
+    androidUrl: "https://github.com/delongkevin/FullStackEngineer/tree/main/android/poker-app",
+    iosUrl: "https://github.com/delongkevin/FullStackEngineer/tree/main/ios/poker-app",
   }
   ,
   {
@@ -297,8 +297,8 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: '/projects/dornerworks-iot',
-    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/latest',
-    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/latest',
+    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/tag/Release_01.01',
+    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/tag/Release_01.01',
   },
   {
     id: 14,
@@ -324,8 +324,8 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: '/projects/kamps-smart-factory',
-    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/latest',
-    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/latest',
+    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/android/kamps-factory',
+    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/ios/kamps-factory',
   },
   {
     id: 15,
@@ -350,8 +350,8 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: '/projects/embedded-video-engineer',
-    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/latest',
-    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/latest',
+    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/android/embedded-video',
+    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/ios/embedded-video',
   },
   {
     id: 16,
@@ -379,8 +379,8 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: '/projects/ComputerStoreApp',
-    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/latest',
-    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/latest',
+    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/android/computer-store',
+    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/ios/computer-store',
   },
   {
     id: 17,
@@ -407,7 +407,8 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: '/projects/mobile-BookApp_Android',
-    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/latest',
+    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/android/book-app',
+    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/ios/book-app',
   },
   {
     id: 18,
@@ -434,8 +435,6 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: '/projects/avionics-test-systems',
-    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/latest',
-    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/latest',
   },
   {
     id: 19,
@@ -462,8 +461,6 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: '/projects/om-platform',
-    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/latest',
-    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/latest',
   },
   {
     id: 21,
@@ -570,8 +567,8 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: '/projects/fitness-tracker',
-    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/latest',
-    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/latest',
+    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/fitness-tracker-app',
+    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/fitness-tracker-app',
   },
   {
     id: 24,
@@ -603,8 +600,8 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: '/projects/finance-dashboard',
-    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/latest',
-    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/latest',
+    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/finance-app',
+    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/finance-app',
   },
   {
     id: 25,
@@ -642,8 +639,8 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: '/projects/chat-app',
-    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/latest',
-    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/latest',
+    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/chat-app',
+    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/chat-app',
   },
   {
     id: 26,
@@ -667,8 +664,8 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: '/projects/real-estate',
-    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/latest',
-    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/latest',
+    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/real-estate-app',
+    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/real-estate-app',
   },
   {
     id: 27,
@@ -691,8 +688,8 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: '/projects/music-streaming',
-    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/latest',
-    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/latest',
+    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/music-streaming-app',
+    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/music-streaming-app',
   },
   {
     id: 28,
@@ -715,8 +712,8 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: '/projects/weather-insights',
-    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/latest',
-    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/latest',
+    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/weather-app',
+    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/weather-app',
   },
   // Add any other projects you have with sequential IDs
 ];
