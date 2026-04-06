@@ -4,6 +4,8 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'node',
+    include: ['setup.test.ts', 'data/**/*.test.ts', 'config/**/*.test.ts'],
+    exclude: ['node_modules', 'real-estate-app/**'],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],

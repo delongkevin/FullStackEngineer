@@ -1,13 +1,28 @@
-// Configuration for embedded applications
+// Configuration for embedded applications in the portfolio
 
 export const embedAppsConfig = {
-    app1: {
-        url: "https://app1.example.com",
-        apiKey: "YOUR_API_KEY_1",
+    fitnessTracker: {
+        url: '/projects/fitness-tracker/index.html',
+        apiKey: 'FITNESS_TRACKER_DEMO_KEY'
     },
-    app2: {
-        url: "https://app2.example.com",
-        apiKey: "YOUR_API_KEY_2",
+    financeDashboard: {
+        url: '/projects/finance-dashboard/index.html',
+        apiKey: 'FINANCE_DASHBOARD_DEMO_KEY'
     },
-    // Add more applications as needed
+    chatApp: {
+        url: '/projects/chat-app/index.html',
+        apiKey: 'CHAT_APP_DEMO_KEY'
+    },
+    realEstateMarketplace: {
+        url: '/projects/real-estate/index.html',
+        apiKey: 'REAL_ESTATE_DEMO_KEY'
+    },
+    musicStreaming: {
+        url: '/projects/music-streaming/index.html',
+        apiKey: 'MUSIC_STREAMING_DEMO_KEY'
+    },
+    weatherInsights: {
+        url: '/projects/weather-insights/index.html',
+        apiKey: 'WEATHER_INSIGHTS_DEMO_KEY'
+    }
 };

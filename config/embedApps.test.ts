@@ -2,17 +2,22 @@ import { describe, it, expect } from 'vitest';
 import { embedAppsConfig } from './embedApps';
 
 describe('embedAppsConfig', () => {
-  it('should have app configurations with url and apiKey', () => {
-    expect(embedAppsConfig.app1.url).toMatch(/^https?:\/\//);
-    expect(embedAppsConfig.app1.apiKey).toEqual(expect.any(String));
-    expect(embedAppsConfig.app2.url).toMatch(/^https?:\/\//);
-    expect(embedAppsConfig.app2.apiKey).toEqual(expect.any(String));
+  it('should have app configurations with local project url and apiKey', () => {
+    const entries = Object.values(embedAppsConfig);
+    expect(entries.length).toBeGreaterThanOrEqual(6);
+
+    entries.forEach((app) => {
+      expect(app.url).toMatch(/^\/projects\/[\w-]+\/index\.html$/);
+      expect(app.apiKey).toEqual(expect.any(String));
+      expect(app.apiKey.length).toBeGreaterThan(10);
+    });
   });
 
-  it.skipIf(process.env.NODE_ENV !== 'production')('should not use placeholder values in production', () => {
-    expect(embedAppsConfig.app1.apiKey).not.toMatch(/^YOUR_API_KEY_\d+$/);
-    expect(embedAppsConfig.app2.apiKey).not.toMatch(/^YOUR_API_KEY_\d+$/);
-    expect(embedAppsConfig.app1.url).not.toContain('example.com');
-    expect(embedAppsConfig.app2.url).not.toContain('example.com');
+  it('should not use placeholder values', () => {
+    const entries = Object.values(embedAppsConfig);
+    entries.forEach((app) => {
+      expect(app.apiKey).not.toMatch(/^YOUR_API_KEY/i);
+      expect(app.url).not.toContain('example.com');
+    });
   });
 });
