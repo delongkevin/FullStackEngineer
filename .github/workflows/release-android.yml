@@ -21,6 +21,11 @@ permissions:
 
 env:
   RELEASE_TAG: android-artifacts-latest
+  EXPO_ANDROID_COMPILE_SDK: '35'
+  EXPO_ANDROID_BUILD_TOOLS: '35.0.0'
+  EXPO_ANDROID_AGP: '8.6.0'
+  EXPO_ANDROID_KOTLIN: '1.9.24'
+  EXPO_ANDROID_GRADLE: '8.7'
 
 jobs:
   build-native-android:
@@ -64,7 +69,7 @@ jobs:
 
       - name: Build debug APK
         working-directory: android
-        run: gradle :${{ matrix.module }}:assembleDebug --no-daemon
+        run: ./gradlew :${{ matrix.module }}:assembleDebug --no-daemon
 
       - name: Rename artifact
         run: |
@@ -122,15 +127,55 @@ jobs:
             npm install --legacy-peer-deps --no-audit --no-fund
           fi
 
+      - name: Align Expo Android toolchain for CI
+        working-directory: ${{ matrix.app_dir }}
+        run: |
+          VERSION_CATALOG="node_modules/react-native/gradle/libs.versions.toml"
+
+          if [ ! -f "$VERSION_CATALOG" ]; then
+            echo "Missing React Native Gradle version catalog: $VERSION_CATALOG"
+            exit 1
+          fi
+
+          sed -i "s/^compileSdk = \".*\"/compileSdk = \"${EXPO_ANDROID_COMPILE_SDK}\"/" "$VERSION_CATALOG"
+          sed -i "s/^targetSdk = \".*\"/targetSdk = \"${EXPO_ANDROID_COMPILE_SDK}\"/" "$VERSION_CATALOG"
+          sed -i "s/^buildTools = \".*\"/buildTools = \"${EXPO_ANDROID_BUILD_TOOLS}\"/" "$VERSION_CATALOG"
+          sed -i "s/^agp = \".*\"/agp = \"${EXPO_ANDROID_AGP}\"/" "$VERSION_CATALOG"
+          sed -i "s/^kotlin = \".*\"/kotlin = \"${EXPO_ANDROID_KOTLIN}\"/" "$VERSION_CATALOG"
+
       - name: Generate native Android project
         working-directory: ${{ matrix.app_dir }}
         env:
           CI: '1'
         run: npx expo prebuild --platform android --clean
 
+      - name: Override generated Android SDK settings
+        working-directory: ${{ matrix.app_dir }}/android
+        run: |
+          set_property() {
+            key="$1"
+            value="$2"
+
+            if grep -q "^${key}=" gradle.properties; then
+              sed -i "s#^${key}=.*#${key}=${value}#" gradle.properties
+            else
+              echo "${key}=${value}" >> gradle.properties
+            fi
+          }
+
+          set_property android.compileSdkVersion "$EXPO_ANDROID_COMPILE_SDK"
+          set_property android.targetSdkVersion "$EXPO_ANDROID_COMPILE_SDK"
+          set_property android.buildToolsVersion "$EXPO_ANDROID_BUILD_TOOLS"
+          set_property android.kotlinVersion "$EXPO_ANDROID_KOTLIN"
+          set_property org.gradle.java.home "$JAVA_HOME"
+
+          sed -i "s#distributionUrl=.*#distributionUrl=https\\://services.gradle.org/distributions/gradle-${EXPO_ANDROID_GRADLE}-all.zip#" gradle/wrapper/gradle-wrapper.properties
+
       - name: Build debug APK
         working-directory: ${{ matrix.app_dir }}/android
-        run: ./gradlew assembleDebug --no-daemon
+        run: |
+          "$JAVA_HOME/bin/java" -version
+          ./gradlew assembleDebug --no-daemon
 
       - name: Rename artifact
         run: |
