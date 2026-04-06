@@ -1,0 +1,14 @@
+{
+  "expo": {
+    "name": "Music Streaming App",
+    "slug": "music-streaming-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "android": {
+      "package": "com.delongkevin.musicstreaming"
+    },
+    "ios": {
+      "bundleIdentifier": "com.delongkevin.musicstreaming"
+    }
+  }
+}

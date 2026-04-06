@@ -1,0 +1,14 @@
+{
+  "expo": {
+    "name": "Weather Insights App",
+    "slug": "weather-insights-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "android": {
+      "package": "com.delongkevin.weatherinsights"
+    },
+    "ios": {
+      "bundleIdentifier": "com.delongkevin.weatherinsights"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "expo": {
+    "name": "Real Estate App",
+    "slug": "real-estate-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "android": {
+      "package": "com.realestate.mobile"
+    },
+    "ios": {
+      "bundleIdentifier": "com.realestate.mobile"
+    }
+  }
+}

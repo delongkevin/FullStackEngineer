@@ -117,14 +117,16 @@ jobs:
         working-directory: ${{ matrix.app_dir }}
         run: |
           if [ -f package-lock.json ]; then
-            npm ci --legacy-peer-deps
+            npm ci --legacy-peer-deps || npm install --legacy-peer-deps --no-audit --no-fund
           else
             npm install --legacy-peer-deps --no-audit --no-fund
           fi
 
       - name: Generate native Android project
         working-directory: ${{ matrix.app_dir }}
-        run: npx expo prebuild --platform android --non-interactive --clean
+        env:
+          CI: '1'
+        run: npx expo prebuild --platform android --clean
 
       - name: Build debug APK
         working-directory: ${{ matrix.app_dir }}/android
