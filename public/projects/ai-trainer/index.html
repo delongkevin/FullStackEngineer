@@ -421,26 +421,109 @@ function updatePreview() {
   const constraints = [...document.querySelectorAll('#constraints-list input')].map(i=>i.value).filter(Boolean);
   const exRows = document.querySelectorAll('[id^=ex-row]');
 
-  let html = `<h3>${title}</h3>
-    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px">
-      <span class="badge badge-${diff.toLowerCase()}">${diff}</span>
-      <span class="badge badge-cat">${cat}</span>
-      ${tags.map(t=>`<span class="tag selected" style="font-size:10px;padding:1px 5px">${t}</span>`).join('')}
-    </div>
-    <div style="font-size:13px;line-height:1.6;color:var(--text)">${desc || '<em style="color:var(--muted)">No description yet...</em>'}</div>`;
+  const previewPanel = document.getElementById('preview-panel');
+
+  previewPanel.replaceChildren();
+
+  const titleEl = document.createElement('h3');
+  titleEl.textContent = title;
+  previewPanel.appendChild(titleEl);
+
+  const metaEl = document.createElement('div');
+  metaEl.style.cssText = 'display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px';
+
+  const diffBadge = document.createElement('span');
+  diffBadge.className = `badge badge-${diff.toLowerCase()}`;
+  diffBadge.textContent = diff;
+  metaEl.appendChild(diffBadge);
+
+  const catBadge = document.createElement('span');
+  catBadge.className = 'badge badge-cat';
+  catBadge.textContent = cat;
+  metaEl.appendChild(catBadge);
+
+  tags.forEach(t => {
+    const tagEl = document.createElement('span');
+    tagEl.className = 'tag selected';
+    tagEl.style.cssText = 'font-size:10px;padding:1px 5px';
+    tagEl.textContent = t;
+    metaEl.appendChild(tagEl);
+  });
+
+  previewPanel.appendChild(metaEl);
+
+  const descEl = document.createElement('div');
+  descEl.style.cssText = 'font-size:13px;line-height:1.6;color:var(--text)';
+  if (desc) {
+    descEl.textContent = desc;
+  } else {
+    const emptyDescEl = document.createElement('em');
+    emptyDescEl.style.color = 'var(--muted)';
+    emptyDescEl.textContent = 'No description yet...';
+    descEl.appendChild(emptyDescEl);
+  }
+  previewPanel.appendChild(descEl);
 
   if (constraints.length) {
-    html += `<div class="section"><div class="section-title">Constraints</div><ul style="padding-left:16px;font-size:12px;color:var(--muted)">${constraints.map(c=>`<li>${c}</li>`).join('')}</ul></div>`;
-  }
-  if (exRows.length) {
-    html += `<div class="section"><div class="section-title">Examples</div>`;
-    exRows.forEach((row,i) => {
-      const inputs = row.querySelectorAll('input');
-      if(inputs[0].value) html += `<div style="background:var(--card);border:1px solid var(--border);border-radius:4px;padding:8px;margin-bottom:6px;font-size:12px"><strong>Input:</strong> ${inputs[0].value}<br><strong>Output:</strong> ${inputs[1].value}<br>${inputs[2].value ? `<em>Explanation: ${inputs[2].value}</em>` : ''}</div>`;
+    const sectionEl = document.createElement('div');
+    sectionEl.className = 'section';
+
+    const sectionTitleEl = document.createElement('div');
+    sectionTitleEl.className = 'section-title';
+    sectionTitleEl.textContent = 'Constraints';
+    sectionEl.appendChild(sectionTitleEl);
+
+    const listEl = document.createElement('ul');
+    listEl.style.cssText = 'padding-left:16px;font-size:12px;color:var(--muted)';
+    constraints.forEach(c => {
+      const itemEl = document.createElement('li');
+      itemEl.textContent = c;
+      listEl.appendChild(itemEl);
     });
-    html += `</div>`;
+    sectionEl.appendChild(listEl);
+
+    previewPanel.appendChild(sectionEl);
   }
-  document.getElementById('preview-panel').innerHTML = html;
+
+  if (exRows.length) {
+    const sectionEl = document.createElement('div');
+    sectionEl.className = 'section';
+
+    const sectionTitleEl = document.createElement('div');
+    sectionTitleEl.className = 'section-title';
+    sectionTitleEl.textContent = 'Examples';
+    sectionEl.appendChild(sectionTitleEl);
+
+    exRows.forEach((row) => {
+      const inputs = row.querySelectorAll('input');
+      if (inputs[0].value) {
+        const exampleEl = document.createElement('div');
+        exampleEl.style.cssText = 'background:var(--card);border:1px solid var(--border);border-radius:4px;padding:8px;margin-bottom:6px;font-size:12px';
+
+        const inputLabel = document.createElement('strong');
+        inputLabel.textContent = 'Input:';
+        exampleEl.appendChild(inputLabel);
+        exampleEl.appendChild(document.createTextNode(' ' + inputs[0].value));
+        exampleEl.appendChild(document.createElement('br'));
+
+        const outputLabel = document.createElement('strong');
+        outputLabel.textContent = 'Output:';
+        exampleEl.appendChild(outputLabel);
+        exampleEl.appendChild(document.createTextNode(' ' + inputs[1].value));
+        exampleEl.appendChild(document.createElement('br'));
+
+        if (inputs[2].value) {
+          const explanationEl = document.createElement('em');
+          explanationEl.textContent = `Explanation: ${inputs[2].value}`;
+          exampleEl.appendChild(explanationEl);
+        }
+
+        sectionEl.appendChild(exampleEl);
+      }
+    });
+
+    previewPanel.appendChild(sectionEl);
+  }
 }
 
 ['prob-title','prob-desc','prob-diff','prob-cat','time-limit','space-limit'].forEach(id => {
