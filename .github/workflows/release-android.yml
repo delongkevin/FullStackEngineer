@@ -64,7 +64,7 @@ jobs:
 
       - name: Build debug APK
         working-directory: android
-        run: ./gradlew :${{ matrix.module }}:assembleDebug --no-daemon
+        run: gradle :${{ matrix.module }}:assembleDebug --no-daemon
 
       - name: Rename artifact
         run: |
@@ -117,9 +117,9 @@ jobs:
         working-directory: ${{ matrix.app_dir }}
         run: |
           if [ -f package-lock.json ]; then
-            npm ci
+            npm ci --legacy-peer-deps
           else
-            npm install
+            npm install --legacy-peer-deps --no-audit --no-fund
           fi
 
       - name: Generate native Android project
