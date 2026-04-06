@@ -1,18 +1,32 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { fetchAlerts } from '../services/weatherService';
 
 export default function AlertsScreen() {
+  const [alerts, setAlerts] = useState([]);
+
+  useEffect(() => {
+    load();
+  }, []);
+
+  async function load() {
+    const data = await fetchAlerts();
+    setAlerts(data);
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Weather Alerts</Text>
-      <View style={styles.alertCard}>
-        <Text style={styles.alertTitle}>Wind Advisory</Text>
-        <Text style={styles.alertBody}>Strong gusts expected between 5 PM and 10 PM. Secure loose outdoor items.</Text>
-      </View>
-      <View style={styles.alertCardSecondary}>
-        <Text style={styles.alertTitle}>Rain Outlook</Text>
-        <Text style={styles.alertBody}>Intermittent rainfall expected overnight with reduced visibility during commute.</Text>
-      </View>
+      <FlatList
+        data={alerts}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <View style={item.severity === 'warning' ? styles.alertCard : styles.alertCardSecondary}>
+            <Text style={styles.alertTitle}>{item.title}</Text>
+            <Text style={styles.alertBody}>{item.message}</Text>
+          </View>
+        )}
+      />
     </View>
   );
 }

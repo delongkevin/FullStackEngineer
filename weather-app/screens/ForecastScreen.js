@@ -1,19 +1,32 @@
-import React from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
-
-const days = [
-  { id: '1', day: 'Mon', high: 61, low: 49, icon: '🌧️' },
-  { id: '2', day: 'Tue', high: 63, low: 50, icon: '⛅' },
-  { id: '3', day: 'Wed', high: 65, low: 52, icon: '☀️' },
-  { id: '4', day: 'Thu', high: 62, low: 48, icon: '🌦️' }
-];
+import React, { useEffect, useState } from 'react';
+import { FlatList, RefreshControl, StyleSheet, Text, View } from 'react-native';
+import { fetchForecast } from '../services/weatherService';
 
 export default function ForecastScreen() {
+  const [days, setDays] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+
+  useEffect(() => {
+    load();
+  }, []);
+
+  async function load() {
+    const forecast = await fetchForecast();
+    setDays(forecast);
+  }
+
+  async function onRefresh() {
+    setRefreshing(true);
+    await load();
+    setRefreshing(false);
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>4-Day Forecast</Text>
       <FlatList
         data={days}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <View style={styles.row}>

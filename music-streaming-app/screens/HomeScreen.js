@@ -1,24 +1,34 @@
-import React from 'react';
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-
-const playlists = [
-  { id: '1', name: 'Code Focus', tracks: 42 },
-  { id: '2', name: 'Morning Boost', tracks: 31 },
-  { id: '3', name: 'Night Drive', tracks: 28 }
-];
+import React, { useEffect, useState } from 'react';
+import { ActivityIndicator, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { fetchFeaturedPlaylists } from '../services/musicService';
 
 export default function HomeScreen() {
+  const [playlists, setPlaylists] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    load();
+  }, []);
+
+  async function load() {
+    setLoading(true);
+    const data = await fetchFeaturedPlaylists();
+    setPlaylists(data);
+    setLoading(false);
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Music Streaming</Text>
       <Text style={styles.subtitle}>Featured Playlists</Text>
+      {loading ? <ActivityIndicator color="#86efac" /> : null}
       <FlatList
         data={playlists}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <TouchableOpacity style={styles.card}>
             <Text style={styles.cardTitle}>{item.name}</Text>
-            <Text style={styles.cardSub}>{item.tracks} tracks</Text>
+            <Text style={styles.cardSub}>{item.tracks} tracks · {item.mood}</Text>
           </TouchableOpacity>
         )}
       />
