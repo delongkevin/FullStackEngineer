@@ -1,0 +1,11 @@
+name: Placeholder Local CI
+
+on:
+  workflow_dispatch:
+
+jobs:
+  noop:
+    runs-on: ubuntu-latest
+    steps:
+      - name: No-op
+        run: echo "This placeholder workflow exists to satisfy local diagnostics."

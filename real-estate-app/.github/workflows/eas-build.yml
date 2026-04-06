@@ -1,0 +1,11 @@
+name: Placeholder Local EAS Build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  noop:
+    runs-on: ubuntu-latest
+    steps:
+      - name: No-op
+        run: echo "Root-level workflows are authoritative for CI/CD."
