@@ -2,6 +2,8 @@
 
 Cross-platform personal finance management application for iOS and Android.
 
+Phase 3 status: completed session persistence and backend API wiring across auth and feature screens.
+
 ## 🚀 Quick Start
 
 ```bash
@@ -72,6 +74,7 @@ npm run eas:build:all
 ✅ User authentication
 ✅ Profile management
 ✅ Data persistence
+✅ Auto-login from persisted session on app restart
 
 ## 🎨 UI/UX Highlights
 

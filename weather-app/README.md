@@ -1,6 +1,6 @@
 # Weather App
 
-Phase 2 productionized mobile project for weather insights and alerts.
+Phase 4 enhancements added on top of the completed Phase 3 baseline.
 
 ## Run
 
@@ -16,6 +16,11 @@ npm run start
 - Forecast screen backed by weather service data
 - Alerts screen with severity-driven rendering
 - Settings screen for local preference toggles
+- Persisted settings (metric/imperial + alerts preference) via AsyncStorage
+- Unit-aware dashboard and forecast rendering
+- Alerts screen behavior tied to user alert preferences
+- Cache-aware weather service fallbacks for resilient data display
+- Outdoor risk index insight on dashboard
 - Bottom tab + stack navigation for iOS/Android/Web
 - Clean service/config split for future API integrations
 

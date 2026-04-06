@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, RefreshControl, StyleSheet, Text, View } from 'react-native';
 import { fetchForecast } from '../services/weatherService';
+import { useSettings } from '../context/SettingsContext';
 
 export default function ForecastScreen() {
+  const { settings } = useSettings();
   const [days, setDays] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
 
@@ -32,7 +34,11 @@ export default function ForecastScreen() {
           <View style={styles.row}>
             <Text style={styles.day}>{item.day}</Text>
             <Text style={styles.icon}>{item.icon}</Text>
-            <Text style={styles.temp}>{item.high}° / {item.low}°</Text>
+            <Text style={styles.temp}>
+              {settings.metricUnits ? Math.round(((item.high - 32) * 5) / 9) : item.high}°
+              {settings.metricUnits ? 'C' : 'F'} / {settings.metricUnits ? Math.round(((item.low - 32) * 5) / 9) : item.low}°
+              {settings.metricUnits ? 'C' : 'F'}
+            </Text>
           </View>
         )}
       />

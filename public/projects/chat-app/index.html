@@ -6,36 +6,82 @@
   <title>Chat App Demo</title>
   <style>
     :root {
-      --bg: #0d1025;
-      --panel: #161b38;
-      --panel-2: #1f2850;
+      --bg: #0b1023;
+      --panel: #141d3b;
+      --panel-2: #1f2b56;
+      --line: #2a3d73;
       --text: #f8fafc;
-      --muted: #adb9d9;
-      --accent: #818cf8;
+      --muted: #aeb9d6;
+      --accent: #8aa0ff;
       --good: #34d399;
+      --bubble-self: #21386d;
+      --bubble-peer: #18274a;
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: "Segoe UI", sans-serif;
+      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
       color: var(--text);
       min-height: 100vh;
-      background: radial-gradient(circle at 80% 0%, #2a2f63 0, #0d1025 60%);
+      background:
+        radial-gradient(760px 360px at 88% -10%, #2a3f75 0, rgba(11, 16, 35, 0) 56%),
+        var(--bg);
     }
-    .wrap { max-width: 980px; margin: 0 auto; padding: 24px; }
+    .wrap { max-width: 1060px; margin: 0 auto; padding: 24px; }
     h1 { margin: 0 0 8px; font-size: 28px; }
     p { margin: 0; color: var(--muted); }
-    .list { margin-top: 16px; display: grid; gap: 10px; }
-    .row {
+    .layout {
+      margin-top: 16px;
+      display: grid;
+      gap: 12px;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 940px) {
+      .layout { grid-template-columns: 0.95fr 1.05fr; }
+    }
+    .panel {
       background: var(--panel);
-      border: 1px solid #2a3566;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px;
+    }
+    .tools {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+    input[type="search"], input[type="text"] {
+      border: 1px solid #3b538e;
+      border-radius: 10px;
+      padding: 9px;
+      background: #0f1733;
+      color: var(--text);
+      flex: 1;
+      min-width: 150px;
+    }
+    button, select {
+      border: 1px solid #3b538e;
+      border-radius: 10px;
+      padding: 9px 11px;
+      background: #253d70;
+      color: var(--text);
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .list { display: grid; gap: 8px; max-height: 500px; overflow: auto; padding-right: 3px; }
+    .row {
+      background: var(--panel-2);
+      border: 1px solid #314a80;
       border-radius: 12px;
       padding: 12px;
       display: grid;
       grid-template-columns: 44px 1fr auto;
       align-items: center;
       gap: 10px;
+      cursor: pointer;
     }
+    .row.active { border-color: var(--good); box-shadow: inset 0 0 0 1px rgba(52, 211, 153, 0.4); }
     .avatar {
       width: 40px; height: 40px; border-radius: 50%;
       background: var(--accent); display: grid; place-items: center; font-weight: 700;
@@ -43,35 +89,234 @@
     .name { font-weight: 700; }
     .msg { color: var(--muted); font-size: 14px; }
     .badge { background: var(--good); color: #052e1f; border-radius: 999px; padding: 3px 8px; font-size: 12px; font-weight: 700; }
+    .thread {
+      min-height: 500px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .messages {
+      flex: 1;
+      border: 1px solid #2e4478;
+      border-radius: 12px;
+      background: #0f1732;
+      padding: 10px;
+      overflow: auto;
+      max-height: 390px;
+    }
+    .bubble {
+      max-width: 80%;
+      border-radius: 12px;
+      padding: 9px;
+      margin: 7px 0;
+      font-size: 14px;
+      line-height: 1.35;
+      border: 1px solid #2f447a;
+    }
+    .self { margin-left: auto; background: var(--bubble-self); }
+    .peer { background: var(--bubble-peer); }
+    .typing { color: #9cebc6; font-size: 12px; min-height: 16px; }
+    .composer { display: flex; gap: 8px; }
+    .state { font-size: 12px; color: #9feac8; }
+    /* ── Consistency & Accessibility ── */
+    *:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+    button, select, input { transition: opacity 0.12s ease, background 0.12s ease; }
+    button:not(:disabled):hover { opacity: 0.82; }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--line); border-radius: 99px; }
+    @media (prefers-reduced-motion: reduce) {
+      button, select, input, *::before, *::after { transition: none !important; animation-duration: 0.01ms !important; }
+    }
   </style>
 </head>
 <body>
   <div class="wrap">
     <h1>Real-time Chat App</h1>
-    <p>Embedded preview for conversation list, presence, and instant messaging UX.</p>
+    <p>Phase-complete preview with presence filtering, thread state, and typing/send interactions.</p>
 
-    <section class="list">
-      <article class="row">
-        <div class="avatar">A</div>
-        <div><div class="name">Alice Johnson</div><div class="msg">Are we shipping the update today?</div></div>
-        <span class="badge">2m</span>
+    <section class="layout">
+      <article class="panel">
+        <div class="tools">
+          <input id="search" type="search" placeholder="Search conversations" aria-label="Search conversations" />
+          <select id="presence" aria-label="Presence filter">
+            <option value="all">All users</option>
+            <option value="online">Online</option>
+            <option value="offline">Offline</option>
+          </select>
+        </div>
+        <div class="list" id="conversationList"></div>
       </article>
-      <article class="row" style="background:var(--panel-2)">
-        <div class="avatar" style="background:#10b981">T</div>
-        <div><div class="name">Team Alpha</div><div class="msg">Build passed. Ready for QA review.</div></div>
-        <span class="badge">15m</span>
-      </article>
-      <article class="row">
-        <div class="avatar" style="background:#f59e0b">B</div>
-        <div><div class="name">Bob Smith</div><div class="msg">I can jump on a quick call in 10.</div></div>
-        <span class="badge">1h</span>
-      </article>
-      <article class="row">
-        <div class="avatar" style="background:#ec4899">M</div>
-        <div><div class="name">Mom</div><div class="msg">Call me when you are free.</div></div>
-        <span class="badge">2d</span>
+
+      <article class="panel thread">
+        <div>
+          <strong id="threadTitle">Select a conversation</strong>
+          <div class="state" id="threadState">Status: Idle</div>
+        </div>
+        <div class="messages" id="messages" aria-live="polite" aria-label="Conversation messages"></div>
+        <div class="typing" id="typing" aria-live="polite" aria-atomic="true"></div>
+        <div class="composer">
+          <input id="composer" type="text" placeholder="Type a message" aria-label="Message input" />
+          <button id="sendBtn" type="button">Send</button>
+        </div>
       </article>
     </section>
   </div>
+
+  <script>
+    const conversations = [
+      {
+        name: 'Alice Johnson',
+        avatar: 'A',
+        color: '#8aa0ff',
+        online: true,
+        ago: '2m',
+        messages: [
+          { fromMe: false, text: 'Are we shipping the update today?' },
+          { fromMe: true, text: 'Yes, after smoke tests pass.' }
+        ]
+      },
+      {
+        name: 'Team Alpha',
+        avatar: 'T',
+        color: '#10b981',
+        online: true,
+        ago: '15m',
+        messages: [
+          { fromMe: false, text: 'Build passed. Ready for QA review.' },
+          { fromMe: true, text: 'Great. I will post release notes in 10.' }
+        ]
+      },
+      {
+        name: 'Bob Smith',
+        avatar: 'B',
+        color: '#f59e0b',
+        online: false,
+        ago: '1h',
+        messages: [
+          { fromMe: false, text: 'I can jump on a quick call in 10.' },
+          { fromMe: true, text: 'Perfect. Sending a calendar invite now.' }
+        ]
+      },
+      {
+        name: 'Design Sync',
+        avatar: 'D',
+        color: '#ec4899',
+        online: false,
+        ago: '2d',
+        messages: [
+          { fromMe: false, text: 'New mockups are in the shared folder.' },
+          { fromMe: true, text: 'Looks good. We can merge this sprint.' }
+        ]
+      }
+    ];
+
+    const listEl = document.getElementById('conversationList');
+    const searchEl = document.getElementById('search');
+    const presenceEl = document.getElementById('presence');
+    const messagesEl = document.getElementById('messages');
+    const composerEl = document.getElementById('composer');
+    const typingEl = document.getElementById('typing');
+    const threadTitleEl = document.getElementById('threadTitle');
+    const threadStateEl = document.getElementById('threadState');
+
+    let active = 0;
+
+    function visibleConversations() {
+      const q = searchEl.value.trim().toLowerCase();
+      const presence = presenceEl.value;
+      return conversations.filter((c) => {
+        const matchPresence = presence === 'all' || (presence === 'online' ? c.online : !c.online);
+        const matchSearch = !q || c.name.toLowerCase().includes(q);
+        return matchPresence && matchSearch;
+      });
+    }
+
+    function renderList() {
+      const visible = visibleConversations();
+      listEl.innerHTML = '';
+      if (!visible.length) {
+        listEl.innerHTML = '<div class="msg">No conversations found.</div>';
+        return;
+      }
+
+      visible.forEach((c) => {
+        const idx = conversations.indexOf(c);
+        const last = c.messages[c.messages.length - 1];
+        const row = document.createElement('article');
+        row.className = 'row' + (idx === active ? ' active' : '');
+        row.setAttribute('tabindex', '0');
+        row.setAttribute('role', 'button');
+        row.setAttribute('aria-label', c.name + ', ' + (c.online ? 'online' : 'offline') + ', last message: ' + last.text);
+        row.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); active = idx; renderList(); renderThread(); } });
+        row.innerHTML =
+          '<div class="avatar" style="background:' + c.color + '">' + c.avatar + '</div>' +
+          '<div><div class="name">' + c.name + ' ' + (c.online ? '<span style="color:#9feac8;font-size:12px">online</span>' : '') + '</div>' +
+          '<div class="msg">' + last.text + '</div></div>' +
+          '<span class="badge">' + c.ago + '</span>';
+        row.onclick = () => {
+          active = idx;
+          renderList();
+          renderThread();
+        };
+        listEl.appendChild(row);
+      });
+    }
+
+    function renderThread() {
+      const c = conversations[active];
+      threadTitleEl.textContent = c.name;
+      threadStateEl.textContent = 'Status: ' + (c.online ? 'Online' : 'Away');
+      messagesEl.innerHTML = '';
+      c.messages.forEach((m) => {
+        const bubble = document.createElement('div');
+        bubble.className = 'bubble ' + (m.fromMe ? 'self' : 'peer');
+        bubble.textContent = m.text;
+        messagesEl.appendChild(bubble);
+      });
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    function simulateTypingReply() {
+      typingEl.textContent = conversations[active].name + ' is typing...';
+      setTimeout(() => {
+        const responses = [
+          'Great, thanks for the update.',
+          'I will review this now.',
+          'Can we sync after standup?',
+          'Looks good from my side.'
+        ];
+        const text = responses[Math.floor(Math.random() * responses.length)];
+        conversations[active].messages.push({ fromMe: false, text: text });
+        typingEl.textContent = '';
+        renderList();
+        renderThread();
+      }, 900);
+    }
+
+    document.getElementById('sendBtn').onclick = () => {
+      const value = composerEl.value.trim();
+      if (!value) {
+        return;
+      }
+      conversations[active].messages.push({ fromMe: true, text: value });
+      composerEl.value = '';
+      renderList();
+      renderThread();
+      simulateTypingReply();
+    };
+
+    composerEl.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        document.getElementById('sendBtn').click();
+      }
+    });
+
+    searchEl.addEventListener('input', renderList);
+    presenceEl.addEventListener('change', renderList);
+
+    renderList();
+    renderThread();
+  </script>
 </body>
 </html>

@@ -2,6 +2,8 @@
 
 Cross-platform fitness tracking application for iOS and Android.
 
+Phase 3 status: completed session persistence and backend API wiring across workouts, health, goals, and profile flows.
+
 ## Quick Start
 
 ```bash

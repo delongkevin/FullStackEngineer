@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { fetchCurrentWeather, getCurrentLocation } from '../services/weatherService';
+import { useSettings } from '../context/SettingsContext';
 
 export default function DashboardScreen() {
+  const { settings } = useSettings();
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [location, setLocation] = useState({ city: 'Loading', state: '' });
@@ -33,6 +35,14 @@ export default function DashboardScreen() {
     setRefreshing(false);
   }
 
+  const displayTemp = settings.metricUnits ? Math.round(((weather.temperature - 32) * 5) / 9) : weather.temperature;
+  const displayFeels = settings.metricUnits ? Math.round(((weather.feelsLike - 32) * 5) / 9) : weather.feelsLike;
+  const displayWind = settings.metricUnits ? Math.round(weather.windMph * 1.609) : weather.windMph;
+  const tempUnit = settings.metricUnits ? 'C' : 'F';
+  const windUnit = settings.metricUnits ? 'km/h' : 'mph';
+  const riskScore = Math.min(100, weather.humidity + weather.windMph * 2 + weather.uv * 5);
+  const riskLabel = riskScore >= 75 ? 'High' : riskScore >= 45 ? 'Moderate' : 'Low';
+
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
@@ -48,9 +58,10 @@ export default function DashboardScreen() {
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
     >
       <Text style={styles.city}>{location.city}, {location.state}</Text>
-      <Text style={styles.temp}>{weather.temperature}°</Text>
-      <Text style={styles.summary}>{weather.summary} - Feels like {weather.feelsLike}°</Text>
-      <Text style={styles.meta}>Humidity {weather.humidity}% · Wind {weather.windMph} mph · UV {weather.uv}</Text>
+      <Text style={styles.temp}>{displayTemp}°{tempUnit}</Text>
+      <Text style={styles.summary}>{weather.summary} - Feels like {displayFeels}°{tempUnit}</Text>
+      <Text style={styles.meta}>Humidity {weather.humidity}% · Wind {displayWind} {windUnit} · UV {weather.uv}</Text>
+      <Text style={styles.risk}>Outdoor Risk Index: {riskLabel} ({Math.round(riskScore)})</Text>
     </ScrollView>
   );
 }
@@ -74,5 +85,6 @@ const styles = StyleSheet.create({
   city: { color: '#dbeafe', fontSize: 22, fontWeight: '700' },
   temp: { color: '#fff', fontSize: 72, fontWeight: '700', marginVertical: 8 },
   summary: { color: '#ecfeff', fontSize: 16 },
-  meta: { color: '#cfe7ff', marginTop: 8 }
+  meta: { color: '#cfe7ff', marginTop: 8 },
+  risk: { color: '#fef3c7', marginTop: 8, fontWeight: '700' }
 });

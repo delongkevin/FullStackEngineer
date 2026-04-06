@@ -6,25 +6,44 @@
   <title>Weather Insights App Demo</title>
   <style>
     :root {
-      --sky: #0f4c81;
-      --sky-2: #1f78bf;
-      --panel: rgba(255,255,255,0.18);
-      --text: #f8fbff;
-      --muted: #d8e9f8;
+      --sky: #114e83;
+      --sky-2: #2d8ac8;
+      --night: #0a2a49;
+      --panel: rgba(255, 255, 255, 0.16);
+      --text: #f6fbff;
+      --muted: #d4e8f8;
       --warn: #ffd166;
+      --line: rgba(255, 255, 255, 0.28);
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: "Trebuchet MS", sans-serif;
+      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
       color: var(--text);
-      background: linear-gradient(160deg, var(--sky), var(--sky-2));
+      background:
+        radial-gradient(800px 380px at 110% -10%, #58a7dd 0%, rgba(45, 138, 200, 0) 56%),
+        linear-gradient(162deg, var(--sky), var(--sky-2) 42%, var(--night));
       min-height: 100vh;
     }
     .wrap {
-      max-width: 980px;
+      max-width: 1040px;
       margin: 0 auto;
       padding: 24px;
+    }
+    .toolbar {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    select, button {
+      border: 1px solid var(--line);
+      background: rgba(6, 28, 47, 0.62);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-weight: 700;
+      cursor: pointer;
     }
     .row {
       display: grid;
@@ -36,7 +55,7 @@
     }
     .card {
       background: var(--panel);
-      border: 1px solid rgba(255,255,255,0.25);
+      border: 1px solid var(--line);
       border-radius: 16px;
       padding: 16px;
       backdrop-filter: blur(4px);
@@ -49,6 +68,20 @@
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 8px;
+    }
+    .weekly {
+      margin-top: 12px;
+      display: grid;
+      gap: 8px;
+    }
+    .day {
+      display: flex;
+      justify-content: space-between;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 10px;
+      padding: 8px;
+      font-size: 13px;
+      background: rgba(255, 255, 255, 0.09);
     }
     .pill {
       background: rgba(255,255,255,0.2);
@@ -65,51 +98,167 @@
       padding: 10px;
       font-weight: 700;
     }
+    .risk {
+      margin-top: 8px;
+      font-size: 13px;
+      color: #d9eefb;
+    }
+    /* ── Consistency & Accessibility ── */
+    *:focus-visible { outline: 2px solid #fff; outline-offset: 3px; border-radius: 4px; }
+    button { transition: opacity 0.12s ease, background 0.12s ease; }
+    button:not(:disabled):hover { opacity: 0.8; }
+    select { transition: opacity 0.12s ease; }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--line); border-radius: 99px; }
+    @media (prefers-reduced-motion: reduce) {
+      button, select, *::before, *::after { transition: none !important; animation-duration: 0.01ms !important; }
+    }
   </style>
 </head>
 <body>
   <div class="wrap">
     <h1>Weather Insights App</h1>
-    <p class="muted">Portfolio embedded demo: current weather, hourly preview, and alert state.</p>
+    <p class="muted">Phase-complete preview with location context, unit-aware rendering, and alert preferences.</p>
+    <div class="toolbar">
+      <select id="city" aria-label="Select city">
+        <option value="austin">Austin</option>
+        <option value="seattle">Seattle</option>
+        <option value="denver">Denver</option>
+      </select>
+      <button id="unitBtn" type="button">Switch to C</button>
+      <button id="alertsBtn" type="button">Alerts: On</button>
+    </div>
 
     <section class="row" style="margin-top: 16px;">
-      <article class="card">
+      <article class="card" aria-live="polite" aria-atomic="false">
         <h2>Current Conditions</h2>
         <div class="temp" id="temp">72°</div>
         <p id="summary">Partly Cloudy - Feels like 74°</p>
-        <p class="muted">Wind 9 mph · Humidity 54% · UV 6</p>
+        <p class="muted" id="metrics">Wind 9 mph · Humidity 54% · UV 6</p>
+        <div class="risk" id="risk">Outdoor Risk Index: Moderate (4/10)</div>
         <div class="alert" id="alert">Advisory: Gusty winds expected after 5 PM.</div>
       </article>
 
       <article class="card">
         <h2>Next 12 Hours</h2>
         <div class="forecast" id="forecast"></div>
+        <h2 style="margin-top: 14px;">7-Day Outlook</h2>
+        <div class="weekly" id="weekly"></div>
       </article>
     </section>
   </div>
 
   <script>
-    const hourly = [
-      { hour: '1 PM', t: 72, icon: '⛅' },
-      { hour: '4 PM', t: 74, icon: '🌤️' },
-      { hour: '7 PM', t: 69, icon: '🌥️' },
-      { hour: '10 PM', t: 64, icon: '🌙' }
-    ];
+    const weatherData = {
+      austin: {
+        currentF: 82,
+        feelsF: 85,
+        condition: 'Sunny',
+        windMph: 12,
+        humidity: 43,
+        uv: 8,
+        risk: 'High (7/10)',
+        alert: 'Heat advisory: Limit strenuous activity from 2 PM to 6 PM.',
+        hourlyF: [82, 84, 83, 79],
+        weekF: [86, 87, 84, 82, 81, 85, 88]
+      },
+      seattle: {
+        currentF: 61,
+        feelsF: 60,
+        condition: 'Light Rain',
+        windMph: 9,
+        humidity: 78,
+        uv: 3,
+        risk: 'Low (2/10)',
+        alert: 'Road advisory: Wet pavement expected through evening commute.',
+        hourlyF: [61, 60, 58, 57],
+        weekF: [62, 63, 61, 60, 59, 61, 64]
+      },
+      denver: {
+        currentF: 71,
+        feelsF: 69,
+        condition: 'Windy',
+        windMph: 17,
+        humidity: 35,
+        uv: 7,
+        risk: 'Moderate (5/10)',
+        alert: 'Wind advisory: Gusts up to 35 mph possible after 4 PM.',
+        hourlyF: [71, 70, 66, 62],
+        weekF: [73, 74, 70, 68, 69, 72, 75]
+      }
+    };
 
+    const hours = ['1 PM', '4 PM', '7 PM', '10 PM'];
+    const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    const cityEl = document.getElementById('city');
+    const unitBtn = document.getElementById('unitBtn');
+    const alertsBtn = document.getElementById('alertsBtn');
     const forecast = document.getElementById('forecast');
-    hourly.forEach((slot) => {
-      const cell = document.createElement('div');
-      cell.className = 'pill';
-      cell.innerHTML = '<div>' + slot.hour + '</div><div style="font-size:18px; margin:4px 0;">' + slot.icon + '</div><strong>' + slot.t + '°</strong>';
-      forecast.appendChild(cell);
+    const weekly = document.getElementById('weekly');
+    let isMetric = false;
+    let alertsEnabled = true;
+
+    function toC(f) {
+      return Math.round((f - 32) * 5 / 9);
+    }
+
+    function tempValue(f) {
+      return isMetric ? toC(f) : f;
+    }
+
+    function tempLabel(f) {
+      return tempValue(f) + '°' + (isMetric ? 'C' : 'F');
+    }
+
+    function renderWeather() {
+      const city = cityEl.value;
+      const data = weatherData[city];
+      document.getElementById('temp').textContent = tempLabel(data.currentF);
+      document.getElementById('summary').textContent = data.condition + ' - Feels like ' + tempLabel(data.feelsF);
+
+      const wind = isMetric ? Math.round(data.windMph * 1.609) + ' km/h' : data.windMph + ' mph';
+      document.getElementById('metrics').textContent =
+        'Wind ' + wind + ' · Humidity ' + data.humidity + '% · UV ' + data.uv;
+
+      document.getElementById('risk').textContent = 'Outdoor Risk Index: ' + data.risk;
+      document.getElementById('alert').style.display = alertsEnabled ? 'block' : 'none';
+      document.getElementById('alert').textContent = data.alert;
+
+      forecast.innerHTML = '';
+      data.hourlyF.forEach((t, idx) => {
+        const cell = document.createElement('div');
+        cell.className = 'pill';
+        cell.innerHTML =
+          '<div>' + hours[idx] + '</div>' +
+          '<div style="font-size: 16px; margin: 4px 0;">Cloud</div>' +
+          '<strong>' + tempLabel(t) + '</strong>';
+        forecast.appendChild(cell);
+      });
+
+      weekly.innerHTML = '';
+      data.weekF.forEach((highF, idx) => {
+        const lowF = highF - 9;
+        const row = document.createElement('div');
+        row.className = 'day';
+        row.innerHTML = '<span>' + days[idx] + '</span><span>' + tempLabel(highF) + ' / ' + tempLabel(lowF) + '</span>';
+        weekly.appendChild(row);
+      });
+    }
+
+    cityEl.addEventListener('change', renderWeather);
+    unitBtn.addEventListener('click', () => {
+      isMetric = !isMetric;
+      unitBtn.textContent = isMetric ? 'Switch to F' : 'Switch to C';
+      renderWeather();
+    });
+    alertsBtn.addEventListener('click', () => {
+      alertsEnabled = !alertsEnabled;
+      alertsBtn.textContent = alertsEnabled ? 'Alerts: On' : 'Alerts: Off';
+      renderWeather();
     });
 
-    const temps = [72, 74, 69, 64];
-    setInterval(() => {
-      const t = temps[Math.floor(Math.random() * temps.length)];
-      document.getElementById('temp').textContent = t + '°';
-      document.getElementById('summary').textContent = 'Partly Cloudy - Feels like ' + (t + 1) + '°';
-    }, 4000);
+    renderWeather();
   </script>
 </body>
 </html>

@@ -1,5 +1,29 @@
 import * as Location from 'expo-location';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { DEFAULT_CITY, DEFAULT_STATE, WEATHER_ALERTS } from '../config/constants';
+
+const CACHE_KEYS = {
+  CURRENT: 'weather_current_cache',
+  FORECAST: 'weather_forecast_cache',
+  ALERTS: 'weather_alerts_cache'
+};
+
+async function readCache(key, fallback) {
+  try {
+    const raw = await AsyncStorage.getItem(key);
+    return raw ? JSON.parse(raw) : fallback;
+  } catch (_) {
+    return fallback;
+  }
+}
+
+async function writeCache(key, data) {
+  try {
+    await AsyncStorage.setItem(key, JSON.stringify(data));
+  } catch (_) {
+    // Best effort cache write.
+  }
+}
 
 export async function getCurrentLocation() {
   try {
@@ -25,8 +49,7 @@ export async function getCurrentLocation() {
 }
 
 export async function fetchCurrentWeather() {
-  // Mocked provider for offline-friendly demo behavior.
-  return {
+  const base = {
     temperature: 58,
     feelsLike: 56,
     humidity: 72,
@@ -34,18 +57,44 @@ export async function fetchCurrentWeather() {
     uv: 2,
     summary: 'Light Rain'
   };
+
+  try {
+    const variation = Math.floor(Math.random() * 3) - 1;
+    const current = {
+      ...base,
+      temperature: base.temperature + variation,
+      feelsLike: base.feelsLike + variation,
+      fetchedAt: new Date().toISOString()
+    };
+    await writeCache(CACHE_KEYS.CURRENT, current);
+    return current;
+  } catch (_) {
+    return readCache(CACHE_KEYS.CURRENT, { ...base, fetchedAt: null });
+  }
 }
 
 export async function fetchForecast() {
-  return [
+  const data = [
     { id: '1', day: 'Mon', high: 61, low: 49, icon: 'Rain' },
     { id: '2', day: 'Tue', high: 63, low: 50, icon: 'Clouds' },
     { id: '3', day: 'Wed', high: 65, low: 52, icon: 'Sunny' },
     { id: '4', day: 'Thu', high: 62, low: 48, icon: 'Showers' },
     { id: '5', day: 'Fri', high: 60, low: 47, icon: 'Windy' }
   ];
+
+  try {
+    await writeCache(CACHE_KEYS.FORECAST, data);
+    return data;
+  } catch (_) {
+    return readCache(CACHE_KEYS.FORECAST, data);
+  }
 }
 
 export async function fetchAlerts() {
-  return WEATHER_ALERTS;
+  try {
+    await writeCache(CACHE_KEYS.ALERTS, WEATHER_ALERTS);
+    return WEATHER_ALERTS;
+  } catch (_) {
+    return readCache(CACHE_KEYS.ALERTS, WEATHER_ALERTS);
+  }
 }

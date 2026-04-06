@@ -2,7 +2,10 @@ export const API_BASE_URL = 'http://localhost:3001';
 
 export const STORAGE_KEYS = {
   TOKEN: 'music_user_token',
-  PROFILE: 'music_user_profile'
+  PROFILE: 'music_user_profile',
+  SAVED_PLAYLISTS: 'music_saved_playlists',
+  RECENTLY_PLAYED: 'music_recently_played',
+  LISTENING_ANALYTICS: 'music_listening_analytics'
 };
 
 export const PLAYLISTS = [

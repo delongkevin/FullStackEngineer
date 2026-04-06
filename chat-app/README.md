@@ -2,6 +2,8 @@
 
 A production-ready cross-platform chat and real-time messaging application built with React Native and Expo. Supports real-time messaging, user presence tracking, typing indicators, and seamless multi-platform deployment to iOS and Android.
 
+Phase 3 status: completed authentication handoff with persisted session bootstrap and reliable logout state reset.
+
 ## Features
 
 ### Core Messaging
@@ -22,6 +24,7 @@ A production-ready cross-platform chat and real-time messaging application built
 - **JWT-based Login**: Secure email/password authentication
 - **Registration**: Create new account with validation
 - **Session Persistence**: Automatic login on app launch
+- **Auth State Handoff**: Login/signup now immediately transitions app navigation state
 - **Passwordless Ready**: Foundation for OAuth/biometric auth
 
 ### User Management

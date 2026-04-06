@@ -89,7 +89,33 @@ function AuthStack() {
   );
 }
 
-function AppStack({ userId, token, onLogout }) {
+function ProfileTabNavigator({ onLogout }) {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen 
+        name="ProfileView" 
+        options={{ title: 'Profile' }}
+      >
+        {(props) => <ProfileScreen {...props} onLogout={onLogout} />}
+      </Stack.Screen>
+    </Stack.Navigator>
+  );
+}
+
+function AuthStackWithProps({ onAuthSuccess }) {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Login"
+        options={{ headerShown: false }}
+      >
+        {(props) => <LoginScreen {...props} onAuthSuccess={onAuthSuccess} />}
+      </Stack.Screen>
+    </Stack.Navigator>
+  );
+}
+
+function AppStack({ onLogout }) {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -132,7 +158,6 @@ function AppStack({ userId, token, onLogout }) {
       
       <Tab.Screen 
         name="ProfileTab" 
-        component={ProfileTabNavigator}
         options={{
           title: 'Profile',
           tabBarLabel: 'Profile',
@@ -141,15 +166,16 @@ function AppStack({ userId, token, onLogout }) {
             <View style={{ width: 24, height: 24, backgroundColor: color, borderRadius: 4 }} />
           )
         }}
-      />
+      >
+        {(props) => <ProfileTabNavigator {...props} onLogout={onLogout} />}
+      </Tab.Screen>
     </Tab.Navigator>
   );
 }
 
 export default function App() {
-  const [state, dispatch] = useState({
+  const [state, setState] = useState({
     isLoading: true,
-    isSignout: false,
     userToken: null,
     userId: null
   });
@@ -162,95 +188,43 @@ export default function App() {
     try {
       const token = await AsyncStorage.getItem('userToken');
       const userId = await AsyncStorage.getItem('userId');
-      
+
       if (token) {
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       }
-      
-      dispatch({
+
+      setState({
         isLoading: false,
-        isSignout: false,
         userToken: token,
         userId: userId
       });
     } catch (e) {
-      dispatch({
+      setState({
         isLoading: false,
-        isSignout: false,
         userToken: null,
         userId: null
       });
     }
   };
 
-  const authContext = {
-    signIn: async (credentials) => {
-      try {
-        const response = await axios.post('http://localhost:3000/api/auth/login', {
-          email: credentials.email,
-          password: credentials.password
-        });
-        
-        const { token, userId } = response.data;
-        
-        await AsyncStorage.setItem('userToken', token);
-        await AsyncStorage.setItem('userId', userId);
-        
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        
-        dispatch({
-          isLoading: false,
-          isSignout: false,
-          userToken: token,
-          userId: userId
-        });
-        
-        return { success: true };
-      } catch (error) {
-        return { success: false, error: error.response?.data?.error || 'Login failed' };
-      }
-    },
-    
-    signUp: async (credentials) => {
-      try {
-        const response = await axios.post('http://localhost:3000/api/auth/register', {
-          name: credentials.name,
-          email: credentials.email,
-          password: credentials.password
-        });
-        
-        const { token, userId } = response.data;
-        
-        await AsyncStorage.setItem('userToken', token);
-        await AsyncStorage.setItem('userId', userId);
-        
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        
-        dispatch({
-          isLoading: false,
-          isSignout: false,
-          userToken: token,
-          userId: userId
-        });
-        
-        return { success: true };
-      } catch (error) {
-        return { success: false, error: error.response?.data?.error || 'Registration failed' };
-      }
-    },
-    
-    signOut: async () => {
-      await AsyncStorage.removeItem('userToken');
-      await AsyncStorage.removeItem('userId');
-      delete axios.defaults.headers.common['Authorization'];
-      
-      dispatch({
-        isLoading: false,
-        isSignout: true,
-        userToken: null,
-        userId: null
-      });
-    }
+  const handleAuthSuccess = ({ token, userId }) => {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    setState({
+      isLoading: false,
+      userToken: token,
+      userId
+    });
+  };
+
+  const handleLogout = async () => {
+    await AsyncStorage.removeItem('userToken');
+    await AsyncStorage.removeItem('userId');
+    delete axios.defaults.headers.common['Authorization'];
+    setState({
+      isLoading: false,
+      userToken: null,
+      userId: null
+    });
   };
 
   if (state.isLoading) {
@@ -264,13 +238,9 @@ export default function App() {
   return (
     <NavigationContainer>
       {state.userToken == null ? (
-        <AuthStack />
+        <AuthStackWithProps onAuthSuccess={handleAuthSuccess} />
       ) : (
-        <AppStack 
-          userId={state.userId} 
-          token={state.userToken}
-          onLogout={authContext.signOut}
-        />
+        <AppStack onLogout={handleLogout} />
       )}
     </NavigationContainer>
   );

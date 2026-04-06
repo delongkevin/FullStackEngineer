@@ -1,9 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, Switch, Text, View } from 'react-native';
+import { useSettings } from '../context/SettingsContext';
 
 export default function SettingsScreen() {
-  const [metricUnits, setMetricUnits] = useState(false);
-  const [pushAlerts, setPushAlerts] = useState(true);
+  const { loading, settings, setMetricUnits, setPushAlerts } = useSettings();
+
+  if (loading) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.title}>Settings</Text>
+        <Text style={styles.note}>Loading your preferences...</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -11,16 +20,16 @@ export default function SettingsScreen() {
 
       <View style={styles.row}>
         <Text style={styles.label}>Use Metric Units</Text>
-        <Switch value={metricUnits} onValueChange={setMetricUnits} />
+        <Switch value={settings.metricUnits} onValueChange={setMetricUnits} />
       </View>
 
       <View style={styles.row}>
         <Text style={styles.label}>Push Weather Alerts</Text>
-        <Switch value={pushAlerts} onValueChange={setPushAlerts} />
+        <Switch value={settings.pushAlerts} onValueChange={setPushAlerts} />
       </View>
 
       <Text style={styles.note}>
-        These settings are local defaults and can be connected to account preferences in the next phase.
+        Preferences save automatically and apply across dashboard, forecast, and alerts screens.
       </Text>
     </View>
   );

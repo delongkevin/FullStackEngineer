@@ -16,7 +16,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const API_BASE_URL = 'http://localhost:3000';
 
-export default function LoginScreen({ navigation }) {
+export default function LoginScreen({ onAuthSuccess }) {
   const [isSignUp, setIsSignUp] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -72,6 +72,7 @@ export default function LoginScreen({ navigation }) {
       await AsyncStorage.setItem('userId', response.data.userId);
       
       axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
+      onAuthSuccess?.({ token: response.data.token, userId: response.data.userId });
       
       Alert.alert('Success', 'Logged in successfully');
     } catch (error) {
@@ -96,6 +97,7 @@ export default function LoginScreen({ navigation }) {
       await AsyncStorage.setItem('userId', response.data.userId);
       
       axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
+      onAuthSuccess?.({ token: response.data.token, userId: response.data.userId });
       
       Alert.alert('Success', 'Account created successfully');
     } catch (error) {

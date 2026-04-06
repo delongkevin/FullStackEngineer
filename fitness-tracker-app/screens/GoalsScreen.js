@@ -15,32 +15,7 @@ const API_URL = 'http://localhost:5000/api';
 const GOAL_TYPES = ['steps', 'calories', 'distance', 'workouts', 'weight', 'sleep'];
 
 export default function GoalsScreen({ userId }) {
-  const [goals, setGoals] = useState([
-    {
-      id: 'goal_1',
-      name: '10,000 Steps Daily',
-      type: 'steps',
-      target: 10000,
-      progress: 7500,
-      deadline: '2026-05-06',
-    },
-    {
-      id: 'goal_2',
-      name: 'Lose 5 kg',
-      type: 'weight',
-      target: 5,
-      progress: 2,
-      deadline: '2026-07-06',
-    },
-    {
-      id: 'goal_3',
-      name: '4 Workouts Per Week',
-      type: 'workouts',
-      target: 4,
-      progress: 3,
-      deadline: '2026-04-13',
-    },
-  ]);
+  const [goals, setGoals] = useState([]);
 
   const [showNewGoalForm, setShowNewGoalForm] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -50,6 +25,24 @@ export default function GoalsScreen({ userId }) {
     target: '',
   });
 
+  useEffect(() => {
+    if (userId) {
+      fetchGoals();
+    }
+  }, [userId]);
+
+  const fetchGoals = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(`${API_URL}/goals/${userId}`);
+      setGoals(response.data);
+    } catch (error) {
+      console.error('Error fetching goals:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleCreateGoal = async () => {
     if (!newGoal.name || !newGoal.target) {
       alert('Please fill in all fields');
@@ -58,23 +51,12 @@ export default function GoalsScreen({ userId }) {
 
     setLoading(true);
     try {
-      await axios.post(`${API_URL}/goals/${userId}`, {
+      const response = await axios.post(`${API_URL}/goals/${userId}`, {
         ...newGoal,
         target: parseInt(newGoal.target),
       });
 
-      setGoals([
-        ...goals,
-        {
-          id: `goal_${Date.now()}`,
-          ...newGoal,
-          target: parseInt(newGoal.target),
-          progress: 0,
-          deadline: new Date(
-            Date.now() + 30 * 24 * 60 * 60 * 1000
-          ).toISOString(),
-        },
-      ]);
+      setGoals((prev) => [...prev, response.data]);
 
       setNewGoal({ name: '', type: 'steps', target: '' });
       setShowNewGoalForm(false);
@@ -227,14 +209,21 @@ export default function GoalsScreen({ userId }) {
             <Text style={styles.fabText}>+ New Goal</Text>
           </TouchableOpacity>
 
-          <FlatList
-            data={goals}
-            renderItem={renderGoal}
-            keyExtractor={(item) => item.id}
-            contentContainerStyle={styles.listContainer}
-            scrollEnabled={true}
-            nestedScrollEnabled={false}
-          />
+          {loading ? (
+            <ActivityIndicator size="large" color="#1565C0" style={{ marginTop: 20 }} />
+          ) : (
+            <FlatList
+              data={goals}
+              renderItem={renderGoal}
+              keyExtractor={(item) => item.id}
+              contentContainerStyle={styles.listContainer}
+              scrollEnabled={true}
+              nestedScrollEnabled={false}
+              ListEmptyComponent={
+                <Text style={styles.emptyText}>No goals yet. Create your first goal.</Text>
+              }
+            />
+          )}
         </>
       )}
     </View>
@@ -342,6 +331,12 @@ const styles = StyleSheet.create({
   listContainer: {
     padding: 20,
     paddingBottom: 100,
+  },
+  emptyText: {
+    textAlign: 'center',
+    color: '#999',
+    fontSize: 16,
+    marginTop: 40,
   },
   goalCard: {
     backgroundColor: '#fff',

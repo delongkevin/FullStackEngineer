@@ -1,19 +1,25 @@
 import React, { useState } from 'react';
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { TRACKS } from '../config/constants';
+import { useLibrary } from '../context/LibraryContext';
 
 export default function PlayerScreen() {
   const [status, setStatus] = useState('Paused');
   const [index, setIndex] = useState(0);
+  const { markTrackPlayed } = useLibrary();
   const current = TRACKS[index];
 
   function nextTrack() {
-    setIndex((i) => (i + 1) % TRACKS.length);
+    const nextIndex = (index + 1) % TRACKS.length;
+    setIndex(nextIndex);
+    markTrackPlayed(TRACKS[nextIndex]);
     setStatus('Playing');
   }
 
   function prevTrack() {
-    setIndex((i) => (i - 1 + TRACKS.length) % TRACKS.length);
+    const prevIndex = (index - 1 + TRACKS.length) % TRACKS.length;
+    setIndex(prevIndex);
+    markTrackPlayed(TRACKS[prevIndex]);
     setStatus('Playing');
   }
 
@@ -26,7 +32,13 @@ export default function PlayerScreen() {
         <TouchableOpacity style={styles.btn} onPress={prevTrack}>
           <Text style={styles.btnText}>Prev</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.btn} onPress={() => setStatus('Playing')}>
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={() => {
+            markTrackPlayed(current);
+            setStatus('Playing');
+          }}
+        >
           <Text style={styles.btnText}>Play</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.btn} onPress={() => setStatus('Paused')}>
@@ -45,6 +57,7 @@ export default function PlayerScreen() {
             style={[styles.queueRow, itemIndex === index && styles.queueRowActive]}
             onPress={() => {
               setIndex(itemIndex);
+              markTrackPlayed(item);
               setStatus('Playing');
             }}
           >

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { fetchFeaturedPlaylists } from '../services/musicService';
+import { useLibrary } from '../context/LibraryContext';
 
 export default function HomeScreen() {
   const [playlists, setPlaylists] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { isPlaylistSaved, toggleSavedPlaylist } = useLibrary();
 
   useEffect(() => {
     load();
@@ -26,9 +28,12 @@ export default function HomeScreen() {
         data={playlists}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <TouchableOpacity style={styles.card}>
+          <TouchableOpacity style={styles.card} onPress={() => toggleSavedPlaylist(item)}>
             <Text style={styles.cardTitle}>{item.name}</Text>
             <Text style={styles.cardSub}>{item.tracks} tracks · {item.mood}</Text>
+            <Text style={styles.saveText}>
+              {isPlaylistSaved(item.id) ? 'Saved to library' : 'Tap to save playlist'}
+            </Text>
           </TouchableOpacity>
         )}
       />
@@ -49,5 +54,6 @@ const styles = StyleSheet.create({
     borderColor: '#2b3d66'
   },
   cardTitle: { color: '#fff', fontWeight: '700', fontSize: 16 },
-  cardSub: { color: '#9bb0d0', marginTop: 2 }
+  cardSub: { color: '#9bb0d0', marginTop: 2 },
+  saveText: { color: '#86efac', marginTop: 8, fontWeight: '600' }
 });

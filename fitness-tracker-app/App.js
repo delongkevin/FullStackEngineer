@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as Notifications from 'expo-notifications';
+import { ActivityIndicator, View } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Screens
 import HomeScreen from './screens/HomeScreen';
@@ -24,13 +26,45 @@ Notifications.setNotificationHandler({
 });
 
 export default function App() {
+  const [loading, setLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState(null);
 
-  const handleLogin = (newUserId) => {
+  useEffect(() => {
+    bootstrap();
+  }, []);
+
+  const bootstrap = async () => {
+    try {
+      const storedUserId = await AsyncStorage.getItem('fitness_user_id');
+      if (storedUserId) {
+        setUserId(storedUserId);
+        setIsLoggedIn(true);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleLogin = async (newUserId) => {
+    await AsyncStorage.setItem('fitness_user_id', String(newUserId));
     setUserId(newUserId);
     setIsLoggedIn(true);
   };
+
+  const handleLogout = async () => {
+    await AsyncStorage.removeItem('fitness_user_id');
+    setIsLoggedIn(false);
+    setUserId(null);
+  };
+
+  if (loading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color="#1565C0" />
+      </View>
+    );
+  }
 
   return (
     <NavigationContainer>
@@ -119,10 +153,7 @@ export default function App() {
               <ProfileScreen
                 {...props}
                 userId={userId}
-                onLogout={() => {
-                  setIsLoggedIn(false);
-                  setUserId(null);
-                }}
+                onLogout={handleLogout}
               />
             )}
           </Tab.Screen>

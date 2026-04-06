@@ -17,7 +17,7 @@ import moment from 'moment';
 
 const API_BASE_URL = 'http://localhost:3000';
 
-export default function ProfileScreen({ navigation }) {
+export default function ProfileScreen({ navigation, onLogout }) {
   const [user, setUser] = useState(null);
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -96,7 +96,7 @@ export default function ProfileScreen({ navigation }) {
               await AsyncStorage.removeItem('userToken');
               await AsyncStorage.removeItem('userId');
               delete axios.defaults.headers.common['Authorization'];
-              // Navigation handled by App.js auth flow
+              onLogout?.();
             } catch (error) {
               Alert.alert('Error', 'Failed to logout');
             }
