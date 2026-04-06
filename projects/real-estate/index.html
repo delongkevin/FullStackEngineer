@@ -6,32 +6,51 @@
   <title>Real Estate Marketplace Demo</title>
   <style>
     :root {
-      --bg: #f4f8f4;
+      --bg: #f2f8f3;
       --ink: #0f172a;
-      --muted: #475569;
+      --muted: #476176;
       --green: #059669;
+      --line: #d0e5d4;
       --panel: #ffffff;
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: "Segoe UI", sans-serif;
+      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
       background: linear-gradient(180deg, #ecfdf3, var(--bg));
       color: var(--ink);
       min-height: 100vh;
     }
-    .wrap { max-width: 980px; margin: 0 auto; padding: 24px; }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 24px; }
     h1 { margin: 0 0 8px; font-size: 30px; }
     p { margin: 0; color: var(--muted); }
+    .toolbar {
+      margin-top: 12px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    input, select, button {
+      border: 1px solid #c1dcc8;
+      border-radius: 10px;
+      padding: 9px;
+      background: #ffffff;
+      color: #0f172a;
+    }
+    button {
+      cursor: pointer;
+      background: #dff6e8;
+      font-weight: 700;
+    }
     .grid {
       margin-top: 16px;
       display: grid;
       gap: 14px;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     }
     .card {
       background: var(--panel);
-      border: 1px solid #dbe7dc;
+      border: 1px solid var(--line);
       border-radius: 14px;
       padding: 14px;
       box-shadow: 0 8px 18px rgba(2, 8, 23, 0.06);
@@ -46,35 +65,160 @@
       background: #d1fae5;
       font-weight: 700;
     }
+    .row {
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      align-items: center;
+    }
+    .price { color: var(--green); font-size: 20px; font-weight: 700; }
+    .meta { font-size: 13px; color: var(--muted); }
+    .summary {
+      margin-top: 14px;
+      border: 1px solid #cbe2d0;
+      border-radius: 12px;
+      padding: 10px;
+      background: #f6fff9;
+      color: #1f3c2f;
+      font-size: 14px;
+    }
+    /* ── Consistency & Accessibility ── */
+    *:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; border-radius: 4px; }
+    button, select, input { transition: opacity 0.12s ease, background 0.12s ease; }
+    button:not(:disabled):hover { opacity: 0.82; }
+    .card { transition: box-shadow 0.14s ease; }
+    .card:hover { box-shadow: 0 12px 28px rgba(2, 8, 23, 0.1); }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--line); border-radius: 99px; }
+    @media (prefers-reduced-motion: reduce) {
+      .card, button, select, input, *::before, *::after { transition: none !important; animation-duration: 0.01ms !important; }
+    }
   </style>
 </head>
 <body>
   <div class="wrap">
     <h1>Real Estate Marketplace</h1>
-    <p>Embedded portfolio overview for search, favorites, bookings, and profile flows.</p>
+    <p>Phase-complete preview with property filtering, favorites management, and tour booking actions.</p>
 
-    <div class="grid">
-      <div class="card">
-        <h3>Property Search</h3>
-        <p>Filter by city, price, bedrooms, and property type with responsive listing cards.</p>
-        <span class="tag">Search</span>
-      </div>
-      <div class="card">
-        <h3>Favorites</h3>
-        <p>Save listings and manage favorites with quick-remove and detail navigation.</p>
-        <span class="tag">Engagement</span>
-      </div>
-      <div class="card">
-        <h3>Bookings</h3>
-        <p>Schedule tours, track status, and review upcoming appointments.</p>
-        <span class="tag">Scheduling</span>
-      </div>
-      <div class="card">
-        <h3>Profile</h3>
-        <p>User profile, account details, and session-aware authentication flow.</p>
-        <span class="tag">Identity</span>
-      </div>
+    <div class="toolbar">
+      <input id="query" type="text" placeholder="Search by city or type" aria-label="Search" />
+      <select id="price" aria-label="Price range">
+        <option value="all">All prices</option>
+        <option value="lt500">Under $500k</option>
+        <option value="500to800">$500k - $800k</option>
+        <option value="gt800">Over $800k</option>
+      </select>
+      <select id="beds" aria-label="Bedroom count">
+        <option value="all">Any beds</option>
+        <option value="2">2+ beds</option>
+        <option value="3">3+ beds</option>
+        <option value="4">4+ beds</option>
+      </select>
     </div>
+
+    <div class="grid" id="listingGrid"></div>
+    <div class="summary" id="summary" aria-live="polite" aria-atomic="true"></div>
   </div>
+
+  <script>
+    const listings = [
+      { id: 1, title: 'Modern Condo', city: 'Austin', type: 'Condo', price: 485000, beds: 2, baths: 2, favorite: false },
+      { id: 2, title: 'Family Home', city: 'Denver', type: 'House', price: 735000, beds: 4, baths: 3, favorite: true },
+      { id: 3, title: 'Urban Loft', city: 'Seattle', type: 'Loft', price: 820000, beds: 2, baths: 2, favorite: false },
+      { id: 4, title: 'Suburban Retreat', city: 'Austin', type: 'House', price: 940000, beds: 5, baths: 4, favorite: false }
+    ];
+
+    let bookings = 3;
+
+    function dollars(amount) {
+      return '$' + amount.toLocaleString();
+    }
+
+    function filteredListings() {
+      const query = document.getElementById('query').value.trim().toLowerCase();
+      const price = document.getElementById('price').value;
+      const beds = document.getElementById('beds').value;
+
+      return listings.filter((home) => {
+        const queryOk = !query || home.city.toLowerCase().includes(query) || home.type.toLowerCase().includes(query) || home.title.toLowerCase().includes(query);
+
+        let priceOk = true;
+        if (price === 'lt500') {
+          priceOk = home.price < 500000;
+        } else if (price === '500to800') {
+          priceOk = home.price >= 500000 && home.price <= 800000;
+        } else if (price === 'gt800') {
+          priceOk = home.price > 800000;
+        }
+
+        const bedsOk = beds === 'all' || home.beds >= Number(beds);
+        return queryOk && priceOk && bedsOk;
+      });
+    }
+
+    function render() {
+      const visible = filteredListings();
+      const grid = document.getElementById('listingGrid');
+      grid.innerHTML = '';
+
+      if (!visible.length) {
+        grid.innerHTML = '<div class="card"><h3>No matching listings</h3><p>Try changing your filters.</p></div>';
+      }
+
+      visible.forEach((home) => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML =
+          '<h3>' + home.title + '</h3>' +
+          '<p>' + home.city + ' · ' + home.type + '</p>' +
+          '<div class="row"><span class="price">' + dollars(home.price) + '</span><span class="meta">' + home.beds + ' bd · ' + home.baths + ' ba</span></div>' +
+          '<div class="row">' +
+          '<button type="button" data-act="favorite" data-id="' + home.id + '">' + (home.favorite ? 'Unfavorite' : 'Favorite') + '</button>' +
+          '<button type="button" data-act="book" data-id="' + home.id + '">Book Tour</button>' +
+          '</div>' +
+          '<span class="tag">' + (home.favorite ? 'Saved' : 'Available') + '</span>';
+        grid.appendChild(card);
+      });
+
+      const saved = listings.filter((l) => l.favorite).length;
+      document.getElementById('summary').textContent =
+        visible.length + ' listings shown · ' + saved + ' favorites saved · ' + bookings + ' tours scheduled';
+    }
+
+    document.addEventListener('click', (event) => {
+      const target = event.target;
+      if (!(target instanceof HTMLElement)) {
+        return;
+      }
+      const action = target.getAttribute('data-act');
+      const id = Number(target.getAttribute('data-id'));
+      if (!action || !id) {
+        return;
+      }
+
+      const home = listings.find((h) => h.id === id);
+      if (!home) {
+        return;
+      }
+
+      if (action === 'favorite') {
+        home.favorite = !home.favorite;
+      }
+
+      if (action === 'book') {
+        bookings += 1;
+      }
+
+      render();
+    });
+
+    document.getElementById('query').addEventListener('input', render);
+    document.getElementById('price').addEventListener('change', render);
+    document.getElementById('beds').addEventListener('change', render);
+
+    render();
+  </script>
 </body>
 </html>

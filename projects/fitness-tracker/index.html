@@ -6,9 +6,10 @@
   <title>Fitness Tracker App Demo</title>
   <style>
     :root {
-      --bg: #0b1324;
-      --panel: #111b33;
-      --panel-2: #1a2747;
+      --bg: #0a1322;
+      --panel: #101f38;
+      --panel-2: #1a2c50;
+      --line: #29467a;
       --text: #f8fafc;
       --muted: #a8b4cc;
       --accent: #38bdf8;
@@ -17,19 +18,21 @@
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: "Segoe UI", sans-serif;
+      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
       color: var(--text);
       min-height: 100vh;
-      background: radial-gradient(circle at 20% 0%, #1f335f 0, #0b1324 55%);
+      background:
+        radial-gradient(760px 360px at 20% -10%, #29467a 0, rgba(10, 19, 34, 0) 56%),
+        var(--bg);
     }
-    .wrap { max-width: 980px; margin: 0 auto; padding: 24px; }
+    .wrap { max-width: 1040px; margin: 0 auto; padding: 24px; }
     h1 { margin: 0 0 8px; font-size: 28px; }
     p { margin: 0; color: var(--muted); }
-    .grid { margin-top: 16px; display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
-    .card { background: var(--panel); border: 1px solid #22355e; border-radius: 14px; padding: 14px; }
+    .grid { margin-top: 16px; display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+    .card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 14px; }
     .ring {
       width: 120px; height: 120px; border-radius: 50%;
-      background: conic-gradient(var(--accent) 0 250deg, #314164 250deg 360deg);
+      background: conic-gradient(var(--accent) 0deg, #314164 0deg 360deg);
       margin: 8px auto;
       display: grid;
       place-items: center;
@@ -41,36 +44,185 @@
     .metric { font-size: 22px; font-weight: 700; color: var(--accent); }
     .tag { display: inline-block; margin-top: 8px; padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; background: #16304e; color: #9dd8ff; }
     .ok { background: #113024; color: #86efac; }
+    .layout {
+      margin-top: 14px;
+      display: grid;
+      gap: 14px;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 920px) {
+      .layout { grid-template-columns: 1fr 1fr; }
+    }
+    input, select, button {
+      border: 1px solid #33518a;
+      background: #0f1f3d;
+      color: var(--text);
+      border-radius: 10px;
+      padding: 9px;
+    }
+    .controls {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 8px;
+    }
+    button { cursor: pointer; background: #1a3667; font-weight: 700; }
+    .workouts {
+      display: grid;
+      gap: 8px;
+      margin-top: 10px;
+      max-height: 190px;
+      overflow: auto;
+      padding-right: 3px;
+    }
+    .item {
+      border: 1px solid #2f4f87;
+      border-radius: 10px;
+      padding: 8px;
+      font-size: 13px;
+      background: var(--panel-2);
+    }
+    .water {
+      margin-top: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #263e6b;
+      overflow: hidden;
+    }
+    .water > span {
+      display: block;
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #3cbff9, #7dd3fc);
+    }
+    /* ── Consistency & Accessibility ── */
+    *:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+    button, select, input { transition: opacity 0.12s ease, background 0.12s ease; }
+    button:not(:disabled):hover { opacity: 0.82; }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--line); border-radius: 99px; }
+    @media (prefers-reduced-motion: reduce) {
+      button, select, input, *::before, *::after { transition: none !important; animation-duration: 0.01ms !important; }
+    }
   </style>
 </head>
 <body>
   <div class="wrap">
     <h1>Fitness Tracker App</h1>
-    <p>Embedded preview for workout logging, goals, and health metrics.</p>
+    <p>Phase-complete preview for workout logging, goal tracking, and health metric updates.</p>
     <div class="grid">
       <article class="card">
         <h3>Daily Progress</h3>
-        <div class="ring"><div>69%</div></div>
+        <div class="ring" id="ring"><div id="ringPct" aria-live="polite" aria-atomic="true">0%</div></div>
         <p style="text-align:center">Goal completion</p>
       </article>
       <article class="card">
         <h3>Steps</h3>
-        <div class="metric">8,246</div>
-        <p>2,000 remaining to daily target</p>
+        <div class="metric" id="steps" aria-live="polite" aria-atomic="true">0</div>
+        <p id="stepHint">0 remaining to daily target</p>
         <span class="tag">Active</span>
       </article>
       <article class="card">
         <h3>Calories</h3>
-        <div class="metric">1,987 kcal</div>
+        <div class="metric" id="calories">0 kcal</div>
         <p>Burned through workouts + activity</p>
         <span class="tag ok">On Track</span>
       </article>
       <article class="card">
-        <h3>Workouts</h3>
-        <p>Run 5km · Strength 40m · Stretch 20m</p>
-        <span class="tag">3 sessions today</span>
+        <h3>Hydration</h3>
+        <p id="waterText">0 of 80 oz target</p>
+        <div class="water"><span id="waterBar"></span></div>
+        <span class="tag" id="streak">0 day streak</span>
       </article>
     </div>
+
+    <section class="layout">
+      <article class="card">
+        <h3>Log Workout</h3>
+        <div class="controls">
+          <select id="workoutType" aria-label="Workout type">
+            <option value="Run">Run</option>
+            <option value="Strength">Strength</option>
+            <option value="Cycling">Cycling</option>
+            <option value="Yoga">Yoga</option>
+          </select>
+          <input id="minutes" type="number" min="5" step="5" value="30" aria-label="Minutes" />
+          <button id="logBtn" type="button">Log Session</button>
+          <button id="waterBtn" type="button">Add 8 oz Water</button>
+        </div>
+      </article>
+
+      <article class="card">
+        <h3>Sessions Today</h3>
+        <div class="workouts" id="workoutList"></div>
+      </article>
+    </section>
   </div>
+
+  <script>
+    const stepGoal = 10000;
+    const caloriesGoal = 2200;
+    const workouts = [
+      { type: 'Run', minutes: 35 },
+      { type: 'Strength', minutes: 40 }
+    ];
+
+    let steps = 8246;
+    let calories = 1987;
+    let waterOz = 48;
+    let streakDays = 6;
+
+    function updateDashboard() {
+      const pct = Math.min(100, Math.round((steps / stepGoal) * 100));
+      const caloriesPct = Math.min(100, Math.round((calories / caloriesGoal) * 100));
+      const progress = Math.round((pct + caloriesPct) / 2);
+
+      document.getElementById('ringPct').textContent = progress + '%';
+      document.getElementById('ring').style.background = 'conic-gradient(var(--accent) 0deg ' + Math.round(progress * 3.6) + 'deg, #314164 ' + Math.round(progress * 3.6) + 'deg 360deg)';
+      document.getElementById('steps').textContent = steps.toLocaleString();
+
+      const remaining = Math.max(0, stepGoal - steps);
+      document.getElementById('stepHint').textContent = remaining.toLocaleString() + ' remaining to daily target';
+
+      document.getElementById('calories').textContent = calories.toLocaleString() + ' kcal';
+      document.getElementById('waterText').textContent = waterOz + ' of 80 oz target';
+      document.getElementById('waterBar').style.width = Math.min(100, Math.round((waterOz / 80) * 100)) + '%';
+      document.getElementById('streak').textContent = streakDays + ' day streak';
+    }
+
+    function renderWorkouts() {
+      const list = document.getElementById('workoutList');
+      list.innerHTML = '';
+      workouts.forEach((w, i) => {
+        const item = document.createElement('div');
+        item.className = 'item';
+        item.textContent = (i + 1) + '. ' + w.type + ' · ' + w.minutes + ' min';
+        list.appendChild(item);
+      });
+    }
+
+    document.getElementById('logBtn').onclick = () => {
+      const type = document.getElementById('workoutType').value;
+      const minutes = Number(document.getElementById('minutes').value || 0);
+      if (minutes <= 0) {
+        return;
+      }
+      workouts.push({ type: type, minutes: minutes });
+      steps += Math.round(minutes * 130);
+      calories += Math.round(minutes * 8.2);
+      streakDays += 1;
+      renderWorkouts();
+      updateDashboard();
+    };
+
+    document.getElementById('waterBtn').onclick = () => {
+      waterOz = Math.min(80, waterOz + 8);
+      updateDashboard();
+    };
+
+    renderWorkouts();
+    updateDashboard();
+  </script>
 </body>
 </html>

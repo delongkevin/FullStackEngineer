@@ -6,64 +6,243 @@
   <title>Personal Finance Tracker Demo</title>
   <style>
     :root {
-      --bg: #061b14;
-      --panel: #0f2b22;
-      --panel-2: #14382d;
+      --bg: #071a14;
+      --panel: #0f2f25;
+      --panel-2: #164034;
+      --line: #2c6551;
       --text: #f0fdf4;
       --muted: #b7d7c8;
       --accent: #34d399;
       --warn: #fbbf24;
+      --danger: #f87171;
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: "Segoe UI", sans-serif;
+      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
       color: var(--text);
-      background: radial-gradient(circle at right top, #134e3d 0, #061b14 60%);
+      background:
+        radial-gradient(720px 340px at 100% -12%, #1b614d 0, rgba(7, 26, 20, 0) 55%),
+        var(--bg);
       min-height: 100vh;
     }
-    .wrap { max-width: 980px; margin: 0 auto; padding: 24px; }
-    .hero { background: var(--panel); border: 1px solid #1f4d3e; border-radius: 16px; padding: 18px; }
+    .wrap { max-width: 1040px; margin: 0 auto; padding: 24px; }
+    .hero { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 18px; }
     h1 { margin: 0 0 6px; }
     p { margin: 0; color: var(--muted); }
     .balance { margin-top: 10px; font-size: 34px; font-weight: 700; color: var(--accent); }
-    .grid { margin-top: 16px; display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
-    .card { background: var(--panel-2); border: 1px solid #245847; border-radius: 14px; padding: 14px; }
+    .grid { margin-top: 16px; display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+    .card { background: var(--panel-2); border: 1px solid #2a6c57; border-radius: 14px; padding: 14px; }
     .bar { height: 8px; background: #275244; border-radius: 99px; overflow: hidden; }
     .bar > span { display: block; height: 100%; background: var(--accent); }
     .chip { display: inline-block; margin-top: 8px; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; }
     .good { background: #123427; color: #86efac; }
     .warn { background: #3e2f0f; color: var(--warn); }
+    .danger { background: #3a1717; color: #fecaca; }
+    .layout {
+      margin-top: 14px;
+      display: grid;
+      gap: 14px;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 920px) {
+      .layout { grid-template-columns: 0.95fr 1.05fr; }
+    }
+    .txn-list {
+      margin-top: 10px;
+      display: grid;
+      gap: 8px;
+      max-height: 280px;
+      overflow: auto;
+      padding-right: 4px;
+    }
+    .txn {
+      display: flex;
+      justify-content: space-between;
+      border: 1px solid #2b6b56;
+      border-radius: 10px;
+      padding: 8px;
+      background: #11362b;
+      font-size: 13px;
+    }
+    .amt-minus { color: #fecaca; }
+    .amt-plus { color: #86efac; }
+    .actions {
+      margin-top: 10px;
+      display: grid;
+      gap: 8px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    input, select, button {
+      border: 1px solid #2d6f59;
+      border-radius: 10px;
+      padding: 9px;
+      background: #0c2a21;
+      color: var(--text);
+    }
+    button {
+      cursor: pointer;
+      background: #1f5d4a;
+      font-weight: 700;
+    }
+    .goal {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #d6f7e6;
+    }
+    /* ── Consistency & Accessibility ── */
+    *:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+    button, select, input { transition: opacity 0.12s ease, background 0.12s ease; }
+    button:not(:disabled):hover { opacity: 0.82; }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--line); border-radius: 99px; }
+    @media (prefers-reduced-motion: reduce) {
+      button, select, input, *::before, *::after { transition: none !important; animation-duration: 0.01ms !important; }
+    }
   </style>
 </head>
 <body>
   <div class="wrap">
     <section class="hero">
       <h1>Personal Finance Tracker</h1>
-      <p>Embedded preview of budgeting, categories, and savings analytics.</p>
-      <div class="balance">$48,291.50</div>
+      <p>Phase-complete preview with transaction input, budget health, goals, and fraud alerts.</p>
+      <div class="balance" id="balance" aria-live="polite" aria-atomic="true">$0.00</div>
     </section>
+
     <section class="grid">
       <article class="card">
         <h3>Budget Usage</h3>
-        <p>Monthly spending progress</p>
-        <div class="bar"><span style="width:72%"></span></div>
-        <span class="chip warn">Warning</span>
+        <p id="budgetText">Monthly spending progress</p>
+        <div class="bar"><span id="budgetBar" style="width:0%"></span></div>
+        <span class="chip" id="budgetStatus">Healthy</span>
       </article>
       <article class="card">
         <h3>Savings Rate</h3>
-        <p style="font-size:28px; font-weight:700; color: var(--accent);">21%</p>
+        <p id="savingsRate" style="font-size:28px; font-weight:700; color: var(--accent);">0%</p>
         <span class="chip good">Healthy</span>
       </article>
       <article class="card">
         <h3>Top Category</h3>
-        <p>Housing · $1,840 this month</p>
+        <p id="topCategory">No expenses yet</p>
       </article>
       <article class="card">
         <h3>Fraud Alerts</h3>
-        <p>0 critical alerts in last 30 days</p>
+        <p id="fraudText" aria-live="polite" aria-atomic="true">0 critical alerts in last 30 days</p>
+      </article>
+    </section>
+
+    <section class="layout">
+      <article class="card">
+        <h3>Add Transaction</h3>
+        <div class="actions">
+          <select id="type" aria-label="Transaction type">
+            <option value="expense">Expense</option>
+            <option value="income">Income</option>
+          </select>
+          <select id="category" aria-label="Category">
+            <option value="Housing">Housing</option>
+            <option value="Food">Food</option>
+            <option value="Transport">Transport</option>
+            <option value="Health">Health</option>
+            <option value="Salary">Salary</option>
+          </select>
+          <input id="amount" type="number" min="1" placeholder="Amount" aria-label="Amount" />
+          <button id="addBtn" type="button">Add</button>
+        </div>
+        <div class="goal" id="goalProgress">Goal: Emergency fund $5,000 · Progress $0</div>
+      </article>
+
+      <article class="card">
+        <h3>Recent Transactions</h3>
+        <div class="txn-list" id="txnList"></div>
       </article>
     </section>
   </div>
+
+  <script>
+    const transactions = [
+      { type: 'income', category: 'Salary', amount: 5200 },
+      { type: 'expense', category: 'Housing', amount: 1840 },
+      { type: 'expense', category: 'Food', amount: 420 },
+      { type: 'expense', category: 'Transport', amount: 190 }
+    ];
+    const monthlyBudget = 3500;
+    const savingsGoal = 5000;
+
+    function currency(value) {
+      return '$' + value.toFixed(2);
+    }
+
+    function recalc() {
+      const income = transactions.filter((t) => t.type === 'income').reduce((sum, t) => sum + t.amount, 0);
+      const expenses = transactions.filter((t) => t.type === 'expense').reduce((sum, t) => sum + t.amount, 0);
+      const balance = income - expenses;
+      document.getElementById('balance').textContent = currency(balance);
+
+      const budgetPct = Math.min(100, Math.round((expenses / monthlyBudget) * 100));
+      document.getElementById('budgetBar').style.width = budgetPct + '%';
+      document.getElementById('budgetText').textContent = currency(expenses) + ' of ' + currency(monthlyBudget) + ' used';
+
+      const budgetStatus = document.getElementById('budgetStatus');
+      if (budgetPct < 70) {
+        budgetStatus.textContent = 'Healthy';
+        budgetStatus.className = 'chip good';
+      } else if (budgetPct < 100) {
+        budgetStatus.textContent = 'Warning';
+        budgetStatus.className = 'chip warn';
+      } else {
+        budgetStatus.textContent = 'Exceeded';
+        budgetStatus.className = 'chip danger';
+      }
+
+      const rate = income ? Math.max(0, Math.round((balance / income) * 100)) : 0;
+      document.getElementById('savingsRate').textContent = rate + '%';
+
+      const categoryTotals = {};
+      transactions.filter((t) => t.type === 'expense').forEach((t) => {
+        categoryTotals[t.category] = (categoryTotals[t.category] || 0) + t.amount;
+      });
+
+      const top = Object.entries(categoryTotals).sort((a, b) => b[1] - a[1])[0];
+      document.getElementById('topCategory').textContent = top ? (top[0] + ' · ' + currency(top[1]) + ' this month') : 'No expenses yet';
+
+      const alerts = transactions.filter((t) => t.type === 'expense' && t.amount > income * 0.5).length;
+      document.getElementById('fraudText').textContent = alerts + ' critical alerts in last 30 days';
+
+      document.getElementById('goalProgress').textContent =
+        'Goal: Emergency fund ' + currency(savingsGoal) + ' · Progress ' + currency(Math.max(0, balance));
+    }
+
+    function renderTxns() {
+      const list = document.getElementById('txnList');
+      list.innerHTML = '';
+      transactions.slice().reverse().forEach((t) => {
+        const row = document.createElement('div');
+        row.className = 'txn';
+        row.innerHTML =
+          '<span>' + t.category + ' · ' + t.type + '</span>' +
+          '<strong class="' + (t.type === 'income' ? 'amt-plus' : 'amt-minus') + '">' +
+          (t.type === 'income' ? '+' : '-') + currency(t.amount) +
+          '</strong>';
+        list.appendChild(row);
+      });
+      recalc();
+    }
+
+    document.getElementById('addBtn').onclick = () => {
+      const type = document.getElementById('type').value;
+      const category = document.getElementById('category').value;
+      const amount = Number(document.getElementById('amount').value || 0);
+      if (amount <= 0) {
+        return;
+      }
+      transactions.push({ type: type, category: category, amount: amount });
+      document.getElementById('amount').value = '';
+      renderTxns();
+    };
+
+    renderTxns();
+  </script>
 </body>
 </html>
