@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ADAS Camera Software Test Dashboard</title>
+<style>
+  :root{
+    --bg:#0a0e14;--panel:#111827;--panel2:#1a2234;--border:#1e3a5f;
+    --accent:#00b4d8;--accent2:#0077b6;--green:#22c55e;--red:#ef4444;
+    --yellow:#f59e0b;--gray:#6b7280;--text:#e2e8f0;--text2:#94a3b8;
+    --pass:#22c55e;--fail:#ef4444;--inprog:#f59e0b;--notexec:#6b7280;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;overflow-x:hidden;}
+
+  /* HEADER */
+  .header{background:linear-gradient(90deg,#010b18 0%,#03213b 50%,#010b18 100%);border-bottom:2px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+  .header-left{display:flex;align-items:center;gap:14px;}
+  .ecu-badge{background:#03213b;border:1px solid var(--accent);border-radius:6px;padding:4px 12px;font-size:11px;color:var(--accent);letter-spacing:.5px;}
+  .logo-text{font-size:17px;font-weight:700;color:#fff;letter-spacing:.3px;}
+  .logo-sub{font-size:10px;color:var(--text2);letter-spacing:1px;text-transform:uppercase;}
+  .header-stats{display:flex;gap:16px;flex-wrap:wrap;}
+  .hstat{text-align:center;}
+  .hstat-val{font-size:18px;font-weight:700;}
+  .hstat-lbl{font-size:9px;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;}
+  .live-badge{display:flex;align-items:center;gap:6px;background:#0d2b12;border:1px solid var(--green);border-radius:20px;padding:4px 10px;font-size:11px;color:var(--green);}
+  .pulse{width:8px;height:8px;background:var(--green);border-radius:50%;animation:pulse 1.2s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(.7);}}
+
+  /* NAV TABS */
+  .nav{background:#080e18;border-bottom:1px solid var(--border);display:flex;overflow-x:auto;padding:0 16px;}
+  .nav-tab{padding:10px 18px;font-size:12px;font-weight:600;color:var(--text2);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .2s;letter-spacing:.4px;text-transform:uppercase;}
+  .nav-tab:hover{color:var(--text);}
+  .nav-tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+
+  /* LAYOUT */
+  .content{padding:14px 16px;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+  .grid5{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;}
+  .panel{background:var(--panel);border:1px solid var(--border);border-radius:8px;overflow:hidden;}
+  .panel-head{background:var(--panel2);padding:8px 14px;font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.8px;display:flex;align-items:center;justify-content:space-between;}
+  .panel-body{padding:12px;}
+
+  /* STATUS BADGE */
+  .badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;letter-spacing:.3px;}
+  .badge-pass{background:#0d2b12;color:var(--pass);border:1px solid #166534;}
+  .badge-fail{background:#2b0d0d;color:var(--fail);border:1px solid #991b1b;}
+  .badge-inprog{background:#2b1f0d;color:var(--inprog);border:1px solid #92400e;}
+  .badge-notexec{background:#1a1f2e;color:var(--notexec);border:1px solid #374151;}
+
+  /* CAMERA FEEDS */
+  .camera-grid{display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:auto auto;gap:8px;}
+  .cam-wrap{position:relative;border-radius:6px;overflow:hidden;border:1px solid var(--border);background:#000;}
+  .cam-wrap.wide{grid-column:1/-1;}
+  .cam-label{position:absolute;top:6px;left:6px;background:rgba(0,0,0,.7);color:var(--accent);font-size:9px;font-weight:700;padding:2px 6px;border-radius:3px;letter-spacing:.5px;text-transform:uppercase;z-index:2;}
+  .cam-stats{position:absolute;bottom:6px;right:6px;background:rgba(0,0,0,.75);padding:3px 6px;border-radius:3px;font-size:9px;color:#fff;z-index:2;}
+  .cam-status-dot{position:absolute;top:6px;right:6px;width:8px;height:8px;border-radius:50%;z-index:2;}
+  canvas.cam-canvas{display:block;width:100%;height:100%;}
+  .cam-overlay{position:absolute;inset:0;pointer-events:none;z-index:1;}
+
+  /* USS GRID */
+  .uss-vehicle{position:relative;width:100%;max-width:420px;margin:0 auto;}
+  .uss-svg-wrap svg{width:100%;height:auto;}
+
+  /* TEST TABLE */
+  .test-table{width:100%;border-collapse:collapse;font-size:12px;}
+  .test-table th{background:#0d1520;padding:7px 10px;text-align:left;font-size:10px;color:var(--text2);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border);}
+  .test-table td{padding:6px 10px;border-bottom:1px solid #1a2234;vertical-align:middle;}
+  .test-table tr:hover td{background:#12192a;}
+  .tc-id{font-family:monospace;color:var(--accent);font-size:11px;}
+  .tc-module{font-size:10px;color:var(--text2);}
+
+  /* METRICS CARDS */
+  .metric-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px;}
+  .metric-card{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:12px;text-align:center;}
+  .metric-val{font-size:26px;font-weight:800;}
+  .metric-lbl{font-size:9px;color:var(--text2);text-transform:uppercase;letter-spacing:.6px;margin-top:3px;}
+
+  /* LOG */
+  .log-box{background:#050a10;border:1px solid var(--border);border-radius:6px;height:160px;overflow-y:auto;padding:8px;font-family:monospace;font-size:10px;line-height:1.6;}
+  .log-entry{margin-bottom:1px;}
+  .log-ts{color:#475569;}
+  .log-can{color:#38bdf8;}
+  .log-uds{color:#a78bfa;}
+  .log-ok{color:var(--green);}
+  .log-err{color:var(--red);}
+  .log-warn{color:var(--yellow);}
+  .log-info{color:var(--text2);}
+
+  /* PROGRESS BAR */
+  .prog-bar-wrap{background:#1a2234;border-radius:4px;height:8px;overflow:hidden;margin-top:4px;}
+  .prog-bar{height:100%;border-radius:4px;transition:width 1s ease;}
+
+  /* DONUT */
+  .donut-wrap{display:flex;align-items:center;gap:16px;}
+  .donut-legend{display:flex;flex-direction:column;gap:6px;}
+  .donut-leg-item{display:flex;align-items:center;gap:6px;font-size:11px;}
+  .donut-dot{width:10px;height:10px;border-radius:50%;}
+
+  /* USE CASE CARDS */
+  .uc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;}
+  .uc-card{background:var(--panel2);border:1px solid var(--border);border-radius:8px;padding:12px;cursor:pointer;transition:border-color .2s;}
+  .uc-card:hover{border-color:var(--accent);}
+  .uc-card.active{border-color:var(--accent);background:#0a1929;}
+  .uc-title{font-size:12px;font-weight:600;margin-bottom:4px;}
+  .uc-desc{font-size:10px;color:var(--text2);line-height:1.5;}
+  .uc-stats{display:flex;gap:8px;margin-top:8px;}
+  .uc-stat{font-size:10px;}
+
+  /* SCENARIO VIZ */
+  .scenario-canvas-wrap{position:relative;border-radius:6px;overflow:hidden;border:1px solid var(--border);}
+
+  /* BUTTON */
+  .btn{padding:7px 16px;border-radius:5px;border:none;cursor:pointer;font-size:11px;font-weight:600;letter-spacing:.4px;transition:all .2s;}
+  .btn-primary{background:var(--accent2);color:#fff;}
+  .btn-primary:hover{background:var(--accent);}
+  .btn-outline{background:transparent;border:1px solid var(--border);color:var(--text2);}
+  .btn-outline:hover{border-color:var(--accent);color:var(--accent);}
+  .btn-danger{background:#7f1d1d;color:#fca5a5;}
+  .btn-success{background:#14532d;color:#86efac;}
+
+  /* FILTER BAR */
+  .filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;}
+  .filter-btn{padding:4px 12px;border-radius:12px;border:1px solid var(--border);background:transparent;color:var(--text2);font-size:10px;cursor:pointer;transition:all .15s;}
+  .filter-btn.active{background:var(--accent2);border-color:var(--accent2);color:#fff;}
+
+  /* HIDDEN */
+  .hidden{display:none!important;}
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar{width:5px;height:5px;}
+  ::-webkit-scrollbar-track{background:#080e18;}
+  ::-webkit-scrollbar-thumb{background:#1e3a5f;border-radius:3px;}
+
+  /* RESPONSIVE */
+  @media(max-width:700px){
+    .metric-row{grid-template-columns:1fr 1fr;}
+    .grid2,.grid3{grid-template-columns:1fr;}
+    .camera-grid{grid-template-columns:1fr 1fr;}
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-left">
+    <div>
+      <div class="logo-text">ADAS Test Dashboard</div>
+      <div class="logo-sub">Surround-View Camera ECU &bull; Commercial Truck Platform</div>
+    </div>
+    <div class="ecu-badge">ECU: SVC-2600 &bull; 5-CAM / 12-USS</div>
+  </div>
+  <div class="header-stats">
+    <div class="hstat"><div class="hstat-val" style="color:var(--pass)" id="h-pass">--</div><div class="hstat-lbl">Pass</div></div>
+    <div class="hstat"><div class="hstat-val" style="color:var(--fail)" id="h-fail">--</div><div class="hstat-lbl">Fail</div></div>
+    <div class="hstat"><div class="hstat-val" style="color:var(--inprog)" id="h-prog">--</div><div class="hstat-lbl">In Progress</div></div>
+    <div class="hstat"><div class="hstat-val" style="color:var(--notexec)" id="h-nte">--</div><div class="hstat-lbl">Not Exec</div></div>
+    <div class="hstat"><div class="hstat-val" id="h-cov" style="color:var(--accent)">--</div><div class="hstat-lbl">Coverage</div></div>
+  </div>
+  <div class="live-badge"><div class="pulse"></div> LIVE SIMULATION</div>
+</div>
+
+<!-- NAV -->
+<div class="nav">
+  <div class="nav-tab active" onclick="switchTab('overview')">Overview</div>
+  <div class="nav-tab" onclick="switchTab('cameras')">Camera Validation</div>
+  <div class="nav-tab" onclick="switchTab('uss')">USS / Parking</div>
+  <div class="nav-tab" onclick="switchTab('adas')">Autonomous ADAS</div>
+  <div class="nav-tab" onclick="switchTab('trailer')">Trailer Assist</div>
+  <div class="nav-tab" onclick="switchTab('results')">Test Results</div>
+  <div class="nav-tab" onclick="switchTab('log')">Diagnostic Log</div>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+  <!-- ======== OVERVIEW ======== -->
+  <div id="tab-overview">
+    <div class="metric-row">
+      <div class="metric-card"><div class="metric-val" style="color:var(--pass)" id="ov-pass">0</div><div class="metric-lbl">Tests Passed</div></div>
+      <div class="metric-card"><div class="metric-val" style="color:var(--fail)" id="ov-fail">0</div><div class="metric-lbl">Tests Failed</div></div>
+      <div class="metric-card"><div class="metric-val" style="color:var(--inprog)" id="ov-prog">0</div><div class="metric-lbl">In Progress</div></div>
+      <div class="metric-card"><div class="metric-val" style="color:var(--notexec)" id="ov-nte">0</div><div class="metric-lbl">Not Executed</div></div>
+    </div>
+
+    <div class="grid2" style="margin-bottom:12px;">
+      <!-- Vehicle overview -->
+      <div class="panel">
+        <div class="panel-head">Vehicle Sensor Map <span id="ts-clock" style="font-size:10px;color:var(--text)"></span></div>
+        <div class="panel-body" style="display:flex;justify-content:center;">
+          <canvas id="vehicleCanvas" width="320" height="480" style="max-width:100%;border-radius:4px;"></canvas>
+        </div>
+      </div>
+      <!-- Module summary -->
+      <div class="panel">
+        <div class="panel-head">Module Test Coverage</div>
+        <div class="panel-body">
+          <div id="module-bars"></div>
+          <div style="margin-top:14px;">
+            <div class="panel-head" style="border-radius:4px;margin-bottom:8px;">Run Controls</div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              <button class="btn btn-primary" onclick="runAllTests()">&#9654; Run All Tests</button>
+              <button class="btn btn-outline" onclick="resetTests()">&#8635; Reset</button>
+              <button class="btn btn-outline" onclick="runFailedOnly()">&#9654; Re-run Failed</button>
+            </div>
+            <div id="run-progress" style="margin-top:10px;"></div>
+          </div>
+          <div style="margin-top:14px;">
+            <div class="panel-head" style="border-radius:4px;margin-bottom:8px;">ECU Health</div>
+            <div id="ecu-health"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Use-case shortcuts -->
+    <div class="panel">
+      <div class="panel-head">Test Use Cases</div>
+      <div class="panel-body">
+        <div class="uc-grid" id="overview-ucards"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== CAMERAS ======== -->
+  <div id="tab-cameras" class="hidden">
+    <div class="panel" style="margin-bottom:12px;">
+      <div class="panel-head">Surround-View Camera Feeds &mdash; 5 Channels</div>
+      <div class="panel-body">
+        <div class="camera-grid" id="camera-grid">
+          <!-- populated by JS -->
+        </div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-head">Camera Test Cases</div>
+      <div class="panel-body">
+        <div class="filter-bar">
+          <button class="filter-btn active" onclick="filterCamTests('all',this)">All</button>
+          <button class="filter-btn" onclick="filterCamTests('PASS',this)">Pass</button>
+          <button class="filter-btn" onclick="filterCamTests('FAIL',this)">Fail</button>
+          <button class="filter-btn" onclick="filterCamTests('IN_PROGRESS',this)">In Progress</button>
+          <button class="filter-btn" onclick="filterCamTests('NOT_EXECUTED',this)">Not Executed</button>
+        </div>
+        <table class="test-table" id="cam-test-table"><thead><tr><th>ID</th><th>Test Case</th><th>Camera</th><th>Status</th><th>Duration</th></tr></thead><tbody></tbody></table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== USS ======== -->
+  <div id="tab-uss" class="hidden">
+    <div class="grid2" style="margin-bottom:12px;">
+      <div class="panel">
+        <div class="panel-head">USS Parking Sensor Grid — 12 Sensors</div>
+        <div class="panel-body">
+          <canvas id="ussCanvas" width="360" height="520" style="max-width:100%;display:block;margin:0 auto;"></canvas>
+          <div style="display:flex;gap:12px;justify-content:center;margin-top:10px;font-size:10px;">
+            <span style="color:var(--green)">&#9632; Clear (&gt;150cm)</span>
+            <span style="color:var(--yellow)">&#9632; Warning (60-150cm)</span>
+            <span style="color:var(--red)">&#9632; Critical (&lt;60cm)</span>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">Sensor Readings</div>
+        <div class="panel-body">
+          <div id="uss-readings"></div>
+          <div style="margin-top:12px;">
+            <div class="panel-head" style="border-radius:4px;margin-bottom:8px;">Parking Scenario</div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;">
+              <button class="btn btn-outline" onclick="setUSSScenario('clear')">&#10003; All Clear</button>
+              <button class="btn btn-outline" onclick="setUSSScenario('parallel')">Parallel Park</button>
+              <button class="btn btn-outline" onclick="setUSSScenario('perpendicular')">Perp. Park</button>
+              <button class="btn btn-outline" onclick="setUSSScenario('trailer')">Trailer Mode</button>
+              <button class="btn btn-danger" onclick="setUSSScenario('collision')">Imminent Collision</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-head">USS Test Cases</div>
+      <div class="panel-body">
+        <table class="test-table" id="uss-test-table"><thead><tr><th>ID</th><th>Test Case</th><th>Sensors</th><th>Status</th><th>Meas. Distance</th></tr></thead><tbody></tbody></table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== ADAS ======== -->
+  <div id="tab-adas" class="hidden">
+    <div class="uc-grid" style="margin-bottom:12px;" id="adas-usecases"></div>
+    <div class="grid2">
+      <div class="panel">
+        <div class="panel-head">Scenario Visualization</div>
+        <div class="panel-body">
+          <canvas id="adasCanvas" width="360" height="240" style="max-width:100%;border-radius:4px;display:block;margin:0 auto;"></canvas>
+          <div id="scenario-info" style="margin-top:8px;font-size:11px;color:var(--text2);text-align:center;"></div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">ADAS Test Cases</div>
+        <div class="panel-body" style="max-height:340px;overflow-y:auto;">
+          <table class="test-table" id="adas-test-table"><thead><tr><th>ID</th><th>Test Case</th><th>Feature</th><th>Status</th></tr></thead><tbody></tbody></table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== TRAILER ======== -->
+  <div id="tab-trailer" class="hidden">
+    <div class="grid2" style="margin-bottom:12px;">
+      <div class="panel">
+        <div class="panel-head">Trailer Reverse Assist — Visual</div>
+        <div class="panel-body">
+          <canvas id="trailerCanvas" width="360" height="300" style="max-width:100%;border-radius:4px;display:block;margin:0 auto;"></canvas>
+          <div style="display:flex;gap:8px;margin-top:8px;justify-content:center;flex-wrap:wrap;">
+            <button class="btn btn-outline" onclick="setTrailerAngle(-30)">&#8592; Steer Left</button>
+            <button class="btn btn-outline" onclick="setTrailerAngle(0)">&#9679; Straight</button>
+            <button class="btn btn-outline" onclick="setTrailerAngle(30)">Steer Right &#8594;</button>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">Trailer Test Cases</div>
+        <div class="panel-body" style="max-height:360px;overflow-y:auto;">
+          <table class="test-table" id="trailer-test-table"><thead><tr><th>ID</th><th>Test Case</th><th>Status</th></tr></thead><tbody></tbody></table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== RESULTS ======== -->
+  <div id="tab-results" class="hidden">
+    <div class="metric-row" style="margin-bottom:12px;">
+      <div class="metric-card"><div class="metric-val" style="color:var(--pass)" id="res-pass">--</div><div class="metric-lbl">Pass</div></div>
+      <div class="metric-card"><div class="metric-val" style="color:var(--fail)" id="res-fail">--</div><div class="metric-lbl">Fail</div></div>
+      <div class="metric-card"><div class="metric-val" style="color:var(--inprog)" id="res-prog">--</div><div class="metric-lbl">In Progress</div></div>
+      <div class="metric-card"><div class="metric-val" style="color:var(--notexec)" id="res-nte">--</div><div class="metric-lbl">Not Executed</div></div>
+    </div>
+    <div class="grid2" style="margin-bottom:12px;">
+      <div class="panel">
+        <div class="panel-head">Results by Module</div>
+        <div class="panel-body"><canvas id="resultsChart" width="300" height="200" style="max-width:100%;"></canvas></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">Defect Summary</div>
+        <div class="panel-body" style="max-height:250px;overflow-y:auto;">
+          <table class="test-table" id="defect-table"><thead><tr><th>Defect ID</th><th>Description</th><th>Severity</th><th>Status</th></tr></thead><tbody></tbody></table>
+        </div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-head">All Test Cases <span style="float:right;"><button class="btn btn-outline" onclick="exportResults()" style="padding:3px 10px;font-size:10px;">&#8681; Export CSV</button></span></div>
+      <div class="panel-body">
+        <div class="filter-bar" id="all-filters">
+          <button class="filter-btn active" onclick="filterAllTests('all',this)">All</button>
+          <button class="filter-btn" onclick="filterAllTests('PASS',this)">Pass</button>
+          <button class="filter-btn" onclick="filterAllTests('FAIL',this)">Fail</button>
+          <button class="filter-btn" onclick="filterAllTests('IN_PROGRESS',this)">In Progress</button>
+          <button class="filter-btn" onclick="filterAllTests('NOT_EXECUTED',this)">Not Executed</button>
+          <button class="filter-btn" onclick="filterAllTests('Camera',this)">Camera</button>
+          <button class="filter-btn" onclick="filterAllTests('USS',this)">USS</button>
+          <button class="filter-btn" onclick="filterAllTests('ADAS',this)">ADAS</button>
+          <button class="filter-btn" onclick="filterAllTests('Trailer',this)">Trailer</button>
+        </div>
+        <table class="test-table" id="all-tests-table"><thead><tr><th>ID</th><th>Module</th><th>Test Case</th><th>Status</th><th>Duration</th><th>Notes</th></tr></thead><tbody></tbody></table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======== LOG ======== -->
+  <div id="tab-log" class="hidden">
+    <div class="grid2">
+      <div class="panel">
+        <div class="panel-head">Live Diagnostic Log <button class="btn btn-outline" onclick="clearLog()" style="padding:2px 8px;font-size:9px;float:right;">Clear</button></div>
+        <div class="panel-body">
+          <div class="log-box" id="diag-log"></div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-head">UDS Diagnostic Sessions</div>
+        <div class="panel-body">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">
+            <div style="background:#08111a;border:1px solid #1a2234;border-radius:6px;padding:6px 8px;font-size:10px;">
+              <div style="color:var(--text2);margin-bottom:2px;">Vehicle Network</div>
+              <div style="font-family:monospace;color:var(--accent)">CAN / CAN-FD: ONLINE</div>
+            </div>
+            <div style="background:#08111a;border:1px solid #1a2234;border-radius:6px;padding:6px 8px;font-size:10px;">
+              <div style="color:var(--text2);margin-bottom:2px;">Ethernet / DoIP</div>
+              <div style="font-family:monospace;color:var(--green)">100BASE-T1 LINK: OK</div>
+            </div>
+            <div style="background:#08111a;border:1px solid #1a2234;border-radius:6px;padding:6px 8px;font-size:10px;">
+              <div style="color:var(--text2);margin-bottom:2px;">Diagnostics Scope</div>
+              <div style="font-family:monospace;color:#a78bfa">DID / RID / DTC</div>
+            </div>
+            <div style="background:#08111a;border:1px solid #1a2234;border-radius:6px;padding:6px 8px;font-size:10px;">
+              <div style="color:var(--text2);margin-bottom:2px;">OTA Health</div>
+              <div style="font-family:monospace;color:#f59e0b">Campaign 24.2: READY</div>
+            </div>
+          </div>
+          <div id="uds-sessions"></div>
+          <div style="margin-top:10px;">
+            <div class="panel-head" style="border-radius:4px;margin-bottom:8px;">Send UDS Request</div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;">
+              <button class="btn btn-outline" onclick="sendUDS('10 02')">SID 0x10 Session Ctrl</button>
+              <button class="btn btn-outline" onclick="sendUDS('19 02 09')">SID 0x19 Read DTC</button>
+              <button class="btn btn-outline" onclick="sendUDS('14 FF FF FF')">SID 0x14 Clear DTC</button>
+              <button class="btn btn-outline" onclick="sendUDS('22 F1 90')">DID F190 Read VIN</button>
+              <button class="btn btn-outline" onclick="sendUDS('22 F1 10')">DID F110 Read SW</button>
+              <button class="btn btn-outline" onclick="sendUDS('31 01 FF 00')">RID FF00 Self-Test</button>
+              <button class="btn btn-outline" onclick="sendUDS('2E F1 A0 01')">DID F1A0 Write Config</button>
+              <button class="btn btn-outline" onclick="sendUDS('2F 02 10 03')">SID 0x2F I/O Control</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end content -->
+
+<script>
+// ===================================================
+// DATA MODEL
+// ===================================================
+const CAMERAS = [
+  {id:'FC',name:'Front Camera',   pos:'front',  res:'1920x1080',fps:30,fov:'120°',status:'OK'},
+  {id:'RC',name:'Rear Camera',    pos:'rear',   res:'1920x1080',fps:30,fov:'180°',status:'OK'},
+  {id:'LC',name:'Left Camera',    pos:'left',   res:'1280x720', fps:30,fov:'90°' ,status:'OK'},
+  {id:'RtC',name:'Right Camera',  pos:'right',  res:'1280x720', fps:30,fov:'90°' ,status:'OK'},
+  {id:'CC',name:'Cargo Camera',   pos:'cargo',  res:'1920x1080',fps:30,fov:'160°',status:'OK'},
+];
+
+const USS = [
+  // Front bumper row (sensors 1-4)
+  {id:'F1',name:'Front-L',zone:'front',  x:.2, y:.08},{id:'F2',name:'Front-CL',zone:'front', x:.37,y:.05},
+  {id:'F3',name:'Front-CR',zone:'front', x:.54,y:.05},{id:'F4',name:'Front-R', zone:'front', x:.71,y:.08},
+  // Rear bumper row (sensors 5-8)
+  {id:'R1',name:'Rear-L',  zone:'rear',  x:.2, y:.90},{id:'R2',name:'Rear-CL', zone:'rear',  x:.37,y:.93},
+  {id:'R3',name:'Rear-CR', zone:'rear',  x:.54,y:.93},{id:'R4',name:'Rear-R',  zone:'rear',  x:.71,y:.90},
+  // Left side (sensors 9-10)
+  {id:'SL1',name:'Side-L-F',zone:'side', x:.04,y:.32},{id:'SL2',name:'Side-L-R',zone:'side', x:.04,y:.62},
+  // Right side (sensors 11-12)
+  {id:'SR1',name:'Side-R-F',zone:'side', x:.87,y:.32},{id:'SR2',name:'Side-R-R',zone:'side', x:.87,y:.62},
+];
+
+// Test case data
+const ALL_TESTS = [];
+let testIdCounter = 1;
+
+function mkTest(module, sub, desc, defaultStatus, dur, notes){
+  ALL_TESTS.push({id:'TC-'+String(testIdCounter++).padStart(3,'0'),module,sub,desc,status:defaultStatus,duration:dur||null,notes:notes||''});
+}
+
+// Camera tests
+['Front Camera','Rear Camera','Left Camera','Right Camera','Cargo Camera'].forEach(cam=>{
+  mkTest('Camera',cam,`${cam} Power-On Initialization`,'NOT_EXECUTED',null,'');
+  mkTest('Camera',cam,`${cam} Image Resolution Verification (1920×1080)`,'NOT_EXECUTED',null,'');
+  mkTest('Camera',cam,`${cam} Frame Rate Stability (30 FPS under load)`,'NOT_EXECUTED',null,'');
+  mkTest('Camera',cam,`${cam} Low-Light Performance (1 lux)`,'NOT_EXECUTED',null,'');
+  mkTest('Camera',cam,`${cam} Distortion Calibration Check`,'NOT_EXECUTED',null,'');
+  mkTest('Camera',cam,`${cam} LVDS Link Integrity`,'NOT_EXECUTED',null,'');
+});
+mkTest('Camera','Surround View','360° Bird-Eye-View Stitching Accuracy','NOT_EXECUTED',null,'');
+mkTest('Camera','Surround View','Dynamic Top-View Rendering < 100ms Latency','NOT_EXECUTED',null,'');
+mkTest('Camera','Surround View','Camera Hot-Swap & Recovery Test','NOT_EXECUTED',null,'');
+mkTest('Camera','Surround View','Camera Fault Code (DTC) Generation on Disconnect','NOT_EXECUTED',null,'');
+
+// USS tests
+mkTest('USS','Parking','Front USS Zone — Obstacle Detection (30cm)','NOT_EXECUTED',null,'');
+mkTest('USS','Parking','Front USS Zone — Obstacle Detection (100cm)','NOT_EXECUTED',null,'');
+mkTest('USS','Parking','Rear USS Zone — Obstacle Detection (30cm)','NOT_EXECUTED',null,'');
+mkTest('USS','Parking','Rear USS Zone — Obstacle Detection (100cm)','NOT_EXECUTED',null,'');
+mkTest('USS','Parking','Side USS — Blind-spot Object Coverage','NOT_EXECUTED',null,'');
+mkTest('USS','Parking','USS Cross-Sensor Fusion Accuracy (±5cm)','NOT_EXECUTED',null,'');
+mkTest('USS','Parking','Auto Park — Perpendicular Slot Detection','NOT_EXECUTED',null,'');
+mkTest('USS','Parking','Auto Park — Parallel Slot Measurement','NOT_EXECUTED',null,'');
+mkTest('USS','Parking','Proximity Alert Threshold: Warning (1.5m)','NOT_EXECUTED',null,'');
+mkTest('USS','Parking','Proximity Alert Threshold: Critical (0.5m)','NOT_EXECUTED',null,'');
+mkTest('USS','Parking','USS Fault Inject — Single Sensor Degradation','NOT_EXECUTED',null,'');
+mkTest('USS','Parking','USS Temperature Compensation (−40°C to +85°C)','NOT_EXECUTED',null,'');
+mkTest('USS','Parking','Trailer Hitch USS Override Logic','NOT_EXECUTED',null,'');
+mkTest('USS','Parking','Park Assist Audio + Visual Warning Synchronization','NOT_EXECUTED',null,'');
+
+// ADAS tests
+['Lane Keep Assist','Lane Keep Assist','Lane Keep Assist'].forEach((_,i)=>{
+  const cases=['LKA Lane Departure Warning — Dashed Line','LKA Lane Departure Warning — Solid Line','LKA Steering Torque Intervention at ≥65 km/h'];
+  mkTest('ADAS','Lane Keep Assist',cases[i],'NOT_EXECUTED',null,'');
+});
+['AEB Trigger — Pedestrian 20 km/h','AEB Trigger — Vehicle 30 km/h','AEB False Positive Rate < 1%','AEB CAN Brake Demand Message Validation'].forEach(c=>mkTest('ADAS','Auto Emergency Braking',c,'NOT_EXECUTED',null,''));
+['BSD Left Lane Rear-Quarter Detection','BSD Right Lane Rear-Quarter Detection','BSD Alert Suppression on Stationary Object','BSD High-Speed >120 km/h Edge Case'].forEach(c=>mkTest('ADAS','Blind Spot Detection',c,'NOT_EXECUTED',null,''));
+['ACC Target Acquisition < 500ms','ACC Follow Distance Maintenance (2s gap)','ACC Cut-in Scenario Response'].forEach(c=>mkTest('ADAS','Adaptive Cruise Control',c,'NOT_EXECUTED',null,''));
+
+// Trailer tests
+mkTest('Trailer','Reverse Assist','Trailer Detection via Cargo Camera','NOT_EXECUTED',null,'');
+mkTest('Trailer','Reverse Assist','Trailer Length Estimation (±20cm)','NOT_EXECUTED',null,'');
+mkTest('Trailer','Reverse Assist','Trailer Articulation Angle Calculation','NOT_EXECUTED',null,'');
+mkTest('Trailer','Reverse Assist','Trailer Jack-knife Prevention — Steering Limit','NOT_EXECUTED',null,'');
+mkTest('Trailer','Reverse Assist','Trailer Reverse Guidance Overlay Accuracy','NOT_EXECUTED',null,'');
+mkTest('Trailer','Reverse Assist','Trailer USS Override — Extended Zone','NOT_EXECUTED',null,'');
+mkTest('Trailer','Hitch Assist','Hitch-Ball Alignment from Cargo Camera','NOT_EXECUTED',null,'');
+mkTest('Trailer','Hitch Assist','Hitch Distance Output to CAN (SPN 0x3B2)','NOT_EXECUTED',null,'');
+mkTest('Trailer','Lighting Check','Trailer Turn Signal Relay Validation','NOT_EXECUTED',null,'');
+mkTest('Trailer','Lighting Check','Trailer Brake Light CAN Trigger','NOT_EXECUTED',null,'');
+
+// Defect data
+const DEFECTS = [
+  {id:'BUG-001',desc:'Front camera momentary dropout at −20°C cold soak',sev:'High',  status:'Open'},
+  {id:'BUG-002',desc:'USS F2 reports 15cm offset vs reference at >80 km/h',sev:'Medium',status:'In Review'},
+  {id:'BUG-003',desc:'Bird-eye stitching seam visible at yaw >3°',           sev:'Low',   status:'Fixed'},
+  {id:'BUG-004',desc:'AEB false trigger on bridge shadow (low contrast)',     sev:'High',  status:'Open'},
+  {id:'BUG-005',desc:'Trailer length estimate +35cm error on 5m trailer',    sev:'Medium',status:'In Review'},
+];
+
+// ===================================================
+// STATE
+// ===================================================
+let ussDistances = {};
+USS.forEach(s=>ussDistances[s.id]=200+Math.random()*100);
+let trailerAngle=0;
+let activeAdasScenario='lka';
+let runInterval=null;
+let logInterval=null;
+const logEntries=[];
+
+// ===================================================
+// INIT
+// ===================================================
+window.addEventListener('load',()=>{
+  buildCameraGrid();
+  updateHeaderStats();
+  buildModuleBars();
+  buildECUHealth();
+  buildOverviewUseCases();
+  buildUSSReadings();
+  buildADASUseCases();
+  buildAllDefects();
+  renderVehicleCanvas();
+  renderUSSCanvas();
+  renderADASCanvas();
+  renderTrailerCanvas();
+  renderResultsChart();
+  renderCamTests();
+  renderUSSTests();
+  renderADASTests();
+  renderTrailerTests();
+  renderAllTests();
+  buildUDSSessions();
+  startLogStream();
+  setInterval(renderVehicleCanvas,1200);
+  setInterval(()=>{
+    USS.forEach(s=>{
+      ussDistances[s.id]=Math.max(10,Math.min(300,ussDistances[s.id]+(Math.random()-0.5)*20));
+    });
+    renderUSSCanvas();
+    buildUSSReadings();
+  },800);
+  setInterval(updateClock,1000);
+  updateClock();
+});
+
+function updateClock(){
+  const now=new Date();
+  document.getElementById('ts-clock').textContent=now.toLocaleTimeString();
+}
+
+// ===================================================
+// TABS
+// ===================================================
+const tabIds=['overview','cameras','uss','adas','trailer','results','log'];
+function switchTab(name){
+  tabIds.forEach(t=>{
+    document.getElementById('tab-'+t).classList.toggle('hidden',t!==name);
+    document.querySelectorAll('.nav-tab').forEach((el,i)=>{
+      el.classList.toggle('active',tabIds[i]===name);
+    });
+  });
+}
+
+// ===================================================
+// CAMERA FEEDS
+// ===================================================
+const CAM_COLORS_PALETTE=['#0a1a2f','#0d2235','#081826'];
+function buildCameraGrid(){
+  const grid=document.getElementById('camera-grid');
+  grid.innerHTML='';
+  CAMERAS.forEach((cam,idx)=>{
+    const wrap=document.createElement('div');
+    wrap.className='cam-wrap'+(cam.pos==='cargo'?' wide':'');
+    wrap.style.height=cam.pos==='cargo'?'130px':'160px';
+    const lbl=document.createElement('div');lbl.className='cam-label';lbl.textContent=cam.id+' '+cam.name;
+    const stats=document.createElement('div');stats.className='cam-stats';stats.textContent=cam.res+' • '+cam.fps+'fps • '+cam.fov;
+    const dot=document.createElement('div');dot.className='cam-status-dot';dot.style.background='var(--green)';
+    const cv=document.createElement('canvas');cv.className='cam-canvas';cv.id='camcv-'+cam.id;
+    cv.width=640;cv.height=cam.pos==='cargo'?180:360;
+    wrap.appendChild(cv);wrap.appendChild(lbl);wrap.appendChild(stats);wrap.appendChild(dot);
+    grid.appendChild(wrap);
+    startCameraFeed(cv,cam,idx);
+  });
+}
+
+function startCameraFeed(canvas,cam,idx){
+  const ctx=canvas.getContext('2d');
+  let frame=0;
+  const colors=['#0a1529','#0a1e30','#091422'];
+  const baseColor=colors[idx%3];
+
+  function drawFrame(){
+    const w=canvas.width,h=canvas.height;
+    // Background road scene
+    ctx.fillStyle=baseColor;ctx.fillRect(0,0,w,h);
+
+    // Road / environment based on camera position
+    if(cam.pos==='front'||cam.pos==='rear'){
+      // Road surface
+      const roadY=h*0.45;
+      ctx.fillStyle='#1a1a1a';ctx.fillRect(w*0.15,roadY,w*0.7,h-roadY);
+      // Dashed lane markers
+      ctx.strokeStyle='#f5f5dc';ctx.setLineDash([30,20]);ctx.lineWidth=3;
+      ctx.beginPath();ctx.moveTo(w*0.5,roadY);ctx.lineTo(w*0.5,h);ctx.stroke();
+      ctx.strokeStyle='#f5f5dc';ctx.setLineDash([]);ctx.lineWidth=4;
+      ctx.beginPath();ctx.moveTo(w*0.15,roadY);ctx.lineTo(w*0.08+Math.sin(frame/40)*5,h);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(w*0.85,roadY);ctx.lineTo(w*0.92+Math.sin(frame/40+1)*5,h);ctx.stroke();
+      // Horizon sky gradient
+      const sky=ctx.createLinearGradient(0,0,0,roadY);
+      sky.addColorStop(0,'#0a1e30');sky.addColorStop(1,'#1a3550');
+      ctx.fillStyle=sky;ctx.fillRect(0,0,w,roadY);
+      // Animated distant vehicle
+      const vx=w*0.45+Math.sin(frame/80)*w*0.05;
+      const vy=roadY+10+(Math.sin(frame/120)+1)*30;
+      ctx.fillStyle='#cc3333';ctx.fillRect(vx-15,vy-10,30,18);
+      ctx.fillStyle='#ffcc00';ctx.fillRect(vx-17,vy-5,5,6);ctx.fillRect(vx+12,vy-5,5,6);
+    } else if(cam.pos==='left'||cam.pos==='right'){
+      // Side view — parking lot
+      ctx.fillStyle='#111';ctx.fillRect(0,h*0.55,w,h);
+      // Lane lines
+      ctx.strokeStyle='#f5f5dc88';ctx.setLineDash([20,20]);ctx.lineWidth=2;
+      for(let i=1;i<4;i++){ctx.beginPath();ctx.moveTo(w*i/4+Math.sin(frame/60)*3,h*0.55);ctx.lineTo(w*i/4,h);ctx.stroke();}
+      ctx.setLineDash([]);
+      // Parked cars
+      [[0.1,0.6,'#1155aa'],[0.55,0.6,'#aa5511']].forEach(([rx,ry,col])=>{
+        ctx.fillStyle=col;ctx.fillRect(w*rx,h*ry,w*0.3,h*0.25);
+        ctx.fillStyle='#000';ctx.fillRect(w*rx+4,h*ry+4,w*0.08,h*0.08);ctx.fillRect(w*(rx+0.2),h*ry+4,w*0.08,h*0.08);
+      });
+    } else {
+      // Cargo / truck bed view
+      ctx.fillStyle='#1a1a1a';ctx.fillRect(0,h*0.3,w,h);
+      ctx.fillStyle='#2a2a2a';ctx.fillRect(w*0.05,h*0.32,w*0.9,h*0.6);
+      ctx.strokeStyle='#555';ctx.lineWidth=2;ctx.strokeRect(w*0.05,h*0.32,w*0.9,h*0.6);
+      // Cargo items
+      ctx.fillStyle='#5a3e1b';ctx.fillRect(w*0.1,h*0.4,w*0.25,h*0.3);
+      ctx.fillStyle='#1b455a';ctx.fillRect(w*0.5,h*0.45,w*0.35,h*0.25);
+    }
+
+    // Overlay: bounding boxes (detection)
+    if(frame%3===0&&Math.random()>0.3){
+      ctx.strokeStyle='#00ff88';ctx.lineWidth=2;ctx.setLineDash([]);
+      const bx=40+Math.random()*(w-100);const by=h*0.3+Math.random()*(h*0.5);
+      ctx.strokeRect(bx,by,50+Math.random()*80,40+Math.random()*60);
+      ctx.fillStyle='#00ff88';ctx.font='bold 11px monospace';
+      ctx.fillText((['Pedestrian','Vehicle','Cyclist','Sign','Barrier'])[Math.floor(Math.random()*5)],bx,by-4);
+    }
+
+    // Grid overlay
+    ctx.strokeStyle='rgba(0,180,216,0.06)';ctx.lineWidth=1;
+    for(let x=0;x<w;x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();}
+    for(let y=0;y<h;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}
+
+    // Scan line
+    const scanY=(frame*3)%h;
+    ctx.strokeStyle='rgba(0,180,216,0.2)';ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(0,scanY);ctx.lineTo(w,scanY);ctx.stroke();
+
+    // Timestamp watermark
+    ctx.fillStyle='rgba(0,180,216,0.5)';ctx.font='10px monospace';
+    ctx.fillText(new Date().toISOString().substr(11,12),8,h-8);
+
+    frame++;
+    requestAnimationFrame(drawFrame);
+  }
+  drawFrame();
+}
+
+// ===================================================
+// VEHICLE CANVAS
+// ===================================================
+function renderVehicleCanvas(){
+  const cv=document.getElementById('vehicleCanvas');
+  if(!cv)return;
+  const ctx=cv.getContext('2d');
+  const w=cv.width,h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='#080e18';ctx.fillRect(0,0,w,h);
+
+  // Grid
+  ctx.strokeStyle='rgba(0,100,200,0.1)';ctx.lineWidth=1;
+  for(let x=0;x<w;x+=20){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();}
+  for(let y=0;y<h;y+=20){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}
+
+  // Truck body
+  const tx=w/2,ty=h/2,tw=80,th=200;
+  ctx.fillStyle='#1a2e44';ctx.strokeStyle='#00b4d8';ctx.lineWidth=2;
+  ctx.beginPath();
+  ctx.roundRect(tx-tw/2,ty-th/2,tw,th,8);
+  ctx.fill();ctx.stroke();
+
+  // Cab
+  ctx.fillStyle='#243b54';
+  ctx.beginPath();ctx.roundRect(tx-tw/2+6,ty-th/2+6,tw-12,50,4);ctx.fill();ctx.stroke();
+
+  // Bed cover
+  ctx.fillStyle='#1a3040';
+  ctx.beginPath();ctx.roundRect(tx-tw/2+6,ty+10,tw-12,th/2-20,4);ctx.fill();ctx.stroke();
+
+  // Wheels
+  [[-1,-1],[1,-1],[-1,1],[1,1]].forEach(([sx,sy])=>{
+    ctx.fillStyle='#0a1520';ctx.strokeStyle='#334155';ctx.lineWidth=2;
+    ctx.beginPath();ctx.ellipse(tx+sx*(tw/2+10),ty+sy*60,12,16,0,0,Math.PI*2);ctx.fill();ctx.stroke();
+    ctx.strokeStyle='#4b6180';ctx.lineWidth=1;
+    ctx.beginPath();ctx.ellipse(tx+sx*(tw/2+10),ty+sy*60,7,10,0,0,Math.PI*2);ctx.stroke();
+  });
+
+  // USS sensor positions (scaled to canvas)
+  USS.forEach(s=>{
+    const sx=s.x*w, sy=s.y*h;
+    const dist=ussDistances[s.id]||200;
+    const color=dist<60?'#ef4444':dist<150?'#f59e0b':'#22c55e';
+    // Ripple
+    const alpha=0.3+Math.sin(Date.now()/400)*0.2;
+    ctx.strokeStyle=color;ctx.lineWidth=1.5;ctx.globalAlpha=alpha;
+    ctx.beginPath();ctx.arc(sx,sy,12,0,Math.PI*2);ctx.stroke();
+    ctx.globalAlpha=1;
+    ctx.fillStyle=color;ctx.beginPath();ctx.arc(sx,sy,5,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='rgba(0,0,0,0.7)';ctx.font='bold 8px monospace';
+    ctx.fillText(s.id,sx-8,sy+16);
+  });
+
+  // Camera icons
+  CAMERAS.forEach(cam=>{
+    let cx,cy,rot=0;
+    if(cam.pos==='front'){cx=w/2;cy=ty-th/2-22;}
+    else if(cam.pos==='rear'){cx=w/2;cy=ty+th/2+22;}
+    else if(cam.pos==='left'){cx=tx-tw/2-22;cy=ty;}
+    else if(cam.pos==='right'){cx=tx+tw/2+22;cy=ty;}
+    else{cx=w/2;cy=ty+th/2-20;}
+    ctx.fillStyle='#00b4d8';ctx.strokeStyle='#e2e8f0';ctx.lineWidth=1;
+    ctx.beginPath();ctx.arc(cx,cy,9,0,Math.PI*2);ctx.fill();ctx.stroke();
+    // FOV cone
+    const fovRad=(cam.pos==='front'||cam.pos==='rear')?1.2:0.9;
+    const fovDir=cam.pos==='front'?-Math.PI/2:cam.pos==='rear'?Math.PI/2:cam.pos==='left'?Math.PI:0;
+    ctx.strokeStyle='rgba(0,180,216,0.3)';ctx.lineWidth=1.5;ctx.setLineDash([4,4]);
+    ctx.beginPath();ctx.moveTo(cx,cy);
+    ctx.arc(cx,cy,40,fovDir-fovRad/2,fovDir+fovRad/2);
+    ctx.closePath();ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle='#fff';ctx.font='bold 7px monospace';ctx.fillText(cam.id,cx-8,cy+3);
+  });
+
+  ctx.fillStyle='rgba(0,180,216,0.7)';ctx.font='9px monospace';
+  ctx.fillText('SVC ECU — Sensor Map',6,h-8);
+}
+
+// ===================================================
+// MODULE BARS
+// ===================================================
+function buildModuleBars(){
+  const modules=['Camera','USS','ADAS','Trailer'];
+  const el=document.getElementById('module-bars');
+  if(!el)return;
+  el.innerHTML='';
+  modules.forEach(mod=>{
+    const tests=ALL_TESTS.filter(t=>t.module===mod);
+    const pass=tests.filter(t=>t.status==='PASS').length;
+    const fail=tests.filter(t=>t.status==='FAIL').length;
+    const total=tests.length;
+    const pct=total?Math.round((pass/total)*100):0;
+    el.innerHTML+=`
+      <div style="margin-bottom:10px;">
+        <div style="display:flex;justify-content:space-between;font-size:11px;margin-bottom:3px;">
+          <span>${mod} Module</span>
+          <span style="color:var(--text2)">${pass}/${total} (${pct}%)</span>
+        </div>
+        <div class="prog-bar-wrap">
+          <div class="prog-bar" style="width:${pct}%;background:${pct>80?'var(--green)':pct>50?'var(--inprog)':'var(--fail)'}"></div>
+        </div>
+      </div>
+    `;
+  });
+}
+
+function buildECUHealth(){
+  const el=document.getElementById('ecu-health');
+  if(!el)return;
+  const metrics=[
+    {name:'ECU Temperature',val:'52°C',ok:true},{name:'CAN Bus Load',val:'38%',ok:true},
+    {name:'LVDS Link (A)',val:'OK',ok:true},{name:'LVDS Link (B)',val:'OK',ok:true},
+    {name:'USS CAN-FD',val:'OK',ok:true},{name:'Power Supply',val:'12.4V',ok:true},
+  ];
+  el.innerHTML=metrics.map(m=>`
+    <div style="display:flex;justify-content:space-between;font-size:11px;padding:4px 0;border-bottom:1px solid #1a2234;">
+      <span style="color:var(--text2)">${m.name}</span>
+      <span style="color:${m.ok?'var(--green)':'var(--red)'}">${m.val}</span>
+    </div>
+  `).join('');
+}
+
+// ===================================================
+// OVERVIEW USE CASES
+// ===================================================
+const USE_CASES=[
+  {title:'Camera Validation',icon:'📷',desc:'Verify all 5 camera channels for resolution, FPS, latency and fault detection.',module:'Camera',tab:'cameras'},
+  {title:'USS Parking Assist',icon:'🅿️',desc:'12 ultrasonic sensor validation for obstacle detection and auto-park scenarios.',module:'USS',tab:'uss'},
+  {title:'Lane Keep Assist',icon:'🛣️',desc:'LKA departure warning and torque intervention on highway scenarios.',module:'ADAS',tab:'adas'},
+  {title:'Auto Emergency Braking',icon:'🛑',desc:'AEB trigger tests for pedestrian and vehicle collision avoidance.',module:'ADAS',tab:'adas'},
+  {title:'Blind Spot Detection',icon:'👁️',desc:'BSD radar+camera fusion for rear-quarter lane monitoring.',module:'ADAS',tab:'adas'},
+  {title:'Trailer Reverse Assist',icon:'🚛',desc:'Cargo camera trailer detection, angle calc and jackknife prevention.',module:'Trailer',tab:'trailer'},
+];
+
+function buildOverviewUseCases(){
+  const el=document.getElementById('overview-ucards');
+  if(!el)return;
+  el.innerHTML=USE_CASES.map((uc,i)=>{
+    const tests=ALL_TESTS.filter(t=>t.module===uc.module);
+    const pass=tests.filter(t=>t.status==='PASS').length;
+    const fail=tests.filter(t=>t.status==='FAIL').length;
+    return `<div class="uc-card" onclick="switchTab('${uc.tab}')">
+      <div style="font-size:20px">${uc.icon}</div>
+      <div class="uc-title">${uc.title}</div>
+      <div class="uc-desc">${uc.desc}</div>
+      <div class="uc-stats">
+        <span class="uc-stat" style="color:var(--pass)">✓ ${pass}</span>
+        <span class="uc-stat" style="color:var(--fail)">✗ ${fail}</span>
+        <span class="uc-stat" style="color:var(--text2)">&bull; ${tests.length} total</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ===================================================
+// CAMERA TEST TABLE
+// ===================================================
+function renderCamTests(filter='all'){
+  const tbody=document.querySelector('#cam-test-table tbody');
+  const tests=ALL_TESTS.filter(t=>t.module==='Camera'&&(filter==='all'||t.status===filter));
+  tbody.innerHTML=tests.map(t=>`
+    <tr><td class="tc-id">${t.id}</td>
+    <td>${t.desc}</td>
+    <td class="tc-module">${t.sub}</td>
+    <td>${statusBadge(t.status)}</td>
+    <td style="color:var(--text2);font-size:11px">${t.duration||'—'}</td></tr>
+  `).join('');
+}
+
+function filterCamTests(f,btn){
+  document.querySelectorAll('#cam-test-table').forEach(()=>{});
+  btn.closest('.filter-bar').querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderCamTests(f);
+}
+
+// ===================================================
+// USS CANVAS + READINGS
+// ===================================================
+function renderUSSCanvas(){
+  const cv=document.getElementById('ussCanvas');if(!cv)return;
+  const ctx=cv.getContext('2d');const w=cv.width,h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='#080e18';ctx.fillRect(0,0,w,h);
+
+  // Grid
+  ctx.strokeStyle='rgba(0,100,200,0.07)';ctx.lineWidth=1;
+  for(let x=0;x<w;x+=20){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();}
+  for(let y=0;y<h;y+=20){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}
+
+  // Truck body
+  const tx=w/2,ty=h/2,tw=90,th=240;
+  ctx.fillStyle='#1a2e44';ctx.strokeStyle='#00b4d8';ctx.lineWidth=2;
+  ctx.beginPath();ctx.roundRect(tx-tw/2,ty-th/2,tw,th,8);ctx.fill();ctx.stroke();
+
+  // Cab detail
+  ctx.fillStyle='#243b54';ctx.beginPath();
+  ctx.roundRect(tx-tw/2+6,ty-th/2+6,tw-12,60,4);ctx.fill();ctx.stroke();
+
+  // Windshield
+  ctx.fillStyle='rgba(0,200,255,0.15)';ctx.fillRect(tx-25,ty-th/2+12,50,30);
+
+  // Labels
+  ctx.fillStyle='rgba(0,180,216,0.5)';ctx.font='9px monospace';ctx.textAlign='center';
+  ctx.fillText('TRUCK CAB',tx,ty-th/2+80);ctx.fillText('CARGO BED',tx,ty+40);ctx.textAlign='left';
+
+  // Draw USS sensors
+  USS.forEach(s=>{
+    const sx=s.x*w, sy=s.y*h;
+    const dist=ussDistances[s.id]||200;
+    const color=dist<60?'#ef4444':dist<150?'#f59e0b':'#22c55e';
+    const maxR=Math.min(70,dist*0.3);
+
+    // Ultrasonic wave arcs
+    for(let r=15;r<=maxR;r+=15){
+      ctx.strokeStyle=color+(r===15?'cc':'44');
+      ctx.lineWidth=1.5;
+      const startAngle=s.zone==='front'?-Math.PI:-s.zone==='rear'?0:s.x<0.5?-Math.PI/2:Math.PI/2;
+      // Simple arc facing outward
+      let sa=0,ea=Math.PI;
+      if(s.zone==='front'){sa=-Math.PI;ea=0;}
+      else if(s.zone==='rear'){sa=0;ea=Math.PI;}
+      else if(s.x<0.5){sa=-Math.PI/2-Math.PI/3;ea=-Math.PI/2+Math.PI/3;}
+      else{sa=Math.PI/2-Math.PI/3;ea=Math.PI/2+Math.PI/3;}
+      ctx.beginPath();ctx.arc(sx,sy,r,sa,ea);ctx.stroke();
+    }
+
+    // Sensor dot
+    ctx.fillStyle=color;ctx.beginPath();ctx.arc(sx,sy,6,0,Math.PI*2);ctx.fill();
+    ctx.strokeStyle='#000';ctx.lineWidth=1;ctx.stroke();
+
+    // Distance label
+    ctx.fillStyle='rgba(0,0,0,0.7)';ctx.fillRect(sx-20,sy+9,40,14);
+    ctx.fillStyle=color;ctx.font='bold 9px monospace';ctx.textAlign='center';
+    ctx.fillText(Math.round(dist)+'cm',sx,sy+20);ctx.textAlign='left';
+  });
+}
+
+function buildUSSReadings(){
+  const el=document.getElementById('uss-readings');if(!el)return;
+  el.innerHTML='<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">'+
+    USS.map(s=>{
+      const d=Math.round(ussDistances[s.id]||200);
+      const color=d<60?'var(--red)':d<150?'var(--yellow)':'var(--green)';
+      const zone=d<60?'CRITICAL':d<150?'WARNING':'CLEAR';
+      return `<div style="background:#0a1520;border:1px solid ${color}33;border-radius:5px;padding:6px;font-size:10px;">
+        <div style="font-weight:700;color:var(--text2)">${s.id} &mdash; ${s.name}</div>
+        <div style="font-size:18px;font-weight:800;color:${color}">${d}<span style="font-size:10px;font-weight:400">cm</span></div>
+        <div style="color:${color};font-size:9px">${zone}</div>
+      </div>`;
+    }).join('')+'</div>';
+}
+
+function setUSSScenario(scenario){
+  if(scenario==='clear'){USS.forEach(s=>ussDistances[s.id]=200+Math.random()*80);}
+  else if(scenario==='parallel'){
+    ['F1','F2'].forEach(id=>ussDistances[id]=180+Math.random()*30);
+    ['R1','R2'].forEach(id=>ussDistances[id]=40+Math.random()*20);
+    ['SL1','SL2'].forEach(id=>ussDistances[id]=80+Math.random()*30);
+    ['SR1','SR2'].forEach(id=>ussDistances[id]=250);
+  } else if(scenario==='perpendicular'){
+    ['F1','F2','F3','F4'].forEach(id=>ussDistances[id]=55+Math.random()*20);
+    ['R1','R2','R3','R4'].forEach(id=>ussDistances[id]=200);
+  } else if(scenario==='trailer'){
+    ['R1','R2','R3','R4'].forEach(id=>ussDistances[id]=30+Math.random()*10);
+  } else if(scenario==='collision'){
+    USS.forEach(s=>ussDistances[s.id]=25+Math.random()*20);
+  }
+  renderUSSCanvas();buildUSSReadings();
+}
+
+function renderUSSTests(){
+  const tbody=document.querySelector('#uss-test-table tbody');
+  const tests=ALL_TESTS.filter(t=>t.module==='USS');
+  tbody.innerHTML=tests.map(t=>`
+    <tr><td class="tc-id">${t.id}</td><td>${t.desc}</td>
+    <td class="tc-module">${t.sub}</td>
+    <td>${statusBadge(t.status)}</td>
+    <td style="color:var(--text2);font-size:11px">${t.duration||'—'}</td></tr>
+  `).join('');
+}
+
+// ===================================================
+// ADAS SCENARIO
+// ===================================================
+const ADAS_SCENARIOS={
+  lka:{name:'Lane Keep Assist',desc:'Vehicle drifting toward lane boundary — LKA torque intervention active'},
+  aeb:{name:'Auto Emergency Braking',desc:'Pedestrian detected crossing at 20 km/h — AEB initiating deceleration'},
+  bsd:{name:'Blind Spot Detection',desc:'Vehicle in rear-left blind zone — BSD warning lamp active'},
+  acc:{name:'Adaptive Cruise Control',desc:'Target vehicle at 35m — ACC maintaining 2-second gap at 90 km/h'},
+};
+
+function buildADASUseCases(){
+  const el=document.getElementById('adas-usecases');if(!el)return;
+  el.innerHTML=Object.entries(ADAS_SCENARIOS).map(([key,sc])=>`
+    <div class="uc-card ${activeAdasScenario===key?'active':''}" onclick="setADASScenario('${key}',this)">
+      <div class="uc-title">${sc.name}</div>
+      <div class="uc-desc">${sc.desc}</div>
+    </div>
+  `).join('');
+}
+
+function setADASScenario(key,el){
+  activeAdasScenario=key;
+  document.querySelectorAll('#adas-usecases .uc-card').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('scenario-info').textContent=ADAS_SCENARIOS[key].desc;
+}
+
+function renderADASCanvas(){
+  const cv=document.getElementById('adasCanvas');if(!cv)return;
+  const ctx=cv.getContext('2d');const w=cv.width,h=cv.height;
+
+  function draw(){
+    const t=Date.now()/1000;
+    ctx.fillStyle='#080e18';ctx.fillRect(0,0,w,h);
+    // Road
+    ctx.fillStyle='#1a1a1a';ctx.fillRect(0,0,w,h);
+    const hw=h*0.5;
+    ctx.fillStyle='#222';ctx.fillRect(w*0.1,0,w*0.8,h);
+    // Lane lines
+    ctx.strokeStyle='#f5f5dc';ctx.lineWidth=3;ctx.setLineDash([30,20]);
+    ctx.beginPath();ctx.moveTo(w*0.5,0);ctx.lineTo(w*0.5,h);ctx.stroke();
+    ctx.setLineDash([]);ctx.lineWidth=4;
+    ctx.beginPath();ctx.moveTo(w*0.1,0);ctx.lineTo(w*0.1,h);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(w*0.9,0);ctx.lineTo(w*0.9,h);ctx.stroke();
+
+    if(activeAdasScenario==='lka'){
+      // Ego car
+      const egoX=w*0.35+Math.sin(t*0.8)*w*0.08;
+      ctx.fillStyle='#1e5faa';ctx.fillRect(egoX-20,h-80,40,70);
+      ctx.fillStyle='#3a8fff';ctx.fillRect(egoX-15,h-78,30,25);
+      // LKA warning
+      if(egoX<w*0.2||egoX>w*0.48){
+        ctx.strokeStyle='#ef4444';ctx.lineWidth=3;ctx.setLineDash([10,5]);
+        ctx.strokeRect(egoX-22,h-82,44,74);ctx.setLineDash([]);
+        ctx.fillStyle='#ef4444';ctx.font='bold 12px sans-serif';ctx.textAlign='center';
+        ctx.fillText('LKA ACTIVE',egoX,h-90);
+      } else {
+        ctx.strokeStyle='#22c55e';ctx.lineWidth=2;ctx.strokeRect(egoX-22,h-82,44,74);
+      }
+      ctx.textAlign='left';
+    } else if(activeAdasScenario==='aeb'){
+      // Ego car
+      ctx.fillStyle='#1e5faa';ctx.fillRect(w*0.4,h-80,40,70);
+      ctx.fillStyle='#3a8fff';ctx.fillRect(w*0.4+5,h-78,30,25);
+      // Pedestrian
+      const px=w*0.37+Math.sin(t*1.2)*w*0.15;
+      ctx.fillStyle='#ff8800';ctx.beginPath();ctx.arc(px,h-140,10,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle='#ff8800';ctx.fillRect(px-5,h-130,10,30);
+      ctx.fillStyle='#ef4444';ctx.font='bold 11px sans-serif';ctx.textAlign='center';
+      ctx.fillText('⚠ AEB',w*0.5,h*0.5);ctx.textAlign='left';
+    } else if(activeAdasScenario==='bsd'){
+      // Ego car
+      ctx.fillStyle='#1e5faa';ctx.fillRect(w*0.4,h-80,40,70);
+      // Following vehicle in blind spot
+      const bx=w*0.1+Math.sin(t*0.5)*10;
+      ctx.fillStyle='#5a1e8a';ctx.fillRect(bx,h-160,36,65);
+      ctx.strokeStyle='#f59e0b';ctx.lineWidth=2;ctx.strokeRect(bx-2,h-162,40,69);
+      ctx.fillStyle='#f59e0b';ctx.font='bold 10px sans-serif';ctx.fillText('BSD WARN',bx,h*0.35);
+    } else if(activeAdasScenario==='acc'){
+      // Lead car
+      const lx=w*0.42;const dy=(Math.sin(t*0.3)+1)*20;
+      ctx.fillStyle='#cc3333';ctx.fillRect(lx,h*0.2+dy,36,60);
+      // Ego car
+      ctx.fillStyle='#1e5faa';ctx.fillRect(w*0.4,h-80,40,70);
+      // Distance indicator
+      ctx.strokeStyle='rgba(0,180,216,0.5)';ctx.lineWidth=1;ctx.setLineDash([5,3]);
+      ctx.beginPath();ctx.moveTo(w*0.5,h-80);ctx.lineTo(w*0.5,h*0.28+dy);ctx.stroke();ctx.setLineDash([]);
+      ctx.fillStyle='var(--accent)';ctx.font='10px monospace';ctx.textAlign='center';
+      ctx.fillText('35m — 2.0s gap',w*0.65,h*0.5);ctx.textAlign='left';
+    }
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+  document.getElementById('scenario-info').textContent=ADAS_SCENARIOS[activeAdasScenario].desc;
+}
+
+function renderADASTests(){
+  const tbody=document.querySelector('#adas-test-table tbody');
+  const tests=ALL_TESTS.filter(t=>t.module==='ADAS');
+  tbody.innerHTML=tests.map(t=>`
+    <tr><td class="tc-id">${t.id}</td><td>${t.desc}</td>
+    <td class="tc-module">${t.sub}</td><td>${statusBadge(t.status)}</td></tr>
+  `).join('');
+}
+
+// ===================================================
+// TRAILER CANVAS
+// ===================================================
+function renderTrailerCanvas(){
+  const cv=document.getElementById('trailerCanvas');if(!cv)return;
+  const ctx=cv.getContext('2d');const w=cv.width,h=cv.height;
+
+  function draw(){
+    ctx.fillStyle='#080e18';ctx.fillRect(0,0,w,h);
+    // Road
+    ctx.fillStyle='#1a1a1a';ctx.fillRect(0,0,w,h);
+    ctx.fillStyle='#222';ctx.fillRect(w*0.1,0,w*0.8,h);
+    ctx.strokeStyle='#f5f5dc';ctx.lineWidth=2;ctx.setLineDash([20,15]);
+    ctx.beginPath();ctx.moveTo(w*0.5,0);ctx.lineTo(w*0.5,h);ctx.stroke();ctx.setLineDash([]);
+    ctx.strokeStyle='#f5f5dc55';ctx.lineWidth=2;
+    ctx.beginPath();ctx.moveTo(w*0.1,0);ctx.lineTo(w*0.1,h);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(w*0.9,0);ctx.lineTo(w*0.9,h);ctx.stroke();
+
+    // Truck
+    const trx=w*0.35,try_=h*0.08;
+    ctx.fillStyle='#1e5faa';ctx.strokeStyle='#3a8fff';ctx.lineWidth=2;
+    ctx.beginPath();ctx.roundRect(trx,try_,70,110,4);ctx.fill();ctx.stroke();
+    ctx.fillStyle='rgba(100,180,255,0.2)';ctx.fillRect(trx+8,try_+10,54,28);
+
+    // Hitch point
+    const hitchX=trx+35,hitchY=try_+120;
+    ctx.fillStyle='#f59e0b';ctx.beginPath();ctx.arc(hitchX,hitchY,5,0,Math.PI*2);ctx.fill();
+
+    // Trailer with articulation angle
+    const rad=trailerAngle*Math.PI/180;
+    const tlen=130;
+    const endX=hitchX+Math.sin(rad)*tlen;
+    const endY=hitchY+Math.cos(rad)*tlen;
+
+    ctx.save();ctx.translate(hitchX,hitchY);ctx.rotate(rad);
+    ctx.fillStyle='#2a3a50';ctx.strokeStyle='#00b4d8';ctx.lineWidth=2;
+    ctx.beginPath();ctx.roundRect(-30,0,60,tlen,4);ctx.fill();ctx.stroke();
+    // Trailer wheels
+    [[-32,90],[28,90],[-32,120],[28,120]].forEach(([ox,oy])=>{
+      ctx.fillStyle='#0a1520';ctx.beginPath();ctx.ellipse(ox,oy,8,12,0,0,Math.PI*2);ctx.fill();
+      ctx.strokeStyle='#4b6180';ctx.lineWidth=1;ctx.stroke();
+    });
+    ctx.restore();
+
+    // Guidance lines
+    ctx.strokeStyle='rgba(0,255,136,0.4)';ctx.lineWidth=2;ctx.setLineDash([8,5]);
+    ctx.beginPath();ctx.moveTo(hitchX-40,hitchY);
+    ctx.quadraticCurveTo(hitchX,hitchY+80,endX-30,endY);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(hitchX+40,hitchY);
+    ctx.quadraticCurveTo(hitchX,hitchY+80,endX+30,endY);ctx.stroke();ctx.setLineDash([]);
+
+    // Angle indicator
+    ctx.fillStyle='rgba(0,0,0,0.6)';ctx.fillRect(6,6,120,20);
+    ctx.fillStyle='#00b4d8';ctx.font='11px monospace';
+    ctx.fillText(`Trailer Angle: ${trailerAngle}°  ${Math.abs(trailerAngle)>25?'⚠ JACKKNIFE':'✓ OK'}`,10,20);
+
+    requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+function setTrailerAngle(a){trailerAngle=a;}
+
+function renderTrailerTests(){
+  const tbody=document.querySelector('#trailer-test-table tbody');
+  const tests=ALL_TESTS.filter(t=>t.module==='Trailer');
+  tbody.innerHTML=tests.map(t=>`
+    <tr><td class="tc-id">${t.id}</td><td>${t.desc} <span style="font-size:10px;color:var(--text2)">[${t.sub}]</span></td>
+    <td>${statusBadge(t.status)}</td></tr>
+  `).join('');
+}
+
+// ===================================================
+// RESULTS CHART
+// ===================================================
+function renderResultsChart(){
+  const cv=document.getElementById('resultsChart');if(!cv)return;
+  const ctx=cv.getContext('2d');
+  const w=cv.width,h=cv.height;
+  const modules=['Camera','USS','ADAS','Trailer'];
+  const barW=40,gap=30,startX=50;
+  ctx.fillStyle='#080e18';ctx.fillRect(0,0,w,h);
+  ctx.fillStyle='#1a2234';ctx.fillRect(30,20,w-40,h-50);
+
+  modules.forEach((mod,i)=>{
+    const tests=ALL_TESTS.filter(t=>t.module===mod);
+    const pass=tests.filter(t=>t.status==='PASS').length;
+    const fail=tests.filter(t=>t.status==='FAIL').length;
+    const prog=tests.filter(t=>t.status==='IN_PROGRESS').length;
+    const total=tests.length;
+    const x=startX+i*(barW+gap);
+    const maxH=h-80;
+
+    // Pass bar
+    const ph=(pass/Math.max(total,1))*maxH;
+    ctx.fillStyle='#22c55e';ctx.fillRect(x,h-40-ph,barW*0.3,ph);
+    // Fail bar
+    const fh=(fail/Math.max(total,1))*maxH;
+    ctx.fillStyle='#ef4444';ctx.fillRect(x+barW*0.35,h-40-fh,barW*0.3,fh);
+    // In prog
+    const ih=(prog/Math.max(total,1))*maxH;
+    ctx.fillStyle='#f59e0b';ctx.fillRect(x+barW*0.7,h-40-ih,barW*0.3,ih);
+
+    ctx.fillStyle='#94a3b8';ctx.font='9px sans-serif';ctx.textAlign='center';
+    ctx.fillText(mod,x+barW/2,h-28);ctx.fillText(total+' tests',x+barW/2,h-18);
+  });
+
+  // Legend
+  [[22,10,'#22c55e','Pass'],[72,10,'#ef4444','Fail'],[122,10,'#f59e0b','In Prog']].forEach(([lx,ly,col,lbl])=>{
+    ctx.fillStyle=col;ctx.fillRect(lx,ly,10,10);
+    ctx.fillStyle='#94a3b8';ctx.font='9px sans-serif';ctx.textAlign='left';
+    ctx.fillText(lbl,lx+14,ly+9);
+  });
+  ctx.textAlign='left';
+}
+
+function buildAllDefects(){
+  const tbody=document.querySelector('#defect-table tbody');if(!tbody)return;
+  tbody.innerHTML=DEFECTS.map(d=>{
+    const sCol=d.sev==='High'?'var(--red)':d.sev==='Medium'?'var(--yellow)':'var(--gray)';
+    const stCol=d.status==='Open'?'var(--red)':d.status==='In Review'?'var(--yellow)':'var(--green)';
+    return `<tr><td class="tc-id">${d.id}</td><td style="font-size:11px">${d.desc}</td>
+      <td><span style="color:${sCol};font-size:10px;font-weight:600">${d.sev}</span></td>
+      <td><span style="color:${stCol};font-size:10px">${d.status}</span></td></tr>`;
+  }).join('');
+}
+
+// ===================================================
+// ALL TESTS TABLE
+// ===================================================
+function renderAllTests(filter='all'){
+  const tbody=document.querySelector('#all-tests-table tbody');if(!tbody)return;
+  let tests=[...ALL_TESTS];
+  if(filter!=='all'){
+    const statusVals=['PASS','FAIL','IN_PROGRESS','NOT_EXECUTED'];
+    if(statusVals.includes(filter))tests=tests.filter(t=>t.status===filter);
+    else tests=tests.filter(t=>t.module===filter);
+  }
+  tbody.innerHTML=tests.map(t=>`
+    <tr><td class="tc-id">${t.id}</td>
+    <td><span class="badge" style="background:#0a1929;color:var(--accent);border:1px solid var(--border)">${t.module}</span></td>
+    <td style="font-size:11px">${t.desc}</td>
+    <td>${statusBadge(t.status)}</td>
+    <td style="color:var(--text2);font-size:11px">${t.duration||'—'}</td>
+    <td style="color:var(--text2);font-size:10px">${t.notes}</td></tr>
+  `).join('');
+}
+
+function filterAllTests(f,btn){
+  btn.closest('.filter-bar').querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderAllTests(f);
+}
+
+// ===================================================
+// TEST RUNNER
+// ===================================================
+function runAllTests(){
+  if(runInterval)clearInterval(runInterval);
+  resetTests();
+  const testQueue=[...ALL_TESTS];
+  let i=0;
+  const runEl=document.getElementById('run-progress');
+  runInterval=setInterval(()=>{
+    if(i>=testQueue.length){clearInterval(runInterval);updateAllViews();return;}
+    const t=testQueue[i];
+    t.status='IN_PROGRESS';
+    updateAllViews();
+    setTimeout(()=>{
+      const r=Math.random();
+      t.status=r>0.85?'FAIL':r>0.05?'PASS':'IN_PROGRESS';
+      t.duration=(800+Math.floor(Math.random()*3200))+'ms';
+      if(t.status==='IN_PROGRESS')t.status='PASS';
+      updateAllViews();
+    },300+Math.random()*600);
+    i++;
+    if(runEl)runEl.innerHTML=`
+      <div style="font-size:10px;color:var(--text2);margin-bottom:3px;">Running ${i}/${testQueue.length}</div>
+      <div class="prog-bar-wrap"><div class="prog-bar" style="width:${Math.round(i/testQueue.length*100)}%;background:var(--accent)"></div></div>`;
+  },120);
+}
+
+function resetTests(){
+  ALL_TESTS.forEach(t=>{t.status='NOT_EXECUTED';t.duration=null;});
+  updateAllViews();
+}
+
+function runFailedOnly(){
+  const failed=ALL_TESTS.filter(t=>t.status==='FAIL');
+  if(!failed.length)return;
+  let i=0;
+  const interval=setInterval(()=>{
+    if(i>=failed.length){clearInterval(interval);updateAllViews();return;}
+    const t=failed[i];
+    t.status='IN_PROGRESS';updateAllViews();
+    setTimeout(()=>{t.status=Math.random()>0.5?'PASS':'FAIL';t.duration=(600+Math.floor(Math.random()*2000))+'ms';updateAllViews();},400);
+    i++;
+  },200);
+}
+
+function updateAllViews(){
+  updateHeaderStats();
+  buildModuleBars();
+  buildOverviewUseCases();
+  renderCamTests();renderUSSTests();renderADASTests();renderTrailerTests();renderAllTests();
+  renderResultsChart();
+  const pass=ALL_TESTS.filter(t=>t.status==='PASS').length;
+  const fail=ALL_TESTS.filter(t=>t.status==='FAIL').length;
+  const prog=ALL_TESTS.filter(t=>t.status==='IN_PROGRESS').length;
+  const nte=ALL_TESTS.filter(t=>t.status==='NOT_EXECUTED').length;
+  document.getElementById('ov-pass').textContent=pass;
+  document.getElementById('ov-fail').textContent=fail;
+  document.getElementById('ov-prog').textContent=prog;
+  document.getElementById('ov-nte').textContent=nte;
+  document.getElementById('res-pass').textContent=pass;
+  document.getElementById('res-fail').textContent=fail;
+  document.getElementById('res-prog').textContent=prog;
+  document.getElementById('res-nte').textContent=nte;
+}
+
+function updateHeaderStats(){
+  const pass=ALL_TESTS.filter(t=>t.status==='PASS').length;
+  const fail=ALL_TESTS.filter(t=>t.status==='FAIL').length;
+  const prog=ALL_TESTS.filter(t=>t.status==='IN_PROGRESS').length;
+  const nte=ALL_TESTS.filter(t=>t.status==='NOT_EXECUTED').length;
+  const total=ALL_TESTS.length;
+  const cov=total?Math.round(((pass+fail)/total)*100):0;
+  document.getElementById('h-pass').textContent=pass;
+  document.getElementById('h-fail').textContent=fail;
+  document.getElementById('h-prog').textContent=prog;
+  document.getElementById('h-nte').textContent=nte;
+  document.getElementById('h-cov').textContent=cov+'%';
+}
+
+// ===================================================
+// DIAGNOSTIC LOG
+// ===================================================
+const LOG_TEMPLATES=[
+  ()=>`<span class="log-ts">${ts()}</span> <span class="log-can">[CAN]</span> 0x${rHex(3)} &rarr; SVC_ECU  DLC:8  ${rBytes(8)}`,
+  ()=>`<span class="log-ts">${ts()}</span> <span class="log-uds">[UDS]</span> Req 22 ${rHex(4)} &rarr; ECU  Resp 62 ${rBytes(4)}`,
+  ()=>`<span class="log-ts">${ts()}</span> <span class="log-info">[DoIP]</span> TCP:13400  DID read routed over Ethernet 100BASE-T1`,
+  ()=>`<span class="log-ts">${ts()}</span> <span class="log-info">[OTA]</span> Campaign 24.2 package verification ${Math.random()>0.2?'PASS':'RETRY'}  chunk=${Math.floor(Math.random()*32)+1}/32`,
+  ()=>`<span class="log-ts">${ts()}</span> <span class="log-ok">[PASS]</span> ${(['FC','RC','LC','RtC','CC'])[Math.floor(Math.random()*5)]} Camera Frame OK  FPS:${28+Math.floor(Math.random()*4)}`,
+  ()=>`<span class="log-ts">${ts()}</span> <span class="log-warn">[WARN]</span> USS ${USS[Math.floor(Math.random()*12)].id} dist=${Math.floor(Math.random()*200)+10}cm`,
+  ()=>`<span class="log-ts">${ts()}</span> <span class="log-info">[INFO]</span> ECU Heartbeat  cycle=${Date.now()%65535}  temp=${50+Math.floor(Math.random()*10)}°C`,
+  ()=>`<span class="log-ts">${ts()}</span> <span class="log-can">[CAN-FD]</span> 0x${rHex(3)} BRS:1  DLC:64  ${rBytes(8)}...`,
+  ()=>`<span class="log-ts">${ts()}</span> <span class="log-info">[LVDS]</span> Camera link OK  lane=${Math.floor(Math.random()*4)}  FEC=0`,
+];
+
+function ts(){return new Date().toISOString().substr(11,12);}
+function rHex(bytes){return Array.from({length:bytes},()=>Math.floor(Math.random()*256).toString(16).padStart(2,'0').toUpperCase()).join('');}
+function rBytes(n){return Array.from({length:n},()=>Math.floor(Math.random()*256).toString(16).padStart(2,'0').toUpperCase()).join(' ');}
+
+function startLogStream(){
+  const logEl=document.getElementById('diag-log');if(!logEl)return;
+  logInterval=setInterval(()=>{
+    const entry=document.createElement('div');entry.className='log-entry';
+    entry.innerHTML=LOG_TEMPLATES[Math.floor(Math.random()*LOG_TEMPLATES.length)]();
+    logEl.appendChild(entry);
+    if(logEl.children.length>200)logEl.removeChild(logEl.firstChild);
+    logEl.scrollTop=logEl.scrollHeight;
+  },250);
+}
+
+function clearLog(){document.getElementById('diag-log').innerHTML='';}
+
+function sendUDS(cmd){
+  const logEl=document.getElementById('diag-log');if(!logEl)return;
+  const entry=document.createElement('div');entry.className='log-entry';
+  entry.innerHTML=`<span class="log-ts">${ts()}</span> <span class="log-uds">[UDS TX]</span> <b style="color:#e2e8f0">${cmd}</b>  &rarr;  ECU`;
+  logEl.appendChild(entry);
+  setTimeout(()=>{
+    const resp=document.createElement('div');resp.className='log-entry';
+    const posResp=(parseInt(cmd.split(' ')[0],16)+0x40).toString(16).toUpperCase();
+    resp.innerHTML=`<span class="log-ts">${ts()}</span> <span class="log-ok">[UDS RX]</span> ${posResp} ${rBytes(4)}  (Positive Response)`;
+    logEl.appendChild(resp);logEl.scrollTop=logEl.scrollHeight;
+  },180);
+  logEl.scrollTop=logEl.scrollHeight;
+}
+
+function buildUDSSessions(){
+  const el=document.getElementById('uds-sessions');if(!el)return;
+  const sessions=[
+    {name:'Default Session',id:'0x01',status:'Active'},
+    {name:'Extended Diag Session',id:'0x03',status:'Available'},
+    {name:'Programming Session',id:'0x02',status:'Available'},
+    {name:'Safety System Diag',id:'0x04',status:'Available'},
+  ];
+  el.innerHTML=sessions.map(s=>`
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid #1a2234;font-size:11px;">
+      <span>${s.name} <span style="color:var(--text2);font-family:monospace">${s.id}</span></span>
+      <span style="color:${s.status==='Active'?'var(--green)':'var(--text2)'}">${s.status}</span>
+    </div>`).join('');
+}
+
+// ===================================================
+// EXPORT
+// ===================================================
+function exportResults(){
+  const rows=[['ID','Module','Sub-Module','Description','Status','Duration','Notes'].join(',')];
+  ALL_TESTS.forEach(t=>rows.push([t.id,t.module,t.sub,`"${t.desc}"`,t.status,t.duration||'',t.notes].join(',')));
+  const blob=new Blob([rows.join('\n')],{type:'text/csv'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='adas_test_results.csv';a.click();
+}
+
+// ===================================================
+// HELPERS
+// ===================================================
+function statusBadge(s){
+  if(s==='PASS')return '<span class="badge badge-pass">✓ PASS</span>';
+  if(s==='FAIL')return '<span class="badge badge-fail">✗ FAIL</span>';
+  if(s==='IN_PROGRESS')return '<span class="badge badge-inprog">⏳ IN PROGRESS</span>';
+  return '<span class="badge badge-notexec">— NOT EXEC</span>';
+}
+</script>
+</body>
+</html>

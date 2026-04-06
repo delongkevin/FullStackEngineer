@@ -1,0 +1,83 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='800' height='450'>
+  <rect width='800' height='450' fill='#070b0f'/>
+  <rect x='0' y='0' width='800' height='52' fill='#0d1f2d'/>
+  <rect x='0' y='50' width='800' height='2' fill='#1e88e5' opacity='0.8'/>
+  <rect x='16' y='12' width='28' height='28' rx='6' fill='#1e88e5'/>
+  <text x='52' y='28' font-family='sans-serif' font-size='14' font-weight='bold' fill='#e2e8f0'>ADAS Camera Software Test Dashboard</text>
+  <text x='52' y='43' font-family='monospace' font-size='8' fill='#546e7a'>SURROUND-VIEW ECU · 5 CAMERAS · 12 USS · AUTONOMOUS DRIVING</text>
+  <rect x='8' y='60' width='186' height='132' rx='5' fill='#0c1218' stroke='#1d3347'/>
+  <text x='12' y='72' font-family='monospace' font-size='7' fill='#546e7a'>FRONT CAMERA 1920×1080</text>
+  <rect x='10' y='75' width='182' height='114' fill='#020508'/>
+  <line x1='10' y1='132' x2='192' y2='132' stroke='#1d3347' stroke-dasharray='2,5' stroke-width='0.5'/>
+  <line x1='101' y1='75' x2='101' y2='189' stroke='#1d3347' stroke-dasharray='2,5' stroke-width='0.5'/>
+  <rect x='28' y='89' width='52' height='32' rx='2' fill='none' stroke='#00e676' stroke-width='1.5'/>
+  <text x='30' y='87' font-family='monospace' font-size='6' fill='#00e676'>VEHICLE</text>
+  <rect x='120' y='107' width='38' height='24' rx='2' fill='none' stroke='#ff9800' stroke-width='1.5'/>
+  <text x='122' y='105' font-family='monospace' font-size='6' fill='#ff9800'>PEDESTRIAN</text>
+  <text x='11' y='187' font-family='monospace' font-size='7' fill='#00e676'>● PASS  FPS:30  LAT:28ms</text>
+  <rect x='202' y='60' width='186' height='132' rx='5' fill='#0c1218' stroke='#1d3347'/>
+  <text x='206' y='72' font-family='monospace' font-size='7' fill='#546e7a'>USS PARKING SENSOR MAP</text>
+  <rect x='264' y='98' width='62' height='82' rx='4' fill='#0a1520' stroke='#1e3c5e' stroke-width='1.5'/>
+  <text x='278' y='142' font-family='monospace' font-size='7' fill='#546e7a'>TRUCK</text>
+  <circle cx='275' cy='104' r='4' fill='none' stroke='#00e5ff' stroke-width='1.5'/>
+  <circle cx='275' cy='104' r='10' fill='none' stroke='#00e5ff' stroke-width='0.7' opacity='0.4'/>
+  <circle cx='318' cy='104' r='4' fill='none' stroke='#00e5ff' stroke-width='1.5'/>
+  <circle cx='275' cy='174' r='4' fill='none' stroke='#00e5ff' stroke-width='1.5'/>
+  <circle cx='318' cy='174' r='4' fill='none' stroke='#ff9800' stroke-width='1.5'/>
+  <circle cx='318' cy='174' r='9' fill='none' stroke='#ff9800' stroke-width='0.8' opacity='0.5'/>
+  <rect x='396' y='60' width='397' height='132' rx='5' fill='#0c1218' stroke='#1d3347'/>
+  <text x='400' y='72' font-family='monospace' font-size='7' fill='#546e7a'>TEST EXECUTION RESULTS</text>
+  <rect x='400' y='78' width='90' height='44' rx='4' fill='#0a1e0a' stroke='#1e4d1e'/>
+  <text x='445' y='99' font-family='monospace' font-size='20' font-weight='bold' fill='#00e676' text-anchor='middle'>24</text>
+  <text x='445' y='115' font-family='monospace' font-size='8' fill='#546e7a' text-anchor='middle'>PASS</text>
+  <rect x='496' y='78' width='90' height='44' rx='4' fill='#1e0a0a' stroke='#4d1e1e'/>
+  <text x='541' y='99' font-family='monospace' font-size='20' font-weight='bold' fill='#ff1744' text-anchor='middle'>3</text>
+  <text x='541' y='115' font-family='monospace' font-size='8' fill='#546e7a' text-anchor='middle'>FAIL</text>
+  <rect x='592' y='78' width='90' height='44' rx='4' fill='#1a1500' stroke='#4d4400'/>
+  <text x='637' y='99' font-family='monospace' font-size='20' font-weight='bold' fill='#ffea00' text-anchor='middle'>2</text>
+  <text x='637' y='115' font-family='monospace' font-size='8' fill='#546e7a' text-anchor='middle'>IN PROG</text>
+  <rect x='688' y='78' width='103' height='44' rx='4' fill='#0a1520' stroke='#1d3347'/>
+  <text x='739' y='99' font-family='monospace' font-size='20' font-weight='bold' fill='#546e7a' text-anchor='middle'>51</text>
+  <text x='739' y='115' font-family='monospace' font-size='8' fill='#546e7a' text-anchor='middle'>NOT EXEC</text>
+  <text x='400' y='142' font-family='monospace' font-size='8' fill='#00e676'>✓ TC-CAM-001 Front Camera Init — PASS 342ms</text>
+  <text x='400' y='154' font-family='monospace' font-size='8' fill='#00e676'>✓ TC-CAM-002 Rear Camera LVDS Link — PASS 218ms</text>
+  <text x='400' y='166' font-family='monospace' font-size='8' fill='#ff1744'>✗ TC-CAM-003 SurroundView Latency — FAIL 1203ms</text>
+  <text x='400' y='178' font-family='monospace' font-size='8' fill='#ffea00'>▶ TC-USS-001 Front USS Obstacle — IN PROGRESS</text>
+  <rect x='0' y='198' width='800' height='34' fill='#0c1218'/>
+  <rect x='0' y='230' width='800' height='1' fill='#1d3347'/>
+  <text x='10' y='219' font-family='sans-serif' font-size='10' font-weight='bold' fill='#00e5ff'>Overview</text>
+  <rect x='5' y='230' width='66' height='2' fill='#00e5ff'/>
+  <text x='88' y='219' font-family='sans-serif' font-size='10' fill='#546e7a'>Camera</text>
+  <text x='150' y='219' font-family='sans-serif' font-size='10' fill='#546e7a'>USS/Parking</text>
+  <text x='254' y='219' font-family='sans-serif' font-size='10' fill='#546e7a'>Autonomous ADAS</text>
+  <text x='384' y='219' font-family='sans-serif' font-size='10' fill='#546e7a'>Trailer Assist</text>
+  <text x='475' y='219' font-family='sans-serif' font-size='10' fill='#546e7a'>Test Results</text>
+  <text x='563' y='219' font-family='sans-serif' font-size='10' fill='#546e7a'>Diag Log</text>
+  <rect x='0' y='232' width='800' height='218' fill='#04070a'/>
+  <rect x='8' y='240' width='390' height='92' rx='4' fill='#0c1218' stroke='#1d3347'/>
+  <text x='12' y='252' font-family='monospace' font-size='7' fill='#546e7a'>ADAS SCENARIO MONITOR</text>
+  <rect x='12' y='257' width='90' height='62' rx='3' fill='#020508'/>
+  <line x1='57' y1='257' x2='57' y2='319' stroke='#1565c0' stroke-width='6' opacity='0.4'/>
+  <rect x='40' y='274' width='34' height='18' rx='2' fill='#1565c0' opacity='0.8'/>
+  <text x='42' y='286' font-family='monospace' font-size='6' fill='#e2e8f0'>EGO</text>
+  <text x='14' y='325' font-family='monospace' font-size='6' fill='#00e5ff'>LKA Active</text>
+  <rect x='108' y='257' width='90' height='62' rx='3' fill='#020508'/>
+  <rect x='130' y='263' width='40' height='8' rx='1' fill='#ff1744' opacity='0.5'/>
+  <rect x='126' y='278' width='46' height='20' rx='2' fill='#1565c0' opacity='0.8'/>
+  <rect x='204' y='257' width='90' height='62' rx='3' fill='#020508'/>
+  <rect x='228' y='265' width='26' height='14' rx='2' fill='#ff9800' opacity='0.8'/>
+  <rect x='212' y='277' width='40' height='20' rx='2' fill='#1565c0' opacity='0.8'/>
+  <text x='206' y='325' font-family='monospace' font-size='6' fill='#ff9800'>BSD Warning</text>
+  <rect x='300' y='257' width='90' height='62' rx='3' fill='#020508'/>
+  <rect x='315' y='263' width='40' height='12' rx='2' fill='#7c3aed' opacity='0.8'/>
+  <rect x='318' y='282' width='36' height='20' rx='2' fill='#1565c0' opacity='0.8'/>
+  <text x='302' y='325' font-family='monospace' font-size='6' fill='#a78bfa'>ACC 65km/h</text>
+  <rect x='406' y='240' width='386' height='92' rx='4' fill='#020508' stroke='#1d3347'/>
+  <text x='410' y='252' font-family='monospace' font-size='7' fill='#546e7a'>DIAGNOSTIC LOG STREAM</text>
+  <text x='410' y='265' font-family='monospace' font-size='7' fill='#546e7a'>[0.124] CAN TX 0x18DA00F1  10 02</text>
+  <text x='410' y='276' font-family='monospace' font-size='7' fill='#00e5ff'>[0.127] CAN RX 0x18DAF100  50 02 Extended Session OK</text>
+  <text x='410' y='287' font-family='monospace' font-size='7' fill='#ff9800'>[0.143] DEM: DTC B1234 set — Camera Front LVDS</text>
+  <text x='410' y='298' font-family='monospace' font-size='7' fill='#546e7a'>[0.250] USS: Ch0=0.32m Ch1=5.00m Ch2=5.00m</text>
+  <text x='410' y='309' font-family='monospace' font-size='7' fill='#00e676'>[0.350] TC-CAM-001 PASS 342ms — Front 1920x1080@30fps</text>
+  <text x='410' y='320' font-family='monospace' font-size='7' fill='#00e5ff'>[0.500] HeartBeat OK | RPM:2340 SPD:88km/h</text>
+</svg>

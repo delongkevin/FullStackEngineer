@@ -50,7 +50,7 @@ describe('projects data', () => {
 
   describe('image paths validation', () => {
     it.each(projects)('project "$title" should have valid image path format', (project) => {
-      expect(project.image).toMatch(/^\/images\/[\w-]+\.(jpg|png|gif|webp)$/i);
+      expect(project.image).toMatch(/^\/images\/[\w-]+\.(jpg|png|gif|webp|svg)$/i);
     });
   });
 
