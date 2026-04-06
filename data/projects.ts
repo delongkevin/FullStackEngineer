@@ -515,6 +515,32 @@ export const projects: Project[] = [
     embeddable: true,
     projectPath: '/projects/qa-dashboard',
   },
+  {
+    id: 22,
+    slug: 'ai-trainer',
+    title: 'AI Code Training Platform',
+    description: 'Full-stack AI Code Trainer platform — design coding challenges, showcase multi-language solutions, evaluate AI-generated code for accuracy and quality, and deliver structured feedback to shape next-generation AI models.',
+    fullDescription: 'AI Code Training Platform is an interactive demonstration built for a Backend Software Engineer – AI Trainer role at DataAnnotation. It showcases five integrated capabilities: a Challenge Designer for authoring well-structured coding problems (constraints, I/O examples, hidden test cases) with a live preview panel and an 8-problem pre-seeded library spanning Easy to Expert difficulty; a Language Showcase presenting 5 classic algorithms (Binary Search, LRU Cache, Graph BFS, Quicksort, Fibonacci) each implemented in JavaScript, TypeScript, Python, Go, and Java with inline syntax highlighting and time/space complexity badges; a Code Evaluator that ingests a pasted solution, runs it against 5 test cases, surfaces categorized issues (Critical/Warning/Info) with line references, and reports code quality metrics including cyclomatic complexity and naming conventions; a Feedback Studio for reviewing AI-generated code submissions across four scored dimensions (Correctness, Efficiency, Clarity, Robustness) with free-form feedback and submission workflow; and an Analytics Dashboard with KPI cards, Canvas-rendered charts (language distribution, difficulty donut, 12-week quality trend, category bars), activity feed, contributor leaderboard, and per-category data quality breakdown table.',
+    image: '/images/ai-trainer.jpg',
+    tech: ['JavaScript', 'TypeScript', 'Python', 'Go', 'Java', 'HTML5', 'CSS3', 'Canvas API', 'Data Structures & Algorithms', 'Code Quality Analysis', 'AI Training'],
+    liveUrl: '/projects/ai-trainer/index.html',
+    githubUrl: 'https://github.com/delongkevin/FullStackEngineer',
+    featured: true,
+    category: 'fullstack',
+    features: [
+      'Challenge Designer: author coding problems with constraints, I/O examples, and hidden test cases; live preview panel renders the formatted problem statement in real time',
+      'Challenge Library: 8 pre-seeded problems (Two Sum → Serialize Binary Tree) spanning Easy/Medium/Hard/Expert difficulty with one-click load into the editor',
+      'Language Showcase: 5 algorithms × 5 languages (JavaScript, TypeScript, Python, Go, Java) with inline CSS syntax highlighting and time/space complexity badges',
+      'Code Evaluator: paste any solution, run 5 test cases, receive pass/fail results, code quality metric bars, and a prioritized issue list (Critical/Warning/Info) with line references',
+      'Feedback Studio: review 3 AI-generated submissions across Correctness, Efficiency, Clarity, and Robustness dimensions with range sliders and free-form feedback submission',
+      'Evaluation Summary KPIs: total reviewed, average score, needs-revision count, and approved count displayed as dashboard cards',
+      'Analytics Dashboard: Canvas-rendered horizontal bar, donut, 12-week trend line, and category bar charts — all drawn with vanilla Canvas API, zero external dependencies',
+      'Activity Feed & Contributor Leaderboard: real-time activity log and ranked contributor list with specialty tags and average scores',
+      'Data Quality Breakdown table: per-category totals, pass rates, average scores, and flagged counts with color-coded cells',
+    ],
+    embeddable: true,
+    projectPath: '/projects/ai-trainer',
+  },
   // Add any other projects you have with sequential IDs
 ];
 
