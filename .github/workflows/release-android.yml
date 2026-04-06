@@ -2,21 +2,52 @@ name: Release Android Apps
 
 on:
   workflow_dispatch:
-    inputs:
-      tag:
-        description: 'Release tag (e.g. v1.0.0)'
-        required: false
-        default: 'v1.0.0'
   push:
-    tags:
-      - 'v*'
+    branches:
+      - main
+    paths:
+      - 'android/**'
+      - 'book-app/**'
+      - 'chat-app/**'
+      - 'finance-app/**'
+      - 'fitness-tracker-app/**'
+      - 'music-streaming-app/**'
+      - 'real-estate-app/**'
+      - 'weather-app/**'
+      - '.github/workflows/release-android.yml'
 
 permissions:
   contents: write
 
+env:
+  RELEASE_TAG: android-artifacts-latest
+
 jobs:
-  build-and-release:
+  build-native-android:
+    name: Build Native APK (${{ matrix.module }})
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - module: book-app
+            output_name: book-app-debug.apk
+            apk_path: android/book-app/build/outputs/apk/debug/book-app-debug.apk
+          - module: computer-store
+            output_name: computer-store-debug.apk
+            apk_path: android/computer-store/build/outputs/apk/debug/computer-store-debug.apk
+          - module: poker-app
+            output_name: poker-app-debug.apk
+            apk_path: android/poker-app/build/outputs/apk/debug/poker-app-debug.apk
+          - module: kamps-factory
+            output_name: kamps-factory-debug.apk
+            apk_path: android/kamps-factory/build/outputs/apk/debug/kamps-factory-debug.apk
+          - module: embedded-video
+            output_name: embedded-video-debug.apk
+            apk_path: android/embedded-video/build/outputs/apk/debug/embedded-video-debug.apk
+          - module: medical-iot-monitor
+            output_name: medical-iot-monitor-debug.apk
+            apk_path: android/medical-iot-monitor/build/outputs/apk/debug/medical-iot-monitor-debug.apk
 
     steps:
       - name: Checkout
@@ -25,89 +56,124 @@ jobs:
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
+          distribution: temurin
           java-version: '17'
-          distribution: 'temurin'
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v3
-        with:
-          gradle-version: '8.4'
 
-      - name: Accept Android SDK licenses
-        run: yes | ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --licenses 2>/dev/null || true
-
-      - name: Build all APKs
+      - name: Build debug APK
         working-directory: android
-        run: gradle assembleDebug --no-daemon
+        run: ./gradlew :${{ matrix.module }}:assembleDebug --no-daemon
 
-      - name: Collect and rename APKs
+      - name: Rename artifact
         run: |
-          TAG="${{ github.event.inputs.tag }}"
-          if [ -z "$TAG" ]; then
-            TAG="${{ github.ref_name }}"
-          fi
-          if [ -z "$TAG" ] || [ "$TAG" = "main" ]; then
-            TAG="v1.0.0"
-          fi
-          echo "TAG=$TAG" >> "$GITHUB_ENV"
+          cp "${{ matrix.apk_path }}" "${{ matrix.output_name }}"
 
-          mkdir -p release-apks
-          find android -path "*/outputs/apk/debug/*.apk" | while read f; do
-            echo "Found APK: $f"
-            cp "$f" release-apks/
-          done
-          ls -la release-apks/
-          # Rename APKs to friendly names including version tag
-          for apk in release-apks/*.apk; do
-            base=$(basename "$apk" .apk)
-            case "$base" in
-              *book-app*) mv "$apk" "release-apks/BookStore-${TAG}.apk" ;;
-              *computer-store*) mv "$apk" "release-apks/ComputerStore-${TAG}.apk" ;;
-              *poker-app*) mv "$apk" "release-apks/PokerApp-${TAG}.apk" ;;
-              *kamps-factory*) mv "$apk" "release-apks/KampsSmartFactory-${TAG}.apk" ;;
-              *embedded-video*) mv "$apk" "release-apks/EmbeddedVideoEngineer-${TAG}.apk" ;;
-              *medical-iot-monitor*) mv "$apk" "release-apks/MedicalIoTMonitor-${TAG}.apk" ;;
-            esac
-          done
-          echo "Final APKs:"
-          ls -la release-apks/
+      - name: Upload intermediate artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: native-${{ matrix.output_name }}
+          path: ${{ matrix.output_name }}
 
-      - name: Create or update GitHub Release
+  build-expo-android:
+    name: Build Expo APK (${{ matrix.app_dir }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - app_dir: fitness-tracker-app
+            output_name: fitness-tracker-app-debug.apk
+          - app_dir: finance-app
+            output_name: finance-app-debug.apk
+          - app_dir: chat-app
+            output_name: chat-app-debug.apk
+          - app_dir: real-estate-app
+            output_name: real-estate-app-debug.apk
+          - app_dir: music-streaming-app
+            output_name: music-streaming-app-debug.apk
+          - app_dir: weather-app
+            output_name: weather-app-debug.apk
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: '${{ matrix.app_dir }}/package.json'
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Install app dependencies
+        working-directory: ${{ matrix.app_dir }}
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
+
+      - name: Generate native Android project
+        working-directory: ${{ matrix.app_dir }}
+        run: npx expo prebuild --platform android --non-interactive --clean
+
+      - name: Build debug APK
+        working-directory: ${{ matrix.app_dir }}/android
+        run: ./gradlew assembleDebug --no-daemon
+
+      - name: Rename artifact
+        run: |
+          cp "${{ matrix.app_dir }}/android/app/build/outputs/apk/debug/app-debug.apk" "${{ matrix.output_name }}"
+
+      - name: Upload intermediate artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: expo-${{ matrix.output_name }}
+          path: ${{ matrix.output_name }}
+
+  publish-release:
+    name: Publish Android Release Assets
+    runs-on: ubuntu-latest
+    needs:
+      - build-native-android
+      - build-expo-android
+    steps:
+      - name: Download all built APKs
+        uses: actions/download-artifact@v4
+        with:
+          path: release-apks
+          merge-multiple: true
+
+      - name: Verify artifacts exist
+        run: |
+          ls -la release-apks
+          count=$(find release-apks -maxdepth 1 -name '*.apk' | wc -l)
+          if [ "$count" -lt 12 ]; then
+            echo "Expected 12 APK files, found $count"
+            exit 1
+          fi
+
+      - name: Create or update release with direct-download APK assets
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          TAG="${{ env.TAG }}"
+          TAG="${{ env.RELEASE_TAG }}"
+          NOTES="Automated Android debug APK artifacts for all mobile apps."
 
-          NOTES="## 📱 Android App Downloads
-
-          Download and install these APKs on your Android device.
-
-          > **Note:** You may need to enable **Install from unknown sources** in your device settings (Settings → Security → Install unknown apps).
-
-          ### Available Apps
-
-          | App | APK File | Description |
-          |-----|----------|-------------|
-          | 📚 Book Store | \`BookStore-${TAG}.apk\` | Native Android bookstore — browse, cart & checkout (Kotlin + MVVM) |
-          | 🛒 Computer Store | \`ComputerStore-${TAG}.apk\` | Computer & electronics e-commerce app |
-          | ♠️ Poker App | \`PokerApp-${TAG}.apk\` | Interactive poker game with betting & UI |
-          | 🏭 Kamps Smart Factory | \`KampsSmartFactory-${TAG}.apk\` | Industrial IoT Smart Factory dashboard |
-          | 📹 Embedded Video | \`EmbeddedVideoEngineer-${TAG}.apk\` | Embedded Video Systems reference app |
-          | 🏥 Medical IoT Monitor | \`MedicalIoTMonitor-${TAG}.apk\` | WebView medical device monitor with offline fallback |
-
-          ### Installation Steps
-          1. Tap a \`.apk\` file below to download it
-          2. Open the file on your Android device
-          3. Allow installation from unknown sources when prompted
-          4. Tap **Install**"
-
-          if gh release view "$TAG" &>/dev/null; then
-            echo "Release $TAG already exists — uploading APKs..."
+          if gh release view "$TAG" > /dev/null 2>&1; then
             gh release upload "$TAG" release-apks/*.apk --clobber
           else
-            echo "Creating release $TAG..."
             gh release create "$TAG" release-apks/*.apk \
-              --title "📱 Mobile Apps $TAG" \
+              --title "Android APK Artifacts" \
               --notes "$NOTES" \
               --latest
           fi

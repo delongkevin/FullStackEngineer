@@ -21,6 +21,10 @@ function isGithubReleaseTagUrl(url: string): boolean {
   return /^https:\/\/github\.com\/[^/]+\/[^/]+\/releases\/tag\/.+/.test(url);
 }
 
+function isGithubReleaseDownloadUrl(url: string): boolean {
+  return /^https:\/\/github\.com\/[^/]+\/[^/]+\/releases\/download\/.+\/.+\.apk$/i.test(url);
+}
+
 function getLocalPathFromRepoTreeUrl(url: string): string | null {
   const match = url.match(
     /^https:\/\/github\.com\/delongkevin\/FullStackEngineer\/tree\/main\/(.+)$/
@@ -53,7 +57,11 @@ describe('link integrity', () => {
       const mobileUrls = [project.androidUrl, project.iosUrl].filter(Boolean) as string[];
 
       mobileUrls.forEach((url) => {
-        const validShape = isGithubTreeUrl(url) || isGithubReleaseTagUrl(url) || isGithubRepoUrl(url);
+        const validShape =
+          isGithubTreeUrl(url) ||
+          isGithubReleaseTagUrl(url) ||
+          isGithubReleaseDownloadUrl(url) ||
+          isGithubRepoUrl(url);
         expect(validShape).toBe(true);
 
         const localPath = getLocalPathFromRepoTreeUrl(url);

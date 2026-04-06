@@ -183,7 +183,7 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: "/projects/PokerApp/PokerApp.html",
-    androidUrl: "https://github.com/delongkevin/FullStackEngineer/tree/main/android/poker-app",
+    androidUrl: "https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/poker-app-debug.apk",
     iosUrl: "https://github.com/delongkevin/FullStackEngineer/tree/main/ios/poker-app",
   }
   ,
@@ -297,7 +297,7 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: '/projects/dornerworks-iot',
-    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/tag/Release_01.01',
+    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/medical-iot-monitor-debug.apk',
     iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/tag/Release_01.01',
   },
   {
@@ -324,7 +324,7 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: '/projects/kamps-smart-factory',
-    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/android/kamps-factory',
+    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/kamps-factory-debug.apk',
     iosUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/ios/kamps-factory',
   },
   {
@@ -350,7 +350,7 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: '/projects/embedded-video-engineer',
-    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/android/embedded-video',
+    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/embedded-video-debug.apk',
     iosUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/ios/embedded-video',
   },
   {
@@ -379,7 +379,7 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: '/projects/ComputerStoreApp',
-    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/android/computer-store',
+    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/computer-store-debug.apk',
     iosUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/ios/computer-store',
   },
   {
@@ -407,7 +407,7 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: '/projects/mobile-BookApp_Android',
-    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/android/book-app',
+    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/book-app-debug.apk',
     iosUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/ios/book-app',
   },
   {
@@ -567,7 +567,7 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: '/projects/fitness-tracker',
-    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/fitness-tracker-app',
+    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/fitness-tracker-app-debug.apk',
     iosUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/fitness-tracker-app',
   },
   {
@@ -600,7 +600,7 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: '/projects/finance-dashboard',
-    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/finance-app',
+    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/finance-app-debug.apk',
     iosUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/finance-app',
   },
   {
@@ -639,7 +639,7 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: '/projects/chat-app',
-    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/chat-app',
+    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/chat-app-debug.apk',
     iosUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/chat-app',
   },
   {
@@ -664,7 +664,7 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: '/projects/real-estate',
-    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/real-estate-app',
+    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/real-estate-app-debug.apk',
     iosUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/real-estate-app',
   },
   {
@@ -688,7 +688,7 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: '/projects/music-streaming',
-    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/music-streaming-app',
+    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/music-streaming-app-debug.apk',
     iosUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/music-streaming-app',
   },
   {
@@ -712,7 +712,7 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: '/projects/weather-insights',
-    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/weather-app',
+    androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/weather-app-debug.apk',
     iosUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/weather-app',
   },
   // Add any other projects you have with sequential IDs
