@@ -1,0 +1,103 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='800' height='450'>
+  <rect width='800' height='450' fill='#060a10'/>
+  <rect x='0' y='0' width='800' height='49' fill='#0a1220'/>
+  <rect x='0' y='47' width='800' height='2' fill='#0288d1' opacity='0.8'/>
+  <rect x='12' y='10' width='29' height='29' rx='6' fill='#0288d1'/>
+  <text x='50' y='25' font-family='sans-serif' font-size='13' font-weight='bold' fill='#e2e8f0'>AUTOSAR ECU Software Component Studio</text>
+  <text x='50' y='40' font-family='monospace' font-size='8' fill='#3d5875'>AUTOSAR R21-11 · SWC Composition · UDS ISO 14229 · BSW Stack · RTE</text>
+  <rect x='594' y='8' width='88' height='18' rx='9' fill='#01243e' stroke='#0288d1'/>
+  <text x='638' y='21' font-family='monospace' font-size='7' fill='#4fc3f7' text-anchor='middle'>AUTOSAR Classic</text>
+  <rect x='688' y='8' width='52' height='18' rx='9' fill='#1a0a00' stroke='#ff9800'/>
+  <text x='714' y='21' font-family='monospace' font-size='7' fill='#ff9800' text-anchor='middle'>ASIL-B</text>
+  <rect x='0' y='51' width='200' height='399' fill='#080d18' stroke='#1a2d4d' stroke-width='1'/>
+  <text x='6' y='65' font-family='monospace' font-size='7' fill='#3d5875'>SOFTWARE COMPONENT TREE</text>
+  <text x='6' y='80' font-family='sans-serif' font-size='9' fill='#7c9ab4'>📦 SurroundView_Composition</text>
+  <text x='18' y='94' font-family='sans-serif' font-size='9' fill='#8baac6'>⚙ CameraAcquisition_SWC</text><rect x='176' y='86' width='18' height='12' rx='2' fill='#1e88e533'/>
+  <text x='18' y='107' font-family='sans-serif' font-size='9' fill='#8baac6'>⚙ ImageProcessing_SWC</text>
+  <text x='18' y='120' font-family='sans-serif' font-size='9' fill='#8baac6'>⚙ ADAS_Fusion_SWC</text>
+  <text x='18' y='133' font-family='sans-serif' font-size='9' fill='#8baac6'>⚙ USSManager_SWC</text>
+  <text x='18' y='146' font-family='sans-serif' font-size='9' fill='#8baac6'>🔌 COM_Service_SWC</text>
+  <text x='18' y='159' font-family='sans-serif' font-size='9' fill='#8baac6'>📡 MotionSensor_SWC</text>
+  <text x='18' y='172' font-family='sans-serif' font-size='9' fill='#8baac6'>⚙ DiagManager_SWC</text>
+  <rect x='202' y='51' width='450' height='248' fill='#03070d'/>
+  <line x1='202' y1='90' x2='652' y2='90' stroke='#0a1e30' stroke-dasharray='4,8' stroke-width='0.5'/>
+  <line x1='202' y1='130' x2='652' y2='130' stroke='#0a1e30' stroke-dasharray='4,8' stroke-width='0.5'/>
+  <line x1='202' y1='170' x2='652' y2='170' stroke='#0a1e30' stroke-dasharray='4,8' stroke-width='0.5'/>
+  <line x1='202' y1='210' x2='652' y2='210' stroke='#0a1e30' stroke-dasharray='4,8' stroke-width='0.5'/>
+  <line x1='260' y1='51' x2='260' y2='299' stroke='#0a1e30' stroke-dasharray='4,8' stroke-width='0.5'/>
+  <line x1='360' y1='51' x2='360' y2='299' stroke='#0a1e30' stroke-dasharray='4,8' stroke-width='0.5'/>
+  <line x1='460' y1='51' x2='460' y2='299' stroke='#0a1e30' stroke-dasharray='4,8' stroke-width='0.5'/>
+  <line x1='560' y1='51' x2='560' y2='299' stroke='#0a1e30' stroke-dasharray='4,8' stroke-width='0.5'/>
+  <rect x='212' y='64' width='100' height='46' rx='4' fill='#0d47a122' stroke='#1e88e5' stroke-width='1.5'/>
+  <text x='262' y='83' font-family='monospace' font-size='8' font-weight='bold' fill='#90caf9' text-anchor='middle'>CameraAcq</text>
+  <text x='262' y='95' font-family='monospace' font-size='6' fill='#546e7a' text-anchor='middle'>ASIL-B</text>
+  <rect x='346' y='58' width='108' height='46' rx='4' fill='#1b5e2022' stroke='#43a047' stroke-width='1.5'/>
+  <text x='400' y='77' font-family='monospace' font-size='8' font-weight='bold' fill='#a5d6a7' text-anchor='middle'>ImgProcessing</text>
+  <text x='400' y='89' font-family='monospace' font-size='6' fill='#546e7a' text-anchor='middle'>ASIL-B</text>
+  <rect x='494' y='58' width='100' height='46' rx='4' fill='#4a148c22' stroke='#9c27b0' stroke-width='1.5'/>
+  <text x='544' y='77' font-family='monospace' font-size='8' font-weight='bold' fill='#ce93d8' text-anchor='middle'>ADAS Fusion</text>
+  <text x='544' y='89' font-family='monospace' font-size='6' fill='#546e7a' text-anchor='middle'>ASIL-B</text>
+  <rect x='212' y='178' width='100' height='46' rx='4' fill='#0e3b3b22' stroke='#00acc1' stroke-width='1.5'/>
+  <text x='262' y='197' font-family='monospace' font-size='8' font-weight='bold' fill='#80deea' text-anchor='middle'>USS Manager</text>
+  <text x='262' y='209' font-family='monospace' font-size='6' fill='#546e7a' text-anchor='middle'>ASIL-A</text>
+  <rect x='494' y='185' width='100' height='46' rx='4' fill='#1c0a2e22' stroke='#7b1fa2' stroke-width='1.5'/>
+  <text x='544' y='204' font-family='monospace' font-size='8' font-weight='bold' fill='#b39ddb' text-anchor='middle'>COM Service</text>
+  <text x='544' y='216' font-family='monospace' font-size='6' fill='#546e7a' text-anchor='middle'>ASIL-QM</text>
+  <rect x='598' y='118' width='44' height='46' rx='4' fill='#3e270022' stroke='#ffa000' stroke-width='1.5'/>
+  <text x='620' y='137' font-family='monospace' font-size='7' font-weight='bold' fill='#ffb74d' text-anchor='middle'>Diag</text>
+  <text x='620' y='149' font-family='monospace' font-size='6' fill='#546e7a' text-anchor='middle'>ASIL-A</text>
+  <rect x='300' y='142' width='278' height='28' rx='3' fill='#0a1a2a22' stroke='#1565c0' stroke-width='2'/>
+  <text x='439' y='160' font-family='monospace' font-size='8' font-weight='bold' fill='#93c5fd' text-anchor='middle'>AUTOSAR RTE</text>
+  <line x1='312' y1='87' x2='346' y2='81' stroke='#4fc3f7' stroke-width='1' stroke-dasharray='3,4' opacity='0.5' marker-end='url(#arr)'/>
+  <line x1='454' y1='81' x2='494' y2='76' stroke='#4fc3f7' stroke-width='1' stroke-dasharray='3,4' opacity='0.5'/>
+  <line x1='544' y1='104' x2='544' y2='142' stroke='#4fc3f7' stroke-width='1' stroke-dasharray='3,4' opacity='0.5'/>
+  <line x1='400' y1='104' x2='400' y2='142' stroke='#4fc3f7' stroke-width='1' stroke-dasharray='3,4' opacity='0.5'/>
+  <line x1='262' y1='110' x2='262' y2='142' stroke='#4fc3f7' stroke-width='1' stroke-dasharray='3,4' opacity='0.5'/>
+  <line x1='262' y1='170' x2='262' y2='178' stroke='#4fc3f7' stroke-width='1' stroke-dasharray='3,4' opacity='0.5'/>
+  <rect x='202' y='299' width='450' height='27' fill='#08101c'/>
+  <text x='210' y='316' font-family='sans-serif' font-size='9' font-weight='bold' fill='#4fc3f7'>SWC Composition</text>
+  <rect x='208' y='325' width='100' height='2' fill='#4fc3f7'/>
+  <text x='326' y='316' font-family='sans-serif' font-size='9' fill='#3d5875'>BSW Stack</text>
+  <text x='400' y='316' font-family='sans-serif' font-size='9' fill='#3d5875'>UDS / DTC</text>
+  <text x='468' y='316' font-family='sans-serif' font-size='9' fill='#3d5875'>RTE Ports</text>
+  <text x='538' y='316' font-family='sans-serif' font-size='9' fill='#3d5875'>Calibration</text>
+  <rect x='202' y='327' width='450' height='123' fill='#04070f'/>
+  <rect x='208' y='332' width='440' height='16' rx='3' fill='#0d47a122' stroke='#1e88e5'/>
+  <text x='212' y='343' font-family='monospace' font-size='7' font-weight='bold' fill='#90caf9'>Application Software Layer</text>
+  <text x='430' y='343' font-family='monospace' font-size='7' fill='#22c55e'>OK</text>
+  <rect x='208' y='351' width='440' height='16' rx='3' fill='#1a237e22' stroke='#3949ab'/>
+  <text x='212' y='362' font-family='monospace' font-size='7' font-weight='bold' fill='#7986cb'>AUTOSAR RTE</text>
+  <text x='430' y='362' font-family='monospace' font-size='7' fill='#22c55e'>OK</text>
+  <rect x='208' y='370' width='440' height='16' rx='3' fill='#1b5e2022' stroke='#388e3c'/>
+  <text x='212' y='381' font-family='monospace' font-size='7' font-weight='bold' fill='#a5d6a7'>Services — DCM, DEM, NvM, Com, PDU Router</text>
+  <text x='430' y='381' font-family='monospace' font-size='7' fill='#22c55e'>OK</text>
+  <rect x='208' y='389' width='440' height='16' rx='3' fill='#004d4022' stroke='#00897b'/>
+  <text x='212' y='400' font-family='monospace' font-size='7' font-weight='bold' fill='#80cbc4'>ECU Abstraction — ADC, DIO, CAN, ETH, FlexRay</text>
+  <rect x='208' y='408' width='440' height='16' rx='3' fill='#311b9222' stroke='#7c4dff'/>
+  <text x='212' y='419' font-family='monospace' font-size='7' font-weight='bold' fill='#b39ddb'>MCAL — TC399 TriCore Drivers</text>
+  <rect x='208' y='427' width='440' height='16' rx='3' fill='#3e272322' stroke='#795548'/>
+  <text x='212' y='438' font-family='monospace' font-size='7' font-weight='bold' fill='#bcaaa4'>AUTOSAR OS (OSEK)</text>
+  <text x='430' y='438' font-family='monospace' font-size='7' fill='#22c55e'>Running</text>
+  <rect x='654' y='51' width='146' height='399' fill='#080d18' stroke='#1a2d4d' stroke-width='1'/>
+  <text x='658' y='65' font-family='monospace' font-size='7' fill='#3d5875'>ECU IDENTITY</text>
+  <text x='658' y='78' font-family='monospace' font-size='7' fill='#546e7a'>ECU Name</text><text x='715' y='78' font-family='monospace' font-size='7' fill='#4fc3f7'>SVC_CAM</text>
+  <text x='658' y='90' font-family='monospace' font-size='7' fill='#546e7a'>SW Version</text><text x='715' y='90' font-family='monospace' font-size='7' fill='#94a3b8'>2.4.1.0</text>
+  <text x='658' y='102' font-family='monospace' font-size='7' fill='#546e7a'>AUTOSAR</text><text x='715' y='102' font-family='monospace' font-size='7' fill='#80cbc4'>R21-11</text>
+  <text x='658' y='114' font-family='monospace' font-size='7' fill='#546e7a'>Core</text><text x='715' y='114' font-family='monospace' font-size='7' fill='#94a3b8'>TC399</text>
+  <text x='658' y='134' font-family='monospace' font-size='7' fill='#3d5875'>SEND UDS</text>
+  <rect x='658' y='139' width='138' height='16' rx='3' fill='#0c1a2e' stroke='#1a2d4d'/><text x='662' y='150' font-family='monospace' font-size='7' fill='#7c9ab4'>10 02 — Extended Session</text>
+  <rect x='658' y='158' width='138' height='16' rx='3' fill='#0c1a2e' stroke='#1a2d4d'/><text x='662' y='169' font-family='monospace' font-size='7' fill='#7c9ab4'>19 02 FF — Read DTCs</text>
+  <rect x='658' y='177' width='138' height='16' rx='3' fill='#0c1a2e' stroke='#1a2d4d'/><text x='662' y='188' font-family='monospace' font-size='7' fill='#7c9ab4'>22 F1 90 — Read VIN</text>
+  <rect x='658' y='196' width='138' height='16' rx='3' fill='#0c1a2e' stroke='#1a2d4d'/><text x='662' y='207' font-family='monospace' font-size='7' fill='#7c9ab4'>14 FF FF FF — Clear DTCs</text>
+  <text x='658' y='227' font-family='monospace' font-size='7' fill='#3d5875'>UDS LOG</text>
+  <text x='658' y='240' font-family='monospace' font-size='7' fill='#3d5875'>[REQ] 10 02  Extended Session</text>
+  <text x='658' y='252' font-family='monospace' font-size='7' fill='#22c55e'>[RES] 50 02  Session OK</text>
+  <text x='658' y='264' font-family='monospace' font-size='7' fill='#3d5875'>[REQ] 19 02 FF</text>
+  <text x='658' y='276' font-family='monospace' font-size='7' fill='#22c55e'>[RES] 3 DTCs found</text>
+  <text x='658' y='296' font-family='monospace' font-size='7' fill='#3d5875'>LIVE PIDs</text>
+  <text x='658' y='309' font-family='monospace' font-size='7' fill='#546e7a'>MCU Load</text><text x='718' y='309' font-family='monospace' font-size='7' fill='#ffd740'>29%</text>
+  <text x='658' y='321' font-family='monospace' font-size='7' fill='#546e7a'>V-BAT</text><text x='718' y='321' font-family='monospace' font-size='7' fill='#22c55e'>12.6V</text>
+  <text x='658' y='333' font-family='monospace' font-size='7' fill='#546e7a'>CAN Load</text><text x='718' y='333' font-family='monospace' font-size='7' fill='#4fc3f7'>38%</text>
+  <text x='658' y='345' font-family='monospace' font-size='7' fill='#546e7a'>SVC FPS</text><text x='718' y='345' font-family='monospace' font-size='7' fill='#fb923c'>29fps</text>
+  <text x='658' y='357' font-family='monospace' font-size='7' fill='#546e7a'>Fusion Lat</text><text x='718' y='357' font-family='monospace' font-size='7' fill='#b39ddb'>88ms</text>
+</svg>

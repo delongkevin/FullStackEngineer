@@ -1,0 +1,96 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='800' height='450'>
+  <rect width='800' height='450' fill='#070b0f'/>
+  <rect x='0' y='0' width='800' height='52' fill='#0c1520'/>
+  <rect x='0' y='50' width='800' height='2' fill='#00e5ff' opacity='0.7'/>
+  <rect x='12' y='11' width='30' height='30' rx='6' fill='#0097a7'/>
+  <text x='50' y='27' font-family='sans-serif' font-size='14' font-weight='bold' fill='#e2e8f0'>HIL / SiL Automotive Test Platform</text>
+  <text x='50' y='43' font-family='monospace' font-size='8' fill='#4a6375'>NI VeriStand Inspired · ECU-in-Loop · Real-Time I/O · 1ms Step</text>
+  <rect x='660' y='11' width='130' height='30' rx='5' fill='#003344' stroke='#00e5ff' stroke-width='1' opacity='0.8'/>
+  <text x='725' y='30' font-family='monospace' font-size='10' fill='#00e5ff' text-anchor='middle'>■ ALL PASS</text>
+  <rect x='0' y='54' width='200' height='396' fill='#080d12' stroke='#1a2d3d' stroke-width='1'/>
+  <text x='6' y='68' font-family='monospace' font-size='7' fill='#4a6375'>TEST SUITE NAVIGATOR</text>
+  <rect x='4' y='73' width='192' height='28' rx='4' fill='#0d1f2d' stroke='#1a2d3d'/>
+  <text x='8' y='86' font-family='sans-serif' font-size='9' font-weight='bold' fill='#94a3b8'>📷 Camera Validation</text>
+  <text x='170' y='87' font-family='monospace' font-size='8' fill='#4a6375'>6</text>
+  <circle cx='10' cy='112' r='4' fill='#00e676'/><text x='18' y='116' font-family='monospace' font-size='8' fill='#94a3b8'>Front Camera Init</text><text x='168' y='116' font-family='monospace' font-size='7' fill='#546e7a'>342ms</text>
+  <circle cx='10' cy='126' r='4' fill='#00e676'/><text x='18' y='130' font-family='monospace' font-size='8' fill='#94a3b8'>Rear LVDS Check</text>
+  <circle cx='10' cy='140' r='4' fill='#ff1744'/><text x='18' y='144' font-family='monospace' font-size='8' fill='#94a3b8'>Stitch Latency</text>
+  <circle cx='10' cy='154' r='4' fill='#ffea00'/><text x='18' y='158' font-family='monospace' font-size='8' fill='#94a3b8'>Camera FPS Test</text>
+  <rect x='4' y='168' width='192' height='22' rx='4' fill='#0d1f2d' stroke='#1a2d3d'/>
+  <text x='8' y='182' font-family='sans-serif' font-size='9' font-weight='bold' fill='#94a3b8'>🅿 USS Parking</text>
+  <circle cx='10' cy='200' r='4' fill='#00e676'/><text x='18' y='204' font-family='monospace' font-size='8' fill='#94a3b8'>Front Obstacle 30cm</text>
+  <circle cx='10' cy='214' r='4' fill='#00e676'/><text x='18' y='218' font-family='monospace' font-size='8' fill='#94a3b8'>Auto-Park Slot</text>
+  <rect x='4' y='228' width='192' height='22' rx='4' fill='#0d1f2d' stroke='#1a2d3d'/>
+  <text x='8' y='242' font-family='sans-serif' font-size='9' font-weight='bold' fill='#94a3b8'>🚗 ADAS Features</text>
+  <circle cx='10' cy='260' r='4' fill='#00e676'/><text x='18' y='264' font-family='monospace' font-size='8' fill='#94a3b8'>AEB Pedestrian</text>
+  <circle cx='10' cy='274' r='4' fill='#546e7a'/><text x='18' y='278' font-family='monospace' font-size='8' fill='#546e7a'>LKA Torque</text>
+  <text x='6' y='310' font-family='monospace' font-size='7' fill='#4a6375'>EXECUTION PROGRESS</text>
+  <rect x='4' y='315' width='192' height='6' rx='3' fill='#0a1520'/>
+  <rect x='4' y='315' width='128' height='6' rx='3' fill='#00e676'/>
+  <text x='4' y='330' font-family='monospace' font-size='8' fill='#4a6375'>13 / 21 tests</text>
+  <rect x='202' y='54' width='450' height='220' fill='#050a0f'/>
+  <rect x='202' y='54' width='450' height='32' fill='#080d18'/>
+  <text x='210' y='65' font-family='sans-serif' font-size='9' font-weight='bold' fill='#00e5ff'>I/O Monitor</text>
+  <text x='280' y='65' font-family='sans-serif' font-size='9' fill='#4a6375'>Oscilloscope</text>
+  <text x='358' y='65' font-family='sans-serif' font-size='9' fill='#4a6375'>Fault Injection</text>
+  <text x='444' y='65' font-family='sans-serif' font-size='9' fill='#4a6375'>Verdict Board</text>
+  <text x='526' y='65' font-family='sans-serif' font-size='9' fill='#4a6375'>Requirements</text>
+  <rect x='202' y='82' width='450' height='2' fill='#1a2d3d'/>
+  <rect x='206' y='82' width='56' height='2' fill='#00e5ff'/>
+  <text x='206' y='98' font-family='monospace' font-size='7' fill='#4a6375'>ANALOG INPUTS</text>
+  <text x='12' y='0' font-family='monospace' font-size='8' fill='#94a3b8'/>
+  <rect x='206' y='101' width='215' height='158' rx='4' fill='#080d12' stroke='#1a2d3d'/>
+  <text x='210' y='114' font-family='monospace' font-size='7' fill='#4a6375'>ANALOG INPUTS (ADC)</text>
+  <text x='210' y='127' font-family='monospace' font-size='8' fill='#64748b'>V-BAT</text><text x='290' y='127' font-family='monospace' font-size='8' font-weight='bold' fill='#22c55e'>12.56 V</text><rect x='350' y='121' width='68' height='6' rx='3' fill='#0a1520'/><rect x='350' y='121' width='54' height='6' rx='3' fill='#22c55e' opacity='0.7'/>
+  <text x='210' y='143' font-family='monospace' font-size='8' fill='#64748b'>ECU Temp</text><text x='290' y='143' font-family='monospace' font-size='8' font-weight='bold' fill='#f59e0b'>54.2 °C</text><rect x='350' y='137' width='68' height='6' rx='3' fill='#0a1520'/><rect x='350' y='137' width='42' height='6' rx='3' fill='#f59e0b' opacity='0.7'/>
+  <text x='210' y='159' font-family='monospace' font-size='8' fill='#64748b'>CamTemp</text><text x='290' y='159' font-family='monospace' font-size='8' font-weight='bold' fill='#38bdf8'>45.8 °C</text><rect x='350' y='153' width='68' height='6' rx='3' fill='#0a1520'/><rect x='350' y='153' width='38' height='6' rx='3' fill='#38bdf8' opacity='0.7'/>
+  <text x='210' y='175' font-family='monospace' font-size='8' fill='#64748b'>Throttle</text><text x='290' y='175' font-family='monospace' font-size='8' font-weight='bold' fill='#fb923c'>32.4 %</text><rect x='350' y='169' width='68' height='6' rx='3' fill='#0a1520'/><rect x='350' y='169' width='22' height='6' rx='3' fill='#fb923c' opacity='0.7'/>
+  <text x='210' y='191' font-family='monospace' font-size='7' fill='#4a6375'>DIGITAL I/O</text>
+  <rect x='212' y='197' width='8' height='8' rx='1' fill='#003300' stroke='#00e676'/><text x='224' y='205' font-family='monospace' font-size='8' fill='#64748b'>IGN_ON</text><text x='328' y='205' font-family='monospace' font-size='8' fill='#22c55e'>HIGH</text>
+  <rect x='212' y='210' width='8' height='8' rx='1' fill='#110011'/><text x='224' y='218' font-family='monospace' font-size='8' fill='#64748b'>BRAKE_SW</text><text x='328' y='218' font-family='monospace' font-size='8' fill='#546e7a'>LOW</text>
+  <rect x='212' y='223' width='8' height='8' rx='1' fill='#003300' stroke='#00e676'/><text x='224' y='231' font-family='monospace' font-size='8' fill='#64748b'>LKA_ENABLE</text><text x='328' y='231' font-family='monospace' font-size='8' fill='#22c55e'>HIGH</text>
+  <rect x='427' y='101' width='222' height='158' rx='4' fill='#030810' stroke='#1a2d3d'/>
+  <text x='431' y='113' font-family='monospace' font-size='7' fill='#4a6375'>OSCILLOSCOPE — 4 CHANNEL</text>
+  <path d='M 431 135 C 455 128 475 148 505 132 C 535 116 555 140 585 126 C 610 113 625 133 648 122' fill='none' stroke='#f59e0b' stroke-width='1.5'/>
+  <path d='M 431 160 C 455 155 475 168 505 158 C 535 148 555 162 585 154 C 610 146 625 158 648 152' fill='none' stroke='#22c55e' stroke-width='1.5'/>
+  <path d='M 431 188 C 455 180 475 200 505 186 C 535 172 555 192 585 178 C 610 164 625 183 648 170' fill='none' stroke='#a78bfa' stroke-width='1.5'/>
+  <text x='431' y='248' font-family='monospace' font-size='7' fill='#f59e0b'>■ RPM</text>
+  <text x='465' y='248' font-family='monospace' font-size='7' fill='#22c55e'>■ Speed</text>
+  <text x='510' y='248' font-family='monospace' font-size='7' fill='#a78bfa'>■ Throttle</text>
+  <rect x='202' y='276' width='450' height='80' fill='#040810' stroke='#1a2d3d' stroke-width='1'/>
+  <text x='206' y='290' font-family='monospace' font-size='7' fill='#4a6375'>VERDICT BOARD</text>
+  <rect x='206' y='296' width='100' height='50' rx='4' fill='#0a1e0a' stroke='#1e4d1e'/>
+  <text x='256' y='322' font-family='monospace' font-size='24' font-weight='bold' fill='#00e676' text-anchor='middle'>13</text>
+  <text x='256' y='340' font-family='monospace' font-size='8' fill='#546e7a' text-anchor='middle'>PASS</text>
+  <rect x='312' y='296' width='100' height='50' rx='4' fill='#1e0a0a' stroke='#4d1e1e'/>
+  <text x='362' y='322' font-family='monospace' font-size='24' font-weight='bold' fill='#ff1744' text-anchor='middle'>2</text>
+  <text x='362' y='340' font-family='monospace' font-size='8' fill='#546e7a' text-anchor='middle'>FAIL</text>
+  <rect x='418' y='296' width='100' height='50' rx='4' fill='#1a1500' stroke='#4d4400'/>
+  <text x='468' y='322' font-family='monospace' font-size='24' font-weight='bold' fill='#ffea00' text-anchor='middle'>1</text>
+  <text x='468' y='340' font-family='monospace' font-size='8' fill='#546e7a' text-anchor='middle'>IN PROG</text>
+  <rect x='524' y='296' width='124' height='50' rx='4' fill='#0a1520' stroke='#1d3347'/>
+  <text x='586' y='322' font-family='monospace' font-size='24' font-weight='bold' fill='#546e7a' text-anchor='middle'>5</text>
+  <text x='586' y='340' font-family='monospace' font-size='8' fill='#546e7a' text-anchor='middle'>NOT EXEC</text>
+  <rect x='202' y='358' width='450' height='92' fill='#020508' stroke='#1a2d3d'/>
+  <text x='206' y='370' font-family='monospace' font-size='7' fill='#4a6375'>CONSOLE OUTPUT</text>
+  <text x='206' y='383' font-family='monospace' font-size='7' fill='#546e7a'>[1.324] [HIL] Test session started</text>
+  <text x='206' y='394' font-family='monospace' font-size='7' fill='#00e5ff'>[1.328] [EXEC] ▶ TC-CAM-001 — Front Camera Init</text>
+  <text x='206' y='405' font-family='monospace' font-size='7' fill='#00e676'>[1.670] [PASS] TC-CAM-001: Front Camera Init (342ms)</text>
+  <text x='206' y='416' font-family='monospace' font-size='7' fill='#00e5ff'>[1.675] [EXEC] ▶ TC-CAM-002 — Rear Camera LVDS Check</text>
+  <text x='206' y='427' font-family='monospace' font-size='7' fill='#00e676'>[1.893] [PASS] TC-CAM-002: Rear Camera LVDS (218ms)</text>
+  <text x='206' y='438' font-family='monospace' font-size='7' fill='#ff1744'>[2.234] [FAIL] TC-CAM-003: SurroundView Latency — tolerance exceeded</text>
+  <rect x='654' y='54' width='146' height='396' fill='#080d12' stroke='#1a2d3d' stroke-width='1'/>
+  <text x='658' y='68' font-family='monospace' font-size='7' fill='#4a6375'>EXECUTION CONTROL</text>
+  <rect x='658' y='74' width='138' height='30' rx='5' fill='#0097a7'/>
+  <text x='727' y='92' font-family='sans-serif' font-size='11' font-weight='bold' fill='#000' text-anchor='middle'>▶ RUN ALL TESTS</text>
+  <text x='658' y='122' font-family='monospace' font-size='7' fill='#4a6375'>MODEL STATUS</text>
+  <text x='658' y='135' font-family='monospace' font-size='7' fill='#64748b'>Model</text><text x='720' y='135' font-family='monospace' font-size='7' fill='#22c55e'>Loaded ✓</text>
+  <text x='658' y='148' font-family='monospace' font-size='7' fill='#64748b'>Sim Rate</text><text x='720' y='148' font-family='monospace' font-size='7' fill='#00e5ff'>1000 Hz</text>
+  <text x='658' y='161' font-family='monospace' font-size='7' fill='#64748b'>CPU</text><text x='720' y='161' font-family='monospace' font-size='7' fill='#f59e0b'>43%</text>
+  <text x='658' y='174' font-family='monospace' font-size='7' fill='#64748b'>Overruns</text><text x='720' y='174' font-family='monospace' font-size='7' fill='#22c55e'>0</text>
+  <text x='658' y='200' font-family='monospace' font-size='7' fill='#4a6375'>COVERAGE</text>
+  <text x='658' y='213' font-family='monospace' font-size='7' fill='#64748b'>Functional</text><text x='728' y='213' font-family='monospace' font-size='7' fill='#22c55e'>62%</text>
+  <rect x='658' y='216' width='138' height='4' rx='2' fill='#0a1520'/><rect x='658' y='216' width='86' height='4' rx='2' fill='#22c55e'/>
+  <text x='658' y='233' font-family='monospace' font-size='7' fill='#64748b'>Code (SiL)</text><text x='728' y='233' font-family='monospace' font-size='7' fill='#b39ddb'>55%</text>
+  <rect x='658' y='236' width='138' height='4' rx='2' fill='#0a1520'/><rect x='658' y='236' width='76' height='4' rx='2' fill='#b39ddb'/>
+</svg>
