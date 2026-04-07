@@ -23,8 +23,12 @@ export default function ContactPage() {
   const [errors, setErrors] = useState<{ name?: string; email?: string; subject?: string; message?: string }>({});
   const [chatStatus, setChatStatus] = useState<'loading' | 'online' | 'offline'>('loading');
 
-  const tawkPropertyId = process.env.NEXT_PUBLIC_TAWK_PROPERTY_ID;
-  const tawkWidgetId = process.env.NEXT_PUBLIC_TAWK_WIDGET_ID;
+  // Fallback IDs ensure chat still works for static export workflows where runtime env is unavailable.
+  const defaultTawkPropertyId = '69d51cf32bcfb31c3daa3057';
+  const defaultTawkWidgetId = '1jlk7i5ot';
+
+  const tawkPropertyId = process.env.NEXT_PUBLIC_TAWK_PROPERTY_ID || defaultTawkPropertyId;
+  const tawkWidgetId = process.env.NEXT_PUBLIC_TAWK_WIDGET_ID || defaultTawkWidgetId;
   const chatEnabled = Boolean(tawkPropertyId && tawkWidgetId);
 
   useEffect(() => {
