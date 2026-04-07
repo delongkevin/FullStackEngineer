@@ -119,7 +119,7 @@ export default function ResumePage() {
             <a
               href="/resume.pdf"
               className="btn-primary inline-flex items-center gap-2"
-              download="Kevin_Delong_Resume.pdf"  // Add this line
+              download="Kevin_Delong_Resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
             >

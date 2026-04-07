@@ -28,7 +28,7 @@ export const projects: Project[] = [
     image: "/images/blackjack.jpg",
     tech: ["React", "JavaScript", "HTML5", "CSS3"],
     liveUrl: "/projects/blackjack/index.html",
-    githubUrl: "https://github.com/delongkevin/2025-Portfolio-SoftwareEngineer",
+    githubUrl: "https://github.com/delongkevin/FullStackEngineer",
     featured: true,
     category: "mobile",
     features: [
@@ -49,7 +49,7 @@ export const projects: Project[] = [
     image: "/images/circle_clicker.jpg",
     tech: ["JavaScript", "HTML5", "CSS3", "Game Development"],
     liveUrl: "/projects/circle-clicker/index.html",
-    githubUrl: "https://github.com/delongkevin/2025-Portfolio-SoftwareEngineer",
+    githubUrl: "https://github.com/delongkevin/FullStackEngineer",
     featured: false,
     category: "mobile",
     features: [
@@ -112,7 +112,7 @@ export const projects: Project[] = [
     image: "/images/tictactoe.jpg",
     tech: ["React", "JavaScript", "HTML5", "CSS3"],
     liveUrl: "/projects/tic-tac-toe/index.html",
-    githubUrl: "https://github.com/delongkevin/2025-Portfolio-SoftwareEngineer",
+    githubUrl: "https://github.com/delongkevin/FullStackEngineer",
     featured: false,
     category: "mobile",
     features: [

@@ -140,7 +140,7 @@ export default function ContactPage() {
                     <Linkedin size={20} aria-hidden="true" />
                   </a>
                                     <a
-                    href="https://github.com/delongkevin/2025-Portfolio-SoftwareEngineer"
+                                      href="https://github.com/delongkevin"
                     className="bg-gray-100 text-gray-600 hover:bg-gray-800 hover:text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors"
                     target="_blank"
                     rel="noopener noreferrer"

@@ -4,6 +4,9 @@ import { projects } from '../../../data/projects';
 import { ExternalLink, Github, ArrowLeft, Smartphone, Download } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import type { Metadata } from 'next';
+
+const siteUrl = 'https://delongkevin.github.io/FullStackEngineer';
 
 interface PageProps {
   params: {
@@ -32,9 +35,29 @@ export default function ProjectDetail({ params }: PageProps) {
     );
   }
 
+  const projectJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: project.title,
+    applicationCategory: project.category,
+    operatingSystem: 'Web, Android, iOS',
+    description: project.description,
+    image: `${siteUrl}${project.image}`,
+    url: `${siteUrl}/projects/${project.id}/`,
+    codeRepository: project.githubUrl,
+    author: {
+      '@type': 'Person',
+      name: 'Kevin Douglas Delong',
+    },
+  };
+
   return (
     <>
       <Header />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(projectJsonLd) }}
+      />
       
       <main id="main-content" className="pt-24 pb-16 min-h-screen">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -278,9 +301,30 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
       title: 'Project Not Found - Kevin Delong',
     };
   }
+
+  const canonicalUrl = `${siteUrl}/projects/${project.id}/`;
+  const imageUrl = `${siteUrl}${project.image}`;
   
-  return {
+  const metadata: Metadata = {
     title: `${project.title} - Kevin Delong`,
     description: project.description,
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    openGraph: {
+      title: `${project.title} - Kevin Delong`,
+      description: project.description,
+      url: canonicalUrl,
+      type: 'article',
+      images: [imageUrl],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${project.title} - Kevin Delong`,
+      description: project.description,
+      images: [imageUrl],
+    },
   };
+
+  return metadata;
 }

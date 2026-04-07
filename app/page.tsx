@@ -24,11 +24,14 @@ export default function Home() {
               mobile development, automotive integrations, and scalable solutions.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <a href="/projects" className="btn-primary inline-flex items-center justify-center transform hover:scale-105 transition-transform">
-                View My Work <ArrowRight className="ml-2" size={20} aria-hidden="true" />
+              <a href="/resume" className="btn-primary inline-flex items-center justify-center transform hover:scale-105 transition-transform">
+                Hire Me <ArrowRight className="ml-2" size={20} aria-hidden="true" />
               </a>
               <a href="/contact" className="btn-secondary inline-flex items-center justify-center transform hover:scale-105 transition-transform">
-                Get In Touch
+                Collaborate
+              </a>
+              <a href="/projects" className="btn-secondary inline-flex items-center justify-center transform hover:scale-105 transition-transform">
+                Explore Projects
               </a>
             </div>
           </div>
