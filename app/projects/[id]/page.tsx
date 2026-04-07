@@ -54,9 +54,13 @@ export default function ProjectDetail({ params }: PageProps) {
               {/* Project Image */}
               <div className="lg:w-1/3">
                 <div className="relative h-64 rounded-lg overflow-hidden">
-                  <div className="w-full h-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-xl font-bold">
-                    {project.title}
-                  </div>
+                  <Image
+                    src={project.image}
+                    alt={`${project.title} screenshot`}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 33vw"
+                  />
                 </div>
               </div>
               
