@@ -75,5 +75,16 @@ This site can be deployed to:
 - GitHub Pages
 - Any static hosting service
 
+## 💬 Live Chat (Netlify-Compatible)
+
+The contact page supports an optional live chat widget with online/offline status (green/red) via Tawk.to.
+
+To enable it on Netlify, add these environment variables in Site Settings -> Environment Variables:
+
+- `NEXT_PUBLIC_TAWK_PROPERTY_ID`
+- `NEXT_PUBLIC_TAWK_WIDGET_ID`
+
+After setting variables, trigger a redeploy. If variables are missing, the contact form remains fully functional and chat is shown as disabled.
+
 ## 📝 License
 - Kevin Douglas Delong
