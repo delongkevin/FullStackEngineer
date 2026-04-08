@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import UxControls from './UxControls';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -114,6 +115,8 @@ export default function Header() {
               })}
             </div>
           </div>
+
+          <UxControls />
 
           {/* Mobile menu button */}
           <div className="md:hidden">

@@ -6,15 +6,24 @@ import Image from 'next/image';
 interface ProjectCardProps {
   project: Project;
   imagePriority?: boolean;
+  cardSize?: 'sm' | 'md' | 'lg';
+  compactMeta?: boolean;
 }
 
-export default function ProjectCard({ project, imagePriority = false }: ProjectCardProps) {
+export default function ProjectCard({
+  project,
+  imagePriority = false,
+  cardSize = 'md',
+  compactMeta = false,
+}: ProjectCardProps) {
   const categoryLabel = formatProjectCategory(project.category);
+  const imageHeightClassName = cardSize === 'sm' ? 'h-36' : cardSize === 'lg' ? 'h-56' : 'h-48';
+  const contentPaddingClassName = cardSize === 'sm' ? 'p-4' : cardSize === 'lg' ? 'p-7' : 'p-6';
 
   return (
-    <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:transform hover:scale-105 group">
+    <div className="surface-card rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:transform hover:scale-[1.02] group">
       {/* Project Image - FIXED: Using actual image */}
-      <div className="h-48 relative overflow-hidden">
+      <div className={`${imageHeightClassName} relative overflow-hidden`}>
         {/* Replace the gradient div with Image component */}
         <Image
           src={project.image}
@@ -85,28 +94,30 @@ export default function ProjectCard({ project, imagePriority = false }: ProjectC
       </div>
       
       {/* Rest of the component remains the same */}
-      <div className="p-6">
+      <div className={contentPaddingClassName}>
         <h3 className="text-xl font-bold text-gray-800 mb-2 group-hover:text-blue-600 transition-colors">
           {project.title}
         </h3>
         <p className="text-gray-600 mb-4 line-clamp-2">{project.description}</p>
         
         {/* Tech Stack */}
-        <div className="flex flex-wrap gap-2 mb-4">
-          {project.tech.slice(0, 4).map((tech: string) => (
-            <span
-              key={tech}
-              className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium"
-            >
-              {tech}
-            </span>
-          ))}
-          {project.tech.length > 4 && (
-            <span className="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm">
-              +{project.tech.length - 4}
-            </span>
-          )}
-        </div>
+        {!compactMeta && (
+          <div className="flex flex-wrap gap-2 mb-4">
+            {project.tech.slice(0, 4).map((tech: string) => (
+              <span
+                key={tech}
+                className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-medium"
+              >
+                {tech}
+              </span>
+            ))}
+            {project.tech.length > 4 && (
+              <span className="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm">
+                +{project.tech.length - 4}
+              </span>
+            )}
+          </div>
+        )}
         
         {/* Action Buttons */}
         <div className="flex justify-between items-center pt-4 border-t border-gray-100">

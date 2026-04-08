@@ -18,8 +18,11 @@ import Link from 'next/link';
 
 type ProjectFilterCategory = 'all' | ProjectCategory;
 type SortOption = 'featured' | 'alphabetical' | 'newest' | 'oldest';
+type ViewMode = 'grid' | 'list' | 'masonry';
+type CardSize = 'sm' | 'md' | 'lg';
 
 const projectCategories: readonly ProjectFilterCategory[] = ['all', 'mobile', 'Automotive', 'Web', 'fullstack'];
+const PROJECT_LAYOUT_STORAGE_KEY = 'portfolio-project-layout-v1';
 
 const sortProjects = (projectList: Project[], sortBy: SortOption): Project[] => {
   const cloned = [...projectList];
@@ -42,6 +45,11 @@ export default function ProjectsClient() {
   const [query, setQuery] = useState('');
   const [featuredOnly, setFeaturedOnly] = useState(false);
   const [sortBy, setSortBy] = useState<SortOption>('featured');
+  const [viewMode, setViewMode] = useState<ViewMode>('grid');
+  const [cardSize, setCardSize] = useState<CardSize>('md');
+  const [showMeta, setShowMeta] = useState(true);
+  const [showRecently, setShowRecently] = useState(true);
+  const [showRecommended, setShowRecommended] = useState(true);
   const [announcement, setAnnouncement] = useState('');
   const [recentlyViewedIds, setRecentlyViewedIds] = useState<number[]>([]);
 
@@ -119,6 +127,37 @@ export default function ProjectsClient() {
       }
     }
 
+    const layoutState = window.localStorage.getItem(PROJECT_LAYOUT_STORAGE_KEY);
+    if (layoutState) {
+      try {
+        const parsed = JSON.parse(layoutState) as {
+          viewMode?: ViewMode;
+          cardSize?: CardSize;
+          showMeta?: boolean;
+          showRecently?: boolean;
+          showRecommended?: boolean;
+        };
+
+        if (parsed.viewMode && ['grid', 'list', 'masonry'].includes(parsed.viewMode)) {
+          setViewMode(parsed.viewMode);
+        }
+        if (parsed.cardSize && ['sm', 'md', 'lg'].includes(parsed.cardSize)) {
+          setCardSize(parsed.cardSize);
+        }
+        if (typeof parsed.showMeta === 'boolean') {
+          setShowMeta(parsed.showMeta);
+        }
+        if (typeof parsed.showRecently === 'boolean') {
+          setShowRecently(parsed.showRecently);
+        }
+        if (typeof parsed.showRecommended === 'boolean') {
+          setShowRecommended(parsed.showRecommended);
+        }
+      } catch {
+        // Ignore malformed local storage values.
+      }
+    }
+
     const recentRaw = window.localStorage.getItem(RECENTLY_VIEWED_PROJECTS_STORAGE_KEY);
     if (recentRaw) {
       try {
@@ -142,6 +181,18 @@ export default function ProjectsClient() {
     window.localStorage.setItem(PROJECT_DISCOVERY_STORAGE_KEY, JSON.stringify(payload));
   }, [filter, query, featuredOnly, sortBy]);
 
+  useEffect(() => {
+    const payload = {
+      viewMode,
+      cardSize,
+      showMeta,
+      showRecently,
+      showRecommended,
+    };
+
+    window.localStorage.setItem(PROJECT_LAYOUT_STORAGE_KEY, JSON.stringify(payload));
+  }, [viewMode, cardSize, showMeta, showRecently, showRecommended]);
+
   const handleFilterChange = (category: ProjectFilterCategory) => {
     setFilter(category);
     const categoryName = category === 'all' ? 'All categories' : formatProjectCategory(category);
@@ -164,6 +215,22 @@ export default function ProjectsClient() {
     setAnnouncement('Reset all filters. Showing full project catalog.');
   };
 
+  const handleResetLayout = () => {
+    setViewMode('grid');
+    setCardSize('md');
+    setShowMeta(true);
+    setShowRecently(true);
+    setShowRecommended(true);
+    setAnnouncement('Layout preferences reset to default.');
+  };
+
+  const cardsContainerClassName =
+    viewMode === 'masonry'
+      ? 'columns-1 md:columns-2 lg:columns-3 gap-6'
+      : viewMode === 'list'
+        ? 'grid grid-cols-1 gap-6'
+        : 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8';
+
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="text-center mb-12">
@@ -178,7 +245,7 @@ export default function ProjectsClient() {
         {announcement}
       </div>
 
-      <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-4 md:p-6 mb-8">
+      <div className="surface-card rounded-2xl shadow-md p-4 md:p-6 mb-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           <label className="lg:col-span-2">
             <span className="text-sm font-medium text-gray-700 mb-2 block">Search projects</span>
@@ -239,6 +306,81 @@ export default function ProjectsClient() {
             Showing {filteredProjects.length} of {categoryCounts[filter]} projects
           </p>
         </div>
+
+        <div className="mt-4 border-t border-gray-200 pt-4 space-y-3">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-sm font-semibold text-gray-700">Layout</span>
+            {(['grid', 'list', 'masonry'] as ViewMode[]).map((mode) => (
+              <button
+                key={mode}
+                type="button"
+                onClick={() => setViewMode(mode)}
+                className={`px-3 py-2 rounded-full border text-xs font-semibold transition-colors ${
+                  viewMode === mode
+                    ? 'bg-blue-600 text-white border-blue-600'
+                    : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100'
+                }`}
+              >
+                {mode[0].toUpperCase() + mode.slice(1)}
+              </button>
+            ))}
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="text-sm font-semibold text-gray-700">Card size</span>
+            {(['sm', 'md', 'lg'] as CardSize[]).map((size) => (
+              <button
+                key={size}
+                type="button"
+                onClick={() => setCardSize(size)}
+                className={`px-3 py-2 rounded-full border text-xs font-semibold transition-colors ${
+                  cardSize === size
+                    ? 'bg-blue-600 text-white border-blue-600'
+                    : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100'
+                }`}
+              >
+                {size.toUpperCase()}
+              </button>
+            ))}
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setShowMeta((current) => !current)}
+              className={`px-3 py-2 rounded-full border text-xs font-semibold transition-colors ${
+                showMeta ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-700 border-gray-300'
+              }`}
+            >
+              {showMeta ? 'Metadata On' : 'Metadata Off'}
+            </button>
+            <button
+              type="button"
+              onClick={() => setShowRecently((current) => !current)}
+              className={`px-3 py-2 rounded-full border text-xs font-semibold transition-colors ${
+                showRecently ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-700 border-gray-300'
+              }`}
+            >
+              {showRecently ? 'Recently Viewed On' : 'Recently Viewed Off'}
+            </button>
+            <button
+              type="button"
+              onClick={() => setShowRecommended((current) => !current)}
+              className={`px-3 py-2 rounded-full border text-xs font-semibold transition-colors ${
+                showRecommended ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-700 border-gray-300'
+              }`}
+            >
+              {showRecommended ? 'Recommended On' : 'Recommended Off'}
+            </button>
+            <button
+              type="button"
+              onClick={handleResetLayout}
+              className="px-3 py-2 rounded-full border border-gray-300 text-xs font-semibold text-gray-700 hover:bg-gray-100"
+            >
+              Reset Layout
+            </button>
+          </div>
+        </div>
       </div>
 
       <div className="flex flex-wrap justify-center gap-4 mb-12">
@@ -263,7 +405,7 @@ export default function ProjectsClient() {
         ))}
       </div>
 
-      {recentlyViewedProjects.length > 0 && (
+      {showRecently && recentlyViewedProjects.length > 0 && (
         <section className="mb-12" aria-label="Recently viewed projects">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Recently Viewed</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -281,7 +423,7 @@ export default function ProjectsClient() {
         </section>
       )}
 
-      {recommendedProjects.length > 0 && (
+      {showRecommended && recommendedProjects.length > 0 && (
         <section className="mb-12" aria-label="Recommended projects">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Recommended For You</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -300,9 +442,16 @@ export default function ProjectsClient() {
       )}
 
       {filteredProjects.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className={cardsContainerClassName}>
           {filteredProjects.map((project, index) => (
-            <ProjectCard key={project.id} project={project} imagePriority={index < 3} />
+            <div key={project.id} className={viewMode === 'masonry' ? 'mb-6 break-inside-avoid' : ''}>
+              <ProjectCard
+                project={project}
+                imagePriority={index < 3}
+                cardSize={cardSize}
+                compactMeta={!showMeta}
+              />
+            </div>
           ))}
         </div>
       ) : (

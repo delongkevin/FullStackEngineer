@@ -12,6 +12,21 @@ interface ProjectDemoEmbedProps {
 export default function ProjectDemoEmbed({ liveUrl, title, category }: ProjectDemoEmbedProps) {
   const [iframeKey, setIframeKey] = useState(0);
   const [copyStatus, setCopyStatus] = useState<'idle' | 'copied' | 'error'>('idle');
+  const [demoHeight, setDemoHeight] = useState<'short' | 'medium' | 'tall' | 'full'>(() => {
+    if (typeof window === 'undefined') {
+      return 'medium';
+    }
+
+    const stored = window.localStorage.getItem('portfolio-demo-height-v1');
+    if (stored === 'short' || stored === 'tall' || stored === 'full') {
+      return stored;
+    }
+
+    return 'medium';
+  });
+
+  const iframeHeight =
+    demoHeight === 'short' ? 520 : demoHeight === 'tall' ? 840 : demoHeight === 'full' ? 980 : 680;
 
   const handleCopyLink = async () => {
     try {
@@ -62,18 +77,39 @@ export default function ProjectDemoEmbed({ liveUrl, title, category }: ProjectDe
         </div>
       </div>
 
+      <div className="mb-4 flex flex-wrap items-center gap-2">
+        <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">Demo Size</p>
+        {(['short', 'medium', 'tall', 'full'] as const).map((size) => (
+          <button
+            key={size}
+            type="button"
+            onClick={() => {
+              setDemoHeight(size);
+              window.localStorage.setItem('portfolio-demo-height-v1', size);
+            }}
+            className={`px-3 py-1.5 rounded-full border text-xs font-semibold ${
+              demoHeight === size
+                ? 'bg-blue-600 text-white border-blue-600'
+                : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100'
+            }`}
+          >
+            {size[0].toUpperCase() + size.slice(1)}
+          </button>
+        ))}
+      </div>
+
       <p id="demo-description" className="sr-only">
         This interactive demo allows you to try {title}. Use keyboard navigation to interact with the embedded content.
       </p>
       <iframe
         key={iframeKey}
         src={liveUrl}
-        className="w-full h-[600px] border-0 rounded-lg bg-white"
+        className="w-full border-0 rounded-lg bg-white"
         title={`Interactive demo of ${title} - ${category} project`}
         aria-describedby="demo-description"
         loading="lazy"
         sandbox="allow-forms allow-scripts allow-same-origin"
-        style={{ minHeight: '600px' }}
+        style={{ minHeight: `${iframeHeight}px`, height: `${iframeHeight}px` }}
       />
     </div>
   );
