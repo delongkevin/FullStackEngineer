@@ -16,6 +16,7 @@
       --good: #34d399;
       --bubble-self: #21386d;
       --bubble-peer: #18274a;
+      --contacts-width: 48%;
     }
     * { box-sizing: border-box; }
     body {
@@ -37,13 +38,34 @@
       grid-template-columns: 1fr;
     }
     @media (min-width: 940px) {
-      .layout { grid-template-columns: 0.95fr 1.05fr; }
+      .layout { grid-template-columns: var(--contacts-width) 1fr; }
     }
     .panel {
       background: var(--panel);
       border: 1px solid var(--line);
       border-radius: 14px;
       padding: 12px;
+    }
+    .widget-toolbar {
+      margin-top: 14px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 8px;
+      background: #121b39;
+      border: 1px solid #2a3d73;
+      border-radius: 12px;
+      padding: 10px;
+    }
+    .widget-toolbar label {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+    .widget-toolbar input[type="range"] {
+      width: 100%;
     }
     .tools {
       display: flex;
@@ -154,8 +176,21 @@
     <h1>Real-time Chat App</h1>
     <p>Phase-complete preview with presence filtering, thread state, and typing/send interactions.</p>
 
+    <div class="widget-toolbar" aria-label="Layout controls">
+      <label>
+        Conversation Panel Width
+        <input id="splitRange" type="range" min="35" max="65" step="1" value="48" />
+      </label>
+      <label>
+        Message Panel Height
+        <input id="threadHeightRange" type="range" min="280" max="620" step="10" value="390" />
+      </label>
+      <button id="toggleContactsBtn" type="button">Hide Contacts</button>
+      <button id="resetLayoutBtn" type="button">Reset Layout</button>
+    </div>
+
     <section class="layout">
-      <article class="panel">
+      <article class="panel" id="contactsPanel">
         <div class="tools">
           <input id="search" type="search" placeholder="Search conversations" aria-label="Search conversations" />
           <select id="presence" aria-label="Presence filter">
@@ -167,7 +202,7 @@
         <div class="list" id="conversationList"></div>
       </article>
 
-      <article class="panel thread">
+      <article class="panel thread" id="threadPanel">
         <div>
           <strong id="threadTitle">Select a conversation</strong>
           <div class="state" id="threadState">Status: Idle</div>
@@ -239,15 +274,89 @@
     ];
 
     const CHAT_STATE_KEY = 'portfolio_chat_state_v1';
+    const CHAT_LAYOUT_KEY = 'portfolio_chat_layout_v1';
 
     const listEl = document.getElementById('conversationList');
+    const layoutEl = document.querySelector('.layout');
+    const contactsPanelEl = document.getElementById('contactsPanel');
     const searchEl = document.getElementById('search');
     const presenceEl = document.getElementById('presence');
     const messagesEl = document.getElementById('messages');
+    const splitRangeEl = document.getElementById('splitRange');
+    const threadHeightRangeEl = document.getElementById('threadHeightRange');
+    const toggleContactsBtnEl = document.getElementById('toggleContactsBtn');
+    const resetLayoutBtnEl = document.getElementById('resetLayoutBtn');
     const composerEl = document.getElementById('composer');
     const typingEl = document.getElementById('typing');
     const threadTitleEl = document.getElementById('threadTitle');
     const threadStateEl = document.getElementById('threadState');
+
+    function loadLayoutState() {
+      const raw = localStorage.getItem(CHAT_LAYOUT_KEY);
+      if (!raw) {
+        return { split: 48, threadHeight: 390, showContacts: true };
+      }
+
+      try {
+        const parsed = JSON.parse(raw);
+        return {
+          split: Number.isFinite(parsed.split) ? Math.min(Math.max(parsed.split, 35), 65) : 48,
+          threadHeight: Number.isFinite(parsed.threadHeight) ? Math.min(Math.max(parsed.threadHeight, 280), 620) : 390,
+          showContacts: typeof parsed.showContacts === 'boolean' ? parsed.showContacts : true
+        };
+      } catch {
+        return { split: 48, threadHeight: 390, showContacts: true };
+      }
+    }
+
+    const layoutState = loadLayoutState();
+
+    function saveLayoutState() {
+      localStorage.setItem(CHAT_LAYOUT_KEY, JSON.stringify(layoutState));
+    }
+
+    function applyLayoutState() {
+      document.documentElement.style.setProperty('--contacts-width', layoutState.split + '%');
+      messagesEl.style.maxHeight = layoutState.threadHeight + 'px';
+      splitRangeEl.value = String(layoutState.split);
+      threadHeightRangeEl.value = String(layoutState.threadHeight);
+
+      if (!layoutState.showContacts) {
+        contactsPanelEl.style.display = 'none';
+        layoutEl.style.gridTemplateColumns = '1fr';
+        toggleContactsBtnEl.textContent = 'Show Contacts';
+      } else {
+        contactsPanelEl.style.display = '';
+        layoutEl.style.removeProperty('grid-template-columns');
+        toggleContactsBtnEl.textContent = 'Hide Contacts';
+      }
+    }
+
+    splitRangeEl.addEventListener('input', () => {
+      layoutState.split = Number(splitRangeEl.value);
+      applyLayoutState();
+      saveLayoutState();
+    });
+
+    threadHeightRangeEl.addEventListener('input', () => {
+      layoutState.threadHeight = Number(threadHeightRangeEl.value);
+      applyLayoutState();
+      saveLayoutState();
+    });
+
+    toggleContactsBtnEl.addEventListener('click', () => {
+      layoutState.showContacts = !layoutState.showContacts;
+      applyLayoutState();
+      saveLayoutState();
+    });
+
+    resetLayoutBtnEl.addEventListener('click', () => {
+      layoutState.split = 48;
+      layoutState.threadHeight = 390;
+      layoutState.showContacts = true;
+      applyLayoutState();
+      saveLayoutState();
+    });
 
     function loadChatState() {
       const raw = localStorage.getItem(CHAT_STATE_KEY);
@@ -468,6 +577,7 @@
 
     renderList();
     renderThread();
+    applyLayoutState();
   </script>
   <!-- Portfolio QoL Enhancer -->
   <script>(function(){if(window.__portfolioQolEnhancer)return;window.__portfolioQolEnhancer=1;var b=document.createElement("button");b.type="button";b.setAttribute("aria-label","Scroll to top");b.textContent="Top";b.style.cssText="position:fixed;right:14px;bottom:14px;z-index:2147483000;border:1px solid rgba(148,163,184,.7);background:rgba(15,23,42,.88);color:#f8fafc;border-radius:999px;font:700 12px/1 Trebuchet MS,Segoe UI,sans-serif;padding:8px 11px;cursor:pointer;opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .16s ease,transform .16s ease";document.body.appendChild(b);function sync(){var visible=window.scrollY>200;b.style.opacity=visible?"1":"0";b.style.transform=visible?"translateY(0)":"translateY(8px)";b.style.pointerEvents=visible?"auto":"none";}b.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});document.addEventListener("keydown",function(e){var t=e.target&&e.target.tagName;if(t==="INPUT"||t==="TEXTAREA"||t==="SELECT")return;if(e.key==="t"||e.key==="T"){window.scrollTo({top:0,behavior:"smooth"});}});window.addEventListener("scroll",sync,{passive:true});sync();})();</script>
