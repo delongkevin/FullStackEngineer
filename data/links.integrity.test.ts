@@ -9,6 +9,10 @@ function asPublicPath(urlPath: string): string {
   return path.join(repoRoot, 'public', urlPath.replace(/^\/+/, ''));
 }
 
+function isLocalSitePath(value: string): boolean {
+  return value.startsWith('/');
+}
+
 function isGithubRepoUrl(url: string): boolean {
   return /^https:\/\/github\.com\/[^/]+\/[^/]+\/?$/.test(url);
 }
@@ -48,6 +52,21 @@ describe('link integrity', () => {
     (project) => {
       expect(project.liveUrl).toMatch(/^\/projects\/.+\.html$/i);
       expect(existsSync(asPublicPath(project.liveUrl))).toBe(true);
+    }
+  );
+
+  it.each(projects.filter((p) => isLocalSitePath(p.liveUrl)))(
+    'project "$title" liveUrl local target exists',
+    (project) => {
+      expect(existsSync(asPublicPath(project.liveUrl))).toBe(true);
+    }
+  );
+
+  it.each(projects.filter((p) => p.projectPath && isLocalSitePath(p.projectPath)))(
+    'project "$title" projectPath local target exists',
+    (project) => {
+      expect(project.projectPath).toBeTruthy();
+      expect(existsSync(asPublicPath(project.projectPath as string))).toBe(true);
     }
   );
 
