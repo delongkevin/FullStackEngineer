@@ -122,8 +122,8 @@ export default function ContactPage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">Get In Touch</h1>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            <h1 className="text-4xl font-bold theme-text-primary mb-4">Get In Touch</h1>
+            <p className="text-xl theme-text-secondary max-w-2xl mx-auto">
               Have a project in mind or want to collaborate? I'd love to hear from you. 
               Send me a message and I'll respond as soon as possible.
              </p>
@@ -132,13 +132,13 @@ export default function ContactPage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             {/* Contact Information */}
             <div className="lg:col-span-1">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Contact Information</h2>
+              <h2 className="text-2xl font-bold theme-text-primary mb-6">Contact Information</h2>
 
-              <div className="bg-white border border-gray-200 rounded-xl p-5 mb-6 shadow-sm">
+              <div className="surface-card rounded-xl p-5 mb-6 shadow-sm">
                 <div className="flex items-center justify-between gap-4 mb-3">
                   <div className="flex items-center gap-2">
                     <MessageCircle className="text-blue-600" size={18} aria-hidden="true" />
-                    <h3 className="font-semibold text-gray-900">Live Chat</h3>
+                    <h3 className="font-semibold theme-text-primary">Live Chat</h3>
                   </div>
                   <span
                     className={`inline-flex items-center gap-2 px-2.5 py-1 rounded-full text-xs font-medium ${
@@ -162,7 +162,7 @@ export default function ContactPage() {
                     {chatStatus === 'online' ? 'Online' : chatStatus === 'loading' ? 'Checking' : 'Offline'}
                   </span>
                 </div>
-                <p className="text-sm text-gray-600 mb-3">
+                <p className="text-sm theme-text-secondary mb-3">
                   {chatStatus === 'online'
                     ? 'I am online now. Start a live chat for the fastest response.'
                     : 'If I am offline, please use the form below and I will get back to you quickly.'}
@@ -171,13 +171,13 @@ export default function ContactPage() {
                   type="button"
                   onClick={handleStartChat}
                   disabled={!chatEnabled}
-                  className="w-full inline-flex items-center justify-center gap-2 bg-blue-600 text-white px-4 py-2.5 rounded-lg hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
+                  className="w-full inline-flex items-center justify-center gap-2 btn-primary px-4 py-2.5 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
                   <MessageCircle size={16} aria-hidden="true" />
                   Start Live Chat
                 </button>
                 {!chatEnabled && (
-                  <p className="text-xs text-gray-500 mt-2">
+                  <p className="text-xs theme-text-tertiary mt-2">
                     Live chat is disabled. Add Netlify env vars NEXT_PUBLIC_TAWK_PROPERTY_ID and NEXT_PUBLIC_TAWK_WIDGET_ID.
                   </p>
                 )}
@@ -189,9 +189,9 @@ export default function ContactPage() {
                     <Mail className="text-blue-600" size={20} />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-900">Email</h3>
-                    <p className="text-gray-600">delong.kevin@gmail.com</p>
-                    <p className="text-sm text-gray-500">Typically replies within 24 hours</p>
+                    <h3 className="font-semibold theme-text-primary">Email</h3>
+                    <p className="theme-text-secondary">delong.kevin@gmail.com</p>
+                    <p className="text-sm theme-text-tertiary">Typically replies within 24 hours</p>
                   </div>
                 </div>
 
@@ -200,9 +200,9 @@ export default function ContactPage() {
                     <Phone className="text-green-600" size={20} />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-900">Phone</h3>
-                    <p className="text-gray-600">(810) 287-7409</p>
-                    <p className="text-sm text-gray-500">Prefer texts, but available for calls</p>
+                    <h3 className="font-semibold theme-text-primary">Phone</h3>
+                    <p className="theme-text-secondary">(810) 287-7409</p>
+                    <p className="text-sm theme-text-tertiary">Prefer texts, but available for calls</p>
                   </div>
                 </div>
 
@@ -211,9 +211,9 @@ export default function ContactPage() {
                     <MapPin className="text-purple-600" size={20} />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-900">Location</h3>
-                    <p className="text-gray-600">United States</p>
-                    <p className="text-sm text-gray-500">Available for remote work worldwide</p>
+                    <h3 className="font-semibold theme-text-primary">Location</h3>
+                    <p className="theme-text-secondary">United States</p>
+                    <p className="text-sm theme-text-tertiary">Available for remote work worldwide</p>
                   </div>
                 </div>
                             <div className="flex items-start">
@@ -221,8 +221,8 @@ export default function ContactPage() {
                   <Heart className="text-pink-600" size={30} />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900">Support My Work</h3>
-                  <p className="text-gray-600 text-sm mb-2">
+                  <h3 className="font-semibold theme-text-primary">Support My Work</h3>
+                  <p className="theme-text-secondary text-sm mb-2">
                     Support my open-source projects and development work!
                   </p>
                   <a
@@ -244,11 +244,11 @@ export default function ContactPage() {
               {/* Social Links */}
           
               <div className="mt-8">
-                <h3 className="font-semibold text-gray-900 mb-4">Follow Me</h3>
+                <h3 className="font-semibold theme-text-primary mb-4">Follow Me</h3>
           <div className="flex space-x-4">
                                     <a
                     href="https://www.linkedin.com/in/kevin-delong-50726135b/"
-                    className="bg-gray-100 text-gray-600 hover:bg-blue-100 hover:text-blue-600 w-10 h-10 rounded-full flex items-center justify-center transition-colors"
+                    className="surface-subtle theme-text-secondary hover:opacity-80 w-10 h-10 rounded-full flex items-center justify-center transition-colors"
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="LinkedIn profile"
@@ -257,7 +257,7 @@ export default function ContactPage() {
                   </a>
                                     <a
                                       href="https://github.com/delongkevin"
-                    className="bg-gray-100 text-gray-600 hover:bg-gray-800 hover:text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors"
+                    className="surface-subtle theme-text-secondary hover:opacity-80 w-10 h-10 rounded-full flex items-center justify-center transition-colors"
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="GitHub profile"
@@ -266,7 +266,7 @@ export default function ContactPage() {
                   </a>
                                     <a
                     href="https://x.com/delongkevin1446"
-                    className="bg-gray-100 text-gray-600 hover:bg-black hover:text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors"
+                    className="surface-subtle theme-text-secondary hover:opacity-80 w-10 h-10 rounded-full flex items-center justify-center transition-colors"
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Twitter profile"
@@ -285,13 +285,13 @@ export default function ContactPage() {
                 method="POST"
                 data-netlify="true"
                 noValidate
-                className="bg-white rounded-2xl shadow-lg p-8"
+                className="surface-card rounded-2xl shadow-lg p-8"
               >
                 <input type="hidden" name="form-name" value="contact"/>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="name" className="block text-sm font-medium theme-text-secondary mb-2">
                       Your Name *
                     </label>
                     <input
@@ -302,7 +302,7 @@ export default function ContactPage() {
                       aria-required="true"
                       aria-invalid={errors.name ? "true" : "false"}
                       aria-describedby={errors.name ? "name-error" : undefined}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                      className="w-full px-4 py-3 theme-input rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                       placeholder="Enter your name"
                     />
                     {errors.name && (
@@ -313,7 +313,7 @@ export default function ContactPage() {
                   </div>
                   
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="email" className="block text-sm font-medium theme-text-secondary mb-2">
                       Email Address *
                     </label>
                     <input
@@ -324,7 +324,7 @@ export default function ContactPage() {
                       aria-required="true"
                       aria-invalid={errors.email ? "true" : "false"}
                       aria-describedby={errors.email ? "email-error" : undefined}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                      className="w-full px-4 py-3 theme-input rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                       placeholder="Enter your email"
                     />
                     {errors.email && (
@@ -336,7 +336,7 @@ export default function ContactPage() {
                 </div>
 
                 <div className="mb-6">
-                  <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="subject" className="block text-sm font-medium theme-text-secondary mb-2">
                     Subject *
                   </label>
                   <input
@@ -347,7 +347,7 @@ export default function ContactPage() {
                     aria-required="true"
                     aria-invalid={errors.subject ? "true" : "false"}
                     aria-describedby={errors.subject ? "subject-error" : undefined}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                    className="w-full px-4 py-3 theme-input rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                     placeholder="What's this about?"
                   />
                   {errors.subject && (
@@ -358,7 +358,7 @@ export default function ContactPage() {
                 </div>
 
                 <div className="mb-6">
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="message" className="block text-sm font-medium theme-text-secondary mb-2">
                     Message *
                   </label>
                   <textarea
@@ -369,7 +369,7 @@ export default function ContactPage() {
                     aria-invalid={errors.message ? "true" : "false"}
                     aria-describedby={errors.message ? "message-error" : undefined}
                     rows={6}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-vertical"
+                    className="w-full px-4 py-3 theme-input rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-vertical"
                     placeholder="Tell me about your project..."
                   ></textarea>
                   {errors.message && (

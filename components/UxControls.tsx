@@ -16,6 +16,7 @@ interface UxPreferences {
   density: DensityMode;
   fontScale: FontScale;
   textContrast: TextContrast;
+  brightness: number;
 }
 
 const UX_PREFS_STORAGE_KEY = 'portfolio-ux-preferences-v1';
@@ -26,6 +27,7 @@ const defaultPrefs: UxPreferences = {
   density: 'comfortable',
   fontScale: 'md',
   textContrast: 'balanced',
+  brightness: 100,
 };
 
 export default function UxControls() {
@@ -52,6 +54,7 @@ export default function UxControls() {
         density: parsed.density === 'compact' ? 'compact' : 'comfortable',
         fontScale: parsed.fontScale === 'sm' || parsed.fontScale === 'lg' ? parsed.fontScale : 'md',
         textContrast: parsed.textContrast === 'soft' || parsed.textContrast === 'strong' ? parsed.textContrast : 'balanced',
+        brightness: typeof parsed.brightness === 'number' ? Math.min(Math.max(parsed.brightness, 85), 120) : 100,
       });
     } catch {
       setPrefs(defaultPrefs);
@@ -71,6 +74,7 @@ export default function UxControls() {
     root.dataset.density = prefs.density;
     root.dataset.fontScale = prefs.fontScale;
     root.dataset.textContrast = prefs.textContrast;
+    root.style.setProperty('--ui-brightness', `${prefs.brightness}%`);
   }, [isMounted, prefs]);
 
   useEffect(() => {
@@ -224,6 +228,18 @@ export default function UxControls() {
                 : 'soft',
         })),
     },
+    {
+      id: 'brightness-increase',
+      label: 'Increase Brightness',
+      keywords: 'brightness lighter brighter',
+      run: () => setPrefs((current) => ({ ...current, brightness: Math.min(current.brightness + 5, 120) })),
+    },
+    {
+      id: 'brightness-decrease',
+      label: 'Decrease Brightness',
+      keywords: 'brightness darker dimmer',
+      run: () => setPrefs((current) => ({ ...current, brightness: Math.max(current.brightness - 5, 85) })),
+    },
   ];
 
   const filteredCommands = (() => {
@@ -372,6 +388,25 @@ export default function UxControls() {
             </div>
 
             <div className="space-y-2">
+              <p className="text-xs font-semibold uppercase tracking-wide theme-text-tertiary">Brightness</p>
+              <div className="space-y-2 mb-4">
+                <input
+                  type="range"
+                  min="85"
+                  max="120"
+                  step="5"
+                  value={prefs.brightness}
+                  onChange={(event) => setPrefs((current) => ({ ...current, brightness: Number(event.target.value) }))}
+                  className="w-full accent-blue-600"
+                  aria-label="Adjust interface brightness"
+                />
+                <div className="flex items-center justify-between text-xs theme-text-secondary">
+                  <span>Dim</span>
+                  <span>{prefs.brightness}%</span>
+                  <span>Bright</span>
+                </div>
+              </div>
+
               <p className="text-xs font-semibold uppercase tracking-wide theme-text-tertiary">Font Scale</p>
               <div className="flex items-center gap-2">
                 <button

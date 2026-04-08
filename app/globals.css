@@ -22,6 +22,7 @@
   --base-font-size: 16px;
   --control-scale: 1;
   --theme-transition-duration: 280ms;
+  --ui-brightness: 100%;
 }
 
 html[data-theme='dark'] {
@@ -144,10 +145,12 @@ html[data-font-scale='lg'] {
     @apply antialiased;
     color: var(--text-1);
     background: radial-gradient(1200px 500px at 100% -10%, rgba(59, 130, 246, 0.18) 0%, transparent 52%), var(--surface-0);
+    filter: brightness(var(--ui-brightness));
     transition:
       background-color var(--theme-transition-duration) ease,
       color var(--theme-transition-duration) ease,
-      background var(--theme-transition-duration) ease;
+      background var(--theme-transition-duration) ease,
+      filter var(--theme-transition-duration) ease;
   }
 
   input,
