@@ -1,31 +1,37 @@
 import { ExternalLink, Github, Star, Play } from 'lucide-react';
-import { Project } from '../data/projects';
+import { Project, formatProjectCategory, getProjectHref } from '../data/projects';
 import Link from 'next/link';
 import Image from 'next/image';
 
 interface ProjectCardProps {
   project: Project;
+  imagePriority?: boolean;
 }
 
-export default function ProjectCard({ project }: ProjectCardProps) {
+export default function ProjectCard({ project, imagePriority = false }: ProjectCardProps) {
+  const categoryLabel = formatProjectCategory(project.category);
+
   return (
     <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:transform hover:scale-105 group">
       {/* Project Image - FIXED: Using actual image */}
       <div className="h-48 relative overflow-hidden">
         {/* Replace the gradient div with Image component */}
-          <Image
-			src={project.image}
-			alt={project.title}
-			fill
-			className="object-cover group-hover:scale-105 transition-transform duration-300"
-			sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-		  />
+        <Image
+          src={project.image}
+          alt={project.title}
+          fill
+          priority={imagePriority}
+          loading={imagePriority ? 'eager' : 'lazy'}
+          fetchPriority={imagePriority ? 'high' : 'auto'}
+          className="object-cover group-hover:scale-105 transition-transform duration-300"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        />
         
         {/* Overlay with project info */}
         <div className="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
           <div className="text-center text-white p-4">
             <div className="text-xl font-bold mb-2">{project.title}</div>
-            <div className="text-sm opacity-90 capitalize">{project.category}</div>
+            <div className="text-sm opacity-90">{categoryLabel}</div>
             {project.embeddable && (
               <div className="mt-2 flex items-center justify-center gap-1 text-sm">
                 <Play size={16} aria-hidden="true" />
@@ -105,7 +111,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         {/* Action Buttons */}
         <div className="flex justify-between items-center pt-4 border-t border-gray-100">
           <Link
-            href={`/projects/${project.id}`}
+            href={getProjectHref(project)}
             className="flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium transition-colors min-h-[44px]"
           >
             {project.embeddable ? (

@@ -162,6 +162,28 @@
       margin-bottom: 16px;
     }
 
+    .toolbar-actions {
+      display: flex;
+      gap: 6px;
+      margin-left: auto;
+    }
+
+    .action-btn {
+      border: 1.5px solid var(--border);
+      background: var(--card);
+      color: var(--muted);
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .action-btn:hover {
+      border-color: var(--purple);
+      color: var(--purple);
+    }
+
     .filter-group {
       display: flex;
       gap: 6px;
@@ -306,6 +328,11 @@
       font-size: 0.74rem;
       color: var(--muted);
       flex-wrap: wrap;
+    }
+
+    .due-overdue {
+      color: #b91c1c;
+      font-weight: 700;
     }
 
     .task-actions {
@@ -463,6 +490,7 @@
       <h2>➕ Add New Task</h2>
       <div class="form-row">
         <input class="task-input" id="new-title" placeholder="Task title…" aria-label="Task title" />
+        <input class="select-field" id="new-due" type="date" aria-label="Due date" />
         <select class="select-field" id="new-priority" aria-label="Priority">
           <option value="low">🔵 Low</option>
           <option value="medium" selected>🟡 Medium</option>
@@ -501,14 +529,20 @@
         <button class="filter-btn"        data-filter="active" onclick="setFilter('active')">Active</button>
         <button class="filter-btn"        data-filter="done"   onclick="setFilter('done')">Completed</button>
         <button class="filter-btn"        data-filter="high"   onclick="setFilter('high')">🔴 High</button>
+        <button class="filter-btn"        data-filter="overdue" onclick="setFilter('overdue')">⏰ Overdue</button>
       </div>
       <input class="search-input" id="search" placeholder="Search tasks…" oninput="renderTasks()" aria-label="Search tasks"/>
       <select class="sort-select" id="sort-select" onchange="renderTasks()" aria-label="Sort tasks">
         <option value="newest">Newest first</option>
         <option value="oldest">Oldest first</option>
         <option value="priority">By priority</option>
+        <option value="due">By due date</option>
         <option value="alpha">A → Z</option>
       </select>
+      <div class="toolbar-actions">
+        <button class="action-btn" type="button" onclick="clearCompleted()">Clear completed</button>
+        <button class="action-btn" type="button" onclick="exportTasks()">Export</button>
+      </div>
     </div>
 
     <!-- Task list -->
@@ -533,6 +567,8 @@
         <option value="medium">🟡 Medium</option>
         <option value="high">🔴 High</option>
       </select>
+      <label for="edit-due">Due date</label>
+      <input id="edit-due" type="date" />
       <label for="edit-category">Category</label>
       <select id="edit-category">
         <option>Personal</option>
@@ -552,6 +588,7 @@
   <script>
     // ── STORAGE ───────────────────────────────────────────────────────────
     const STORE_KEY = 'taskflow_tasks';
+    const PREF_KEY = 'taskflow_prefs_v1';
 
     function loadTasks() {
       try { return JSON.parse(localStorage.getItem(STORE_KEY)) || []; }
@@ -560,6 +597,34 @@
 
     function saveTasks(tasks) {
       localStorage.setItem(STORE_KEY, JSON.stringify(tasks));
+    }
+
+    function savePrefs() {
+      localStorage.setItem(PREF_KEY, JSON.stringify({
+        activeFilter,
+        search: document.getElementById('search').value,
+        sort: document.getElementById('sort-select').value,
+      }));
+    }
+
+    function loadPrefs() {
+      const raw = localStorage.getItem(PREF_KEY);
+      if (!raw) return;
+
+      try {
+        const prefs = JSON.parse(raw);
+        if (typeof prefs.search === 'string') {
+          document.getElementById('search').value = prefs.search;
+        }
+        if (typeof prefs.sort === 'string') {
+          document.getElementById('sort-select').value = prefs.sort;
+        }
+        if (typeof prefs.activeFilter === 'string') {
+          activeFilter = prefs.activeFilter;
+        }
+      } catch {
+        // Ignore malformed preferences.
+      }
     }
 
     // ── STATE ─────────────────────────────────────────────────────────────
@@ -576,7 +641,7 @@
         { id: now-3, title: 'Morning run', desc: '30-minute jog in the park before work.', priority: 'medium', category: 'Health', done: true, created: now-3000 },
         { id: now-2, title: 'Read React docs', desc: 'Review new concurrent features and hooks added in React 18.', priority: 'low', category: 'Learning', done: false, created: now-2000 },
         { id: now-1, title: 'Call dentist', desc: 'Schedule annual check-up appointment.', priority: 'high', category: 'Health', done: false, created: now-1000 },
-      ];
+      ].map((task) => ({ ...task, dueDate: '' }));
       saveTasks(tasks);
     }
 
@@ -595,6 +660,7 @@
         desc: document.getElementById('new-desc').value.trim(),
         priority: document.getElementById('new-priority').value,
         category: document.getElementById('new-category').value,
+        dueDate: document.getElementById('new-due').value,
         done: false,
         created: Date.now(),
       };
@@ -602,6 +668,7 @@
       saveTasks(tasks);
       document.getElementById('new-title').value = '';
       document.getElementById('new-desc').value  = '';
+      document.getElementById('new-due').value = '';
       renderTasks();
       updateStats();
     }
@@ -629,6 +696,7 @@
       document.getElementById('edit-title').value    = t.title;
       document.getElementById('edit-desc').value     = t.desc || '';
       document.getElementById('edit-priority').value = t.priority;
+      document.getElementById('edit-due').value = t.dueDate || '';
       document.getElementById('edit-category').value = t.category;
       document.getElementById('edit-modal').classList.add('open');
     }
@@ -639,6 +707,7 @@
       t.title    = document.getElementById('edit-title').value.trim() || t.title;
       t.desc     = document.getElementById('edit-desc').value.trim();
       t.priority = document.getElementById('edit-priority').value;
+      t.dueDate  = document.getElementById('edit-due').value;
       t.category = document.getElementById('edit-category').value;
       saveTasks(tasks);
       closeModal();
@@ -663,6 +732,14 @@
       renderTasks();
     }
 
+    function isOverdue(task) {
+      if (!task.dueDate || task.done) return false;
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const due = new Date(task.dueDate + 'T00:00:00');
+      return due < today;
+    }
+
     function getFiltered() {
       const q = document.getElementById('search').value.toLowerCase().trim();
       let list = tasks.filter(t => {
@@ -670,6 +747,7 @@
         if (activeFilter === 'active') return !t.done;
         if (activeFilter === 'done')   return t.done;
         if (activeFilter === 'high')   return t.priority === 'high' && !t.done;
+        if (activeFilter === 'overdue') return isOverdue(t);
         return true;
       });
       const sort = document.getElementById('sort-select').value;
@@ -677,6 +755,12 @@
       else if (sort === 'priority') list.sort((a,b) => {
         const rank = { high:0, medium:1, low:2 };
         return (rank[a.priority] - rank[b.priority]) || b.created - a.created;
+      });
+      else if (sort === 'due') list.sort((a, b) => {
+        if (!a.dueDate && !b.dueDate) return b.created - a.created;
+        if (!a.dueDate) return 1;
+        if (!b.dueDate) return -1;
+        return a.dueDate.localeCompare(b.dueDate);
       });
       else if (sort === 'alpha') list.sort((a,b) => a.title.localeCompare(b.title));
       else list.sort((a,b) => b.created - a.created); // newest
@@ -717,6 +801,7 @@
             ${t.desc ? `<div class="task-desc">${escHtml(t.desc)}</div>` : ''}
             <div class="task-meta">
               <span>📅 ${formatDate(t.created)}</span>
+              ${t.dueDate ? `<span class="${isOverdue(t) ? 'due-overdue' : ''}">⏰ Due ${formatDueDate(t.dueDate)}${isOverdue(t) ? ' (overdue)' : ''}</span>` : ''}
             </div>
           </div>
           <div class="task-actions">
@@ -724,6 +809,8 @@
             <button class="icon-btn delete" onclick="deleteTask(${t.id})" aria-label="Delete task" title="Delete">🗑️</button>
           </div>
         </div>`).join('');
+
+      savePrefs();
     }
 
     function updateStats() {
@@ -740,6 +827,26 @@
       document.getElementById('progress-label').textContent = pct + '%';
     }
 
+    function clearCompleted() {
+      const completedCount = tasks.filter((task) => task.done).length;
+      if (completedCount === 0) return;
+      if (!confirm('Clear all completed tasks?')) return;
+
+      tasks = tasks.filter((task) => !task.done);
+      saveTasks(tasks);
+      renderTasks();
+      updateStats();
+    }
+
+    function exportTasks() {
+      const blob = new Blob([JSON.stringify(tasks, null, 2)], { type: 'application/json' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'taskflow-export.json';
+      link.click();
+      URL.revokeObjectURL(link.href);
+    }
+
     // ── UTILS ─────────────────────────────────────────────────────────────
     function escHtml(s) {
       return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
@@ -750,14 +857,29 @@
       return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
     }
 
+    function formatDueDate(iso) {
+      const d = new Date(iso + 'T00:00:00');
+      return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+    }
+
     // Enter key support
     document.getElementById('new-title').addEventListener('keydown', e => {
       if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); addTask(); }
     });
 
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        closeModal();
+      }
+    });
+
     // ── BOOT ──────────────────────────────────────────────────────────────
+    loadPrefs();
+    setFilter(activeFilter);
     renderTasks();
     updateStats();
   </script>
+  <!-- Portfolio QoL Enhancer -->
+  <script>(function(){if(window.__portfolioQolEnhancer)return;window.__portfolioQolEnhancer=1;var b=document.createElement("button");b.type="button";b.setAttribute("aria-label","Scroll to top");b.textContent="Top";b.style.cssText="position:fixed;right:14px;bottom:14px;z-index:2147483000;border:1px solid rgba(148,163,184,.7);background:rgba(15,23,42,.88);color:#f8fafc;border-radius:999px;font:700 12px/1 Trebuchet MS,Segoe UI,sans-serif;padding:8px 11px;cursor:pointer;opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .16s ease,transform .16s ease";document.body.appendChild(b);function sync(){var visible=window.scrollY>200;b.style.opacity=visible?"1":"0";b.style.transform=visible?"translateY(0)":"translateY(8px)";b.style.pointerEvents=visible?"auto":"none";}b.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});document.addEventListener("keydown",function(e){var t=e.target&&e.target.tagName;if(t==="INPUT"||t==="TEXTAREA"||t==="SELECT")return;if(e.key==="t"||e.key==="T"){window.scrollTo({top:0,behavior:"smooth"});}});window.addEventListener("scroll",sync,{passive:true});sync();})();</script>
 </body>
 </html>

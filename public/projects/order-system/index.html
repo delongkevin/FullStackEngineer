@@ -92,6 +92,29 @@
       flex-wrap: wrap;
     }
 
+    .hero-tools {
+      max-width: 800px;
+      margin: 12px auto 0;
+      display: grid;
+      grid-template-columns: 1fr 180px;
+      gap: 10px;
+    }
+
+    .hero-search,
+    .hero-sort {
+      border: 1px solid #a7f3d0;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 0.9rem;
+      width: 100%;
+      outline: none;
+    }
+
+    .hero-search:focus,
+    .hero-sort:focus {
+      border-color: var(--green);
+    }
+
     .cat-chip {
       border: 2px solid var(--border);
       background: var(--card);
@@ -259,6 +282,84 @@
     .checkout-btn:hover { background: var(--green-dark); }
     .empty-cart { text-align: center; color: var(--muted); padding: 40px 0; font-size: 0.95rem; }
 
+    .promo-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .promo-row input {
+      flex: 1;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 0.85rem;
+    }
+
+    .promo-btn {
+      border: 1px solid var(--green);
+      background: #fff;
+      color: var(--green);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-weight: 700;
+      font-size: 0.78rem;
+      cursor: pointer;
+    }
+
+    .promo-msg {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .history-card {
+      max-width: 1000px;
+      margin: 16px auto 0;
+      background: #fff;
+      border: 1px solid #d1fae5;
+      border-radius: 12px;
+      padding: 12px 14px;
+      text-align: left;
+    }
+
+    .history-card h3 {
+      font-size: 0.9rem;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .history-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .history-order {
+      border: 1px solid #d1fae5;
+      border-radius: 999px;
+      background: #f0fdf4;
+      color: var(--green-dark);
+      padding: 6px 10px;
+      font-size: 0.76rem;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .history-order:hover {
+      background: #d1fae5;
+    }
+
+    @media (max-width: 640px) {
+      .hero-tools {
+        grid-template-columns: 1fr;
+      }
+
+      .promo-row {
+        flex-direction: column;
+      }
+    }
+
     /* ── CHECKOUT FORM ── */
     .checkout-page { max-width: 560px; margin: 0 auto; padding: 24px 16px 60px; }
     .checkout-page h1 { font-size: 1.6rem; font-weight: 800; color: var(--text); margin-bottom: 6px; }
@@ -360,7 +461,20 @@
     <div class="hero">
       <h1>🛒 Fresh Groceries Delivered</h1>
       <p>Order by 6 PM for same-day delivery · Free delivery over $35</p>
+      <div class="hero-tools">
+        <input id="hero-search" class="hero-search" type="search" placeholder="Search products, categories, or descriptions" aria-label="Search products" />
+        <select id="hero-sort" class="hero-sort" aria-label="Sort products">
+          <option value="featured">Sort: Featured</option>
+          <option value="price-asc">Price: Low to High</option>
+          <option value="price-desc">Price: High to Low</option>
+          <option value="name-asc">Name: A-Z</option>
+        </select>
+      </div>
       <div class="category-strip" id="cat-strip"></div>
+      <div class="history-card" id="order-history-box" style="display:none">
+        <h3>Recent Orders</h3>
+        <div class="history-list" id="order-history-list"></div>
+      </div>
     </div>
 
     <div class="products-section">
@@ -520,6 +634,11 @@ const CATEGORIES = ['All', ...new Set(PRODUCTS.map(p => p.cat))];
 // ── STATE ─────────────────────────────────────────────────────────────────
 let cart = {};
 let activeCat = 'All';
+let searchQuery = '';
+let sortMode = 'featured';
+let promoCode = '';
+let promoDiscount = 0;
+const ORDER_HISTORY_STORAGE_KEY = 'shopquick_orders';
 
 // ── RENDER PRODUCTS ───────────────────────────────────────────────────────
 function buildCatStrip() {
@@ -537,9 +656,23 @@ function setCat(c) {
 }
 
 function renderProducts() {
-  const items = activeCat === 'All'
-    ? PRODUCTS
-    : PRODUCTS.filter(p => p.cat === activeCat);
+  const filtered = PRODUCTS.filter((p) => {
+    if (activeCat !== 'All' && p.cat !== activeCat) {
+      return false;
+    }
+    if (!searchQuery) {
+      return true;
+    }
+    const haystack = `${p.name} ${p.cat} ${p.desc}`.toLowerCase();
+    return haystack.includes(searchQuery);
+  });
+
+  const items = filtered.sort((a, b) => {
+    if (sortMode === 'price-asc') return a.price - b.price;
+    if (sortMode === 'price-desc') return b.price - a.price;
+    if (sortMode === 'name-asc') return a.name.localeCompare(b.name);
+    return a.id - b.id;
+  });
 
   document.getElementById('products-grid').innerHTML = items.map(p => {
     const qty = cart[p.id] ? cart[p.id].qty : 0;
@@ -584,6 +717,18 @@ function cartCount()  { return Object.values(cart).reduce((s, e) => s + e.qty, 0
 function cartSubtotal(){ return Object.values(cart).reduce((s, e) => s + e.product.price * e.qty, 0); }
 function deliveryFee(){ return cartSubtotal() >= 35 ? 0 : 3.99; }
 function cartTotal()  { return cartSubtotal() + deliveryFee(); }
+function discountedTotal() { return Math.max(0, cartTotal() - promoDiscount); }
+
+function recomputePromoDiscount() {
+  const code = promoCode.trim().toUpperCase();
+  if (code === 'SAVE5') {
+    promoDiscount = Math.min(5, cartTotal());
+  } else if (code === 'SAVE10') {
+    promoDiscount = Math.min(cartTotal() * 0.1, 10);
+  } else {
+    promoDiscount = 0;
+  }
+}
 
 function updateCartBadge() {
   document.getElementById('cart-badge').textContent = cartCount();
@@ -601,6 +746,7 @@ function closeCart() {
 }
 
 function renderPanel() {
+  recomputePromoDiscount();
   const entries = Object.values(cart);
   const body    = document.getElementById('panel-body');
   const footer  = document.getElementById('panel-footer');
@@ -629,10 +775,24 @@ function renderPanel() {
     : `$${deliveryFee().toFixed(2)} <small style="color:var(--muted)">(free over $35)</small>`;
 
   footer.innerHTML = `
+    <div class="promo-row">
+      <input id="promo-input" placeholder="Promo code (SAVE5 or SAVE10)" value="${promoCode}" />
+      <button class="promo-btn" onclick="applyPromo()">Apply</button>
+    </div>
+    <div class="promo-msg" id="promo-msg">${promoDiscount > 0 ? `Promo applied: -$${promoDiscount.toFixed(2)}` : 'No promo applied'}</div>
     <div class="subtotal-row"><span>Subtotal</span><span>$${cartSubtotal().toFixed(2)}</span></div>
     <div class="subtotal-row"><span>Delivery</span><span>${freeMsg}</span></div>
-    <div class="total-row"><span>Total</span><span>$${cartTotal().toFixed(2)}</span></div>
+    <div class="subtotal-row"><span>Discount</span><span>-$${promoDiscount.toFixed(2)}</span></div>
+    <div class="total-row"><span>Total</span><span>$${discountedTotal().toFixed(2)}</span></div>
     <button class="checkout-btn" onclick="goCheckout()">Checkout →</button>`;
+}
+
+function applyPromo() {
+  const input = document.getElementById('promo-input');
+  promoCode = input.value.trim().toUpperCase();
+  recomputePromoDiscount();
+
+  renderPanel();
 }
 
 function goCheckout() {
@@ -643,6 +803,7 @@ function goCheckout() {
 
 // ── CHECKOUT ──────────────────────────────────────────────────────────────
 function renderCheckoutSummary() {
+  recomputePromoDiscount();
   const entries = Object.values(cart);
   document.getElementById('checkout-summary').innerHTML = `
     <h3>Order Summary</h3>
@@ -656,9 +817,13 @@ function renderCheckoutSummary() {
       <span>Delivery</span>
       <span>${deliveryFee() === 0 ? 'FREE' : '$' + deliveryFee().toFixed(2)}</span>
     </div>
+    <div class="order-summary-item">
+      <span>Discount</span>
+      <span>-$${promoDiscount.toFixed(2)}</span>
+    </div>
     <div class="order-summary-total">
       <span>Total</span>
-      <span>$${cartTotal().toFixed(2)}</span>
+      <span>$${discountedTotal().toFixed(2)}</span>
     </div>`;
 }
 
@@ -717,12 +882,14 @@ function placeOrder(e) {
       qty: e.qty, price: e.product.price
     })),
     total: cartTotal(),
+    discountedTotal: discountedTotal(),
+    promoCode: promoCode || null,
     delivery: document.getElementById('delivery-time').value,
     date: new Date().toLocaleString(),
   };
-  const history = JSON.parse(localStorage.getItem('shopquick_orders') || '[]');
+  const history = JSON.parse(localStorage.getItem(ORDER_HISTORY_STORAGE_KEY) || '[]');
   history.unshift(order);
-  localStorage.setItem('shopquick_orders', JSON.stringify(history.slice(0, 20)));
+  localStorage.setItem(ORDER_HISTORY_STORAGE_KEY, JSON.stringify(history.slice(0, 20)));
 
   showConfirmation(order);
 }
@@ -738,17 +905,60 @@ function showConfirmation(order) {
       </div>`).join('')}
     <hr style="border:none;border-top:1px solid var(--border);margin:10px 0"/>
     <div class="confirm-row" style="font-weight:700">
-      <span>Total Paid</span><span style="color:var(--green)">$${order.total.toFixed(2)}</span>
+      <span>Total Paid</span><span style="color:var(--green)">$${(order.discountedTotal ?? order.total).toFixed(2)}</span>
     </div>`;
   showPage('confirm');
   cart = {};
+  promoCode = '';
+  promoDiscount = 0;
   updateCartBadge();
   renderProducts();
+  renderOrderHistory();
 }
 
 function resetAndShop() {
   document.getElementById('order-form').reset();
   showPage('shop');
+}
+
+function renderOrderHistory() {
+  const box = document.getElementById('order-history-box');
+  const list = document.getElementById('order-history-list');
+  const history = JSON.parse(localStorage.getItem(ORDER_HISTORY_STORAGE_KEY) || '[]');
+
+  if (!Array.isArray(history) || history.length === 0) {
+    box.style.display = 'none';
+    list.innerHTML = '';
+    return;
+  }
+
+  box.style.display = 'block';
+  list.innerHTML = history.slice(0, 4).map((order) => `
+    <button class="history-order" onclick="reorder('${order.id}')">
+      ${order.id} · ${order.items.length} items · $${(order.discountedTotal ?? order.total).toFixed(2)}
+    </button>
+  `).join('');
+}
+
+function reorder(orderId) {
+  const history = JSON.parse(localStorage.getItem(ORDER_HISTORY_STORAGE_KEY) || '[]');
+  const order = history.find((entry) => entry.id === orderId);
+  if (!order) {
+    return;
+  }
+
+  cart = {};
+  order.items.forEach((item) => {
+    const product = PRODUCTS.find((candidate) => candidate.name === item.name);
+    if (product) {
+      cart[product.id] = { product, qty: item.qty };
+    }
+  });
+  promoCode = '';
+  promoDiscount = 0;
+  updateCartBadge();
+  renderProducts();
+  openCart();
 }
 
 // ── HELPERS ───────────────────────────────────────────────────────────────
@@ -771,8 +981,21 @@ document.getElementById('cvv').addEventListener('input', function() {
 });
 
 // ── BOOT ─────────────────────────────────────────────────────────────────
+document.getElementById('hero-search').addEventListener('input', (event) => {
+  searchQuery = event.target.value.trim().toLowerCase();
+  renderProducts();
+});
+
+document.getElementById('hero-sort').addEventListener('change', (event) => {
+  sortMode = event.target.value;
+  renderProducts();
+});
+
 buildCatStrip();
 renderProducts();
+renderOrderHistory();
 </script>
+  <!-- Portfolio QoL Enhancer -->
+  <script>(function(){if(window.__portfolioQolEnhancer)return;window.__portfolioQolEnhancer=1;var b=document.createElement("button");b.type="button";b.setAttribute("aria-label","Scroll to top");b.textContent="Top";b.style.cssText="position:fixed;right:14px;bottom:14px;z-index:2147483000;border:1px solid rgba(148,163,184,.7);background:rgba(15,23,42,.88);color:#f8fafc;border-radius:999px;font:700 12px/1 Trebuchet MS,Segoe UI,sans-serif;padding:8px 11px;cursor:pointer;opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .16s ease,transform .16s ease";document.body.appendChild(b);function sync(){var visible=window.scrollY>200;b.style.opacity=visible?"1":"0";b.style.transform=visible?"translateY(0)":"translateY(8px)";b.style.pointerEvents=visible?"auto":"none";}b.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});document.addEventListener("keydown",function(e){var t=e.target&&e.target.tagName;if(t==="INPUT"||t==="TEXTAREA"||t==="SELECT")return;if(e.key==="t"||e.key==="T"){window.scrollTo({top:0,behavior:"smooth"});}});window.addEventListener("scroll",sync,{passive:true});sync();})();</script>
 </body>
 </html>

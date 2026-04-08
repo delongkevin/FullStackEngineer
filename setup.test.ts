@@ -21,7 +21,7 @@ describe('setup.js logic', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockConsoleLog = vi.spyOn(console, 'log').mockImplementation(() => {});
-    mockProcessExit = vi.spyOn(process, 'exit').mockImplementation((code?: number) => {
+    mockProcessExit = vi.spyOn(process, 'exit').mockImplementation((code?: string | number | null) => {
       throw new Error(`process.exit called with code ${code}`);
     });
   });

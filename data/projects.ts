@@ -19,6 +19,10 @@ export interface Project {
   /** TestFlight invite URL or Apple App Store link */
   iosUrl?: string;
 }
+
+export type ProjectCategory = Exclude<Project['category'], 'all'>;
+export const PROJECT_DISCOVERY_STORAGE_KEY = 'portfolio-project-discovery-v1';
+export const RECENTLY_VIEWED_PROJECTS_STORAGE_KEY = 'portfolio-recently-viewed-projects-v1';
 export const projects: Project[] = [
   {
     id: 1,
@@ -128,8 +132,8 @@ export const projects: Project[] = [
   {
     id: 6,
     title: "Automotive CAN-Bus Logger",
-    description: "Interactive Automotive CAN-bus logger used with Vector CANoe Products!",
-    fullDescription: "Python application that will connect to a CAN-driver for CAN-bus applications!",
+    description: "Desktop CAN/CAN-FD logging and diagnostics tool with live frame trace and export support for Vector workflows.",
+    fullDescription: "A Python-based CAN diagnostics application for automotive network analysis. It connects to compatible CAN interfaces, streams live bus traffic, and helps engineers inspect, filter, and export frame data for troubleshooting and validation.",
     image: "/images/CAN_Analyzer.jpg",
     tech: ["CAN", "Python", "HTML5", "CSS3"],
     liveUrl: "/projects/can_analyzer/dist/CAN_Analyzer.exe",
@@ -137,7 +141,9 @@ export const projects: Project[] = [
     featured: true,
     category: "Automotive",
     features: [
-      "Driver Layer",
+      "CAN driver interface integration",
+      "Live frame capture and filtering",
+      "Export-ready diagnostics workflows",
       "Responsive design",
       "Professional UI/UX"
     ],
@@ -147,8 +153,8 @@ export const projects: Project[] = [
   {
     id: 7,
     title: "Camera Object Detection",
-    description: "Object Detection with Camera App!",
-    fullDescription: "With OpenCV libararies on Object Detection from a camera source!",
+    description: "Real-time camera object detection demo powered by OpenCV pipelines and confidence scoring.",
+    fullDescription: "A computer vision prototype that captures live camera frames and applies object detection in real time using OpenCV-based processing. The app demonstrates detection confidence overlays, frame-by-frame tracking, and responsive visualization for rapid prototyping.",
     image: "/images/object_detection.jpg",
     tech: ["Python", "Flutter", "CSS3"],
     liveUrl: "/projects/ObjectDetection/object_detection.py",
@@ -156,8 +162,9 @@ export const projects: Project[] = [
     featured: true,
     category: "Automotive",
     features: [
-      "Python",
-	  "Flutter",
+      "Real-time camera frame processing",
+      "Detection overlays with confidence output",
+      "Python and Flutter integration",
       "Responsive design"
     ],
     embeddable: false,
@@ -166,10 +173,10 @@ export const projects: Project[] = [
     {
     id: 8,
     title: "Poker App",
-    description: "Interactive Poker App!",
-    fullDescription: "A polished version with betting, score keeping, highly instrusive UI/UX.",
+      description: "Interactive Texas Hold'em mobile app with betting flow, hand management, and score tracking.",
+      fullDescription: "A polished Texas Hold'em implementation focused on mobile gameplay. It includes betting actions, chip and pot tracking, round progression, and a responsive interface designed for Android and iOS devices.",
     image: "/images/PokerApp.jpg",
-    tech: ["React-Native", "JavaScript", "CSS3", "Android", "IOS"],
+      tech: ["React Native", "JavaScript", "CSS3", "Android", "iOS"],
     liveUrl: "/projects/PokerApp/PokerApp.html",
     githubUrl: "https://github.com/delongkevin/FullStackEngineer",
     featured: true,
@@ -813,4 +820,71 @@ export const projects: Project[] = [
     projectPath: '/projects/autosar-ecu-diagnostics',
   },
 ];
+
+const searchableProjectFields = (project: Project) => {
+  return [
+    project.title,
+    project.description,
+    project.fullDescription,
+    project.category,
+    ...project.tech,
+    ...project.features,
+  ].join(' ').toLowerCase();
+};
+
+export const getProjectHref = (project: Project): string => {
+  return `/projects/${project.slug ?? project.id}`;
+};
+
+export const getProjectRouteKey = (project: Project): string => {
+  return (project.slug ?? project.id.toString()).toLowerCase();
+};
+
+export const findProjectByRouteParam = (param: string): Project | undefined => {
+  const normalized = param.toLowerCase();
+  const asNumber = Number.parseInt(param, 10);
+
+  return projects.find((project) => {
+    if (project.slug && project.slug.toLowerCase() === normalized) {
+      return true;
+    }
+
+    return Number.isInteger(asNumber) && project.id === asNumber;
+  });
+};
+
+export const findProjectById = (id: number): Project | undefined => {
+  return projects.find((project) => project.id === id);
+};
+
+export const formatProjectCategory = (category: Project['category']): string => {
+  if (category === 'fullstack') {
+    return 'Full Stack';
+  }
+
+  if (category === 'all') {
+    return 'All';
+  }
+
+  return category;
+};
+
+export const searchProjects = (projectList: Project[], query: string): Project[] => {
+  const normalizedQuery = query.trim().toLowerCase();
+
+  if (!normalizedQuery) {
+    return projectList;
+  }
+
+  return projectList.filter((project) => searchableProjectFields(project).includes(normalizedQuery));
+};
+
+export const getProjectMetaDescription = (project: Project): string => {
+  const source = (project.description || project.fullDescription).trim();
+  if (source.length <= 160) {
+    return source;
+  }
+
+  return `${source.slice(0, 157).trimEnd()}...`;
+};
 

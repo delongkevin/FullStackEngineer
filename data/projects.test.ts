@@ -1,5 +1,13 @@
 import { describe, it, expect } from 'vitest';
-import { projects } from './projects';
+import {
+  findProjectByRouteParam,
+  findProjectById,
+  getProjectMetaDescription,
+  getProjectHref,
+  getProjectRouteKey,
+  projects,
+  searchProjects,
+} from './projects';
 
 describe('projects data', () => {
   describe('structure validation', () => {
@@ -113,6 +121,54 @@ describe('projects data', () => {
     it('should have at least one featured project', () => {
       const featuredProjects = projects.filter((p) => p.featured);
       expect(featuredProjects.length).toBeGreaterThan(0);
+    });
+  });
+
+  describe('routing helpers', () => {
+    it.each(projects)('should generate project href for "$title"', (project) => {
+      const href = getProjectHref(project);
+      expect(href.startsWith('/projects/')).toBe(true);
+      expect(href.length).toBeGreaterThan('/projects/'.length);
+    });
+
+    it.each(projects)('should resolve project by route key for "$title"', (project) => {
+      const routeKey = getProjectRouteKey(project);
+      const resolved = findProjectByRouteParam(routeKey);
+      expect(resolved?.id).toBe(project.id);
+    });
+
+    it('should resolve projects by numeric id route parameter', () => {
+      const firstProject = projects[0];
+      const resolved = findProjectByRouteParam(firstProject.id.toString());
+      expect(resolved?.id).toBe(firstProject.id);
+    });
+
+    it('should resolve projects by id helper', () => {
+      const firstProject = projects[0];
+      const resolved = findProjectById(firstProject.id);
+      expect(resolved?.id).toBe(firstProject.id);
+    });
+  });
+
+  describe('search helper', () => {
+    it('should return full list when query is empty', () => {
+      expect(searchProjects(projects, '').length).toBe(projects.length);
+    });
+
+    it('should match projects by title or technology', () => {
+      const titleMatches = searchProjects(projects, 'poker');
+      expect(titleMatches.some((project) => project.title.toLowerCase().includes('poker'))).toBe(true);
+
+      const techMatches = searchProjects(projects, 'kotlin');
+      expect(techMatches.length).toBeGreaterThan(0);
+    });
+  });
+
+  describe('metadata helper', () => {
+    it.each(projects)('should return non-empty meta description for "$title"', (project) => {
+      const description = getProjectMetaDescription(project);
+      expect(description.length).toBeGreaterThan(0);
+      expect(description.length).toBeLessThanOrEqual(160);
     });
   });
 });

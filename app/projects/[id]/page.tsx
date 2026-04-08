@@ -1,6 +1,14 @@
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
-import { projects } from '../../../data/projects';
+import ProjectDemoEmbed from '../../../components/ProjectDemoEmbed';
+import ProjectViewTracker from '../../../components/ProjectViewTracker';
+import {
+  findProjectByRouteParam,
+  formatProjectCategory,
+  getProjectMetaDescription,
+  getProjectRouteKey,
+  projects,
+} from '../../../data/projects';
 import { ExternalLink, Github, ArrowLeft, Smartphone, Download } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -15,8 +23,7 @@ interface PageProps {
 }
 
 export default function ProjectDetail({ params }: PageProps) {
-  const projectId = parseInt(params.id);
-  const project = projects.find(p => p.id === projectId);
+  const project = findProjectByRouteParam(params.id);
 
   if (!project) {
     return (
@@ -43,7 +50,7 @@ export default function ProjectDetail({ params }: PageProps) {
     operatingSystem: 'Web, Android, iOS',
     description: project.description,
     image: `${siteUrl}${project.image}`,
-    url: `${siteUrl}/projects/${project.id}/`,
+    url: `${siteUrl}/projects/${getProjectRouteKey(project)}/`,
     codeRepository: project.githubUrl,
     author: {
       '@type': 'Person',
@@ -51,9 +58,17 @@ export default function ProjectDetail({ params }: PageProps) {
     },
   };
 
+  const currentProjectIndex = projects.findIndex((entry) => entry.id === project.id);
+  const previousProject = currentProjectIndex > 0 ? projects[currentProjectIndex - 1] : undefined;
+  const nextProject = currentProjectIndex < projects.length - 1 ? projects[currentProjectIndex + 1] : undefined;
+  const relatedProjects = projects
+    .filter((candidate) => candidate.id !== project.id && candidate.category === project.category)
+    .slice(0, 3);
+
   return (
     <>
       <Header />
+      <ProjectViewTracker projectId={project.id} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(projectJsonLd) }}
@@ -194,21 +209,11 @@ export default function ProjectDetail({ params }: PageProps) {
           {project.embeddable ? (
             <div className="bg-white rounded-xl shadow-lg p-6">
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Interactive Demo</h2>
-              <div className="bg-gray-100 rounded-lg p-6 min-h-[600px] flex items-center justify-center">
-                <p id="demo-description" className="sr-only">
-                  This interactive demo allows you to try {project.title}.
-                  Use keyboard navigation to interact with the embedded content.
-                </p>
-                <iframe
-                  src={project.liveUrl}
-                  className="w-full h-[600px] border-0 rounded-lg bg-white"
-                  title={`Interactive demo of ${project.title} - ${project.category} project`}
-                  aria-describedby="demo-description"
-                  loading="lazy"
-                  sandbox="allow-scripts allow-same-origin"
-                  style={{ minHeight: '600px' }}
-                />
-              </div>
+              <ProjectDemoEmbed
+                liveUrl={project.liveUrl}
+                title={project.title}
+                category={project.category}
+              />
             </div>
           ) : (
                <div className="bg-white rounded-xl shadow-lg p-6">
@@ -236,7 +241,7 @@ export default function ProjectDetail({ params }: PageProps) {
                 <div className="space-y-3">
                   <div>
                     <span className="text-sm text-gray-500">Category:</span>
-                    <div className="font-medium text-gray-900 capitalize">{project.category}</div>
+                    <div className="font-medium text-gray-900">{formatProjectCategory(project.category)}</div>
                   </div>
                   <div>
                     <span className="text-sm text-gray-500">Status:</span>
@@ -276,6 +281,59 @@ export default function ProjectDetail({ params }: PageProps) {
               </div>
             </div>
           </div>
+
+          <section className="mt-10 space-y-6" aria-label="Project navigation and related work">
+            <div className="bg-white rounded-xl shadow-lg p-6">
+              <h2 className="text-xl font-bold text-gray-900 mb-4">Continue Exploring</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {previousProject ? (
+                  <Link
+                    href={`/projects/${getProjectRouteKey(previousProject)}`}
+                    className="block rounded-lg border border-gray-200 p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors"
+                  >
+                    <p className="text-sm text-gray-500">Previous project</p>
+                    <p className="font-semibold text-gray-900">{previousProject.title}</p>
+                  </Link>
+                ) : (
+                  <div className="rounded-lg border border-dashed border-gray-200 p-4 text-sm text-gray-500">
+                    You are viewing the first project.
+                  </div>
+                )}
+
+                {nextProject ? (
+                  <Link
+                    href={`/projects/${getProjectRouteKey(nextProject)}`}
+                    className="block rounded-lg border border-gray-200 p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors"
+                  >
+                    <p className="text-sm text-gray-500">Next project</p>
+                    <p className="font-semibold text-gray-900">{nextProject.title}</p>
+                  </Link>
+                ) : (
+                  <div className="rounded-lg border border-dashed border-gray-200 p-4 text-sm text-gray-500">
+                    You are viewing the last project.
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {relatedProjects.length > 0 && (
+              <div className="bg-white rounded-xl shadow-lg p-6">
+                <h2 className="text-xl font-bold text-gray-900 mb-4">Related Projects</h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {relatedProjects.map((relatedProject) => (
+                    <Link
+                      key={relatedProject.id}
+                      href={`/projects/${getProjectRouteKey(relatedProject)}`}
+                      className="rounded-lg border border-gray-200 p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors"
+                    >
+                      <p className="font-semibold text-gray-900">{relatedProject.title}</p>
+                      <p className="text-sm text-gray-600 mt-1 line-clamp-2">{relatedProject.description}</p>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+          </section>
         </div>
       </main>
 
@@ -286,15 +344,20 @@ export default function ProjectDetail({ params }: PageProps) {
 
 // Generate static pages for each project
 export async function generateStaticParams() {
-  return projects.map((project) => ({
-    id: project.id.toString(),
-  }));
+  return projects.flatMap((project) => {
+    const params = [{ id: project.id.toString() }];
+
+    if (project.slug) {
+      params.push({ id: project.slug });
+    }
+
+    return params;
+  });
 }
 
 // Generate metadata for SEO
 export async function generateMetadata({ params }: { params: { id: string } }) {
-  const projectId = parseInt(params.id);
-  const project = projects.find(p => p.id === projectId);
+  const project = findProjectByRouteParam(params.id);
   
   if (!project) {
     return {
@@ -302,18 +365,18 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
     };
   }
 
-  const canonicalUrl = `${siteUrl}/projects/${project.id}/`;
+  const canonicalUrl = `${siteUrl}/projects/${getProjectRouteKey(project)}/`;
   const imageUrl = `${siteUrl}${project.image}`;
   
   const metadata: Metadata = {
     title: `${project.title} - Kevin Delong`,
-    description: project.description,
+    description: getProjectMetaDescription(project),
     alternates: {
       canonical: canonicalUrl,
     },
     openGraph: {
       title: `${project.title} - Kevin Delong`,
-      description: project.description,
+      description: getProjectMetaDescription(project),
       url: canonicalUrl,
       type: 'article',
       images: [imageUrl],
@@ -321,7 +384,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
     twitter: {
       card: 'summary_large_image',
       title: `${project.title} - Kevin Delong`,
-      description: project.description,
+      description: getProjectMetaDescription(project),
       images: [imageUrl],
     },
   };

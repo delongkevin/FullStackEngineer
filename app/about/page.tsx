@@ -1,6 +1,7 @@
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { Code2, Database, Smartphone, Cloud, GitBranch, Figma } from 'lucide-react';
+import Link from 'next/link';
 
 export default function AboutPage() {
   const skills = {
@@ -124,9 +125,9 @@ export default function AboutPage() {
               Interested in collaborating on a project? I'm always open to discussing 
               new opportunities and ideas.
             </p>
-            <a href="/contact" className="btn-primary bg-white text-blue-600 hover:bg-gray-100">
+            <Link href="/contact" className="btn-primary bg-white text-blue-600 hover:bg-gray-100">
               Get In Touch
-            </a>
+            </Link>
           </section>
         </div>
       </main>

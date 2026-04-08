@@ -38,6 +38,29 @@
       max-width: 340px;
     }
 
+    .toolbar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .tool-btn {
+      flex: 1;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.1);
+      color: #e5e7eb;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 8px 10px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .tool-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
     .display {
       background: rgba(0, 0, 0, 0.35);
       border-radius: 12px;
@@ -73,6 +96,29 @@
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 10px;
+    }
+
+    .memory-buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .memory-btn {
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(15, 23, 42, 0.25);
+      color: #cbd5e1;
+      border-radius: 10px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 10px 6px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .memory-btn:hover {
+      background: rgba(15, 23, 42, 0.45);
     }
 
     button {
@@ -149,15 +195,36 @@
       text-align: center;
       margin-top: 14px;
     }
+
+    .announce {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+    }
   </style>
 </head>
 <body>
   <h1>🧮 Calculator</h1>
 
   <div class="calc-wrapper">
+    <div class="toolbar">
+      <button class="tool-btn" onclick="clearHistory()" aria-label="Clear calculation history">Clear History</button>
+      <button class="tool-btn" onclick="copyCurrent()" aria-label="Copy current value">Copy Value</button>
+    </div>
+
     <div class="display">
       <div class="expression" id="expression"></div>
       <div class="current" id="current">0</div>
+    </div>
+
+    <div class="memory-buttons">
+      <button class="memory-btn" onclick="memoryClear()" aria-label="Clear memory">MC</button>
+      <button class="memory-btn" onclick="memoryRecall()" aria-label="Recall memory">MR</button>
+      <button class="memory-btn" onclick="memoryAdd()" aria-label="Add current value to memory">M+</button>
+      <button class="memory-btn" onclick="memorySubtract()" aria-label="Subtract current value from memory">M-</button>
     </div>
 
     <div class="buttons">
@@ -193,6 +260,7 @@
     </div>
   </div>
 
+  <div id="announce" class="announce" role="status" aria-live="polite"></div>
   <p class="hint">Keyboard supported: 0–9 · + − * / Enter Backspace</p>
 
   <script>
@@ -200,11 +268,14 @@
     let prev = '';
     let operator = null;
     let justCalc = false;
+    let memory = 0;
     const MAX_DIGITS = 12;
+    const HISTORY_STORAGE_KEY = 'portfolio_calculator_history_v1';
 
     const $cur  = document.getElementById('current');
     const $expr = document.getElementById('expression');
     const $hist = document.getElementById('history');
+    const $announce = document.getElementById('announce');
 
     function render() {
       $cur.textContent = formatNum(current);
@@ -281,6 +352,10 @@
       render();
     }
 
+    function announce(message) {
+      $announce.textContent = message;
+    }
+
     function toggleSign() {
       if (current !== '0' && current !== 'Error') {
         current = current.startsWith('-') ? current.slice(1) : '-' + current;
@@ -299,6 +374,80 @@
       div.textContent = entry;
       $hist.prepend(div);
       while ($hist.children.length > 10) $hist.removeChild($hist.lastChild);
+      persistHistory();
+    }
+
+    function historyEntries() {
+      return Array.from($hist.children).map((child) => child.textContent).filter(Boolean);
+    }
+
+    function persistHistory() {
+      localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(historyEntries()));
+    }
+
+    function loadHistory() {
+      const raw = localStorage.getItem(HISTORY_STORAGE_KEY);
+      if (!raw) {
+        return;
+      }
+
+      try {
+        const entries = JSON.parse(raw);
+        if (!Array.isArray(entries)) {
+          return;
+        }
+
+        entries.slice().reverse().forEach((entry) => {
+          const div = document.createElement('div');
+          div.className = 'history-item';
+          div.textContent = String(entry);
+          $hist.prepend(div);
+        });
+      } catch {
+        // Ignore malformed storage values.
+      }
+    }
+
+    function clearHistory() {
+      $hist.innerHTML = '';
+      localStorage.removeItem(HISTORY_STORAGE_KEY);
+      announce('History cleared');
+    }
+
+    async function copyCurrent() {
+      try {
+        await navigator.clipboard.writeText(current);
+        announce('Current value copied');
+      } catch {
+        announce('Unable to copy current value');
+      }
+    }
+
+    function parseCurrentValue() {
+      const value = parseFloat(current);
+      return Number.isFinite(value) ? value : 0;
+    }
+
+    function memoryClear() {
+      memory = 0;
+      announce('Memory cleared');
+    }
+
+    function memoryRecall() {
+      current = String(memory);
+      justCalc = false;
+      render();
+      announce('Memory recalled');
+    }
+
+    function memoryAdd() {
+      memory += parseCurrentValue();
+      announce('Added to memory');
+    }
+
+    function memorySubtract() {
+      memory -= parseCurrentValue();
+      announce('Subtracted from memory');
     }
 
     document.addEventListener('keydown', (e) => {
@@ -316,7 +465,10 @@
       } else if (e.key === 'Escape') clearAll();
     });
 
+    loadHistory();
     render();
   </script>
+  <!-- Portfolio QoL Enhancer -->
+  <script>(function(){if(window.__portfolioQolEnhancer)return;window.__portfolioQolEnhancer=1;var b=document.createElement("button");b.type="button";b.setAttribute("aria-label","Scroll to top");b.textContent="Top";b.style.cssText="position:fixed;right:14px;bottom:14px;z-index:2147483000;border:1px solid rgba(148,163,184,.7);background:rgba(15,23,42,.88);color:#f8fafc;border-radius:999px;font:700 12px/1 Trebuchet MS,Segoe UI,sans-serif;padding:8px 11px;cursor:pointer;opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .16s ease,transform .16s ease";document.body.appendChild(b);function sync(){var visible=window.scrollY>200;b.style.opacity=visible?"1":"0";b.style.transform=visible?"translateY(0)":"translateY(8px)";b.style.pointerEvents=visible?"auto":"none";}b.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});document.addEventListener("keydown",function(e){var t=e.target&&e.target.tagName;if(t==="INPUT"||t==="TEXTAREA"||t==="SELECT")return;if(e.key==="t"||e.key==="T"){window.scrollTo({top:0,behavior:"smooth"});}});window.addEventListener("scroll",sync,{passive:true});sync();})();</script>
 </body>
 </html>

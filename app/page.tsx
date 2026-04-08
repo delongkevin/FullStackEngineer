@@ -3,6 +3,7 @@ import Footer from '../components/Footer';
 import ProjectCard from '../components/ProjectCard';
 import { projects } from '../data/projects';
 import { ArrowRight, Code, Smartphone, Globe } from 'lucide-react';
+import Link from 'next/link';
 
 export default function Home() {
   const featuredProjects = projects.filter(project => project.featured);
@@ -24,15 +25,15 @@ export default function Home() {
               mobile development, automotive integrations, and scalable solutions.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="/resume" className="btn-primary inline-flex items-center justify-center transform hover:scale-105 transition-transform">
+              <Link href="/resume" className="btn-primary inline-flex items-center justify-center transform hover:scale-105 transition-transform">
                 Hire Me <ArrowRight className="ml-2" size={20} aria-hidden="true" />
-              </a>
-              <a href="/contact" className="btn-secondary inline-flex items-center justify-center transform hover:scale-105 transition-transform">
+              </Link>
+              <Link href="/contact" className="btn-secondary inline-flex items-center justify-center transform hover:scale-105 transition-transform">
                 Collaborate
-              </a>
-              <a href="/projects" className="btn-secondary inline-flex items-center justify-center transform hover:scale-105 transition-transform">
+              </Link>
+              <Link href="/projects" className="btn-secondary inline-flex items-center justify-center transform hover:scale-105 transition-transform">
                 Explore Projects
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -84,14 +85,14 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center mb-12">
             <h2 id="projects-heading" className="text-3xl font-bold text-gray-900">Featured Projects</h2>
-                        <a href="/projects" className="text-blue-600 hover:text-blue-700 font-medium">
+                        <Link href="/projects" className="text-blue-600 hover:text-blue-700 font-medium">
               View All Projects <ArrowRight className="inline ml-1" size={16} aria-hidden="true" />
-            </a>
+            </Link>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredProjects.map((project) => (
-              <ProjectCard key={project.id} project={project} />
+            {featuredProjects.map((project, index) => (
+              <ProjectCard key={project.id} project={project} imagePriority={index < 2} />
             ))}
           </div>
                 </div>

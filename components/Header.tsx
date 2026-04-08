@@ -3,11 +3,13 @@
 import { useState, useRef, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
     if (isMenuOpen && menuRef.current) {
@@ -15,6 +17,42 @@ export default function Header() {
       const firstLink = menuRef.current.querySelector('a');
       firstLink?.focus();
     }
+  }, [isMenuOpen]);
+
+  useEffect(() => {
+    if (!isMenuOpen) {
+      return;
+    }
+
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as Node;
+      const clickedInMenu = menuRef.current?.contains(target);
+      const clickedButton = menuButtonRef.current?.contains(target);
+
+      if (!clickedInMenu && !clickedButton) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isMenuOpen]);
+
+  useEffect(() => {
+    if (!isMenuOpen) {
+      document.body.style.removeProperty('overflow');
+      return;
+    }
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
   }, [isMenuOpen]);
 
   // Handle Escape key
@@ -37,6 +75,14 @@ export default function Header() {
     { name: 'Contact', href: '/contact' },
   ];
 
+  const isNavItemActive = (href: string) => {
+    if (href === '/') {
+      return pathname === '/';
+    }
+
+    return pathname.startsWith(href);
+  };
+
   return (
     <header className="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b border-gray-200">
       <nav className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Main navigation">
@@ -51,15 +97,21 @@ export default function Header() {
           {/* Desktop Navigation */}
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-8">
-              {navItems.map((item) => (
+              {navItems.map((item) => {
+                const isActive = isNavItemActive(item.href);
+                return (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="text-gray-700 hover:text-blue-600 px-4 py-3 rounded-md text-sm font-medium transition-colors min-h-[44px] flex items-center"
+                  aria-current={isActive ? 'page' : undefined}
+                  className={`px-4 py-3 rounded-md text-sm font-medium transition-colors min-h-[44px] flex items-center ${
+                    isActive ? 'text-blue-600 bg-blue-50' : 'text-gray-700 hover:text-blue-600'
+                  }`}
                 >
                   {item.name}
                 </Link>
-              ))}
+                );
+              })}
             </div>
           </div>
 
@@ -82,16 +134,22 @@ export default function Header() {
         {isMenuOpen && (
           <div ref={menuRef} className="md:hidden" id="mobile-menu" role="navigation" aria-label="Mobile navigation">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200">
-              {navItems.map((item) => (
+              {navItems.map((item) => {
+                const isActive = isNavItemActive(item.href);
+                return (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="text-gray-700 hover:text-blue-600 block px-3 py-3 rounded-md text-base font-medium min-h-[44px] flex items-center"
+                  aria-current={isActive ? 'page' : undefined}
+                  className={`block px-3 py-3 rounded-md text-base font-medium min-h-[44px] flex items-center ${
+                    isActive ? 'text-blue-600 bg-blue-50' : 'text-gray-700 hover:text-blue-600'
+                  }`}
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.name}
                 </Link>
-              ))}
+                );
+              })}
             </div>
           </div>
         )}

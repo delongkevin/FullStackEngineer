@@ -6,9 +6,26 @@ const siteUrl = 'https://delongkevin.github.io/FullStackEngineer';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: 'Kevin Delong | Full-Stack Engineer',
+  title: {
+    default: 'Kevin Delong | Full-Stack Engineer',
+    template: '%s | Kevin Delong',
+  },
   description: 'Portfolio showcasing full-stack projects, automotive integrations, and mobile apps.',
   keywords: ['Kevin Delong', 'Full Stack Engineer', 'React', 'Next.js', 'Mobile Development', 'Automotive Software'],
+  authors: [{ name: 'Kevin Douglas Delong', url: siteUrl }],
+  creator: 'Kevin Douglas Delong',
+  publisher: 'Kevin Douglas Delong',
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
+  },
   alternates: {
     canonical: '/',
   },

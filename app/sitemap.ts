@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next';
-import { projects } from '../data/projects';
+import { getProjectRouteKey, projects } from '../data/projects';
 
 const siteUrl = 'https://delongkevin.github.io/FullStackEngineer';
 
@@ -13,7 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   const projectPages: MetadataRoute.Sitemap = projects.map((project) => ({
-    url: `${siteUrl}/projects/${project.id}/`,
+    url: `${siteUrl}/projects/${getProjectRouteKey(project)}/`,
     changeFrequency: 'monthly',
     priority: project.featured ? 0.9 : 0.7,
   }));

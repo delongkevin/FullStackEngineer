@@ -118,6 +118,25 @@
     .typing { color: #9cebc6; font-size: 12px; min-height: 16px; }
     .composer { display: flex; gap: 8px; }
     .state { font-size: 12px; color: #9feac8; }
+    .thread-tools {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+    .ghost-btn {
+      background: #16264d;
+      border: 1px solid #3b538e;
+      color: var(--text);
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+    .ghost-btn:hover {
+      background: #203566;
+    }
     /* ── Consistency & Accessibility ── */
     *:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
     button, select, input { transition: opacity 0.12s ease, background 0.12s ease; }
@@ -152,6 +171,10 @@
         <div>
           <strong id="threadTitle">Select a conversation</strong>
           <div class="state" id="threadState">Status: Idle</div>
+          <div class="thread-tools">
+            <button id="clearThreadBtn" class="ghost-btn" type="button">Clear Thread</button>
+            <button id="exportThreadBtn" class="ghost-btn" type="button">Export Thread</button>
+          </div>
         </div>
         <div class="messages" id="messages" aria-live="polite" aria-label="Conversation messages"></div>
         <div class="typing" id="typing" aria-live="polite" aria-atomic="true"></div>
@@ -164,13 +187,14 @@
   </div>
 
   <script>
-    const conversations = [
+    const DEFAULT_CONVERSATIONS = [
       {
         name: 'Alice Johnson',
         avatar: 'A',
         color: '#8aa0ff',
         online: true,
         ago: '2m',
+        unread: 0,
         messages: [
           { fromMe: false, text: 'Are we shipping the update today?' },
           { fromMe: true, text: 'Yes, after smoke tests pass.' }
@@ -182,6 +206,7 @@
         color: '#10b981',
         online: true,
         ago: '15m',
+        unread: 0,
         messages: [
           { fromMe: false, text: 'Build passed. Ready for QA review.' },
           { fromMe: true, text: 'Great. I will post release notes in 10.' }
@@ -193,6 +218,7 @@
         color: '#f59e0b',
         online: false,
         ago: '1h',
+        unread: 1,
         messages: [
           { fromMe: false, text: 'I can jump on a quick call in 10.' },
           { fromMe: true, text: 'Perfect. Sending a calendar invite now.' }
@@ -204,12 +230,15 @@
         color: '#ec4899',
         online: false,
         ago: '2d',
+        unread: 0,
         messages: [
           { fromMe: false, text: 'New mockups are in the shared folder.' },
           { fromMe: true, text: 'Looks good. We can merge this sprint.' }
         ]
       }
     ];
+
+    const CHAT_STATE_KEY = 'portfolio_chat_state_v1';
 
     const listEl = document.getElementById('conversationList');
     const searchEl = document.getElementById('search');
@@ -220,7 +249,57 @@
     const threadTitleEl = document.getElementById('threadTitle');
     const threadStateEl = document.getElementById('threadState');
 
-    let active = 0;
+    function loadChatState() {
+      const raw = localStorage.getItem(CHAT_STATE_KEY);
+      if (!raw) {
+        return {
+          conversations: structuredClone(DEFAULT_CONVERSATIONS),
+          active: 0,
+          search: '',
+          presence: 'all'
+        };
+      }
+
+      try {
+        const parsed = JSON.parse(raw);
+        const safeConversations = Array.isArray(parsed.conversations)
+          ? parsed.conversations.map((conversation) => ({
+              ...conversation,
+              unread: Number.isFinite(conversation.unread) ? conversation.unread : 0,
+              messages: Array.isArray(conversation.messages) ? conversation.messages : []
+            }))
+          : structuredClone(DEFAULT_CONVERSATIONS);
+
+        return {
+          conversations: safeConversations,
+          active: Number.isFinite(parsed.active) ? parsed.active : 0,
+          search: typeof parsed.search === 'string' ? parsed.search : '',
+          presence: parsed.presence === 'online' || parsed.presence === 'offline' ? parsed.presence : 'all'
+        };
+      } catch {
+        return {
+          conversations: structuredClone(DEFAULT_CONVERSATIONS),
+          active: 0,
+          search: '',
+          presence: 'all'
+        };
+      }
+    }
+
+    function saveChatState() {
+      localStorage.setItem(CHAT_STATE_KEY, JSON.stringify({
+        conversations,
+        active,
+        search: searchEl.value,
+        presence: presenceEl.value
+      }));
+    }
+
+    const initialState = loadChatState();
+    const conversations = initialState.conversations;
+    let active = Math.min(Math.max(initialState.active, 0), Math.max(conversations.length - 1, 0));
+    searchEl.value = initialState.search;
+    presenceEl.value = initialState.presence;
 
     function visibleConversations() {
       const q = searchEl.value.trim().toLowerCase();
@@ -243,19 +322,21 @@
       visible.forEach((c) => {
         const idx = conversations.indexOf(c);
         const last = c.messages[c.messages.length - 1];
+        const preview = last ? last.text : 'No messages yet';
         const row = document.createElement('article');
         row.className = 'row' + (idx === active ? ' active' : '');
         row.setAttribute('tabindex', '0');
         row.setAttribute('role', 'button');
-        row.setAttribute('aria-label', c.name + ', ' + (c.online ? 'online' : 'offline') + ', last message: ' + last.text);
+        row.setAttribute('aria-label', c.name + ', ' + (c.online ? 'online' : 'offline') + ', last message: ' + preview);
         row.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); active = idx; renderList(); renderThread(); } });
         row.innerHTML =
           '<div class="avatar" style="background:' + c.color + '">' + c.avatar + '</div>' +
           '<div><div class="name">' + c.name + ' ' + (c.online ? '<span style="color:#9feac8;font-size:12px">online</span>' : '') + '</div>' +
-          '<div class="msg">' + last.text + '</div></div>' +
-          '<span class="badge">' + c.ago + '</span>';
+          '<div class="msg">' + preview + '</div></div>' +
+          '<span class="badge">' + (c.unread > 0 ? c.unread + ' new' : c.ago) + '</span>';
         row.onclick = () => {
           active = idx;
+          conversations[active].unread = 0;
           renderList();
           renderThread();
         };
@@ -265,6 +346,7 @@
 
     function renderThread() {
       const c = conversations[active];
+      c.unread = 0;
       threadTitleEl.textContent = c.name;
       threadStateEl.textContent = 'Status: ' + (c.online ? 'Online' : 'Away');
       messagesEl.innerHTML = '';
@@ -275,6 +357,7 @@
         messagesEl.appendChild(bubble);
       });
       messagesEl.scrollTop = messagesEl.scrollHeight;
+      saveChatState();
     }
 
     function simulateTypingReply() {
@@ -288,6 +371,7 @@
         ];
         const text = responses[Math.floor(Math.random() * responses.length)];
         conversations[active].messages.push({ fromMe: false, text: text });
+        conversations[active].ago = 'now';
         typingEl.textContent = '';
         renderList();
         renderThread();
@@ -300,6 +384,7 @@
         return;
       }
       conversations[active].messages.push({ fromMe: true, text: value });
+      conversations[active].ago = 'now';
       composerEl.value = '';
       renderList();
       renderThread();
@@ -315,8 +400,76 @@
     searchEl.addEventListener('input', renderList);
     presenceEl.addEventListener('change', renderList);
 
+    document.getElementById('clearThreadBtn').addEventListener('click', () => {
+      if (conversations[active].messages.length === 0) {
+        return;
+      }
+      if (!confirm('Clear all messages in this thread?')) {
+        return;
+      }
+      conversations[active].messages = [];
+      conversations[active].unread = 0;
+      renderList();
+      renderThread();
+    });
+
+    document.getElementById('exportThreadBtn').addEventListener('click', () => {
+      const conversation = conversations[active];
+      const payload = {
+        name: conversation.name,
+        exportedAt: new Date().toISOString(),
+        messages: conversation.messages
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = conversation.name.toLowerCase().replace(/\s+/g, '-') + '-thread.json';
+      link.click();
+      URL.revokeObjectURL(url);
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === '/') {
+        event.preventDefault();
+        composerEl.focus();
+      }
+    });
+
+    // Simulate incoming messages on background threads so unread badges are meaningful.
+    setInterval(() => {
+      if (conversations.length < 2) {
+        return;
+      }
+
+      const candidateIndexes = conversations
+        .map((_, index) => index)
+        .filter((index) => index !== active);
+
+      if (candidateIndexes.length === 0) {
+        return;
+      }
+
+      const randomIndex = candidateIndexes[Math.floor(Math.random() * candidateIndexes.length)];
+      const samples = [
+        'Quick update: QA passed on my end.',
+        'Can you review the latest commit?',
+        'I pushed a small fix to the branch.',
+        'Let me know if this timing works for you.'
+      ];
+      const sampleText = samples[Math.floor(Math.random() * samples.length)];
+
+      conversations[randomIndex].messages.push({ fromMe: false, text: sampleText });
+      conversations[randomIndex].unread = (conversations[randomIndex].unread || 0) + 1;
+      conversations[randomIndex].ago = 'now';
+      renderList();
+      saveChatState();
+    }, 18000);
+
     renderList();
     renderThread();
   </script>
+  <!-- Portfolio QoL Enhancer -->
+  <script>(function(){if(window.__portfolioQolEnhancer)return;window.__portfolioQolEnhancer=1;var b=document.createElement("button");b.type="button";b.setAttribute("aria-label","Scroll to top");b.textContent="Top";b.style.cssText="position:fixed;right:14px;bottom:14px;z-index:2147483000;border:1px solid rgba(148,163,184,.7);background:rgba(15,23,42,.88);color:#f8fafc;border-radius:999px;font:700 12px/1 Trebuchet MS,Segoe UI,sans-serif;padding:8px 11px;cursor:pointer;opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .16s ease,transform .16s ease";document.body.appendChild(b);function sync(){var visible=window.scrollY>200;b.style.opacity=visible?"1":"0";b.style.transform=visible?"translateY(0)":"translateY(8px)";b.style.pointerEvents=visible?"auto":"none";}b.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});document.addEventListener("keydown",function(e){var t=e.target&&e.target.tagName;if(t==="INPUT"||t==="TEXTAREA"||t==="SELECT")return;if(e.key==="t"||e.key==="T"){window.scrollTo({top:0,behavior:"smooth"});}});window.addEventListener("scroll",sync,{passive:true});sync();})();</script>
 </body>
 </html>
