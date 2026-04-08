@@ -344,15 +344,7 @@ export default function ProjectDetail({ params }: PageProps) {
 
 // Generate static pages for each project
 export async function generateStaticParams() {
-  return projects.flatMap((project) => {
-    const params = [{ id: project.id.toString() }];
-
-    if (project.slug) {
-      params.push({ id: project.slug });
-    }
-
-    return params;
-  });
+  return projects.map((project) => ({ id: project.id.toString() }));
 }
 
 // Generate metadata for SEO

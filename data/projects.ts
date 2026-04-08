@@ -833,11 +833,11 @@ const searchableProjectFields = (project: Project) => {
 };
 
 export const getProjectHref = (project: Project): string => {
-  return `/projects/${project.slug ?? project.id}`;
+  return `/projects/${project.id}`;
 };
 
 export const getProjectRouteKey = (project: Project): string => {
-  return (project.slug ?? project.id.toString()).toLowerCase();
+  return project.id.toString();
 };
 
 export const findProjectByRouteParam = (param: string): Project | undefined => {
