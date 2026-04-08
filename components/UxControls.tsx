@@ -5,21 +5,27 @@ import { Command, Monitor, Moon, Sun, Contrast, Type, Minus, Plus } from 'lucide
 import { useRouter } from 'next/navigation';
 
 type ThemeMode = 'light' | 'dark' | 'contrast';
+type ThemeTone = 'soft' | 'balanced' | 'vivid';
 type DensityMode = 'comfortable' | 'compact';
 type FontScale = 'sm' | 'md' | 'lg';
+type TextContrast = 'soft' | 'balanced' | 'strong';
 
 interface UxPreferences {
   theme: ThemeMode;
+  themeTone: ThemeTone;
   density: DensityMode;
   fontScale: FontScale;
+  textContrast: TextContrast;
 }
 
 const UX_PREFS_STORAGE_KEY = 'portfolio-ux-preferences-v1';
 
 const defaultPrefs: UxPreferences = {
   theme: 'light',
+  themeTone: 'balanced',
   density: 'comfortable',
   fontScale: 'md',
+  textContrast: 'balanced',
 };
 
 export default function UxControls() {
@@ -42,8 +48,10 @@ export default function UxControls() {
       const parsed = JSON.parse(raw) as Partial<UxPreferences>;
       setPrefs({
         theme: parsed.theme === 'dark' || parsed.theme === 'contrast' ? parsed.theme : 'light',
+        themeTone: parsed.themeTone === 'soft' || parsed.themeTone === 'vivid' ? parsed.themeTone : 'balanced',
         density: parsed.density === 'compact' ? 'compact' : 'comfortable',
         fontScale: parsed.fontScale === 'sm' || parsed.fontScale === 'lg' ? parsed.fontScale : 'md',
+        textContrast: parsed.textContrast === 'soft' || parsed.textContrast === 'strong' ? parsed.textContrast : 'balanced',
       });
     } catch {
       setPrefs(defaultPrefs);
@@ -59,8 +67,10 @@ export default function UxControls() {
 
     const root = document.documentElement;
     root.dataset.theme = prefs.theme;
+    root.dataset.themeTone = prefs.themeTone;
     root.dataset.density = prefs.density;
     root.dataset.fontScale = prefs.fontScale;
+    root.dataset.textContrast = prefs.textContrast;
   }, [isMounted, prefs]);
 
   useEffect(() => {
@@ -163,6 +173,21 @@ export default function UxControls() {
       run: cycleTheme,
     },
     {
+      id: 'theme-tone-cycle',
+      label: 'Cycle Theme Tone',
+      keywords: 'theme tone soft vivid balanced',
+      run: () =>
+        setPrefs((current) => ({
+          ...current,
+          themeTone:
+            current.themeTone === 'soft'
+              ? 'balanced'
+              : current.themeTone === 'balanced'
+                ? 'vivid'
+                : 'soft',
+        })),
+    },
+    {
       id: 'density-toggle',
       label: 'Toggle Compact Density',
       keywords: 'density compact spacing',
@@ -183,6 +208,21 @@ export default function UxControls() {
       label: 'Decrease Font Scale',
       keywords: 'font text scale smaller',
       run: () => adjustFontScale('down'),
+    },
+    {
+      id: 'text-contrast-cycle',
+      label: 'Cycle Text Contrast',
+      keywords: 'text contrast font readability soft strong',
+      run: () =>
+        setPrefs((current) => ({
+          ...current,
+          textContrast:
+            current.textContrast === 'soft'
+              ? 'balanced'
+              : current.textContrast === 'balanced'
+                ? 'strong'
+                : 'soft',
+        })),
     },
   ];
 
@@ -208,7 +248,7 @@ export default function UxControls() {
         <button
           type="button"
           onClick={() => setIsDisplayOpen((current) => !current)}
-          className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-slate-300 text-sm font-semibold text-slate-700 hover:bg-slate-100"
+          className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border theme-border text-sm font-semibold theme-text-primary hover:opacity-90 surface-card"
           aria-expanded={isDisplayOpen}
           aria-controls="display-controls"
         >
@@ -218,7 +258,7 @@ export default function UxControls() {
         <button
           type="button"
           onClick={() => setIsPaletteOpen(true)}
-          className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-slate-300 text-sm font-semibold text-slate-700 hover:bg-slate-100"
+          className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border theme-border text-sm font-semibold theme-text-primary hover:opacity-90 surface-card"
           aria-label="Open command palette"
         >
           <Command size={16} aria-hidden="true" />
@@ -228,20 +268,21 @@ export default function UxControls() {
         {isDisplayOpen && (
           <div
             id="display-controls"
-            className="absolute right-0 top-12 w-72 rounded-xl border border-slate-200 bg-white p-4 shadow-xl z-[60]"
+            className="absolute right-0 top-12 w-80 rounded-xl surface-card p-4 shadow-xl z-[60]"
             role="dialog"
             aria-label="Display preferences"
           >
-            <p className="text-sm font-semibold text-slate-900 mb-3">Display Preferences</p>
+            <p className="text-sm font-semibold theme-text-primary mb-1">Display Preferences</p>
+            <p className="text-xs theme-text-secondary mb-3">Tune brightness, tone, and text readability without leaving the page.</p>
 
             <div className="space-y-2 mb-4">
-              <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Theme</p>
+              <p className="text-xs font-semibold uppercase tracking-wide theme-text-tertiary">Theme</p>
               <div className="grid grid-cols-3 gap-2">
                 <button
                   type="button"
                   onClick={() => setPrefs((current) => ({ ...current, theme: 'light' }))}
                   className={`px-2 py-2 rounded-lg border text-xs font-semibold ${
-                    prefs.theme === 'light' ? 'bg-blue-600 text-white border-blue-600' : 'border-slate-300 text-slate-700'
+                    prefs.theme === 'light' ? 'bg-blue-600 text-white border-blue-600' : 'theme-border theme-text-primary surface-subtle'
                   }`}
                 >
                   <Sun size={14} className="mx-auto mb-1" aria-hidden="true" />
@@ -251,7 +292,7 @@ export default function UxControls() {
                   type="button"
                   onClick={() => setPrefs((current) => ({ ...current, theme: 'dark' }))}
                   className={`px-2 py-2 rounded-lg border text-xs font-semibold ${
-                    prefs.theme === 'dark' ? 'bg-blue-600 text-white border-blue-600' : 'border-slate-300 text-slate-700'
+                    prefs.theme === 'dark' ? 'bg-blue-600 text-white border-blue-600' : 'theme-border theme-text-primary surface-subtle'
                   }`}
                 >
                   <Moon size={14} className="mx-auto mb-1" aria-hidden="true" />
@@ -261,7 +302,7 @@ export default function UxControls() {
                   type="button"
                   onClick={() => setPrefs((current) => ({ ...current, theme: 'contrast' }))}
                   className={`px-2 py-2 rounded-lg border text-xs font-semibold ${
-                    prefs.theme === 'contrast' ? 'bg-blue-600 text-white border-blue-600' : 'border-slate-300 text-slate-700'
+                    prefs.theme === 'contrast' ? 'bg-blue-600 text-white border-blue-600' : 'theme-border theme-text-primary surface-subtle'
                   }`}
                 >
                   <Contrast size={14} className="mx-auto mb-1" aria-hidden="true" />
@@ -271,13 +312,31 @@ export default function UxControls() {
             </div>
 
             <div className="space-y-2 mb-4">
-              <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Density</p>
+              <p className="text-xs font-semibold uppercase tracking-wide theme-text-tertiary">Theme Tone</p>
+              <div className="grid grid-cols-3 gap-2">
+                {(['soft', 'balanced', 'vivid'] as ThemeTone[]).map((tone) => (
+                  <button
+                    key={tone}
+                    type="button"
+                    onClick={() => setPrefs((current) => ({ ...current, themeTone: tone }))}
+                    className={`px-2 py-2 rounded-lg border text-xs font-semibold ${
+                      prefs.themeTone === tone ? 'bg-blue-600 text-white border-blue-600' : 'theme-border theme-text-primary surface-subtle'
+                    }`}
+                  >
+                    {tone[0].toUpperCase() + tone.slice(1)}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-2 mb-4">
+              <p className="text-xs font-semibold uppercase tracking-wide theme-text-tertiary">Density</p>
               <div className="grid grid-cols-2 gap-2">
                 <button
                   type="button"
                   onClick={() => setPrefs((current) => ({ ...current, density: 'comfortable' }))}
                   className={`px-3 py-2 rounded-lg border text-xs font-semibold ${
-                    prefs.density === 'comfortable' ? 'bg-blue-600 text-white border-blue-600' : 'border-slate-300 text-slate-700'
+                    prefs.density === 'comfortable' ? 'bg-blue-600 text-white border-blue-600' : 'theme-border theme-text-primary surface-subtle'
                   }`}
                 >
                   Comfortable
@@ -286,7 +345,7 @@ export default function UxControls() {
                   type="button"
                   onClick={() => setPrefs((current) => ({ ...current, density: 'compact' }))}
                   className={`px-3 py-2 rounded-lg border text-xs font-semibold ${
-                    prefs.density === 'compact' ? 'bg-blue-600 text-white border-blue-600' : 'border-slate-300 text-slate-700'
+                    prefs.density === 'compact' ? 'bg-blue-600 text-white border-blue-600' : 'theme-border theme-text-primary surface-subtle'
                   }`}
                 >
                   Compact
@@ -294,25 +353,43 @@ export default function UxControls() {
               </div>
             </div>
 
+            <div className="space-y-2 mb-4">
+              <p className="text-xs font-semibold uppercase tracking-wide theme-text-tertiary">Text Contrast</p>
+              <div className="grid grid-cols-3 gap-2">
+                {(['soft', 'balanced', 'strong'] as TextContrast[]).map((mode) => (
+                  <button
+                    key={mode}
+                    type="button"
+                    onClick={() => setPrefs((current) => ({ ...current, textContrast: mode }))}
+                    className={`px-2 py-2 rounded-lg border text-xs font-semibold ${
+                      prefs.textContrast === mode ? 'bg-blue-600 text-white border-blue-600' : 'theme-border theme-text-primary surface-subtle'
+                    }`}
+                  >
+                    {mode[0].toUpperCase() + mode.slice(1)}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <div className="space-y-2">
-              <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Font Scale</p>
+              <p className="text-xs font-semibold uppercase tracking-wide theme-text-tertiary">Font Scale</p>
               <div className="flex items-center gap-2">
                 <button
                   type="button"
                   onClick={() => adjustFontScale('down')}
-                  className="px-2 py-2 rounded-lg border border-slate-300 text-slate-700"
+                  className="px-2 py-2 rounded-lg border theme-border theme-text-primary surface-subtle"
                   aria-label="Decrease font scale"
                 >
                   <Minus size={14} aria-hidden="true" />
                 </button>
-                <div className="flex-1 rounded-lg border border-slate-300 px-3 py-2 text-xs font-semibold text-slate-700 flex items-center justify-center gap-2">
+                <div className="flex-1 rounded-lg border theme-border px-3 py-2 text-xs font-semibold theme-text-primary flex items-center justify-center gap-2 surface-subtle">
                   <Type size={14} aria-hidden="true" />
                   {prefs.fontScale === 'sm' ? 'Small' : prefs.fontScale === 'lg' ? 'Large' : 'Default'}
                 </div>
                 <button
                   type="button"
                   onClick={() => adjustFontScale('up')}
-                  className="px-2 py-2 rounded-lg border border-slate-300 text-slate-700"
+                  className="px-2 py-2 rounded-lg border theme-border theme-text-primary surface-subtle"
                   aria-label="Increase font scale"
                 >
                   <Plus size={14} aria-hidden="true" />
@@ -324,15 +401,15 @@ export default function UxControls() {
       </div>
 
       {isPaletteOpen && (
-        <div className="fixed inset-0 z-[70] bg-slate-900/60 backdrop-blur-sm p-4 flex items-start justify-center pt-28">
-          <div className="w-full max-w-2xl rounded-xl border border-slate-200 bg-white shadow-2xl overflow-hidden">
-            <div className="border-b border-slate-200 p-3">
+        <div className="fixed inset-0 z-[70] p-4 flex items-start justify-center pt-28" style={{ background: 'var(--overlay-bg)' }}>
+          <div className="w-full max-w-2xl rounded-xl surface-card shadow-2xl overflow-hidden">
+            <div className="border-b theme-border p-3">
               <input
                 ref={paletteInputRef}
                 value={paletteQuery}
                 onChange={(event) => setPaletteQuery(event.target.value)}
                 placeholder="Type a command... (e.g., dark theme, go projects)"
-                className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full rounded-lg theme-input px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                 aria-label="Command palette search"
               />
             </div>
@@ -342,14 +419,14 @@ export default function UxControls() {
                   <button
                     type="button"
                     onClick={() => executeCommand(command)}
-                    className="w-full text-left px-3 py-2 rounded-lg text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-700"
+                    className="w-full text-left px-3 py-2 rounded-lg text-sm theme-text-primary hover:bg-blue-50 hover:text-blue-700"
                   >
                     {command.label}
                   </button>
                 </li>
               ))}
               {filteredCommands.length === 0 && (
-                <li className="px-3 py-4 text-sm text-slate-500">No matching commands.</li>
+                <li className="px-3 py-4 text-sm theme-text-secondary">No matching commands.</li>
               )}
             </ul>
           </div>

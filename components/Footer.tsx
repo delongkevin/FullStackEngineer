@@ -25,12 +25,12 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-gray-900 text-white py-12" aria-label="Site footer">
+    <footer className="py-12" aria-label="Site footer" style={{ background: 'var(--surface-1)', color: 'var(--text-1)', borderTop: '1px solid var(--border-soft)' }}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-6 md:mb-0">
-            <h3 className="text-2xl font-bold text-white">Kevin Delong</h3>
-            <p className="text-gray-400 mt-2">Full Stack & Frontend Developer</p>
+            <h3 className="text-2xl font-bold theme-text-primary">Kevin Delong</h3>
+            <p className="theme-text-secondary mt-2">Full Stack & Frontend Developer</p>
           </div>
           
           <div className="flex space-x-6">
@@ -38,7 +38,7 @@ export default function Footer() {
               <a
                 key={social.label}
                 href={social.href}
-                className="text-gray-400 hover:text-white transition-colors"
+                className="theme-text-secondary hover:opacity-80 transition-colors"
                 aria-label={social.label}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -49,7 +49,7 @@ export default function Footer() {
           </div>
         </div>
         
-        <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+        <div className="border-t theme-border mt-8 pt-8 text-center theme-text-secondary">
           <p>&copy; {new Date().getFullYear()} Kevin Douglas Delong. All rights reserved.</p>
           <p className="mt-2 text-sm">Phone: (810) 287-7409 | Email: delong.kevin@gmail.com</p>
         </div>

@@ -54,7 +54,7 @@ export default function ContactForm() {
     <form onSubmit={handleSubmit} className="space-y-6" noValidate>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label htmlFor="cf-name" className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="cf-name" className="block text-sm font-medium theme-text-secondary mb-2">
             Your Name *
           </label>
           <input
@@ -67,7 +67,7 @@ export default function ContactForm() {
             aria-required="true"
             aria-invalid={errors.name ? "true" : "false"}
             aria-describedby={errors.name ? "name-error" : undefined}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+            className="w-full px-4 py-3 theme-input rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
             placeholder="Enter your name"
           />
           {errors.name && (
@@ -78,7 +78,7 @@ export default function ContactForm() {
         </div>
         
         <div>
-          <label htmlFor="cf-email" className="block text-sm font-medium text-gray-700 mb-2">
+          <label htmlFor="cf-email" className="block text-sm font-medium theme-text-secondary mb-2">
             Email Address *
           </label>
           <input
@@ -91,7 +91,7 @@ export default function ContactForm() {
             aria-required="true"
             aria-invalid={errors.email ? "true" : "false"}
             aria-describedby={errors.email ? "email-error" : undefined}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+            className="w-full px-4 py-3 theme-input rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
             placeholder="Enter your email"
           />
           {errors.email && (
@@ -103,7 +103,7 @@ export default function ContactForm() {
       </div>
 
       <div>
-        <label htmlFor="cf-subject" className="block text-sm font-medium text-gray-700 mb-2">
+        <label htmlFor="cf-subject" className="block text-sm font-medium theme-text-secondary mb-2">
           Subject *
         </label>
         <input
@@ -116,7 +116,7 @@ export default function ContactForm() {
           aria-required="true"
           aria-invalid={errors.subject ? "true" : "false"}
           aria-describedby={errors.subject ? "subject-error" : undefined}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+          className="w-full px-4 py-3 theme-input rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
           placeholder="What's this about?"
         />
         {errors.subject && (
@@ -127,7 +127,7 @@ export default function ContactForm() {
       </div>
 
       <div>
-        <label htmlFor="cf-message" className="block text-sm font-medium text-gray-700 mb-2">
+        <label htmlFor="cf-message" className="block text-sm font-medium theme-text-secondary mb-2">
           Message *
         </label>
         <textarea
@@ -140,7 +140,7 @@ export default function ContactForm() {
           aria-invalid={errors.message ? "true" : "false"}
           aria-describedby={errors.message ? "message-error" : undefined}
           rows={6}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-vertical"
+          className="w-full px-4 py-3 theme-input rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-vertical"
           placeholder="Tell me about your project..."
         ></textarea>
         {errors.message && (

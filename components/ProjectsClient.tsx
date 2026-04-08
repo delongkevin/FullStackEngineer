@@ -234,8 +234,8 @@ export default function ProjectsClient() {
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">My Projects</h1>
-        <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+        <h1 className="text-4xl font-bold theme-text-primary mb-4">My Projects</h1>
+        <p className="text-xl theme-text-secondary max-w-2xl mx-auto">
           A collection of my work spanning frontend, full-stack, automotive, and mobile development.
           Each project represents unique challenges and learning experiences.
         </p>
@@ -248,28 +248,28 @@ export default function ProjectsClient() {
       <div className="surface-card rounded-2xl shadow-md p-4 md:p-6 mb-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           <label className="lg:col-span-2">
-            <span className="text-sm font-medium text-gray-700 mb-2 block">Search projects</span>
+            <span className="text-sm font-medium theme-text-secondary mb-2 block">Search projects</span>
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} aria-hidden="true" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 theme-text-tertiary" size={18} aria-hidden="true" />
               <input
                 type="search"
                 value={query}
                 onChange={(event) => setQuery(event.target.value)}
                 placeholder="Search by title, technology, or feature"
-                className="w-full border border-gray-300 rounded-lg pl-10 pr-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full theme-input rounded-lg pl-10 pr-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 aria-label="Search projects"
               />
             </div>
           </label>
 
           <label>
-            <span className="text-sm font-medium text-gray-700 mb-2 block">Sort results</span>
+            <span className="text-sm font-medium theme-text-secondary mb-2 block">Sort results</span>
             <div className="relative">
-              <SlidersHorizontal className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} aria-hidden="true" />
+              <SlidersHorizontal className="absolute left-3 top-1/2 -translate-y-1/2 theme-text-tertiary" size={18} aria-hidden="true" />
               <select
                 value={sortBy}
                 onChange={(event) => setSortBy(event.target.value as SortOption)}
-                className="w-full border border-gray-300 rounded-lg pl-10 pr-10 py-3 bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full theme-input rounded-lg pl-10 pr-10 py-3 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 aria-label="Sort projects"
               >
                 <option value="featured">Featured first</option>
@@ -289,7 +289,7 @@ export default function ProjectsClient() {
             className={`inline-flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-medium transition-colors ${
               featuredOnly
                 ? 'bg-blue-600 text-white border-blue-600'
-                : 'bg-gray-50 text-gray-700 border-gray-300 hover:bg-gray-100'
+                : 'surface-subtle theme-text-secondary theme-border hover:opacity-90'
             }`}
           >
             <Sparkles size={16} aria-hidden="true" />
@@ -298,18 +298,18 @@ export default function ProjectsClient() {
           <button
             type="button"
             onClick={handleResetFilters}
-            className="px-4 py-2 rounded-full border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-100 transition-colors"
+            className="px-4 py-2 rounded-full border theme-border text-sm font-medium theme-text-secondary hover:opacity-90 transition-colors surface-subtle"
           >
             Reset filters
           </button>
-          <p className="text-sm text-gray-600" aria-live="polite">
+          <p className="text-sm theme-text-secondary" aria-live="polite">
             Showing {filteredProjects.length} of {categoryCounts[filter]} projects
           </p>
         </div>
 
-        <div className="mt-4 border-t border-gray-200 pt-4 space-y-3">
+        <div className="mt-4 border-t theme-border pt-4 space-y-3">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-sm font-semibold text-gray-700">Layout</span>
+            <span className="text-sm font-semibold theme-text-secondary">Layout</span>
             {(['grid', 'list', 'masonry'] as ViewMode[]).map((mode) => (
               <button
                 key={mode}
@@ -318,7 +318,7 @@ export default function ProjectsClient() {
                 className={`px-3 py-2 rounded-full border text-xs font-semibold transition-colors ${
                   viewMode === mode
                     ? 'bg-blue-600 text-white border-blue-600'
-                    : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100'
+                    : 'surface-subtle theme-text-secondary theme-border hover:opacity-90'
                 }`}
               >
                 {mode[0].toUpperCase() + mode.slice(1)}
@@ -327,7 +327,7 @@ export default function ProjectsClient() {
           </div>
 
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-sm font-semibold text-gray-700">Card size</span>
+            <span className="text-sm font-semibold theme-text-secondary">Card size</span>
             {(['sm', 'md', 'lg'] as CardSize[]).map((size) => (
               <button
                 key={size}
@@ -336,7 +336,7 @@ export default function ProjectsClient() {
                 className={`px-3 py-2 rounded-full border text-xs font-semibold transition-colors ${
                   cardSize === size
                     ? 'bg-blue-600 text-white border-blue-600'
-                    : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100'
+                    : 'surface-subtle theme-text-secondary theme-border hover:opacity-90'
                 }`}
               >
                 {size.toUpperCase()}
@@ -349,7 +349,7 @@ export default function ProjectsClient() {
               type="button"
               onClick={() => setShowMeta((current) => !current)}
               className={`px-3 py-2 rounded-full border text-xs font-semibold transition-colors ${
-                showMeta ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-700 border-gray-300'
+                showMeta ? 'bg-blue-600 text-white border-blue-600' : 'surface-subtle theme-text-secondary theme-border'
               }`}
             >
               {showMeta ? 'Metadata On' : 'Metadata Off'}
@@ -358,7 +358,7 @@ export default function ProjectsClient() {
               type="button"
               onClick={() => setShowRecently((current) => !current)}
               className={`px-3 py-2 rounded-full border text-xs font-semibold transition-colors ${
-                showRecently ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-700 border-gray-300'
+                showRecently ? 'bg-blue-600 text-white border-blue-600' : 'surface-subtle theme-text-secondary theme-border'
               }`}
             >
               {showRecently ? 'Recently Viewed On' : 'Recently Viewed Off'}
@@ -367,7 +367,7 @@ export default function ProjectsClient() {
               type="button"
               onClick={() => setShowRecommended((current) => !current)}
               className={`px-3 py-2 rounded-full border text-xs font-semibold transition-colors ${
-                showRecommended ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-700 border-gray-300'
+                showRecommended ? 'bg-blue-600 text-white border-blue-600' : 'surface-subtle theme-text-secondary theme-border'
               }`}
             >
               {showRecommended ? 'Recommended On' : 'Recommended Off'}
@@ -375,7 +375,7 @@ export default function ProjectsClient() {
             <button
               type="button"
               onClick={handleResetLayout}
-              className="px-3 py-2 rounded-full border border-gray-300 text-xs font-semibold text-gray-700 hover:bg-gray-100"
+              className="px-3 py-2 rounded-full border theme-border text-xs font-semibold theme-text-secondary hover:opacity-90 surface-subtle"
             >
               Reset Layout
             </button>
@@ -392,7 +392,7 @@ export default function ProjectsClient() {
             className={`px-6 py-3 rounded-full font-medium transition-all min-h-[44px] ${
               filter === category
                 ? 'bg-blue-600 text-white shadow-lg'
-                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                : 'surface-subtle theme-text-secondary hover:opacity-90'
             }`}
           >
             {category === 'all' ? 'All' : formatProjectCategory(category)}
@@ -407,16 +407,16 @@ export default function ProjectsClient() {
 
       {showRecently && recentlyViewedProjects.length > 0 && (
         <section className="mb-12" aria-label="Recently viewed projects">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Recently Viewed</h2>
+          <h2 className="text-2xl font-bold theme-text-primary mb-4">Recently Viewed</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {recentlyViewedProjects.map((project) => (
               <Link
                 key={project.id}
                 href={getProjectHref(project)}
-                className="rounded-lg border border-gray-200 p-4 bg-white hover:border-blue-400 hover:bg-blue-50 transition-colors"
+                className="rounded-lg surface-card p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors"
               >
-                <p className="font-semibold text-gray-900 line-clamp-1">{project.title}</p>
-                <p className="text-sm text-gray-600 mt-1 line-clamp-2">{project.description}</p>
+                <p className="font-semibold theme-text-primary line-clamp-1">{project.title}</p>
+                <p className="text-sm theme-text-secondary mt-1 line-clamp-2">{project.description}</p>
               </Link>
             ))}
           </div>
@@ -425,16 +425,16 @@ export default function ProjectsClient() {
 
       {showRecommended && recommendedProjects.length > 0 && (
         <section className="mb-12" aria-label="Recommended projects">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Recommended For You</h2>
+          <h2 className="text-2xl font-bold theme-text-primary mb-4">Recommended For You</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             {recommendedProjects.map((project) => (
               <Link
                 key={project.id}
                 href={getProjectHref(project)}
-                className="rounded-lg border border-gray-200 p-4 bg-white hover:border-blue-400 hover:bg-blue-50 transition-colors"
+                className="rounded-lg surface-card p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors"
               >
-                <p className="font-semibold text-gray-900 line-clamp-1">{project.title}</p>
-                <p className="text-sm text-gray-600 mt-1 line-clamp-2">{project.description}</p>
+                <p className="font-semibold theme-text-primary line-clamp-1">{project.title}</p>
+                <p className="text-sm theme-text-secondary mt-1 line-clamp-2">{project.description}</p>
               </Link>
             ))}
           </div>
@@ -456,7 +456,7 @@ export default function ProjectsClient() {
         </div>
       ) : (
         <div className="text-center py-12">
-          <p className="text-gray-500 text-lg mb-4">No projects matched your current filters.</p>
+          <p className="theme-text-secondary text-lg mb-4">No projects matched your current filters.</p>
           <button
             type="button"
             onClick={handleResetFilters}

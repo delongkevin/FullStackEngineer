@@ -31,8 +31,8 @@ export default function ProjectDetail({ params }: PageProps) {
         <Header />
         <div className="pt-24 pb-16 min-h-screen flex items-center justify-center">
           <div className="text-center">
-            <h1 className="text-2xl font-bold text-gray-900 mb-4">Project Not Found</h1>
-            <Link href="/projects" className="text-blue-600 hover:text-blue-700">
+            <h1 className="text-2xl font-bold theme-text-primary mb-4">Project Not Found</h1>
+            <Link href="/projects" className="theme-accent-text hover:opacity-80">
               ← Back to Projects
             </Link>
           </div>
@@ -77,7 +77,7 @@ export default function ProjectDetail({ params }: PageProps) {
       <main id="main-content" className="pt-24 pb-16 min-h-screen">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="sticky top-20 z-30 mb-6 surface-card rounded-xl shadow-md px-4 py-3 flex flex-wrap items-center gap-3">
-            <p className="text-sm font-semibold text-gray-700">Quick Actions</p>
+            <p className="text-sm font-semibold theme-text-secondary">Quick Actions</p>
             <a
               href={project.liveUrl}
               className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700"
@@ -89,7 +89,7 @@ export default function ProjectDetail({ params }: PageProps) {
             </a>
             <a
               href={project.githubUrl}
-              className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-300 text-gray-700 text-sm font-semibold hover:bg-gray-100"
+              className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border theme-border theme-text-secondary text-sm font-semibold hover:opacity-90 surface-subtle"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -101,7 +101,7 @@ export default function ProjectDetail({ params }: PageProps) {
           {/* Back Button */}
           <Link
             href="/projects"
-            className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-6"
+            className="inline-flex items-center gap-2 theme-accent-text hover:opacity-80 mb-6"
             aria-label="Back to all projects"
           >
             <ArrowLeft size={20} aria-hidden="true" />
@@ -109,7 +109,7 @@ export default function ProjectDetail({ params }: PageProps) {
           </Link>
 
           {/* Project Header */}
-          <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
+          <div className="surface-card rounded-xl shadow-lg p-8 mb-8">
             <div className="flex flex-col lg:flex-row gap-8">
               {/* Project Image */}
               <div className="lg:w-1/3">
@@ -126,14 +126,14 @@ export default function ProjectDetail({ params }: PageProps) {
               
               {/* Project Info */}
               <div className="lg:w-2/3">
-                <h1 className="text-3xl font-bold text-gray-900 mb-4">{project.title}</h1>
-                <p className="text-xl text-gray-600 mb-6">{project.fullDescription}</p>
+                <h1 className="text-3xl font-bold theme-text-primary mb-4">{project.title}</h1>
+                <p className="text-xl theme-text-secondary mb-6">{project.fullDescription}</p>
                 
                 <div className="flex flex-wrap gap-4 mb-6">
                   {project.tech.map((tech: string) => (
                     <span
                       key={tech}
-                      className="px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium"
+                      className="px-4 py-2 theme-chip rounded-full font-medium"
                     >
                       {tech}
                     </span>
@@ -165,8 +165,8 @@ export default function ProjectDetail({ params }: PageProps) {
 
                 {/* App Store Download Buttons */}
                 {(project.androidUrl || project.iosUrl) && (
-                  <div className="mt-4 pt-4 border-t border-gray-200">
-                    <p className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-2">
+                  <div className="mt-4 pt-4 border-t theme-border">
+                    <p className="text-sm font-semibold theme-text-secondary mb-3 flex items-center gap-2">
                       <Smartphone size={16} aria-hidden="true" />
                       {project.androidUrl?.includes('/releases/') || project.iosUrl?.includes('/releases/')
                         ? 'Download the App'
@@ -176,7 +176,8 @@ export default function ProjectDetail({ params }: PageProps) {
                       {project.androidUrl && (
                         <a
                           href={project.androidUrl}
-                          className="inline-flex items-center gap-2 px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-700 transition-colors text-sm font-medium"
+                          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg hover:opacity-90 transition-colors text-sm font-medium"
+                          style={{ background: 'var(--surface-3)', color: 'var(--text-1)', border: '1px solid var(--border-soft)' }}
                           target="_blank"
                           rel="noopener noreferrer"
                           aria-label={`${project.androidUrl.includes('/releases/') ? 'Download' : 'View Android source for'} ${project.title}`}
@@ -192,7 +193,8 @@ export default function ProjectDetail({ params }: PageProps) {
                       {project.iosUrl && project.iosUrl !== project.androidUrl && (
                         <a
                           href={project.iosUrl}
-                          className="inline-flex items-center gap-2 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-600 transition-colors text-sm font-medium"
+                          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg hover:opacity-90 transition-colors text-sm font-medium"
+                          style={{ background: 'var(--surface-3)', color: 'var(--text-1)', border: '1px solid var(--border-soft)' }}
                           target="_blank"
                           rel="noopener noreferrer"
                           aria-label={`${project.iosUrl.includes('/releases/') ? 'Download' : 'View iOS source for'} ${project.title}`}
@@ -208,7 +210,8 @@ export default function ProjectDetail({ params }: PageProps) {
                       {project.iosUrl && project.iosUrl === project.androidUrl && (
                         <a
                           href={project.iosUrl}
-                          className="inline-flex items-center gap-2 px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-500 transition-colors text-sm font-medium"
+                          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg hover:opacity-90 transition-colors text-sm font-medium"
+                          style={{ background: 'var(--surface-3)', color: 'var(--text-1)', border: '1px solid var(--border-soft)' }}
                           target="_blank"
                           rel="noopener noreferrer"
                           aria-label={`View React Native source for ${project.title}`}
@@ -229,8 +232,8 @@ export default function ProjectDetail({ params }: PageProps) {
             {/* Main Content */}
             <div className="lg:col-span-2">
           {project.embeddable ? (
-            <div className="bg-white rounded-xl shadow-lg p-6">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Interactive Demo</h2>
+            <div className="surface-card rounded-xl shadow-lg p-6">
+              <h2 className="text-2xl font-bold theme-text-primary mb-6">Interactive Demo</h2>
               <ProjectDemoEmbed
                 liveUrl={project.liveUrl}
                 title={project.title}
@@ -238,16 +241,16 @@ export default function ProjectDetail({ params }: PageProps) {
               />
             </div>
           ) : (
-               <div className="bg-white rounded-xl shadow-lg p-6">
-                  <h2 className="text-2xl font-bold text-gray-900 mb-4">Project Details</h2>
-                  <p className="text-gray-700 mb-6">{project.fullDescription}</p>
+              <div className="surface-card rounded-xl shadow-lg p-6">
+                <h2 className="text-2xl font-bold theme-text-primary mb-4">Project Details</h2>
+                <p className="theme-text-secondary mb-6">{project.fullDescription}</p>
                   
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">Key Features</h3>
+                  <h3 className="text-xl font-semibold theme-text-primary mb-4">Key Features</h3>
                   <ul className="space-y-3">
                     {project.features.map((feature: string, index: number) => (
                       <li key={index} className="flex items-start">
                         <span className="text-blue-500 mr-3 mt-1">•</span>
-                        <span className="text-gray-700">{feature}</span>
+                        <span className="theme-text-secondary">{feature}</span>
                       </li>
                     ))}
                   </ul>
@@ -258,27 +261,27 @@ export default function ProjectDetail({ params }: PageProps) {
             {/* Sidebar */}
             <div className="space-y-6">
               {/* Project Info Card */}
-              <details open className="bg-white rounded-xl shadow-lg p-6">
-                <summary className="text-lg font-semibold text-gray-900 mb-4 cursor-pointer">Project Information</summary>
+              <details open className="surface-card rounded-xl shadow-lg p-6">
+                <summary className="text-lg font-semibold theme-text-primary mb-4 cursor-pointer">Project Information</summary>
                 <div className="space-y-3 mt-4">
                   <div>
-                    <span className="text-sm text-gray-500">Category:</span>
-                    <div className="font-medium text-gray-900">{formatProjectCategory(project.category)}</div>
+                    <span className="text-sm theme-text-tertiary">Category:</span>
+                    <div className="font-medium theme-text-primary">{formatProjectCategory(project.category)}</div>
                   </div>
                   <div>
-                    <span className="text-sm text-gray-500">Status:</span>
+                    <span className="text-sm theme-text-tertiary">Status:</span>
                     <div className="font-medium text-green-600">Completed</div>
                   </div>
                   <div>
-                    <span className="text-sm text-gray-500">Type:</span>
-                    <div className="font-medium text-gray-900">
+                    <span className="text-sm theme-text-tertiary">Type:</span>
+                    <div className="font-medium theme-text-primary">
                       {project.embeddable ? 'Interactive Demo' : 'Web Application'}
                     </div>
                   </div>
                   {(project.androidUrl || project.iosUrl) && (
                     <div>
-                      <span className="text-sm text-gray-500">Platforms:</span>
-                      <div className="font-medium text-gray-900 flex gap-2 mt-1">
+                      <span className="text-sm theme-text-tertiary">Platforms:</span>
+                      <div className="font-medium theme-text-primary flex gap-2 mt-1">
                         {project.androidUrl && <span className="text-xs px-2 py-1 bg-green-100 text-green-700 rounded-full">🤖 Android</span>}
                         {project.iosUrl && <span className="text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded-full">🍎 iOS</span>}
                       </div>
@@ -288,13 +291,13 @@ export default function ProjectDetail({ params }: PageProps) {
               </details>
               
               {/* Technology Stack */}
-              <details open className="bg-white rounded-xl shadow-lg p-6">
-                <summary className="text-lg font-semibold text-gray-900 mb-4 cursor-pointer">Technology Stack</summary>
+              <details open className="surface-card rounded-xl shadow-lg p-6">
+                <summary className="text-lg font-semibold theme-text-primary mb-4 cursor-pointer">Technology Stack</summary>
                 <div className="flex flex-wrap gap-2 mt-4">
                   {project.tech.map((tech: string) => (
                     <span
                       key={tech}
-                      className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm"
+                      className="px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm"
                     >
                       {tech}
                     </span>
@@ -305,19 +308,19 @@ export default function ProjectDetail({ params }: PageProps) {
           </div>
 
           <section className="mt-10 space-y-6" aria-label="Project navigation and related work">
-            <div className="bg-white rounded-xl shadow-lg p-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Continue Exploring</h2>
+            <div className="surface-card rounded-xl shadow-lg p-6">
+              <h2 className="text-xl font-bold theme-text-primary mb-4">Continue Exploring</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {previousProject ? (
                   <Link
                     href={`/projects/${getProjectRouteKey(previousProject)}`}
-                    className="block rounded-lg border border-gray-200 p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors"
+                    className="block rounded-lg surface-subtle p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors"
                   >
-                    <p className="text-sm text-gray-500">Previous project</p>
-                    <p className="font-semibold text-gray-900">{previousProject.title}</p>
+                    <p className="text-sm theme-text-tertiary">Previous project</p>
+                    <p className="font-semibold theme-text-primary">{previousProject.title}</p>
                   </Link>
                 ) : (
-                  <div className="rounded-lg border border-dashed border-gray-200 p-4 text-sm text-gray-500">
+                  <div className="rounded-lg border border-dashed theme-border p-4 text-sm theme-text-tertiary">
                     You are viewing the first project.
                   </div>
                 )}
@@ -325,13 +328,13 @@ export default function ProjectDetail({ params }: PageProps) {
                 {nextProject ? (
                   <Link
                     href={`/projects/${getProjectRouteKey(nextProject)}`}
-                    className="block rounded-lg border border-gray-200 p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors"
+                    className="block rounded-lg surface-subtle p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors"
                   >
-                    <p className="text-sm text-gray-500">Next project</p>
-                    <p className="font-semibold text-gray-900">{nextProject.title}</p>
+                    <p className="text-sm theme-text-tertiary">Next project</p>
+                    <p className="font-semibold theme-text-primary">{nextProject.title}</p>
                   </Link>
                 ) : (
-                  <div className="rounded-lg border border-dashed border-gray-200 p-4 text-sm text-gray-500">
+                  <div className="rounded-lg border border-dashed theme-border p-4 text-sm theme-text-tertiary">
                     You are viewing the last project.
                   </div>
                 )}
@@ -339,17 +342,17 @@ export default function ProjectDetail({ params }: PageProps) {
             </div>
 
             {relatedProjects.length > 0 && (
-              <div className="bg-white rounded-xl shadow-lg p-6">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">Related Projects</h2>
+              <div className="surface-card rounded-xl shadow-lg p-6">
+                <h2 className="text-xl font-bold theme-text-primary mb-4">Related Projects</h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   {relatedProjects.map((relatedProject) => (
                     <Link
                       key={relatedProject.id}
                       href={`/projects/${getProjectRouteKey(relatedProject)}`}
-                      className="rounded-lg border border-gray-200 p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors"
+                      className="rounded-lg surface-subtle p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors"
                     >
-                      <p className="font-semibold text-gray-900">{relatedProject.title}</p>
-                      <p className="text-sm text-gray-600 mt-1 line-clamp-2">{relatedProject.description}</p>
+                      <p className="font-semibold theme-text-primary">{relatedProject.title}</p>
+                      <p className="text-sm theme-text-secondary mt-1 line-clamp-2">{relatedProject.description}</p>
                     </Link>
                   ))}
                 </div>

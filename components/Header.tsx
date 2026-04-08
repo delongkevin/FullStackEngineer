@@ -85,12 +85,12 @@ export default function Header() {
   };
 
   return (
-    <header className="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b border-gray-200">
+    <header className="fixed top-0 w-full theme-header backdrop-blur-md z-50 border-b">
       <nav className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Main navigation">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link href="/" className="text-2xl font-bold text-blue-600">
+            <Link href="/" className="text-2xl font-bold theme-accent-text">
               Kevin Delong
             </Link>
           </div>
@@ -106,7 +106,7 @@ export default function Header() {
                   href={item.href}
                   aria-current={isActive ? 'page' : undefined}
                   className={`px-4 py-3 rounded-md text-sm font-medium transition-colors min-h-[44px] flex items-center ${
-                    isActive ? 'text-blue-600 bg-blue-50' : 'text-gray-700 hover:text-blue-600'
+                    isActive ? 'theme-accent-text surface-subtle' : 'theme-text-secondary hover:opacity-80'
                   }`}
                 >
                   {item.name}
@@ -123,7 +123,7 @@ export default function Header() {
             <button
               ref={menuButtonRef}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-gray-700 hover:text-blue-600 p-2"
+              className="theme-text-secondary hover:opacity-80 p-2"
               aria-expanded={isMenuOpen}
               aria-controls="mobile-menu"
               aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
@@ -136,7 +136,7 @@ export default function Header() {
         {/* Mobile Navigation */}
         {isMenuOpen && (
           <div ref={menuRef} className="md:hidden" id="mobile-menu" role="navigation" aria-label="Mobile navigation">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200">
+            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 surface-card border-t theme-border">
               {navItems.map((item) => {
                 const isActive = isNavItemActive(item.href);
                 return (
@@ -145,7 +145,7 @@ export default function Header() {
                   href={item.href}
                   aria-current={isActive ? 'page' : undefined}
                   className={`block px-3 py-3 rounded-md text-base font-medium min-h-[44px] flex items-center ${
-                    isActive ? 'text-blue-600 bg-blue-50' : 'text-gray-700 hover:text-blue-600'
+                    isActive ? 'theme-accent-text surface-subtle' : 'theme-text-secondary hover:opacity-80'
                   }`}
                   onClick={() => setIsMenuOpen(false)}
                 >

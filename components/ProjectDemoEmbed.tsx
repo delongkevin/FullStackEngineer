@@ -42,16 +42,16 @@ export default function ProjectDemoEmbed({ liveUrl, title, category }: ProjectDe
   };
 
   return (
-    <div className="bg-gray-100 rounded-lg p-6 min-h-[600px]">
+    <div className="surface-subtle rounded-lg p-6 min-h-[600px]">
       <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
-        <p className="text-sm text-gray-600">
+        <p className="text-sm theme-text-secondary">
           Run the interactive demo directly in this page, or open it in a dedicated tab for full-screen testing.
         </p>
         <div className="flex flex-wrap gap-2">
           <button
             type="button"
             onClick={() => setIframeKey((value) => value + 1)}
-            className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-300 text-sm text-gray-700 hover:bg-gray-200 transition-colors"
+            className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border theme-border text-sm theme-text-secondary hover:opacity-90 transition-colors surface-card"
           >
             <RefreshCw size={16} aria-hidden="true" />
             Reload Demo
@@ -60,7 +60,7 @@ export default function ProjectDemoEmbed({ liveUrl, title, category }: ProjectDe
             href={liveUrl}
             target={liveUrl.startsWith('http') ? '_blank' : '_self'}
             rel={liveUrl.startsWith('http') ? 'noopener noreferrer' : ''}
-            className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-blue-300 bg-blue-50 text-blue-700 text-sm hover:bg-blue-100 transition-colors"
+            className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border theme-border theme-chip text-sm hover:opacity-90 transition-colors"
           >
             <ExternalLink size={16} aria-hidden="true" />
             Open Demo
@@ -68,7 +68,7 @@ export default function ProjectDemoEmbed({ liveUrl, title, category }: ProjectDe
           <button
             type="button"
             onClick={handleCopyLink}
-            className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-300 text-sm text-gray-700 hover:bg-gray-200 transition-colors"
+            className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border theme-border text-sm theme-text-secondary hover:opacity-90 transition-colors surface-card"
             aria-live="polite"
           >
             <Copy size={16} aria-hidden="true" />
@@ -78,7 +78,7 @@ export default function ProjectDemoEmbed({ liveUrl, title, category }: ProjectDe
       </div>
 
       <div className="mb-4 flex flex-wrap items-center gap-2">
-        <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">Demo Size</p>
+        <p className="text-xs font-semibold uppercase tracking-wide theme-text-tertiary">Demo Size</p>
         {(['short', 'medium', 'tall', 'full'] as const).map((size) => (
           <button
             key={size}
@@ -90,7 +90,7 @@ export default function ProjectDemoEmbed({ liveUrl, title, category }: ProjectDe
             className={`px-3 py-1.5 rounded-full border text-xs font-semibold ${
               demoHeight === size
                 ? 'bg-blue-600 text-white border-blue-600'
-                : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-100'
+                : 'surface-card theme-text-secondary theme-border hover:opacity-90'
             }`}
           >
             {size[0].toUpperCase() + size.slice(1)}
@@ -104,7 +104,7 @@ export default function ProjectDemoEmbed({ liveUrl, title, category }: ProjectDe
       <iframe
         key={iframeKey}
         src={liveUrl}
-        className="w-full border-0 rounded-lg bg-white"
+        className="w-full border-0 rounded-lg surface-card"
         title={`Interactive demo of ${title} - ${category} project`}
         aria-describedby="demo-description"
         loading="lazy"
