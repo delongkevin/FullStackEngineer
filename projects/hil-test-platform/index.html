@@ -1,1 +1,1046 @@
-<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="/_next/static/css/4cba7fc3b6ee7195.css" crossorigin="" data-precedence="next"/><link rel="preload" as="script" fetchPriority="low" href="/_next/static/chunks/webpack-0e82af5fc7dd78ae.js" crossorigin=""/><script src="/_next/static/chunks/fd9d1056-456948113883b121.js" async="" crossorigin=""></script><script src="/_next/static/chunks/472-0c2d031b25dc566c.js" async="" crossorigin=""></script><script src="/_next/static/chunks/main-app-626cee463d6fe0c2.js" async="" crossorigin=""></script><script src="/_next/static/chunks/394-f36f0ea0535de9ed.js" async=""></script><script src="/_next/static/chunks/413-e95fbadccfbfa2da.js" async=""></script><script src="/_next/static/chunks/141-312630d5b6568587.js" async=""></script><script src="/_next/static/chunks/app/projects/%5Bid%5D/page-ba176704f7564572.js" async=""></script><title>HIL / SiL Automotive Test Platform - Kevin Delong | Kevin Delong</title><meta name="description" content="Hardware-in-the-Loop test platform for ADAS ECU validation — NI TestStand-style sequence runner, real-time I/O panel, oscilloscope, fault injection, and requ..."/><link rel="author" href="https://delongkevin.github.io/FullStackEngineer"/><meta name="author" content="Kevin Douglas Delong"/><meta name="keywords" content="Kevin Delong,Full Stack Engineer,React,Next.js,Mobile Development,Automotive Software"/><meta name="creator" content="Kevin Douglas Delong"/><meta name="publisher" content="Kevin Douglas Delong"/><meta name="robots" content="index, follow"/><meta name="googlebot" content="index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"/><link rel="canonical" href="https://delongkevin.github.io/FullStackEngineer/projects/hil-test-platform/"/><meta property="og:title" content="HIL / SiL Automotive Test Platform - Kevin Delong"/><meta property="og:description" content="Hardware-in-the-Loop test platform for ADAS ECU validation — NI TestStand-style sequence runner, real-time I/O panel, oscilloscope, fault injection, and requ..."/><meta property="og:url" content="https://delongkevin.github.io/FullStackEngineer/projects/hil-test-platform/"/><meta property="og:image" content="https://delongkevin.github.io/FullStackEngineer/images/hil-test-platform.png"/><meta property="og:type" content="article"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="HIL / SiL Automotive Test Platform - Kevin Delong"/><meta name="twitter:description" content="Hardware-in-the-Loop test platform for ADAS ECU validation — NI TestStand-style sequence runner, real-time I/O panel, oscilloscope, fault injection, and requ..."/><meta name="twitter:image" content="https://delongkevin.github.io/FullStackEngineer/images/hil-test-platform.png"/><script src="/_next/static/chunks/polyfills-c67a75d1b6f99dc8.js" crossorigin="" noModule=""></script></head><body class="font-sans"><script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Kevin Douglas Delong","jobTitle":"Full-Stack Engineer","email":"mailto:delong.kevin@gmail.com","url":"https://delongkevin.github.io/FullStackEngineer","sameAs":["https://github.com/delongkevin","https://www.linkedin.com/in/kevin-delong-50726135b/","https://x.com/delongkevin1446"]}</script><a href="#main-content" class="skip-link">Skip to main content</a><div class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50"><header class="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b border-gray-200"><nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Main navigation"><div class="flex justify-between items-center h-16"><div class="flex-shrink-0"><a class="text-2xl font-bold text-blue-600" href="/">Kevin Delong</a></div><div class="hidden md:block"><div class="ml-10 flex items-baseline space-x-8"><a class="px-4 py-3 rounded-md text-sm font-medium transition-colors min-h-[44px] flex items-center text-gray-700 hover:text-blue-600" href="/">Home</a><a aria-current="page" class="px-4 py-3 rounded-md text-sm font-medium transition-colors min-h-[44px] flex items-center text-blue-600 bg-blue-50" href="/projects/">Projects</a><a class="px-4 py-3 rounded-md text-sm font-medium transition-colors min-h-[44px] flex items-center text-gray-700 hover:text-blue-600" href="/resume/">Resume</a><a class="px-4 py-3 rounded-md text-sm font-medium transition-colors min-h-[44px] flex items-center text-gray-700 hover:text-blue-600" href="/about/">About</a><a class="px-4 py-3 rounded-md text-sm font-medium transition-colors min-h-[44px] flex items-center text-gray-700 hover:text-blue-600" href="/contact/">Contact</a></div></div><div class="md:hidden"><button class="text-gray-700 hover:text-blue-600 p-2" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open navigation menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu" aria-hidden="true"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button></div></div></nav></header><script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"HIL / SiL Automotive Test Platform","applicationCategory":"Automotive","operatingSystem":"Web, Android, iOS","description":"Hardware-in-the-Loop test platform for ADAS ECU validation — NI TestStand-style sequence runner, real-time I/O panel, oscilloscope, fault injection, and requirements traceability.","image":"https://delongkevin.github.io/FullStackEngineer/images/hil-test-platform.png","url":"https://delongkevin.github.io/FullStackEngineer/projects/hil-test-platform/","codeRepository":"https://github.com/delongkevin/FullStackEngineer","author":{"@type":"Person","name":"Kevin Douglas Delong"}}</script><main id="main-content" class="pt-24 pb-16 min-h-screen"><div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"><a class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-6" aria-label="Back to all projects" href="/projects/"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left" aria-hidden="true"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg>Back to Projects</a><div class="bg-white rounded-xl shadow-lg p-8 mb-8"><div class="flex flex-col lg:flex-row gap-8"><div class="lg:w-1/3"><div class="relative h-64 rounded-lg overflow-hidden"><img alt="HIL / SiL Automotive Test Platform screenshot" loading="lazy" decoding="async" data-nimg="fill" class="object-cover" style="position:absolute;height:100%;width:100%;left:0;top:0;right:0;bottom:0;color:transparent" src="/images/hil-test-platform.png"/></div></div><div class="lg:w-2/3"><h1 class="text-3xl font-bold text-gray-900 mb-4">HIL / SiL Automotive Test Platform</h1><p class="text-xl text-gray-600 mb-6">A full Hardware-in-the-Loop (HIL) and Software-in-the-Loop (SiL) test execution environment targeting ADAS camera ECU validation. The platform features a NI VeriStand-inspired UI with a live analog/digital I/O monitor, 4-channel oscilloscope canvas for RPM, Speed, Throttle, and Brake signals, a NI TestStand-style animated test sequence runner, fault injection panel (7 hardware faults), a requirements traceability matrix, and a real-time console log with CAPL script editor. Pass/fail verdicts are tracked across 5 test suites covering Camera, USS Parking, ADAS, Trailer Assist, and Power Safety.</p><div class="flex flex-wrap gap-4 mb-6"><span class="px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium">NI VeriStand</span><span class="px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium">NI TestStand</span><span class="px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium">CAPL</span><span class="px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium">CANoe</span><span class="px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium">Python</span><span class="px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium">CAN</span><span class="px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium">CAN-FD</span><span class="px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium">Ethernet DoIP</span><span class="px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium">OTA</span><span class="px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium">UDS DID/RID</span><span class="px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium">AUTOSAR</span><span class="px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium">HIL</span><span class="px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium">SiL</span><span class="px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium">HTML5 Canvas</span><span class="px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium">JavaScript</span></div><div class="flex gap-4"><a href="/projects/hil-test-platform/index.html" class="btn-primary inline-flex items-center gap-2" target="_self" rel="" aria-label="Open interactive demo of HIL / SiL Automotive Test Platform"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" x2="21" y1="14" y2="3"></line></svg>View Demo</a><a href="https://github.com/delongkevin/FullStackEngineer" class="btn-secondary inline-flex items-center gap-2" target="_blank" rel="noopener noreferrer" aria-label="View source code for HIL / SiL Automotive Test Platform on GitHub"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg>View Code</a></div></div></div></div><div class="grid grid-cols-1 lg:grid-cols-3 gap-8"><div class="lg:col-span-2"><div class="bg-white rounded-xl shadow-lg p-6"><h2 class="text-2xl font-bold text-gray-900 mb-6">Interactive Demo</h2><div class="bg-gray-100 rounded-lg p-6 min-h-[600px]"><div class="flex flex-wrap items-center justify-between gap-3 mb-4"><p class="text-sm text-gray-600">Run the interactive demo directly in this page, or open it in a dedicated tab for full-screen testing.</p><div class="flex flex-wrap gap-2"><button type="button" class="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-300 text-sm text-gray-700 hover:bg-gray-200 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-refresh-cw" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path><path d="M8 16H3v5"></path></svg>Reload Demo</button><a href="/projects/hil-test-platform/index.html" target="_self" rel="" class="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-blue-300 bg-blue-50 text-blue-700 text-sm hover:bg-blue-100 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" x2="21" y1="14" y2="3"></line></svg>Open Demo</a><button type="button" class="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-300 text-sm text-gray-700 hover:bg-gray-200 transition-colors" aria-live="polite"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>Copy Link</button></div></div><p id="demo-description" class="sr-only">This interactive demo allows you to try <!-- -->HIL / SiL Automotive Test Platform<!-- -->. Use keyboard navigation to interact with the embedded content.</p><iframe src="/projects/hil-test-platform/index.html" class="w-full h-[600px] border-0 rounded-lg bg-white" title="Interactive demo of HIL / SiL Automotive Test Platform - Automotive project" aria-describedby="demo-description" loading="lazy" sandbox="allow-forms allow-scripts allow-same-origin" style="min-height:600px"></iframe></div></div></div><div class="space-y-6"><div class="bg-white rounded-xl shadow-lg p-6"><h3 class="text-lg font-semibold text-gray-900 mb-4">Project Information</h3><div class="space-y-3"><div><span class="text-sm text-gray-500">Category:</span><div class="font-medium text-gray-900">Automotive</div></div><div><span class="text-sm text-gray-500">Status:</span><div class="font-medium text-green-600">Completed</div></div><div><span class="text-sm text-gray-500">Type:</span><div class="font-medium text-gray-900">Interactive Demo</div></div></div></div><div class="bg-white rounded-xl shadow-lg p-6"><h3 class="text-lg font-semibold text-gray-900 mb-4">Technology Stack</h3><div class="flex flex-wrap gap-2"><span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">NI VeriStand</span><span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">NI TestStand</span><span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">CAPL</span><span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">CANoe</span><span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">Python</span><span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">CAN</span><span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">CAN-FD</span><span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">Ethernet DoIP</span><span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">OTA</span><span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">UDS DID/RID</span><span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">AUTOSAR</span><span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">HIL</span><span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">SiL</span><span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">HTML5 Canvas</span><span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">JavaScript</span></div></div></div></div><section class="mt-10 space-y-6" aria-label="Project navigation and related work"><div class="bg-white rounded-xl shadow-lg p-6"><h2 class="text-xl font-bold text-gray-900 mb-4">Continue Exploring</h2><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><a class="block rounded-lg border border-gray-200 p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors" href="/projects/can-fd-analyzer/"><p class="text-sm text-gray-500">Previous project</p><p class="font-semibold text-gray-900">CAN-FD Network Analyzer &amp; Protocol Decoder</p></a><a class="block rounded-lg border border-gray-200 p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors" href="/projects/autosar-ecu-diagnostics/"><p class="text-sm text-gray-500">Next project</p><p class="font-semibold text-gray-900">AUTOSAR ECU Software Component Studio</p></a></div></div><div class="bg-white rounded-xl shadow-lg p-6"><h2 class="text-xl font-bold text-gray-900 mb-4">Related Projects</h2><div class="grid grid-cols-1 md:grid-cols-3 gap-4"><a class="rounded-lg border border-gray-200 p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors" href="/projects/6/"><p class="font-semibold text-gray-900">Automotive CAN-Bus Logger</p><p class="text-sm text-gray-600 mt-1 line-clamp-2">Desktop CAN/CAN-FD logging and diagnostics tool with live frame trace and export support for Vector workflows.</p></a><a class="rounded-lg border border-gray-200 p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors" href="/projects/7/"><p class="font-semibold text-gray-900">Camera Object Detection</p><p class="text-sm text-gray-600 mt-1 line-clamp-2">Real-time camera object detection demo powered by OpenCV pipelines and confidence scoring.</p></a><a class="rounded-lg border border-gray-200 p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors" href="/projects/embedded-video-engineer/"><p class="font-semibold text-gray-900">Embedded Video Systems Engineer</p><p class="text-sm text-gray-600 mt-1 line-clamp-2">Interactive embedded video systems dashboard — live H.265/AV1 pipeline, VPU metrics, codec tuning, and multi-platform mobile targets</p></a></div></div></section></div></main><footer class="bg-gray-900 text-white py-12" aria-label="Site footer"><div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"><div class="flex flex-col md:flex-row justify-between items-center"><div class="mb-6 md:mb-0"><h3 class="text-2xl font-bold text-white">Kevin Delong</h3><p class="text-gray-400 mt-2">Full Stack &amp; Frontend Developer</p></div><div class="flex space-x-6"><a href="https://github.com/delongkevin" class="text-gray-400 hover:text-white transition-colors" aria-label="GitHub" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg></a><a href="https://www.linkedin.com/in/kevin-delong-50726135b/" class="text-gray-400 hover:text-white transition-colors" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-linkedin" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect width="4" height="12" x="2" y="9"></rect><circle cx="4" cy="4" r="2"></circle></svg></a><a href="https://x.com/delongkevin1446" class="text-gray-400 hover:text-white transition-colors" aria-label="Twitter" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-twitter" aria-hidden="true"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg></a><a href="mailto:delong.kevin@gmail.com" class="text-gray-400 hover:text-white transition-colors" aria-label="Email" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg></a></div></div><div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400"><p>© <!-- -->2026<!-- --> Kevin Douglas Delong. All rights reserved.</p><p class="mt-2 text-sm">Phone: (810) 287-7409 | Email: delong.kevin@gmail.com</p></div></div></footer></div><script src="/_next/static/chunks/webpack-0e82af5fc7dd78ae.js" crossorigin="" async=""></script><script>(self.__next_f=self.__next_f||[]).push([0]);self.__next_f.push([2,null])</script><script>self.__next_f.push([1,"1:HL[\"/_next/static/css/4cba7fc3b6ee7195.css\",\"style\",{\"crossOrigin\":\"\"}]\n0:\"$L2\"\n"])</script><script>self.__next_f.push([1,"3:I[3728,[],\"\"]\n5:I[9928,[],\"\"]\n6:I[6954,[],\"\"]\n7:I[7264,[],\"\"]\n9:I[3827,[\"394\",\"static/chunks/394-f36f0ea0535de9ed.js\",\"413\",\"static/chunks/413-e95fbadccfbfa2da.js\",\"141\",\"static/chunks/141-312630d5b6568587.js\",\"626\",\"static/chunks/app/projects/%5Bid%5D/page-ba176704f7564572.js\"],\"\"]\na:I[2070,[\"394\",\"static/chunks/394-f36f0ea0535de9ed.js\",\"413\",\"static/chunks/413-e95fbadccfbfa2da.js\",\"141\",\"static/chunks/141-312630d5b6568587.js\",\"626\",\"static/chunks/app/projects/%5Bid%5D/page-ba176704f7564572.js\"],\"\"]\nb:I["])</script><script>self.__next_f.push([1,"8326,[\"394\",\"static/chunks/394-f36f0ea0535de9ed.js\",\"413\",\"static/chunks/413-e95fbadccfbfa2da.js\",\"141\",\"static/chunks/141-312630d5b6568587.js\",\"626\",\"static/chunks/app/projects/%5Bid%5D/page-ba176704f7564572.js\"],\"\"]\nc:I[413,[\"394\",\"static/chunks/394-f36f0ea0535de9ed.js\",\"413\",\"static/chunks/413-e95fbadccfbfa2da.js\",\"141\",\"static/chunks/141-312630d5b6568587.js\",\"626\",\"static/chunks/app/projects/%5Bid%5D/page-ba176704f7564572.js\"],\"Image\"]\nd:I[4045,[\"394\",\"static/chunks/394-f36f0ea0535de9ed.js\",\"413\",\"stati"])</script><script>self.__next_f.push([1,"c/chunks/413-e95fbadccfbfa2da.js\",\"141\",\"static/chunks/141-312630d5b6568587.js\",\"626\",\"static/chunks/app/projects/%5Bid%5D/page-ba176704f7564572.js\"],\"\"]\n"])</script><script>self.__next_f.push([1,"2:[[[\"$\",\"link\",\"0\",{\"rel\":\"stylesheet\",\"href\":\"/_next/static/css/4cba7fc3b6ee7195.css\",\"precedence\":\"next\",\"crossOrigin\":\"\"}]],[\"$\",\"$L3\",null,{\"buildId\":\"m2Tn9SnI3y5GmXAqCcVO1\",\"assetPrefix\":\"\",\"initialCanonicalUrl\":\"/projects/hil-test-platform/\",\"initialTree\":[\"\",{\"children\":[\"projects\",{\"children\":[[\"id\",\"hil-test-platform\",\"d\"],{\"children\":[\"__PAGE__?{\\\"id\\\":\\\"hil-test-platform\\\"}\",{}]}]}]},\"$undefined\",\"$undefined\",true],\"initialHead\":[false,\"$L4\"],\"globalErrorComponent\":\"$5\",\"children\":[null,[\"$\",\"html\",null,{\"lang\":\"en\",\"children\":[\"$\",\"body\",null,{\"className\":\"font-sans\",\"children\":[null,[\"$\",\"script\",null,{\"type\":\"application/ld+json\",\"dangerouslySetInnerHTML\":{\"__html\":\"{\\\"@context\\\":\\\"https://schema.org\\\",\\\"@type\\\":\\\"Person\\\",\\\"name\\\":\\\"Kevin Douglas Delong\\\",\\\"jobTitle\\\":\\\"Full-Stack Engineer\\\",\\\"email\\\":\\\"mailto:delong.kevin@gmail.com\\\",\\\"url\\\":\\\"https://delongkevin.github.io/FullStackEngineer\\\",\\\"sameAs\\\":[\\\"https://github.com/delongkevin\\\",\\\"https://www.linkedin.com/in/kevin-delong-50726135b/\\\",\\\"https://x.com/delongkevin1446\\\"]}\"}}],[\"$\",\"a\",null,{\"href\":\"#main-content\",\"className\":\"skip-link\",\"children\":\"Skip to main content\"}],[\"$\",\"div\",null,{\"className\":\"min-h-screen bg-gradient-to-br from-slate-50 to-blue-50\",\"children\":[\"$\",\"$L6\",null,{\"parallelRouterKey\":\"children\",\"segmentPath\":[\"children\"],\"loading\":\"$undefined\",\"loadingStyles\":\"$undefined\",\"loadingScripts\":\"$undefined\",\"hasLoading\":false,\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L7\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":[[\"$\",\"title\",null,{\"children\":\"404: This page could not be found.\"}],[\"$\",\"div\",null,{\"style\":{\"fontFamily\":\"system-ui,\\\"Segoe UI\\\",Roboto,Helvetica,Arial,sans-serif,\\\"Apple Color Emoji\\\",\\\"Segoe UI Emoji\\\"\",\"height\":\"100vh\",\"textAlign\":\"center\",\"display\":\"flex\",\"flexDirection\":\"column\",\"alignItems\":\"center\",\"justifyContent\":\"center\"},\"children\":[\"$\",\"div\",null,{\"children\":[[\"$\",\"style\",null,{\"dangerouslySetInnerHTML\":{\"__html\":\"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}\"}}],[\"$\",\"h1\",null,{\"className\":\"next-error-h1\",\"style\":{\"display\":\"inline-block\",\"margin\":\"0 20px 0 0\",\"padding\":\"0 23px 0 0\",\"fontSize\":24,\"fontWeight\":500,\"verticalAlign\":\"top\",\"lineHeight\":\"49px\"},\"children\":\"404\"}],[\"$\",\"div\",null,{\"style\":{\"display\":\"inline-block\"},\"children\":[\"$\",\"h2\",null,{\"style\":{\"fontSize\":14,\"fontWeight\":400,\"lineHeight\":\"49px\",\"margin\":0},\"children\":\"This page could not be found.\"}]}]]}]}]],\"notFoundStyles\":[],\"childProp\":{\"current\":[\"$\",\"$L6\",null,{\"parallelRouterKey\":\"children\",\"segmentPath\":[\"children\",\"projects\",\"children\"],\"loading\":\"$undefined\",\"loadingStyles\":\"$undefined\",\"loadingScripts\":\"$undefined\",\"hasLoading\":false,\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L7\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":\"$undefined\",\"notFoundStyles\":\"$undefined\",\"childProp\":{\"current\":[\"$\",\"$L6\",null,{\"parallelRouterKey\":\"children\",\"segmentPath\":[\"children\",\"projects\",\"children\",[\"id\",\"hil-test-platform\",\"d\"],\"children\"],\"loading\":\"$undefined\",\"loadingStyles\":\"$undefined\",\"loadingScripts\":\"$undefined\",\"hasLoading\":false,\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L7\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":\"$undefined\",\"notFoundStyles\":\"$undefined\",\"childProp\":{\"current\":[\"$L8\",[[\"$\",\"$L9\",null,{}],[\"$\",\"$La\",null,{\"projectId\":31}],[\"$\",\"script\",null,{\"type\":\"application/ld+json\",\"dangerouslySetInnerHTML\":{\"__html\":\"{\\\"@context\\\":\\\"https://schema.org\\\",\\\"@type\\\":\\\"SoftwareApplication\\\",\\\"name\\\":\\\"HIL / SiL Automotive Test Platform\\\",\\\"applicationCategory\\\":\\\"Automotive\\\",\\\"operatingSystem\\\":\\\"Web, Android, iOS\\\",\\\"description\\\":\\\"Hardware-in-the-Loop test platform for ADAS ECU validation — NI TestStand-style sequence runner, real-time I/O panel, oscilloscope, fault injection, and requirements traceability.\\\",\\\"image\\\":\\\"https://delongkevin.github.io/FullStackEngineer/images/hil-test-platform.png\\\",\\\"url\\\":\\\"https://delongkevin.github.io/FullStackEngineer/projects/hil-test-platform/\\\",\\\"codeRepository\\\":\\\"https://github.com/delongkevin/FullStackEngineer\\\",\\\"author\\\":{\\\"@type\\\":\\\"Person\\\",\\\"name\\\":\\\"Kevin Douglas Delong\\\"}}\"}}],[\"$\",\"main\",null,{\"id\":\"main-content\",\"className\":\"pt-24 pb-16 min-h-screen\",\"children\":[\"$\",\"div\",null,{\"className\":\"max-w-6xl mx-auto px-4 sm:px-6 lg:px-8\",\"children\":[[\"$\",\"$Lb\",null,{\"href\":\"/projects\",\"className\":\"inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-6\",\"aria-label\":\"Back to all projects\",\"children\":[[\"$\",\"svg\",null,{\"xmlns\":\"http://www.w3.org/2000/svg\",\"width\":20,\"height\":20,\"viewBox\":\"0 0 24 24\",\"fill\":\"none\",\"stroke\":\"currentColor\",\"strokeWidth\":2,\"strokeLinecap\":\"round\",\"strokeLinejoin\":\"round\",\"className\":\"lucide lucide-arrow-left\",\"aria-hidden\":\"true\",\"children\":[[\"$\",\"path\",\"1l729n\",{\"d\":\"m12 19-7-7 7-7\"}],[\"$\",\"path\",\"x3x0zl\",{\"d\":\"M19 12H5\"}],\"$undefined\"]}],\"Back to Projects\"]}],[\"$\",\"div\",null,{\"className\":\"bg-white rounded-xl shadow-lg p-8 mb-8\",\"children\":[\"$\",\"div\",null,{\"className\":\"flex flex-col lg:flex-row gap-8\",\"children\":[[\"$\",\"div\",null,{\"className\":\"lg:w-1/3\",\"children\":[\"$\",\"div\",null,{\"className\":\"relative h-64 rounded-lg overflow-hidden\",\"children\":[\"$\",\"$Lc\",null,{\"src\":\"/images/hil-test-platform.png\",\"alt\":\"HIL / SiL Automotive Test Platform screenshot\",\"fill\":true,\"className\":\"object-cover\",\"sizes\":\"(max-width: 1024px) 100vw, 33vw\"}]}]}],[\"$\",\"div\",null,{\"className\":\"lg:w-2/3\",\"children\":[[\"$\",\"h1\",null,{\"className\":\"text-3xl font-bold text-gray-900 mb-4\",\"children\":\"HIL / SiL Automotive Test Platform\"}],[\"$\",\"p\",null,{\"className\":\"text-xl text-gray-600 mb-6\",\"children\":\"A full Hardware-in-the-Loop (HIL) and Software-in-the-Loop (SiL) test execution environment targeting ADAS camera ECU validation. The platform features a NI VeriStand-inspired UI with a live analog/digital I/O monitor, 4-channel oscilloscope canvas for RPM, Speed, Throttle, and Brake signals, a NI TestStand-style animated test sequence runner, fault injection panel (7 hardware faults), a requirements traceability matrix, and a real-time console log with CAPL script editor. Pass/fail verdicts are tracked across 5 test suites covering Camera, USS Parking, ADAS, Trailer Assist, and Power Safety.\"}],[\"$\",\"div\",null,{\"className\":\"flex flex-wrap gap-4 mb-6\",\"children\":[[\"$\",\"span\",\"NI VeriStand\",{\"className\":\"px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium\",\"children\":\"NI VeriStand\"}],[\"$\",\"span\",\"NI TestStand\",{\"className\":\"px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium\",\"children\":\"NI TestStand\"}],[\"$\",\"span\",\"CAPL\",{\"className\":\"px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium\",\"children\":\"CAPL\"}],[\"$\",\"span\",\"CANoe\",{\"className\":\"px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium\",\"children\":\"CANoe\"}],[\"$\",\"span\",\"Python\",{\"className\":\"px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium\",\"children\":\"Python\"}],[\"$\",\"span\",\"CAN\",{\"className\":\"px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium\",\"children\":\"CAN\"}],[\"$\",\"span\",\"CAN-FD\",{\"className\":\"px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium\",\"children\":\"CAN-FD\"}],[\"$\",\"span\",\"Ethernet DoIP\",{\"className\":\"px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium\",\"children\":\"Ethernet DoIP\"}],[\"$\",\"span\",\"OTA\",{\"className\":\"px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium\",\"children\":\"OTA\"}],[\"$\",\"span\",\"UDS DID/RID\",{\"className\":\"px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium\",\"children\":\"UDS DID/RID\"}],[\"$\",\"span\",\"AUTOSAR\",{\"className\":\"px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium\",\"children\":\"AUTOSAR\"}],[\"$\",\"span\",\"HIL\",{\"className\":\"px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium\",\"children\":\"HIL\"}],[\"$\",\"span\",\"SiL\",{\"className\":\"px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium\",\"children\":\"SiL\"}],[\"$\",\"span\",\"HTML5 Canvas\",{\"className\":\"px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium\",\"children\":\"HTML5 Canvas\"}],[\"$\",\"span\",\"JavaScript\",{\"className\":\"px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium\",\"children\":\"JavaScript\"}]]}],[\"$\",\"div\",null,{\"className\":\"flex gap-4\",\"children\":[[\"$\",\"a\",null,{\"href\":\"/projects/hil-test-platform/index.html\",\"className\":\"btn-primary inline-flex items-center gap-2\",\"target\":\"_self\",\"rel\":\"\",\"aria-label\":\"Open interactive demo of HIL / SiL Automotive Test Platform\",\"children\":[[\"$\",\"svg\",null,{\"xmlns\":\"http://www.w3.org/2000/svg\",\"width\":20,\"height\":20,\"viewBox\":\"0 0 24 24\",\"fill\":\"none\",\"stroke\":\"currentColor\",\"strokeWidth\":2,\"strokeLinecap\":\"round\",\"strokeLinejoin\":\"round\",\"className\":\"lucide lucide-external-link\",\"aria-hidden\":\"true\",\"children\":[[\"$\",\"path\",\"a6xqqp\",{\"d\":\"M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6\"}],[\"$\",\"polyline\",\"mznyad\",{\"points\":\"15 3 21 3 21 9\"}],[\"$\",\"line\",\"18c3s4\",{\"x1\":\"10\",\"x2\":\"21\",\"y1\":\"14\",\"y2\":\"3\"}],\"$undefined\"]}],\"View Demo\"]}],[\"$\",\"a\",null,{\"href\":\"https://github.com/delongkevin/FullStackEngineer\",\"className\":\"btn-secondary inline-flex items-center gap-2\",\"target\":\"_blank\",\"rel\":\"noopener noreferrer\",\"aria-label\":\"View source code for HIL / SiL Automotive Test Platform on GitHub\",\"children\":[[\"$\",\"svg\",null,{\"xmlns\":\"http://www.w3.org/2000/svg\",\"width\":20,\"height\":20,\"viewBox\":\"0 0 24 24\",\"fill\":\"none\",\"stroke\":\"currentColor\",\"strokeWidth\":2,\"strokeLinecap\":\"round\",\"strokeLinejoin\":\"round\",\"className\":\"lucide lucide-github\",\"aria-hidden\":\"true\",\"children\":[[\"$\",\"path\",\"tonef\",{\"d\":\"M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4\"}],[\"$\",\"path\",\"9comsn\",{\"d\":\"M9 18c-4.51 2-5-2-7-2\"}],\"$undefined\"]}],\"View Code\"]}]]}],\"$undefined\"]}]]}]}],[\"$\",\"div\",null,{\"className\":\"grid grid-cols-1 lg:grid-cols-3 gap-8\",\"children\":[[\"$\",\"div\",null,{\"className\":\"lg:col-span-2\",\"children\":[\"$\",\"div\",null,{\"className\":\"bg-white rounded-xl shadow-lg p-6\",\"children\":[[\"$\",\"h2\",null,{\"className\":\"text-2xl font-bold text-gray-900 mb-6\",\"children\":\"Interactive Demo\"}],[\"$\",\"$Ld\",null,{\"liveUrl\":\"/projects/hil-test-platform/index.html\",\"title\":\"HIL / SiL Automotive Test Platform\",\"category\":\"Automotive\"}]]}]}],[\"$\",\"div\",null,{\"className\":\"space-y-6\",\"children\":[[\"$\",\"div\",null,{\"className\":\"bg-white rounded-xl shadow-lg p-6\",\"children\":[[\"$\",\"h3\",null,{\"className\":\"text-lg font-semibold text-gray-900 mb-4\",\"children\":\"Project Information\"}],[\"$\",\"div\",null,{\"className\":\"space-y-3\",\"children\":[[\"$\",\"div\",null,{\"children\":[[\"$\",\"span\",null,{\"className\":\"text-sm text-gray-500\",\"children\":\"Category:\"}],[\"$\",\"div\",null,{\"className\":\"font-medium text-gray-900\",\"children\":\"Automotive\"}]]}],[\"$\",\"div\",null,{\"children\":[[\"$\",\"span\",null,{\"className\":\"text-sm text-gray-500\",\"children\":\"Status:\"}],[\"$\",\"div\",null,{\"className\":\"font-medium text-green-600\",\"children\":\"Completed\"}]]}],[\"$\",\"div\",null,{\"children\":[[\"$\",\"span\",null,{\"className\":\"text-sm text-gray-500\",\"children\":\"Type:\"}],[\"$\",\"div\",null,{\"className\":\"font-medium text-gray-900\",\"children\":\"Interactive Demo\"}]]}],\"$undefined\"]}]]}],[\"$\",\"div\",null,{\"className\":\"bg-white rounded-xl shadow-lg p-6\",\"children\":[[\"$\",\"h3\",null,{\"className\":\"text-lg font-semibold text-gray-900 mb-4\",\"children\":\"Technology Stack\"}],[\"$\",\"div\",null,{\"className\":\"flex flex-wrap gap-2\",\"children\":[[\"$\",\"span\",\"NI VeriStand\",{\"className\":\"px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm\",\"children\":\"NI VeriStand\"}],[\"$\",\"span\",\"NI TestStand\",{\"className\":\"px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm\",\"children\":\"NI TestStand\"}],[\"$\",\"span\",\"CAPL\",{\"className\":\"px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm\",\"children\":\"CAPL\"}],[\"$\",\"span\",\"CANoe\",{\"className\":\"px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm\",\"children\":\"CANoe\"}],[\"$\",\"span\",\"Python\",{\"className\":\"px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm\",\"children\":\"Python\"}],[\"$\",\"span\",\"CAN\",{\"className\":\"px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm\",\"children\":\"CAN\"}],[\"$\",\"span\",\"CAN-FD\",{\"className\":\"px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm\",\"children\":\"CAN-FD\"}],[\"$\",\"span\",\"Ethernet DoIP\",{\"className\":\"px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm\",\"children\":\"Ethernet DoIP\"}],[\"$\",\"span\",\"OTA\",{\"className\":\"px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm\",\"children\":\"OTA\"}],[\"$\",\"span\",\"UDS DID/RID\",{\"className\":\"px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm\",\"children\":\"UDS DID/RID\"}],[\"$\",\"span\",\"AUTOSAR\",{\"className\":\"px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm\",\"children\":\"AUTOSAR\"}],[\"$\",\"span\",\"HIL\",{\"className\":\"px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm\",\"children\":\"HIL\"}],[\"$\",\"span\",\"SiL\",{\"className\":\"px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm\",\"children\":\"SiL\"}],[\"$\",\"span\",\"HTML5 Canvas\",{\"className\":\"px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm\",\"children\":\"HTML5 Canvas\"}],[\"$\",\"span\",\"JavaScript\",{\"className\":\"px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm\",\"children\":\"JavaScript\"}]]}]]}]]}]]}],[\"$\",\"section\",null,{\"className\":\"mt-10 space-y-6\",\"aria-label\":\"Project navigation and related work\",\"children\":[[\"$\",\"div\",null,{\"className\":\"bg-white rounded-xl shadow-lg p-6\",\"children\":[[\"$\",\"h2\",null,{\"className\":\"text-xl font-bold text-gray-900 mb-4\",\"children\":\"Continue Exploring\"}],[\"$\",\"div\",null,{\"className\":\"grid grid-cols-1 md:grid-cols-2 gap-4\",\"children\":[[\"$\",\"$Lb\",null,{\"href\":\"/projects/can-fd-analyzer\",\"className\":\"block rounded-lg border border-gray-200 p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors\",\"children\":[[\"$\",\"p\",null,{\"className\":\"text-sm text-gray-500\",\"children\":\"Previous project\"}],[\"$\",\"p\",null,{\"className\":\"font-semibold text-gray-900\",\"children\":\"CAN-FD Network Analyzer \u0026 Protocol Decoder\"}]]}],[\"$\",\"$Lb\",null,{\"href\":\"/projects/autosar-ecu-diagnostics\",\"className\":\"block rounded-lg border border-gray-200 p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors\",\"children\":[[\"$\",\"p\",null,{\"className\":\"text-sm text-gray-500\",\"children\":\"Next project\"}],[\"$\",\"p\",null,{\"className\":\"font-semibold text-gray-900\",\"children\":\"AUTOSAR ECU Software Component Studio\"}]]}]]}]]}],[\"$\",\"div\",null,{\"className\":\"bg-white rounded-xl shadow-lg p-6\",\"children\":[[\"$\",\"h2\",null,{\"className\":\"text-xl font-bold text-gray-900 mb-4\",\"children\":\"Related Projects\"}],[\"$\",\"div\",null,{\"className\":\"grid grid-cols-1 md:grid-cols-3 gap-4\",\"children\":[[\"$\",\"$Lb\",\"6\",{\"href\":\"/projects/6\",\"className\":\"rounded-lg border border-gray-200 p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors\",\"children\":[[\"$\",\"p\",null,{\"className\":\"font-semibold text-gray-900\",\"children\":\"Automotive CAN-Bus Logger\"}],[\"$\",\"p\",null,{\"className\":\"text-sm text-gray-600 mt-1 line-clamp-2\",\"children\":\"Desktop CAN/CAN-FD logging and diagnostics tool with live frame trace and export support for Vector workflows.\"}]]}],[\"$\",\"$Lb\",\"7\",{\"href\":\"/projects/7\",\"className\":\"rounded-lg border border-gray-200 p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors\",\"children\":[[\"$\",\"p\",null,{\"className\":\"font-semibold text-gray-900\",\"children\":\"Camera Object Detection\"}],[\"$\",\"p\",null,{\"className\":\"text-sm text-gray-600 mt-1 line-clamp-2\",\"children\":\"Real-time camera object detection demo powered by OpenCV pipelines and confidence scoring.\"}]]}],[\"$\",\"$Lb\",\"15\",{\"href\":\"/projects/embedded-video-engineer\",\"className\":\"rounded-lg border border-gray-200 p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors\",\"children\":[[\"$\",\"p\",null,{\"className\":\"font-semibold text-gray-900\",\"children\":\"Embedded Video Systems Engineer\"}],[\"$\",\"p\",null,{\"className\":\"text-sm text-gray-600 mt-1 line-clamp-2\",\"children\":\"Interactive embedded video systems dashboard — live H.265/AV1 pipeline, VPU metrics, codec tuning, and multi-platform mobile targets\"}]]}]]}]]}]]}]]}]}],[\"$\",\"footer\",null,{\"className\":\"bg-gray-900 text-white py-12\",\"aria-label\":\"Site footer\",\"children\":[\"$\",\"div\",null,{\"className\":\"max-w-6xl mx-auto px-4 sm:px-6 lg:px-8\",\"children\":[[\"$\",\"div\",null,{\"className\":\"flex flex-col md:flex-row justify-between items-center\",\"children\":[[\"$\",\"div\",null,{\"className\":\"mb-6 md:mb-0\",\"children\":[[\"$\",\"h3\",null,{\"className\":\"text-2xl font-bold text-white\",\"children\":\"Kevin Delong\"}],[\"$\",\"p\",null,{\"className\":\"text-gray-400 mt-2\",\"children\":\"Full Stack \u0026 Frontend Developer\"}]]}],[\"$\",\"div\",null,{\"className\":\"flex space-x-6\",\"children\":[[\"$\",\"a\",\"GitHub\",{\"href\":\"https://github.com/delongkevin\",\"className\":\"text-gray-400 hover:text-white transition-colors\",\"aria-label\":\"GitHub\",\"target\":\"_blank\",\"rel\":\"noopener noreferrer\",\"children\":[\"$\",\"svg\",null,{\"xmlns\":\"http://www.w3.org/2000/svg\",\"width\":24,\"height\":24,\"viewBox\":\"0 0 24 24\",\"fill\":\"none\",\"stroke\":\"currentColor\",\"strokeWidth\":2,\"strokeLinecap\":\"round\",\"strokeLinejoin\":\"round\",\"className\":\"lucide lucide-github\",\"aria-hidden\":\"true\",\"children\":[[\"$\",\"path\",\"tonef\",{\"d\":\"M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4\"}],[\"$\",\"path\",\"9comsn\",{\"d\":\"M9 18c-4.51 2-5-2-7-2\"}],\"$undefined\"]}]}],[\"$\",\"a\",\"LinkedIn\",{\"href\":\"https://www.linkedin.com/in/kevin-delong-50726135b/\",\"className\":\"text-gray-400 hover:text-white transition-colors\",\"aria-label\":\"LinkedIn\",\"target\":\"_blank\",\"rel\":\"noopener noreferrer\",\"children\":[\"$\",\"svg\",null,{\"xmlns\":\"http://www.w3.org/2000/svg\",\"width\":24,\"height\":24,\"viewBox\":\"0 0 24 24\",\"fill\":\"none\",\"stroke\":\"currentColor\",\"strokeWidth\":2,\"strokeLinecap\":\"round\",\"strokeLinejoin\":\"round\",\"className\":\"lucide lucide-linkedin\",\"aria-hidden\":\"true\",\"children\":[[\"$\",\"path\",\"c2jq9f\",{\"d\":\"M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z\"}],[\"$\",\"rect\",\"mk3on5\",{\"width\":\"4\",\"height\":\"12\",\"x\":\"2\",\"y\":\"9\"}],[\"$\",\"circle\",\"bt5ra8\",{\"cx\":\"4\",\"cy\":\"4\",\"r\":\"2\"}],\"$undefined\"]}]}],[\"$\",\"a\",\"Twitter\",{\"href\":\"https://x.com/delongkevin1446\",\"className\":\"text-gray-400 hover:text-white transition-colors\",\"aria-label\":\"Twitter\",\"target\":\"_blank\",\"rel\":\"noopener noreferrer\",\"children\":[\"$\",\"svg\",null,{\"xmlns\":\"http://www.w3.org/2000/svg\",\"width\":24,\"height\":24,\"viewBox\":\"0 0 24 24\",\"fill\":\"none\",\"stroke\":\"currentColor\",\"strokeWidth\":2,\"strokeLinecap\":\"round\",\"strokeLinejoin\":\"round\",\"className\":\"lucide lucide-twitter\",\"aria-hidden\":\"true\",\"children\":[[\"$\",\"path\",\"pff0z6\",{\"d\":\"M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z\"}],\"$undefined\"]}]}],[\"$\",\"a\",\"Email\",{\"href\":\"mailto:delong.kevin@gmail.com\",\"className\":\"text-gray-400 hover:text-white transition-colors\",\"aria-label\":\"Email\",\"target\":\"_blank\",\"rel\":\"noopener noreferrer\",\"children\":[\"$\",\"svg\",null,{\"xmlns\":\"http://www.w3.org/2000/svg\",\"width\":24,\"height\":24,\"viewBox\":\"0 0 24 24\",\"fill\":\"none\",\"stroke\":\"currentColor\",\"strokeWidth\":2,\"strokeLinecap\":\"round\",\"strokeLinejoin\":\"round\",\"className\":\"lucide lucide-mail\",\"aria-hidden\":\"true\",\"children\":[[\"$\",\"rect\",\"18n3k1\",{\"width\":\"20\",\"height\":\"16\",\"x\":\"2\",\"y\":\"4\",\"rx\":\"2\"}],[\"$\",\"path\",\"1ocrg3\",{\"d\":\"m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7\"}],\"$undefined\"]}]}]]}]]}],[\"$\",\"div\",null,{\"className\":\"border-t border-gray-700 mt-8 pt-8 text-center text-gray-400\",\"children\":[[\"$\",\"p\",null,{\"children\":[\"© \",2026,\" Kevin Douglas Delong. All rights reserved.\"]}],[\"$\",\"p\",null,{\"className\":\"mt-2 text-sm\",\"children\":\"Phone: (810) 287-7409 | Email: delong.kevin@gmail.com\"}]]}]]}]}]],null],\"segment\":\"__PAGE__?{\\\"id\\\":\\\"hil-test-platform\\\"}\"},\"styles\":null}],\"segment\":[\"id\",\"hil-test-platform\",\"d\"]},\"styles\":null}],\"segment\":\"projects\"},\"styles\":null}]}]]}]}],null]}]]\n"])</script><script>self.__next_f.push([1,"4:[[\"$\",\"meta\",\"0\",{\"name\":\"viewport\",\"content\":\"width=device-width, initial-scale=1\"}],[\"$\",\"meta\",\"1\",{\"charSet\":\"utf-8\"}],[\"$\",\"title\",\"2\",{\"children\":\"HIL / SiL Automotive Test Platform - Kevin Delong | Kevin Delong\"}],[\"$\",\"meta\",\"3\",{\"name\":\"description\",\"content\":\"Hardware-in-the-Loop test platform for ADAS ECU validation — NI TestStand-style sequence runner, real-time I/O panel, oscilloscope, fault injection, and requ...\"}],[\"$\",\"link\",\"4\",{\"rel\":\"author\",\"href\":\"https://delongkevin.github.io/FullStackEngineer\"}],[\"$\",\"meta\",\"5\",{\"name\":\"author\",\"content\":\"Kevin Douglas Delong\"}],[\"$\",\"meta\",\"6\",{\"name\":\"keywords\",\"content\":\"Kevin Delong,Full Stack Engineer,React,Next.js,Mobile Development,Automotive Software\"}],[\"$\",\"meta\",\"7\",{\"name\":\"creator\",\"content\":\"Kevin Douglas Delong\"}],[\"$\",\"meta\",\"8\",{\"name\":\"publisher\",\"content\":\"Kevin Douglas Delong\"}],[\"$\",\"meta\",\"9\",{\"name\":\"robots\",\"content\":\"index, follow\"}],[\"$\",\"meta\",\"10\",{\"name\":\"googlebot\",\"content\":\"index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1\"}],[\"$\",\"link\",\"11\",{\"rel\":\"canonical\",\"href\":\"https://delongkevin.github.io/FullStackEngineer/projects/hil-test-platform/\"}],[\"$\",\"meta\",\"12\",{\"property\":\"og:title\",\"content\":\"HIL / SiL Automotive Test Platform - Kevin Delong\"}],[\"$\",\"meta\",\"13\",{\"property\":\"og:description\",\"content\":\"Hardware-in-the-Loop test platform for ADAS ECU validation — NI TestStand-style sequence runner, real-time I/O panel, oscilloscope, fault injection, and requ...\"}],[\"$\",\"meta\",\"14\",{\"property\":\"og:url\",\"content\":\"https://delongkevin.github.io/FullStackEngineer/projects/hil-test-platform/\"}],[\"$\",\"meta\",\"15\",{\"property\":\"og:image\",\"content\":\"https://delongkevin.github.io/FullStackEngineer/images/hil-test-platform.png\"}],[\"$\",\"meta\",\"16\",{\"property\":\"og:type\",\"content\":\"article\"}],[\"$\",\"meta\",\"17\",{\"name\":\"twitter:card\",\"content\":\"summary_large_image\"}],[\"$\",\"meta\",\"18\",{\"name\":\"twitter:title\",\"content\":\"HIL / SiL Automotive Test Platform - Kevin Delong\"}],[\"$\",\"meta\",\"19\",{\"name\":\"twitter:description\",\"content\":\"Hardware-in-the-Loop test platform for ADAS ECU validation — NI TestStand-style sequence runner, real-time I/O panel, oscilloscope, fault injection, and requ...\"}],[\"$\",\"meta\",\"20\",{\"name\":\"twitter:image\",\"content\":\"https://delongkevin.github.io/FullStackEngineer/images/hil-test-platform.png\"}]]\n"])</script><script>self.__next_f.push([1,"8:null\n"])</script><script>self.__next_f.push([1,""])</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>HIL/SiL Automotive Test Platform</title>
+<style>
+:root{
+  --bg:#070b0f;--panel:#0c1218;--panel2:#111a24;--panel3:#162033;
+  --border:#1d3347;--border2:#254460;
+  --accent:#00e5ff;--accent2:#0097a7;--accent3:#003344;
+  --green:#00e676;--red:#ff1744;--yellow:#ffea00;--orange:#ff9800;
+  --purple:#ce93d8;--teal:#80deea;--lime:#ccff90;
+  --text:#eceff1;--text2:#90a4ae;--text3:#546e7a;
+  --pass:#00e676;--fail:#ff1744;--inprog:#ffea00;--nte:#546e7a;
+  --font-mono:'JetBrains Mono','Fira Code',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow:hidden;}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,'Segoe UI',sans-serif;font-size:13px;}
+
+/* HEADER */
+.hdr{height:56px;background:linear-gradient(90deg,#050a10 0%,#0d1f2d 50%,#050a10 100%);
+  border-bottom:2px solid var(--border2);display:flex;align-items:center;
+  justify-content:space-between;padding:0 18px;flex-shrink:0;}
+.hdr-brand{display:flex;align-items:center;gap:14px;}
+.hdr-logo{width:36px;height:36px;background:linear-gradient(135deg,#0097a7,#00e5ff);
+  border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;}
+.hdr-title{font-size:16px;font-weight:700;}
+.hdr-sub{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-top:1px;}
+.hdr-model{background:var(--accent3);border:1px solid var(--accent2);border-radius:6px;
+  padding:5px 14px;font-size:11px;font-family:var(--font-mono);color:var(--accent);}
+.hdr-right{display:flex;align-items:center;gap:12px;}
+.exec-status{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;}
+.status-led{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.led-green{background:var(--green);box-shadow:0 0 10px var(--green);}
+.led-red{background:var(--red);box-shadow:0 0 10px var(--red);}
+.led-yellow{background:var(--yellow);box-shadow:0 0 10px var(--yellow);animation:blink .5s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+
+/* APP LAYOUT */
+.app{display:flex;height:calc(100vh - 56px);}
+
+/* LEFT SIDEBAR — Test Suite */
+.sidebar-left{width:260px;border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;overflow:hidden;}
+
+/* CENTER AREA */
+.center{flex:1;display:grid;grid-template-rows:1fr 230px;overflow:hidden;}
+
+/* RIGHT SIDEBAR */
+.sidebar-right{width:300px;border-left:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;overflow:hidden;}
+
+/* PANEL HEADER */
+.ph{height:34px;background:var(--panel2);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;padding:0 12px;flex-shrink:0;}
+.ph-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text2);}
+
+/* TEST SUITE TREE */
+.suite-wrap{overflow-y:auto;flex:1;padding:8px;}
+.suite-group{margin-bottom:8px;}
+.suite-hdr{display:flex;align-items:center;gap:6px;padding:5px 8px;background:var(--panel2);
+  border-radius:5px;cursor:pointer;margin-bottom:3px;border:1px solid var(--border);}
+.suite-hdr:hover{border-color:var(--border2);}
+.suite-icon{font-size:11px;}
+.suite-name{font-size:11px;font-weight:600;flex:1;}
+.suite-cnt{font-size:9px;color:var(--text3);font-family:var(--font-mono);}
+.tc-item{display:flex;align-items:center;gap:6px;padding:4px 6px 4px 20px;
+  border-radius:4px;cursor:pointer;margin-bottom:1px;}
+.tc-item:hover{background:var(--panel2);}
+.tc-item.running{background:#0d1f10;border-left:2px solid var(--green);}
+.tc-item.active-sel{background:var(--accent3);}
+.tc-status-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.tc-name-txt{font-size:10px;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.tc-dur{font-size:9px;color:var(--text3);font-family:var(--font-mono);}
+
+/* MAIN VIEW TABS */
+.tab-bar{height:36px;background:var(--panel2);border-bottom:1px solid var(--border);
+  display:flex;flex-shrink:0;}
+.tab{padding:0 16px;font-size:11px;font-weight:600;color:var(--text3);
+  cursor:pointer;border-bottom:2px solid transparent;display:flex;align-items:center;transition:all .15s;}
+.tab:hover{color:var(--text);}
+.tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+.view{flex:1;overflow:hidden;display:none;padding:10px;}
+.view.active{display:flex;flex-direction:column;gap:8px;}
+
+/* I/O PANEL */
+.io-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.io-section{background:var(--panel2);border:1px solid var(--border);border-radius:6px;padding:10px;}
+.io-sec-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text2);margin-bottom:8px;}
+.io-channel{display:flex;align-items:center;gap:8px;margin-bottom:5px;font-size:11px;}
+.io-ch-name{width:100px;color:var(--text2);font-size:10px;font-family:var(--font-mono);}
+.io-ch-val{width:80px;font-family:var(--font-mono);font-weight:700;font-size:12px;}
+.io-ch-bar{flex:1;height:8px;background:#0a1520;border-radius:4px;overflow:hidden;}
+.io-ch-bar-fill{height:100%;border-radius:4px;transition:width .3s;}
+.dig-channel{display:flex;align-items:center;gap:8px;margin-bottom:3px;font-size:10px;}
+.dig-state{width:14px;height:14px;border-radius:3px;border:1px solid;flex-shrink:0;transition:all .2s;}
+.dig-high{background:#003300;border-color:var(--green);box-shadow:0 0 6px var(--green);}
+.dig-low{background:#110011;border-color:#334155;}
+.dig-name{flex:1;color:var(--text2);font-family:var(--font-mono);font-size:10px;}
+.dig-val{color:var(--text2);font-family:var(--font-mono);}
+
+/* OSCILLOSCOPE */
+.scope-wrap{background:#050a0e;border:1px solid var(--border);border-radius:6px;overflow:hidden;}
+canvas#scopeCanvas{display:block;width:100%;}
+
+/* FAULT INJECTION */
+.fault-grid{display:flex;flex-direction:column;gap:6px;}
+.fault-card{background:var(--panel2);border:1px solid var(--border);border-radius:6px;
+  padding:8px 12px;display:flex;align-items:center;justify-content:space-between;}
+.fault-name{font-size:11px;font-weight:600;}
+.fault-desc{font-size:9px;color:var(--text3);margin-top:2px;}
+.fault-btn{padding:4px 14px;border-radius:4px;border:1px solid;font-size:10px;cursor:pointer;font-weight:600;transition:all .15s;}
+.fb-inject{background:#1a0a00;border-color:#c2410c;color:#fb923c;}
+.fb-inject:hover{background:#c2410c;color:#fff;}
+.fb-active{background:#c2410c;border-color:var(--red);color:#fff;animation:pulse2 .8s infinite;}
+.fb-clear{background:#0a1a10;border-color:#166534;color:var(--green);}
+.fb-clear:hover{background:#166534;color:#fff;}
+@keyframes pulse2{0%,100%{opacity:1}50%{opacity:.5}}
+
+/* VERDICT BOARD */
+.verdict-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px;}
+.vcard{background:var(--panel2);border:1px solid var(--border);border-radius:6px;padding:10px;text-align:center;}
+.vc-val{font-size:24px;font-weight:800;font-family:var(--font-mono);}
+.vc-lbl{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-top:3px;}
+
+/* REQUIREMENT MATRIX */
+.req-table{width:100%;border-collapse:collapse;font-size:10px;}
+.req-table th{background:#0a1520;padding:4px 8px;font-size:9px;text-transform:uppercase;color:var(--text3);border-bottom:1px solid var(--border);}
+.req-table td{padding:4px 8px;border-bottom:1px solid #0d1424;}
+.req-table tr:hover td{background:#0a1929;}
+.req-id{font-family:var(--font-mono);color:var(--accent);font-size:9px;}
+.req-cov{text-align:center;}
+
+/* CONSOLE OUTPUT */
+.console-out{flex:1;background:#040810;font-family:var(--font-mono);font-size:10px;
+  line-height:1.7;overflow-y:auto;padding:8px 10px;}
+
+/* BOTTOM PANE */
+.bottom-pane{border-top:2px solid var(--border);display:flex;flex-direction:column;overflow:hidden;}
+.bp-tabs{display:flex;border-bottom:1px solid var(--border);flex-shrink:0;}
+.bp-tab{padding:5px 14px;font-size:10px;font-weight:600;color:var(--text3);
+  cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;}
+.bp-tab:hover{color:var(--text);}
+.bp-tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+.bp-panel{flex:1;display:none;overflow-y:auto;padding:8px 10px;}
+.bp-panel.active{display:block;}
+
+/* RIGHT PANEL */
+.rp-body{flex:1;overflow-y:auto;padding:10px;}
+.rp-section{margin-bottom:14px;}
+.rp-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;
+  color:var(--text3);margin-bottom:6px;padding-bottom:4px;border-bottom:1px solid var(--border);}
+.metric-row{display:flex;justify-content:space-between;font-size:11px;padding:3px 0;border-bottom:1px solid #0d1424;}
+.metric-key{color:var(--text2);}
+.metric-val{font-family:var(--font-mono);font-weight:600;}
+.prog-bar-wrap{background:#0a1520;border-radius:4px;height:7px;overflow:hidden;margin-top:2px;}
+.prog-bar{height:100%;border-radius:4px;transition:width .5s;}
+.run-btn{width:100%;padding:9px;border-radius:6px;border:none;font-size:12px;font-weight:700;
+  cursor:pointer;letter-spacing:.5px;margin-bottom:8px;transition:all .2s;}
+.btn-run{background:linear-gradient(135deg,#0097a7,#00e5ff);color:#000;}
+.btn-run:hover{filter:brightness(1.15);}
+.btn-stop{background:linear-gradient(135deg,#c62828,#ff1744);color:#fff;}
+.btn-reset{background:var(--panel2);border:1px solid var(--border2);color:var(--text);}
+.coverage-bar{margin-top:6px;}
+
+::-webkit-scrollbar{width:4px;height:4px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hdr-brand">
+    <div class="hdr-logo">⚙</div>
+    <div>
+      <div class="hdr-title">HIL / SiL Automotive Test Platform</div>
+      <div class="hdr-sub">NI VeriStand Inspired &bull; ECU-in-Loop &bull; Real-Time I/O &bull; UDS/DoIP/OTA Validation</div>
+    </div>
+  </div>
+  <div class="hdr-model">MODEL: ADAS_ECU_SVC2600_v2.4.1.simulink</div>
+  <div class="hdr-right">
+    <div class="exec-status">
+      <div class="status-led" id="status-led" style="background:var(--green);box-shadow:0 0 10px var(--green)"></div>
+      <span id="status-text" style="color:var(--green)">HIL READY</span>
+    </div>
+    <div style="font-size:10px;color:var(--text3);font-family:var(--font-mono)">RT-Clock: <span id="rt-clock" style="color:var(--accent)">0.000 s</span></div>
+    <div style="font-size:10px;color:var(--text3);font-family:var(--font-mono)">Step: 1ms</div>
+  </div>
+</div>
+
+<!-- APP BODY -->
+<div class="app">
+
+  <!-- LEFT: Test Suite -->
+  <div class="sidebar-left">
+    <div class="ph"><div class="ph-title">Test Suite Navigator</div></div>
+    <div class="suite-wrap" id="suite-wrap"><!-- populated by JS --></div>
+    <div style="padding:8px;border-top:1px solid var(--border);">
+      <div style="font-size:9px;color:var(--text3);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px;">Execution Progress</div>
+      <div class="prog-bar-wrap"><div class="prog-bar" id="suite-prog" style="width:0%;background:var(--green)"></div></div>
+      <div style="font-size:9px;color:var(--text3);margin-top:3px;" id="suite-prog-txt">0 / 0 tests</div>
+    </div>
+  </div>
+
+  <!-- CENTER -->
+  <div class="center">
+
+    <!-- TOP CENTER: Views -->
+    <div style="display:flex;flex-direction:column;overflow:hidden;border-right:1px solid var(--border);">
+      <div class="tab-bar">
+        <div class="tab active" onclick="viewSwitch('io',this)">I/O Monitor</div>
+        <div class="tab" onclick="viewSwitch('scope',this)">Oscilloscope</div>
+        <div class="tab" onclick="viewSwitch('fault',this)">Fault Injection</div>
+        <div class="tab" onclick="viewSwitch('verdict',this)">Verdict Board</div>
+        <div class="tab" onclick="viewSwitch('reqs',this)">Requirements</div>
+      </div>
+
+      <!-- I/O MONITOR -->
+      <div class="view active" id="view-io" style="overflow-y:auto;">
+        <div class="io-grid">
+          <div class="io-section">
+            <div class="io-sec-title">Analog Inputs (ADC)</div>
+            <div id="adc-channels"></div>
+          </div>
+          <div class="io-section">
+            <div class="io-sec-title">Analog Outputs (DAC)</div>
+            <div id="dac-channels"></div>
+          </div>
+          <div class="io-section">
+            <div class="io-sec-title">Digital Inputs</div>
+            <div id="di-channels"></div>
+          </div>
+          <div class="io-section">
+            <div class="io-sec-title">Digital Outputs</div>
+            <div id="do-channels"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OSCILLOSCOPE -->
+      <div class="view" id="view-scope" style="overflow:hidden;">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:6px;">
+          <select id="scope-ch" style="background:var(--panel2);border:1px solid var(--border);color:var(--text);padding:4px 8px;border-radius:4px;font-size:11px;" onchange="updateScopeChannels()">
+            <option>CH1: EngineRPM</option>
+            <option>CH1+CH2: RPM+Speed</option>
+            <option>CH1+CH2+CH3: RPM+Speed+Throttle</option>
+            <option>All 4 channels</option>
+          </select>
+          <select id="scope-time" style="background:var(--panel2);border:1px solid var(--border);color:var(--text);padding:4px 8px;border-radius:4px;font-size:11px;">
+            <option>50ms/div</option><option>100ms/div</option><option>200ms/div</option><option>500ms/div</option>
+          </select>
+          <button onclick="clearScope()" style="padding:4px 10px;background:var(--panel2);border:1px solid var(--border2);color:var(--text2);border-radius:4px;font-size:10px;cursor:pointer;">Clear</button>
+        </div>
+        <div class="scope-wrap" style="flex:1;">
+          <canvas id="scopeCanvas" width="800" height="280" style="width:100%;height:100%;display:block;"></canvas>
+        </div>
+        <div style="display:flex;gap:16px;padding:4px;font-size:10px;font-family:var(--font-mono);">
+          <span style="color:#f59e0b">■ EngineRPM (rpm)</span>
+          <span style="color:#22c55e">■ VehSpeed (km/h)</span>
+          <span style="color:#a78bfa">■ ThrottlePos (%)</span>
+          <span style="color:#38bdf8">■ BrakePress (bar)</span>
+        </div>
+      </div>
+
+      <!-- FAULT INJECTION -->
+      <div class="view" id="view-fault" style="overflow-y:auto;">
+        <div style="font-size:11px;color:var(--text2);margin-bottom:8px;">Inject hardware faults and CAN signal anomalies to validate ECU robustness:</div>
+        <div class="fault-grid" id="fault-grid"></div>
+      </div>
+
+      <!-- VERDICT BOARD -->
+      <div class="view" id="view-verdict" style="overflow-y:auto;">
+        <div class="verdict-grid">
+          <div class="vcard"><div class="vc-val" style="color:var(--pass)" id="vrd-pass">0</div><div class="vc-lbl">Pass</div></div>
+          <div class="vcard"><div class="vc-val" style="color:var(--fail)" id="vrd-fail">0</div><div class="vc-lbl">Fail</div></div>
+          <div class="vcard"><div class="vc-val" style="color:var(--inprog)" id="vrd-prog">0</div><div class="vc-lbl">In Progress</div></div>
+          <div class="vcard"><div class="vc-val" style="color:var(--nte)" id="vrd-nte">0</div><div class="vc-lbl">Not Exec</div></div>
+        </div>
+        <div style="font-size:10px;color:var(--text3);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;">Coverage by Module</div>
+        <canvas id="verdictChart" width="600" height="180" style="max-width:100%;background:#040810;border-radius:6px;"></canvas>
+      </div>
+
+      <!-- REQUIREMENTS -->
+      <div class="view" id="view-reqs" style="overflow-y:auto;">
+        <table class="req-table">
+          <thead><tr><th>Req ID</th><th>Description</th><th>Tests</th><th>Coverage</th><th>Status</th></tr></thead>
+          <tbody id="req-tbody"></tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <!-- BOTTOM: Console -->
+    <div class="bottom-pane">
+      <div class="bp-tabs">
+        <div class="bp-tab active" onclick="bpSwitch('console',this)">Console Output</div>
+        <div class="bp-tab" onclick="bpSwitch('capl',this)">CAPL / Python Script</div>
+        <div class="bp-tab" onclick="bpSwitch('report',this)">Test Report</div>
+      </div>
+      <div class="bp-panel active" id="bp-console">
+        <div class="console-out" id="console-out"></div>
+      </div>
+      <div class="bp-panel" id="bp-capl">
+        <pre style="color:#a78bfa;font-size:10px;line-height:1.6;overflow:auto;height:170px;">
+<span style="color:var(--text3)">// CAPL — SVC Camera Validation Script</span>
+<span style="color:#38bdf8">on</span> start {
+  <span style="color:#86efac">setTimer</span>(tHeartbeat, 100);
+  write(<span style="color:#fca5a5">"[HIL] SVC-ECU test session started"</span>);
+}
+
+<span style="color:#38bdf8">on</span> timer tHeartbeat {
+  <span style="color:#38bdf8">long</span> rpm  = <span style="color:#86efac">getValue</span>(ENG_Status::EngineRPM);
+  <span style="color:#38bdf8">long</span> spd  = <span style="color:#86efac">getValue</span>(VehDynamics::VehicleSpeed);
+  <span style="color:#38bdf8">long</span> dist = <span style="color:#86efac">getValue</span>(ADAS_Fusion::LeadObjDist);
+  <span style="color:#38bdf8">if</span> (dist &lt; 30) {
+    <span style="color:#86efac">testStepFail</span>(<span style="color:#fca5a5">"TC-AEB-001"</span>, <span style="color:#fca5a5">"AEB distance below threshold"</span>);
+  } <span style="color:#38bdf8">else</span> {
+    <span style="color:#86efac">testStepPass</span>(<span style="color:#fca5a5">"TC-AEB-001"</span>, <span style="color:#fca5a5">"AEB distance nominal"</span>);
+  }
+  <span style="color:#86efac">setTimer</span>(tHeartbeat, 100);
+}
+
+<span style="color:#38bdf8">on</span> message ENG_Status {
+  <span style="color:#38bdf8">if</span> (ENG_Status.CoolantTemp &gt; 115) {
+    <span style="color:#86efac">testStepFail</span>(<span style="color:#fca5a5">"TC-ENG-007"</span>, <span style="color:#fca5a5">"Coolant overtemp: "</span> + ENG_Status.CoolantTemp);
+  }
+}</pre>
+      </div>
+      <div class="bp-panel" id="bp-report">
+        <div id="report-content" style="font-size:10px;color:var(--text2);font-family:var(--font-mono);line-height:1.7;overflow:auto;height:170px;"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- RIGHT: Control Panel -->
+  <div class="sidebar-right">
+    <div class="ph"><div class="ph-title">Execution Control</div></div>
+    <div class="rp-body">
+
+      <div class="rp-section">
+        <button class="run-btn btn-run" id="run-btn" onclick="startRun()">▶ RUN ALL TESTS</button>
+        <button class="run-btn btn-stop" id="stop-btn" onclick="stopRun()" style="display:none">■ STOP</button>
+        <button class="run-btn btn-reset" onclick="resetAll()">↺ Reset All</button>
+      </div>
+
+      <div class="rp-section">
+        <div class="rp-title">Model Status</div>
+        <div class="metric-row"><span class="metric-key">Model</span><span class="metric-val" style="color:var(--green)">Loaded ✓</span></div>
+        <div class="metric-row"><span class="metric-key">Simulation Rate</span><span class="metric-val" style="color:var(--accent)">1000 Hz</span></div>
+        <div class="metric-row"><span class="metric-key">CPU Usage</span><span class="metric-val" id="cpu-use" style="color:var(--yellow)">0%</span></div>
+        <div class="metric-row"><span class="metric-key">RT Overruns</span><span class="metric-val" id="rt-overruns" style="color:var(--green)">0</span></div>
+        <div class="metric-row"><span class="metric-key">CAN Link</span><span class="metric-val" style="color:var(--green)">OK</span></div>
+        <div class="metric-row"><span class="metric-key">CAN-FD Link</span><span class="metric-val" style="color:var(--green)">OK</span></div>
+        <div class="metric-row"><span class="metric-key">Ethernet / DoIP</span><span class="metric-val" style="color:var(--green)">UP</span></div>
+        <div class="metric-row"><span class="metric-key">OTA Agent</span><span class="metric-val" style="color:var(--yellow)">READY</span></div>
+        <div class="metric-row"><span class="metric-key">Power Supply</span><span class="metric-val" style="color:var(--green)">12.6V</span></div>
+      </div>
+
+      <div class="rp-section">
+        <div class="rp-title">Active Test</div>
+        <div id="active-tc-panel" style="background:var(--panel3);border:1px solid var(--border);border-radius:6px;padding:10px;">
+          <div style="font-size:9px;color:var(--text3);margin-bottom:4px;text-transform:uppercase;">Currently Executing</div>
+          <div id="active-tc-id" style="font-family:var(--font-mono);color:var(--accent);font-size:11px;font-weight:700;">—</div>
+          <div id="active-tc-name" style="font-size:11px;margin-top:2px;">Idle</div>
+          <div style="margin-top:6px;"><div class="prog-bar-wrap"><div class="prog-bar" id="tc-prog" style="width:0%;background:var(--inprog)"></div></div></div>
+          <div id="active-tc-elapsed" style="font-size:9px;color:var(--text3);margin-top:3px;font-family:var(--font-mono);">0ms</div>
+        </div>
+      </div>
+
+      <div class="rp-section">
+        <div class="rp-title">Signal Injection Override</div>
+        <div style="display:flex;flex-direction:column;gap:6px;" id="sig-injection"></div>
+      </div>
+
+      <div class="rp-section">
+        <div class="rp-title">Coverage Summary</div>
+        <div class="coverage-bar">
+          <div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:2px;">
+            <span>Functional Coverage</span><span id="cov-func" style="font-family:var(--font-mono)">0%</span>
+          </div>
+          <div class="prog-bar-wrap"><div class="prog-bar" id="pb-func" style="width:0%;background:var(--green)"></div></div>
+        </div>
+        <div class="coverage-bar">
+          <div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:2px;">
+            <span>Code Coverage (SIL)</span><span id="cov-code" style="font-family:var(--font-mono)">0%</span>
+          </div>
+          <div class="prog-bar-wrap"><div class="prog-bar" id="pb-code" style="width:0%;background:var(--purple)"></div></div>
+        </div>
+        <div class="coverage-bar">
+          <div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:2px;">
+            <span>Req. Traceability</span><span id="cov-req" style="font-family:var(--font-mono)">0%</span>
+          </div>
+          <div class="prog-bar-wrap"><div class="prog-bar" id="pb-req" style="width:0%;background:var(--teal)"></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- end app -->
+
+<script>
+// ============================================================
+// TEST DATA
+// ============================================================
+const TEST_SUITES=[
+  {name:'Camera Validation', icon:'📷', tests:[
+    {id:'TC-CAM-001',name:'Front Camera Init & Resolution',dur:null,status:'NOT_EXEC'},
+    {id:'TC-CAM-002',name:'Rear Camera LVDS Link Check',dur:null,status:'NOT_EXEC'},
+    {id:'TC-CAM-003',name:'Left/Right Camera FPS @ 30Hz',dur:null,status:'NOT_EXEC'},
+    {id:'TC-CAM-004',name:'Cargo Camera NightVision Gain',dur:null,status:'NOT_EXEC'},
+    {id:'TC-CAM-005',name:'SurroundView Stitching Latency',dur:null,status:'NOT_EXEC'},
+    {id:'TC-CAM-006',name:'Camera Fault DTC on Dropout',dur:null,status:'NOT_EXEC'},
+  ]},
+  {name:'USS Parking', icon:'🅿️', tests:[
+    {id:'TC-USS-001',name:'Front Sensor Obstacle at 30cm',dur:null,status:'NOT_EXEC'},
+    {id:'TC-USS-002',name:'Rear Sensor Obstacle at 50cm',dur:null,status:'NOT_EXEC'},
+    {id:'TC-USS-003',name:'Side Sensor Cross-Talk Check',dur:null,status:'NOT_EXEC'},
+    {id:'TC-USS-004',name:'Auto-Park Perpendicular Slot',dur:null,status:'NOT_EXEC'},
+    {id:'TC-USS-005',name:'Proximity Alert < 0.5m',dur:null,status:'NOT_EXEC'},
+  ]},
+  {name:'ADAS Features', icon:'🚗', tests:[
+    {id:'TC-AEB-001',name:'AEB — Pedestrian 20 km/h',dur:null,status:'NOT_EXEC'},
+    {id:'TC-AEB-002',name:'AEB — Vehicle Cut-In',dur:null,status:'NOT_EXEC'},
+    {id:'TC-LKA-001',name:'LKA Lane Departure Warning',dur:null,status:'NOT_EXEC'},
+    {id:'TC-LKA-002',name:'LKA Torque Intervention',dur:null,status:'NOT_EXEC'},
+    {id:'TC-BSD-001',name:'BSD Rear-Quarter Detection',dur:null,status:'NOT_EXEC'},
+    {id:'TC-ACC-001',name:'ACC Target Acquisition',dur:null,status:'NOT_EXEC'},
+  ]},
+  {name:'Trailer Assist', icon:'🚛', tests:[
+    {id:'TC-TRA-001',name:'Trailer Detection via Camera',dur:null,status:'NOT_EXEC'},
+    {id:'TC-TRA-002',name:'Trailer Angle Calculation',dur:null,status:'NOT_EXEC'},
+    {id:'TC-TRA-003',name:'Jack-knife Prevention',dur:null,status:'NOT_EXEC'},
+    {id:'TC-TRA-004',name:'Hitch-Ball Alignment',dur:null,status:'NOT_EXEC'},
+  ]},
+  {name:'Power & Safety', icon:'⚡', tests:[
+    {id:'TC-PWR-001',name:'Undervoltage Response (9V)',dur:null,status:'NOT_EXEC'},
+    {id:'TC-PWR-002',name:'Overvoltage Clamp (16V)',dur:null,status:'NOT_EXEC'},
+    {id:'TC-SAF-001',name:'Watchdog Reset Under Load',dur:null,status:'NOT_EXEC'},
+    {id:'TC-SAF-002',name:'ASIL-B Safety Monitor',dur:null,status:'NOT_EXEC'},
+  ]},
+  {name:'Diagnostics & OTA', icon:'🧪', tests:[
+    {id:'TC-DIAG-001',name:'Read DID F190 (VIN) over UDS',dur:null,status:'NOT_EXEC'},
+    {id:'TC-DIAG-002',name:'Run RID FF00 Self-Test',dur:null,status:'NOT_EXEC'},
+    {id:'TC-DIAG-003',name:'DTC Clear + Recheck Path',dur:null,status:'NOT_EXEC'},
+    {id:'TC-OTA-001',name:'OTA Package Signature Validation',dur:null,status:'NOT_EXEC'},
+  ]},
+];
+
+const FAULTS=[
+  {id:'F001',name:'Camera LVDS Short',desc:'Inject LVDS short on Camera CH1 (Front)',active:false},
+  {id:'F002',name:'CAN Bus Off',desc:'Force CAN controller to Bus-Off state',active:false},
+  {id:'F003',name:'USS Sensor Failure',desc:'Set USS F-L sensor to out-of-range (0x7FF)',active:false},
+  {id:'F004',name:'Supply Undervoltage',desc:'Drive VBAT to 8.5V (below min spec)',active:false},
+  {id:'F005',name:'ECU Overtemperature',desc:'Inject +95°C to ECU temperature sensor',active:false},
+  {id:'F006',name:'LVDS Signal Noise',desc:'Add 50mV p-p noise to LVDS lane A',active:false},
+  {id:'F007',name:'CAN Frame Corruption',desc:'Bit-flip byte[3] of ID 0x300 (ADAS)',active:false},
+  {id:'F008',name:'Ethernet Link Drop',desc:'Drop DoIP link for 2s on ECU port',active:false},
+  {id:'F009',name:'OTA Signature Failure',desc:'Inject invalid OTA package signature hash',active:false},
+];
+
+const REQUIREMENTS=[
+  {id:'SREQ-001',desc:'Front camera shall deliver 1920×1080@30fps',tests:['TC-CAM-001'],cov:0},
+  {id:'SREQ-002',desc:'SurroundView latency shall be ≤100ms',tests:['TC-CAM-005'],cov:0},
+  {id:'SREQ-003',desc:'USS detection accuracy ±5cm at 30cm',tests:['TC-USS-001','TC-USS-002'],cov:0},
+  {id:'SREQ-004',desc:'AEB shall trigger braking command within 200ms',tests:['TC-AEB-001','TC-AEB-002'],cov:0},
+  {id:'SREQ-005',desc:'LKA torque intervention at >65km/h lane departure',tests:['TC-LKA-001','TC-LKA-002'],cov:0},
+  {id:'SREQ-006',desc:'BSD detection range: rear-quarter up to 4m',tests:['TC-BSD-001'],cov:0},
+  {id:'SREQ-007',desc:'Trailer angle range: ±50degrees accuracy ±2deg',tests:['TC-TRA-002'],cov:0},
+  {id:'SREQ-008',desc:'ECU shall operate 9V–16V (ISO 16750-2)',tests:['TC-PWR-001','TC-PWR-002'],cov:0},
+];
+
+// ============================================================
+// STATE
+// ============================================================
+let running=false;
+let runQueue=[];
+let currIdx=0;
+let runTimer=null;
+let rtTime=0;
+let activeTC=null;
+let tcStartTime=0;
+let simPhase=0;
+let cpuUsage=0;
+
+// I/O simulation state
+let ioState={
+  adc:{
+    'Ch0: VBAT':{val:12.6,min:0,max:16,unit:'V',color:'#22c55e'},
+    'Ch1: ECU_Temp':{val:52,min:-40,max:85,unit:'°C',color:'#f59e0b'},
+    'Ch2: Camera_Temp':{val:45,min:-30,max:80,unit:'°C',color:'#38bdf8'},
+    'Ch3: USS_Vcc':{val:5.01,min:0,max:6,unit:'V',color:'#a78bfa'},
+    'Ch4: Brake_Press':{val:0,min:0,max:200,unit:'bar',color:'#f43f5e'},
+    'Ch5: Throttle_Sig':{val:20,min:0,max:100,unit:'%',color:'#fb923c'},
+  },
+  dac:{
+    'Out0: AEB_Cmd':{val:0,min:0,max:100,unit:'%',color:'#f43f5e'},
+    'Out1: LKA_Torque':{val:0,min:-10,max:10,unit:'Nm',color:'#22c55e'},
+    'Out2: ACC_Throttle':{val:25,min:0,max:100,unit:'%',color:'#f59e0b'},
+    'Out3: Park_Buzz':{val:0,min:0,max:5,unit:'V',color:'#38bdf8'},
+  },
+  di:{
+    'DI0: IGN_ON':{val:1},'DI1: Brake_Sw':{val:0},'DI2: Reverse_Gear':{val:0},
+    'DI3: ACC_Resume':{val:1},'DI4: LKA_Enable':{val:1},'DI5: Hazard_Sw':{val:0},
+    'DI6: TowMode_Sw':{val:0},'DI7: Park_Brake':{val:0},
+  },
+  do:{
+    'DO0: AEB_Warn_LED':{val:0},'DO1: BSD_Warn_L':{val:0},'DO2: BSD_Warn_R':{val:0},
+    'DO3: Park_Beeper':{val:0},'DO4: LKA_LED':{val:1},'DO5: FaultRelay':{val:0},
+    'DO6: CamPower_En':{val:1},'DO7: USS_Enable':{val:1},
+  },
+};
+
+// Scope signal history
+const scopeHistory={
+  rpm:[],speed:[],throttle:[],brake:[],
+};
+const SCOPE_LEN=200;
+
+// ============================================================
+// BUILD UI
+// ============================================================
+window.addEventListener('load',()=>{
+  buildSuiteTree();
+  buildFaultGrid();
+  buildReqTable();
+  buildSigInjection();
+  renderIOChannels();
+  renderRequirements();
+  setInterval(simStep,50);
+  setInterval(renderIOChannels,150);
+  setInterval(drawScope,60);
+  setInterval(drawVerdictChart,1000);
+  setInterval(updateRTClock,50);
+});
+
+function buildSuiteTree(){
+  const wrap=document.getElementById('suite-wrap');
+  wrap.innerHTML='';
+  TEST_SUITES.forEach((suite,si)=>{
+    const grp=document.createElement('div');grp.className='suite-group';
+    const hdr=document.createElement('div');hdr.className='suite-hdr';
+    hdr.innerHTML=`<span class="suite-icon">${suite.icon}</span><span class="suite-name">${suite.name}</span><span class="suite-cnt">${suite.tests.length}</span>`;
+    grp.appendChild(hdr);
+    suite.tests.forEach((tc,ti)=>{
+      const item=document.createElement('div');
+      item.className='tc-item';item.id='tc-item-'+tc.id;
+      item.onclick=()=>selectTC(tc);
+      item.innerHTML=`<div class="tc-status-dot" id="dot-${tc.id}" style="background:var(--nte)"></div>
+        <span class="tc-name-txt" title="${tc.name}">${tc.name}</span>
+        <span class="tc-dur" id="dur-${tc.id}"></span>`;
+      grp.appendChild(item);
+    });
+    wrap.appendChild(grp);
+  });
+}
+
+function selectTC(tc){
+  document.querySelectorAll('.tc-item').forEach(i=>i.classList.remove('active-sel'));
+  document.getElementById('tc-item-'+tc.id).classList.add('active-sel');
+}
+
+function buildFaultGrid(){
+  document.getElementById('fault-grid').innerHTML=FAULTS.map(f=>`
+    <div class="fault-card" id="fc-${f.id}">
+      <div>
+        <div class="fault-name">${f.id}: ${f.name}</div>
+        <div class="fault-desc">${f.desc}</div>
+      </div>
+      <div style="display:flex;gap:6px;">
+        <button class="fault-btn fb-inject" id="finj-${f.id}" onclick="injectFault('${f.id}')">Inject</button>
+        <button class="fault-btn fb-clear" onclick="clearFault('${f.id}')">Clear</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function buildReqTable(){
+  document.getElementById('req-tbody').innerHTML=REQUIREMENTS.map(r=>`
+    <tr>
+      <td class="req-id">${r.id}</td>
+      <td style="font-size:10px">${r.desc}</td>
+      <td style="font-size:9px;color:var(--text3);font-family:var(--font-mono)">${r.tests.join(', ')}</td>
+      <td class="req-cov"><span id="req-cov-${r.id}" style="font-family:var(--font-mono);font-size:10px">0%</span></td>
+      <td><span id="req-st-${r.id}" class="tc-status-dot" style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--nte)"></span></td>
+    </tr>
+  `).join('');
+}
+
+function buildSigInjection(){
+  const overrides=[
+    {name:'Vehicle Speed',id:'si-spd',min:0,max:200,step:1,val:80},
+    {name:'Lead Distance',id:'si-dist',min:0,max:200,step:1,val:50},
+    {name:'Engine RPM',id:'si-rpm',min:500,max:7000,step:100,val:2000},
+  ];
+  document.getElementById('sig-injection').innerHTML=overrides.map(o=>`
+    <div>
+      <div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:2px;">
+        <span style="color:var(--text2)">${o.name}</span>
+        <span id="${o.id}-display" style="font-family:var(--font-mono);color:var(--accent)">${o.val}</span>
+      </div>
+      <input type="range" min="${o.min}" max="${o.max}" step="${o.step}" value="${o.val}" id="${o.id}"
+        style="width:100%;accent-color:var(--accent);cursor:pointer;"
+        oninput="document.getElementById('${o.id}-display').textContent=this.value">
+    </div>
+  `).join('');
+}
+
+// ============================================================
+// SIMULATION STEP
+// ============================================================
+function simStep(){
+  simPhase+=0.03;
+  const p=simPhase;
+  const injSpd=parseInt(document.getElementById('si-spd')?.value||80);
+  const injDist=parseInt(document.getElementById('si-dist')?.value||50);
+  const injRpm=parseInt(document.getElementById('si-rpm')?.value||2000);
+
+  // Update ADC channels dynamically
+  ioState.adc['Ch0: VBAT'].val=12.4+Math.sin(p*0.1)*0.3;
+  ioState.adc['Ch1: ECU_Temp'].val=52+Math.sin(p*0.05)*6;
+  ioState.adc['Ch2: Camera_Temp'].val=44+Math.sin(p*0.07)*4;
+  ioState.adc['Ch4: Brake_Press'].val=running&&currIdx%5===0?80+Math.sin(p*5)*10:Math.max(0,Math.sin(p)*3);
+  ioState.adc['Ch5: Throttle_Sig'].val=Math.max(0,20+Math.sin(p*0.4)*25+Math.random()*3);
+
+  // Update DAC
+  const brakePres=ioState.adc['Ch4: Brake_Press'].val;
+  ioState.dac['Out0: AEB_Cmd'].val=brakePres>50?Math.min(100,brakePres*1.1):0;
+  ioState.dac['Out1: LKA_Torque'].val=Math.sin(p*0.6)*2;
+  ioState.dac['Out2: ACC_Throttle'].val=Math.max(0,20+Math.sin(p*0.3)*15);
+
+  // Update DOs
+  ioState.do['DO0: AEB_Warn_LED'].val=brakePres>40?1:0;
+  ioState.do['DO3: Park_Beeper'].val=Math.floor(p*2)%2;
+
+  // CPU usage
+  cpuUsage=Math.min(99,35+Math.sin(p*0.4)*20+(running?20:0));
+  document.getElementById('cpu-use').textContent=Math.round(cpuUsage)+'%';
+  document.getElementById('cpu-use').style.color=cpuUsage>80?'var(--red)':cpuUsage>60?'var(--yellow)':'var(--green)';
+
+  // Scope
+  const spd=injSpd+Math.sin(p*0.3)*10;
+  const rpm=injRpm+Math.sin(p*2)*300+Math.random()*50;
+  const thr=Math.max(0,Math.min(100,20+Math.sin(p*0.5)*25));
+  const brk=Math.max(0,brakePres);
+  ['rpm','speed','throttle','brake'].forEach((k,idx)=>{
+    const arr=scopeHistory[k];
+    arr.push([rpm,spd,thr,brk][idx]);
+    if(arr.length>SCOPE_LEN)arr.shift();
+  });
+}
+
+function renderIOChannels(){
+  renderAnalogChannels('adc-channels',ioState.adc);
+  renderAnalogChannels('dac-channels',ioState.dac);
+  renderDigChannels('di-channels',ioState.di,'DI');
+  renderDigChannels('do-channels',ioState.do,'DO');
+}
+
+function renderAnalogChannels(id,channels){
+  const el=document.getElementById(id);if(!el)return;
+  el.innerHTML='';
+  Object.entries(channels).forEach(([name,ch])=>{
+    const pct=((ch.val-ch.min)/(ch.max-ch.min)*100).toFixed(0);
+    const div=document.createElement('div');div.className='io-channel';
+    div.innerHTML=`
+      <div class="io-ch-name">${name.split(':')[1]||name}</div>
+      <div class="io-ch-val" style="color:${ch.color}">${ch.val.toFixed(2)}<span style="font-size:9px;color:var(--text3)"> ${ch.unit}</span></div>
+      <div class="io-ch-bar"><div class="io-ch-bar-fill" style="width:${pct}%;background:${ch.color}44;box-shadow:0 0 4px ${ch.color}"></div></div>`;
+    el.appendChild(div);
+  });
+}
+
+function renderDigChannels(id,channels,prefix){
+  const el=document.getElementById(id);if(!el)return;
+  el.innerHTML='';
+  Object.entries(channels).forEach(([name,ch])=>{
+    const div=document.createElement('div');div.className='dig-channel';
+    div.innerHTML=`
+      <div class="dig-state ${ch.val?'dig-high':'dig-low'}"></div>
+      <span class="dig-name">${name.split(':')[1]||name}</span>
+      <span class="dig-val" style="color:${ch.val?'var(--green)':'var(--text3)'}">${ch.val?'HIGH':'LOW'}</span>`;
+    el.appendChild(div);
+  });
+}
+
+// ============================================================
+// OSCILLOSCOPE
+// ============================================================
+function drawScope(){
+  const cv=document.getElementById('scopeCanvas');if(!cv)return;
+  const ctx=cv.getContext('2d');const w=cv.width,h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='#030810';ctx.fillRect(0,0,w,h);
+
+  // Grid
+  ctx.strokeStyle='rgba(0,180,216,0.08)';ctx.lineWidth=1;
+  for(let x=0;x<=w;x+=w/10){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();}
+  for(let y=0;y<=h;y+=h/8){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}
+
+  const CHANNELS=[
+    {key:'rpm',  color:'#f59e0b',min:500,  max:7000, label:'RPM'},
+    {key:'speed',color:'#22c55e',min:0,    max:200,  label:'km/h'},
+    {key:'throttle',color:'#a78bfa',min:0, max:100,  label:'%'},
+    {key:'brake',color:'#f43f5e',min:0,    max:200,  label:'bar'},
+  ];
+
+  CHANNELS.forEach((ch,ci)=>{
+    const data=scopeHistory[ch.key];if(!data.length)return;
+    const rangeH=h/4;const yBase=ci*rangeH+rangeH/2;
+    const range=ch.max-ch.min;
+
+    // Channel lane background
+    ctx.fillStyle=ci%2===0?'rgba(0,0,0,0.1)':'rgba(0,0,0,0)';
+    ctx.fillRect(0,ci*rangeH,w,rangeH);
+
+    // Ref line
+    ctx.strokeStyle=ch.color+'33';ctx.lineWidth=1;ctx.setLineDash([4,4]);
+    ctx.beginPath();ctx.moveTo(0,yBase);ctx.lineTo(w,yBase);ctx.stroke();ctx.setLineDash([]);
+
+    // Signal
+    ctx.strokeStyle=ch.color;ctx.lineWidth=1.5;
+    ctx.shadowColor=ch.color;ctx.shadowBlur=4;
+    ctx.beginPath();
+    const step=w/SCOPE_LEN;
+    data.forEach((v,i)=>{
+      const x=i*step;
+      const y=yBase-((v-ch.min)/range)*(rangeH*0.7);
+      i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    });
+    ctx.stroke();ctx.shadowBlur=0;
+
+    // Label
+    ctx.fillStyle=ch.color;ctx.font='bold 9px monospace';
+    ctx.fillText(`CH${ci+1} ${ch.label}`,6,ci*rangeH+14);
+    const last=data[data.length-1];
+    if(last!==undefined){ctx.fillText(last.toFixed(0),w-40,ci*rangeH+14);}
+  });
+
+  // Trigger line
+  ctx.strokeStyle='rgba(255,255,255,0.2)';ctx.lineWidth=1;ctx.setLineDash([2,4]);
+  ctx.beginPath();ctx.moveTo(w*0.1,0);ctx.lineTo(w*0.1,h);ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle='rgba(255,255,255,0.5)';ctx.font='9px monospace';ctx.fillText('TRIG',w*0.1+2,h-4);
+}
+
+function clearScope(){Object.values(scopeHistory).forEach(a=>a.length=0);}
+
+// ============================================================
+// TEST EXECUTION
+// ============================================================
+function startRun(){
+  if(running)return;
+  running=true;
+  document.getElementById('run-btn').style.display='none';
+  document.getElementById('stop-btn').style.display='block';
+  document.getElementById('status-led').className='status-led led-yellow';
+  document.getElementById('status-text').textContent='RUNNING';
+  document.getElementById('status-text').style.color='var(--yellow)';
+
+  // Flatten all tests
+  runQueue=[];
+  TEST_SUITES.forEach(s=>s.tests.forEach(t=>runQueue.push({suite:s.name,tc:t})));
+  currIdx=0;
+  resetAllStatuses();
+  logConsole('[HIL] Test session started','info');
+  logConsole(`[HIL] ${runQueue.length} test cases queued`,'info');
+  logConsole('[HIL] Model: ADAS_ECU_SVC2600_v2.4.1 loaded ✓','ok');
+  runNextTC();
+}
+
+function runNextTC(){
+  if(!running||currIdx>=runQueue.length){
+    finishRun();return;
+  }
+  const {suite,tc}=runQueue[currIdx];
+  activeTC=tc;tcStartTime=performance.now();
+  tc.status='IN_PROGRESS';
+  document.getElementById('dot-'+tc.id).style.background='var(--inprog)';
+  document.getElementById('tc-item-'+tc.id).classList.add('running');
+  document.getElementById('active-tc-id').textContent=tc.id;
+  document.getElementById('active-tc-name').textContent=tc.name;
+  logConsole(`[EXEC] ▶ ${tc.id} — ${tc.name}`,'info');
+
+  // Animate progress bar
+  let prog=0;
+  const dur=600+Math.random()*1800;
+  const progInterval=setInterval(()=>{
+    prog=Math.min(100,prog+5);
+    document.getElementById('tc-prog').style.width=prog+'%';
+    document.getElementById('active-tc-elapsed').textContent=Math.round(prog*dur/100)+'ms';
+  },dur/20);
+
+  // Verdict after duration
+  runTimer=setTimeout(()=>{
+    clearInterval(progInterval);
+    document.getElementById('tc-prog').style.width='100%';
+    const pass=Math.random()>0.18;
+    tc.status=pass?'PASS':'FAIL';
+    tc.dur=Math.round(performance.now()-tcStartTime)+'ms';
+    document.getElementById('dot-'+tc.id).style.background=pass?'var(--pass)':'var(--fail)';
+    document.getElementById('dur-'+tc.id).textContent=tc.dur;
+    document.getElementById('tc-item-'+tc.id).classList.remove('running');
+    logConsole(`[${pass?'PASS':'FAIL'}] ${tc.id}: ${tc.name} (${tc.dur})`+ (pass?'':' — Check reference signal tolerance'),pass?'ok':'fail');
+    updateVerdictCounts();
+    updateSuiteProgress();
+    updateRequirements();
+    updateCoverage();
+    currIdx++;
+    setTimeout(runNextTC,80);
+  },dur);
+}
+
+function finishRun(){
+  running=false;
+  document.getElementById('run-btn').style.display='block';
+  document.getElementById('stop-btn').style.display='none';
+  const pass=TEST_SUITES.flatMap(s=>s.tests).filter(t=>t.status==='PASS').length;
+  const total=runQueue.length;
+  document.getElementById('status-led').className='status-led '+(pass===total?'led-green':'led-red');
+  document.getElementById('status-text').textContent=pass===total?'ALL PASS':'HAS FAILURES';
+  document.getElementById('status-text').style.color=pass===total?'var(--green)':'var(--red)';
+  logConsole(`[HIL] Session complete: ${pass}/${total} PASS`,'ok');
+  logConsole('[HIL] Report saved: HIL_Report_'+new Date().toISOString().substr(0,10)+'.html','info');
+  generateReport();
+}
+
+function stopRun(){
+  running=false;
+  if(runTimer)clearTimeout(runTimer);
+  document.getElementById('run-btn').style.display='block';
+  document.getElementById('stop-btn').style.display='none';
+  document.getElementById('status-led').className='status-led led-yellow';
+  document.getElementById('status-text').textContent='ABORTED';
+  document.getElementById('status-text').style.color='var(--yellow)';
+  logConsole('[HIL] Test run aborted by user','warn');
+}
+
+function resetAll(){
+  stopRun();
+  resetAllStatuses();
+  document.getElementById('console-out').innerHTML='';
+  document.getElementById('status-led').className='status-led led-green';
+  document.getElementById('status-text').textContent='HIL READY';
+  document.getElementById('status-text').style.color='var(--green)';
+  document.getElementById('active-tc-id').textContent='—';
+  document.getElementById('active-tc-name').textContent='Idle';
+  document.getElementById('tc-prog').style.width='0%';
+  document.getElementById('active-tc-elapsed').textContent='0ms';
+  updateVerdictCounts();updateSuiteProgress();updateCoverage();updateRequirements();
+}
+
+function resetAllStatuses(){
+  TEST_SUITES.forEach(s=>s.tests.forEach(t=>{
+    t.status='NOT_EXEC';t.dur=null;
+    const dot=document.getElementById('dot-'+t.id);if(dot)dot.style.background='var(--nte)';
+    const dur=document.getElementById('dur-'+t.id);if(dur)dur.textContent='';
+  }));
+}
+
+// ============================================================
+// UPDATES
+// ============================================================
+function updateVerdictCounts(){
+  const all=TEST_SUITES.flatMap(s=>s.tests);
+  const pass=all.filter(t=>t.status==='PASS').length;
+  const fail=all.filter(t=>t.status==='FAIL').length;
+  const prog=all.filter(t=>t.status==='IN_PROGRESS').length;
+  const nte=all.filter(t=>t.status==='NOT_EXEC').length;
+  document.getElementById('vrd-pass').textContent=pass;
+  document.getElementById('vrd-fail').textContent=fail;
+  document.getElementById('vrd-prog').textContent=prog;
+  document.getElementById('vrd-nte').textContent=nte;
+}
+
+function updateSuiteProgress(){
+  const all=TEST_SUITES.flatMap(s=>s.tests);
+  const done=all.filter(t=>t.status==='PASS'||t.status==='FAIL').length;
+  const pct=all.length?Math.round(done/all.length*100):0;
+  document.getElementById('suite-prog').style.width=pct+'%';
+  document.getElementById('suite-prog-txt').textContent=`${done} / ${all.length} tests`;
+}
+
+function updateCoverage(){
+  const all=TEST_SUITES.flatMap(s=>s.tests);
+  const done=all.filter(t=>t.status==='PASS'||t.status==='FAIL').length;
+  const pass=all.filter(t=>t.status==='PASS').length;
+  const func=all.length?Math.round(done/all.length*100):0;
+  const code=all.length?Math.round(pass/all.length*88):0;
+  const req=REQUIREMENTS.length?Math.round(REQUIREMENTS.filter(r=>r.cov>50).length/REQUIREMENTS.length*100):0;
+  document.getElementById('cov-func').textContent=func+'%';
+  document.getElementById('pb-func').style.width=func+'%';
+  document.getElementById('cov-code').textContent=code+'%';
+  document.getElementById('pb-code').style.width=code+'%';
+  document.getElementById('cov-req').textContent=req+'%';
+  document.getElementById('pb-req').style.width=req+'%';
+}
+
+function updateRequirements(){
+  REQUIREMENTS.forEach(r=>{
+    const covered=r.tests.filter(tid=>{
+      const tc=TEST_SUITES.flatMap(s=>s.tests).find(t=>t.id===tid);
+      return tc&&(tc.status==='PASS'||tc.status==='FAIL');
+    });
+    r.cov=r.tests.length?Math.round(covered.length/r.tests.length*100):0;
+    const passed=r.tests.filter(tid=>{
+      const tc=TEST_SUITES.flatMap(s=>s.tests).find(t=>t.id===tid);
+      return tc&&tc.status==='PASS';
+    });
+    const reqCovEl=document.getElementById('req-cov-'+r.id);
+    const reqStEl=document.getElementById('req-st-'+r.id);
+    if(reqCovEl)reqCovEl.textContent=r.cov+'%';
+    if(reqStEl){
+      const allPassed=r.tests.length>0&&passed.length===r.tests.length;
+      const anyFailed=r.tests.some(tid=>{const tc=TEST_SUITES.flatMap(s=>s.tests).find(t=>t.id===tid);return tc&&tc.status==='FAIL';});
+      reqStEl.style.background=allPassed?'var(--green)':anyFailed?'var(--red)':covered.length>0?'var(--yellow)':'var(--nte)';
+    }
+  });
+}
+
+function renderRequirements(){
+  updateRequirements();
+}
+
+function drawVerdictChart(){
+  const cv=document.getElementById('verdictChart');if(!cv)return;
+  const ctx=cv.getContext('2d');const w=cv.width,h=cv.height;
+  ctx.clearRect(0,0,w,h);ctx.fillStyle='#040810';ctx.fillRect(0,0,w,h);
+  // Grid
+  ctx.strokeStyle='rgba(30,51,86,0.4)';ctx.lineWidth=1;
+  for(let x=0;x<=w;x+=w/10){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();}
+  const BW=50,gap=30,startX=60;
+  TEST_SUITES.forEach((suite,i)=>{
+    const pass=suite.tests.filter(t=>t.status==='PASS').length;
+    const fail=suite.tests.filter(t=>t.status==='FAIL').length;
+    const total=suite.tests.length;
+    const x=startX+i*(BW+gap);const maxH=h-50;
+    const ph=(pass/Math.max(1,total))*maxH;
+    const fh=(fail/Math.max(1,total))*maxH;
+    // Stacked bar
+    ctx.fillStyle='var(--pass)';ctx.fillRect(x,h-40-ph,BW*0.55,ph);
+    ctx.fillStyle='var(--fail)';ctx.fillRect(x+BW*0.6,h-40-fh,BW*0.4,fh);
+    // Labels
+    ctx.fillStyle='#94a3b8';ctx.font='9px sans-serif';ctx.textAlign='center';
+    ctx.fillText(suite.name.split(' ')[0],x+BW/2,h-26);
+    ctx.fillText(`${pass}/${total}`,x+BW/2,h-16);
+  });
+  [[30,10,'var(--pass)','Pass'],[90,10,'var(--fail)','Fail']].forEach(([lx,ly,col,lbl])=>{
+    ctx.fillStyle=col;ctx.fillRect(lx,ly,10,10);
+    ctx.fillStyle='#94a3b8';ctx.font='9px sans-serif';ctx.textAlign='left';
+    ctx.fillText(lbl,lx+14,ly+9);
+  });
+  ctx.textAlign='left';
+}
+
+// ============================================================
+// FAULT INJECTION
+// ============================================================
+function injectFault(id){
+  const f=FAULTS.find(x=>x.id===id);if(!f)return;
+  f.active=true;
+  document.getElementById('finj-'+id).className='fault-btn fb-active';
+  document.getElementById('finj-'+id).textContent='ACTIVE';
+  logConsole(`[FAULT] Injected: ${f.name} — ${f.desc}`,'warn');
+  if(id==='F002'){ioState.dac['Out0: AEB_Cmd'].val=0;}
+  if(id==='F004'){ioState.adc['Ch0: VBAT'].val=8.5;}
+  if(id==='F005'){ioState.adc['Ch1: ECU_Temp'].val=96;}
+}
+
+function clearFault(id){
+  const f=FAULTS.find(x=>x.id===id);if(!f)return;
+  f.active=false;
+  document.getElementById('finj-'+id).className='fault-btn fb-inject';
+  document.getElementById('finj-'+id).textContent='Inject';
+  logConsole(`[FAULT] Cleared: ${f.name}`,'ok');
+  if(id==='F004'){ioState.adc['Ch0: VBAT'].val=12.6;}
+  if(id==='F005'){ioState.adc['Ch1: ECU_Temp'].val=52;}
+}
+
+// ============================================================
+// CONSOLE LOG
+// ============================================================
+function logConsole(msg,type){
+  const el=document.getElementById('console-out');if(!el)return;
+  const div=document.createElement('div');
+  const col=type==='ok'?'var(--green)':type==='fail'?'var(--red)':type==='warn'?'var(--yellow)':'var(--text2)';
+  const ts=((performance.now()/1000)%9999).toFixed(3);
+  div.innerHTML=`<span style="color:var(--text3)">[${ts}]</span> <span style="color:${col}">${msg}</span>`;
+  el.appendChild(div);el.scrollTop=el.scrollHeight;
+}
+
+function generateReport(){
+  const all=TEST_SUITES.flatMap(s=>s.tests);
+  const pass=all.filter(t=>t.status==='PASS').length;
+  const fail=all.filter(t=>t.status==='FAIL').length;
+  const el=document.getElementById('report-content');if(!el)return;
+  el.innerHTML=`
+<span style="color:var(--accent)">HIL TEST REPORT — ADAS_ECU_SVC2600</span>
+<span style="color:var(--text3)">Date: ${new Date().toISOString().substr(0,19).replace('T',' ')}</span>
+<span style="color:var(--text3)">Model: ADAS_ECU_SVC2600_v2.4.1.simulink</span>
+<span style="color:var(--text3)">Platform: NI PXI-8840 / VeriStand</span>
+
+<span style="color:var(--green)">SUMMARY: ${pass}/${all.length} PASS (${Math.round(pass/all.length*100)}%)</span>
+
+${TEST_SUITES.map(s=>{
+  const sp=s.tests.filter(t=>t.status==='PASS').length;
+  return `<span style="color:var(--text2)">[${s.name}] ${sp}/${s.tests.length}</span>`;
+}).join('\n')}
+
+FAILED TESTS:
+${all.filter(t=>t.status==='FAIL').map(t=>`  ${t.id}: ${t.name}`).join('\n')||'  None'}
+  `;
+}
+
+// ============================================================
+// RT CLOCK
+// ============================================================
+function updateRTClock(){
+  rtTime+=0.05;
+  const el=document.getElementById('rt-clock');
+  if(el)el.textContent=rtTime.toFixed(3)+' s';
+}
+
+// ============================================================
+// UI HELPERS
+// ============================================================
+function viewSwitch(name,el){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('view-'+name).classList.add('active');
+  el.classList.add('active');
+}
+
+function bpSwitch(name,el){
+  document.querySelectorAll('.bp-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.bp-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('bp-'+name).classList.add('active');
+  el.classList.add('active');
+}
+</script>
+  <!-- Portfolio QoL Enhancer -->
+  <script>(function(){if(window.__portfolioQolEnhancer)return;window.__portfolioQolEnhancer=1;var b=document.createElement("button");b.type="button";b.setAttribute("aria-label","Scroll to top");b.textContent="Top";b.style.cssText="position:fixed;right:14px;bottom:14px;z-index:2147483000;border:1px solid rgba(148,163,184,.7);background:rgba(15,23,42,.88);color:#f8fafc;border-radius:999px;font:700 12px/1 Trebuchet MS,Segoe UI,sans-serif;padding:8px 11px;cursor:pointer;opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .16s ease,transform .16s ease";document.body.appendChild(b);function sync(){var visible=window.scrollY>200;b.style.opacity=visible?"1":"0";b.style.transform=visible?"translateY(0)":"translateY(8px)";b.style.pointerEvents=visible?"auto":"none";}b.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});document.addEventListener("keydown",function(e){var t=e.target&&e.target.tagName;if(t==="INPUT"||t==="TEXTAREA"||t==="SELECT")return;if(e.key==="t"||e.key==="T"){window.scrollTo({top:0,behavior:"smooth"});}});window.addEventListener("scroll",sync,{passive:true});sync();})();</script>
+</body>
+</html>

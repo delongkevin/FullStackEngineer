@@ -1,1 +1,1363 @@
-<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="/_next/static/css/4cba7fc3b6ee7195.css" crossorigin="" data-precedence="next"/><link rel="preload" as="script" fetchPriority="low" href="/_next/static/chunks/webpack-0e82af5fc7dd78ae.js" crossorigin=""/><script src="/_next/static/chunks/fd9d1056-456948113883b121.js" async="" crossorigin=""></script><script src="/_next/static/chunks/472-0c2d031b25dc566c.js" async="" crossorigin=""></script><script src="/_next/static/chunks/main-app-626cee463d6fe0c2.js" async="" crossorigin=""></script><script src="/_next/static/chunks/394-f36f0ea0535de9ed.js" async=""></script><script src="/_next/static/chunks/413-e95fbadccfbfa2da.js" async=""></script><script src="/_next/static/chunks/141-312630d5b6568587.js" async=""></script><script src="/_next/static/chunks/app/projects/%5Bid%5D/page-ba176704f7564572.js" async=""></script><title>System Integration Test Management Dashboard - Kevin Delong | Kevin Delong</title><meta name="description" content="Full-stack SIT Dashboard for on-site commissioning teams: manage acceptance, regression, performance and volume test plans, track test cases across functiona..."/><link rel="author" href="https://delongkevin.github.io/FullStackEngineer"/><meta name="author" content="Kevin Douglas Delong"/><meta name="keywords" content="Kevin Delong,Full Stack Engineer,React,Next.js,Mobile Development,Automotive Software"/><meta name="creator" content="Kevin Douglas Delong"/><meta name="publisher" content="Kevin Douglas Delong"/><meta name="robots" content="index, follow"/><meta name="googlebot" content="index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"/><link rel="canonical" href="https://delongkevin.github.io/FullStackEngineer/projects/sit-dashboard/"/><meta property="og:title" content="System Integration Test Management Dashboard - Kevin Delong"/><meta property="og:description" content="Full-stack SIT Dashboard for on-site commissioning teams: manage acceptance, regression, performance and volume test plans, track test cases across functiona..."/><meta property="og:url" content="https://delongkevin.github.io/FullStackEngineer/projects/sit-dashboard/"/><meta property="og:image" content="https://delongkevin.github.io/FullStackEngineer/images/sit-dashboard.png"/><meta property="og:type" content="article"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="System Integration Test Management Dashboard - Kevin Delong"/><meta name="twitter:description" content="Full-stack SIT Dashboard for on-site commissioning teams: manage acceptance, regression, performance and volume test plans, track test cases across functiona..."/><meta name="twitter:image" content="https://delongkevin.github.io/FullStackEngineer/images/sit-dashboard.png"/><script src="/_next/static/chunks/polyfills-c67a75d1b6f99dc8.js" crossorigin="" noModule=""></script></head><body class="font-sans"><script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Kevin Douglas Delong","jobTitle":"Full-Stack Engineer","email":"mailto:delong.kevin@gmail.com","url":"https://delongkevin.github.io/FullStackEngineer","sameAs":["https://github.com/delongkevin","https://www.linkedin.com/in/kevin-delong-50726135b/","https://x.com/delongkevin1446"]}</script><a href="#main-content" class="skip-link">Skip to main content</a><div class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50"><header class="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b border-gray-200"><nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Main navigation"><div class="flex justify-between items-center h-16"><div class="flex-shrink-0"><a class="text-2xl font-bold text-blue-600" href="/">Kevin Delong</a></div><div class="hidden md:block"><div class="ml-10 flex items-baseline space-x-8"><a class="px-4 py-3 rounded-md text-sm font-medium transition-colors min-h-[44px] flex items-center text-gray-700 hover:text-blue-600" href="/">Home</a><a aria-current="page" class="px-4 py-3 rounded-md text-sm font-medium transition-colors min-h-[44px] flex items-center text-blue-600 bg-blue-50" href="/projects/">Projects</a><a class="px-4 py-3 rounded-md text-sm font-medium transition-colors min-h-[44px] flex items-center text-gray-700 hover:text-blue-600" href="/resume/">Resume</a><a class="px-4 py-3 rounded-md text-sm font-medium transition-colors min-h-[44px] flex items-center text-gray-700 hover:text-blue-600" href="/about/">About</a><a class="px-4 py-3 rounded-md text-sm font-medium transition-colors min-h-[44px] flex items-center text-gray-700 hover:text-blue-600" href="/contact/">Contact</a></div></div><div class="md:hidden"><button class="text-gray-700 hover:text-blue-600 p-2" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open navigation menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu" aria-hidden="true"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button></div></div></nav></header><script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"System Integration Test Management Dashboard","applicationCategory":"fullstack","operatingSystem":"Web, Android, iOS","description":"Full-stack SIT Dashboard for on-site commissioning teams: manage acceptance, regression, performance and volume test plans, track test cases across functional areas, run equipment emulation test suites, and generate professional status reports.","image":"https://delongkevin.github.io/FullStackEngineer/images/sit-dashboard.png","url":"https://delongkevin.github.io/FullStackEngineer/projects/sit-dashboard/","codeRepository":"https://github.com/delongkevin/FullStackEngineer","author":{"@type":"Person","name":"Kevin Douglas Delong"}}</script><main id="main-content" class="pt-24 pb-16 min-h-screen"><div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"><a class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-6" aria-label="Back to all projects" href="/projects/"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left" aria-hidden="true"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg>Back to Projects</a><div class="bg-white rounded-xl shadow-lg p-8 mb-8"><div class="flex flex-col lg:flex-row gap-8"><div class="lg:w-1/3"><div class="relative h-64 rounded-lg overflow-hidden"><img alt="System Integration Test Management Dashboard screenshot" loading="lazy" decoding="async" data-nimg="fill" class="object-cover" style="position:absolute;height:100%;width:100%;left:0;top:0;right:0;bottom:0;color:transparent" src="/images/sit-dashboard.png"/></div></div><div class="lg:w-2/3"><h1 class="text-3xl font-bold text-gray-900 mb-4">System Integration Test Management Dashboard</h1><p class="text-xl text-gray-600 mb-6">System Integration Test (SIT) Dashboard is a comprehensive test management application built for on-site commissioning engineers responsible for material handling system integration testing. The app covers the full testing lifecycle: create and manage Acceptance, Regression, Performance, and Volume test plans aligned to customer acceptance criteria; author detailed test cases organized by functional area (Conveyor Control, Sortation Logic, WMS Interface, PLC Communication, Safety Systems, HMI, Network, and Database Integration); execute test suites against a simulated equipment emulation model with real-time animated progress and console output; and generate professional status reports distributed to site teams, senior management, and clients. A live dashboard summarizes pass rates, open defects, blocked items, plan completion progress, and a 7-day results trend chart. The Code Specs tab provides C# (NUnit/MSTest) and Java (JUnit 5) reference test harness snippets for conveyor speed acceptance, E-stop deceleration, sortation divert accuracy, WMS roundtrip SLA, and PLC heartbeat regression — directly aligned with the functional testing specifications in the job description.</p><div class="flex flex-wrap gap-4 mb-6"><span class="px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium">JavaScript</span><span class="px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium">HTML5</span><span class="px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium">CSS3</span><span class="px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium">Chart.js</span><span class="px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium">LocalStorage</span><span class="px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium">C#</span><span class="px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium">Java</span><span class="px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium">NUnit</span><span class="px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium">JUnit</span><span class="px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium">Equipment Emulation</span><span class="px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium">Material Handling</span><span class="px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium">Test Automation</span></div><div class="flex gap-4"><a href="/projects/sit-dashboard/index.html" class="btn-primary inline-flex items-center gap-2" target="_self" rel="" aria-label="Open interactive demo of System Integration Test Management Dashboard"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" x2="21" y1="14" y2="3"></line></svg>View Demo</a><a href="https://github.com/delongkevin/FullStackEngineer" class="btn-secondary inline-flex items-center gap-2" target="_blank" rel="noopener noreferrer" aria-label="View source code for System Integration Test Management Dashboard on GitHub"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg>View Code</a></div></div></div></div><div class="grid grid-cols-1 lg:grid-cols-3 gap-8"><div class="lg:col-span-2"><div class="bg-white rounded-xl shadow-lg p-6"><h2 class="text-2xl font-bold text-gray-900 mb-6">Interactive Demo</h2><div class="bg-gray-100 rounded-lg p-6 min-h-[600px]"><div class="flex flex-wrap items-center justify-between gap-3 mb-4"><p class="text-sm text-gray-600">Run the interactive demo directly in this page, or open it in a dedicated tab for full-screen testing.</p><div class="flex flex-wrap gap-2"><button type="button" class="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-300 text-sm text-gray-700 hover:bg-gray-200 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-refresh-cw" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path><path d="M8 16H3v5"></path></svg>Reload Demo</button><a href="/projects/sit-dashboard/index.html" target="_self" rel="" class="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-blue-300 bg-blue-50 text-blue-700 text-sm hover:bg-blue-100 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" x2="21" y1="14" y2="3"></line></svg>Open Demo</a><button type="button" class="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-300 text-sm text-gray-700 hover:bg-gray-200 transition-colors" aria-live="polite"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>Copy Link</button></div></div><p id="demo-description" class="sr-only">This interactive demo allows you to try <!-- -->System Integration Test Management Dashboard<!-- -->. Use keyboard navigation to interact with the embedded content.</p><iframe src="/projects/sit-dashboard/index.html" class="w-full h-[600px] border-0 rounded-lg bg-white" title="Interactive demo of System Integration Test Management Dashboard - fullstack project" aria-describedby="demo-description" loading="lazy" sandbox="allow-forms allow-scripts allow-same-origin" style="min-height:600px"></iframe></div></div></div><div class="space-y-6"><div class="bg-white rounded-xl shadow-lg p-6"><h3 class="text-lg font-semibold text-gray-900 mb-4">Project Information</h3><div class="space-y-3"><div><span class="text-sm text-gray-500">Category:</span><div class="font-medium text-gray-900">Full Stack</div></div><div><span class="text-sm text-gray-500">Status:</span><div class="font-medium text-green-600">Completed</div></div><div><span class="text-sm text-gray-500">Type:</span><div class="font-medium text-gray-900">Interactive Demo</div></div></div></div><div class="bg-white rounded-xl shadow-lg p-6"><h3 class="text-lg font-semibold text-gray-900 mb-4">Technology Stack</h3><div class="flex flex-wrap gap-2"><span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">JavaScript</span><span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">HTML5</span><span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">CSS3</span><span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">Chart.js</span><span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">LocalStorage</span><span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">C#</span><span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">Java</span><span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">NUnit</span><span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">JUnit</span><span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">Equipment Emulation</span><span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">Material Handling</span><span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">Test Automation</span></div></div></div></div><section class="mt-10 space-y-6" aria-label="Project navigation and related work"><div class="bg-white rounded-xl shadow-lg p-6"><h2 class="text-xl font-bold text-gray-900 mb-4">Continue Exploring</h2><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><a class="block rounded-lg border border-gray-200 p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors" href="/projects/om-platform/"><p class="text-sm text-gray-500">Previous project</p><p class="font-semibold text-gray-900">SQL &amp; XML Data Operations Platform</p></a><a class="block rounded-lg border border-gray-200 p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors" href="/projects/qa-dashboard/"><p class="text-sm text-gray-500">Next project</p><p class="font-semibold text-gray-900">Software QA Analyst Platform</p></a></div></div><div class="bg-white rounded-xl shadow-lg p-6"><h2 class="text-xl font-bold text-gray-900 mb-4">Related Projects</h2><div class="grid grid-cols-1 md:grid-cols-3 gap-4"><a class="rounded-lg border border-gray-200 p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors" href="/projects/11/"><p class="font-semibold text-gray-900">Online Grocery Order System</p><p class="text-sm text-gray-600 mt-1 line-clamp-2">Full-stack retail ordering app with product catalog, cart, checkout form, and order persistence</p></a><a class="rounded-lg border border-gray-200 p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors" href="/projects/12/"><p class="font-semibold text-gray-900">Task Manager</p><p class="text-sm text-gray-600 mt-1 line-clamp-2">Full-stack task management app with CRUD, priority levels, filters, search, and localStorage sync</p></a><a class="rounded-lg border border-gray-200 p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors" href="/projects/kamps-smart-factory/"><p class="font-semibold text-gray-900">Kamps Smart Factory Platform</p><p class="text-sm text-gray-600 mt-1 line-clamp-2">Industry 4.0 mobile dashboard showcasing PLC integration, YOLOv8 pallet detection, K3s microservices, Prometheus/Grafana observability, MQTT pub/sub, and full CI/CD — built for Kamps</p></a></div></div></section></div></main><footer class="bg-gray-900 text-white py-12" aria-label="Site footer"><div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"><div class="flex flex-col md:flex-row justify-between items-center"><div class="mb-6 md:mb-0"><h3 class="text-2xl font-bold text-white">Kevin Delong</h3><p class="text-gray-400 mt-2">Full Stack &amp; Frontend Developer</p></div><div class="flex space-x-6"><a href="https://github.com/delongkevin" class="text-gray-400 hover:text-white transition-colors" aria-label="GitHub" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg></a><a href="https://www.linkedin.com/in/kevin-delong-50726135b/" class="text-gray-400 hover:text-white transition-colors" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-linkedin" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect width="4" height="12" x="2" y="9"></rect><circle cx="4" cy="4" r="2"></circle></svg></a><a href="https://x.com/delongkevin1446" class="text-gray-400 hover:text-white transition-colors" aria-label="Twitter" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-twitter" aria-hidden="true"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg></a><a href="mailto:delong.kevin@gmail.com" class="text-gray-400 hover:text-white transition-colors" aria-label="Email" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg></a></div></div><div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400"><p>© <!-- -->2026<!-- --> Kevin Douglas Delong. All rights reserved.</p><p class="mt-2 text-sm">Phone: (810) 287-7409 | Email: delong.kevin@gmail.com</p></div></div></footer></div><script src="/_next/static/chunks/webpack-0e82af5fc7dd78ae.js" crossorigin="" async=""></script><script>(self.__next_f=self.__next_f||[]).push([0]);self.__next_f.push([2,null])</script><script>self.__next_f.push([1,"1:HL[\"/_next/static/css/4cba7fc3b6ee7195.css\",\"style\",{\"crossOrigin\":\"\"}]\n0:\"$L2\"\n"])</script><script>self.__next_f.push([1,"3:I[3728,[],\"\"]\n5:I[9928,[],\"\"]\n6:I[6954,[],\"\"]\n7:I[7264,[],\"\"]\n9:I[3827,[\"394\",\"static/chunks/394-f36f0ea0535de9ed.js\",\"413\",\"static/chunks/413-e95fbadccfbfa2da.js\",\"141\",\"static/chunks/141-312630d5b6568587.js\",\"626\",\"static/chunks/app/projects/%5Bid%5D/page-ba176704f7564572.js\"],\"\"]\na:I[2070,[\"394\",\"static/chunks/394-f36f0ea0535de9ed.js\",\"413\",\"static/chunks/413-e95fbadccfbfa2da.js\",\"141\",\"static/chunks/141-312630d5b6568587.js\",\"626\",\"static/chunks/app/projects/%5Bid%5D/page-ba176704f7564572.js\"],\"\"]\nb:I["])</script><script>self.__next_f.push([1,"8326,[\"394\",\"static/chunks/394-f36f0ea0535de9ed.js\",\"413\",\"static/chunks/413-e95fbadccfbfa2da.js\",\"141\",\"static/chunks/141-312630d5b6568587.js\",\"626\",\"static/chunks/app/projects/%5Bid%5D/page-ba176704f7564572.js\"],\"\"]\nc:I[413,[\"394\",\"static/chunks/394-f36f0ea0535de9ed.js\",\"413\",\"static/chunks/413-e95fbadccfbfa2da.js\",\"141\",\"static/chunks/141-312630d5b6568587.js\",\"626\",\"static/chunks/app/projects/%5Bid%5D/page-ba176704f7564572.js\"],\"Image\"]\ne:I[4045,[\"394\",\"static/chunks/394-f36f0ea0535de9ed.js\",\"413\",\"stati"])</script><script>self.__next_f.push([1,"c/chunks/413-e95fbadccfbfa2da.js\",\"141\",\"static/chunks/141-312630d5b6568587.js\",\"626\",\"static/chunks/app/projects/%5Bid%5D/page-ba176704f7564572.js\"],\"\"]\nd:T4a9,"])</script><script>self.__next_f.push([1,"System Integration Test (SIT) Dashboard is a comprehensive test management application built for on-site commissioning engineers responsible for material handling system integration testing. The app covers the full testing lifecycle: create and manage Acceptance, Regression, Performance, and Volume test plans aligned to customer acceptance criteria; author detailed test cases organized by functional area (Conveyor Control, Sortation Logic, WMS Interface, PLC Communication, Safety Systems, HMI, Network, and Database Integration); execute test suites against a simulated equipment emulation model with real-time animated progress and console output; and generate professional status reports distributed to site teams, senior management, and clients. A live dashboard summarizes pass rates, open defects, blocked items, plan completion progress, and a 7-day results trend chart. The Code Specs tab provides C# (NUnit/MSTest) and Java (JUnit 5) reference test harness snippets for conveyor speed acceptance, E-stop deceleration, sortation divert accuracy, WMS roundtrip SLA, and PLC heartbeat regression — directly aligned with the functional testing specifications in the job description."])</script><script>self.__next_f.push([1,"2:[[[\"$\",\"link\",\"0\",{\"rel\":\"stylesheet\",\"href\":\"/_next/static/css/4cba7fc3b6ee7195.css\",\"precedence\":\"next\",\"crossOrigin\":\"\"}]],[\"$\",\"$L3\",null,{\"buildId\":\"m2Tn9SnI3y5GmXAqCcVO1\",\"assetPrefix\":\"\",\"initialCanonicalUrl\":\"/projects/sit-dashboard/\",\"initialTree\":[\"\",{\"children\":[\"projects\",{\"children\":[[\"id\",\"sit-dashboard\",\"d\"],{\"children\":[\"__PAGE__?{\\\"id\\\":\\\"sit-dashboard\\\"}\",{}]}]}]},\"$undefined\",\"$undefined\",true],\"initialHead\":[false,\"$L4\"],\"globalErrorComponent\":\"$5\",\"children\":[null,[\"$\",\"html\",null,{\"lang\":\"en\",\"children\":[\"$\",\"body\",null,{\"className\":\"font-sans\",\"children\":[null,[\"$\",\"script\",null,{\"type\":\"application/ld+json\",\"dangerouslySetInnerHTML\":{\"__html\":\"{\\\"@context\\\":\\\"https://schema.org\\\",\\\"@type\\\":\\\"Person\\\",\\\"name\\\":\\\"Kevin Douglas Delong\\\",\\\"jobTitle\\\":\\\"Full-Stack Engineer\\\",\\\"email\\\":\\\"mailto:delong.kevin@gmail.com\\\",\\\"url\\\":\\\"https://delongkevin.github.io/FullStackEngineer\\\",\\\"sameAs\\\":[\\\"https://github.com/delongkevin\\\",\\\"https://www.linkedin.com/in/kevin-delong-50726135b/\\\",\\\"https://x.com/delongkevin1446\\\"]}\"}}],[\"$\",\"a\",null,{\"href\":\"#main-content\",\"className\":\"skip-link\",\"children\":\"Skip to main content\"}],[\"$\",\"div\",null,{\"className\":\"min-h-screen bg-gradient-to-br from-slate-50 to-blue-50\",\"children\":[\"$\",\"$L6\",null,{\"parallelRouterKey\":\"children\",\"segmentPath\":[\"children\"],\"loading\":\"$undefined\",\"loadingStyles\":\"$undefined\",\"loadingScripts\":\"$undefined\",\"hasLoading\":false,\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L7\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":[[\"$\",\"title\",null,{\"children\":\"404: This page could not be found.\"}],[\"$\",\"div\",null,{\"style\":{\"fontFamily\":\"system-ui,\\\"Segoe UI\\\",Roboto,Helvetica,Arial,sans-serif,\\\"Apple Color Emoji\\\",\\\"Segoe UI Emoji\\\"\",\"height\":\"100vh\",\"textAlign\":\"center\",\"display\":\"flex\",\"flexDirection\":\"column\",\"alignItems\":\"center\",\"justifyContent\":\"center\"},\"children\":[\"$\",\"div\",null,{\"children\":[[\"$\",\"style\",null,{\"dangerouslySetInnerHTML\":{\"__html\":\"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}\"}}],[\"$\",\"h1\",null,{\"className\":\"next-error-h1\",\"style\":{\"display\":\"inline-block\",\"margin\":\"0 20px 0 0\",\"padding\":\"0 23px 0 0\",\"fontSize\":24,\"fontWeight\":500,\"verticalAlign\":\"top\",\"lineHeight\":\"49px\"},\"children\":\"404\"}],[\"$\",\"div\",null,{\"style\":{\"display\":\"inline-block\"},\"children\":[\"$\",\"h2\",null,{\"style\":{\"fontSize\":14,\"fontWeight\":400,\"lineHeight\":\"49px\",\"margin\":0},\"children\":\"This page could not be found.\"}]}]]}]}]],\"notFoundStyles\":[],\"childProp\":{\"current\":[\"$\",\"$L6\",null,{\"parallelRouterKey\":\"children\",\"segmentPath\":[\"children\",\"projects\",\"children\"],\"loading\":\"$undefined\",\"loadingStyles\":\"$undefined\",\"loadingScripts\":\"$undefined\",\"hasLoading\":false,\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L7\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":\"$undefined\",\"notFoundStyles\":\"$undefined\",\"childProp\":{\"current\":[\"$\",\"$L6\",null,{\"parallelRouterKey\":\"children\",\"segmentPath\":[\"children\",\"projects\",\"children\",[\"id\",\"sit-dashboard\",\"d\"],\"children\"],\"loading\":\"$undefined\",\"loadingStyles\":\"$undefined\",\"loadingScripts\":\"$undefined\",\"hasLoading\":false,\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L7\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":\"$undefined\",\"notFoundStyles\":\"$undefined\",\"childProp\":{\"current\":[\"$L8\",[[\"$\",\"$L9\",null,{}],[\"$\",\"$La\",null,{\"projectId\":21}],[\"$\",\"script\",null,{\"type\":\"application/ld+json\",\"dangerouslySetInnerHTML\":{\"__html\":\"{\\\"@context\\\":\\\"https://schema.org\\\",\\\"@type\\\":\\\"SoftwareApplication\\\",\\\"name\\\":\\\"System Integration Test Management Dashboard\\\",\\\"applicationCategory\\\":\\\"fullstack\\\",\\\"operatingSystem\\\":\\\"Web, Android, iOS\\\",\\\"description\\\":\\\"Full-stack SIT Dashboard for on-site commissioning teams: manage acceptance, regression, performance and volume test plans, track test cases across functional areas, run equipment emulation test suites, and generate professional status reports.\\\",\\\"image\\\":\\\"https://delongkevin.github.io/FullStackEngineer/images/sit-dashboard.png\\\",\\\"url\\\":\\\"https://delongkevin.github.io/FullStackEngineer/projects/sit-dashboard/\\\",\\\"codeRepository\\\":\\\"https://github.com/delongkevin/FullStackEngineer\\\",\\\"author\\\":{\\\"@type\\\":\\\"Person\\\",\\\"name\\\":\\\"Kevin Douglas Delong\\\"}}\"}}],[\"$\",\"main\",null,{\"id\":\"main-content\",\"className\":\"pt-24 pb-16 min-h-screen\",\"children\":[\"$\",\"div\",null,{\"className\":\"max-w-6xl mx-auto px-4 sm:px-6 lg:px-8\",\"children\":[[\"$\",\"$Lb\",null,{\"href\":\"/projects\",\"className\":\"inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 mb-6\",\"aria-label\":\"Back to all projects\",\"children\":[[\"$\",\"svg\",null,{\"xmlns\":\"http://www.w3.org/2000/svg\",\"width\":20,\"height\":20,\"viewBox\":\"0 0 24 24\",\"fill\":\"none\",\"stroke\":\"currentColor\",\"strokeWidth\":2,\"strokeLinecap\":\"round\",\"strokeLinejoin\":\"round\",\"className\":\"lucide lucide-arrow-left\",\"aria-hidden\":\"true\",\"children\":[[\"$\",\"path\",\"1l729n\",{\"d\":\"m12 19-7-7 7-7\"}],[\"$\",\"path\",\"x3x0zl\",{\"d\":\"M19 12H5\"}],\"$undefined\"]}],\"Back to Projects\"]}],[\"$\",\"div\",null,{\"className\":\"bg-white rounded-xl shadow-lg p-8 mb-8\",\"children\":[\"$\",\"div\",null,{\"className\":\"flex flex-col lg:flex-row gap-8\",\"children\":[[\"$\",\"div\",null,{\"className\":\"lg:w-1/3\",\"children\":[\"$\",\"div\",null,{\"className\":\"relative h-64 rounded-lg overflow-hidden\",\"children\":[\"$\",\"$Lc\",null,{\"src\":\"/images/sit-dashboard.png\",\"alt\":\"System Integration Test Management Dashboard screenshot\",\"fill\":true,\"className\":\"object-cover\",\"sizes\":\"(max-width: 1024px) 100vw, 33vw\"}]}]}],[\"$\",\"div\",null,{\"className\":\"lg:w-2/3\",\"children\":[[\"$\",\"h1\",null,{\"className\":\"text-3xl font-bold text-gray-900 mb-4\",\"children\":\"System Integration Test Management Dashboard\"}],[\"$\",\"p\",null,{\"className\":\"text-xl text-gray-600 mb-6\",\"children\":\"$d\"}],[\"$\",\"div\",null,{\"className\":\"flex flex-wrap gap-4 mb-6\",\"children\":[[\"$\",\"span\",\"JavaScript\",{\"className\":\"px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium\",\"children\":\"JavaScript\"}],[\"$\",\"span\",\"HTML5\",{\"className\":\"px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium\",\"children\":\"HTML5\"}],[\"$\",\"span\",\"CSS3\",{\"className\":\"px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium\",\"children\":\"CSS3\"}],[\"$\",\"span\",\"Chart.js\",{\"className\":\"px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium\",\"children\":\"Chart.js\"}],[\"$\",\"span\",\"LocalStorage\",{\"className\":\"px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium\",\"children\":\"LocalStorage\"}],[\"$\",\"span\",\"C#\",{\"className\":\"px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium\",\"children\":\"C#\"}],[\"$\",\"span\",\"Java\",{\"className\":\"px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium\",\"children\":\"Java\"}],[\"$\",\"span\",\"NUnit\",{\"className\":\"px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium\",\"children\":\"NUnit\"}],[\"$\",\"span\",\"JUnit\",{\"className\":\"px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium\",\"children\":\"JUnit\"}],[\"$\",\"span\",\"Equipment Emulation\",{\"className\":\"px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium\",\"children\":\"Equipment Emulation\"}],[\"$\",\"span\",\"Material Handling\",{\"className\":\"px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium\",\"children\":\"Material Handling\"}],[\"$\",\"span\",\"Test Automation\",{\"className\":\"px-4 py-2 bg-blue-100 text-blue-700 rounded-full font-medium\",\"children\":\"Test Automation\"}]]}],[\"$\",\"div\",null,{\"className\":\"flex gap-4\",\"children\":[[\"$\",\"a\",null,{\"href\":\"/projects/sit-dashboard/index.html\",\"className\":\"btn-primary inline-flex items-center gap-2\",\"target\":\"_self\",\"rel\":\"\",\"aria-label\":\"Open interactive demo of System Integration Test Management Dashboard\",\"children\":[[\"$\",\"svg\",null,{\"xmlns\":\"http://www.w3.org/2000/svg\",\"width\":20,\"height\":20,\"viewBox\":\"0 0 24 24\",\"fill\":\"none\",\"stroke\":\"currentColor\",\"strokeWidth\":2,\"strokeLinecap\":\"round\",\"strokeLinejoin\":\"round\",\"className\":\"lucide lucide-external-link\",\"aria-hidden\":\"true\",\"children\":[[\"$\",\"path\",\"a6xqqp\",{\"d\":\"M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6\"}],[\"$\",\"polyline\",\"mznyad\",{\"points\":\"15 3 21 3 21 9\"}],[\"$\",\"line\",\"18c3s4\",{\"x1\":\"10\",\"x2\":\"21\",\"y1\":\"14\",\"y2\":\"3\"}],\"$undefined\"]}],\"View Demo\"]}],[\"$\",\"a\",null,{\"href\":\"https://github.com/delongkevin/FullStackEngineer\",\"className\":\"btn-secondary inline-flex items-center gap-2\",\"target\":\"_blank\",\"rel\":\"noopener noreferrer\",\"aria-label\":\"View source code for System Integration Test Management Dashboard on GitHub\",\"children\":[[\"$\",\"svg\",null,{\"xmlns\":\"http://www.w3.org/2000/svg\",\"width\":20,\"height\":20,\"viewBox\":\"0 0 24 24\",\"fill\":\"none\",\"stroke\":\"currentColor\",\"strokeWidth\":2,\"strokeLinecap\":\"round\",\"strokeLinejoin\":\"round\",\"className\":\"lucide lucide-github\",\"aria-hidden\":\"true\",\"children\":[[\"$\",\"path\",\"tonef\",{\"d\":\"M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4\"}],[\"$\",\"path\",\"9comsn\",{\"d\":\"M9 18c-4.51 2-5-2-7-2\"}],\"$undefined\"]}],\"View Code\"]}]]}],\"$undefined\"]}]]}]}],[\"$\",\"div\",null,{\"className\":\"grid grid-cols-1 lg:grid-cols-3 gap-8\",\"children\":[[\"$\",\"div\",null,{\"className\":\"lg:col-span-2\",\"children\":[\"$\",\"div\",null,{\"className\":\"bg-white rounded-xl shadow-lg p-6\",\"children\":[[\"$\",\"h2\",null,{\"className\":\"text-2xl font-bold text-gray-900 mb-6\",\"children\":\"Interactive Demo\"}],[\"$\",\"$Le\",null,{\"liveUrl\":\"/projects/sit-dashboard/index.html\",\"title\":\"System Integration Test Management Dashboard\",\"category\":\"fullstack\"}]]}]}],[\"$\",\"div\",null,{\"className\":\"space-y-6\",\"children\":[[\"$\",\"div\",null,{\"className\":\"bg-white rounded-xl shadow-lg p-6\",\"children\":[[\"$\",\"h3\",null,{\"className\":\"text-lg font-semibold text-gray-900 mb-4\",\"children\":\"Project Information\"}],[\"$\",\"div\",null,{\"className\":\"space-y-3\",\"children\":[[\"$\",\"div\",null,{\"children\":[[\"$\",\"span\",null,{\"className\":\"text-sm text-gray-500\",\"children\":\"Category:\"}],[\"$\",\"div\",null,{\"className\":\"font-medium text-gray-900\",\"children\":\"Full Stack\"}]]}],[\"$\",\"div\",null,{\"children\":[[\"$\",\"span\",null,{\"className\":\"text-sm text-gray-500\",\"children\":\"Status:\"}],[\"$\",\"div\",null,{\"className\":\"font-medium text-green-600\",\"children\":\"Completed\"}]]}],[\"$\",\"div\",null,{\"children\":[[\"$\",\"span\",null,{\"className\":\"text-sm text-gray-500\",\"children\":\"Type:\"}],[\"$\",\"div\",null,{\"className\":\"font-medium text-gray-900\",\"children\":\"Interactive Demo\"}]]}],\"$undefined\"]}]]}],[\"$\",\"div\",null,{\"className\":\"bg-white rounded-xl shadow-lg p-6\",\"children\":[[\"$\",\"h3\",null,{\"className\":\"text-lg font-semibold text-gray-900 mb-4\",\"children\":\"Technology Stack\"}],[\"$\",\"div\",null,{\"className\":\"flex flex-wrap gap-2\",\"children\":[[\"$\",\"span\",\"JavaScript\",{\"className\":\"px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm\",\"children\":\"JavaScript\"}],[\"$\",\"span\",\"HTML5\",{\"className\":\"px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm\",\"children\":\"HTML5\"}],[\"$\",\"span\",\"CSS3\",{\"className\":\"px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm\",\"children\":\"CSS3\"}],[\"$\",\"span\",\"Chart.js\",{\"className\":\"px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm\",\"children\":\"Chart.js\"}],[\"$\",\"span\",\"LocalStorage\",{\"className\":\"px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm\",\"children\":\"LocalStorage\"}],[\"$\",\"span\",\"C#\",{\"className\":\"px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm\",\"children\":\"C#\"}],[\"$\",\"span\",\"Java\",{\"className\":\"px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm\",\"children\":\"Java\"}],[\"$\",\"span\",\"NUnit\",{\"className\":\"px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm\",\"children\":\"NUnit\"}],[\"$\",\"span\",\"JUnit\",{\"className\":\"px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm\",\"children\":\"JUnit\"}],[\"$\",\"span\",\"Equipment Emulation\",{\"className\":\"px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm\",\"children\":\"Equipment Emulation\"}],[\"$\",\"span\",\"Material Handling\",{\"className\":\"px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm\",\"children\":\"Material Handling\"}],[\"$\",\"span\",\"Test Automation\",{\"className\":\"px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm\",\"children\":\"Test Automation\"}]]}]]}]]}]]}],[\"$\",\"section\",null,{\"className\":\"mt-10 space-y-6\",\"aria-label\":\"Project navigation and related work\",\"children\":[[\"$\",\"div\",null,{\"className\":\"bg-white rounded-xl shadow-lg p-6\",\"children\":[[\"$\",\"h2\",null,{\"className\":\"text-xl font-bold text-gray-900 mb-4\",\"children\":\"Continue Exploring\"}],[\"$\",\"div\",null,{\"className\":\"grid grid-cols-1 md:grid-cols-2 gap-4\",\"children\":[[\"$\",\"$Lb\",null,{\"href\":\"/projects/om-platform\",\"className\":\"block rounded-lg border border-gray-200 p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors\",\"children\":[[\"$\",\"p\",null,{\"className\":\"text-sm text-gray-500\",\"children\":\"Previous project\"}],[\"$\",\"p\",null,{\"className\":\"font-semibold text-gray-900\",\"children\":\"SQL \u0026 XML Data Operations Platform\"}]]}],[\"$\",\"$Lb\",null,{\"href\":\"/projects/qa-dashboard\",\"className\":\"block rounded-lg border border-gray-200 p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors\",\"children\":[[\"$\",\"p\",null,{\"className\":\"text-sm text-gray-500\",\"children\":\"Next project\"}],[\"$\",\"p\",null,{\"className\":\"font-semibold text-gray-900\",\"children\":\"Software QA Analyst Platform\"}]]}]]}]]}],[\"$\",\"div\",null,{\"className\":\"bg-white rounded-xl shadow-lg p-6\",\"children\":[[\"$\",\"h2\",null,{\"className\":\"text-xl font-bold text-gray-900 mb-4\",\"children\":\"Related Projects\"}],[\"$\",\"div\",null,{\"className\":\"grid grid-cols-1 md:grid-cols-3 gap-4\",\"children\":[[\"$\",\"$Lb\",\"11\",{\"href\":\"/projects/11\",\"className\":\"rounded-lg border border-gray-200 p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors\",\"children\":[[\"$\",\"p\",null,{\"className\":\"font-semibold text-gray-900\",\"children\":\"Online Grocery Order System\"}],[\"$\",\"p\",null,{\"className\":\"text-sm text-gray-600 mt-1 line-clamp-2\",\"children\":\"Full-stack retail ordering app with product catalog, cart, checkout form, and order persistence\"}]]}],[\"$\",\"$Lb\",\"12\",{\"href\":\"/projects/12\",\"className\":\"rounded-lg border border-gray-200 p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors\",\"children\":[[\"$\",\"p\",null,{\"className\":\"font-semibold text-gray-900\",\"children\":\"Task Manager\"}],[\"$\",\"p\",null,{\"className\":\"text-sm text-gray-600 mt-1 line-clamp-2\",\"children\":\"Full-stack task management app with CRUD, priority levels, filters, search, and localStorage sync\"}]]}],[\"$\",\"$Lb\",\"14\",{\"href\":\"/projects/kamps-smart-factory\",\"className\":\"rounded-lg border border-gray-200 p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors\",\"children\":[[\"$\",\"p\",null,{\"className\":\"font-semibold text-gray-900\",\"children\":\"Kamps Smart Factory Platform\"}],[\"$\",\"p\",null,{\"className\":\"text-sm text-gray-600 mt-1 line-clamp-2\",\"children\":\"Industry 4.0 mobile dashboard showcasing PLC integration, YOLOv8 pallet detection, K3s microservices, Prometheus/Grafana observability, MQTT pub/sub, and full CI/CD — built for Kamps\"}]]}]]}]]}]]}]]}]}],[\"$\",\"footer\",null,{\"className\":\"bg-gray-900 text-white py-12\",\"aria-label\":\"Site footer\",\"children\":[\"$\",\"div\",null,{\"className\":\"max-w-6xl mx-auto px-4 sm:px-6 lg:px-8\",\"children\":[[\"$\",\"div\",null,{\"className\":\"flex flex-col md:flex-row justify-between items-center\",\"children\":[[\"$\",\"div\",null,{\"className\":\"mb-6 md:mb-0\",\"children\":[[\"$\",\"h3\",null,{\"className\":\"text-2xl font-bold text-white\",\"children\":\"Kevin Delong\"}],[\"$\",\"p\",null,{\"className\":\"text-gray-400 mt-2\",\"children\":\"Full Stack \u0026 Frontend Developer\"}]]}],[\"$\",\"div\",null,{\"className\":\"flex space-x-6\",\"children\":[[\"$\",\"a\",\"GitHub\",{\"href\":\"https://github.com/delongkevin\",\"className\":\"text-gray-400 hover:text-white transition-colors\",\"aria-label\":\"GitHub\",\"target\":\"_blank\",\"rel\":\"noopener noreferrer\",\"children\":[\"$\",\"svg\",null,{\"xmlns\":\"http://www.w3.org/2000/svg\",\"width\":24,\"height\":24,\"viewBox\":\"0 0 24 24\",\"fill\":\"none\",\"stroke\":\"currentColor\",\"strokeWidth\":2,\"strokeLinecap\":\"round\",\"strokeLinejoin\":\"round\",\"className\":\"lucide lucide-github\",\"aria-hidden\":\"true\",\"children\":[[\"$\",\"path\",\"tonef\",{\"d\":\"M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4\"}],[\"$\",\"path\",\"9comsn\",{\"d\":\"M9 18c-4.51 2-5-2-7-2\"}],\"$undefined\"]}]}],[\"$\",\"a\",\"LinkedIn\",{\"href\":\"https://www.linkedin.com/in/kevin-delong-50726135b/\",\"className\":\"text-gray-400 hover:text-white transition-colors\",\"aria-label\":\"LinkedIn\",\"target\":\"_blank\",\"rel\":\"noopener noreferrer\",\"children\":[\"$\",\"svg\",null,{\"xmlns\":\"http://www.w3.org/2000/svg\",\"width\":24,\"height\":24,\"viewBox\":\"0 0 24 24\",\"fill\":\"none\",\"stroke\":\"currentColor\",\"strokeWidth\":2,\"strokeLinecap\":\"round\",\"strokeLinejoin\":\"round\",\"className\":\"lucide lucide-linkedin\",\"aria-hidden\":\"true\",\"children\":[[\"$\",\"path\",\"c2jq9f\",{\"d\":\"M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z\"}],[\"$\",\"rect\",\"mk3on5\",{\"width\":\"4\",\"height\":\"12\",\"x\":\"2\",\"y\":\"9\"}],[\"$\",\"circle\",\"bt5ra8\",{\"cx\":\"4\",\"cy\":\"4\",\"r\":\"2\"}],\"$undefined\"]}]}],[\"$\",\"a\",\"Twitter\",{\"href\":\"https://x.com/delongkevin1446\",\"className\":\"text-gray-400 hover:text-white transition-colors\",\"aria-label\":\"Twitter\",\"target\":\"_blank\",\"rel\":\"noopener noreferrer\",\"children\":[\"$\",\"svg\",null,{\"xmlns\":\"http://www.w3.org/2000/svg\",\"width\":24,\"height\":24,\"viewBox\":\"0 0 24 24\",\"fill\":\"none\",\"stroke\":\"currentColor\",\"strokeWidth\":2,\"strokeLinecap\":\"round\",\"strokeLinejoin\":\"round\",\"className\":\"lucide lucide-twitter\",\"aria-hidden\":\"true\",\"children\":[[\"$\",\"path\",\"pff0z6\",{\"d\":\"M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z\"}],\"$undefined\"]}]}],[\"$\",\"a\",\"Email\",{\"href\":\"mailto:delong.kevin@gmail.com\",\"className\":\"text-gray-400 hover:text-white transition-colors\",\"aria-label\":\"Email\",\"target\":\"_blank\",\"rel\":\"noopener noreferrer\",\"children\":[\"$\",\"svg\",null,{\"xmlns\":\"http://www.w3.org/2000/svg\",\"width\":24,\"height\":24,\"viewBox\":\"0 0 24 24\",\"fill\":\"none\",\"stroke\":\"currentColor\",\"strokeWidth\":2,\"strokeLinecap\":\"round\",\"strokeLinejoin\":\"round\",\"className\":\"lucide lucide-mail\",\"aria-hidden\":\"true\",\"children\":[[\"$\",\"rect\",\"18n3k1\",{\"width\":\"20\",\"height\":\"16\",\"x\":\"2\",\"y\":\"4\",\"rx\":\"2\"}],[\"$\",\"path\",\"1ocrg3\",{\"d\":\"m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7\"}],\"$undefined\"]}]}]]}]]}],[\"$\",\"div\",null,{\"className\":\"border-t border-gray-700 mt-8 pt-8 text-center text-gray-400\",\"children\":[[\"$\",\"p\",null,{\"children\":[\"© \",2026,\" Kevin Douglas Delong. All rights reserved.\"]}],[\"$\",\"p\",null,{\"className\":\"mt-2 text-sm\",\"children\":\"Phone: (810) 287-7409 | Email: delong.kevin@gmail.com\"}]]}]]}]}]],null],\"segment\":\"__PAGE__?{\\\"id\\\":\\\"sit-dashboard\\\"}\"},\"styles\":null}],\"segment\":[\"id\",\"sit-dashboard\",\"d\"]},\"styles\":null}],\"segment\":\"projects\"},\"styles\":null}]}]]}]}],null]}]]\n"])</script><script>self.__next_f.push([1,"4:[[\"$\",\"meta\",\"0\",{\"name\":\"viewport\",\"content\":\"width=device-width, initial-scale=1\"}],[\"$\",\"meta\",\"1\",{\"charSet\":\"utf-8\"}],[\"$\",\"title\",\"2\",{\"children\":\"System Integration Test Management Dashboard - Kevin Delong | Kevin Delong\"}],[\"$\",\"meta\",\"3\",{\"name\":\"description\",\"content\":\"Full-stack SIT Dashboard for on-site commissioning teams: manage acceptance, regression, performance and volume test plans, track test cases across functiona...\"}],[\"$\",\"link\",\"4\",{\"rel\":\"author\",\"href\":\"https://delongkevin.github.io/FullStackEngineer\"}],[\"$\",\"meta\",\"5\",{\"name\":\"author\",\"content\":\"Kevin Douglas Delong\"}],[\"$\",\"meta\",\"6\",{\"name\":\"keywords\",\"content\":\"Kevin Delong,Full Stack Engineer,React,Next.js,Mobile Development,Automotive Software\"}],[\"$\",\"meta\",\"7\",{\"name\":\"creator\",\"content\":\"Kevin Douglas Delong\"}],[\"$\",\"meta\",\"8\",{\"name\":\"publisher\",\"content\":\"Kevin Douglas Delong\"}],[\"$\",\"meta\",\"9\",{\"name\":\"robots\",\"content\":\"index, follow\"}],[\"$\",\"meta\",\"10\",{\"name\":\"googlebot\",\"content\":\"index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1\"}],[\"$\",\"link\",\"11\",{\"rel\":\"canonical\",\"href\":\"https://delongkevin.github.io/FullStackEngineer/projects/sit-dashboard/\"}],[\"$\",\"meta\",\"12\",{\"property\":\"og:title\",\"content\":\"System Integration Test Management Dashboard - Kevin Delong\"}],[\"$\",\"meta\",\"13\",{\"property\":\"og:description\",\"content\":\"Full-stack SIT Dashboard for on-site commissioning teams: manage acceptance, regression, performance and volume test plans, track test cases across functiona...\"}],[\"$\",\"meta\",\"14\",{\"property\":\"og:url\",\"content\":\"https://delongkevin.github.io/FullStackEngineer/projects/sit-dashboard/\"}],[\"$\",\"meta\",\"15\",{\"property\":\"og:image\",\"content\":\"https://delongkevin.github.io/FullStackEngineer/images/sit-dashboard.png\"}],[\"$\",\"meta\",\"16\",{\"property\":\"og:type\",\"content\":\"article\"}],[\"$\",\"meta\",\"17\",{\"name\":\"twitter:card\",\"content\":\"summary_large_image\"}],[\"$\",\"meta\",\"18\",{\"name\":\"twitter:title\",\"content\":\"System Integration Test Management Dashboard - Kevin Delong\"}],[\"$\",\"meta\",\"19\",{\"name\":\"twitter:description\",\"content\":\"Full-stack SIT Dashboard for on-site commissioning teams: manage acceptance, regression, performance and volume test plans, track test cases across functiona...\"}],[\"$\",\"meta\",\"20\",{\"name\":\"twitter:image\",\"content\":\"https://delongkevin.github.io/FullStackEngineer/images/sit-dashboard.png\"}]]\n"])</script><script>self.__next_f.push([1,"8:null\n"])</script><script>self.__next_f.push([1,""])</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SIT Dashboard – System Integration Test Management</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg: #0f172a; --surface: #1e293b; --surface2: #273549; --border: #334155;
+    --text: #e2e8f0; --muted: #94a3b8; --accent: #38bdf8; --accent2: #818cf8;
+    --green: #22c55e; --red: #ef4444; --yellow: #f59e0b; --purple: #a855f7;
+    --orange: #f97316; --teal: #14b8a6;
+    --pass: #22c55e; --fail: #ef4444; --blocked: #f59e0b;
+    --not-started: #64748b; --in-progress: #38bdf8;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
+  /* ── NAV ── */
+  nav{background:var(--surface);border-bottom:1px solid var(--border);padding:0 1rem;display:flex;align-items:center;gap:.25rem;flex-wrap:wrap;position:sticky;top:0;z-index:100}
+  .nav-brand{font-weight:700;font-size:1rem;color:var(--accent);padding:.75rem .5rem;margin-right:.5rem;white-space:nowrap}
+  .nav-brand span{color:var(--text)}
+  .nav-tab{background:none;border:none;color:var(--muted);cursor:pointer;padding:.75rem .75rem;font-size:.85rem;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap}
+  .nav-tab:hover{color:var(--text)}
+  .nav-tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+  /* ── LAYOUT ── */
+  main{flex:1;padding:1.25rem;max-width:1400px;width:100%;margin:0 auto}
+  .page{display:none}.page.active{display:block}
+  /* ── CARDS ── */
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:.75rem;padding:1.25rem}
+  .card-sm{background:var(--surface2);border:1px solid var(--border);border-radius:.6rem;padding:1rem}
+  .grid-4{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:1.25rem}
+  .grid-2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.25rem;margin-bottom:1.25rem}
+  .grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem;margin-bottom:1.25rem}
+  /* ── STAT CARDS ── */
+  .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:.75rem;padding:1.25rem;display:flex;flex-direction:column;gap:.35rem}
+  .stat-label{font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+  .stat-value{font-size:2rem;font-weight:700;line-height:1}
+  .stat-sub{font-size:.78rem;color:var(--muted)}
+  /* ── TYPOGRAPHY ── */
+  h1{font-size:1.4rem;font-weight:700;margin-bottom:1rem}
+  h2{font-size:1.1rem;font-weight:600;margin-bottom:.75rem}
+  h3{font-size:.95rem;font-weight:600}
+  .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem}
+  /* ── BUTTONS ── */
+  .btn{display:inline-flex;align-items:center;gap:.4rem;padding:.45rem .9rem;border:none;border-radius:.5rem;cursor:pointer;font-size:.82rem;font-weight:500;transition:all .15s;line-height:1.4}
+  .btn-primary{background:var(--accent);color:#0f172a}
+  .btn-primary:hover{background:#7dd3fc}
+  .btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
+  .btn-secondary:hover{background:var(--border)}
+  .btn-danger{background:#7f1d1d;color:#fca5a5;border:1px solid #991b1b}
+  .btn-danger:hover{background:#991b1b}
+  .btn-success{background:#14532d;color:#86efac;border:1px solid #166534}
+  .btn-success:hover{background:#166534}
+  .btn-sm{padding:.3rem .65rem;font-size:.75rem}
+  /* ── BADGES ── */
+  .badge{display:inline-block;padding:.2rem .55rem;border-radius:9999px;font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+  .badge-pass{background:#14532d;color:#86efac}
+  .badge-fail{background:#7f1d1d;color:#fca5a5}
+  .badge-blocked{background:#78350f;color:#fde68a}
+  .badge-not-started{background:#1e293b;color:#94a3b8;border:1px solid #334155}
+  .badge-in-progress{background:#0c4a6e;color:#7dd3fc}
+  .badge-acceptance{background:#312e81;color:#c4b5fd}
+  .badge-regression{background:#1e3a5f;color:#93c5fd}
+  .badge-performance{background:#064e3b;color:#6ee7b7}
+  .badge-volume{background:#431407;color:#fdba74}
+  .badge-critical{background:#7f1d1d;color:#fca5a5}
+  .badge-high{background:#78350f;color:#fde68a}
+  .badge-medium{background:#1e3a5f;color:#93c5fd}
+  .badge-low{background:#1e293b;color:#94a3b8;border:1px solid #334155}
+  /* ── TABLE ── */
+  .table-wrap{overflow-x:auto;border-radius:.6rem;border:1px solid var(--border)}
+  table{width:100%;border-collapse:collapse;font-size:.82rem}
+  th{background:var(--surface2);color:var(--muted);font-weight:600;padding:.6rem .85rem;text-align:left;text-transform:uppercase;font-size:.7rem;letter-spacing:.04em;white-space:nowrap}
+  td{padding:.6rem .85rem;border-top:1px solid var(--border);vertical-align:middle}
+  tr:hover td{background:rgba(255,255,255,.02)}
+  /* ── FORMS ── */
+  .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.75rem}
+  .field{display:flex;flex-direction:column;gap:.3rem}
+  label{font-size:.78rem;color:var(--muted);font-weight:500}
+  input,select,textarea{background:var(--surface2);border:1px solid var(--border);border-radius:.45rem;padding:.5rem .7rem;color:var(--text);font-size:.85rem;outline:none;width:100%}
+  input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 2px rgba(56,189,248,.15)}
+  textarea{resize:vertical;min-height:70px}
+  select option{background:var(--surface2)}
+  /* ── MODAL ── */
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:200;align-items:center;justify-content:center;padding:1rem}
+  .modal-overlay.open{display:flex}
+  .modal{background:var(--surface);border:1px solid var(--border);border-radius:.9rem;padding:1.5rem;width:100%;max-width:580px;max-height:90vh;overflow-y:auto}
+  .modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem}
+  .modal-close{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1.4rem;line-height:1;padding:.2rem}
+  .modal-close:hover{color:var(--text)}
+  .modal-footer{display:flex;justify-content:flex-end;gap:.5rem;margin-top:1.25rem}
+  /* ── PROGRESS ── */
+  .progress{background:var(--surface2);border-radius:9999px;height:6px;overflow:hidden}
+  .progress-bar{height:100%;border-radius:9999px;background:var(--accent);transition:width .4s}
+  .progress-bar.green{background:var(--green)}
+  .progress-bar.red{background:var(--red)}
+  .progress-bar.yellow{background:var(--yellow)}
+  /* ── CONSOLE ── */
+  .console{background:#020817;border:1px solid var(--border);border-radius:.6rem;padding:.85rem;font-family:'Cascadia Code','Fira Code',monospace;font-size:.76rem;line-height:1.6;height:220px;overflow-y:auto;color:#94a3b8}
+  .console .log-info{color:#38bdf8}
+  .console .log-pass{color:#22c55e}
+  .console .log-fail{color:#ef4444}
+  .console .log-warn{color:#f59e0b}
+  .console .log-ts{color:#475569}
+  /* ── EMULATOR ── */
+  .emu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.75rem}
+  .emu-device{background:var(--surface2);border:1px solid var(--border);border-radius:.6rem;padding:.85rem;display:flex;flex-direction:column;gap:.5rem}
+  .emu-device-name{font-weight:600;font-size:.85rem}
+  .emu-device-status{font-size:.75rem}
+  .pulse{animation:pulse 1.5s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+  /* ── ACTIVITY FEED ── */
+  .activity-item{display:flex;gap:.75rem;padding:.6rem 0;border-bottom:1px solid var(--border)}
+  .activity-item:last-child{border-bottom:none}
+  .activity-dot{width:8px;height:8px;border-radius:50%;margin-top:5px;flex-shrink:0}
+  .activity-content{flex:1;font-size:.82rem}
+  .activity-time{font-size:.72rem;color:var(--muted)}
+  /* ── FILTER BAR ── */
+  .filter-bar{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem;align-items:center}
+  .filter-bar input{max-width:220px}
+  /* ── CODE SNIPPET ── */
+  .code-block{background:#020817;border:1px solid var(--border);border-radius:.6rem;padding:.85rem;font-family:'Cascadia Code','Fira Code',monospace;font-size:.75rem;line-height:1.7;overflow-x:auto;color:#e2e8f0}
+  .code-kw{color:#818cf8}.code-type{color:#38bdf8}.code-str{color:#86efac}.code-comment{color:#475569}.code-num{color:#fb923c}
+  /* ── REPORT ── */
+  .report-section{margin-bottom:1.5rem}
+  .report-table td,.report-table th{padding:.5rem .75rem}
+  /* ── MISC ── */
+  .empty-state{text-align:center;padding:3rem 1rem;color:var(--muted)}
+  .empty-icon{font-size:2.5rem;margin-bottom:.5rem}
+  .divider{border:none;border-top:1px solid var(--border);margin:1rem 0}
+  .tag{display:inline-block;background:var(--surface2);border:1px solid var(--border);border-radius:.3rem;padding:.1rem .4rem;font-size:.7rem;color:var(--muted);margin:.1rem}
+  .flex{display:flex}.gap-sm{gap:.5rem}.gap-md{gap:.75rem}.items-center{align-items:center}.flex-wrap{flex-wrap:wrap}
+  .text-accent{color:var(--accent)}.text-green{color:var(--green)}.text-red{color:var(--red)}.text-yellow{color:var(--yellow)}.text-muted{color:var(--muted)}
+  .mt-sm{margin-top:.5rem}.mt-md{margin-top:1rem}.mb-sm{margin-bottom:.5rem}.mb-md{margin-bottom:1rem}
+  .w-full{width:100%}
+  .chart-container{position:relative;height:240px}
+  .icon{font-style:normal}
+  @media(max-width:600px){main{padding:.75rem}.stat-value{font-size:1.5rem}.grid-4{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+
+<!-- ════════════════ NAV ════════════════ -->
+<nav>
+  <div class="nav-brand">SIT <span>Dashboard</span></div>
+  <button class="nav-tab active" onclick="showPage('dashboard')">📊 Dashboard</button>
+  <button class="nav-tab" onclick="showPage('plans')">📋 Test Plans</button>
+  <button class="nav-tab" onclick="showPage('cases')">🧪 Test Cases</button>
+  <button class="nav-tab" onclick="showPage('execution')">▶ Execution</button>
+  <button class="nav-tab" onclick="showPage('code')">💻 Code Specs</button>
+  <button class="nav-tab" onclick="showPage('reports')">📄 Reports</button>
+</nav>
+
+<main>
+
+<!-- ══════════════════════════════════════════
+     PAGE: DASHBOARD
+══════════════════════════════════════════ -->
+<div id="page-dashboard" class="page active">
+  <h1>System Integration Test Overview</h1>
+  <div class="grid-4" id="dash-stats"></div>
+  <div class="grid-2">
+    <div class="card">
+      <h2>Test Status by Functional Area</h2>
+      <div class="chart-container"><canvas id="chartArea"></canvas></div>
+    </div>
+    <div class="card">
+      <h2>Results Trend (Last 7 Days)</h2>
+      <div class="chart-container"><canvas id="chartTrend"></canvas></div>
+    </div>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <h2>Plan Completion</h2>
+      <div id="dash-plans-progress"></div>
+    </div>
+    <div class="card">
+      <h2>Recent Activity</h2>
+      <div id="dash-activity"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PAGE: TEST PLANS
+══════════════════════════════════════════ -->
+<div id="page-plans" class="page">
+  <div class="section-header">
+    <h1>Test Plans</h1>
+    <button class="btn btn-primary" onclick="openPlanModal()">+ New Plan</button>
+  </div>
+  <div class="filter-bar">
+    <input type="text" placeholder="Search plans…" id="plan-search" oninput="renderPlans()"/>
+    <select id="plan-type-filter" onchange="renderPlans()">
+      <option value="">All Types</option>
+      <option>Acceptance</option><option>Regression</option>
+      <option>Performance</option><option>Volume</option>
+    </select>
+    <select id="plan-status-filter" onchange="renderPlans()">
+      <option value="">All Status</option>
+      <option>Not Started</option><option>In Progress</option>
+      <option>Completed</option><option>On Hold</option>
+    </select>
+  </div>
+  <div id="plans-list"></div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PAGE: TEST CASES
+══════════════════════════════════════════ -->
+<div id="page-cases" class="page">
+  <div class="section-header">
+    <h1>Test Cases</h1>
+    <button class="btn btn-primary" onclick="openCaseModal()">+ New Test Case</button>
+  </div>
+  <div class="filter-bar">
+    <input type="text" placeholder="Search test cases…" id="case-search" oninput="renderCases()"/>
+    <select id="case-area-filter" onchange="renderCases()">
+      <option value="">All Areas</option>
+      <option>Conveyor Control</option><option>Sortation Logic</option>
+      <option>WMS Interface</option><option>PLC Communication</option>
+      <option>Safety Systems</option><option>HMI / Operator UI</option>
+      <option>Network / Communication</option><option>Database Integration</option>
+      <option>Performance</option><option>Volume / Stress</option>
+    </select>
+    <select id="case-status-filter" onchange="renderCases()">
+      <option value="">All Status</option>
+      <option>Not Started</option><option>In Progress</option>
+      <option>Pass</option><option>Fail</option><option>Blocked</option>
+    </select>
+    <select id="case-priority-filter" onchange="renderCases()">
+      <option value="">All Priority</option>
+      <option>Critical</option><option>High</option><option>Medium</option><option>Low</option>
+    </select>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th><th>Title</th><th>Plan</th><th>Functional Area</th>
+          <th>Priority</th><th>Status</th><th>Assigned To</th><th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="cases-tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PAGE: EXECUTION
+══════════════════════════════════════════ -->
+<div id="page-execution" class="page">
+  <h1>Test Execution &amp; Equipment Emulation</h1>
+  <div class="grid-2">
+    <div class="card">
+      <h2>Equipment Emulation Model</h2>
+      <p class="text-muted mb-sm" style="font-size:.82rem">Simulated material handling devices used during on-site commissioning testing.</p>
+      <div class="emu-grid" id="emu-devices"></div>
+      <hr class="divider"/>
+      <div class="flex gap-sm flex-wrap mt-md">
+        <button class="btn btn-success btn-sm" onclick="startAllDevices()">▶ Start All Devices</button>
+        <button class="btn btn-danger btn-sm" onclick="stopAllDevices()">■ Stop All</button>
+        <button class="btn btn-secondary btn-sm" onclick="resetDevices()">↺ Reset</button>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Run Test Suite</h2>
+      <div class="form-grid" style="grid-template-columns:1fr">
+        <div class="field">
+          <label>Select Test Plan</label>
+          <select id="exec-plan-select"></select>
+        </div>
+        <div class="field">
+          <label>Filter by Functional Area</label>
+          <select id="exec-area-select">
+            <option value="">All Areas</option>
+            <option>Conveyor Control</option><option>Sortation Logic</option>
+            <option>WMS Interface</option><option>PLC Communication</option>
+            <option>Safety Systems</option><option>HMI / Operator UI</option>
+            <option>Network / Communication</option><option>Database Integration</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Execution Mode</label>
+          <select id="exec-mode">
+            <option>Sequential</option><option>Parallel</option><option>Smoke Only (Critical)</option>
+          </select>
+        </div>
+      </div>
+      <div class="mt-md">
+        <div class="flex gap-sm flex-wrap">
+          <button class="btn btn-primary" onclick="startExecution()" id="exec-btn">▶ Run Tests</button>
+          <button class="btn btn-secondary btn-sm" onclick="clearConsole()">Clear Log</button>
+        </div>
+      </div>
+      <div class="mt-md">
+        <div class="flex items-center gap-sm mb-sm">
+          <span style="font-size:.78rem;color:var(--muted)">Progress</span>
+          <span id="exec-pct" style="font-size:.78rem;color:var(--accent)">0%</span>
+        </div>
+        <div class="progress"><div class="progress-bar" id="exec-progress-bar" style="width:0%"></div></div>
+        <div class="flex gap-sm mt-sm flex-wrap" id="exec-mini-stats" style="font-size:.78rem;color:var(--muted)"></div>
+      </div>
+      <div class="mt-md">
+        <div class="console" id="exec-console"><span class="log-info">[ SIT Engine ] Ready. Select a plan and press Run Tests.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PAGE: CODE SPECS
+══════════════════════════════════════════ -->
+<div id="page-code" class="page">
+  <h1>Test Specification Code Samples</h1>
+  <p class="text-muted mb-md" style="font-size:.85rem">Reference C# and Java snippets used during functional testing to meet acceptance criteria for material handling systems.</p>
+  <div class="grid-2">
+
+    <div class="card">
+      <h2>C# — Conveyor Functional Test</h2>
+      <pre class="code-block"><span class="code-comment">// Conveyor belt speed acceptance test</span>
+<span class="code-kw">using</span> NUnit.Framework;
+
+[TestFixture]
+<span class="code-kw">public class</span> <span class="code-type">ConveyorTests</span>
+{
+    <span class="code-kw">private</span> <span class="code-type">ConveyorEmulator</span> _emu;
+
+    [SetUp]
+    <span class="code-kw">public void</span> Init()
+        => _emu = <span class="code-kw">new</span> <span class="code-type">ConveyorEmulator</span>(<span class="code-str">"COM3"</span>);
+
+    [Test]
+    <span class="code-kw">public void</span> SpeedReachesSetpoint_Within3Seconds()
+    {
+        _emu.SetSpeed(<span class="code-num">120</span>); <span class="code-comment">// fpm</span>
+        <span class="code-type">Thread</span>.Sleep(<span class="code-num">3000</span>);
+        <span class="code-type">Assert</span>.That(_emu.ActualSpeed,
+            Is.InRange(<span class="code-num">117</span>, <span class="code-num">123</span>));
+    }
+
+    [Test]
+    <span class="code-kw">public void</span> E_StopDeceleration_UnderHalfSecond()
+    {
+        _emu.SetSpeed(<span class="code-num">120</span>);
+        <span class="code-type">Thread</span>.Sleep(<span class="code-num">1000</span>);
+        <span class="code-kw">var</span> t0 = <span class="code-type">DateTime</span>.UtcNow;
+        _emu.TriggerEStop();
+        <span class="code-kw">while</span> (_emu.ActualSpeed > <span class="code-num">0</span>) { }
+        <span class="code-type">Assert</span>.Less(
+            (<span class="code-type">DateTime</span>.UtcNow - t0).TotalSeconds,
+            <span class="code-num">0.5</span>);
+    }
+}</pre>
+    </div>
+
+    <div class="card">
+      <h2>Java — Sortation System Test</h2>
+      <pre class="code-block"><span class="code-comment">// Sortation divert accuracy test</span>
+<span class="code-kw">import</span> org.junit.jupiter.api.*;
+<span class="code-kw">import static</span> org.junit.jupiter.api.Assertions.*;
+
+<span class="code-kw">class</span> <span class="code-type">SortationTest</span> {
+    <span class="code-type">SortController</span> ctrl;
+
+    @BeforeEach
+    <span class="code-kw">void</span> setup() {
+        ctrl = <span class="code-kw">new</span> <span class="code-type">SortController</span>(
+            <span class="code-type">EmulatorFactory</span>.create(<span class="code-str">"SORT-01"</span>));
+    }
+
+    @Test
+    <span class="code-kw">void</span> divertAccuracy_Above99Point5Pct() {
+        <span class="code-kw">int</span> total = <span class="code-num">1000</span>, passed = <span class="code-num">0</span>;
+        <span class="code-kw">for</span> (<span class="code-kw">int</span> i = <span class="code-num">0</span>; i &lt; total; i++) {
+            <span class="code-type">Package</span> pkg = <span class="code-type">Package</span>.random();
+            ctrl.induct(pkg);
+            <span class="code-kw">if</span> (ctrl.verify(pkg)) passed++;
+        }
+        <span class="code-kw">double</span> acc = (<span class="code-kw">double</span>) passed / total * <span class="code-num">100</span>;
+        assertTrue(acc >= <span class="code-num">99.5</span>,
+            <span class="code-str">"Accuracy "</span> + acc + <span class="code-str">"% &lt; 99.5%"</span>);
+    }
+
+    @Test
+    <span class="code-kw">void</span> throughput_500PackagesPerHour() {
+        <span class="code-kw">long</span> start = <span class="code-type">System</span>.currentTimeMillis();
+        ctrl.runBatch(<span class="code-num">500</span>);
+        <span class="code-kw">long</span> elapsed = <span class="code-type">System</span>.currentTimeMillis() - start;
+        assertTrue(elapsed &lt;= <span class="code-num">3_600_000L</span>);
+    }
+}</pre>
+    </div>
+
+    <div class="card">
+      <h2>C# — WMS Interface Integration Test</h2>
+      <pre class="code-block"><span class="code-comment">// WMS message roundtrip acceptance test</span>
+[TestClass]
+<span class="code-kw">public class</span> <span class="code-type">WmsInterfaceTests</span>
+{
+    <span class="code-kw">private</span> <span class="code-type">WmsEmulator</span> _wms;
+    <span class="code-kw">private</span> <span class="code-type">MhsAdapter</span>  _mhs;
+
+    [TestInitialize]
+    <span class="code-kw">public void</span> Setup()
+    {
+        _wms = <span class="code-kw">new</span> <span class="code-type">WmsEmulator</span>(<span class="code-str">"tcp://localhost:5100"</span>);
+        _mhs = <span class="code-kw">new</span> <span class="code-type">MhsAdapter</span>(_wms);
+    }
+
+    [TestMethod]
+    <span class="code-kw">public async</span> <span class="code-type">Task</span> ShipConfirm_RoundTripUnder200ms()
+    {
+        <span class="code-kw">var</span> msg = <span class="code-kw">new</span> <span class="code-type">ShipConfirmMsg</span> {
+            OrderId = <span class="code-str">"ORD-00042"</span>,
+            LpnId   = <span class="code-str">"LPN-9999"</span>
+        };
+        <span class="code-kw">var</span> sw = <span class="code-type">Stopwatch</span>.StartNew();
+        <span class="code-kw">var</span> ack = <span class="code-kw">await</span> _mhs.SendAsync(msg);
+        sw.Stop();
+
+        <span class="code-type">Assert</span>.IsTrue(ack.Success);
+        <span class="code-type">Assert</span>.IsTrue(sw.ElapsedMilliseconds &lt; <span class="code-num">200</span>);
+    }
+}</pre>
+    </div>
+
+    <div class="card">
+      <h2>Java — PLC Heartbeat &amp; Regression Test</h2>
+      <pre class="code-block"><span class="code-comment">// PLC heartbeat regression test suite</span>
+<span class="code-kw">class</span> <span class="code-type">PlcRegressionTest</span> {
+    <span class="code-type">PlcEmulator</span> plc;
+
+    @BeforeEach
+    <span class="code-kw">void</span> connect() {
+        plc = <span class="code-kw">new</span> <span class="code-type">PlcEmulator</span>(
+            <span class="code-str">"192.168.1.100"</span>, <span class="code-num">44818</span>);
+        plc.connect();
+    }
+
+    @AfterEach
+    <span class="code-kw">void</span> disconnect() { plc.close(); }
+
+    @RepeatedTest(<span class="code-num">10</span>)
+    <span class="code-kw">void</span> heartbeat_RespondsWith200ms() {
+        <span class="code-kw">long</span> t = plc.ping();
+        assertTrue(t &lt; <span class="code-num">200</span>,
+          <span class="code-str">"Heartbeat "</span> + t + <span class="code-str">"ms > 200ms"</span>);
+    }
+
+    @Test
+    <span class="code-kw">void</span> tagWrite_ReadbackMatches() {
+        plc.write(<span class="code-str">"ConveyorSpeed"</span>, <span class="code-num">120</span>);
+        <span class="code-type">Thread</span>.sleep(<span class="code-num">50</span>);
+        assertEquals(<span class="code-num">120</span>,
+          plc.read(<span class="code-str">"ConveyorSpeed"</span>));
+    }
+
+    @Test
+    <span class="code-kw">void</span> safetyRelay_TripsOnFault() {
+        plc.injectFault(<span class="code-str">"JAM_DETECT"</span>);
+        <span class="code-type">Thread</span>.sleep(<span class="code-num">100</span>);
+        assertTrue(plc.safetyRelayOpen());
+    }
+}</pre>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PAGE: REPORTS
+══════════════════════════════════════════ -->
+<div id="page-reports" class="page">
+  <div class="section-header">
+    <h1>Test Status Reports</h1>
+    <div class="flex gap-sm flex-wrap">
+      <button class="btn btn-secondary btn-sm" onclick="generateReport()">⟳ Refresh</button>
+      <button class="btn btn-primary btn-sm" onclick="printReport()">🖨 Print / Export</button>
+    </div>
+  </div>
+  <div id="report-content"></div>
+</div>
+
+</main>
+
+<!-- ══════════════════════════════════════════
+     MODAL: PLAN
+══════════════════════════════════════════ -->
+<div class="modal-overlay" id="modal-plan">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="modal-plan-title">New Test Plan</h2>
+      <button class="modal-close" onclick="closeModal('modal-plan')" aria-label="Close">✕</button>
+    </div>
+    <div class="form-grid">
+      <div class="field" style="grid-column:1/-1">
+        <label>Plan Title *</label>
+        <input type="text" id="plan-name" placeholder="e.g. Acceptance Test Plan — Conveyor System"/>
+      </div>
+      <div class="field">
+        <label>Plan Type *</label>
+        <select id="plan-type">
+          <option>Acceptance</option><option>Regression</option>
+          <option>Performance</option><option>Volume</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Status</label>
+        <select id="plan-status">
+          <option>Not Started</option><option>In Progress</option>
+          <option>Completed</option><option>On Hold</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Assigned Engineer</label>
+        <input type="text" id="plan-engineer" placeholder="e.g. Kevin DeLong"/>
+      </div>
+      <div class="field">
+        <label>Target System</label>
+        <input type="text" id="plan-system" placeholder="e.g. Conveyor Line 3"/>
+      </div>
+      <div class="field">
+        <label>Start Date</label>
+        <input type="date" id="plan-start"/>
+      </div>
+      <div class="field">
+        <label>End Date</label>
+        <input type="date" id="plan-end"/>
+      </div>
+      <div class="field" style="grid-column:1/-1">
+        <label>Description</label>
+        <textarea id="plan-desc" placeholder="Describe the scope and objectives of this test plan…"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('modal-plan')">Cancel</button>
+      <button class="btn btn-primary" onclick="savePlan()">Save Plan</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     MODAL: TEST CASE
+══════════════════════════════════════════ -->
+<div class="modal-overlay" id="modal-case">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="modal-case-title">New Test Case</h2>
+      <button class="modal-close" onclick="closeModal('modal-case')" aria-label="Close">✕</button>
+    </div>
+    <div class="form-grid">
+      <div class="field" style="grid-column:1/-1">
+        <label>Test Case Title *</label>
+        <input type="text" id="case-title" placeholder="e.g. Verify conveyor speed reaches 120 fpm within 3s"/>
+      </div>
+      <div class="field">
+        <label>Test Plan</label>
+        <select id="case-plan"></select>
+      </div>
+      <div class="field">
+        <label>Functional Area *</label>
+        <select id="case-area">
+          <option>Conveyor Control</option><option>Sortation Logic</option>
+          <option>WMS Interface</option><option>PLC Communication</option>
+          <option>Safety Systems</option><option>HMI / Operator UI</option>
+          <option>Network / Communication</option><option>Database Integration</option>
+          <option>Performance</option><option>Volume / Stress</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Priority *</label>
+        <select id="case-priority">
+          <option>Critical</option><option>High</option>
+          <option>Medium</option><option>Low</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Status</label>
+        <select id="case-status-field">
+          <option>Not Started</option><option>In Progress</option>
+          <option>Pass</option><option>Fail</option><option>Blocked</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Assigned To</label>
+        <input type="text" id="case-assigned" placeholder="Engineer name"/>
+      </div>
+      <div class="field" style="grid-column:1/-1">
+        <label>Test Steps</label>
+        <textarea id="case-steps" placeholder="1. Set conveyor speed to 120 fpm&#10;2. Start timer&#10;3. Verify actual speed sensor reads ≥117 and ≤123 fpm"/>
+      </div>
+      <div class="field" style="grid-column:1/-1">
+        <label>Expected Result</label>
+        <textarea id="case-expected" placeholder="Conveyor reaches setpoint within ±2.5% tolerance in under 3 seconds"/>
+      </div>
+      <div class="field" style="grid-column:1/-1">
+        <label>Actual Result / Notes</label>
+        <textarea id="case-actual" placeholder="Leave blank until executed…"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" onclick="closeModal('modal-case')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveCase()">Save Test Case</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+//  DATA STORE
+// ═══════════════════════════════════════════════════════
+// XSS helper — escape any user-supplied string before HTML interpolation
+function esc(s) {
+  return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+const KEY_PLANS  = 'sit_plans_v2';
+const KEY_CASES  = 'sit_cases_v2';
+const KEY_LOG    = 'sit_activity_v2';
+
+let plans  = JSON.parse(localStorage.getItem(KEY_PLANS)  || 'null') || [];
+let cases  = JSON.parse(localStorage.getItem(KEY_CASES)  || 'null') || [];
+let actLog = JSON.parse(localStorage.getItem(KEY_LOG)    || 'null') || [];
+let editPlanId = null, editCaseId = null;
+
+function save() {
+  localStorage.setItem(KEY_PLANS, JSON.stringify(plans));
+  localStorage.setItem(KEY_CASES, JSON.stringify(cases));
+  localStorage.setItem(KEY_LOG,   JSON.stringify(actLog));
+}
+
+function addActivity(msg, color = '#38bdf8') {
+  actLog.unshift({ msg, color, ts: new Date().toLocaleString() });
+  if (actLog.length > 60) actLog.pop();
+  save();
+}
+
+// ─── SEED DATA ───────────────────────────────────────────
+function seed() {
+  if (localStorage.getItem(KEY_PLANS) !== null) return; // already seeded (use key presence, not array length)
+
+  plans = [
+    { id:1, name:'Material Handling System – User Acceptance Test', type:'Acceptance', status:'In Progress', engineer:'Kevin DeLong', system:'Full MHS Line 1', start:'2025-06-01', end:'2025-06-30', desc:'End-to-end UAT covering all functional areas of the material handling system, validated against customer acceptance criteria.' },
+    { id:2, name:'Conveyor Control Regression Suite', type:'Regression', status:'In Progress', engineer:'Sarah Kim', system:'Conveyor Subsystem', start:'2025-05-15', end:'2025-06-15', desc:'Regression tests to verify conveyor speed, e-stop, jam detection and zone control after each software build.' },
+    { id:3, name:'Sortation Throughput – Performance Test', type:'Performance', status:'Not Started', engineer:'Mike Torres', system:'Sortation Line A', start:'2025-07-01', end:'2025-07-10', desc:'Validate sortation accuracy ≥99.5% and throughput of 500 pph under peak conditions using equipment emulation.' },
+    { id:4, name:'WMS Integration – Volume Load Test', type:'Volume', status:'Not Started', engineer:'Kevin DeLong', system:'WMS Interface Layer', start:'2025-07-11', end:'2025-07-18', desc:'Inject 10,000 WMS messages at peak rate to validate no message loss and roundtrip SLA ≤200ms.' },
+  ];
+
+  cases = [
+    // ── Acceptance ──
+    { id:1, planId:1, title:'Verify conveyor speed reaches 120 fpm within 3s', area:'Conveyor Control', priority:'Critical', status:'Pass', assigned:'Kevin DeLong', steps:'1. Set speed 120 fpm\n2. Start timer\n3. Read encoder', expected:'Actual speed 117–123 fpm in ≤3s', actual:'Passed at 2.7s. Actual: 119.4 fpm', ts: Date.now()-86400000*3 },
+    { id:2, planId:1, title:'E-Stop decelerates conveyor in <0.5s', area:'Safety Systems', priority:'Critical', status:'Pass', assigned:'Kevin DeLong', steps:'1. Run conveyor at 120 fpm\n2. Trigger E-Stop\n3. Measure stop time', expected:'Full stop in ≤0.5s', actual:'Stopped in 0.38s', ts: Date.now()-86400000*3 },
+    { id:3, planId:1, title:'Jam detection triggers zone stop within 1s', area:'Conveyor Control', priority:'High', status:'Pass', assigned:'Sarah Kim', steps:'1. Induce jam sensor\n2. Observe zone stop', expected:'Zone stops within 1s, alarm raised', actual:'Zone stopped in 0.61s', ts: Date.now()-86400000*2 },
+    { id:4, planId:1, title:'Sortation divert accuracy ≥99.5% over 1000 packages', area:'Sortation Logic', priority:'Critical', status:'In Progress', assigned:'Mike Torres', steps:'1. Induct 1000 pkgs\n2. Verify each destination', expected:'≥995 correctly diverted', actual:'', ts: Date.now()-86400000 },
+    { id:5, planId:1, title:'WMS ship-confirm roundtrip ≤200ms', area:'WMS Interface', priority:'High', status:'Pass', assigned:'Kevin DeLong', steps:'1. Send ShipConfirm\n2. Measure ACK time', expected:'ACK received in ≤200ms', actual:'Avg 143ms over 100 runs', ts: Date.now()-86400000*2 },
+    { id:6, planId:1, title:'PLC heartbeat responds within 200ms x10 consecutive', area:'PLC Communication', priority:'High', status:'Pass', assigned:'Sarah Kim', steps:'1. Send 10 heartbeat pings\n2. Record RTT', expected:'All <200ms', actual:'Max 87ms', ts: Date.now()-86400000 },
+    { id:7, planId:1, title:'HMI alarm banner displays within 2s of fault', area:'HMI / Operator UI', priority:'High', status:'In Progress', assigned:'Kevin DeLong', steps:'1. Inject fault signal\n2. Observe HMI', expected:'Alarm visible ≤2s', actual:'', ts: Date.now()-3600000 },
+    { id:8, planId:1, title:'Network failover restores comms in <5s', area:'Network / Communication', priority:'Critical', status:'Fail', assigned:'Mike Torres', steps:'1. Disconnect primary NIC\n2. Measure failover time', expected:'<5s', actual:'FAILED: 8.2s — switch config issue', ts: Date.now()-7200000 },
+    { id:9, planId:1, title:'Database write latency <50ms under normal load', area:'Database Integration', priority:'Medium', status:'Not Started', assigned:'', steps:'1. Inject 100 writes/s\n2. Measure latency', expected:'p95 <50ms', actual:'', ts: Date.now() },
+    // ── Regression ──
+    { id:10, planId:2, title:'Zone start/stop sequence unchanged after build', area:'Conveyor Control', priority:'High', status:'Pass', assigned:'Sarah Kim', steps:'1. Deploy new build\n2. Run zone sequence', expected:'Matches baseline', actual:'PASS – 0 deviations', ts: Date.now()-86400000*5 },
+    { id:11, planId:2, title:'Speed ramp profile unchanged after build', area:'Conveyor Control', priority:'High', status:'Pass', assigned:'Sarah Kim', steps:'1. Record ramp profile\n2. Compare to baseline', expected:'Within ±1% of baseline', actual:'PASS – max delta 0.3%', ts: Date.now()-86400000*4 },
+    { id:12, planId:2, title:'E-Stop regression — all zones', area:'Safety Systems', priority:'Critical', status:'Pass', assigned:'Kevin DeLong', steps:'1. Trigger E-Stop\n2. Verify all zones stop', expected:'100% of zones stop', actual:'PASS', ts: Date.now()-86400000*4 },
+    { id:13, planId:2, title:'Barcode scan throughput regression', area:'WMS Interface', priority:'Medium', status:'In Progress', assigned:'Mike Torres', steps:'1. Scan 500 barcodes\n2. Compare to baseline', expected:'≥99% success rate', actual:'', ts: Date.now()-3600000*2 },
+    // ── Performance ──
+    { id:14, planId:3, title:'Peak throughput: 500 pph sustained 1 hour', area:'Performance', priority:'Critical', status:'Not Started', assigned:'', steps:'1. Load 500 pkg/h\n2. Run 60 min\n3. Record metrics', expected:'No jams, accuracy ≥99.5%', actual:'', ts: Date.now() },
+    { id:15, planId:3, title:'CPU usage <70% during peak throughput', area:'Performance', priority:'High', status:'Not Started', assigned:'', steps:'1. Start peak run\n2. Monitor CPU', expected:'<70%', actual:'', ts: Date.now() },
+    // ── Volume ──
+    { id:16, planId:4, title:'10,000 WMS messages with zero loss', area:'Volume / Stress', priority:'Critical', status:'Not Started', assigned:'', steps:'1. Inject 10k msgs\n2. Count ACKs', expected:'0 dropped', actual:'', ts: Date.now() },
+    { id:17, planId:4, title:'Message queue depth stays <1000 at peak', area:'Volume / Stress', priority:'High', status:'Not Started', assigned:'', steps:'1. Inject at 2x rate\n2. Monitor queue', expected:'Depth <1000', actual:'', ts: Date.now() },
+    { id:18, planId:1, title:'Safety PLC watchdog triggers on comm loss', area:'Safety Systems', priority:'Critical', status:'Blocked', assigned:'Kevin DeLong', steps:'1. Cut PLC comms\n2. Wait 3s\n3. Verify watchdog', expected:'Watchdog triggers e-stop', actual:'BLOCKED: PLC firmware 2.1.3 required', ts: Date.now()-1800000 },
+  ];
+
+  actLog = [
+    { msg:'TC-008 FAILED: Network failover 8.2s > 5s SLA', color:'#ef4444', ts: new Date(Date.now()-7200000).toLocaleString() },
+    { msg:'TC-007 In Progress: HMI alarm test started by Kevin DeLong', color:'#38bdf8', ts: new Date(Date.now()-3600000).toLocaleString() },
+    { msg:'TC-013 In Progress: Barcode scan regression underway', color:'#38bdf8', ts: new Date(Date.now()-3600000*2).toLocaleString() },
+    { msg:'TC-018 BLOCKED: PLC firmware version mismatch', color:'#f59e0b', ts: new Date(Date.now()-1800000).toLocaleString() },
+    { msg:'Test Plan 4 created: WMS Integration Volume Load Test', color:'#a855f7', ts: new Date(Date.now()-86400000).toLocaleString() },
+    { msg:'TC-006 PASSED: PLC heartbeat max RTT 87ms', color:'#22c55e', ts: new Date(Date.now()-86400000).toLocaleString() },
+    { msg:'TC-005 PASSED: WMS ship-confirm avg 143ms', color:'#22c55e', ts: new Date(Date.now()-86400000*2).toLocaleString() },
+  ];
+  save();
+}
+
+// ═══════════════════════════════════════════════════════
+//  NAVIGATION
+// ═══════════════════════════════════════════════════════
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  const tabs = document.querySelectorAll('.nav-tab');
+  tabs.forEach(t => { if (t.textContent.toLowerCase().includes(id.substring(0,4))) t.classList.add('active'); });
+  // re-render
+  const renders = { dashboard: renderDashboard, plans: renderPlans, cases: renderCases, execution: renderExecution, reports: generateReport };
+  if (renders[id]) renders[id]();
+}
+
+// ═══════════════════════════════════════════════════════
+//  DASHBOARD
+// ═══════════════════════════════════════════════════════
+let chartArea = null, chartTrend = null;
+function renderDashboard() {
+  const pass    = cases.filter(c => c.status==='Pass').length;
+  const fail    = cases.filter(c => c.status==='Fail').length;
+  const blocked = cases.filter(c => c.status==='Blocked').length;
+  const inprog  = cases.filter(c => c.status==='In Progress').length;
+  const total   = cases.length;
+  const pct     = total ? Math.round(pass/total*100) : 0;
+
+  document.getElementById('dash-stats').innerHTML = `
+    <div class="stat-card"><div class="stat-label">Test Plans</div><div class="stat-value text-accent">${plans.length}</div><div class="stat-sub">${plans.filter(p=>p.status==='In Progress').length} in progress</div></div>
+    <div class="stat-card"><div class="stat-label">Total Test Cases</div><div class="stat-value">${total}</div><div class="stat-sub">${inprog} in progress</div></div>
+    <div class="stat-card"><div class="stat-label">Pass Rate</div><div class="stat-value text-green">${pct}%</div><div class="stat-sub">${pass} passed</div></div>
+    <div class="stat-card"><div class="stat-label">Open Defects</div><div class="stat-value text-red">${fail}</div><div class="stat-sub">${blocked} blocked</div></div>
+  `;
+
+  // Chart: by functional area
+  const areas = [...new Set(cases.map(c=>c.area))].sort();
+  const aPass = areas.map(a => cases.filter(c=>c.area===a&&c.status==='Pass').length);
+  const aFail = areas.map(a => cases.filter(c=>c.area===a&&c.status==='Fail').length);
+  const aBlk  = areas.map(a => cases.filter(c=>c.area===a&&c.status==='Blocked').length);
+  const aOth  = areas.map(a => cases.filter(c=>c.area===a&&!['Pass','Fail','Blocked'].includes(c.status)).length);
+  const ctx1  = document.getElementById('chartArea').getContext('2d');
+  if (chartArea) chartArea.destroy();
+  chartArea = new Chart(ctx1, {
+    type:'bar',
+    data:{ labels: areas.map(a=>a.split('/')[0].trim()), datasets:[
+      {label:'Pass',data:aPass,backgroundColor:'#22c55e'},
+      {label:'Fail',data:aFail,backgroundColor:'#ef4444'},
+      {label:'Blocked',data:aBlk,backgroundColor:'#f59e0b'},
+      {label:'Other',data:aOth,backgroundColor:'#334155'},
+    ]},
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{labels:{color:'#94a3b8',font:{size:11}}}},
+      scales:{ x:{stacked:true,ticks:{color:'#64748b',font:{size:9}},grid:{color:'#1e293b'}}, y:{stacked:true,ticks:{color:'#64748b'},grid:{color:'#1e293b'}} } }
+  });
+
+  // Chart: trend (synthetic)
+  const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const ctx2 = document.getElementById('chartTrend').getContext('2d');
+  if (chartTrend) chartTrend.destroy();
+  chartTrend = new Chart(ctx2, {
+    type:'line',
+    data:{ labels:days, datasets:[
+      {label:'Pass',data:[2,4,6,9,11,11,pass],borderColor:'#22c55e',backgroundColor:'rgba(34,197,94,.08)',tension:.3,fill:true},
+      {label:'Fail',data:[0,1,1,1,2,2,fail],borderColor:'#ef4444',backgroundColor:'rgba(239,68,68,.06)',tension:.3,fill:true},
+      {label:'Blocked',data:[0,0,1,1,1,2,blocked],borderColor:'#f59e0b',backgroundColor:'rgba(245,158,11,.06)',tension:.3,fill:true},
+    ]},
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{labels:{color:'#94a3b8',font:{size:11}}}},
+      scales:{ x:{ticks:{color:'#64748b'},grid:{color:'#1e293b'}}, y:{ticks:{color:'#64748b'},grid:{color:'#1e293b'}} } }
+  });
+
+  // Plan progress
+  const pp = plans.map(p=>{
+    const pc = cases.filter(c=>c.planId===p.id);
+    const ppassed = pc.filter(c=>c.status==='Pass').length;
+    const pct2 = pc.length ? Math.round(ppassed/pc.length*100) : 0;
+    const barColor = p.status==='Completed'?'green': p.status==='On Hold'?'yellow':'';
+    return `<div class="mb-md">
+      <div class="flex items-center gap-sm mb-sm" style="justify-content:space-between">
+        <span style="font-size:.82rem;font-weight:600">${p.name}</span>
+        <span class="badge badge-${p.type.toLowerCase()}">${p.type}</span>
+      </div>
+      <div class="flex items-center gap-sm">
+        <div class="progress" style="flex:1"><div class="progress-bar ${barColor}" style="width:${pct2}%"></div></div>
+        <span style="font-size:.75rem;color:var(--muted);width:36px;text-align:right">${pct2}%</span>
+      </div>
+      <div style="font-size:.72rem;color:var(--muted);margin-top:.2rem">${ppassed}/${pc.length} cases passed · ${p.status}</div>
+    </div>`;
+  }).join('');
+  document.getElementById('dash-plans-progress').innerHTML = pp || '<div class="empty-state"><div class="empty-icon">📋</div>No plans yet</div>';
+
+  // Activity
+  const actContainer = document.getElementById('dash-activity');
+  actContainer.textContent = '';
+  const acts = actLog.slice(0,10);
+  if (!acts.length) {
+    const em = document.createElement('div'); em.className = 'empty-state'; em.textContent = 'No activity yet';
+    actContainer.appendChild(em);
+  } else {
+    acts.forEach(a => {
+      const item = document.createElement('div'); item.className = 'activity-item';
+      const dot  = document.createElement('div'); dot.className = 'activity-dot'; dot.style.background = a.color;
+      const body = document.createElement('div'); body.className = 'activity-content';
+      const msg  = document.createElement('div'); msg.textContent = a.msg;
+      const ts2  = document.createElement('div'); ts2.className = 'activity-time'; ts2.textContent = a.ts;
+      body.appendChild(msg); body.appendChild(ts2);
+      item.appendChild(dot); item.appendChild(body);
+      actContainer.appendChild(item);
+    });
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+//  TEST PLANS
+// ═══════════════════════════════════════════════════════
+function renderPlans() {
+  const q   = (document.getElementById('plan-search')?.value||'').toLowerCase();
+  const tf  = document.getElementById('plan-type-filter')?.value||'';
+  const sf  = document.getElementById('plan-status-filter')?.value||'';
+  const fp  = plans.filter(p=>
+    (!q || p.name.toLowerCase().includes(q)) &&
+    (!tf || p.type===tf) &&
+    (!sf || p.status===sf)
+  );
+
+  if (!fp.length) {
+    document.getElementById('plans-list').innerHTML = `<div class="empty-state"><div class="empty-icon">📋</div><p>No test plans found.</p></div>`;
+    return;
+  }
+
+  document.getElementById('plans-list').innerHTML = fp.map(p => {
+    const pc = cases.filter(c=>c.planId===p.id);
+    const ppassed = pc.filter(c=>c.status==='Pass').length;
+    const pfail   = pc.filter(c=>c.status==='Fail').length;
+    const pct2    = pc.length ? Math.round(ppassed/pc.length*100) : 0;
+    const barColor = p.status==='Completed'?'green': p.status==='On Hold'?'yellow':'';
+    return `<div class="card mb-md">
+      <div class="flex items-center gap-sm flex-wrap" style="justify-content:space-between;margin-bottom:.75rem">
+        <div class="flex items-center gap-sm flex-wrap">
+          <h3>${esc(p.name)}</h3>
+          <span class="badge badge-${esc(p.type.toLowerCase())}">${esc(p.type)}</span>
+          <span class="badge badge-${statusKey(p.status)}">${esc(p.status)}</span>
+        </div>
+        <div class="flex gap-sm">
+          <button class="btn btn-secondary btn-sm" onclick="openPlanModal(${p.id})" aria-label="Edit plan">✏ Edit</button>
+          <button class="btn btn-danger btn-sm" onclick="deletePlan(${p.id})" aria-label="Delete plan">🗑</button>
+        </div>
+      </div>
+      <p style="font-size:.82rem;color:var(--muted);margin-bottom:.75rem">${esc(p.desc)}</p>
+      <div class="grid-4" style="gap:.5rem;margin-bottom:.75rem">
+        <div class="card-sm"><div class="stat-label">Engineer</div><div style="font-size:.85rem;font-weight:600">${esc(p.engineer||'—')}</div></div>
+        <div class="card-sm"><div class="stat-label">System</div><div style="font-size:.85rem;font-weight:600">${esc(p.system||'—')}</div></div>
+        <div class="card-sm"><div class="stat-label">Start</div><div style="font-size:.85rem">${esc(p.start||'—')}</div></div>
+        <div class="card-sm"><div class="stat-label">End</div><div style="font-size:.85rem">${esc(p.end||'—')}</div></div>
+      </div>
+      <div class="flex items-center gap-sm" style="margin-bottom:.3rem">
+        <div class="progress" style="flex:1"><div class="progress-bar ${barColor}" style="width:${pct2}%"></div></div>
+        <span style="font-size:.75rem;color:var(--muted)">${pct2}% (${ppassed}/${pc.length} passed)</span>
+      </div>
+      <div class="flex gap-sm flex-wrap" style="font-size:.75rem;color:var(--muted)">
+        <span class="text-green">✔ ${ppassed} Pass</span>
+        <span class="text-red">✖ ${pfail} Fail</span>
+        <span class="text-muted">● ${pc.length - ppassed - pfail} Other</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function statusKey(s) {
+  const m = {'Not Started':'not-started','In Progress':'in-progress','Pass':'pass','Fail':'fail','Blocked':'blocked','Completed':'pass','On Hold':'blocked'};
+  return m[s] || 'not-started';
+}
+
+function openPlanModal(id) {
+  editPlanId = id||null;
+  const p = id ? plans.find(x=>x.id===id) : null;
+  document.getElementById('modal-plan-title').textContent = p ? 'Edit Test Plan' : 'New Test Plan';
+  document.getElementById('plan-name').value       = p?.name||'';
+  document.getElementById('plan-type').value       = p?.type||'Acceptance';
+  document.getElementById('plan-status').value     = p?.status||'Not Started';
+  document.getElementById('plan-engineer').value   = p?.engineer||'';
+  document.getElementById('plan-system').value     = p?.system||'';
+  document.getElementById('plan-start').value      = p?.start||'';
+  document.getElementById('plan-end').value        = p?.end||'';
+  document.getElementById('plan-desc').value       = p?.desc||'';
+  document.getElementById('modal-plan').classList.add('open');
+}
+
+function savePlan() {
+  const name = document.getElementById('plan-name').value.trim();
+  if (!name) { alert('Plan title is required.'); return; }
+  const data = {
+    name, type:document.getElementById('plan-type').value,
+    status:document.getElementById('plan-status').value,
+    engineer:document.getElementById('plan-engineer').value.trim(),
+    system:document.getElementById('plan-system').value.trim(),
+    start:document.getElementById('plan-start').value,
+    end:document.getElementById('plan-end').value,
+    desc:document.getElementById('plan-desc').value.trim(),
+  };
+  if (editPlanId) {
+    const idx = plans.findIndex(p=>p.id===editPlanId);
+    plans[idx] = { ...plans[idx], ...data };
+    addActivity(`Plan updated: "${name}"`, '#818cf8');
+  } else {
+    const id = plans.length ? Math.max(...plans.map(p=>p.id))+1 : 1;
+    plans.push({ id, ...data });
+    addActivity(`New plan created: "${name}"`, '#a855f7');
+  }
+  save(); closeModal('modal-plan'); renderPlans();
+}
+
+function deletePlan(id) {
+  if (!confirm('Delete this test plan? Associated test cases will remain.')) return;
+  const p = plans.find(x=>x.id===id);
+  plans = plans.filter(x=>x.id!==id);
+  addActivity(`Plan deleted: "${p?.name}"`, '#ef4444');
+  save(); renderPlans();
+}
+
+// ═══════════════════════════════════════════════════════
+//  TEST CASES
+// ═══════════════════════════════════════════════════════
+function renderCases() {
+  const q  = (document.getElementById('case-search')?.value||'').toLowerCase();
+  const af = document.getElementById('case-area-filter')?.value||'';
+  const sf = document.getElementById('case-status-filter')?.value||'';
+  const pf = document.getElementById('case-priority-filter')?.value||'';
+  const fc = cases.filter(c=>
+    (!q || c.title.toLowerCase().includes(q) || c.area.toLowerCase().includes(q)) &&
+    (!af || c.area===af) && (!sf || c.status===sf) && (!pf || c.priority===pf)
+  );
+
+  const planName = id => { const p = plans.find(x=>x.id===id); return p ? p.name.split('–')[0].trim() : '—'; };
+  const tbody = document.getElementById('cases-tbody');
+  tbody.textContent = '';
+  if (!fc.length) {
+    const tr = document.createElement('tr');
+    const td = document.createElement('td'); td.colSpan = 8;
+    const em = document.createElement('div'); em.className = 'empty-state';
+    const ico = document.createElement('div'); ico.className = 'empty-icon'; ico.textContent = '🧪';
+    const txt = document.createElement('p'); txt.textContent = 'No test cases found.';
+    em.appendChild(ico); em.appendChild(txt); td.appendChild(em); tr.appendChild(td);
+    tbody.appendChild(tr);
+    return;
+  }
+  const frag = document.createDocumentFragment();
+  fc.forEach(c => {
+    const tr = document.createElement('tr');
+
+    // ID
+    const tdId = document.createElement('td');
+    const idSpan = document.createElement('span');
+    idSpan.style.cssText = 'font-size:.75rem;color:var(--muted)';
+    idSpan.textContent = 'TC-' + String(c.id).padStart(3,'0');
+    tdId.appendChild(idSpan); tr.appendChild(tdId);
+
+    // Title / actual
+    const tdTitle = document.createElement('td'); tdTitle.style.maxWidth = '260px';
+    const titleDiv = document.createElement('div');
+    titleDiv.style.cssText = 'font-weight:500;font-size:.82rem';
+    titleDiv.textContent = c.title; tdTitle.appendChild(titleDiv);
+    if (c.actual) {
+      const actDiv = document.createElement('div');
+      actDiv.style.cssText = 'font-size:.72rem;color:var(--muted);margin-top:.15rem';
+      actDiv.textContent = c.actual.substring(0,60) + (c.actual.length>60?'…':'');
+      tdTitle.appendChild(actDiv);
+    }
+    tr.appendChild(tdTitle);
+
+    // Plan
+    const tdPlan = document.createElement('td');
+    tdPlan.style.cssText = 'font-size:.75rem;color:var(--muted)';
+    tdPlan.textContent = planName(c.planId); tr.appendChild(tdPlan);
+
+    // Area
+    const tdArea = document.createElement('td');
+    const areaSpan = document.createElement('span'); areaSpan.className = 'tag';
+    areaSpan.textContent = c.area; tdArea.appendChild(areaSpan); tr.appendChild(tdArea);
+
+    // Priority
+    const tdPri = document.createElement('td');
+    const priSpan = document.createElement('span');
+    priSpan.className = 'badge badge-' + String(c.priority).toLowerCase();
+    priSpan.textContent = c.priority; tdPri.appendChild(priSpan); tr.appendChild(tdPri);
+
+    // Status
+    const tdSt = document.createElement('td');
+    const stSpan = document.createElement('span');
+    stSpan.className = 'badge badge-' + statusKey(c.status);
+    stSpan.textContent = c.status; tdSt.appendChild(stSpan); tr.appendChild(tdSt);
+
+    // Assigned
+    const tdAss = document.createElement('td'); tdAss.style.fontSize = '.8rem';
+    tdAss.textContent = c.assigned || '—'; tr.appendChild(tdAss);
+
+    // Actions
+    const tdAct = document.createElement('td');
+    const actDiv = document.createElement('div'); actDiv.className = 'flex gap-sm';
+    const editBtn = document.createElement('button');
+    editBtn.className = 'btn btn-secondary btn-sm'; editBtn.textContent = '✏';
+    editBtn.setAttribute('aria-label', 'Edit test case');
+    editBtn.addEventListener('click', () => openCaseModal(c.id));
+    const delBtn = document.createElement('button');
+    delBtn.className = 'btn btn-danger btn-sm'; delBtn.textContent = '🗑';
+    delBtn.setAttribute('aria-label', 'Delete test case');
+    delBtn.addEventListener('click', () => deleteCase(c.id));
+    actDiv.appendChild(editBtn); actDiv.appendChild(delBtn); tdAct.appendChild(actDiv);
+    tr.appendChild(tdAct);
+
+    frag.appendChild(tr);
+  });
+  tbody.appendChild(frag);
+}
+
+function populateCasePlanSelect(selectedId) {
+  const sel = document.getElementById('case-plan');
+  sel.innerHTML = '<option value="">— No Plan —</option>' +
+    plans.map(p=>`<option value="${p.id}" ${p.id===selectedId?'selected':''}>${p.name.substring(0,50)}</option>`).join('');
+}
+
+function openCaseModal(id) {
+  editCaseId = id||null;
+  const c = id ? cases.find(x=>x.id===id) : null;
+  document.getElementById('modal-case-title').textContent = c ? 'Edit Test Case' : 'New Test Case';
+  populateCasePlanSelect(c?.planId);
+  document.getElementById('case-title').value    = c?.title||'';
+  document.getElementById('case-area').value     = c?.area||'Conveyor Control';
+  document.getElementById('case-priority').value = c?.priority||'High';
+  document.getElementById('case-status-field').value = c?.status||'Not Started';
+  document.getElementById('case-assigned').value = c?.assigned||'';
+  document.getElementById('case-steps').value    = c?.steps||'';
+  document.getElementById('case-expected').value = c?.expected||'';
+  document.getElementById('case-actual').value   = c?.actual||'';
+  document.getElementById('modal-case').classList.add('open');
+}
+
+function saveCase() {
+  const title = document.getElementById('case-title').value.trim();
+  if (!title) { alert('Test case title is required.'); return; }
+  const data = {
+    title,
+    planId: parseInt(document.getElementById('case-plan').value)||null,
+    area:   document.getElementById('case-area').value,
+    priority: document.getElementById('case-priority').value,
+    status: document.getElementById('case-status-field').value,
+    assigned: document.getElementById('case-assigned').value.trim(),
+    steps:  document.getElementById('case-steps').value.trim(),
+    expected: document.getElementById('case-expected').value.trim(),
+    actual: document.getElementById('case-actual').value.trim(),
+    ts: Date.now(),
+  };
+  if (editCaseId) {
+    const idx = cases.findIndex(c=>c.id===editCaseId);
+    cases[idx] = { ...cases[idx], ...data };
+    addActivity(`TC-${String(editCaseId).padStart(3,'0')} updated → ${data.status}`, data.status==='Pass'?'#22c55e':data.status==='Fail'?'#ef4444':'#38bdf8');
+  } else {
+    const id = cases.length ? Math.max(...cases.map(c=>c.id))+1 : 1;
+    cases.push({ id, ...data });
+    addActivity(`TC-${String(id).padStart(3,'0')} created: "${title.substring(0,40)}"`, '#38bdf8');
+  }
+  save(); closeModal('modal-case'); renderCases();
+}
+
+function deleteCase(id) {
+  if (!confirm('Delete this test case?')) return;
+  cases = cases.filter(c=>c.id!==id);
+  save(); renderCases();
+}
+
+// ═══════════════════════════════════════════════════════
+//  EXECUTION
+// ═══════════════════════════════════════════════════════
+const DEVICES = [
+  { id:'CVR-01', name:'Conveyor Zone 1', type:'Conveyor', status:'offline' },
+  { id:'CVR-02', name:'Conveyor Zone 2', type:'Conveyor', status:'offline' },
+  { id:'SRT-01', name:'Sortation Unit A', type:'Sorter',  status:'offline' },
+  { id:'PLC-01', name:'PLC Controller',  type:'PLC',     status:'offline' },
+  { id:'WMS-01', name:'WMS Emulator',    type:'WMS',     status:'offline' },
+  { id:'HMI-01', name:'HMI Station',     type:'HMI',     status:'offline' },
+];
+let deviceState = DEVICES.map(d=>({...d}));
+let execRunning = false;
+
+function renderExecution() {
+  // populate plan select
+  const ps = document.getElementById('exec-plan-select');
+  ps.innerHTML = plans.map(p=>`<option value="${p.id}">${p.name.substring(0,55)}</option>`).join('');
+  renderDevices();
+}
+
+function renderDevices() {
+  document.getElementById('emu-devices').innerHTML = deviceState.map(d=>{
+    const col = d.status==='online'?'var(--green)':d.status==='running'?'var(--accent)':'var(--muted)';
+    const icon = d.status==='online'?'🟢':d.status==='running'?'🔵':'⚫';
+    const pulse = d.status==='running'?'class="pulse"':'';
+    return `<div class="emu-device">
+      <div class="emu-device-name">${d.name}</div>
+      <div class="emu-device-status" style="color:${col}" ${pulse}>${icon} ${d.status}</div>
+      <div style="font-size:.7rem;color:var(--muted)">${d.type} · ${d.id}</div>
+    </div>`;
+  }).join('');
+}
+
+function startAllDevices() {
+  deviceState.forEach(d=>d.status='online');
+  renderDevices();
+  logToConsole('All emulation devices online and ready.', 'pass');
+}
+function stopAllDevices() {
+  deviceState.forEach(d=>d.status='offline');
+  renderDevices();
+  logToConsole('All devices stopped.', 'warn');
+}
+function resetDevices() {
+  deviceState = DEVICES.map(d=>({...d}));
+  renderDevices();
+  logToConsole('Emulation model reset.', 'info');
+}
+
+function logToConsole(msg, type='info') {
+  const con = document.getElementById('exec-console');
+  const ts = new Date().toLocaleTimeString();
+  const div = document.createElement('div');
+  const tsSpan = document.createElement('span');
+  tsSpan.className = 'log-ts';
+  tsSpan.textContent = '[' + ts + '] ';
+  const msgSpan = document.createElement('span');
+  msgSpan.className = 'log-' + type;
+  msgSpan.textContent = msg;
+  div.appendChild(tsSpan);
+  div.appendChild(msgSpan);
+  con.appendChild(div);
+  con.scrollTop = con.scrollHeight;
+}
+function clearConsole() {
+  document.getElementById('exec-console').innerHTML = '';
+  document.getElementById('exec-progress-bar').style.width = '0%';
+  document.getElementById('exec-pct').textContent = '0%';
+  document.getElementById('exec-mini-stats').textContent = '';
+}
+
+async function startExecution() {
+  if (execRunning) return;
+  execRunning = true;
+  const btn = document.getElementById('exec-btn');
+  btn.disabled = true; btn.textContent = '⏳ Running…';
+  clearConsole();
+
+  const planId  = parseInt(document.getElementById('exec-plan-select').value);
+  const areaFil = document.getElementById('exec-area-select').value;
+  const mode    = document.getElementById('exec-mode').value;
+  const plan    = plans.find(p=>p.id===planId);
+
+  let toRun = cases.filter(c=>c.planId===planId && (!areaFil||c.area===areaFil));
+  if (mode === 'Smoke Only (Critical)') toRun = toRun.filter(c=>c.priority==='Critical');
+  if (!toRun.length) {
+    logToConsole('No test cases match the selected criteria.', 'warn');
+    execRunning=false; btn.disabled=false; btn.textContent='▶ Run Tests'; return;
+  }
+
+  logToConsole(`Starting execution: "${plan?.name}" — ${toRun.length} cases [${mode}]`, 'info');
+  logToConsole('Initializing equipment emulation model…', 'info');
+  await delay(400);
+  deviceState.forEach(d=>d.status='running'); renderDevices();
+  await delay(300);
+  logToConsole('All devices RUNNING. Beginning test sequence.', 'pass');
+
+  // Shared counters (updated via closure for both modes)
+  let passed=0, failed=0, blocked=0, completed=0;
+  const total = toRun.length;
+
+  function updateMiniStats() {
+    document.getElementById('exec-mini-stats').innerHTML =
+      `<span class="text-green">✔ ${passed} Pass</span>&nbsp;&nbsp;<span class="text-red">✖ ${failed} Fail</span>&nbsp;&nbsp;<span class="text-yellow">⚠ ${blocked} Blocked</span>`;
+    const pct = Math.round((completed/total)*100);
+    document.getElementById('exec-progress-bar').style.width = pct+'%';
+    document.getElementById('exec-pct').textContent = pct+'%';
+  }
+
+  // Per-case simulation: returns 'Pass'|'Fail'|'Blocked'
+  function simulateCase(tc) {
+    let result = tc.status;
+    if (result==='Not Started' || result==='In Progress') {
+      const r = Math.random();
+      result = r < 0.78 ? 'Pass' : r < 0.9 ? 'Fail' : 'Blocked';
+    }
+    return result;
+  }
+
+  function applyResult(tc, result) {
+    completed++;
+    if (result==='Pass') {
+      passed++;
+      logToConsole(`  ✔ PASS TC-${String(tc.id).padStart(3,'0')}: ${tc.title.substring(0,55)}`, 'pass');
+      const idx = cases.findIndex(c=>c.id===tc.id);
+      if (idx!==-1 && cases[idx].status!=='Fail') {
+        cases[idx].status='Pass';
+        cases[idx].actual = cases[idx].actual||'Passed via emulation run';
+      }
+    } else if (result==='Fail') {
+      failed++;
+      logToConsole(`  ✖ FAIL TC-${String(tc.id).padStart(3,'0')}: ${tc.title.substring(0,55)}`, 'fail');
+      addActivity(`TC-${String(tc.id).padStart(3,'0')} FAILED during emulation run`, '#ef4444');
+      const idx = cases.findIndex(c=>c.id===tc.id);
+      if (idx!==-1) {
+        cases[idx].status='Fail';
+        cases[idx].actual = cases[idx].actual||'Failed during emulation run';
+      }
+    } else {
+      blocked++;
+      logToConsole(`  ⚠ BLOCKED TC-${String(tc.id).padStart(3,'0')}: ${tc.title.substring(0,55)}`, 'warn');
+      const idx = cases.findIndex(c=>c.id===tc.id);
+      if (idx!==-1) {
+        cases[idx].status='Blocked';
+        cases[idx].actual = cases[idx].actual||'Blocked during emulation run';
+      }
+    }
+    updateMiniStats();
+  }
+
+  if (mode === 'Parallel') {
+    logToConsole(`Launching ${total} tests in parallel (Promise.allSettled)…`, 'info');
+    await Promise.allSettled(toRun.map(tc =>
+      delay(200 + Math.random()*600).then(() => applyResult(tc, simulateCase(tc)))
+    ));
+  } else {
+    // Sequential (also handles Smoke Only which already filtered toRun)
+    for (const tc of toRun) {
+      logToConsole(`► TC-${String(tc.id).padStart(3,'0')}: ${tc.title.substring(0,60)}`, 'info');
+      await delay(200+Math.random()*400);
+      applyResult(tc, simulateCase(tc));
+    }
+  }
+
+  // Final
+  document.getElementById('exec-progress-bar').style.width = '100%';
+  document.getElementById('exec-pct').textContent = '100%';
+  deviceState.forEach(d=>d.status='online'); renderDevices();
+  await delay(200);
+  const prate = Math.round(passed/total*100);
+  logToConsole(`─── Execution Complete ─── ${total} tests | ✔ ${passed} Pass | ✖ ${failed} Fail | ⚠ ${blocked} Blocked | Pass Rate: ${prate}%`, prate>=80?'pass':'fail');
+  addActivity(`Execution completed: ${plan?.name?.substring(0,40)} — ${prate}% pass rate`, prate>=80?'#22c55e':'#ef4444');
+  save();
+  execRunning=false; btn.disabled=false; btn.textContent='▶ Run Tests';
+}
+
+function delay(ms) { return new Promise(r=>setTimeout(r,ms)); }
+
+// ═══════════════════════════════════════════════════════
+//  REPORTS
+// ═══════════════════════════════════════════════════════
+function generateReport() {
+  const now = new Date().toLocaleString();
+  const total  = cases.length;
+  const pass   = cases.filter(c=>c.status==='Pass').length;
+  const fail   = cases.filter(c=>c.status==='Fail').length;
+  const blk    = cases.filter(c=>c.status==='Blocked').length;
+  const ns     = cases.filter(c=>c.status==='Not Started').length;
+  const ip     = cases.filter(c=>c.status==='In Progress').length;
+  const pct    = total ? Math.round(pass/total*100) : 0;
+
+  // Per-plan breakdown
+  const planRows = plans.map(p => {
+    const pc    = cases.filter(c=>c.planId===p.id);
+    const pp    = pc.filter(c=>c.status==='Pass').length;
+    const pf    = pc.filter(c=>c.status==='Fail').length;
+    const pb    = pc.filter(c=>c.status==='Blocked').length;
+    const ppct  = pc.length ? Math.round(pp/pc.length*100) : 0;
+    return `<tr>
+      <td>${esc(p.name)}</td>
+      <td><span class="badge badge-${esc(p.type.toLowerCase())}">${esc(p.type)}</span></td>
+      <td><span class="badge badge-${statusKey(p.status)}">${esc(p.status)}</span></td>
+      <td>${pc.length}</td>
+      <td class="text-green">${pp}</td>
+      <td class="text-red">${pf}</td>
+      <td class="text-yellow">${pb}</td>
+      <td><b>${ppct}%</b></td>
+    </tr>`;
+  }).join('');
+
+  // Failed / blocked cases
+  const critRows = cases.filter(c=>c.status==='Fail'||c.status==='Blocked').map(c=>{
+    const pn = plans.find(p=>p.id===c.planId)?.name?.split('–')[0]?.trim()||'—';
+    return `<tr>
+      <td>TC-${String(c.id).padStart(3,'0')}</td>
+      <td>${esc(c.title)}</td>
+      <td>${esc(pn)}</td>
+      <td><span class="tag">${esc(c.area)}</span></td>
+      <td><span class="badge badge-${esc(c.priority.toLowerCase())}">${esc(c.priority)}</span></td>
+      <td><span class="badge badge-${statusKey(c.status)}">${esc(c.status)}</span></td>
+      <td style="font-size:.75rem">${esc(c.actual||'—')}</td>
+    </tr>`;
+  }).join('');
+
+  document.getElementById('report-content').innerHTML = `
+  <div class="report-section">
+    <div class="card" style="border-left:3px solid var(--accent)">
+      <div class="flex items-center gap-sm flex-wrap" style="justify-content:space-between;margin-bottom:.5rem">
+        <h2>System Integration Test Status Report</h2>
+        <span style="font-size:.78rem;color:var(--muted)">Generated: ${now}</span>
+      </div>
+      <p style="font-size:.82rem;color:var(--muted)">On-site commissioning · Material Handling System · All Functional Areas</p>
+    </div>
+  </div>
+
+  <div class="grid-4" style="margin-bottom:1.25rem">
+    <div class="stat-card"><div class="stat-label">Total Test Cases</div><div class="stat-value">${total}</div></div>
+    <div class="stat-card"><div class="stat-label">Pass Rate</div><div class="stat-value text-green">${pct}%</div></div>
+    <div class="stat-card"><div class="stat-label">Open Defects</div><div class="stat-value text-red">${fail}</div></div>
+    <div class="stat-card"><div class="stat-label">Blocked</div><div class="stat-value text-yellow">${blk}</div></div>
+  </div>
+
+  <div class="report-section">
+    <h2>Test Plan Summary</h2>
+    <div class="table-wrap">
+      <table class="report-table">
+        <thead><tr><th>Plan</th><th>Type</th><th>Status</th><th>Total</th><th>Pass</th><th>Fail</th><th>Blocked</th><th>Pass %</th></tr></thead>
+        <tbody>${planRows}</tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="report-section">
+    <h2>Open Defects &amp; Blocked Items</h2>
+    ${critRows ? `<div class="table-wrap"><table class="report-table">
+      <thead><tr><th>ID</th><th>Title</th><th>Plan</th><th>Area</th><th>Priority</th><th>Status</th><th>Notes</th></tr></thead>
+      <tbody>${critRows}</tbody>
+    </table></div>` : '<div class="empty-state" style="padding:1.5rem"><div class="empty-icon">✅</div><p>No open defects or blocked items!</p></div>'}
+  </div>
+
+  <div class="report-section">
+    <div class="card-sm">
+      <h3 style="margin-bottom:.5rem">Status Breakdown by Functional Area</h3>
+      <div class="flex gap-sm flex-wrap">
+        ${[...new Set(cases.map(c=>c.area))].sort().map(a=>{
+          const ac = cases.filter(c=>c.area===a);
+          const ap = ac.filter(c=>c.status==='Pass').length;
+          const pct2 = Math.round(ap/ac.length*100);
+          return `<div class="card-sm" style="min-width:160px;flex:1">
+            <div style="font-size:.78rem;font-weight:600">${esc(a)}</div>
+            <div class="progress mt-sm"><div class="progress-bar" style="width:${pct2}%"></div></div>
+            <div style="font-size:.72rem;color:var(--muted);margin-top:.2rem">${ap}/${ac.length} (${pct2}%)</div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>
+  </div>
+
+  <div class="report-section">
+    <div class="card-sm" style="font-size:.8rem;color:var(--muted)">
+      <strong style="color:var(--text)">Prepared by:</strong> Kevin DeLong, System Integration Test Engineer<br/>
+      <strong style="color:var(--text)">Distribution:</strong> Site Team · Senior Management · Client<br/>
+      <strong style="color:var(--text)">Confidentiality:</strong> Internal use only
+    </div>
+  </div>`;
+}
+
+function printReport() { window.print(); }
+
+// ═══════════════════════════════════════════════════════
+//  MODAL UTILS
+// ═══════════════════════════════════════════════════════
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+document.querySelectorAll('.modal-overlay').forEach(el => {
+  el.addEventListener('click', e => { if (e.target===el) el.classList.remove('open'); });
+});
+
+// ═══════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════
+seed();
+renderDashboard();
+</script>
+  <!-- Portfolio QoL Enhancer -->
+  <script>(function(){if(window.__portfolioQolEnhancer)return;window.__portfolioQolEnhancer=1;var b=document.createElement("button");b.type="button";b.setAttribute("aria-label","Scroll to top");b.textContent="Top";b.style.cssText="position:fixed;right:14px;bottom:14px;z-index:2147483000;border:1px solid rgba(148,163,184,.7);background:rgba(15,23,42,.88);color:#f8fafc;border-radius:999px;font:700 12px/1 Trebuchet MS,Segoe UI,sans-serif;padding:8px 11px;cursor:pointer;opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .16s ease,transform .16s ease";document.body.appendChild(b);function sync(){var visible=window.scrollY>200;b.style.opacity=visible?"1":"0";b.style.transform=visible?"translateY(0)":"translateY(8px)";b.style.pointerEvents=visible?"auto":"none";}b.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});document.addEventListener("keydown",function(e){var t=e.target&&e.target.tagName;if(t==="INPUT"||t==="TEXTAREA"||t==="SELECT")return;if(e.key==="t"||e.key==="T"){window.scrollTo({top:0,behavior:"smooth"});}});window.addEventListener("scroll",sync,{passive:true});sync();})();</script>
+</body>
+</html>
