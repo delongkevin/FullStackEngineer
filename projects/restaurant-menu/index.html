@@ -105,6 +105,30 @@
       flex-wrap: wrap;
     }
 
+    .utility-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .sort-select,
+    .utility-btn {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      cursor: pointer;
+    }
+
+    .utility-btn.active {
+      border-color: var(--orange);
+      color: var(--orange);
+      background: var(--badge-bg);
+    }
+
     .filter-pill {
       display: flex;
       align-items: center;
@@ -218,6 +242,30 @@
     .add-btn:hover  { background: #c2410c; }
     .add-btn:active { transform: scale(0.95); }
     .add-btn.added  { background: #16a34a; }
+
+    .card-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .fav-btn {
+      border: 1px solid var(--border);
+      background: #fff;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      cursor: pointer;
+      color: var(--muted);
+      transition: all 0.15s;
+    }
+
+    .fav-btn.active {
+      border-color: #f59e0b;
+      color: #b45309;
+      background: #fef3c7;
+    }
 
     /* ── CART TOAST ── */
     #cart-bar {
@@ -357,6 +405,16 @@
         <input type="checkbox" value="spicy" /> 🌶️ Spicy
       </label>
     </div>
+    <div class="utility-row">
+      <select id="sort" class="sort-select" aria-label="Sort dishes">
+        <option value="featured">Sort: Featured</option>
+        <option value="price-asc">Price: Low to High</option>
+        <option value="price-desc">Price: High to Low</option>
+        <option value="name-asc">Name: A to Z</option>
+      </select>
+      <button id="fav-toggle" class="utility-btn" type="button">⭐ Favorites only</button>
+      <button id="reset-filters" class="utility-btn" type="button">Reset filters</button>
+    </div>
   </div>
 
   <main id="menu-root"></main>
@@ -421,7 +479,12 @@
     let activeCategory = 'All';
     let activeFilters  = new Set();
     let searchQuery    = '';
+    let sortMode = 'featured';
+    let favoritesOnly = false;
     const cart         = {};   // id -> { item, qty }
+    const favorites    = new Set();
+    const CART_STORAGE_KEY = 'bistro_bliss_cart_v1';
+    const PREF_STORAGE_KEY = 'bistro_bliss_prefs_v1';
 
     // ── INIT ─────────────────────────────────────────────────────────────────
     const categories = ['All', ...new Set(MENU.map(i => i.cat))];
@@ -456,15 +519,59 @@
       render();
     });
 
+    document.getElementById('sort').addEventListener('change', (event) => {
+      sortMode = event.target.value;
+      persistPrefs();
+      render();
+    });
+
+    document.getElementById('fav-toggle').addEventListener('click', () => {
+      favoritesOnly = !favoritesOnly;
+      document.getElementById('fav-toggle').classList.toggle('active', favoritesOnly);
+      persistPrefs();
+      render();
+    });
+
+    document.getElementById('reset-filters').addEventListener('click', () => {
+      activeCategory = 'All';
+      activeFilters.clear();
+      searchQuery = '';
+      sortMode = 'featured';
+      favoritesOnly = false;
+
+      document.getElementById('search').value = '';
+      document.getElementById('sort').value = 'featured';
+      document.querySelectorAll('.filter-pill input').forEach((input) => {
+        input.checked = false;
+        input.closest('.filter-pill').classList.remove('active');
+      });
+      document.getElementById('fav-toggle').classList.remove('active');
+      buildTabs();
+      persistPrefs();
+      render();
+    });
+
     // ── RENDER ───────────────────────────────────────────────────────────────
     function filteredItems() {
-      return MENU.filter(item => {
+      const filtered = MENU.filter(item => {
         if (activeCategory !== 'All' && item.cat !== activeCategory) return false;
         if (activeFilters.size > 0 && ![...activeFilters].every(f => item.tags.includes(f))) return false;
         if (searchQuery && !item.name.toLowerCase().includes(searchQuery) &&
             !item.desc.toLowerCase().includes(searchQuery)) return false;
+        if (favoritesOnly && !favorites.has(item.id)) return false;
         return true;
       });
+
+      if (sortMode === 'price-asc') {
+        return filtered.sort((a, b) => a.price - b.price);
+      }
+      if (sortMode === 'price-desc') {
+        return filtered.sort((a, b) => b.price - a.price);
+      }
+      if (sortMode === 'name-asc') {
+        return filtered.sort((a, b) => a.name.localeCompare(b.name));
+      }
+      return filtered.sort((a, b) => Number(b.tags.includes('pop')) - Number(a.tags.includes('pop')));
     }
 
     function render() {
@@ -500,7 +607,12 @@
           <div class="card-img" style="background:${catColor(item.cat)}">${item.emoji}</div>
           <div class="card-body">
             <div class="card-badges">${badges}</div>
-            <div class="card-name">${item.name}</div>
+            <div class="card-header-row">
+              <div class="card-name">${item.name}</div>
+              <button class="fav-btn ${favorites.has(item.id) ? 'active' : ''}" onclick="toggleFavorite(${item.id})" aria-label="Toggle favorite for ${item.name}">
+                ${favorites.has(item.id) ? '★' : '☆'}
+              </button>
+            </div>
             <div class="card-desc">${item.desc}</div>
             <div class="card-footer">
               <span class="price">$${item.price.toFixed(2)}</span>
@@ -525,12 +637,24 @@
       if (!item) return;
       cart[id] = cart[id] ? { item, qty: cart[id].qty + 1 } : { item, qty: 1 };
       updateCartBar();
+      persistCart();
+      render();
+    }
+
+    function toggleFavorite(id) {
+      if (favorites.has(id)) {
+        favorites.delete(id);
+      } else {
+        favorites.add(id);
+      }
+      persistPrefs();
       render();
     }
 
     function removeFromCart(id) {
       delete cart[id];
       updateCartBar();
+      persistCart();
       renderCartModal();
       render();
     }
@@ -590,8 +714,79 @@
       closeCart();
       Object.keys(cart).forEach(k => delete cart[k]);
       updateCartBar();
+      persistCart();
       render();
       alert(`✅ Order placed! Enjoy your: ${names}.\n\nThank you for dining at Bistro Bliss!`);
+    }
+
+    function persistCart() {
+      localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+    }
+
+    function persistPrefs() {
+      localStorage.setItem(PREF_STORAGE_KEY, JSON.stringify({
+        activeCategory,
+        activeFilters: [...activeFilters],
+        searchQuery,
+        sortMode,
+        favoritesOnly,
+        favorites: [...favorites],
+      }));
+    }
+
+    function hydrateFromStorage() {
+      const cartRaw = localStorage.getItem(CART_STORAGE_KEY);
+      if (cartRaw) {
+        try {
+          const parsedCart = JSON.parse(cartRaw);
+          Object.keys(parsedCart).forEach((key) => {
+            const entry = parsedCart[key];
+            if (!entry || !entry.item || !entry.qty) {
+              return;
+            }
+            cart[key] = entry;
+          });
+        } catch {
+          // Ignore malformed cart cache.
+        }
+      }
+
+      const prefRaw = localStorage.getItem(PREF_STORAGE_KEY);
+      if (prefRaw) {
+        try {
+          const prefs = JSON.parse(prefRaw);
+          if (prefs.activeCategory && categories.includes(prefs.activeCategory)) {
+            activeCategory = prefs.activeCategory;
+          }
+          if (Array.isArray(prefs.activeFilters)) {
+            activeFilters = new Set(prefs.activeFilters);
+          }
+          if (typeof prefs.searchQuery === 'string') {
+            searchQuery = prefs.searchQuery;
+            document.getElementById('search').value = searchQuery;
+          }
+          if (typeof prefs.sortMode === 'string') {
+            sortMode = prefs.sortMode;
+            document.getElementById('sort').value = sortMode;
+          }
+          if (typeof prefs.favoritesOnly === 'boolean') {
+            favoritesOnly = prefs.favoritesOnly;
+            document.getElementById('fav-toggle').classList.toggle('active', favoritesOnly);
+          }
+          if (Array.isArray(prefs.favorites)) {
+            prefs.favorites.forEach((id) => favorites.add(id));
+          }
+        } catch {
+          // Ignore malformed preferences cache.
+        }
+      }
+
+      document.querySelectorAll('.filter-pill input').forEach((input) => {
+        if (activeFilters.has(input.value)) {
+          input.checked = true;
+          input.closest('.filter-pill').classList.add('active');
+        }
+      });
     }
 
     // Close modal when clicking overlay
@@ -604,8 +799,12 @@
     });
 
     // ── BOOT ─────────────────────────────────────────────────────────────────
+    hydrateFromStorage();
     buildTabs();
+    updateCartBar();
     render();
   </script>
+  <!-- Portfolio QoL Enhancer -->
+  <script>(function(){if(window.__portfolioQolEnhancer)return;window.__portfolioQolEnhancer=1;var b=document.createElement("button");b.type="button";b.setAttribute("aria-label","Scroll to top");b.textContent="Top";b.style.cssText="position:fixed;right:14px;bottom:14px;z-index:2147483000;border:1px solid rgba(148,163,184,.7);background:rgba(15,23,42,.88);color:#f8fafc;border-radius:999px;font:700 12px/1 Trebuchet MS,Segoe UI,sans-serif;padding:8px 11px;cursor:pointer;opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .16s ease,transform .16s ease";document.body.appendChild(b);function sync(){var visible=window.scrollY>200;b.style.opacity=visible?"1":"0";b.style.transform=visible?"translateY(0)":"translateY(8px)";b.style.pointerEvents=visible?"auto":"none";}b.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});document.addEventListener("keydown",function(e){var t=e.target&&e.target.tagName;if(t==="INPUT"||t==="TEXTAREA"||t==="SELECT")return;if(e.key==="t"||e.key==="T"){window.scrollTo({top:0,behavior:"smooth"});}});window.addEventListener("scroll",sync,{passive:true});sync();})();</script>
 </body>
 </html>

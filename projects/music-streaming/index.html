@@ -176,6 +176,12 @@
       color: #baf5d0;
       font-weight: 600;
     }
+    .mini-tools {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
     .queue {
       margin-top: 12px;
       border-top: 1px solid #2b406d;
@@ -247,7 +253,12 @@
             <button id="playBtn">Play</button>
             <button id="pauseBtn" class="ghost">Pause</button>
             <button id="nextBtn" class="ghost">Next</button>
+            <button id="shuffleBtn" class="ghost">Shuffle</button>
             <button id="likeBtn" class="ghost">Save</button>
+          </div>
+          <div class="mini-tools">
+            <button id="clearSavedBtn" class="ghost">Clear Saved</button>
+            <button id="exportBtn" class="ghost">Export Playlist</button>
           </div>
           <div class="status" id="status" aria-live="polite" aria-atomic="true">Status: Idle</div>
           <div class="queue">
@@ -261,7 +272,7 @@
 
   <script>
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const tracks = [
+    const DEFAULT_TRACKS = [
       { title: 'Pixel Skyline', artist: 'Neon Drift', length: 222, mood: 'focus', plays: 1203, saved: true },
       { title: 'Refactor Dreams', artist: 'Loop Theory', length: 251, mood: 'focus', plays: 967, saved: false },
       { title: 'Night Deploy', artist: 'Merge Request', length: 178, mood: 'uplift', plays: 1510, saved: false },
@@ -269,6 +280,7 @@
       { title: 'Branch and Bloom', artist: 'Stable Build', length: 196, mood: 'uplift', plays: 633, saved: true },
       { title: 'Quiet Commit', artist: 'Pull Request', length: 230, mood: 'calm', plays: 881, saved: false }
     ];
+    const MUSIC_STATE_KEY = 'portfolio_music_state_v1';
 
     const playlistEl = document.getElementById('playlist');
     const searchEl = document.getElementById('search');
@@ -281,10 +293,64 @@
     const timeTotal = document.getElementById('timeTotal');
     const queueList = document.getElementById('queueList');
 
-    let current = 0;
-    let position = 0;
+    const loadedState = loadState();
+    let tracks = loadedState.tracks;
+    let current = loadedState.current;
+    let position = loadedState.position;
     let isPlaying = false;
     let timerId = null;
+    searchEl.value = loadedState.search;
+    moodEl.value = loadedState.mood;
+
+    function loadState() {
+      const raw = localStorage.getItem(MUSIC_STATE_KEY);
+      if (!raw) {
+        return {
+          tracks: structuredClone(DEFAULT_TRACKS),
+          current: 0,
+          position: 0,
+          search: '',
+          mood: 'all'
+        };
+      }
+
+      try {
+        const parsed = JSON.parse(raw);
+        const safeTracks = Array.isArray(parsed.tracks)
+          ? parsed.tracks.map((track, index) => ({
+              ...structuredClone(DEFAULT_TRACKS[index] || DEFAULT_TRACKS[0]),
+              saved: Boolean(track.saved),
+              plays: Number.isFinite(track.plays) ? track.plays : (DEFAULT_TRACKS[index]?.plays || 0)
+            }))
+          : structuredClone(DEFAULT_TRACKS);
+
+        return {
+          tracks: safeTracks,
+          current: Number.isFinite(parsed.current) ? Math.max(0, Math.min(parsed.current, safeTracks.length - 1)) : 0,
+          position: Number.isFinite(parsed.position) ? Math.max(0, parsed.position) : 0,
+          search: typeof parsed.search === 'string' ? parsed.search : '',
+          mood: parsed.mood === 'focus' || parsed.mood === 'uplift' || parsed.mood === 'calm' ? parsed.mood : 'all'
+        };
+      } catch {
+        return {
+          tracks: structuredClone(DEFAULT_TRACKS),
+          current: 0,
+          position: 0,
+          search: '',
+          mood: 'all'
+        };
+      }
+    }
+
+    function saveState() {
+      localStorage.setItem(MUSIC_STATE_KEY, JSON.stringify({
+        tracks,
+        current,
+        position,
+        search: searchEl.value,
+        mood: moodEl.value
+      }));
+    }
 
     function toMMSS(seconds) {
       const m = Math.floor(seconds / 60);
@@ -353,6 +419,7 @@
       document.getElementById('likeBtn').textContent = t.saved ? 'Unsave' : 'Save';
       renderQueue();
       renderPlaylist();
+      saveState();
     }
 
     function selectTrack(idx) {
@@ -399,18 +466,60 @@
       }
     }
 
+    function shuffle() {
+      const nextIndex = Math.floor(Math.random() * tracks.length);
+      current = nextIndex;
+      position = 0;
+      renderNowPlaying();
+      statusEl.textContent = 'Status: Shuffled';
+      if (isPlaying) {
+        play();
+      }
+    }
+
     document.getElementById('playBtn').onclick = play;
     document.getElementById('pauseBtn').onclick = pause;
     document.getElementById('nextBtn').onclick = next;
+    document.getElementById('shuffleBtn').onclick = shuffle;
     document.getElementById('likeBtn').onclick = () => {
       tracks[current].saved = !tracks[current].saved;
       renderNowPlaying();
     };
-    searchEl.addEventListener('input', renderPlaylist);
-    moodEl.addEventListener('change', renderPlaylist);
+    document.getElementById('clearSavedBtn').onclick = () => {
+      tracks.forEach((track) => {
+        track.saved = false;
+      });
+      renderNowPlaying();
+      statusEl.textContent = 'Status: Saved tracks cleared';
+    };
+
+    document.getElementById('exportBtn').onclick = () => {
+      const payload = {
+        exportedAt: new Date().toISOString(),
+        tracks,
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'music-playlist.json';
+      link.click();
+      URL.revokeObjectURL(url);
+    };
+
+    searchEl.addEventListener('input', () => {
+      renderPlaylist();
+      saveState();
+    });
+    moodEl.addEventListener('change', () => {
+      renderPlaylist();
+      saveState();
+    });
 
     renderNowPlaying();
     renderPlaylist();
   </script>
+  <!-- Portfolio QoL Enhancer -->
+  <script>(function(){if(window.__portfolioQolEnhancer)return;window.__portfolioQolEnhancer=1;var b=document.createElement("button");b.type="button";b.setAttribute("aria-label","Scroll to top");b.textContent="Top";b.style.cssText="position:fixed;right:14px;bottom:14px;z-index:2147483000;border:1px solid rgba(148,163,184,.7);background:rgba(15,23,42,.88);color:#f8fafc;border-radius:999px;font:700 12px/1 Trebuchet MS,Segoe UI,sans-serif;padding:8px 11px;cursor:pointer;opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .16s ease,transform .16s ease";document.body.appendChild(b);function sync(){var visible=window.scrollY>200;b.style.opacity=visible?"1":"0";b.style.transform=visible?"translateY(0)":"translateY(8px)";b.style.pointerEvents=visible?"auto":"none";}b.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});document.addEventListener("keydown",function(e){var t=e.target&&e.target.tagName;if(t==="INPUT"||t==="TEXTAREA"||t==="SELECT")return;if(e.key==="t"||e.key==="T"){window.scrollTo({top:0,behavior:"smooth"});}});window.addEventListener("scroll",sync,{passive:true});sync();})();</script>
 </body>
 </html>

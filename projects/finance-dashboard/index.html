@@ -73,6 +73,17 @@
       gap: 8px;
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
+    .utility-row {
+      margin-top: 8px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .ghost {
+      background: #12392e;
+      border-color: #2f785f;
+      color: #d9f7ea;
+    }
     input, select, button {
       border: 1px solid #2d6f59;
       border-radius: 10px;
@@ -150,6 +161,10 @@
           <input id="amount" type="number" min="1" placeholder="Amount" aria-label="Amount" />
           <button id="addBtn" type="button">Add</button>
         </div>
+        <div class="utility-row">
+          <button id="exportBtn" class="ghost" type="button">Export JSON</button>
+          <button id="resetBtn" class="ghost" type="button">Reset Demo Data</button>
+        </div>
         <div class="goal" id="goalProgress">Goal: Emergency fund $5,000 · Progress $0</div>
       </article>
 
@@ -161,14 +176,46 @@
   </div>
 
   <script>
-    const transactions = [
+    const DEFAULT_TRANSACTIONS = [
       { type: 'income', category: 'Salary', amount: 5200 },
       { type: 'expense', category: 'Housing', amount: 1840 },
       { type: 'expense', category: 'Food', amount: 420 },
       { type: 'expense', category: 'Transport', amount: 190 }
     ];
+    const FINANCE_STATE_KEY = 'portfolio_finance_state_v1';
     const monthlyBudget = 3500;
     const savingsGoal = 5000;
+
+    let transactions = loadState();
+
+    function loadState() {
+      const raw = localStorage.getItem(FINANCE_STATE_KEY);
+      if (!raw) {
+        return structuredClone(DEFAULT_TRANSACTIONS);
+      }
+
+      try {
+        const parsed = JSON.parse(raw);
+        if (!Array.isArray(parsed)) {
+          return structuredClone(DEFAULT_TRANSACTIONS);
+        }
+
+        return parsed
+          .filter((entry) => entry && (entry.type === 'income' || entry.type === 'expense'))
+          .map((entry) => ({
+            type: entry.type,
+            category: typeof entry.category === 'string' ? entry.category : 'Other',
+            amount: Number(entry.amount) > 0 ? Number(entry.amount) : 0,
+          }))
+          .filter((entry) => entry.amount > 0);
+      } catch {
+        return structuredClone(DEFAULT_TRANSACTIONS);
+      }
+    }
+
+    function saveState() {
+      localStorage.setItem(FINANCE_STATE_KEY, JSON.stringify(transactions));
+    }
 
     function currency(value) {
       return '$' + value.toFixed(2);
@@ -212,6 +259,8 @@
 
       document.getElementById('goalProgress').textContent =
         'Goal: Emergency fund ' + currency(savingsGoal) + ' · Progress ' + currency(Math.max(0, balance));
+
+      saveState();
     }
 
     function renderTxns() {
@@ -242,7 +291,31 @@
       renderTxns();
     };
 
+    document.getElementById('exportBtn').onclick = () => {
+      const payload = {
+        exportedAt: new Date().toISOString(),
+        transactions,
+      };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'finance-transactions.json';
+      link.click();
+      URL.revokeObjectURL(url);
+    };
+
+    document.getElementById('resetBtn').onclick = () => {
+      if (!confirm('Reset finance data to default demo values?')) {
+        return;
+      }
+      transactions = structuredClone(DEFAULT_TRANSACTIONS);
+      renderTxns();
+    };
+
     renderTxns();
   </script>
+  <!-- Portfolio QoL Enhancer -->
+  <script>(function(){if(window.__portfolioQolEnhancer)return;window.__portfolioQolEnhancer=1;var b=document.createElement("button");b.type="button";b.setAttribute("aria-label","Scroll to top");b.textContent="Top";b.style.cssText="position:fixed;right:14px;bottom:14px;z-index:2147483000;border:1px solid rgba(148,163,184,.7);background:rgba(15,23,42,.88);color:#f8fafc;border-radius:999px;font:700 12px/1 Trebuchet MS,Segoe UI,sans-serif;padding:8px 11px;cursor:pointer;opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .16s ease,transform .16s ease";document.body.appendChild(b);function sync(){var visible=window.scrollY>200;b.style.opacity=visible?"1":"0";b.style.transform=visible?"translateY(0)":"translateY(8px)";b.style.pointerEvents=visible?"auto":"none";}b.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});document.addEventListener("keydown",function(e){var t=e.target&&e.target.tagName;if(t==="INPUT"||t==="TEXTAREA"||t==="SELECT")return;if(e.key==="t"||e.key==="T"){window.scrollTo({top:0,behavior:"smooth"});}});window.addEventListener("scroll",sync,{passive:true});sync();})();</script>
 </body>
 </html>
