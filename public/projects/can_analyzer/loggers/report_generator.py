@@ -324,45 +324,164 @@ class ReportGenerator:
         <html>
         <head>
             <title>CAN Bus Analysis Report</title>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <style>
-                body {{ font-family: Arial, sans-serif; margin: 40px; }}
-                h1 {{ color: #2c3e50; }}
-                .section {{ margin-bottom: 30px; }}
-                .stat-grid {{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }}
-                .stat-card {{ background: #f8f9fa; padding: 15px; border-radius: 5px; }}
-                table {{ width: 100%; border-collapse: collapse; }}
-                th, td {{ padding: 8px; text-align: left; border-bottom: 1px solid #ddd; }}
-                th {{ background-color: #f2f2f2; }}
+                * {{
+                    box-sizing: border-box;
+                }}
+                body {{
+                    font-family: Arial, sans-serif;
+                    margin: 0;
+                    padding: 20px;
+                    background-color: #f5f5f5;
+                }}
+                .container {{
+                    max-width: 1200px;
+                    margin: 0 auto;
+                    background-color: white;
+                    padding: 30px;
+                    border-radius: 8px;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                }}
+                h1 {{
+                    color: #2c3e50;
+                    margin-top: 0;
+                    font-size: clamp(1.5rem, 4vw, 2.5rem);
+                    border-bottom: 3px solid #3498db;
+                    padding-bottom: 10px;
+                }}
+                h2 {{
+                    color: #34495e;
+                    font-size: clamp(1.2rem, 3vw, 1.8rem);
+                    margin-top: 30px;
+                }}
+                h3 {{
+                    color: #7f8c8d;
+                    font-size: clamp(1rem, 2.5vw, 1.3rem);
+                    margin-top: 0;
+                }}
+                .section {{
+                    margin-bottom: 30px;
+                    padding: 20px;
+                    background-color: #f8f9fa;
+                    border-radius: 6px;
+                }}
+                .stat-grid {{
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                    gap: 15px;
+                    margin-top: 15px;
+                }}
+                .stat-card {{
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    color: white;
+                    padding: 20px;
+                    border-radius: 8px;
+                    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                    transition: transform 0.2s;
+                }}
+                .stat-card:hover {{
+                    transform: translateY(-2px);
+                    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+                }}
+                .stat-card h3 {{
+                    margin: 0 0 10px 0;
+                    font-size: 0.9rem;
+                    color: rgba(255,255,255,0.9);
+                    text-transform: uppercase;
+                    letter-spacing: 1px;
+                }}
+                .stat-card p {{
+                    margin: 0;
+                    font-size: 2rem;
+                    font-weight: bold;
+                }}
+                table {{
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin-top: 15px;
+                    overflow-x: auto;
+                    display: block;
+                }}
+                thead {{
+                    position: sticky;
+                    top: 0;
+                    z-index: 10;
+                }}
+                th, td {{
+                    padding: 12px;
+                    text-align: left;
+                    border-bottom: 1px solid #ddd;
+                    white-space: nowrap;
+                }}
+                th {{
+                    background-color: #3498db;
+                    color: white;
+                    font-weight: 600;
+                }}
+                tr:hover {{
+                    background-color: #f1f1f1;
+                }}
+                .info-text {{
+                    color: #555;
+                    line-height: 1.6;
+                }}
+                @media screen and (max-width: 768px) {{
+                    body {{
+                        padding: 10px;
+                    }}
+                    .container {{
+                        padding: 15px;
+                    }}
+                    .stat-grid {{
+                        grid-template-columns: 1fr;
+                    }}
+                    table {{
+                        font-size: 0.85rem;
+                    }}
+                    th, td {{
+                        padding: 8px;
+                    }}
+                }}
+                @media print {{
+                    body {{
+                        background-color: white;
+                    }}
+                    .container {{
+                        box-shadow: none;
+                    }}
+                }}
             </style>
         </head>
         <body>
-            <h1>CAN Bus Analysis Report</h1>
-            <div class="section">
-                <h2>Report Information</h2>
-                <p><strong>Generated:</strong> {data['metadata']['generated_at']}</p>
-                <p><strong>Time Range:</strong> {data['metadata']['time_range']['start']} to {data['metadata']['time_range']['end']}</p>
-            </div>
-            
-            <div class="section">
-                <h2>Statistics</h2>
-                <div class="stat-grid">
-                    <div class="stat-card">
-                        <h3>Total Messages</h3>
-                        <p>{data['statistics']['total_messages']}</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>RX Messages</h3>
-                        <p>{data['statistics']['rx_messages']}</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>TX Messages</h3>
-                        <p>{data['statistics']['tx_messages']}</p>
+            <div class="container">
+                <h1>🚗 CAN Bus Analysis Report</h1>
+                <div class="section">
+                    <h2>Report Information</h2>
+                    <p class="info-text"><strong>Generated:</strong> {data['metadata']['generated_at']}</p>
+                    <p class="info-text"><strong>Time Range:</strong> {data['metadata']['time_range']['start']} to {data['metadata']['time_range']['end']}</p>
+                </div>
+
+                <div class="section">
+                    <h2>Statistics Overview</h2>
+                    <div class="stat-grid">
+                        <div class="stat-card">
+                            <h3>Total Messages</h3>
+                            <p>{data['statistics']['total_messages']}</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>RX Messages</h3>
+                            <p>{data['statistics']['rx_messages']}</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>TX Messages</h3>
+                            <p>{data['statistics']['tx_messages']}</p>
+                        </div>
                     </div>
                 </div>
+
+                <!-- Additional sections would be added here -->
             </div>
-            
-            <!-- Additional sections would be added here -->
-            
         </body>
         </html>
         """
