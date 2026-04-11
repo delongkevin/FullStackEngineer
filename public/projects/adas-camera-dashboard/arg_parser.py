@@ -442,18 +442,20 @@ body {
  * FIX: Watermark icon (Magna "A" mark).
  * – position:absolute keeps it inside the sidebar (overflow:hidden clips it).
  * – opacity, filter and pointer-events make it purely decorative.
- * – bottom/right anchoring means it stays in place as the sidebar height grows.
+ * – Sized to fill most of the sidebar width so the trademark "A" remains
+ *   prominent in the background, matching the original report design.
+ * – Centered at bottom so it stays in place as the sidebar height grows.
  */
 .sidebar-watermark {
   position: absolute;
-  bottom: -40px;
-  right: -30px;
-  width: 220px;
-  height: 220px;
-  opacity: 0.13;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 230px;
+  height: 230px;
+  opacity: 0.17;
   pointer-events: none;
   user-select: none;
-  filter: blur(0.4px);
   z-index: 0;
 }
 
@@ -1005,15 +1007,15 @@ body {
 }
 """
 
-# Magna "A" mark SVG (simplified triangle + top dot).
+# Magna Electronics "A" mark – trademark shape reproduced exactly:
+# sharp-peak isosceles triangle with geometric crossbar, miter joins, no decoration.
 MAGNA_ICON_SVG = """\
 <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-  <polygon points="50,8 96,88 4,88"
-           fill="none" stroke="white" stroke-width="7"
-           stroke-linejoin="round"/>
-  <line x1="24" y1="68" x2="76" y2="68"
-        stroke="white" stroke-width="7" stroke-linecap="round"/>
-  <circle cx="50" cy="8" r="6" fill="white"/>
+  <polygon points="50,4 97,92 3,92"
+           fill="none" stroke="white" stroke-width="8"
+           stroke-linejoin="miter" stroke-miterlimit="10"/>
+  <line x1="26" y1="66" x2="74" y2="66"
+        stroke="white" stroke-width="8" stroke-linecap="square"/>
 </svg>"""
 
 
