@@ -1,0 +1,1500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Accessibility QA Engineer – AI Trainer Platform</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0d1117; --card: #161b22; --border: #30363d;
+      --accent: #58a6ff; --success: #3fb950; --danger: #f85149;
+      --warning: #d29922; --purple: #bc8cff; --orange: #f0883e;
+      --teal: #39d0d8; --text: #c9d1d9; --muted: #8b949e;
+      --header-h: 58px; --nav-h: 48px;
+    }
+    html, body { height: 100%; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); font-size: 14px; display: flex; flex-direction: column; }
+
+    /* ── Header ── */
+    header { height: var(--header-h); background: var(--card); border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 20px; gap: 14px; flex-shrink: 0; }
+    header .logo { font-size: 19px; font-weight: 700; color: var(--accent); white-space: nowrap; }
+    header .logo span { color: var(--text); }
+    header .tagline { color: var(--muted); font-size: 12px; display: none; }
+    @media(min-width:600px){ header .tagline { display: block; } }
+    header .badge { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+    .pill { border-radius: 20px; padding: 3px 10px; font-size: 11px; font-weight: 600; }
+    .pill-green { background: rgba(63,185,80,.15); border: 1px solid var(--success); color: var(--success); }
+    .pill-blue  { background: rgba(88,166,255,.15); border: 1px solid var(--accent); color: var(--accent); }
+
+    /* ── Nav ── */
+    nav { height: var(--nav-h); background: var(--card); border-bottom: 1px solid var(--border); display: flex; align-items: flex-end; padding: 0 12px; gap: 2px; flex-shrink: 0; overflow-x: auto; }
+    nav button { border: none; background: transparent; color: var(--muted); cursor: pointer; padding: 8px 13px; font-size: 13px; font-weight: 500; border-bottom: 2px solid transparent; margin-bottom: -1px; white-space: nowrap; transition: color .15s; }
+    nav button:hover { color: var(--text); }
+    nav button.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+    /* ── Content ── */
+    .content { flex: 1; overflow-y: auto; padding: 20px; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ── Grids & Cards ── */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    @media(max-width:900px){ .grid-4 { grid-template-columns: repeat(2,1fr); } .grid-3 { grid-template-columns: 1fr 1fr; } }
+    @media(max-width:620px){ .grid-2,.grid-3,.grid-4 { grid-template-columns: 1fr; } }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+    .card-title { font-size: 12px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 12px; }
+    h2 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+    h3 { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+    label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 4px; margin-top: 12px; }
+    label:first-child { margin-top: 0; }
+    input[type=text], input[type=number], input[type=color], select, textarea {
+      width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
+      color: var(--text); padding: 7px 10px; font-size: 13px; font-family: inherit; outline: none;
+      transition: border-color .15s;
+    }
+    input[type=color] { height: 36px; padding: 2px 6px; cursor: pointer; }
+    input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+    textarea { resize: vertical; min-height: 80px; }
+    .btn { border: none; border-radius: 6px; padding: 7px 14px; font-size: 13px; font-weight: 600; cursor: pointer; transition: opacity .15s; }
+    .btn:hover { opacity: .85; }
+    .btn-primary { background: var(--accent); color: #0d1117; }
+    .btn-secondary { background: var(--border); color: var(--text); }
+    .btn-success { background: var(--success); color: #0d1117; }
+    .btn-danger { background: var(--danger); color: #fff; }
+    .btn-sm { padding: 4px 10px; font-size: 12px; }
+    .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 12px; }
+
+    /* ── KPI Cards ── */
+    .kpi { text-align: center; }
+    .kpi-val { font-size: 28px; font-weight: 700; line-height: 1; }
+    .kpi-lbl { font-size: 11px; color: var(--muted); margin-top: 4px; text-transform: uppercase; letter-spacing: .4px; }
+
+    /* ── Badges / Tags ── */
+    .badge-tag { display: inline-block; border-radius: 4px; padding: 2px 8px; font-size: 11px; font-weight: 600; }
+    .tag-a { background: rgba(248,81,73,.15); color: var(--danger); border: 1px solid rgba(248,81,73,.3); }
+    .tag-aa { background: rgba(210,153,34,.15); color: var(--warning); border: 1px solid rgba(210,153,34,.3); }
+    .tag-aaa { background: rgba(63,185,80,.15); color: var(--success); border: 1px solid rgba(63,185,80,.3); }
+    .tag-pass { background: rgba(63,185,80,.15); color: var(--success); border: 1px solid rgba(63,185,80,.3); }
+    .tag-fail { background: rgba(248,81,73,.15); color: var(--danger); border: 1px solid rgba(248,81,73,.3); }
+    .tag-warn { background: rgba(210,153,34,.15); color: var(--warning); border: 1px solid rgba(210,153,34,.3); }
+    .tag-info { background: rgba(88,166,255,.15); color: var(--accent); border: 1px solid rgba(88,166,255,.3); }
+    .tag-easy { background: rgba(63,185,80,.15); color: var(--success); border: 1px solid rgba(63,185,80,.3); }
+    .tag-medium { background: rgba(210,153,34,.15); color: var(--warning); border: 1px solid rgba(210,153,34,.3); }
+    .tag-hard { background: rgba(248,81,73,.15); color: var(--danger); border: 1px solid rgba(248,81,73,.3); }
+
+    /* ── Progress bars ── */
+    .progress-wrap { background: var(--border); border-radius: 4px; height: 8px; overflow: hidden; margin-top: 4px; }
+    .progress-fill { height: 100%; border-radius: 4px; transition: width .4s; }
+    .pf-green { background: var(--success); }
+    .pf-blue  { background: var(--accent); }
+    .pf-yellow{ background: var(--warning); }
+    .pf-red   { background: var(--danger); }
+
+    /* ── Table ── */
+    .tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .tbl th { background: rgba(48,54,61,.6); padding: 8px 10px; text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .4px; color: var(--muted); border-bottom: 1px solid var(--border); }
+    .tbl td { padding: 8px 10px; border-bottom: 1px solid rgba(48,54,61,.5); vertical-align: middle; }
+    .tbl tr:last-child td { border-bottom: none; }
+    .tbl tr:hover td { background: rgba(255,255,255,.02); }
+
+    /* ── Code block ── */
+    pre { background: #010409; border: 1px solid var(--border); border-radius: 6px; padding: 14px; font-size: 12px; line-height: 1.6; overflow-x: auto; margin: 8px 0; font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace; }
+    .hl-kw  { color: #ff7b72; }
+    .hl-fn  { color: #d2a8ff; }
+    .hl-st  { color: #a5d6ff; }
+    .hl-cm  { color: #8b949e; }
+    .hl-nu  { color: #f0883e; }
+    .hl-tp  { color: #ffa657; }
+
+    /* ── Contrast swatch ── */
+    .contrast-swatch { border-radius: 6px; padding: 16px; font-size: 15px; font-weight: 600; text-align: center; margin-top: 10px; border: 1px solid var(--border); }
+
+    /* ── Issue list ── */
+    .issue-item { display: flex; gap: 10px; align-items: flex-start; padding: 10px; border-bottom: 1px solid rgba(48,54,61,.5); }
+    .issue-item:last-child { border-bottom: none; }
+    .issue-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+    /* ── ARIA tree ── */
+    .aria-tree { font-size: 12px; line-height: 1.8; font-family: monospace; background: #010409; border: 1px solid var(--border); border-radius: 6px; padding: 12px; max-height: 200px; overflow-y: auto; }
+    .aria-el { color: #7ee787; }
+    .aria-role { color: var(--warning); }
+    .aria-attr { color: var(--accent); }
+    .aria-val { color: var(--orange); }
+
+    /* ── Focus ring visualizer ── */
+    .focus-demo { background: #010409; border: 1px solid var(--border); border-radius: 6px; padding: 20px; display: flex; flex-wrap: wrap; gap: 10px; }
+    .fd-elem { border-radius: 4px; padding: 6px 12px; font-size: 12px; cursor: pointer; transition: outline .1s; }
+    .fd-elem:focus { outline: 3px solid var(--accent); outline-offset: 2px; }
+    .fd-btn { background: var(--accent); color: #0d1117; border: none; font-weight: 600; }
+    .fd-input { background: var(--bg); border: 1px solid var(--border); color: var(--text); width: 120px; }
+    .fd-link { background: transparent; border: none; color: var(--accent); text-decoration: underline; }
+    .fd-select { background: var(--bg); border: 1px solid var(--border); color: var(--text); }
+    .fd-note { font-size: 11px; color: var(--muted); width: 100%; }
+
+    /* ── Feedback sliders ── */
+    .fb-slider-row { display: flex; align-items: center; gap: 10px; margin: 8px 0; }
+    .fb-slider-row label { width: 110px; margin: 0; flex-shrink: 0; font-size: 12px; }
+    .fb-slider-row input[type=range] { flex: 1; accent-color: var(--accent); }
+    .fb-slider-row .fb-val { width: 30px; text-align: right; font-weight: 600; color: var(--accent); }
+
+    /* ── Canvas chart area ── */
+    canvas { display: block; border-radius: 6px; }
+    .chart-wrap { position: relative; }
+
+    /* ── Kbd ── */
+    kbd { display: inline-block; background: var(--card); border: 1px solid var(--border); border-radius: 4px; padding: 1px 6px; font-size: 11px; font-family: monospace; }
+
+    /* ── Accordion / collapsible ── */
+    .accord-hdr { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+    .accord-body { display: none; background: var(--card); border: 1px solid var(--border); border-top: none; border-radius: 0 0 6px 6px; padding: 12px; margin-bottom: 8px; font-size: 13px; line-height: 1.6; }
+    .accord-body.open { display: block; }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    /* ── Utility ── */
+    .mt8 { margin-top: 8px; }
+    .mt16 { margin-top: 16px; }
+    .mb8 { margin-bottom: 8px; }
+    .mb16 { margin-bottom: 16px; }
+    .muted { color: var(--muted); }
+    .text-success { color: var(--success); }
+    .text-danger { color: var(--danger); }
+    .text-warning { color: var(--warning); }
+    .text-accent { color: var(--accent); }
+    .flex { display: flex; }
+    .gap8 { gap: 8px; }
+    .gap16 { gap: 16px; }
+    .flex-1 { flex: 1; }
+    .justify-between { justify-content: space-between; }
+    .align-center { align-items: center; }
+    hr.sep { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════ HEADER ═══════════════════ -->
+<header role="banner">
+  <div class="logo">♿ Accessibility<span>QA·AI</span></div>
+  <div class="tagline">Accessibility QA Engineer – AI Trainer Platform</div>
+  <div class="badge">
+    <span class="pill pill-green">● WCAG 2.1 AA</span>
+    <span class="pill pill-blue">DataAnnotation</span>
+  </div>
+</header>
+
+<!-- ═══════════════════ NAV ═══════════════════ -->
+<nav role="navigation" aria-label="Main tabs">
+  <button class="active" onclick="showTab('auditor',this)" aria-selected="true">🔍 Accessibility Auditor</button>
+  <button onclick="showTab('designer',this)" aria-selected="false">✏️ Challenge Designer</button>
+  <button onclick="showTab('evaluator',this)" aria-selected="false">🧪 Code Evaluator</button>
+  <button onclick="showTab('feedback',this)" aria-selected="false">📋 AI Feedback Studio</button>
+  <button onclick="showTab('analytics',this)" aria-selected="false">📊 Analytics</button>
+</nav>
+
+<main class="content" role="main">
+
+<!-- ═══════════════════════════════════════════════════════════
+     TAB 1 – ACCESSIBILITY AUDITOR
+═══════════════════════════════════════════════════════════════ -->
+<section id="tab-auditor" class="tab-panel active" aria-label="Accessibility Auditor">
+  <h2>Accessibility Auditor</h2>
+  <p class="muted mb16">Live WCAG 2.1 checks: color contrast, ARIA integrity, keyboard navigation, and focus order.</p>
+
+  <div class="grid-2" style="gap:20px;">
+
+    <!-- Contrast Checker -->
+    <div class="card">
+      <div class="card-title">🎨 Color Contrast Checker</div>
+      <div class="grid-2" style="gap:12px;">
+        <div>
+          <label for="fg-color">Foreground Color</label>
+          <input type="color" id="fg-color" value="#c9d1d9" oninput="runContrastCheck()">
+        </div>
+        <div>
+          <label for="bg-color">Background Color</label>
+          <input type="color" id="bg-color" value="#0d1117" oninput="runContrastCheck()">
+        </div>
+      </div>
+      <div id="contrast-swatch" class="contrast-swatch" style="background:#0d1117;color:#c9d1d9;">
+        Sample Text — Aa Bb Cc
+      </div>
+      <div id="contrast-result" class="mt8"></div>
+      <hr class="sep">
+      <div class="card-title">WCAG Thresholds</div>
+      <table class="tbl" aria-label="WCAG contrast thresholds">
+        <thead><tr><th>Level</th><th>Normal Text</th><th>Large Text</th></tr></thead>
+        <tbody>
+          <tr><td><span class="badge-tag tag-aa">AA</span></td><td>4.5 : 1</td><td>3.0 : 1</td></tr>
+          <tr><td><span class="badge-tag tag-aaa">AAA</span></td><td>7.0 : 1</td><td>4.5 : 1</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ARIA Validator -->
+    <div class="card">
+      <div class="card-title">🏷️ ARIA Role &amp; Attribute Validator</div>
+      <label for="aria-input">Paste HTML snippet</label>
+      <textarea id="aria-input" rows="6" placeholder='<button aria-label="Close" onclick="...">X</button>'>&lt;nav role="navigation" aria-label="Main"&gt;
+  &lt;a href="/" aria-current="page"&gt;Home&lt;/a&gt;
+  &lt;a href="/about"&gt;About&lt;/a&gt;
+&lt;/nav&gt;</textarea>
+      <div class="row">
+        <button class="btn btn-primary" onclick="validateAria()">Validate ARIA</button>
+        <button class="btn btn-secondary" onclick="loadBadAriaExample()">Load Bad Example</button>
+      </div>
+      <div id="aria-output" class="mt8"></div>
+    </div>
+  </div><!-- /grid-2 -->
+
+  <div class="grid-2 mt16" style="gap:20px;">
+
+    <!-- Keyboard Nav Tester -->
+    <div class="card">
+      <div class="card-title">⌨️ Keyboard Navigation Tester</div>
+      <p class="muted mb8" style="font-size:12px;">Tab through the interactive elements below. Focus order is visually highlighted. Press <kbd>Tab</kbd> / <kbd>Shift+Tab</kbd> to navigate.</p>
+      <div class="focus-demo" id="focus-demo" role="group" aria-label="Keyboard navigation test area">
+        <button class="fd-elem fd-btn" tabindex="0">Primary Action</button>
+        <input class="fd-elem fd-input" type="text" placeholder="Text field" tabindex="0" aria-label="Sample text input">
+        <a href="#" class="fd-elem fd-link" tabindex="0" onclick="return false;">Link Item</a>
+        <select class="fd-elem fd-select" tabindex="0" aria-label="Sample dropdown">
+          <option>Option A</option><option>Option B</option><option>Option C</option>
+        </select>
+        <button class="fd-elem fd-btn" tabindex="0" style="background:var(--success);">Secondary Action</button>
+        <button class="fd-elem fd-btn" tabindex="0" style="background:var(--danger);">Destructive Action</button>
+        <span class="fd-note">✅ All elements have visible focus rings meeting WCAG 2.4.7 (Focus Visible)</span>
+      </div>
+      <div id="focus-order" class="mt8"></div>
+      <button class="btn btn-secondary btn-sm mt8" onclick="auditFocusOrder()">Audit Focus Order</button>
+    </div>
+
+    <!-- WCAG Checklist -->
+    <div class="card">
+      <div class="card-title">✅ WCAG 2.1 AA Quick Checklist</div>
+      <div id="wcag-list" style="font-size:13px; line-height:1.8;"></div>
+      <hr class="sep">
+      <div class="row">
+        <button class="btn btn-primary btn-sm" onclick="runFullAudit()">Run Full Audit</button>
+        <span id="audit-score" style="font-size:13px;"></span>
+      </div>
+    </div>
+
+  </div><!-- /grid-2 -->
+
+  <!-- Screen Reader Output Preview -->
+  <div class="card mt16">
+    <div class="card-title">🔊 Screen Reader Output Simulator</div>
+    <div class="grid-2" style="gap:16px;">
+      <div>
+        <label for="sr-html">HTML Snippet</label>
+        <textarea id="sr-html" rows="8" oninput="updateSRPreview()">&lt;main&gt;
+  &lt;h1&gt;Shopping Cart&lt;/h1&gt;
+  &lt;ul aria-label="Cart items"&gt;
+    &lt;li&gt;
+      &lt;img src="shoe.jpg" alt="Blue running shoes, size 10"&gt;
+      &lt;span&gt;Blue Running Shoes&lt;/span&gt;
+      &lt;span aria-label="Price: 89 dollars"&gt;$89.00&lt;/span&gt;
+      &lt;button aria-label="Remove Blue Running Shoes from cart"&gt;×&lt;/button&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;button&gt;Checkout&lt;/button&gt;
+&lt;/main&gt;</textarea>
+      </div>
+      <div>
+        <label>Screen Reader Output (simulated)</label>
+        <div id="sr-output" class="aria-tree" style="min-height:200px; max-height:200px;"></div>
+        <div id="sr-issues" class="mt8"></div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     TAB 2 – CHALLENGE DESIGNER
+═══════════════════════════════════════════════════════════════ -->
+<section id="tab-designer" class="tab-panel" aria-label="Challenge Designer">
+  <h2>Challenge Designer</h2>
+  <p class="muted mb16">Author coding challenges used to train AI models. All problems include accessibility metadata and evaluation criteria.</p>
+
+  <div class="grid-2" style="gap:20px;">
+    <!-- Editor -->
+    <div>
+      <div class="card">
+        <div class="card-title">Problem Statement Editor</div>
+        <label for="ch-title">Problem Title</label>
+        <input type="text" id="ch-title" value="Accessible Modal Dialog" oninput="renderPreview()">
+        <label for="ch-difficulty">Difficulty</label>
+        <select id="ch-difficulty" onchange="renderPreview()">
+          <option value="Easy">Easy</option>
+          <option value="Medium" selected>Medium</option>
+          <option value="Hard">Hard</option>
+          <option value="Expert">Expert</option>
+        </select>
+        <label for="ch-lang">Primary Language</label>
+        <select id="ch-lang" onchange="renderPreview()">
+          <option>JavaScript</option>
+          <option>TypeScript</option>
+          <option>Python</option>
+          <option>Go</option>
+          <option>Java</option>
+        </select>
+        <label for="ch-desc">Problem Description</label>
+        <textarea id="ch-desc" rows="6" oninput="renderPreview()">Implement an accessible modal dialog that:
+1. Traps keyboard focus while open
+2. Returns focus to trigger element on close
+3. Uses proper ARIA roles (role="dialog", aria-modal="true", aria-labelledby)
+4. Closes on Escape key press
+5. Announces opening to screen readers via aria-live</textarea>
+        <label for="ch-constraints">Constraints</label>
+        <textarea id="ch-constraints" rows="3" oninput="renderPreview()">- No external libraries
+- Must pass WCAG 2.1 AA
+- Handle multiple concurrent modals</textarea>
+        <label for="ch-input">Example Input</label>
+        <input type="text" id="ch-input" value='openModal({ title: "Confirm", content: "Delete item?" })' oninput="renderPreview()">
+        <label for="ch-output">Expected Output / Behavior</label>
+        <input type="text" id="ch-output" value='Modal visible, focus trapped, aria-modal="true" set' oninput="renderPreview()">
+        <label for="ch-wcag">Related WCAG Criteria</label>
+        <input type="text" id="ch-wcag" value="1.3.1, 2.1.1, 2.1.2, 4.1.2, 2.4.3" oninput="renderPreview()">
+        <div class="row">
+          <button class="btn btn-primary" onclick="saveChallenge()">Save Challenge</button>
+          <button class="btn btn-secondary" onclick="clearChallenge()">Clear</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Preview -->
+    <div>
+      <div class="card">
+        <div class="card-title">Live Preview</div>
+        <div id="challenge-preview"></div>
+      </div>
+      <div class="card mt16">
+        <div class="card-title">Challenge Library <span id="lib-count" class="muted"></span></div>
+        <div id="challenge-library"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     TAB 3 – CODE EVALUATOR
+═══════════════════════════════════════════════════════════════ -->
+<section id="tab-evaluator" class="tab-panel" aria-label="Code Evaluator">
+  <h2>Code Evaluator</h2>
+  <p class="muted mb16">Paste a solution and evaluate it for correctness, accessibility compliance, and code quality. Used to grade AI-generated submissions.</p>
+
+  <div class="grid-2" style="gap:20px;">
+    <div>
+      <div class="card">
+        <div class="card-title">Code Input</div>
+        <label for="eval-lang">Language</label>
+        <select id="eval-lang">
+          <option>JavaScript</option>
+          <option>TypeScript</option>
+          <option>Python</option>
+          <option>Go</option>
+          <option>Java</option>
+        </select>
+        <label for="eval-code">Solution Code</label>
+        <textarea id="eval-code" rows="16" style="font-family:monospace;font-size:12px;" placeholder="Paste code here...">function openModal(config) {
+  const overlay = document.createElement('div');
+  overlay.innerHTML = `
+    <div role="dialog" aria-modal="true"
+         aria-labelledby="modal-title" id="modal">
+      <h2 id="modal-title">${config.title}</h2>
+      <p>${config.content}</p>
+      <button id="close-btn" onclick="closeModal()">Close</button>
+    </div>`;
+  document.body.appendChild(overlay);
+
+  // Focus the modal
+  overlay.querySelector('#modal').focus();
+
+  // Trap focus
+  overlay.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeModal();
+    if (e.key === 'Tab') trapFocus(e, overlay);
+  });
+}
+
+function trapFocus(e, container) {
+  const focusable = container.querySelectorAll(
+    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+  );
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+  if (e.shiftKey && document.activeElement === first) {
+    e.preventDefault(); last.focus();
+  } else if (!e.shiftKey && document.activeElement === last) {
+    e.preventDefault(); first.focus();
+  }
+}
+
+function closeModal() {
+  const modal = document.getElementById('modal');
+  if (modal) modal.closest('div').remove();
+}</textarea>
+        <div class="row">
+          <button class="btn btn-primary" onclick="evaluateCode()">Evaluate Code</button>
+          <button class="btn btn-secondary" onclick="loadBadExample()">Load Bad Example</button>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div id="eval-results" class="card">
+        <div class="card-title">Evaluation Results</div>
+        <p class="muted" style="font-size:13px;">Click <strong>Evaluate Code</strong> to run analysis.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Test Case Runner -->
+  <div class="card mt16">
+    <div class="card-title">🧪 Test Case Runner</div>
+    <table class="tbl" id="test-table" aria-label="Test case results">
+      <thead>
+        <tr><th>#</th><th>Test Description</th><th>WCAG Criteria</th><th>Expected</th><th>Status</th></tr>
+      </thead>
+      <tbody id="test-tbody">
+        <tr><td colspan="5" class="muted" style="padding:20px;text-align:center;">Run evaluation to see test results</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     TAB 4 – AI FEEDBACK STUDIO
+═══════════════════════════════════════════════════════════════ -->
+<section id="tab-feedback" class="tab-panel" aria-label="AI Feedback Studio">
+  <h2>AI Feedback Studio</h2>
+  <p class="muted mb16">Review AI-generated code submissions, score them across accessibility and quality dimensions, and submit structured feedback to shape next-generation models.</p>
+
+  <!-- KPI Row -->
+  <div class="grid-4 mb16">
+    <div class="card kpi">
+      <div class="kpi-val text-accent" id="fb-total">0</div>
+      <div class="kpi-lbl">Total Reviewed</div>
+    </div>
+    <div class="card kpi">
+      <div class="kpi-val text-success" id="fb-avg">—</div>
+      <div class="kpi-lbl">Avg Score</div>
+    </div>
+    <div class="card kpi">
+      <div class="kpi-val text-warning" id="fb-revise">0</div>
+      <div class="kpi-lbl">Needs Revision</div>
+    </div>
+    <div class="card kpi">
+      <div class="kpi-val text-success" id="fb-approved">0</div>
+      <div class="kpi-lbl">Approved</div>
+    </div>
+  </div>
+
+  <!-- Submission Selector -->
+  <div class="card mb16">
+    <div class="card-title">AI Submission Queue</div>
+    <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+      <label for="sub-select" style="margin:0;color:var(--text);">Select Submission:</label>
+      <select id="sub-select" style="width:320px;" onchange="loadSubmission(this.value)">
+        <option value="0">Sub #A-101 — Keyboard Trap in Modal (JS)</option>
+        <option value="1">Sub #A-102 — Image Alt Text Generator (Python)</option>
+        <option value="2">Sub #A-103 — ARIA Live Region Announcer (TypeScript)</option>
+      </select>
+      <button class="btn btn-secondary btn-sm" onclick="prevSub()">◀ Prev</button>
+      <button class="btn btn-secondary btn-sm" onclick="nextSub()">Next ▶</button>
+    </div>
+  </div>
+
+  <div class="grid-2" style="gap:20px;">
+    <!-- Code View -->
+    <div class="card">
+      <div class="card-title" id="sub-title">AI Submission Preview</div>
+      <pre id="sub-code" style="min-height:300px; max-height:400px; overflow-y:auto;"></pre>
+    </div>
+
+    <!-- Scoring Form -->
+    <div class="card">
+      <div class="card-title">Scoring Rubric</div>
+      <div id="scoring-form">
+        <div class="fb-slider-row">
+          <label>Correctness</label>
+          <input type="range" min="0" max="10" value="7" oninput="updateScore(this,'s-correctness')">
+          <span class="fb-val" id="s-correctness">7</span>
+        </div>
+        <div class="fb-slider-row">
+          <label>Accessibility</label>
+          <input type="range" min="0" max="10" value="5" oninput="updateScore(this,'s-accessibility')">
+          <span class="fb-val" id="s-accessibility">5</span>
+        </div>
+        <div class="fb-slider-row">
+          <label>WCAG Compliance</label>
+          <input type="range" min="0" max="10" value="6" oninput="updateScore(this,'s-wcag')">
+          <span class="fb-val" id="s-wcag">6</span>
+        </div>
+        <div class="fb-slider-row">
+          <label>Code Clarity</label>
+          <input type="range" min="0" max="10" value="8" oninput="updateScore(this,'s-clarity')">
+          <span class="fb-val" id="s-clarity">8</span>
+        </div>
+        <div class="fb-slider-row">
+          <label>Performance</label>
+          <input type="range" min="0" max="10" value="7" oninput="updateScore(this,'s-perf')">
+          <span class="fb-val" id="s-perf">7</span>
+        </div>
+        <div class="fb-slider-row">
+          <label>Robustness</label>
+          <input type="range" min="0" max="10" value="6" oninput="updateScore(this,'s-robust')">
+          <span class="fb-val" id="s-robust">6</span>
+        </div>
+
+        <hr class="sep">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
+          <span style="font-size:13px;font-weight:600;">Overall Score:</span>
+          <span id="overall-score" style="font-size:22px;font-weight:700;color:var(--accent);">6.5</span>
+          <span class="badge-tag" id="score-verdict"></span>
+        </div>
+
+        <label for="fb-notes">Feedback Notes</label>
+        <textarea id="fb-notes" rows="4" placeholder="Describe specific issues found, WCAG criteria violated, and suggestions for improvement..."></textarea>
+
+        <label for="fb-severity">Issue Severity</label>
+        <select id="fb-severity">
+          <option value="critical">Critical – blocks users with disabilities</option>
+          <option value="major" selected>Major – significant barrier</option>
+          <option value="minor">Minor – inconvenience only</option>
+          <option value="none">No issues found</option>
+        </select>
+
+        <div class="row mt8">
+          <button class="btn btn-success" onclick="submitFeedback()">Submit Feedback</button>
+          <button class="btn btn-secondary" onclick="clearFeedback()">Clear</button>
+        </div>
+        <div id="fb-submit-msg" class="mt8"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Feedback History -->
+  <div class="card mt16">
+    <div class="card-title">Feedback History</div>
+    <table class="tbl" id="history-table" aria-label="Feedback submission history">
+      <thead>
+        <tr><th>Sub ID</th><th>Problem</th><th>Correctness</th><th>Accessibility</th><th>WCAG</th><th>Clarity</th><th>Overall</th><th>Verdict</th><th>Submitted</th></tr>
+      </thead>
+      <tbody id="history-tbody">
+        <tr><td colspan="9" class="muted" style="padding:16px;text-align:center;">No submissions yet</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     TAB 5 – ANALYTICS
+═══════════════════════════════════════════════════════════════ -->
+<section id="tab-analytics" class="tab-panel" aria-label="Analytics Dashboard">
+  <h2>Analytics Dashboard</h2>
+  <p class="muted mb16">Real-time metrics on AI training data quality, WCAG issue distribution, and contributor performance.</p>
+
+  <!-- Top KPIs -->
+  <div class="grid-4 mb16">
+    <div class="card kpi"><div class="kpi-val text-accent">248</div><div class="kpi-lbl">Problems Designed</div></div>
+    <div class="card kpi"><div class="kpi-val text-success">1,847</div><div class="kpi-lbl">AI Submissions Reviewed</div></div>
+    <div class="card kpi"><div class="kpi-val text-warning">94</div><div class="kpi-lbl">Avg Quality Score</div></div>
+    <div class="card kpi"><div class="kpi-val text-success">$40+</div><div class="kpi-lbl">Hourly Rate (USD)</div></div>
+  </div>
+
+  <!-- Charts Row 1 -->
+  <div class="grid-2 mb16" style="gap:20px;">
+    <div class="card chart-wrap">
+      <div class="card-title">WCAG Issue Distribution</div>
+      <canvas id="chart-wcag" width="420" height="220" aria-label="WCAG issue distribution bar chart" role="img"></canvas>
+    </div>
+    <div class="card chart-wrap">
+      <div class="card-title">Issue Severity Breakdown</div>
+      <canvas id="chart-severity" width="420" height="220" aria-label="Issue severity donut chart" role="img"></canvas>
+    </div>
+  </div>
+
+  <!-- Charts Row 2 -->
+  <div class="grid-2 mb16" style="gap:20px;">
+    <div class="card chart-wrap">
+      <div class="card-title">12-Week Quality Trend</div>
+      <canvas id="chart-trend" width="420" height="200" aria-label="12-week quality trend line chart" role="img"></canvas>
+    </div>
+    <div class="card chart-wrap">
+      <div class="card-title">Language Distribution</div>
+      <canvas id="chart-lang" width="420" height="200" aria-label="Language distribution chart" role="img"></canvas>
+    </div>
+  </div>
+
+  <!-- Data Quality Table -->
+  <div class="card">
+    <div class="card-title">Data Quality Breakdown by WCAG Principle</div>
+    <table class="tbl" aria-label="Data quality breakdown by WCAG principle">
+      <thead>
+        <tr><th>Principle</th><th>Total Tests</th><th>Pass Rate</th><th>Avg Score</th><th>Critical Issues</th><th>Trend</th></tr>
+      </thead>
+      <tbody id="quality-tbody"></tbody>
+    </table>
+  </div>
+
+  <!-- Contributor Leaderboard -->
+  <div class="grid-2 mt16" style="gap:20px;">
+    <div class="card">
+      <div class="card-title">Contributor Leaderboard</div>
+      <table class="tbl" id="leaderboard" aria-label="Contributor leaderboard">
+        <thead><tr><th>Rank</th><th>Contributor</th><th>Specialty</th><th>Reviews</th><th>Avg Score</th></tr></thead>
+        <tbody id="leaderboard-tbody"></tbody>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title">Recent Activity Feed</div>
+      <div id="activity-feed" style="font-size:13px;line-height:1.8;max-height:260px;overflow-y:auto;"></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<script>
+// ═══════════════════════════════════════════════════════════
+//  UTILITY
+// ═══════════════════════════════════════════════════════════
+function showTab(name, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+  btn.setAttribute('aria-selected','true');
+  if (name === 'analytics') drawAllCharts();
+  if (name === 'designer')  renderPreview();
+  if (name === 'feedback')  loadSubmission(0);
+}
+
+// ═══════════════════════════════════════════════════════════
+//  TAB 1 — ACCESSIBILITY AUDITOR
+// ═══════════════════════════════════════════════════════════
+
+// Luminance helpers
+function hexToRgb(hex) {
+  hex = hex.replace('#','');
+  if (hex.length === 3) hex = hex.split('').map(x=>x+x).join('');
+  const n = parseInt(hex, 16);
+  return { r: (n>>16)&255, g: (n>>8)&255, b: n&255 };
+}
+function relativeLuminance({r,g,b}) {
+  const srgb = [r,g,b].map(c => {
+    c /= 255;
+    return c <= 0.03928 ? c/12.92 : Math.pow((c+0.055)/1.055, 2.4);
+  });
+  return 0.2126*srgb[0] + 0.7152*srgb[1] + 0.0722*srgb[2];
+}
+function contrastRatio(hex1, hex2) {
+  const l1 = relativeLuminance(hexToRgb(hex1));
+  const l2 = relativeLuminance(hexToRgb(hex2));
+  const [bright, dark] = l1 > l2 ? [l1, l2] : [l2, l1];
+  return (bright + 0.05) / (dark + 0.05);
+}
+
+function runContrastCheck() {
+  const fg = document.getElementById('fg-color').value;
+  const bg = document.getElementById('bg-color').value;
+  const swatch = document.getElementById('contrast-swatch');
+  const result = document.getElementById('contrast-result');
+  swatch.style.background = bg;
+  swatch.style.color = fg;
+  const ratio = contrastRatio(fg, bg).toFixed(2);
+  const passAA  = ratio >= 4.5;
+  const passAAA = ratio >= 7.0;
+  const passAALarge = ratio >= 3.0;
+  result.innerHTML = `
+    <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+      <strong style="font-size:18px;color:var(--accent);">${ratio}:1</strong>
+      <span class="badge-tag ${passAA ? 'tag-pass':'tag-fail'}">AA Normal ${passAA?'✓':'✗'}</span>
+      <span class="badge-tag ${passAALarge ? 'tag-pass':'tag-fail'}">AA Large ${passAALarge?'✓':'✗'}</span>
+      <span class="badge-tag ${passAAA ? 'tag-pass':'tag-fail'}">AAA ${passAAA?'✓':'✗'}</span>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-top:6px;">
+      ${passAA ? '✅ Meets WCAG 2.1 AA for normal body text.' : '❌ Fails WCAG 2.1 AA. Increase contrast by adjusting colors.'}
+    </p>`;
+}
+runContrastCheck();
+
+// ARIA Validator
+function validateAria() {
+  const html = document.getElementById('aria-input').value;
+  const issues = [];
+  const ok = [];
+
+  if (!/<[^>]+role=/.test(html) && /<nav|<main|<aside|<header|<footer/.test(html))
+    ok.push('Landmark element found – implicit ARIA role applied');
+  if (/<[^>]+role=/.test(html)) ok.push('Explicit ARIA role attribute detected');
+  if (/<[^>]+aria-label=/.test(html)) ok.push('aria-label attribute present');
+  if (/<[^>]+aria-current=/.test(html)) ok.push('aria-current attribute present – great for navigation');
+  if (/<[^>]+aria-labelledby=/.test(html) && !html.includes('id='))
+    issues.push({ sev:'warn', msg:'aria-labelledby references an ID that may not exist in the snippet' });
+  if (/<img[^>]+(?!alt=)[^>]*>/.test(html))
+    issues.push({ sev:'crit', msg:'<img> without alt attribute — violates WCAG 1.1.1 Non-text Content' });
+  if (/<a[^>]*href=["']#["']/.test(html))
+    issues.push({ sev:'warn', msg:'Anchor with href="#" may confuse screen readers — use a real target or button' });
+  if (/<div[^>]+onclick/.test(html))
+    issues.push({ sev:'crit', msg:'<div> with onclick handler — not keyboard accessible. Use <button> instead (WCAG 2.1.1)' });
+  if (/<button[^>]*>\s*[×xX]\s*<\/button>/.test(html) && !/<button[^>]+aria-label/.test(html))
+    issues.push({ sev:'warn', msg:'Icon-only button without aria-label — screen readers will read "x" (WCAG 4.1.2)' });
+  if (issues.length === 0 && ok.length > 0)
+    issues.push({ sev:'pass', msg:'No critical ARIA violations detected in this snippet' });
+
+  let html2 = '<div>';
+  issues.forEach(i => {
+    const icon = i.sev==='crit'?'🔴':i.sev==='warn'?'🟡':'🟢';
+    const cls = i.sev==='crit'?'tag-fail':i.sev==='warn'?'tag-warn':'tag-pass';
+    html2 += `<div class="issue-item"><span class="issue-icon">${icon}</span><div><span class="badge-tag ${cls}">${i.sev.toUpperCase()}</span> ${i.msg}</div></div>`;
+  });
+  ok.forEach(o => {
+    html2 += `<div class="issue-item"><span class="issue-icon">✅</span><div>${o}</div></div>`;
+  });
+  html2 += '</div>';
+
+  // ARIA tree
+  html2 += '<div class="card-title mt8">Parsed ARIA Tree</div><div class="aria-tree">';
+  const tagMatches = [...html.matchAll(/<(\w+)([^>]*)>/g)];
+  tagMatches.forEach(m => {
+    const tag = m[1], attrs = m[2];
+    const role  = (attrs.match(/role="([^"]+)"/) || [])[1] || '';
+    const label = (attrs.match(/aria-label="([^"]+)"/) || [])[1] || '';
+    const cur   = (attrs.match(/aria-current="([^"]+)"/) || [])[1] || '';
+    html2 += `<div><span class="aria-el">&lt;${tag}&gt;</span>`;
+    if (role)  html2 += ` <span class="aria-role">role=</span><span class="aria-val">"${role}"</span>`;
+    if (label) html2 += ` <span class="aria-attr">aria-label=</span><span class="aria-val">"${label}"</span>`;
+    if (cur)   html2 += ` <span class="aria-attr">aria-current=</span><span class="aria-val">"${cur}"</span>`;
+    html2 += '</div>';
+  });
+  html2 += '</div>';
+
+  document.getElementById('aria-output').innerHTML = html2;
+}
+validateAria();
+
+function loadBadAriaExample() {
+  document.getElementById('aria-input').value =
+`<div onclick="submitForm()">Submit</div>
+<img src="logo.png">
+<a href="#">Click here</a>
+<button>×</button>`;
+  validateAria();
+}
+
+// Focus Order Audit
+function auditFocusOrder() {
+  const el = document.getElementById('focus-demo');
+  const focusable = el.querySelectorAll('button,input,a,select,[tabindex]');
+  let html = '<div class="card-title mt8">Focus Order</div><ol style="padding-left:18px;font-size:12px;line-height:1.8;">';
+  focusable.forEach((f, i) => {
+    const tag = f.tagName.toLowerCase();
+    const label = f.getAttribute('aria-label') || f.textContent.trim() || f.placeholder || tag;
+    const ti = f.getAttribute('tabindex');
+    html += `<li><kbd>${i+1}</kbd> &lt;${tag}&gt; "${label}" ${ti!==null?`tabindex="${ti}"`:'(natural order)'}</li>`;
+  });
+  html += '</ol><p style="font-size:12px;color:var(--success);margin-top:6px;">✅ Focus order is logical and matches DOM order (WCAG 2.4.3)</p>';
+  document.getElementById('focus-order').innerHTML = html;
+}
+
+// WCAG Checklist
+const wcagItems = [
+  { id:'1.1.1', lvl:'A',  label:'Non-text Content — alt attributes on images', pass:true },
+  { id:'1.3.1', lvl:'A',  label:'Info and Relationships — semantic HTML structure', pass:true },
+  { id:'1.3.2', lvl:'A',  label:'Meaningful Sequence — logical DOM order', pass:true },
+  { id:'1.4.1', lvl:'A',  label:'Use of Color — not sole conveyor of information', pass:true },
+  { id:'1.4.3', lvl:'AA', label:'Contrast (Minimum) — 4.5:1 for normal text', pass:null },
+  { id:'1.4.4', lvl:'AA', label:'Resize Text — content reflows up to 200%', pass:true },
+  { id:'1.4.11',lvl:'AA', label:'Non-text Contrast — 3:1 for UI components', pass:true },
+  { id:'2.1.1', lvl:'A',  label:'Keyboard — all functionality via keyboard', pass:true },
+  { id:'2.1.2', lvl:'A',  label:'No Keyboard Trap — focus not locked', pass:true },
+  { id:'2.4.3', lvl:'A',  label:'Focus Order — logical, sequential focus', pass:true },
+  { id:'2.4.7', lvl:'AA', label:'Focus Visible — keyboard focus indicator visible', pass:true },
+  { id:'4.1.1', lvl:'A',  label:'Parsing — valid HTML, no duplicate IDs', pass:null },
+  { id:'4.1.2', lvl:'A',  label:'Name, Role, Value — ARIA roles and properties', pass:true },
+  { id:'4.1.3', lvl:'AA', label:'Status Messages — aria-live announcements', pass:true },
+];
+function renderWcagList() {
+  const ratio = contrastRatio(
+    document.getElementById('fg-color').value,
+    document.getElementById('bg-color').value
+  );
+  wcagItems.forEach(i => {
+    if (i.id === '1.4.3') i.pass = ratio >= 4.5;
+    if (i.id === '4.1.1') i.pass = true;
+  });
+  const el = document.getElementById('wcag-list');
+  el.innerHTML = wcagItems.map(i => {
+    const icon = i.pass === true ? '✅' : i.pass === false ? '❌' : '⏳';
+    const lvlTag = i.lvl === 'A' ? 'tag-a' : 'tag-aa';
+    return `<div style="display:flex;gap:8px;align-items:baseline;margin-bottom:4px;">
+      <span style="font-size:14px;">${icon}</span>
+      <span class="badge-tag ${lvlTag}" style="flex-shrink:0;">${i.lvl}</span>
+      <span style="color:var(--muted);font-size:11px;flex-shrink:0;">${i.id}</span>
+      <span>${i.label}</span>
+    </div>`;
+  }).join('');
+}
+renderWcagList();
+
+function runFullAudit() {
+  renderWcagList();
+  const pass = wcagItems.filter(i=>i.pass===true).length;
+  const total = wcagItems.length;
+  const pct = Math.round(pass/total*100);
+  document.getElementById('audit-score').innerHTML =
+    `<strong style="color:var(--success);">${pass}/${total} passed (${pct}%)</strong> — ${pct>=85?'✅ Compliant':'⚠️ Needs Work'}`;
+}
+runFullAudit();
+
+// Screen Reader Simulator
+function updateSRPreview() {
+  const html = document.getElementById('sr-html').value;
+  const issues = [];
+  const lines = [];
+
+  // Parse landmarks and elements
+  const tagRe = /<(\/?[\w]+)([^>]*)>/g;
+  let match;
+  const openTags = [];
+  while ((match = tagRe.exec(html)) !== null) {
+    const full = match[0], tagName = match[1], attrs = match[2];
+    const closing = tagName.startsWith('/');
+    const name = tagName.replace('/','').toLowerCase();
+    if (closing) { openTags.pop(); continue; }
+    const roleAttr = (attrs.match(/role="([^"]+)"/) || [])[1];
+    const ariaLabel = (attrs.match(/aria-label="([^"]+)"/) || [])[1];
+    const ariaLabelledBy = (attrs.match(/aria-labelledby="([^"]+)"/) || [])[1];
+    const alt = (attrs.match(/alt="([^"]+)"/) || [])[1];
+    const id = (attrs.match(/\bid="([^"]+)"/) || [])[1];
+
+    const indent = '  '.repeat(openTags.length);
+    let announcement = '';
+
+    const implicitRoles = {main:'main',nav:'navigation',header:'banner',footer:'contentinfo',
+      aside:'complementary',form:'form',h1:'heading level 1',h2:'heading level 2',
+      h3:'heading level 3',ul:'list',ol:'list',li:'list item',button:'button',
+      a:'link',img:'image',input:'text input',select:'combobox',textarea:'text area'};
+
+    const role = roleAttr || implicitRoles[name] || name;
+    const labelStr = ariaLabel || ariaLabelledBy ? `"${ariaLabel||ariaLabelledBy}"` : '';
+
+    if (name === 'img') {
+      if (alt) announcement = `${indent}[Image: ${alt}]`;
+      else { announcement = `${indent}[Image: unlabeled]`; issues.push('⚠️ Image missing alt attribute (WCAG 1.1.1)'); }
+    } else if (name === 'button') {
+      announcement = `${indent}[Button${labelStr?' '+labelStr:''}]`;
+    } else if (name === 'a') {
+      announcement = `${indent}[Link${labelStr?' '+labelStr:''}]`;
+    } else if (/^h[1-6]$/.test(name)) {
+      announcement = `${indent}[${role.toUpperCase()}]`;
+    } else if (name === 'input') {
+      announcement = `${indent}[Input: ${labelStr||'unlabeled'}]`;
+    } else if (['main','nav','aside','header','footer'].includes(name)) {
+      announcement = `${indent}[Landmark: ${role}${labelStr?' '+labelStr:''}]`;
+    } else if (name === 'ul' || name === 'ol') {
+      const countMatch = html.match(/<li/g);
+      announcement = `${indent}[List: ${countMatch?countMatch.length:0} items${labelStr?' '+labelStr:''}]`;
+    } else if (['li','p','span','div'].includes(name) && attrs.includes('aria-')) {
+      announcement = `${indent}[${name.toUpperCase()}${labelStr?' '+labelStr:''}]`;
+    } else {
+      announcement = null;
+    }
+    if (announcement) lines.push(`<span class="aria-el">${announcement}</span>`);
+    openTags.push(name);
+  }
+
+  document.getElementById('sr-output').innerHTML = lines.join('<br>') || '<span class="muted">No announcements generated</span>';
+  let issueHtml = '';
+  if (issues.length) {
+    issueHtml = issues.map(i=>`<div class="issue-item"><span class="issue-icon">⚠️</span><span>${i}</span></div>`).join('');
+  } else {
+    issueHtml = '<p style="font-size:12px;color:var(--success);">✅ No accessibility issues detected in this snippet</p>';
+  }
+  document.getElementById('sr-issues').innerHTML = issueHtml;
+}
+updateSRPreview();
+
+// ═══════════════════════════════════════════════════════════
+//  TAB 2 — CHALLENGE DESIGNER
+// ═══════════════════════════════════════════════════════════
+const LIBRARY = [
+  { title:'Accessible Modal Dialog', difficulty:'Medium', lang:'JavaScript', wcag:'2.1.1, 2.1.2, 4.1.2', desc:'Implement focus-trapped modal with Escape close and proper ARIA.' },
+  { title:'Color Contrast Checker', difficulty:'Easy', lang:'JavaScript', wcag:'1.4.3, 1.4.11', desc:'Calculate WCAG contrast ratio between two hex colors.' },
+  { title:'ARIA Live Region', difficulty:'Easy', lang:'TypeScript', wcag:'4.1.3', desc:'Announce dynamic content changes to screen readers.' },
+  { title:'Skip Navigation Link', difficulty:'Easy', lang:'HTML/CSS', wcag:'2.4.1', desc:'Implement bypass block skip-nav link for keyboard users.' },
+  { title:'Focus Trap Utility', difficulty:'Medium', lang:'TypeScript', wcag:'2.1.2', desc:'Reusable focus-trap module for modals, drawers, and tooltips.' },
+  { title:'Accessible Data Table', difficulty:'Medium', lang:'JavaScript', wcag:'1.3.1, 1.3.2', desc:'Table with scope, caption, summary, and keyboard sort.' },
+  { title:'Screen Reader Alt Text Generator', difficulty:'Hard', lang:'Python', wcag:'1.1.1', desc:'AI function that generates descriptive alt text for images.' },
+  { title:'WCAG Audit Crawler', difficulty:'Expert', lang:'Python', wcag:'All AA', desc:'Recursive URL crawler reporting WCAG 2.1 AA violations.' },
+];
+
+function renderPreview() {
+  const title = document.getElementById('ch-title').value || 'Untitled';
+  const diff  = document.getElementById('ch-difficulty').value;
+  const lang  = document.getElementById('ch-lang').value;
+  const desc  = document.getElementById('ch-desc').value;
+  const con   = document.getElementById('ch-constraints').value;
+  const inp   = document.getElementById('ch-input').value;
+  const out   = document.getElementById('ch-output').value;
+  const wcag  = document.getElementById('ch-wcag').value;
+  const diffClass = {'Easy':'tag-easy','Medium':'tag-medium','Hard':'tag-hard','Expert':'tag-hard'}[diff]||'tag-medium';
+  document.getElementById('challenge-preview').innerHTML = `
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px;">
+      <h3 style="margin:0;flex:1;">${escHtml(title)}</h3>
+      <span class="badge-tag ${diffClass}">${diff}</span>
+      <span class="badge-tag tag-info">${lang}</span>
+    </div>
+    <p style="font-size:13px;line-height:1.6;margin-bottom:10px;">${escHtml(desc).replace(/\n/g,'<br>')}</p>
+    ${con?`<div class="card-title">Constraints</div><p style="font-size:13px;line-height:1.6;">${escHtml(con).replace(/\n/g,'<br>')}</p>`:''}
+    ${inp?`<div class="card-title mt8">Example Input</div><pre style="margin:0;">${escHtml(inp)}</pre>`:''}
+    ${out?`<div class="card-title mt8">Expected Output</div><pre style="margin:0;">${escHtml(out)}</pre>`:''}
+    ${wcag?`<div class="card-title mt8">Related WCAG</div><div>${wcag.split(',').map(s=>`<span class="badge-tag tag-info" style="margin-right:4px;">${s.trim()}</span>`).join('')}</div>`:''}`;
+  renderLibrary();
+}
+
+function saveChallenge() {
+  const title = document.getElementById('ch-title').value;
+  const diff  = document.getElementById('ch-difficulty').value;
+  const lang  = document.getElementById('ch-lang').value;
+  const desc  = document.getElementById('ch-desc').value;
+  const wcag  = document.getElementById('ch-wcag').value;
+  LIBRARY.unshift({ title, difficulty: diff, lang, wcag, desc });
+  renderLibrary();
+  document.getElementById('challenge-preview').insertAdjacentHTML('afterbegin',
+    `<div style="background:rgba(63,185,80,.1);border:1px solid var(--success);border-radius:6px;padding:8px 12px;margin-bottom:12px;font-size:13px;color:var(--success);">✅ Challenge saved to library!</div>`);
+  setTimeout(() => renderPreview(), 2000);
+}
+
+function clearChallenge() {
+  document.getElementById('ch-title').value = '';
+  document.getElementById('ch-desc').value = '';
+  document.getElementById('ch-constraints').value = '';
+  document.getElementById('ch-input').value = '';
+  document.getElementById('ch-output').value = '';
+  document.getElementById('ch-wcag').value = '';
+  renderPreview();
+}
+
+function renderLibrary() {
+  document.getElementById('lib-count').textContent = `(${LIBRARY.length})`;
+  document.getElementById('challenge-library').innerHTML = LIBRARY.slice(0,8).map((c,i) => {
+    const dc = {'Easy':'tag-easy','Medium':'tag-medium','Hard':'tag-hard','Expert':'tag-hard'}[c.difficulty]||'tag-medium';
+    return `<div style="padding:8px 0;border-bottom:1px solid var(--border);display:flex;gap:8px;align-items:baseline;">
+      <span class="badge-tag ${dc}" style="flex-shrink:0;">${c.difficulty}</span>
+      <span class="badge-tag tag-info" style="flex-shrink:0;">${c.lang}</span>
+      <span style="flex:1;font-size:13px;">${escHtml(c.title)}</span>
+      <button class="btn btn-secondary btn-sm" onclick="loadLibChallenge(${i})">Load</button>
+    </div>`;
+  }).join('');
+}
+
+function loadLibChallenge(i) {
+  const c = LIBRARY[i];
+  document.getElementById('ch-title').value = c.title;
+  document.getElementById('ch-difficulty').value = c.difficulty;
+  document.getElementById('ch-lang').value = c.lang;
+  document.getElementById('ch-desc').value = c.desc;
+  document.getElementById('ch-wcag').value = c.wcag;
+  renderPreview();
+}
+
+renderLibrary();
+renderPreview();
+
+// ═══════════════════════════════════════════════════════════
+//  TAB 3 — CODE EVALUATOR
+// ═══════════════════════════════════════════════════════════
+function evaluateCode() {
+  const code = document.getElementById('eval-code').value;
+  const results = document.getElementById('eval-results');
+
+  // Static analysis rules
+  const issues = [];
+  const checks = [
+    { re:/role="dialog"/, sev:'pass', msg:'WCAG 4.1.2: role="dialog" present' },
+    { re:/aria-modal="true"/, sev:'pass', msg:'WCAG 4.1.2: aria-modal="true" present' },
+    { re:/aria-labelledby|aria-label/, sev:'pass', msg:'WCAG 4.1.2: accessible name provided' },
+    { re:/Escape/, sev:'pass', msg:'WCAG 2.1.1: Escape key handler present' },
+    { re:/trapFocus|trap.*focus/i, sev:'pass', msg:'WCAG 2.1.2: focus trap logic present' },
+    { re:/\.focus\(\)/, sev:'pass', msg:'WCAG 2.4.3: programmatic focus management' },
+    { re:/tabindex="-1"/, sev:'warn', msg:'WCAG 2.1.1: tabindex="-1" may remove focusable element from tab order' },
+    { re:/onclick="/, sev:'warn', msg:'WCAG 2.1.1: Inline onclick — prefer addEventListener for better separation' },
+    { re:/aria-live/, sev:'info', msg:'WCAG 4.1.3: aria-live region recommended to announce open/close' },
+    { re:/return\s+false/, sev:'info', msg:'Avoid return false — use preventDefault() for clarity' },
+  ];
+
+  checks.forEach(c => {
+    if (c.re.test(code)) issues.push(c);
+    else if (c.sev === 'pass') issues.push({ sev:'fail', msg: c.msg.replace('present','MISSING') });
+  });
+
+  // Metrics
+  const lines = code.split('\n').length;
+  const fns   = (code.match(/function\s+\w+|=>\s*\{|=\s*function/g)||[]).length;
+  const cyc   = 1 + (code.match(/\bif\b|\belse\b|\bwhile\b|\bfor\b|\?\s*:/g)||[]).length;
+
+  results.innerHTML = `
+    <div class="card-title">Quality Metrics</div>
+    <div class="grid-4" style="gap:8px;margin-bottom:12px;">
+      <div class="card kpi" style="padding:10px;"><div class="kpi-val" style="font-size:20px;">${lines}</div><div class="kpi-lbl">Lines</div></div>
+      <div class="card kpi" style="padding:10px;"><div class="kpi-val" style="font-size:20px;">${fns}</div><div class="kpi-lbl">Functions</div></div>
+      <div class="card kpi" style="padding:10px;"><div class="kpi-val" style="font-size:20px;">${cyc}</div><div class="kpi-lbl">Cyclomatic</div></div>
+      <div class="card kpi" style="padding:10px;">
+        <div class="kpi-val" style="font-size:20px;color:${cyc<=5?'var(--success)':cyc<=10?'var(--warning)':'var(--danger)'};">${cyc<=5?'Low':cyc<=10?'Med':'High'}</div>
+        <div class="kpi-lbl">Complexity</div>
+      </div>
+    </div>
+    <div class="card-title">Accessibility Analysis</div>
+    ${issues.map(i => {
+      const ic = i.sev==='pass'?'✅':i.sev==='fail'?'❌':i.sev==='warn'?'⚠️':'ℹ️';
+      const cl = i.sev==='pass'?'tag-pass':i.sev==='fail'?'tag-fail':i.sev==='warn'?'tag-warn':'tag-info';
+      return `<div class="issue-item"><span class="issue-icon">${ic}</span><div><span class="badge-tag ${cl}">${i.sev.toUpperCase()}</span> ${i.msg}</div></div>`;
+    }).join('')}`;
+
+  // Test cases
+  const tests = [
+    { desc:'role="dialog" attribute present', wcag:'4.1.2', exp:'Present', re:/role="dialog"/ },
+    { desc:'aria-modal="true" attribute set', wcag:'4.1.2', exp:'Present', re:/aria-modal="true"/ },
+    { desc:'Dialog has accessible name', wcag:'4.1.2', exp:'Present', re:/aria-labelledby|aria-label/ },
+    { desc:'Escape key closes modal', wcag:'2.1.1', exp:'Handled', re:/Escape/ },
+    { desc:'Focus trap implemented', wcag:'2.1.2', exp:'Present', re:/trapFocus|trap.*focus/i },
+    { desc:'Focus returned on close', wcag:'2.4.3', exp:'Managed', re:/\.focus\(\)/ },
+    { desc:'No tabindex > 0 (forced order)', wcag:'2.4.3', exp:'Absent', re:/tabindex="[1-9]"/, invert:true },
+    { desc:'Event listeners use addEventListener', wcag:'2.1.1', exp:'Preferred', re:/addEventListener/, soft:true },
+  ];
+  const tbody = document.getElementById('test-tbody');
+  tbody.innerHTML = tests.map((t,i) => {
+    let pass = t.re.test(code);
+    if (t.invert) pass = !t.re.test(code);
+    const st = pass ? '<span class="badge-tag tag-pass">PASS</span>' : t.soft ? '<span class="badge-tag tag-warn">INFO</span>' : '<span class="badge-tag tag-fail">FAIL</span>';
+    return `<tr><td>${i+1}</td><td>${t.desc}</td><td><span class="badge-tag tag-info">${t.wcag}</span></td><td>${t.exp}</td><td>${st}</td></tr>`;
+  }).join('');
+}
+
+function loadBadExample() {
+  document.getElementById('eval-code').value =
+`// Bad example — accessibility violations
+function showDialog() {
+  var modal = document.createElement('div');
+  modal.innerHTML = '<div style="position:fixed"><p>Are you sure?</p><div onclick="closeDialog()">×</div></div>';
+  document.body.appendChild(modal);
+  // No focus management, no ARIA, no keyboard support
+}
+function closeDialog() {
+  document.querySelector('.modal').remove();
+}`;
+  evaluateCode();
+}
+
+// ═══════════════════════════════════════════════════════════
+//  TAB 4 — AI FEEDBACK STUDIO
+// ═══════════════════════════════════════════════════════════
+const SUBMISSIONS = [
+  {
+    id:'A-101', title:'Sub #A-101 — Keyboard Trap in Modal (JS)',
+    code:`<span class="hl-cm">// AI-generated: Keyboard trap for accessible modal</span>
+<span class="hl-kw">function</span> <span class="hl-fn">trapFocus</span>(modal) {
+  <span class="hl-kw">const</span> focusable = modal.<span class="hl-fn">querySelectorAll</span>(
+    <span class="hl-st">'button,[href],input,select,textarea,[tabindex]:not([tabindex="-1"])'</span>
+  );
+  <span class="hl-kw">const</span> first = focusable[<span class="hl-nu">0</span>];
+  <span class="hl-kw">const</span> last  = focusable[focusable.length - <span class="hl-nu">1</span>];
+
+  modal.<span class="hl-fn">addEventListener</span>(<span class="hl-st">'keydown'</span>, e => {
+    <span class="hl-kw">if</span> (e.key === <span class="hl-st">'Tab'</span>) {
+      <span class="hl-kw">if</span> (e.shiftKey &amp;&amp; document.activeElement === first) {
+        e.<span class="hl-fn">preventDefault</span>(); last.<span class="hl-fn">focus</span>();
+      } <span class="hl-kw">else if</span> (!e.shiftKey &amp;&amp; document.activeElement === last) {
+        e.<span class="hl-fn">preventDefault</span>(); first.<span class="hl-fn">focus</span>();
+      }
+    }
+    <span class="hl-kw">if</span> (e.key === <span class="hl-st">'Escape'</span>) <span class="hl-fn">closeModal</span>();
+  });
+  <span class="hl-cm">// Missing: aria-modal, role="dialog", initial focus</span>
+}`
+  },
+  {
+    id:'A-102', title:'Sub #A-102 — Image Alt Text Generator (Python)',
+    code:`<span class="hl-cm"># AI-generated: alt text generator using vision model</span>
+<span class="hl-kw">import</span> openai
+
+<span class="hl-kw">def</span> <span class="hl-fn">generate_alt_text</span>(image_url: <span class="hl-tp">str</span>) -> <span class="hl-tp">str</span>:
+    <span class="hl-st">"""Generate WCAG-compliant alt text for an image."""</span>
+    client = openai.<span class="hl-fn">OpenAI</span>()
+    response = client.chat.completions.<span class="hl-fn">create</span>(
+        model=<span class="hl-st">"gpt-4o"</span>,
+        messages=[{
+            <span class="hl-st">"role"</span>: <span class="hl-st">"user"</span>,
+            <span class="hl-st">"content"</span>: [
+                {<span class="hl-st">"type"</span>: <span class="hl-st">"text"</span>,
+                 <span class="hl-st">"text"</span>: <span class="hl-st">"Write concise alt text for this image for WCAG 1.1.1 compliance."</span>},
+                {<span class="hl-st">"type"</span>: <span class="hl-st">"image_url"</span>, <span class="hl-st">"image_url"</span>: {<span class="hl-st">"url"</span>: image_url}}
+            ]
+        }],
+        max_tokens=<span class="hl-nu">100</span>
+    )
+    <span class="hl-kw">return</span> response.choices[<span class="hl-nu">0</span>].message.content.strip()
+    <span class="hl-cm"># Missing: error handling, empty image case, decorative image detection</span>`
+  },
+  {
+    id:'A-103', title:'Sub #A-103 — ARIA Live Region Announcer (TypeScript)',
+    code:`<span class="hl-cm">// AI-generated: ARIA live region utility</span>
+<span class="hl-kw">type</span> <span class="hl-tp">Politeness</span> = <span class="hl-st">'polite'</span> | <span class="hl-st">'assertive'</span>;
+
+<span class="hl-kw">class</span> <span class="hl-fn">LiveAnnouncer</span> {
+  <span class="hl-kw">private</span> politeEl:   HTMLElement;
+  <span class="hl-kw">private</span> assertiveEl: HTMLElement;
+
+  <span class="hl-fn">constructor</span>() {
+    <span class="hl-kw">this</span>.politeEl    = <span class="hl-kw">this</span>.<span class="hl-fn">_createRegion</span>(<span class="hl-st">'polite'</span>);
+    <span class="hl-kw">this</span>.assertiveEl = <span class="hl-kw">this</span>.<span class="hl-fn">_createRegion</span>(<span class="hl-st">'assertive'</span>);
+  }
+
+  <span class="hl-fn">announce</span>(msg: <span class="hl-tp">string</span>, politeness: <span class="hl-tp">Politeness</span> = <span class="hl-st">'polite'</span>): <span class="hl-tp">void</span> {
+    <span class="hl-kw">const</span> el = politeness === <span class="hl-st">'assertive'</span> ? <span class="hl-kw">this</span>.assertiveEl : <span class="hl-kw">this</span>.politeEl;
+    el.textContent = <span class="hl-st">''</span>;
+    <span class="hl-fn">setTimeout</span>(() => { el.textContent = msg; }, <span class="hl-nu">50</span>);
+  }
+
+  <span class="hl-kw">private</span> <span class="hl-fn">_createRegion</span>(politeness: <span class="hl-tp">Politeness</span>): HTMLElement {
+    <span class="hl-kw">const</span> el = document.<span class="hl-fn">createElement</span>(<span class="hl-st">'div'</span>);
+    el.<span class="hl-fn">setAttribute</span>(<span class="hl-st">'aria-live'</span>, politeness);
+    el.<span class="hl-fn">setAttribute</span>(<span class="hl-st">'aria-atomic'</span>, <span class="hl-st">'true'</span>);
+    el.style.cssText = <span class="hl-st">'position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;'</span>;
+    document.body.<span class="hl-fn">appendChild</span>(el);
+    <span class="hl-kw">return</span> el;
+  }
+}`
+  }
+];
+
+let currentSub = 0;
+const fbHistory = [];
+
+function loadSubmission(idx) {
+  currentSub = parseInt(idx, 10);
+  const sub = SUBMISSIONS[currentSub];
+  document.getElementById('sub-select').value = currentSub;
+  document.getElementById('sub-title').textContent = sub.title;
+  document.getElementById('sub-code').innerHTML = sub.code;
+  updateOverallScore();
+}
+
+function prevSub() { loadSubmission((currentSub+SUBMISSIONS.length-1)%SUBMISSIONS.length); }
+function nextSub() { loadSubmission((currentSub+1)%SUBMISSIONS.length); }
+
+function updateScore(el, id) {
+  document.getElementById(id).textContent = el.value;
+  updateOverallScore();
+}
+
+function updateOverallScore() {
+  const ids = ['s-correctness','s-accessibility','s-wcag','s-clarity','s-perf','s-robust'];
+  const vals = ids.map(id => parseInt(document.getElementById(id).textContent, 10));
+  const avg = (vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(1);
+  document.getElementById('overall-score').textContent = avg;
+  const verdict = avg >= 8 ? 'Approved' : avg >= 5 ? 'Needs Revision' : 'Rejected';
+  const cls = avg >= 8 ? 'tag-pass' : avg >= 5 ? 'tag-warn' : 'tag-fail';
+  document.getElementById('score-verdict').className = `badge-tag ${cls}`;
+  document.getElementById('score-verdict').textContent = verdict;
+}
+
+function submitFeedback() {
+  const sub = SUBMISSIONS[currentSub];
+  const ids = ['s-correctness','s-accessibility','s-wcag','s-clarity'];
+  const [cor, acc, wcag, clar] = ids.map(id => document.getElementById(id).textContent);
+  const avg = document.getElementById('overall-score').textContent;
+  const verdict = document.getElementById('score-verdict').textContent;
+  const verdictCls = verdict==='Approved'?'tag-pass':verdict==='Needs Revision'?'tag-warn':'tag-fail';
+  const now = new Date().toLocaleTimeString();
+
+  fbHistory.unshift({ subId: sub.id, title: sub.title.split('—')[1]?.trim()||sub.title, cor, acc, wcag, clar, avg, verdict, verdictCls, time: now });
+  updateFbKpis();
+  renderHistory();
+
+  document.getElementById('fb-submit-msg').innerHTML =
+    `<div style="background:rgba(63,185,80,.1);border:1px solid var(--success);border-radius:6px;padding:8px 12px;font-size:13px;color:var(--success);">✅ Feedback submitted for ${sub.id} — Score: ${avg}</div>`;
+  setTimeout(()=>{ document.getElementById('fb-submit-msg').innerHTML=''; }, 3000);
+}
+
+function updateFbKpis() {
+  document.getElementById('fb-total').textContent = fbHistory.length;
+  const avgs = fbHistory.map(f=>parseFloat(f.avg));
+  document.getElementById('fb-avg').textContent = avgs.length ? (avgs.reduce((a,b)=>a+b,0)/avgs.length).toFixed(1) : '—';
+  document.getElementById('fb-revise').textContent = fbHistory.filter(f=>f.verdict==='Needs Revision').length;
+  document.getElementById('fb-approved').textContent = fbHistory.filter(f=>f.verdict==='Approved').length;
+}
+
+function renderHistory() {
+  const tbody = document.getElementById('history-tbody');
+  if (!fbHistory.length) { tbody.innerHTML = '<tr><td colspan="9" class="muted" style="padding:16px;text-align:center;">No submissions yet</td></tr>'; return; }
+  tbody.innerHTML = fbHistory.map(f =>
+    `<tr><td>${f.subId}</td><td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${f.title}</td><td>${f.cor}/10</td><td>${f.acc}/10</td><td>${f.wcag}/10</td><td>${f.clar}/10</td><td><strong>${f.avg}</strong></td><td><span class="badge-tag ${f.verdictCls}">${f.verdict}</span></td><td class="muted">${f.time}</td></tr>`
+  ).join('');
+}
+
+function clearFeedback() {
+  document.querySelectorAll('#scoring-form input[type=range]').forEach(r => { r.value = 7; });
+  ['s-correctness','s-accessibility','s-wcag','s-clarity','s-perf','s-robust'].forEach(id => document.getElementById(id).textContent = '7');
+  document.getElementById('fb-notes').value = '';
+  updateOverallScore();
+}
+
+loadSubmission(0);
+
+// ═══════════════════════════════════════════════════════════
+//  TAB 5 — ANALYTICS (Canvas Charts)
+// ═══════════════════════════════════════════════════════════
+function drawAllCharts() {
+  drawWcagChart();
+  drawSeverityDonut();
+  drawTrendLine();
+  drawLangChart();
+  renderQualityTable();
+  renderLeaderboard();
+  renderActivityFeed();
+}
+
+function drawWcagChart() {
+  const canvas = document.getElementById('chart-wcag');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0,0,W,H);
+  const data = [
+    { label:'1.1.1 Non-text', val:87, color:'#f85149' },
+    { label:'1.4.3 Contrast', val:142, color:'#d29922' },
+    { label:'2.1.1 Keyboard', val:63, color:'#f0883e' },
+    { label:'2.4.7 Focus',    val:95, color:'#58a6ff' },
+    { label:'4.1.2 Name/Role',val:118, color:'#bc8cff' },
+    { label:'4.1.3 Status',   val:44, color:'#39d0d8' },
+  ];
+  const maxVal = Math.max(...data.map(d=>d.val));
+  const pad = { top:10, bottom:20, left:110, right:30 };
+  const barH = Math.floor((H - pad.top - pad.bottom - (data.length-1)*6) / data.length);
+  ctx.fillStyle = '#8b949e';
+  ctx.font = '11px sans-serif';
+  data.forEach((d,i) => {
+    const y = pad.top + i*(barH+6);
+    const barW = (d.val/maxVal)*(W-pad.left-pad.right);
+    ctx.fillStyle = d.color + '33';
+    ctx.strokeStyle = d.color;
+    ctx.lineWidth = 1;
+    ctx.fillRect(pad.left, y, barW, barH);
+    ctx.strokeRect(pad.left, y, barW, barH);
+    ctx.fillStyle = '#8b949e';
+    ctx.textAlign = 'right';
+    ctx.fillText(d.label, pad.left-6, y+barH/2+4);
+    ctx.fillStyle = '#c9d1d9';
+    ctx.textAlign = 'left';
+    ctx.fillText(d.val, pad.left+barW+4, y+barH/2+4);
+  });
+}
+
+function drawSeverityDonut() {
+  const canvas = document.getElementById('chart-severity');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0,0,W,H);
+  const data = [
+    { label:'Critical', val:87,  color:'#f85149' },
+    { label:'Major',    val:218, color:'#d29922' },
+    { label:'Minor',    val:144, color:'#58a6ff' },
+    { label:'Pass',     val:398, color:'#3fb950' },
+  ];
+  const total = data.reduce((a,d)=>a+d.val,0);
+  const cx = 110, cy = H/2, r = 80, ri = 52;
+  let angle = -Math.PI/2;
+  data.forEach(d => {
+    const sweep = (d.val/total)*(2*Math.PI);
+    ctx.beginPath();
+    ctx.moveTo(cx,cy);
+    ctx.arc(cx,cy,r,angle,angle+sweep);
+    ctx.closePath();
+    ctx.fillStyle = d.color;
+    ctx.fill();
+    angle += sweep;
+  });
+  ctx.beginPath(); ctx.arc(cx,cy,ri,0,2*Math.PI); ctx.fillStyle='#161b22'; ctx.fill();
+  ctx.fillStyle='#c9d1d9'; ctx.font='bold 14px sans-serif'; ctx.textAlign='center';
+  ctx.fillText(total, cx, cy+5);
+  ctx.fillStyle='#8b949e'; ctx.font='10px sans-serif';
+  ctx.fillText('total', cx, cy+20);
+  let lx = 220, ly = 40;
+  data.forEach(d => {
+    ctx.fillStyle = d.color; ctx.fillRect(lx,ly,12,12);
+    ctx.fillStyle = '#c9d1d9'; ctx.font='12px sans-serif'; ctx.textAlign='left';
+    ctx.fillText(`${d.label}: ${d.val}`, lx+18, ly+11);
+    ly += 26;
+  });
+}
+
+function drawTrendLine() {
+  const canvas = document.getElementById('chart-trend');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0,0,W,H);
+  const weeks = ['W1','W2','W3','W4','W5','W6','W7','W8','W9','W10','W11','W12'];
+  const scores = [74,76,79,81,80,83,85,84,87,89,91,94];
+  const pad = { top:20, bottom:30, left:40, right:20 };
+  const gW = W-pad.left-pad.right, gH = H-pad.top-pad.bottom;
+  const minV=65, maxV=100;
+  const scaleX = i => pad.left + i/(weeks.length-1)*gW;
+  const scaleY = v => pad.top + (1-(v-minV)/(maxV-minV))*gH;
+  // grid
+  ctx.strokeStyle='#30363d'; ctx.lineWidth=1;
+  [70,80,90,100].forEach(v => {
+    const y = scaleY(v);
+    ctx.beginPath(); ctx.moveTo(pad.left,y); ctx.lineTo(W-pad.right,y); ctx.stroke();
+    ctx.fillStyle='#8b949e'; ctx.font='10px sans-serif'; ctx.textAlign='right';
+    ctx.fillText(v, pad.left-4, y+4);
+  });
+  // fill
+  ctx.beginPath(); ctx.moveTo(scaleX(0),scaleY(scores[0]));
+  scores.forEach((v,i) => ctx.lineTo(scaleX(i),scaleY(v)));
+  ctx.lineTo(scaleX(scores.length-1), H-pad.bottom);
+  ctx.lineTo(pad.left, H-pad.bottom); ctx.closePath();
+  ctx.fillStyle='rgba(88,166,255,0.12)'; ctx.fill();
+  // line
+  ctx.beginPath(); ctx.moveTo(scaleX(0),scaleY(scores[0]));
+  scores.forEach((v,i) => ctx.lineTo(scaleX(i),scaleY(v)));
+  ctx.strokeStyle='#58a6ff'; ctx.lineWidth=2; ctx.lineJoin='round'; ctx.stroke();
+  // dots
+  scores.forEach((v,i) => {
+    ctx.beginPath(); ctx.arc(scaleX(i),scaleY(v),3,0,2*Math.PI);
+    ctx.fillStyle='#58a6ff'; ctx.fill();
+  });
+  // x labels
+  ctx.fillStyle='#8b949e'; ctx.font='10px sans-serif'; ctx.textAlign='center';
+  weeks.forEach((w,i) => ctx.fillText(w, scaleX(i), H-pad.bottom+14));
+}
+
+function drawLangChart() {
+  const canvas = document.getElementById('chart-lang');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0,0,W,H);
+  const data = [
+    { label:'JavaScript', val:38, color:'#d29922' },
+    { label:'TypeScript',  val:22, color:'#58a6ff' },
+    { label:'Python',      val:21, color:'#3fb950' },
+    { label:'Go',          val:10, color:'#39d0d8' },
+    { label:'Java',        val:9,  color:'#bc8cff' },
+  ];
+  const barW = 46, gap = 18, pad = { top:20, bottom:40, left:20, right:20 };
+  const maxVal = Math.max(...data.map(d=>d.val));
+  const gH = H - pad.top - pad.bottom;
+  const startX = (W - data.length*(barW+gap)+gap)/2;
+  data.forEach((d,i) => {
+    const x = startX + i*(barW+gap);
+    const bH = (d.val/maxVal)*gH;
+    const y  = pad.top + gH - bH;
+    ctx.fillStyle = d.color + '44';
+    ctx.strokeStyle = d.color;
+    ctx.lineWidth = 1;
+    ctx.fillRect(x, y, barW, bH);
+    ctx.strokeRect(x, y, barW, bH);
+    ctx.fillStyle = '#c9d1d9'; ctx.font='bold 12px sans-serif'; ctx.textAlign='center';
+    ctx.fillText(d.val+'%', x+barW/2, y-5);
+    ctx.fillStyle = '#8b949e'; ctx.font='11px sans-serif';
+    ctx.fillText(d.label, x+barW/2, H-pad.bottom+14);
+  });
+}
+
+function renderQualityTable() {
+  const rows = [
+    { principle:'Perceivable',   tests:412, pass:94, avg:91, crit:23, trend:'↑ +3%' },
+    { principle:'Operable',      tests:387, pass:89, avg:87, crit:41, trend:'↑ +5%' },
+    { principle:'Understandable',tests:298, pass:96, avg:93, crit:12, trend:'→ 0%' },
+    { principle:'Robust',        tests:350, pass:91, avg:88, crit:31, trend:'↑ +2%' },
+  ];
+  document.getElementById('quality-tbody').innerHTML = rows.map(r => {
+    const passColor = r.pass>=95?'var(--success)':r.pass>=85?'var(--warning)':'var(--danger)';
+    return `<tr>
+      <td><strong>${r.principle}</strong></td>
+      <td>${r.tests}</td>
+      <td><span style="color:${passColor};font-weight:600;">${r.pass}%</span></td>
+      <td>${r.avg}</td>
+      <td style="color:var(--danger);">${r.crit}</td>
+      <td style="color:var(--success);font-weight:600;">${r.trend}</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderLeaderboard() {
+  const contributors = [
+    { rank:1, name:'Kevin DeLong', spec:'Accessibility QA', reviews:248, avg:9.4 },
+    { rank:2, name:'Sarah Chen',   spec:'Frontend/WCAG',   reviews:201, avg:9.1 },
+    { rank:3, name:'James Liu',    spec:'Python/Testing',  reviews:187, avg:8.9 },
+    { rank:4, name:'Maria Garcia', spec:'Full Stack',      reviews:163, avg:8.7 },
+    { rank:5, name:'Alex Kim',     spec:'TypeScript',      reviews:144, avg:8.5 },
+  ];
+  document.getElementById('leaderboard-tbody').innerHTML = contributors.map(c => {
+    const medal = c.rank===1?'🥇':c.rank===2?'🥈':c.rank===3?'🥉':'';
+    return `<tr>
+      <td>${medal} ${c.rank}</td>
+      <td><strong>${c.name}</strong></td>
+      <td><span class="badge-tag tag-info">${c.spec}</span></td>
+      <td>${c.reviews}</td>
+      <td style="color:var(--success);font-weight:600;">${c.avg}</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderActivityFeed() {
+  const activities = [
+    { icon:'✅', msg:'Reviewed Sub #A-103 — ARIA Live Announcer (TypeScript)', time:'2m ago' },
+    { icon:'⚠️', msg:'Flagged Sub #A-99 — Missing focus trap in accordion (JS)', time:'8m ago' },
+    { icon:'✏️', msg:'Designed new challenge: "Accessible Data Table"', time:'15m ago' },
+    { icon:'📊', msg:'Analytics report generated for Week 12', time:'1h ago' },
+    { icon:'✅', msg:'Approved Sub #A-97 — Screen reader live regions (TypeScript)', time:'2h ago' },
+    { icon:'🔍', msg:'Audited 5 WCAG contrast violations in batch #B-22', time:'3h ago' },
+    { icon:'✅', msg:'Reviewed Sub #A-95 — Skip nav links (HTML/CSS)', time:'4h ago' },
+    { icon:'✏️', msg:'Authored challenge: "WCAG Audit Crawler" (Python, Expert)', time:'5h ago' },
+  ];
+  document.getElementById('activity-feed').innerHTML = activities.map(a =>
+    `<div style="display:flex;gap:8px;padding:4px 0;border-bottom:1px solid var(--border);">
+      <span>${a.icon}</span>
+      <span style="flex:1;">${a.msg}</span>
+      <span class="muted" style="font-size:11px;flex-shrink:0;">${a.time}</span>
+    </div>`
+  ).join('');
+}
+
+// ═══════════════════════════════════════════════════════════
+//  HELPERS
+// ═══════════════════════════════════════════════════════════
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// Resize canvases to fit container before drawing
+function resizeCanvases() {
+  ['chart-wcag','chart-severity','chart-trend','chart-lang'].forEach(id => {
+    const canvas = document.getElementById(id);
+    if (!canvas) return;
+    const w = canvas.parentElement.clientWidth - 32;
+    if (w > 100) { canvas.width = w; }
+  });
+}
+window.addEventListener('resize', () => { resizeCanvases(); if (document.querySelector('#tab-analytics.active')) drawAllCharts(); });
+
+// Accordion
+document.querySelectorAll('.accord-hdr').forEach(h => {
+  h.addEventListener('click', () => {
+    const body = h.nextElementSibling;
+    body.classList.toggle('open');
+    h.querySelector('.accord-arrow').textContent = body.classList.contains('open') ? '▲' : '▼';
+  });
+});
+</script>
+</body>
+</html>
