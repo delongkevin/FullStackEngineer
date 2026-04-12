@@ -229,7 +229,26 @@ class MainWindow(QMainWindow):
         control_layout = QHBoxLayout(control_group)
         
         self.emergency_stop_btn = QPushButton("🛑 Emergency Stop")
-        self.emergency_stop_btn.setStyleSheet("background-color: red; color: white; font-weight: bold;")
+        self.emergency_stop_btn.setStyleSheet("""
+            QPushButton {
+                background-color: #dc3545;
+                color: white;
+                font-weight: bold;
+                font-size: 14px;
+                padding: 8px 16px;
+                border-radius: 6px;
+                border: 2px solid #c82333;
+                min-width: 140px;
+                min-height: 36px;
+            }
+            QPushButton:hover {
+                background-color: #c82333;
+                border-color: #bd2130;
+            }
+            QPushButton:pressed {
+                background-color: #bd2130;
+            }
+        """)
         control_layout.addWidget(self.emergency_stop_btn)
         
         self.start_btn = QPushButton("Start Capture")
@@ -271,6 +290,18 @@ class MainWindow(QMainWindow):
         # Traffic light indicator
         self.traffic_light = QLabel("🔴")
         self.traffic_light.setFont(QFont("Arial", 20))
+        self.traffic_light.setStyleSheet("""
+            QLabel {
+                background-color: rgba(50, 50, 50, 0.1);
+                border: 2px solid rgba(100, 100, 100, 0.3);
+                border-radius: 20px;
+                padding: 8px 12px;
+                min-width: 40px;
+                min-height: 40px;
+                qproperty-alignment: AlignCenter;
+            }
+        """)
+        self.traffic_light.setToolTip("CAN Bus Activity Status")
         status_indicator_layout.addWidget(self.traffic_light)
         
         # Message rate indicator
@@ -457,15 +488,42 @@ class MainWindow(QMainWindow):
             # Warn if memory usage is high
             if memory_mb > 500:  # 500 MB threshold
                 self.performance_label.setText("Performance: HIGH MEMORY")
-                self.performance_label.setStyleSheet("color: orange;")
+                self.performance_label.setStyleSheet("""
+                    QLabel {
+                        color: #ff8c00;
+                        background-color: rgba(255, 140, 0, 0.1);
+                        padding: 4px 8px;
+                        border-radius: 4px;
+                        border: 1px solid rgba(255, 140, 0, 0.3);
+                        font-weight: bold;
+                    }
+                """)
             elif memory_mb > 1000:  # 1 GB threshold
                 self.performance_label.setText("Performance: CRITICAL MEMORY")
-                self.performance_label.setStyleSheet("color: red;")
+                self.performance_label.setStyleSheet("""
+                    QLabel {
+                        color: #dc3545;
+                        background-color: rgba(220, 53, 69, 0.1);
+                        padding: 4px 8px;
+                        border-radius: 4px;
+                        border: 1px solid rgba(220, 53, 69, 0.3);
+                        font-weight: bold;
+                    }
+                """)
                 # Auto-cleanup
                 self.cleanup_resources()
             else:
                 self.performance_label.setText("Performance: OK")
-                self.performance_label.setStyleSheet("color: green;")
+                self.performance_label.setStyleSheet("""
+                    QLabel {
+                        color: #28a745;
+                        background-color: rgba(40, 167, 69, 0.1);
+                        padding: 4px 8px;
+                        border-radius: 4px;
+                        border: 1px solid rgba(40, 167, 69, 0.3);
+                        font-weight: bold;
+                    }
+                """)
                 
         except ImportError:
             self.memory_label.setText("Memory: psutil not available")
