@@ -1,6 +1,7 @@
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import ProjectDemoEmbed from '../../../components/ProjectDemoEmbed';
+import ProjectVideoSection from '../../../components/ProjectVideoSection';
 import ProjectViewTracker from '../../../components/ProjectViewTracker';
 import {
   findProjectByRouteParam,
@@ -306,6 +307,9 @@ export default function ProjectDetail({ params }: PageProps) {
               </details>
             </div>
           </div>
+
+          {/* Technical Overview Video */}
+          <ProjectVideoSection videoUrl={project.videoUrl} projectTitle={project.title} />
 
           <section className="mt-10 space-y-6" aria-label="Project navigation and related work">
             <div className="surface-card rounded-xl shadow-lg p-6">
