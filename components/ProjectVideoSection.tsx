@@ -58,16 +58,9 @@ export default function ProjectVideoSection({ videoUrl, projectTitle }: ProjectV
           <div>
             <p className="text-lg font-semibold theme-text-primary">Video Presentation Coming Soon</p>
             <p className="theme-text-secondary text-sm mt-2 max-w-md">
-              An AI-generated video walkthrough explaining the technical details of this project will
-              be added here. The presenter will cover architecture decisions, technology choices, and
-              key implementation highlights.
+              A video walkthrough for this project will be added here soon.
             </p>
           </div>
-          <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold"
-            style={{ background: 'var(--accent-soft)', color: 'var(--accent)' }}>
-            <PlayCircle size={12} aria-hidden="true" />
-            In Production
-          </span>
         </div>
       )}
     </section>
