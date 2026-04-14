@@ -18,6 +18,9 @@ export interface Project {
   androidUrl?: string;
   /** TestFlight invite URL or Apple App Store link */
   iosUrl?: string;
+  /** YouTube embed URL (https://www.youtube.com/embed/VIDEO_ID) or Vimeo embed URL
+   *  (https://player.vimeo.com/video/VIDEO_ID) for the technical overview video */
+  videoUrl?: string;
 }
 
 export type ProjectCategory = Exclude<Project['category'], 'all'>;
