@@ -13,11 +13,9 @@ function isValidEmbedUrl(url: string): boolean {
     const isYouTube =
       (parsed.hostname === 'www.youtube.com' || parsed.hostname === 'youtube.com') &&
       parsed.pathname.startsWith('/embed/');
-    const isYouTubeShort =
-      parsed.hostname === 'youtu.be';
     const isVimeo =
-      (parsed.hostname === 'player.vimeo.com') && parsed.pathname.startsWith('/video/');
-    return isYouTube || isYouTubeShort || isVimeo;
+      parsed.hostname === 'player.vimeo.com' && parsed.pathname.startsWith('/video/');
+    return isYouTube || isVimeo;
   } catch {
     return false;
   }
@@ -42,7 +40,7 @@ export default function ProjectVideoSection({ videoUrl, projectTitle }: ProjectV
           <iframe
             src={videoUrl}
             className="absolute inset-0 w-full h-full border-0"
-            title={`Technical overview video for ${projectTitle}`}
+            title={`${projectTitle} – Technical Overview`}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen
             loading="lazy"
