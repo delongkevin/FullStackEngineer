@@ -705,7 +705,7 @@ function runRateCalc() {
   const div = document.getElementById('rate-result');
   div.style.display = 'block';
   div.innerHTML = '<div class="rate-result-row"><span>Base Rate Premium</span><span>$' + Math.round(r.base).toLocaleString() + '</span></div>'
-    + '<div class="rate-result-row"><span>Territory Factor (' + state + ')</span><span>&times; ' + r.territory.toFixed(2) + '</span></div>'
+    + '<div class="rate-result-row"><span>Territory Factor (' + escHTML(state) + ')</span><span>&times; ' + r.territory.toFixed(2) + '</span></div>'
     + '<div class="rate-result-row"><span>Limit Factor</span><span>&times; ' + r.limit.toFixed(2) + '</span></div>'
     + '<div class="rate-result-row"><span>Deductible Credit</span><span>&#8722; ' + (r.deductible * 100).toFixed(1) + '%</span></div>'
     + '<div class="rate-result-row"><span>Experience Mod</span><span>&times; ' + r.expmod.toFixed(2) + '</span></div>'
@@ -735,6 +735,7 @@ class FormSerializer {
 }
 
 function escXML(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function escHTML(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 function generateMockRequestId() { return 'xxxx-xxxx-xxxx'.replace(/x/g, () => Math.floor(Math.random()*16).toString(16)); }
 
 function syntaxHighlightJSON(json) {
@@ -757,7 +758,7 @@ function exportJSON() {
   const obj = FormSerializer.toJSON();
   const json = JSON.stringify(obj, null, 2);
   document.getElementById('export-title').textContent = 'JSON Export';
-  document.getElementById('export-pre').innerHTML = syntaxHighlightJSON(json);
+  document.getElementById('export-pre').innerHTML = syntaxHighlightJSON(escHTML(json));
   document.getElementById('export-card').style.display = 'block';
 }
 
