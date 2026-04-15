@@ -395,7 +395,7 @@ canvas{display:block}
     <div class="card">
       <div class="card-title" id="form-preview-title">Form Preview — Select a form</div>
       <pre id="form-preview-content" style="max-height:320px;overflow-y:auto;font-size:11px">Click a form in the library to preview its XML schema.</pre>
-      <div style="margin-top:12px;display:flex;gap:8px" id="form-actions" style="display:none">
+      <div style="margin-top:12px;display:none;gap:8px" id="form-actions">
         <button class="btn btn-primary" onclick="validateForm()">&#10003; Validate Form</button>
         <button class="btn btn-outline" onclick="showJSONSchema()">{ } JSON Schema</button>
       </div>
@@ -638,6 +638,9 @@ function updateCoverages() {
 }
 
 // === RATE ENGINE ===
+const DEFAULT_BASE_VALUE = 500;   // base exposure unit for premium calculation
+const DEFAULT_EXP_MOD = 1.0;     // default experience modification factor (unity)
+
 class RateEngine {
   static territoryFactors = { CA:1.35, NY:1.42, FL:1.28, TX:1.15, IL:1.18, PA:1.12, OH:1.05, MI:1.08, GA:1.10 };
   static baseRates = { auto: 0.0185, property: 0.0042, gl: 0.0068, wc: 0.0155 };
@@ -679,7 +682,7 @@ function calculatePremium() {
     if (!cb || !cb.checked) return;
     const limit = parseFloat(document.getElementById('lim-' + c.id).value) || c.defLimit;
     const ded = parseFloat(document.getElementById('ded-' + c.id).value) || 0;
-    const result = RateEngine.calculate(lob, state, limit, ded, 500, 1.0);
+    const result = RateEngine.calculate(lob, state, limit, ded, DEFAULT_BASE_VALUE, DEFAULT_EXP_MOD);
     const prem = result.total / covs.length;
     grandTotal += prem;
     rows += '<tr><td>' + c.label + '</td><td>$' + limit.toLocaleString() + '</td><td>$' + ded.toLocaleString() + '</td><td>$' + Math.round(prem).toLocaleString() + '</td></tr>';
@@ -727,12 +730,12 @@ class FormSerializer {
     const covXML = (obj.coverages || []).map(c =>
       `        <Coverage>\n          <CoverageCode>${escXML(c.coverage)}</CoverageCode>\n          <Limit><FormatInteger>${c.limit}</FormatInteger></Limit>\n          <Deductible><FormatInteger>${c.deductible}</FormatInteger></Deductible>\n        </Coverage>`
     ).join('\n');
-    return `<?xml version="1.0" encoding="UTF-8"?>\n<ACORD>\n  <SignonRq>\n    <SignonTransport>\n      <CustId><CustLoginId>PolicyCore</CustLoginId></CustId>\n    </SignonTransport>\n  </SignonRq>\n  <InsuranceSvcRq>\n    <RqUID>${generateHexToken()}</RqUID>\n    <TransactionRequestDt>${new Date().toISOString()}</TransactionRequestDt>\n    <CommlLineBusiness>\n      <CommlLineBusinessInfo>\n        <PolicyNumber>${escXML(obj.policyNumber)}</PolicyNumber>\n        <LOBCd>${escXML(obj.lineOfBusiness)}</LOBCd>\n        <EffectiveDt>${escXML(obj.effectiveDate)}</EffectiveDt>\n        <ExpirationDt>${escXML(obj.expirationDate)}</ExpirationDt>\n        <StateProvCd>${escXML(obj.state)}</StateProvCd>\n      </CommlLineBusinessInfo>\n      <GeneralLiabilityLineBusiness>\n        <InsuredInfo>\n          <GeneralPartyInfo>\n            <NameInfo><CommercialName>${escXML(obj.insuredName)}</CommercialName></NameInfo>\n          </GeneralPartyInfo>\n        </InsuredInfo>\n        <CoverageSection>\n${covXML}\n        </CoverageSection>\n      </GeneralLiabilityLineBusiness>\n    </CommlLineBusiness>\n  </InsuranceSvcRq>\n</ACORD>`;
+    return `<?xml version="1.0" encoding="UTF-8"?>\n<ACORD>\n  <SignonRq>\n    <SignonTransport>\n      <CustId><CustLoginId>PolicyCore</CustLoginId></CustId>\n    </SignonTransport>\n  </SignonRq>\n  <InsuranceSvcRq>\n    <RqUID>${generateMockRequestId()}</RqUID>\n    <TransactionRequestDt>${new Date().toISOString()}</TransactionRequestDt>\n    <CommlLineBusiness>\n      <CommlLineBusinessInfo>\n        <PolicyNumber>${escXML(obj.policyNumber)}</PolicyNumber>\n        <LOBCd>${escXML(obj.lineOfBusiness)}</LOBCd>\n        <EffectiveDt>${escXML(obj.effectiveDate)}</EffectiveDt>\n        <ExpirationDt>${escXML(obj.expirationDate)}</ExpirationDt>\n        <StateProvCd>${escXML(obj.state)}</StateProvCd>\n      </CommlLineBusinessInfo>\n      <GeneralLiabilityLineBusiness>\n        <InsuredInfo>\n          <GeneralPartyInfo>\n            <NameInfo><CommercialName>${escXML(obj.insuredName)}</CommercialName></NameInfo>\n          </GeneralPartyInfo>\n        </InsuredInfo>\n        <CoverageSection>\n${covXML}\n        </CoverageSection>\n      </GeneralLiabilityLineBusiness>\n    </CommlLineBusiness>\n  </InsuranceSvcRq>\n</ACORD>`;
   }
 }
 
 function escXML(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-function generateHexToken() { return 'xxxx-xxxx-xxxx'.replace(/x/g, () => Math.floor(Math.random()*16).toString(16)); }
+function generateMockRequestId() { return 'xxxx-xxxx-xxxx'.replace(/x/g, () => Math.floor(Math.random()*16).toString(16)); }
 
 function syntaxHighlightJSON(json) {
   return json.replace(/(".*?")\s*:/g, '<span class="json-key">$1</span>:')
