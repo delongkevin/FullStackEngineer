@@ -8,7 +8,6 @@ variables
   msTimer tHeartbeat;
   int gPassCount = 0;
   int gFailCount = 0;
-  const long MAX_LONG_VALUE = 2147483647;
   const long MAX_TOLERANCE_MS = 1000;
 }
 
@@ -53,7 +52,7 @@ void verifyDidRead(long did, int expectedOk)
   // Mock UDS DID read handling (replace with real request/response transport)
   int udsPositive = expectedOk;
   char name[64];
-  snprintf(name, elcount(name), "Read DID 0x%lx", did);
+  snprintf(name, elcount(name), "Read DID 0x%lx", (unsigned long)did);
   markResult(name, udsPositive);
 }
 
@@ -61,7 +60,7 @@ void verifyRidRoutine(long rid, int expectedOk)
 {
   int routineOk = expectedOk;
   char name[64];
-  snprintf(name, elcount(name), "Routine RID 0x%lx", rid);
+  snprintf(name, elcount(name), "Routine RID 0x%lx", (unsigned long)rid);
   markResult(name, routineOk);
 }
 
@@ -96,8 +95,10 @@ void verifyCanPeriod(char msgName[], long measuredMs, long expectedMs, long tole
 
   if (upperBound < lowerBound)
   {
-    upperBound = MAX_LONG_VALUE;
-    lowerBound = 0;
+    char invalidRange[96];
+    snprintf(invalidRange, elcount(invalidRange), "CAN period bounds invalid for %s", msgName);
+    markResult(invalidRange, 0);
+    return;
   }
 
   ok = (measuredMs >= lowerBound) && (measuredMs <= upperBound);
