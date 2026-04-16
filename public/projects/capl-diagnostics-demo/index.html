@@ -95,7 +95,7 @@
             <button data-feature="autonomy">Run Autonomous Drive</button>
             <button id="run-all">Run Full Sequence</button>
             <button id="clear-dtc" class="secondary">Clear DTCs</button>
-            <a class="btn secondary" href="./capl_diagnostics_demo.can" download>Download CAPL Script</a>
+            <a class="btn secondary" href="./capl_diagnostics_demo.can" target="_blank" rel="noopener">Open CAPL Script</a>
           </div>
           <table>
             <thead>
@@ -104,6 +104,7 @@
             <tbody id="diag-body"></tbody>
           </table>
           <div class="legend">DID example: 0xF190 VIN, 0xF1A0 Calibration • RID example: 0xFF00 Camera Self-Test</div>
+          <div class="legend">Embedded preview may block downloads. Use “Open Demo” to download or save the CAPL file.</div>
         </div>
       </section>
 
@@ -148,6 +149,7 @@
 
     const state = { pass: 0, fail: 0, dtc: 0, verified: 0 };
     const FAILURE_PROBABILITY = 0.18;
+    const MAX_LOG_ENTRIES = 250;
     const logEl = document.getElementById('log');
     const diagBody = document.getElementById('diag-body');
     const canBody = document.getElementById('can-body');
@@ -198,6 +200,9 @@
       row.appendChild(kindSpan);
       row.appendChild(document.createTextNode(text));
       logEl.prepend(row);
+      while (logEl.childElementCount > MAX_LOG_ENTRIES) {
+        logEl.removeChild(logEl.lastElementChild);
+      }
     }
 
     function evalFeature(name) {

@@ -68,9 +68,24 @@ void verifyDtcFlow(char dtcCode[], int shouldBePresent)
 {
   // Mock DTC read + clear + re-read flow
   int isPresent = shouldBePresent;
+  int readMatchesExpectation = (isPresent == shouldBePresent);
   char name[96];
-  snprintf(name, elcount(name), "DTC check %s present=%d", dtcCode, isPresent);
-  markResult(name, 1);
+  snprintf(name, elcount(name), "DTC read %s expected=%d actual=%d", dtcCode, shouldBePresent, isPresent);
+  markResult(name, readMatchesExpectation);
+
+  if (isPresent)
+  {
+    int clearOk = 1;
+    int isPresentAfterClear = clearOk ? 0 : isPresent;
+    char clearName[96];
+    char rereadName[96];
+
+    snprintf(clearName, elcount(clearName), "DTC clear %s", dtcCode);
+    markResult(clearName, clearOk);
+
+    snprintf(rereadName, elcount(rereadName), "DTC re-read %s actual=%d", dtcCode, isPresentAfterClear);
+    markResult(rereadName, isPresentAfterClear == 0);
+  }
 }
 
 void verifyCanPeriod(char msgName[], long measuredMs, long expectedMs, long toleranceMs)
