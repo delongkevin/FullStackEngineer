@@ -8,6 +8,7 @@ variables
   msTimer tHeartbeat;
   int gPassCount = 0;
   int gFailCount = 0;
+  const long MAX_LONG_VALUE = 2147483647;
 }
 
 // Example message objects (names/IDs should match your DBC)
@@ -74,6 +75,11 @@ void verifyDtcFlow(char dtcCode[], int shouldBePresent)
 
 void verifyCanPeriod(char msgName[], long measuredMs, long expectedMs, long toleranceMs)
 {
+  if (toleranceMs < 0)
+  {
+    toleranceMs = 0;
+  }
+
   long lowerBound = expectedMs - toleranceMs;
   long upperBound = expectedMs + toleranceMs;
   int ok;
@@ -83,9 +89,9 @@ void verifyCanPeriod(char msgName[], long measuredMs, long expectedMs, long tole
     lowerBound = 0;
   }
 
-  if (upperBound < expectedMs)
+  if (upperBound < lowerBound)
   {
-    upperBound = 2147483647;
+    upperBound = MAX_LONG_VALUE;
   }
 
   ok = (measuredMs >= lowerBound) && (measuredMs <= upperBound);
