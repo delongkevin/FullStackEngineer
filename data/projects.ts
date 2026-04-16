@@ -885,6 +885,30 @@ export const projects: Project[] = [
     embeddable: true,
     projectPath: '/projects/insurance-policy-admin',
   },
+  {
+    id: 35,
+    slug: 'capl-diagnostics-can-verification',
+    title: 'CAPL Diagnostics & CAN Verification Demo',
+    description: 'Interactive CAPL-oriented mock bench for UDS DID/RID/DTC handling and feature-level CAN verification across park assist, trailer, camera, and autonomous driving.',
+    fullDescription: 'A practical and expandable CAPL-focused diagnostics demo that simulates how a test engineer validates ECU behavior using DID reads/writes, RID routine control, DTC monitoring/clear flows, and message-level CAN verification. The dashboard includes scenario execution for Park Assist, Trailer Handling, Camera Image Validation, and Autonomous Driving, with live request/response traces, verdict logic, and a downloadable CAPL script starter that can be continued in Vector CANoe.',
+    image: '/images/adas-camera-dashboard.png',
+    tech: ['CAPL', 'UDS (ISO 14229)', 'CAN', 'CANoe', 'DID/RID/DTC', 'Automotive Validation', 'HTML5', 'JavaScript'],
+    liveUrl: '/projects/capl-diagnostics-demo/index.html',
+    githubUrl: 'https://github.com/delongkevin/FullStackEngineer',
+    featured: true,
+    category: 'Automotive',
+    features: [
+      'DID operations: mock ReadDataByIdentifier and WriteDataByIdentifier verification for feature calibration and status values',
+      'RID operations: routine control simulation for camera self-test, trailer alignment assist routine, and ADAS readiness checks',
+      'DTC flow handling: active DTC monitoring, status-byte interpretation, clear-DTC action, and post-clear re-validation',
+      'CAN message verification engine: expected ID, period, DLC, and signal-range checks with pass/fail verdicts',
+      'Feature scenarios for Park Assist, Trailer Handling, Camera Image Validation, and Autonomous Driving in a single run sequence',
+      'Live event log and professional dark-theme mock bench designed for direct extension in project delivery',
+      'Downloadable CAPL starter script with practical test logic structure ready for CANoe integration',
+    ],
+    embeddable: true,
+    projectPath: '/projects/capl-diagnostics-demo',
+  },
 ];
 
 const searchableProjectFields = (project: Project) => {
