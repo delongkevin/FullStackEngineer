@@ -51,7 +51,7 @@ void verifyDidRead(long did, int expectedOk)
   // Mock UDS DID read handling (replace with real request/response transport)
   int udsPositive = expectedOk;
   char name[64];
-  snprintf(name, elcount(name), "Read DID 0x%x", did);
+  snprintf(name, elcount(name), "Read DID 0x%lx", did);
   markResult(name, udsPositive);
 }
 
@@ -59,7 +59,7 @@ void verifyRidRoutine(long rid, int expectedOk)
 {
   int routineOk = expectedOk;
   char name[64];
-  snprintf(name, elcount(name), "Routine RID 0x%x", rid);
+  snprintf(name, elcount(name), "Routine RID 0x%lx", rid);
   markResult(name, routineOk);
 }
 
@@ -74,7 +74,21 @@ void verifyDtcFlow(char dtcCode[], int shouldBePresent)
 
 void verifyCanPeriod(char msgName[], long measuredMs, long expectedMs, long toleranceMs)
 {
-  int ok = (measuredMs >= (expectedMs - toleranceMs)) && (measuredMs <= (expectedMs + toleranceMs));
+  long lowerBound = expectedMs - toleranceMs;
+  long upperBound = expectedMs + toleranceMs;
+  int ok;
+
+  if (lowerBound < 0)
+  {
+    lowerBound = 0;
+  }
+
+  if (upperBound < expectedMs)
+  {
+    upperBound = 2147483647;
+  }
+
+  ok = (measuredMs >= lowerBound) && (measuredMs <= upperBound);
   char name[96];
   snprintf(name, elcount(name), "CAN period %s=%ldms exp=%ld±%ld", msgName, measuredMs, expectedMs, toleranceMs);
   markResult(name, ok);
