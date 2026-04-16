@@ -51,7 +51,7 @@ void verifyDidRead(long did, int expectedOk)
   // Mock UDS DID read handling (replace with real request/response transport)
   int udsPositive = expectedOk;
   char name[64];
-  snprintf(name, elcount(name), "Read DID 0x%X", did);
+  snprintf(name, elcount(name), "Read DID 0x%x", did);
   markResult(name, udsPositive);
 }
 
@@ -59,7 +59,7 @@ void verifyRidRoutine(long rid, int expectedOk)
 {
   int routineOk = expectedOk;
   char name[64];
-  snprintf(name, elcount(name), "Routine RID 0x%X", rid);
+  snprintf(name, elcount(name), "Routine RID 0x%x", rid);
   markResult(name, routineOk);
 }
 

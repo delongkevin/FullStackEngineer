@@ -69,7 +69,7 @@
     <div class="head">
       <div>
         <div class="title">CAPL Diagnostics & CAN Verification Demo</div>
-        <div class="sub">UDS DID / RID / DTC handling + feature verification for Park Assist, Trailer, Camera, and Autonomous Driving</div>
+        <div class="sub">UDS DID / RID / DTC handling &bull; feature verification for Park Assist, Trailer, Camera, and Autonomous Driving</div>
       </div>
       <div class="status"><span class="dot"></span>Mock Bench Online • CANoe-style Execution</div>
     </div>
@@ -147,6 +147,7 @@
     ];
 
     const state = { pass: 0, fail: 0, dtc: 0, verified: 0 };
+    const FAILURE_PROBABILITY = 0.18;
     const logEl = document.getElementById('log');
     const diagBody = document.getElementById('diag-body');
     const canBody = document.getElementById('can-body');
@@ -186,14 +187,24 @@
     function log(kind, text) {
       const ts = new Date().toLocaleTimeString();
       const color = kind === 'ERR' ? '#f87171' : kind === 'CAN' ? '#7dd3fc' : kind === 'UDS' ? '#c4b5fd' : '#cbd5e1';
-      logEl.innerHTML = `<div><span style="color:#64748b">[${ts}]</span> <span style="color:${color}">[${kind}]</span> ${text}</div>` + logEl.innerHTML;
+      const row = document.createElement('div');
+      const tsSpan = document.createElement('span');
+      tsSpan.style.color = '#64748b';
+      tsSpan.textContent = `[${ts}] `;
+      const kindSpan = document.createElement('span');
+      kindSpan.style.color = color;
+      kindSpan.textContent = `[${kind}] `;
+      row.appendChild(tsSpan);
+      row.appendChild(kindSpan);
+      row.appendChild(document.createTextNode(text));
+      logEl.prepend(row);
     }
 
     function evalFeature(name) {
       const idx = { park: 0, trailer: 1, camera: 2, autonomy: 3 }[name];
       if (idx === undefined) return;
 
-      const pass = Math.random() > 0.18;
+      const pass = Math.random() > FAILURE_PROBABILITY;
       diagRows[idx].status = pass ? 'PASS' : 'FAIL';
       canRows[idx].verdict = pass ? 'PASS' : 'FAIL';
       canRows[idx].measured = [
