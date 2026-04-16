@@ -891,7 +891,7 @@ export const projects: Project[] = [
     title: 'CAPL Diagnostics & CAN Verification Demo',
     description: 'Interactive CAPL-oriented mock bench for UDS DID/RID/DTC handling and feature-level CAN verification across park assist, trailer, camera, and autonomous driving.',
     fullDescription: 'A practical and expandable CAPL-focused diagnostics demo that simulates how a test engineer validates ECU behavior using DID reads/writes, RID routine control, DTC monitoring/clear flows, and message-level CAN verification. The dashboard includes scenario execution for Park Assist, Trailer Handling, Camera Image Validation, and Autonomous Driving, with live request/response traces, verdict logic, and a downloadable CAPL script starter that can be continued in Vector CANoe.',
-    image: '/images/adas-camera-dashboard.png',
+    image: '/images/capl-diagnostics-demo.svg',
     tech: ['CAPL', 'UDS (ISO 14229)', 'CAN', 'CANoe', 'DID/RID/DTC', 'Automotive Validation', 'HTML5', 'JavaScript'],
     liveUrl: '/projects/capl-diagnostics-demo/index.html',
     githubUrl: 'https://github.com/delongkevin/FullStackEngineer',

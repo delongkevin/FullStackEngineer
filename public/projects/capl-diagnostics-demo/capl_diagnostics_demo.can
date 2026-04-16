@@ -9,6 +9,7 @@ variables
   int gPassCount = 0;
   int gFailCount = 0;
   const long MAX_LONG_VALUE = 2147483647;
+  const long MAX_TOLERANCE_MS = 1000;
 }
 
 // Example message objects (names/IDs should match your DBC)
@@ -79,6 +80,10 @@ void verifyCanPeriod(char msgName[], long measuredMs, long expectedMs, long tole
   {
     toleranceMs = 0;
   }
+  else if (toleranceMs > MAX_TOLERANCE_MS)
+  {
+    toleranceMs = MAX_TOLERANCE_MS;
+  }
 
   long lowerBound = expectedMs - toleranceMs;
   long upperBound = expectedMs + toleranceMs;
@@ -92,6 +97,7 @@ void verifyCanPeriod(char msgName[], long measuredMs, long expectedMs, long tole
   if (upperBound < lowerBound)
   {
     upperBound = MAX_LONG_VALUE;
+    lowerBound = 0;
   }
 
   ok = (measuredMs >= lowerBound) && (measuredMs <= upperBound);
