@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-label="CAPL diagnostics and CAN verification demo">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b1220"/>
+      <stop offset="100%" stop-color="#102745"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect x="70" y="70" width="1060" height="535" rx="18" fill="#121b2d" stroke="#2a3b63" stroke-width="3"/>
+  <text x="110" y="140" fill="#e6edf8" font-family="Segoe UI, Arial, sans-serif" font-size="38" font-weight="700">CAPL Diagnostics &amp; CAN Verification Demo</text>
+  <text x="110" y="182" fill="#9db0d4" font-family="Segoe UI, Arial, sans-serif" font-size="22">DID / RID / DTC handling for Park Assist, Trailer, Camera, and Autonomous Driving</text>
+
+  <rect x="110" y="225" width="470" height="155" rx="12" fill="#1a2640" stroke="#2a3b63"/>
+  <text x="132" y="260" fill="#7dd3fc" font-family="Consolas, monospace" font-size="20">UDS Session</text>
+  <text x="132" y="294" fill="#c4b5fd" font-family="Consolas, monospace" font-size="18">0x22 Read DID 0xF190  -> 0x62 Positive Response</text>
+  <text x="132" y="326" fill="#c4b5fd" font-family="Consolas, monospace" font-size="18">0x31 RID 0xFF00       -> Camera Self-Test PASS</text>
+  <text x="132" y="358" fill="#c4b5fd" font-family="Consolas, monospace" font-size="18">0x19 Read DTC         -> 0 Active Faults</text>
+
+  <rect x="620" y="225" width="470" height="155" rx="12" fill="#1a2640" stroke="#2a3b63"/>
+  <text x="642" y="260" fill="#86efac" font-family="Consolas, monospace" font-size="20">CAN Verification</text>
+  <text x="642" y="294" fill="#e6edf8" font-family="Consolas, monospace" font-size="18">0x321 USS_DistanceFront  50ms  DLC8   PASS</text>
+  <text x="642" y="326" fill="#e6edf8" font-family="Consolas, monospace" font-size="18">0x451 Trailer_Angle      20ms  DLC8   PASS</text>
+  <text x="642" y="358" fill="#e6edf8" font-family="Consolas, monospace" font-size="18">0x600 ADAS_Fusion        10ms  DLC16  PASS</text>
+
+  <rect x="110" y="415" width="980" height="145" rx="12" fill="#0f1729" stroke="#2a3b63"/>
+  <text x="132" y="455" fill="#9db0d4" font-family="Segoe UI, Arial, sans-serif" font-size="20">Professional Mock Bench • Expandable for CANoe Test Projects • Practical Hiring Demo</text>
+  <circle cx="142" cy="508" r="10" fill="#22c55e"/>
+  <text x="164" y="515" fill="#e6edf8" font-family="Segoe UI, Arial, sans-serif" font-size="18">Functional UI and runnable interactive logic</text>
+  <circle cx="142" cy="545" r="10" fill="#22c55e"/>
+  <text x="164" y="552" fill="#e6edf8" font-family="Segoe UI, Arial, sans-serif" font-size="18">CAPL script starter with DID/RID/DTC + CAN checks</text>
+</svg>

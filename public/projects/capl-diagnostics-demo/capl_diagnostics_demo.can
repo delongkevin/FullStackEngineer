@@ -1,0 +1,176 @@
+/* CAPL Diagnostics & CAN Verification Demo
+ * Practical starter script for CANoe-based feature validation.
+ * Covers DID/RID/DTC handling and CAN message verification.
+ */
+
+variables
+{
+  msTimer tHeartbeat;
+  int gPassCount = 0;
+  int gFailCount = 0;
+  const long MAX_TOLERANCE_MS = 1000;
+}
+
+// Example message objects (names/IDs should match your DBC)
+message 0x321 USS_DistanceFront;
+message 0x451 Trailer_Angle;
+message 0x5A2 Camera_Status;
+message 0x600 ADAS_Fusion;
+
+on start
+{
+  write("CAPL demo started: Diagnostics and CAN verification.");
+  setTimer(tHeartbeat, 1000);
+  runParkAssistChecks();
+  runTrailerChecks();
+  runCameraChecks();
+  runAutonomousChecks();
+}
+
+on timer tHeartbeat
+{
+  write("HB: PASS=%d FAIL=%d", gPassCount, gFailCount);
+  setTimer(tHeartbeat, 1000);
+}
+
+void markResult(char testName[], int isPass)
+{
+  if (isPass)
+  {
+    gPassCount++;
+    write("[PASS] %s", testName);
+  }
+  else
+  {
+    gFailCount++;
+    write("[FAIL] %s", testName);
+  }
+}
+
+void verifyDidRead(long did, int expectedOk)
+{
+  // Mock UDS DID read handling (replace with real request/response transport)
+  int udsPositive = expectedOk;
+  char name[64];
+  snprintf(name, elcount(name), "Read DID 0x%lx", (unsigned long)did);
+  markResult(name, udsPositive);
+}
+
+void verifyRidRoutine(long rid, int expectedOk)
+{
+  int routineOk = expectedOk;
+  char name[64];
+  snprintf(name, elcount(name), "Routine RID 0x%lx", (unsigned long)rid);
+  markResult(name, routineOk);
+}
+
+void verifyDtcFlow(char dtcCode[], int shouldBePresent)
+{
+  // Mock DTC read + clear + re-read flow
+  int isPresent = shouldBePresent;
+  int readMatchesExpectation = (isPresent == shouldBePresent);
+  char name[96];
+  snprintf(name, elcount(name), "DTC read %s expected=%d actual=%d", dtcCode, shouldBePresent, isPresent);
+  markResult(name, readMatchesExpectation);
+
+  if (isPresent)
+  {
+    int clearOk = 1;
+    int isPresentAfterClear = clearOk ? 0 : isPresent;
+    char clearName[96];
+    char rereadName[96];
+
+    snprintf(clearName, elcount(clearName), "DTC clear %s", dtcCode);
+    markResult(clearName, clearOk);
+
+    snprintf(rereadName, elcount(rereadName), "DTC re-read %s actual=%d", dtcCode, isPresentAfterClear);
+    markResult(rereadName, isPresentAfterClear == 0);
+  }
+}
+
+void verifyCanPeriod(char msgName[], long measuredMs, long expectedMs, long toleranceMs)
+{
+  if (toleranceMs < 0)
+  {
+    toleranceMs = 0;
+  }
+  else if (toleranceMs > MAX_TOLERANCE_MS)
+  {
+    toleranceMs = MAX_TOLERANCE_MS;
+  }
+
+  long lowerBound = expectedMs - toleranceMs;
+  long upperBound = expectedMs + toleranceMs;
+  int ok;
+
+  if (lowerBound < 0)
+  {
+    lowerBound = 0;
+  }
+
+  if (upperBound < lowerBound)
+  {
+    char invalidRange[96];
+    snprintf(invalidRange, elcount(invalidRange), "CAN period bounds invalid for %s", msgName);
+    markResult(invalidRange, 0);
+    return;
+  }
+
+  ok = (measuredMs >= lowerBound) && (measuredMs <= upperBound);
+  char name[96];
+  snprintf(name, elcount(name), "CAN period %s=%ldms exp=%ld±%ld", msgName, measuredMs, expectedMs, toleranceMs);
+  markResult(name, ok);
+}
+
+void runParkAssistChecks()
+{
+  verifyDidRead(0xF1A0, 1);                 // Calibration status
+  verifyRidRoutine(0x0201, 1);              // Park assist self-check routine
+  verifyDtcFlow("C1A62-04", 0);             // USS range sensor fault
+  verifyCanPeriod("USS_DistanceFront", 50, 50, 5);
+}
+
+void runTrailerChecks()
+{
+  verifyDidRead(0xF187, 1);                 // Trailer profile info
+  verifyRidRoutine(0x0302, 1);              // Trailer alignment routine
+  verifyDtcFlow("C1B17-13", 0);             // Trailer steering angle out-of-range
+  verifyCanPeriod("Trailer_Angle", 20, 20, 2);
+}
+
+void runCameraChecks()
+{
+  verifyDidRead(0xF190, 1);                 // VIN check
+  verifyRidRoutine(0xFF00, 1);              // Camera image integrity routine
+  verifyDtcFlow("B2C10-92", 0);             // Camera frame CRC fault
+  verifyCanPeriod("Camera_Status", 33, 33, 4);
+}
+
+void runAutonomousChecks()
+{
+  verifyDidRead(0xF180, 1);                 // Boot/software information
+  verifyRidRoutine(0x0401, 1);              // Autonomous readiness routine
+  verifyDtcFlow("U0401-81", 0);             // Invalid data from ADAS fusion
+  verifyCanPeriod("ADAS_Fusion", 10, 10, 2);
+}
+
+on message USS_DistanceFront
+{
+  // Example signal checks (replace with actual signal names from your DBC)
+  // if (this.DistanceCm < 0 || this.DistanceCm > 250) { markResult("USS range", 0); }
+}
+
+on message Trailer_Angle
+{
+  // if (this.AngleDeg < -90 || this.AngleDeg > 90) { markResult("Trailer angle range", 0); }
+}
+
+on message Camera_Status
+{
+  // if (this.FrameCrcValid == 0) { markResult("Camera CRC validity", 0); }
+}
+
+on message ADAS_Fusion
+{
+  // if (this.ObjectConfidence < 85) { markResult("ADAS object confidence", 0); }
+}
