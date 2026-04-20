@@ -81,7 +81,7 @@ export default function ResumePage() {
       degree: "Bachelor of Science in Computer Engineering",
       school: "Lawrence Technological University",
       period: "2008 - 2013",
-      details: "Focus on Embedded Systems and Communication Architectures. Languages: C, C++, Python"
+      details: "Focus on Embedded Systems and Communication Architectures. C, C++, Python"
     }
   ];
 
@@ -192,7 +192,7 @@ export default function ResumePage() {
               <section aria-labelledby="summary-heading" className="surface-card rounded-xl shadow-lg p-6">
                 <h2 id="summary-heading" className="text-2xl font-bold theme-text-primary mb-4">Professional Summary</h2>
                 <p className="theme-text-secondary leading-relaxed">
-                Results-oriented Automotive Software Engineer with 10+ years of experience in infotainment and ECU validation, including AUTOSAR-based systems and service-oriented communication. Strong background in C/Embedded C and Python with hands-on expertise in Ethernet, SOME/IP, Service Discovery, DoIP, UDS, CAN/CAN FD, and bench-level integration testing. Proven success supporting customer programs, driving Tier 1 issue resolution, and improving release quality through automation, diagnostics validation, and cross-functional technical leadership.
+                Results-oriented Automotive Software Engineer with 10+ years of experience in infotainment and ECU validation, including AUTOSAR-based systems and service-oriented communication. Strong background in C/Embedded C and Python with hands-on expertise in Ethernet, SOME/IP, Service Discovery, DoIP, UDS, and CAN/CAN FD. Proven success supporting customer programs, driving Tier 1 issue resolution, and improving release quality through automation, diagnostics validation, and cross-functional technical leadership.
                 </p>
               </section>
 
