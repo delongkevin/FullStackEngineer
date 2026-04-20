@@ -928,7 +928,7 @@ export const projects: Project[] = [
       'Environment & Test Data readiness module with checklists, ownership, migration rehearsal evidence, and audit/security coverage indicators',
       'Resource and Delivery management view for onshore/offshore allocation, tester capacity, and milestone-aligned execution health',
       'Go-Live readiness decision support with configurable coverage/critical-defect/hyper-care inputs and automated GO/NO-GO recommendation',
-      'Exportable executive update and readiness memo outputs to demonstrate stakeholder communication competency',
+      'Exportable executive update and readiness memo outputs to demonstrate stakeholder communication competency'
     ],
     embeddable: true,
     projectPath: '/projects/sap-test-manager',
