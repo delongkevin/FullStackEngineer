@@ -12,10 +12,10 @@ export default function ResumePage() {
   ];
 
   const skills = {
-    "Frontend Development": ["React", "JavaScript", "TypeScript", "HTML5", "CSS3", "Next.js", "Tailwind CSS", "Redux"],
-    "Backend Development": ["Node.js", "Express", "Python", "REST APIs", "MongoDB"],
-    "Mobile Development": ["React Native", "iOS", "Android"],
-    "Tools & Technologies": ["Git", "Docker", "AWS", "Webpack", "Figma", "Agile/Scrum", "CI/CD"]
+    "Automotive Protocols": ["AUTOSAR", "SOME/IP", "Service Discovery", "Ethernet", "DoIP", "UDS", "CAN", "CAN FD", "LIN", "SPI"],
+    "Validation & Integration": ["Bench Testing", "Ethernet Stack Validation", "Diagnostics (Diag/COM)", "Tier 1 Support", "Regression Testing", "System Integration"],
+    "Programming": ["C", "Embedded C", "Python", "CAPL"],
+    "Tools": ["CANoe", "Lauterbach", "ISOLAR", "RTC", "JIRA", "Git", "CI/CD"]
   };
 
   const experience = [
@@ -23,11 +23,11 @@ export default function ResumePage() {
       title: "Software Test Lead",
       company: "Magna Electronics",
       period: "Jan 2023 - Present",
-      description: "Engineered and maintained Python-based autonomous testing solutions for ADAS camera systems, increasing test coverage by 40% and reducing manual testing efforts.",
+      description: "Engineered and maintained Python-based automated validation solutions for ADAS and in-vehicle communication systems, increasing test coverage by 40% and reducing manual testing effort.",
       achievements: [
-        "Led a team in diagnosing and resolving critical software defects, collaborating with development teams to implement robust fixes and improve overall software quality",
-        "Act as the primary technical liaison for customer accounts, ensuring successful software deliverables and managing relationships to align with project milestones",
-        "Implemented CI/CD pipelines reducing deployment time by 60%"
+        "Led issue triage and defect root-cause analysis for communication and diagnostics features, partnering with development teams to deliver robust fixes",
+        "Served as primary technical liaison for customer accounts, supporting milestone readiness, validation status, and delivery quality",
+        "Implemented CI/CD validation pipelines reducing deployment and feedback time by 60%"
       ]
     },
     {
@@ -55,22 +55,22 @@ export default function ResumePage() {
       title: "Software Testing Lead",
       company: "Harman International",
       period: "Jan 2018 - Nov 2021",
-      description: "Led cross functional teams for software testing department to reduce overall defects exposure in field for infotainment systems (Automotive)",
+      description: "Led cross-functional validation teams to reduce field defect exposure for automotive infotainment and ECU communication features.",
       achievements: [
-         "Automated Over-the-Air (OTA) update validation processes for automotive infotainment systems, ensuring 99.9% reliability for remote deployments.",
-          "Led defect resolution for AUTOSAR implementations on System-on-Chip (SoC) and I/O controllers, improving system performance and reliability.",
-          "Mentored and trained new engineers on the infotainment software architecture, Vector tools, and automation best practices",
+         "Automated OTA validation workflows for infotainment software, ensuring 99.9% reliability for remote deployments.",
+          "Led defect resolution and integration support for AUTOSAR implementations on SoC and I/O controllers, improving system stability and reliability.",
+          "Mentored and trained engineers on software architecture, Vector toolchains, diagnostics workflows, and automation best practices",
       ]
     },
     {
       title: "Senior Software Test Engineer",
       company: "Harman International",
       period: "Jan 2013 - Jan 2018",
-      description: "Software Test Engineer for performing validation and verification tasks towards customer specifications before releasing to End-user.",
+      description: "Performed software validation and verification against OEM customer specifications prior to production release.",
       achievements: [
-          "Developed and debugged automation scripts using Python and Vector tools to simulate vehicle ECU behavior, increasing the accuracy of pre-deployment testing.",
-          "Created custom user interfaces in CANoe to simulate CAN bus messaging for feature validation, allowing for early-stage bug detection.",
-          "Wrote and optimized over 500 test cases for manual and automated execution, establishing a comprehensive regression suite that became the standard for the department. "
+          "Developed and debugged automation scripts using Python and Vector tools to simulate ECU behavior and improve pre-deployment test accuracy.",
+          "Built CANoe-based test environments to validate CAN/CAN FD communication, diagnostics behavior, and service interactions.",
+          "Authored and optimized 500+ manual and automated test cases for system and bench validation across infotainment releases."
       ]
     }
 
@@ -81,25 +81,25 @@ export default function ResumePage() {
       degree: "Bachelor of Science in Computer Engineering",
       school: "Lawrence Technological University",
       period: "2008 - 2013",
-      details: "Focus on Embedded Systems, Languages: C, C++, Python"
+      details: "Focus on Embedded Systems and Communication Architectures. Languages: C, C++, Python"
     }
   ];
 
   const projects = [
     {
-      name: "CANoe Application Tester",
-      description: "Real-time CAN-Bus data logger.",
-      tech: ["Python"]
+      name: "CANoe ECU Communication Validator",
+      description: "Bench-focused validation utility for CAN/CAN FD messaging, diagnostics checks, and automated trace analysis.",
+      tech: ["Python", "CANoe", "CAN", "CAN FD", "UDS"]
     },
     {
-      name: "Image Capture Comparison App",
-      description: "OpenCV libraries used for object detection with camera feeds",
-      tech: ["Node.js", "OpenCV", "Python", "Embedded C"]
+      name: "AUTOSAR ECU Diagnostics and Service Validation",
+      description: "Integrated and validated AUTOSAR communication and diagnostics flows, including service-oriented checks and customer-facing issue triage.",
+      tech: ["AUTOSAR", "SOME/IP", "Service Discovery", "DoIP", "UDS", "Ethernet"]
     },
     {
-      name: "Report Parser",
-      description: "Report parser using recursive functions based on keyword selection",
-      tech: ["Python", "Jenkins", "CD/CI Pipeline"]
+      name: "Validation Report Pipeline",
+      description: "Automated parser and reporting pipeline for test execution outcomes to speed regression feedback cycles.",
+      tech: ["Python", "Jenkins", "CI/CD", "Git"]
     }
   ];
 
@@ -112,9 +112,9 @@ export default function ResumePage() {
           {/* Header */}
           <section aria-labelledby="resume-heading" className="text-center mb-12">
             <h1 id="resume-heading" className="text-4xl font-bold theme-text-primary mb-4">Resume</h1>
-            <p className="text-xl theme-text-secondary max-w-2xl mx-auto">
-              Full Stack Developer specializing in modern web technologies and scalable solutions.
-            </p>
+              <p className="text-xl theme-text-secondary max-w-2xl mx-auto">
+               AUTOSAR Integration and Validation Engineer specializing in Ethernet communications, diagnostics, and embedded systems quality.
+              </p>
           <div className="mt-6">
             <a
               href="/resume.pdf"
@@ -136,14 +136,14 @@ export default function ResumePage() {
               <div className="relative w-32 h-32 mx-auto mb-4">
                 <Image
                   src="/images/headshot.jpg"
-                  alt="Kevin Delong - Full Stack Developer"
+                  alt="Kevin Delong - AUTOSAR Integration Engineer"
                   fill
                   className="rounded-full object-cover border-4 border-blue-500"
                   sizes="128px"
                 />
               </div>
               <h2 className="text-xl font-bold theme-text-primary">Kevin Delong</h2>
-              <p className="theme-accent-text font-medium">Full Stack Developer</p>
+              <p className="theme-accent-text font-medium">AUTOSAR Integration Engineer (Ethernet)</p>
             </div>
           {/* Contact Info */}
               <section aria-labelledby="contact-heading" className="surface-card rounded-xl shadow-lg p-6">
@@ -192,7 +192,8 @@ export default function ResumePage() {
               <section aria-labelledby="summary-heading" className="surface-card rounded-xl shadow-lg p-6">
                 <h2 id="summary-heading" className="text-2xl font-bold theme-text-primary mb-4">Professional Summary</h2>
                 <p className="theme-text-secondary leading-relaxed">
-                Results-oriented Software Engineer with 10+ years in automotive infotainment systems, specializing in backend automation, frontend UI development, and full-stack integration for web, mobile, and embedded applications. Proven track record in C++, Python, and AutoSAR architecture, collaborating on CI/CD pipelines to deliver high-quality, secure software. Excel at debugging complex SOC/IOC issues, fuzz testing protocols (CAN/Ethernet), and leading cross-functional teams to exceed milestones—reducing defects by 25% through optimized test automation. Eager to drive innovative solutions in scalable software environments.                </p>
+                Results-oriented Automotive Software Engineer with 10+ years of experience in infotainment and ECU validation, including AUTOSAR-based systems and service-oriented communication. Strong background in C/Embedded C and Python with hands-on expertise in Ethernet, SOME/IP, Service Discovery, DoIP, UDS, CAN/CAN FD, and bench-level integration testing. Proven success supporting customer programs, driving Tier 1 issue resolution, and improving release quality through automation, diagnostics validation, and cross-functional technical leadership.
+                </p>
               </section>
 
               {/* Experience */}
