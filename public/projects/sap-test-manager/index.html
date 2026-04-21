@@ -159,9 +159,13 @@
         <div class="card">
           <h3>Log New Defect</h3>
           <div class="grid">
+            <label for="defectTitle">Defect Title</label>
             <input id="defectTitle" placeholder="Defect summary" />
+            <label for="defectSeverity">Severity</label>
             <select id="defectSeverity"><option>Sev1</option><option>Sev2</option><option>Sev3</option><option>Sev4</option></select>
+            <label for="defectStatus">Status</label>
             <select id="defectStatus"><option>Open</option><option>In Triage</option><option>In Progress</option><option>Ready for Retest</option><option>Closed</option></select>
+            <label for="defectOwner">Owner</label>
             <input id="defectOwner" placeholder="Owner" />
             <button id="addDefect">Add Defect</button>
           </div>
@@ -385,7 +389,36 @@ Generated: ${new Date().toLocaleString()}`], { type: 'text/plain' });
         closed: state.defects.filter((d) => d.status === 'Closed').length,
       };
       document.getElementById('defectStats').innerHTML = [['Open', counts.open], ['In Triage', counts.triage], ['In Progress', counts.inProgress], ['Ready for Retest', counts.retest], ['Closed', counts.closed], ['Total', state.defects.length]].map(([name, value]) => `<article class="card"><div class="muted">${name}</div><div class="metric">${value}</div></article>`).join('');
-      document.getElementById('defectTable').innerHTML = state.defects.map((d) => `<tr><td>${d.id}</td><td>${d.title}</td><td><span class="status ${statusClass(d.severity)}">${d.severity}</span></td><td>${d.status}</td><td>${d.owner}</td></tr>`).join('');
+      const defectTable = document.getElementById('defectTable');
+      defectTable.replaceChildren();
+      state.defects.forEach((d) => {
+        const row = document.createElement('tr');
+
+        const idCell = document.createElement('td');
+        idCell.textContent = d.id;
+        row.appendChild(idCell);
+
+        const titleCell = document.createElement('td');
+        titleCell.textContent = d.title;
+        row.appendChild(titleCell);
+
+        const severityCell = document.createElement('td');
+        const severityBadge = document.createElement('span');
+        severityBadge.className = `status ${statusClass(d.severity)}`;
+        severityBadge.textContent = d.severity;
+        severityCell.appendChild(severityBadge);
+        row.appendChild(severityCell);
+
+        const statusCell = document.createElement('td');
+        statusCell.textContent = d.status;
+        row.appendChild(statusCell);
+
+        const ownerCell = document.createElement('td');
+        ownerCell.textContent = d.owner;
+        row.appendChild(ownerCell);
+
+        defectTable.appendChild(row);
+      });
 
       document.getElementById('addDefect').onclick = () => {
         const title = document.getElementById('defectTitle').value.trim();
@@ -435,12 +468,21 @@ Generated: ${new Date().toLocaleString()}`], { type: 'text/plain' });
         state.readiness.notes = document.getElementById('readinessNotes').value.trim();
         saveState();
         const go = state.readiness.coverage >= 92 && state.readiness.criticalOpen === 0 && state.readiness.hyperCare >= 90;
-        document.getElementById('readinessResult').innerHTML = `${go ? '<span class="status green">GO</span>' : '<span class="status red">NO-GO</span>'} — Coverage ${state.readiness.coverage}%, Open Critical ${state.readiness.criticalOpen}, Hyper Care Prepared ${state.readiness.hyperCare}%. ${state.readiness.notes}`;
+        const readinessResult = document.getElementById('readinessResult');
+        readinessResult.textContent = '';
+        const statusBadge = document.createElement('span');
+        statusBadge.className = `status ${go ? 'green' : 'red'}`;
+        statusBadge.textContent = go ? 'GO' : 'NO-GO';
+        readinessResult.appendChild(statusBadge);
+        readinessResult.appendChild(
+          document.createTextNode(
+            ` — Coverage ${state.readiness.coverage}%, Open Critical ${state.readiness.criticalOpen}, Hyper Care Prepared ${state.readiness.hyperCare}%. ${state.readiness.notes}`
+          )
+        );
       };
 
       document.getElementById('exportReadiness').onclick = () => {
-        const text = ['SAP Go-Live Readiness Memo', `Coverage: ${state.readiness.coverage}%`, `Open Critical Defects: ${state.readiness.criticalOpen}`, `Hyper Care Preparedness: ${state.readiness.hyperCare}%`, `Notes: ${state.readiness.notes}`, `Generated: ${new Date().toLocaleString()}`].join('
-');
+        const text = ['SAP Go-Live Readiness Memo', `Coverage: ${state.readiness.coverage}%`, `Open Critical Defects: ${state.readiness.criticalOpen}`, `Hyper Care Preparedness: ${state.readiness.hyperCare}%`, `Notes: ${state.readiness.notes}`, `Generated: ${new Date().toLocaleString()}`].join('\n');
         downloadBlob(new Blob([text], { type: 'text/plain' }), 'sap-go-live-readiness-memo.txt');
       };
 
