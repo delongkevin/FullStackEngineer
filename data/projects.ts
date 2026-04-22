@@ -909,6 +909,30 @@ export const projects: Project[] = [
     embeddable: true,
     projectPath: '/projects/capl-diagnostics-demo',
   },
+  {
+    id: 36,
+    slug: 'sap-test-manager-greenfield',
+    title: 'SAP Test Manager Greenfield Command Center',
+    description: 'Interactive SAP program testing leadership demo covering strategy, governance, defect triage, environment readiness, stakeholder reporting, and go-live decisioning.',
+    fullDescription: 'An end-to-end SAP Greenfield implementation testing command center built for a SAP Test Manager role in Lisle, IL. The demo provides clear evidence of program-level test leadership from planning through hyper care: master test plan governance across SIT/E2E/UAT/regression/cutover, quality-gate decision support, defect and triage management, environment and test data readiness controls, offshore/onshore resource oversight, executive steering communication, and go-live readiness evaluation with exportable status outputs.',
+    image: '/images/sap-test-manager.svg',
+    tech: ['SAP Testing', 'qTest', 'Tosca', 'NeoLoad', 'Azure DevOps', 'SIT', 'E2E', 'UAT', 'Cutover', 'Hyper Care', 'HTML5', 'JavaScript', 'CSS3', 'LocalStorage'],
+    liveUrl: '/projects/sap-test-manager/index.html',
+    githubUrl: 'https://github.com/delongkevin/FullStackEngineer',
+    featured: true,
+    category: 'fullstack',
+    features: [
+      'Executive Overview module with dynamic KPIs, risk index scoring, and steering-committee narrative generation',
+      'Program Test Strategy and Governance module with editable SIT/E2E/UAT/cutover/hyper-care master plan progress and quality gate decisions',
+      'Defect Control center with severity/status tracking, triage metrics, and live defect logging workflow',
+      'Environment & Test Data readiness module with checklists, ownership, migration rehearsal evidence, and audit/security coverage indicators',
+      'Resource and Delivery management view for onshore/offshore allocation, tester capacity, and milestone-aligned execution health',
+      'Go-Live readiness decision support with configurable coverage/critical-defect/hyper-care inputs and automated GO/NO-GO recommendation',
+      'Exportable executive update and readiness memo outputs to demonstrate stakeholder communication competency'
+    ],
+    embeddable: true,
+    projectPath: '/projects/sap-test-manager',
+  },
 ];
 
 const searchableProjectFields = (project: Project) => {
