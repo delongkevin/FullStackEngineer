@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SAP Test Manager Greenfield Program Demo</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: #141b34;
+      --panel-2: #1d2747;
+      --accent: #3b82f6;
+      --accent-2: #22c55e;
+      --warn: #f59e0b;
+      --danger: #ef4444;
+      --text: #e5e7eb;
+      --muted: #94a3b8;
+      --border: #334155;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: radial-gradient(circle at 15% 10%, #1e3a8a 0%, var(--bg) 50%);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 1.25rem; }
+    .hero { background: linear-gradient(135deg, rgba(59,130,246,.25), rgba(34,197,94,.18)); border: 1px solid var(--border); border-radius: 16px; padding: 1.25rem; margin-bottom: 1rem; }
+    .hero h1 { margin: 0 0 .4rem; font-size: clamp(1.3rem, 2.5vw, 2rem); }
+    .hero p { margin: .25rem 0; color: var(--muted); }
+    .chips { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: .8rem; }
+    .chip { font-size: .78rem; border: 1px solid #456; border-radius: 999px; padding: .3rem .65rem; background: rgba(30,41,59,.55); color: #bfdbfe; }
+    .tabs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .5rem; margin: .8rem 0 1rem; }
+    .tab { border: 1px solid var(--border); background: rgba(15,23,42,.75); color: var(--text); border-radius: 10px; padding: .7rem; cursor: pointer; font-weight: 600; font-size: .82rem; }
+    .tab.active { background: linear-gradient(135deg, #1d4ed8, #2563eb); border-color: #60a5fa; }
+    .panel { border: 1px solid var(--border); background: rgba(15,23,42,.75); border-radius: 14px; padding: 1rem; margin-bottom: 1rem; }
+    .grid { display: grid; gap: .75rem; }
+    .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .card { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: .85rem; }
+    .metric { font-size: 1.4rem; font-weight: 700; margin: .2rem 0; }
+    .muted { color: var(--muted); font-size: .86rem; }
+    table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+    th, td { border-bottom: 1px solid var(--border); padding: .55rem; text-align: left; vertical-align: top; }
+    th { color: #bfdbfe; font-weight: 600; }
+    .status { display: inline-block; border-radius: 999px; padding: .15rem .5rem; font-size: .72rem; border: 1px solid transparent; }
+    .status.green { color: #86efac; background: rgba(34,197,94,.17); border-color: rgba(34,197,94,.35); }
+    .status.amber { color: #fcd34d; background: rgba(245,158,11,.17); border-color: rgba(245,158,11,.35); }
+    .status.red { color: #fca5a5; background: rgba(239,68,68,.15); border-color: rgba(239,68,68,.35); }
+    .status.blue { color: #93c5fd; background: rgba(59,130,246,.18); border-color: rgba(59,130,246,.35); }
+    input, select, textarea { width: 100%; border: 1px solid #475569; background: #0f172a; color: var(--text); border-radius: 8px; padding: .55rem; font: inherit; }
+    textarea { min-height: 100px; resize: vertical; }
+    button { border: 1px solid #3b82f6; background: linear-gradient(135deg, #1d4ed8, #2563eb); color: #fff; border-radius: 8px; padding: .55rem .85rem; font-weight: 600; cursor: pointer; }
+    button.ghost { background: transparent; border-color: #64748b; color: #cbd5e1; }
+    .actions { display: flex; gap: .5rem; flex-wrap: wrap; }
+    .hidden { display: none; }
+    .risk-strip { height: 14px; border-radius: 999px; background: linear-gradient(90deg, #16a34a, #f59e0b 60%, #dc2626); position: relative; overflow: hidden; }
+    .risk-marker { position: absolute; top: -3px; width: 2px; height: 20px; background: #fff; }
+    .footer-note { font-size: .78rem; color: #93c5fd; margin-top: .5rem; }
+    @media (max-width: 960px) { .tabs { grid-template-columns: repeat(2, minmax(0, 1fr)); } .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <section class="hero">
+      <h1>SAP Test Manager — Greenfield Implementation Command Center</h1>
+      <p>Location: Lisle, IL · Hiring Type: Contract · Scope: Planning through Hyper Care</p>
+      <p>Interactive demo proving program-level SAP test leadership, governance, execution control, and go-live readiness decision-making.</p>
+      <div class="chips">
+        <span class="chip">SIT · E2E · UAT · Regression</span>
+        <span class="chip">Defect Governance</span>
+        <span class="chip">qTest / Tosca / NeoLoad / ADO</span>
+        <span class="chip">Cutover · Mock Conversion · Hyper Care</span>
+      </div>
+    </section>
+
+    <nav class="tabs" aria-label="Demo modules">
+      <button class="tab active" data-tab="overview">Executive Overview</button>
+      <button class="tab" data-tab="strategy">Strategy & Governance</button>
+      <button class="tab" data-tab="defects">Defect Control</button>
+      <button class="tab" data-tab="env">Environment & Test Data</button>
+      <button class="tab" data-tab="delivery">Delivery & Go-Live</button>
+    </nav>
+
+    <section id="overview" class="tab-panel">
+      <div class="panel grid grid-4" id="kpiGrid"></div>
+      <div class="panel grid grid-2">
+        <div class="card">
+          <h3>Program Risk Index</h3>
+          <div class="risk-strip" aria-hidden="true"><span id="riskMarker" class="risk-marker"></span></div>
+          <p class="muted" id="riskLabel"></p>
+          <p class="footer-note">Risk is auto-scored from open Sev1/2 defects, environment readiness, and critical path test completion.</p>
+        </div>
+        <div class="card">
+          <h3>Steering Committee Narrative</h3>
+          <p class="muted" id="steeringSummary"></p>
+          <div class="actions">
+            <button id="refreshSummary">Refresh Summary</button>
+            <button id="downloadSummary" class="ghost">Download Executive Update</button>
+          </div>
+        </div>
+      </div>
+      <div class="panel card">
+        <h3>Competency Evidence Matrix</h3>
+        <table>
+          <thead><tr><th>Competency</th><th>Evidence in Demo</th><th>Current Status</th></tr></thead>
+          <tbody id="competencyTable"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="strategy" class="tab-panel hidden">
+      <div class="panel">
+        <h3>Master Test Plan by Phase</h3>
+        <table>
+          <thead><tr><th>Phase</th><th>Scope</th><th>Entry Criteria</th><th>Exit Target</th><th>Completion</th><th>Status</th></tr></thead>
+          <tbody id="phaseTable"></tbody>
+        </table>
+      </div>
+      <div class="panel grid grid-2">
+        <div class="card">
+          <h3>Stakeholder Governance Cadence</h3>
+          <table>
+            <thead><tr><th>Forum</th><th>Frequency</th><th>Audience</th><th>Output</th></tr></thead>
+            <tbody>
+              <tr><td>Daily Defect Triage</td><td>Daily</td><td>SAP Leads, SI, QA</td><td>Sev1/2 closure decisions</td></tr>
+              <tr><td>Phase Gate Readiness</td><td>Twice Weekly</td><td>PMO, IT, Business Owners</td><td>Go / No-Go recommendation</td></tr>
+              <tr><td>SteerCo Quality Review</td><td>Weekly</td><td>Leadership + Vendors</td><td>Executive risk dashboard</td></tr>
+              <tr><td>Hyper Care Standup</td><td>Daily (Post Go-Live)</td><td>Operations + Support</td><td>Stabilization backlog</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card">
+          <h3>Quality Gate Overrides</h3>
+          <div class="grid">
+            <label><input type="checkbox" class="gate" data-gate="criticalRequirements" checked /> 100% critical requirement traceability</label>
+            <label><input type="checkbox" class="gate" data-gate="sev1Closed" checked /> All Sev1 defects closed</label>
+            <label><input type="checkbox" class="gate" data-gate="sev2Plan" checked /> Sev2 defects with approved mitigation</label>
+            <label><input type="checkbox" class="gate" data-gate="mockConversion" checked /> Mock conversion success > 98%</label>
+            <label><input type="checkbox" class="gate" data-gate="controlSignoff" checked /> SOX / security controls sign-off</label>
+          </div>
+          <p class="muted" id="gateOutcome"></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="defects" class="tab-panel hidden">
+      <div class="panel grid grid-3" id="defectStats"></div>
+      <div class="panel grid grid-2">
+        <div class="card">
+          <h3>Defect Register</h3>
+          <table>
+            <thead><tr><th>ID</th><th>Title</th><th>Severity</th><th>Status</th><th>Owner</th></tr></thead>
+            <tbody id="defectTable"></tbody>
+          </table>
+        </div>
+        <div class="card">
+          <h3>Log New Defect</h3>
+          <div class="grid">
+            <label for="defectTitle">Defect Title</label>
+            <input id="defectTitle" placeholder="Defect summary" />
+            <label for="defectSeverity">Severity</label>
+            <select id="defectSeverity"><option>Sev1</option><option>Sev2</option><option>Sev3</option><option>Sev4</option></select>
+            <label for="defectStatus">Status</label>
+            <select id="defectStatus"><option>Open</option><option>In Triage</option><option>In Progress</option><option>Ready for Retest</option><option>Closed</option></select>
+            <label for="defectOwner">Owner</label>
+            <input id="defectOwner" placeholder="Owner" />
+            <button id="addDefect">Add Defect</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="env" class="tab-panel hidden">
+      <div class="panel grid grid-3" id="envCards"></div>
+      <div class="panel grid grid-2">
+        <div class="card">
+          <h3>Environment Readiness Checklist</h3>
+          <div class="grid" id="envChecklist"></div>
+        </div>
+        <div class="card">
+          <h3>Test Data & Compliance</h3>
+          <table>
+            <tbody>
+              <tr><td>Data Migration Rehearsal</td><td id="dataMigration"></td></tr>
+              <tr><td>Masking Coverage (PII)</td><td id="piiMasking"></td></tr>
+              <tr><td>Role/Access Test Evidence</td><td id="securityEvidence"></td></tr>
+              <tr><td>Audit Control Scenarios</td><td id="auditCoverage"></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="delivery" class="tab-panel hidden">
+      <div class="panel grid grid-3" id="deliveryStats"></div>
+      <div class="panel grid grid-2">
+        <div class="card">
+          <h3>Global Test Team Allocation</h3>
+          <table>
+            <thead><tr><th>Team</th><th>Planned FTE</th><th>Actual FTE</th><th>Focus</th></tr></thead>
+            <tbody id="resourceTable"></tbody>
+          </table>
+        </div>
+        <div class="card">
+          <h3>Go-Live Readiness Decision Support</h3>
+          <label>Business Process Coverage (%)<input id="coverageInput" type="number" min="0" max="100" /></label>
+          <label>Critical Defects Open<input id="criticalInput" type="number" min="0" /></label>
+          <label>Hyper Care Staffing Prepared (%)<input id="hyperInput" type="number" min="0" max="100" /></label>
+          <label>Readiness Notes<textarea id="readinessNotes">Program quality trend is stable, defect burn-down is ahead of plan, and mock conversion met threshold.</textarea></label>
+          <div class="actions">
+            <button id="evaluateReadiness">Evaluate Go-Live</button>
+            <button id="exportReadiness" class="ghost">Export Readiness Memo</button>
+          </div>
+          <p id="readinessResult" class="muted"></p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const storageKey = 'sap-test-manager-demo-v1';
+    const defaultState = {
+      phases: [
+        { phase: 'SIT', scope: 'Core FI/CO, MM, SD, interfaces', entry: 'Build freeze + unit tests complete', exit: '>=95% pass, Sev1=0', completion: 92, status: 'Amber' },
+        { phase: 'E2E', scope: 'Order-to-Cash, Procure-to-Pay, Record-to-Report', entry: 'SIT stable + data load cycle 2', exit: '>=93% pass, critical paths complete', completion: 84, status: 'Amber' },
+        { phase: 'UAT Support', scope: 'Business-owned scenario execution', entry: 'E2E baseline achieved', exit: 'Business sign-off by tower', completion: 78, status: 'Amber' },
+        { phase: 'Cutover/Mock Conversion', scope: 'Dress rehearsal + reconciliation', entry: 'UAT confidence > 90%', exit: 'Data reconciliation variance < 2%', completion: 88, status: 'Green' },
+        { phase: 'Hyper Care', scope: 'Post go-live stabilization', entry: 'Go-live approval', exit: 'Incident SLA compliance > 95%', completion: 63, status: 'Blue' }
+      ],
+      defects: [
+        { id: 'DF-3011', title: 'Intercompany tax mismatch in FI posting', severity: 'Sev2', status: 'In Progress', owner: 'FI Lead' },
+        { id: 'DF-3018', title: 'Inbound IDoc fails for blocked vendor edge case', severity: 'Sev1', status: 'In Triage', owner: 'Integration Lead' },
+        { id: 'DF-3025', title: 'Batch job delay in nightly inventory sync', severity: 'Sev3', status: 'Open', owner: 'Basis' },
+        { id: 'DF-3032', title: 'Role conflict in approval workflow', severity: 'Sev2', status: 'Ready for Retest', owner: 'Security QA' }
+      ],
+      environments: [
+        { name: 'SIT Landscape', ready: true, owner: 'Basis Team' },
+        { name: 'E2E Integrated', ready: true, owner: 'Infra + SAP' },
+        { name: 'UAT Tenant', ready: false, owner: 'Business IT' },
+        { name: 'Performance/NeoLoad', ready: true, owner: 'Perf Team' },
+        { name: 'Cutover Rehearsal', ready: false, owner: 'PMO + Data' }
+      ],
+      gates: {
+        criticalRequirements: true,
+        sev1Closed: true,
+        sev2Plan: true,
+        mockConversion: true,
+        controlSignoff: true
+      },
+      resources: [
+        { team: 'Onshore Test Leadership', planned: 6, actual: 6, focus: 'Governance, readiness, exec comms' },
+        { team: 'SAP Functional QA (Offshore)', planned: 18, actual: 17, focus: 'SIT/E2E execution + retest' },
+        { team: 'Automation & Performance', planned: 7, actual: 7, focus: 'Tosca regression + NeoLoad' },
+        { team: 'Business UAT Coordinators', planned: 9, actual: 8, focus: 'Business process validation' }
+      ],
+      compliance: {
+        dataMigration: '3/3 mock conversions passed',
+        piiMasking: '96% masked; remaining 4% in approved remediation',
+        securityEvidence: 'SoD and role matrix evidence uploaded in ADO',
+        auditCoverage: '42 controls tested, 42 passed'
+      },
+      readiness: {
+        coverage: 94,
+        criticalOpen: 1,
+        hyperCare: 92,
+        notes: 'Program quality trend is stable, defect burn-down is ahead of plan, and mock conversion met threshold.'
+      }
+    };
+
+    let state = loadState();
+
+    function loadState() {
+      try {
+        const parsed = JSON.parse(localStorage.getItem(storageKey) || '{}');
+        return { ...defaultState, ...parsed, gates: { ...defaultState.gates, ...(parsed.gates || {}) }, readiness: { ...defaultState.readiness, ...(parsed.readiness || {}) } };
+      } catch {
+        return structuredClone(defaultState);
+      }
+    }
+
+    function saveState() { localStorage.setItem(storageKey, JSON.stringify(state)); }
+
+    function statusClass(value) {
+      if (value === 'Green' || value === 'Closed') return 'green';
+      if (value === 'Amber' || value === 'In Progress' || value === 'In Triage' || value === 'Ready for Retest') return 'amber';
+      if (value === 'Red' || value === 'Open' || value === 'Sev1') return 'red';
+      return 'blue';
+    }
+
+    function renderTabs() {
+      document.querySelectorAll('.tab').forEach((btn) => {
+        btn.onclick = () => {
+          const target = btn.dataset.tab;
+          document.querySelectorAll('.tab').forEach((b) => b.classList.remove('active'));
+          btn.classList.add('active');
+          document.querySelectorAll('.tab-panel').forEach((panel) => panel.classList.add('hidden'));
+          document.getElementById(target).classList.remove('hidden');
+        };
+      });
+    }
+
+    function calcKPIs() {
+      const totalDefects = state.defects.length;
+      const openCritical = state.defects.filter((d) => d.severity === 'Sev1' && d.status !== 'Closed').length;
+      const phaseCompletion = Math.round(state.phases.reduce((sum, p) => sum + p.completion, 0) / state.phases.length);
+      const envReady = state.environments.filter((e) => e.ready).length;
+      return { passRate: Math.max(88, Math.min(99, phaseCompletion + 4)), totalDefects, openCritical, phaseCompletion, envReady };
+    }
+
+    function renderOverview() {
+      const k = calcKPIs();
+      document.getElementById('kpiGrid').innerHTML = [
+        ['Overall Test Health', `${k.passRate}%`, 'Program-level quality trend'],
+        ['Open Defects', `${k.totalDefects}`, 'Across all workstreams'],
+        ['Open Sev1', `${k.openCritical}`, 'Requires immediate triage'],
+        ['Phase Completion', `${k.phaseCompletion}%`, 'SIT → Hyper Care execution']
+      ].map(([title, value, note]) => `<article class="card"><div class="muted">${title}</div><div class="metric">${value}</div><div class="muted">${note}</div></article>`).join('');
+
+      const riskScore = Math.max(0, Math.min(100, (k.openCritical * 25) + ((5 - k.envReady) * 8) + (100 - k.phaseCompletion) * 0.4));
+      document.getElementById('riskMarker').style.left = `${riskScore}%`;
+      document.getElementById('riskLabel').textContent = `Risk score: ${Math.round(riskScore)}/100 (${riskScore < 35 ? 'Controlled' : riskScore < 65 ? 'Watchlist' : 'Escalated'})`;
+
+      const summary = `SIT/E2E completion is ${k.phaseCompletion}% with ${k.openCritical} open Sev1 defect(s). ${k.envReady}/5 test environments are ready. Recommendation: ${riskScore < 50 ? 'continue toward go-live gates with focused risk burn-down.' : 'hold gate and execute targeted recovery plan before sign-off.'}`;
+      document.getElementById('steeringSummary').textContent = summary;
+
+      const competencies = [
+        ['Program test strategy leadership', 'Master test phases, quality gates, readiness scoring', 'Demonstrated'],
+        ['Governance and stakeholder influence', 'Steering summary + governance cadence + go/no-go output', 'Demonstrated'],
+        ['Defect, environment, and data readiness', 'Live defect register + env checklist + compliance panel', 'Demonstrated'],
+        ['Resource and global team management', 'Onshore/offshore capacity vs plan and focus alignment', 'Demonstrated'],
+        ['Tools and automation governance', 'qTest/Tosca/NeoLoad/ADO process mapped in phase controls', 'Demonstrated'],
+        ['Cutover and hyper care support', 'Dedicated phase tracking and readiness decision module', 'Demonstrated']
+      ];
+      document.getElementById('competencyTable').innerHTML = competencies.map((row) => `<tr><td>${row[0]}</td><td>${row[1]}</td><td><span class="status green">${row[2]}</span></td></tr>`).join('');
+
+      document.getElementById('refreshSummary').onclick = () => renderOverview();
+      document.getElementById('downloadSummary').onclick = () => {
+        const blob = new Blob([`SAP Test Program Executive Update
+
+${summary}
+
+Generated: ${new Date().toLocaleString()}`], { type: 'text/plain' });
+        downloadBlob(blob, 'sap-test-manager-executive-update.txt');
+      };
+    }
+
+    function renderStrategy() {
+      document.getElementById('phaseTable').innerHTML = state.phases.map((p, idx) => `<tr><td>${p.phase}</td><td>${p.scope}</td><td>${p.entry}</td><td>${p.exit}</td><td><input type="number" min="0" max="100" value="${p.completion}" data-phase="${idx}" class="phase-completion" /></td><td><span class="status ${statusClass(p.status)}">${p.status}</span></td></tr>`).join('');
+
+      document.querySelectorAll('.phase-completion').forEach((input) => {
+        input.onchange = (e) => {
+          const idx = Number(e.target.dataset.phase);
+          const value = Math.max(0, Math.min(100, Number(e.target.value) || 0));
+          state.phases[idx].completion = value;
+          state.phases[idx].status = value >= 90 ? 'Green' : value >= 75 ? 'Amber' : 'Red';
+          saveState();
+          renderAll();
+        };
+      });
+
+      document.querySelectorAll('.gate').forEach((checkbox) => {
+        checkbox.checked = !!state.gates[checkbox.dataset.gate];
+        checkbox.onchange = () => {
+          state.gates[checkbox.dataset.gate] = checkbox.checked;
+          saveState();
+          renderGateOutcome();
+        };
+      });
+      renderGateOutcome();
+    }
+
+    function renderGateOutcome() {
+      const gates = Object.values(state.gates);
+      const passCount = gates.filter(Boolean).length;
+      const total = gates.length;
+      const decision = passCount === total ? 'Go recommendation for next test phase.' : passCount >= total - 1 ? 'Conditional go with mitigation plan.' : 'No-go: unresolved quality gate gaps.';
+      document.getElementById('gateOutcome').textContent = `Gate score: ${passCount}/${total} · ${decision}`;
+    }
+
+    function renderDefects() {
+      const counts = {
+        open: state.defects.filter((d) => d.status === 'Open').length,
+        triage: state.defects.filter((d) => d.status === 'In Triage').length,
+        inProgress: state.defects.filter((d) => d.status === 'In Progress').length,
+        retest: state.defects.filter((d) => d.status === 'Ready for Retest').length,
+        closed: state.defects.filter((d) => d.status === 'Closed').length,
+      };
+      document.getElementById('defectStats').innerHTML = [['Open', counts.open], ['In Triage', counts.triage], ['In Progress', counts.inProgress], ['Ready for Retest', counts.retest], ['Closed', counts.closed], ['Total', state.defects.length]].map(([name, value]) => `<article class="card"><div class="muted">${name}</div><div class="metric">${value}</div></article>`).join('');
+      const defectTable = document.getElementById('defectTable');
+      defectTable.replaceChildren();
+      state.defects.forEach((d) => {
+        const row = document.createElement('tr');
+
+        const idCell = document.createElement('td');
+        idCell.textContent = d.id;
+        row.appendChild(idCell);
+
+        const titleCell = document.createElement('td');
+        titleCell.textContent = d.title;
+        row.appendChild(titleCell);
+
+        const severityCell = document.createElement('td');
+        const severityBadge = document.createElement('span');
+        severityBadge.className = `status ${statusClass(d.severity)}`;
+        severityBadge.textContent = d.severity;
+        severityCell.appendChild(severityBadge);
+        row.appendChild(severityCell);
+
+        const statusCell = document.createElement('td');
+        statusCell.textContent = d.status;
+        row.appendChild(statusCell);
+
+        const ownerCell = document.createElement('td');
+        ownerCell.textContent = d.owner;
+        row.appendChild(ownerCell);
+
+        defectTable.appendChild(row);
+      });
+
+      document.getElementById('addDefect').onclick = () => {
+        const title = document.getElementById('defectTitle').value.trim();
+        const severity = document.getElementById('defectSeverity').value;
+        const status = document.getElementById('defectStatus').value;
+        const owner = document.getElementById('defectOwner').value.trim() || 'Unassigned';
+        if (!title) return;
+        const next = state.defects.length + 3010;
+        state.defects.unshift({ id: `DF-${next}`, title, severity, status, owner });
+        document.getElementById('defectTitle').value = '';
+        document.getElementById('defectOwner').value = '';
+        saveState();
+        renderAll();
+      };
+    }
+
+    function renderEnv() {
+      document.getElementById('envCards').innerHTML = state.environments.map((e) => `<article class="card"><div class="muted">${e.name}</div><div class="metric">${e.ready ? 'Ready' : 'At Risk'}</div><div class="muted">Owner: ${e.owner}</div></article>`).join('');
+      const checklist = document.getElementById('envChecklist');
+      checklist.innerHTML = state.environments.map((e, idx) => `<label><input type="checkbox" data-env="${idx}" ${e.ready ? 'checked' : ''}/> ${e.name} · ${e.owner}</label>`).join('');
+      checklist.querySelectorAll('input').forEach((box) => {
+        box.onchange = () => {
+          state.environments[Number(box.dataset.env)].ready = box.checked;
+          saveState();
+          renderAll();
+        };
+      });
+      document.getElementById('dataMigration').textContent = state.compliance.dataMigration;
+      document.getElementById('piiMasking').textContent = state.compliance.piiMasking;
+      document.getElementById('securityEvidence').textContent = state.compliance.securityEvidence;
+      document.getElementById('auditCoverage').textContent = state.compliance.auditCoverage;
+    }
+
+    function renderDelivery() {
+      document.getElementById('deliveryStats').innerHTML = [['Regression Automation Coverage', '72%'], ['UAT Defect Turnaround SLA', '89% met'], ['Cutover Rehearsal Success', '98.4%']].map(([name, value]) => `<article class="card"><div class="muted">${name}</div><div class="metric">${value}</div></article>`).join('');
+      document.getElementById('resourceTable').innerHTML = state.resources.map((r) => `<tr><td>${r.team}</td><td>${r.planned}</td><td>${r.actual}</td><td>${r.focus}</td></tr>`).join('');
+
+      document.getElementById('coverageInput').value = state.readiness.coverage;
+      document.getElementById('criticalInput').value = state.readiness.criticalOpen;
+      document.getElementById('hyperInput').value = state.readiness.hyperCare;
+      document.getElementById('readinessNotes').value = state.readiness.notes;
+
+      document.getElementById('evaluateReadiness').onclick = () => {
+        state.readiness.coverage = Number(document.getElementById('coverageInput').value) || 0;
+        state.readiness.criticalOpen = Number(document.getElementById('criticalInput').value) || 0;
+        state.readiness.hyperCare = Number(document.getElementById('hyperInput').value) || 0;
+        state.readiness.notes = document.getElementById('readinessNotes').value.trim();
+        saveState();
+        const go = state.readiness.coverage >= 92 && state.readiness.criticalOpen === 0 && state.readiness.hyperCare >= 90;
+        const readinessResult = document.getElementById('readinessResult');
+        readinessResult.textContent = '';
+        const statusBadge = document.createElement('span');
+        statusBadge.className = `status ${go ? 'green' : 'red'}`;
+        statusBadge.textContent = go ? 'GO' : 'NO-GO';
+        readinessResult.appendChild(statusBadge);
+        readinessResult.appendChild(
+          document.createTextNode(
+            ` — Coverage ${state.readiness.coverage}%, Open Critical ${state.readiness.criticalOpen}, Hyper Care Prepared ${state.readiness.hyperCare}%. ${state.readiness.notes}`
+          )
+        );
+      };
+
+      document.getElementById('exportReadiness').onclick = () => {
+        const text = ['SAP Go-Live Readiness Memo', `Coverage: ${state.readiness.coverage}%`, `Open Critical Defects: ${state.readiness.criticalOpen}`, `Hyper Care Preparedness: ${state.readiness.hyperCare}%`, `Notes: ${state.readiness.notes}`, `Generated: ${new Date().toLocaleString()}`].join('\n');
+        downloadBlob(new Blob([text], { type: 'text/plain' }), 'sap-go-live-readiness-memo.txt');
+      };
+
+      document.getElementById('evaluateReadiness').click();
+    }
+
+    function downloadBlob(blob, filename) {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function renderAll() {
+      renderOverview();
+      renderStrategy();
+      renderDefects();
+      renderEnv();
+      renderDelivery();
+    }
+
+    renderTabs();
+    renderAll();
+  </script>
+</body>
+</html>
