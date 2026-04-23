@@ -2,8 +2,28 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { Code2, Database, Smartphone, Cloud, GitBranch, Figma } from 'lucide-react';
 import Link from 'next/link';
+import { projects, formatProjectCategory } from '../../data/projects';
 
 export default function AboutPage() {
+  const projectCategoryOrder = ['mobile', 'Automotive', 'Web', 'fullstack'] as const;
+  const projectCategorySummary = projectCategoryOrder
+    .map((category) => ({
+      category: formatProjectCategory(category),
+      count: projects.filter((project) => project.category === category).length,
+    }))
+    .filter((item) => item.count > 0);
+
+  const topTechnologies = Array.from(
+    projects.reduce((counts, project) => {
+      project.tech.forEach((tech) => {
+        counts.set(tech, (counts.get(tech) ?? 0) + 1);
+      });
+      return counts;
+    }, new Map<string, number>()),
+  )
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 8);
+
   const skills = {
     frontend: [
       { name: 'React', level: 95 },
@@ -47,8 +67,8 @@ export default function AboutPage() {
           <section aria-labelledby="about-heading" className="text-center mb-16">
             <h1 id="about-heading" className="text-4xl font-bold theme-text-primary mb-4">About Me</h1>
             <p className="text-xl theme-text-secondary max-w-3xl mx-auto">
-              Passionate full-stack developer with expertise in modern web technologies 
-              and a focus on creating exceptional user experiences.
+              Passionate engineer building {projects.length} portfolio projects across mobile, automotive,
+              web, and full-stack domains with a focus on scalable architecture and polished user experiences.
             </p>
           </section>
 
@@ -117,6 +137,32 @@ export default function AboutPage() {
               </div>
             </section>
           </div>
+
+          <section aria-labelledby="project-alignment-heading" className="mb-16">
+            <h2 id="project-alignment-heading" className="text-2xl font-bold theme-text-primary mb-6 text-center">
+              Aligned With Included Projects
+            </h2>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+              {projectCategorySummary.map((item) => (
+                <div key={item.category} className="surface-card rounded-xl p-4 text-center">
+                  <p className="text-3xl font-bold theme-accent-text">{item.count}</p>
+                  <p className="text-sm font-medium theme-text-secondary">{item.category} projects</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="surface-card rounded-xl p-6">
+              <h3 className="text-lg font-semibold theme-text-primary mb-4">Most-used technologies in this portfolio</h3>
+              <div className="flex flex-wrap gap-2">
+                {topTechnologies.map(([tech, count]) => (
+                  <span key={tech} className="surface-subtle rounded-full px-3 py-1 text-sm theme-text-secondary">
+                    {tech} ({count})
+                  </span>
+                ))}
+              </div>
+            </div>
+          </section>
 
           {/* Call to Action */}
           <section aria-labelledby="cta-heading" className="text-center rounded-2xl p-8 text-white" style={{ background: 'linear-gradient(90deg, var(--accent), var(--accent-strong))' }}>
