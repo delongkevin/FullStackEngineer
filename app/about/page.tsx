@@ -22,6 +22,9 @@ export default function AboutPage() {
   const categoryListText = categoryLabels.length > 1
     ? `${categoryLabels.slice(0, -1).join(', ')}, and ${categoryLabels[categoryLabels.length - 1]}`
     : categoryLabels[0] ?? 'modern software';
+  const introSummaryText = projects.length > 0
+    ? `building ${projects.length} portfolio projects across ${categoryListText}`
+    : 'designing and shipping modern software solutions';
 
   const topTechnologies = Array.from(
     projects.reduce((counts, project) => {
@@ -77,8 +80,7 @@ export default function AboutPage() {
           <section aria-labelledby="about-heading" className="text-center mb-16">
             <h1 id="about-heading" className="text-4xl font-bold theme-text-primary mb-4">About Me</h1>
             <p className="text-xl theme-text-secondary max-w-3xl mx-auto">
-              Passionate engineer building {projects.length} portfolio projects across {categoryListText}
-              with a focus on scalable architecture and polished user experiences.
+              Passionate engineer {introSummaryText} with a focus on scalable architecture and polished user experiences.
             </p>
           </section>
 
