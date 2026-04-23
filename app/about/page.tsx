@@ -2,31 +2,103 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { Code2, Database, Smartphone, Cloud, GitBranch, Figma } from 'lucide-react';
 import Link from 'next/link';
+import { projects, formatProjectCategory } from '../../data/projects';
+
+const formatCategoryList = (categoryLabels: string[]) => {
+  if (categoryLabels.length === 0) {
+    return 'modern software';
+  }
+
+  if (categoryLabels.length === 1) {
+    return categoryLabels[0];
+  }
+
+  if (categoryLabels.length === 2) {
+    return `${categoryLabels[0]} and ${categoryLabels[1]}`;
+  }
+
+  return `${categoryLabels.slice(0, -1).join(', ')}, and ${categoryLabels[categoryLabels.length - 1]}`;
+};
+
+const skillDefinitions: Record<'frontend' | 'backend' | 'tools', Array<{ name: string; aliases: string[] }>> = {
+  frontend: [
+    { name: 'React', aliases: ['React', 'React Native'] },
+    { name: 'TypeScript', aliases: ['TypeScript'] },
+    { name: 'Next.js', aliases: ['Next.js'] },
+    { name: 'JavaScript', aliases: ['JavaScript'] },
+    { name: 'HTML/CSS', aliases: ['HTML5', 'CSS3', 'HTML/CSS'] },
+  ],
+  backend: [
+    { name: 'Node.js', aliases: ['Node.js'] },
+    { name: 'Python', aliases: ['Python'] },
+    { name: 'MongoDB', aliases: ['MongoDB'] },
+    { name: 'PostgreSQL', aliases: ['PostgreSQL'] },
+    { name: 'Firebase', aliases: ['Firebase'] },
+  ],
+  tools: [
+    { name: 'Git', aliases: ['Git', 'GitHub'] },
+    { name: 'Docker', aliases: ['Docker'] },
+    { name: 'AWS', aliases: ['AWS'] },
+    { name: 'Figma', aliases: ['Figma'] },
+    { name: 'Jest', aliases: ['Jest'] },
+  ],
+};
 
 export default function AboutPage() {
-  const skills = {
-    frontend: [
-      { name: 'React', level: 95 },
-      { name: 'TypeScript', level: 90 },
-      { name: 'Next.js', level: 88 },
-      { name: 'Tailwind CSS', level: 92 },
-      { name: 'HTML/CSS', level: 98 }
-    ],
-    backend: [
-      { name: 'Node.js', level: 85 },
-      { name: 'Express', level: 82 },
-      { name: 'MongoDB', level: 80 },
-      { name: 'PostgreSQL', level: 78 },
-      { name: 'Firebase', level: 85 }
-    ],
-    tools: [
-      { name: 'Git', level: 90 },
-      { name: 'Docker', level: 75 },
-      { name: 'AWS', level: 70 },
-      { name: 'Figma', level: 80 },
-      { name: 'Jest', level: 85 }
-    ]
+  const projectCategorySummary = Array.from(
+    projects.reduce((counts, project) => {
+      counts.set(project.category, (counts.get(project.category) ?? 0) + 1);
+      return counts;
+    }, new Map<(typeof projects)[number]['category'], number>()),
+  )
+    .sort(([, countA], [, countB]) => countB - countA)
+    .filter(([category]) => category !== 'all')
+    .map(([category, count]) => ({
+      rawCategory: category,
+      label: formatProjectCategory(category),
+      count,
+    }));
+
+  const categoryLabels = projectCategorySummary.map((item) => item.label.toLowerCase());
+  const categoryListText = formatCategoryList(categoryLabels);
+  const introSummaryText = projects.length > 0
+    ? `building ${projects.length} portfolio projects across ${categoryListText}`
+    : 'designing and shipping modern software solutions';
+
+  const topTechnologies = Array.from(
+    projects.reduce((counts, project) => {
+      project.tech.forEach((tech) => {
+        counts.set(tech, (counts.get(tech) ?? 0) + 1);
+      });
+      return counts;
+    }, new Map<string, number>()),
+  )
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 8);
+
+  const projectTechSets = projects.map((project) => new Set(project.tech.map((tech) => tech.toLowerCase())));
+  const calculateSkillLevel = (aliases: string[]) => {
+    if (projectTechSets.length === 0) {
+      return 0;
+    }
+
+    const normalizedAliases = aliases.map((alias) => alias.toLowerCase());
+    const projectsUsingSkill = projectTechSets.filter((techSet) =>
+      normalizedAliases.some((alias) => techSet.has(alias)),
+    ).length;
+
+    return Math.round((projectsUsingSkill / projectTechSets.length) * 100);
   };
+
+  const skills = Object.fromEntries(
+    Object.entries(skillDefinitions).map(([category, skillList]) => [
+      category,
+      skillList.map((skill) => ({
+        name: skill.name,
+        level: calculateSkillLevel(skill.aliases),
+      })),
+    ]),
+  ) as Record<keyof typeof skillDefinitions, Array<{ name: string; level: number }>>;
 
   const skillIcons = [
     { icon: Code2, label: 'Frontend', color: 'text-blue-600' },
@@ -47,8 +119,7 @@ export default function AboutPage() {
           <section aria-labelledby="about-heading" className="text-center mb-16">
             <h1 id="about-heading" className="text-4xl font-bold theme-text-primary mb-4">About Me</h1>
             <p className="text-xl theme-text-secondary max-w-3xl mx-auto">
-              Passionate full-stack developer with expertise in modern web technologies 
-              and a focus on creating exceptional user experiences.
+              Passionate engineer {introSummaryText} with a focus on scalable architecture and polished user experiences.
             </p>
           </section>
 
@@ -117,6 +188,32 @@ export default function AboutPage() {
               </div>
             </section>
           </div>
+
+          <section aria-labelledby="project-alignment-heading" className="mb-16">
+            <h2 id="project-alignment-heading" className="text-2xl font-bold theme-text-primary mb-6 text-center">
+              Project Portfolio Overview
+            </h2>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+              {projectCategorySummary.map((item) => (
+                <div key={item.rawCategory} className="surface-card rounded-xl p-4 text-center">
+                  <p className="text-3xl font-bold theme-accent-text">{item.count}</p>
+                  <p className="text-sm font-medium theme-text-secondary">{item.label} projects</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="surface-card rounded-xl p-6">
+              <h3 className="text-lg font-semibold theme-text-primary mb-4">Most-used technologies in this portfolio</h3>
+              <div className="flex flex-wrap gap-2">
+                {topTechnologies.map(([tech, count]) => (
+                  <span key={tech} className="surface-subtle rounded-full px-3 py-1 text-sm theme-text-secondary">
+                    {tech} ({count})
+                  </span>
+                ))}
+              </div>
+            </div>
+          </section>
 
           {/* Call to Action */}
           <section aria-labelledby="cta-heading" className="text-center rounded-2xl p-8 text-white" style={{ background: 'linear-gradient(90deg, var(--accent), var(--accent-strong))' }}>
