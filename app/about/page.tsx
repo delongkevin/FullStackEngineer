@@ -4,6 +4,22 @@ import { Code2, Database, Smartphone, Cloud, GitBranch, Figma } from 'lucide-rea
 import Link from 'next/link';
 import { projects, formatProjectCategory } from '../../data/projects';
 
+const formatCategoryList = (categoryLabels: string[]) => {
+  if (categoryLabels.length === 0) {
+    return 'modern software';
+  }
+
+  if (categoryLabels.length === 1) {
+    return categoryLabels[0];
+  }
+
+  if (categoryLabels.length === 2) {
+    return `${categoryLabels[0]} and ${categoryLabels[1]}`;
+  }
+
+  return `${categoryLabels.slice(0, -1).join(', ')}, and ${categoryLabels[categoryLabels.length - 1]}`;
+};
+
 export default function AboutPage() {
   const projectCategorySummary = Array.from(
     projects.reduce((counts, project) => {
@@ -20,13 +36,7 @@ export default function AboutPage() {
     }));
 
   const categoryLabels = projectCategorySummary.map((item) => item.label.toLowerCase());
-  const categoryListText = categoryLabels.length === 0
-    ? 'modern software'
-    : categoryLabels.length === 1
-      ? categoryLabels[0]
-      : categoryLabels.length === 2
-        ? `${categoryLabels[0]} and ${categoryLabels[1]}`
-        : `${categoryLabels.slice(0, -1).join(', ')}, and ${categoryLabels[categoryLabels.length - 1]}`;
+  const categoryListText = formatCategoryList(categoryLabels);
   const introSummaryText = projects.length > 0
     ? `building ${projects.length} portfolio projects across ${categoryListText}`
     : 'designing and shipping modern software solutions';
