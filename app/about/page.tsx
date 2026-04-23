@@ -5,13 +5,26 @@ import Link from 'next/link';
 import { projects, formatProjectCategory } from '../../data/projects';
 
 export default function AboutPage() {
-  const projectCategoryOrder = ['mobile', 'Automotive', 'Web', 'fullstack'] as const;
-  const projectCategorySummary = projectCategoryOrder
-    .map((category) => ({
+  const categoryPriority: Record<(typeof projects)[number]['category'], number> = {
+    mobile: 0,
+    Automotive: 1,
+    Web: 2,
+    fullstack: 3,
+    all: 4,
+  };
+
+  const projectCategorySummary = Array.from(
+    projects.reduce((counts, project) => {
+      counts.set(project.category, (counts.get(project.category) ?? 0) + 1);
+      return counts;
+    }, new Map<(typeof projects)[number]['category'], number>()),
+  )
+    .sort(([categoryA], [categoryB]) => categoryPriority[categoryA] - categoryPriority[categoryB])
+    .filter(([category]) => category !== 'all')
+    .map(([category, count]) => ({
       category: formatProjectCategory(category),
-      count: projects.filter((project) => project.category === category).length,
-    }))
-    .filter((item) => item.count > 0);
+      count,
+    }));
 
   const topTechnologies = Array.from(
     projects.reduce((counts, project) => {
@@ -140,7 +153,7 @@ export default function AboutPage() {
 
           <section aria-labelledby="project-alignment-heading" className="mb-16">
             <h2 id="project-alignment-heading" className="text-2xl font-bold theme-text-primary mb-6 text-center">
-              Aligned With Included Projects
+              Project Portfolio Overview
             </h2>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
