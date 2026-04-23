@@ -20,6 +20,30 @@ const formatCategoryList = (categoryLabels: string[]) => {
   return `${categoryLabels.slice(0, -1).join(', ')}, and ${categoryLabels[categoryLabels.length - 1]}`;
 };
 
+const skillDefinitions: Record<'frontend' | 'backend' | 'tools', Array<{ name: string; aliases: string[] }>> = {
+  frontend: [
+    { name: 'React', aliases: ['React', 'React Native'] },
+    { name: 'TypeScript', aliases: ['TypeScript'] },
+    { name: 'Next.js', aliases: ['Next.js'] },
+    { name: 'JavaScript', aliases: ['JavaScript'] },
+    { name: 'HTML/CSS', aliases: ['HTML5', 'CSS3', 'HTML/CSS'] },
+  ],
+  backend: [
+    { name: 'Node.js', aliases: ['Node.js'] },
+    { name: 'Python', aliases: ['Python'] },
+    { name: 'MongoDB', aliases: ['MongoDB'] },
+    { name: 'PostgreSQL', aliases: ['PostgreSQL'] },
+    { name: 'Firebase', aliases: ['Firebase'] },
+  ],
+  tools: [
+    { name: 'Git', aliases: ['Git', 'GitHub'] },
+    { name: 'Docker', aliases: ['Docker'] },
+    { name: 'AWS', aliases: ['AWS'] },
+    { name: 'Figma', aliases: ['Figma'] },
+    { name: 'Jest', aliases: ['Jest'] },
+  ],
+};
+
 export default function AboutPage() {
   const projectCategorySummary = Array.from(
     projects.reduce((counts, project) => {
@@ -52,29 +76,29 @@ export default function AboutPage() {
     .sort((a, b) => b[1] - a[1])
     .slice(0, 8);
 
-  const skills = {
-    frontend: [
-      { name: 'React', level: 95 },
-      { name: 'TypeScript', level: 90 },
-      { name: 'Next.js', level: 88 },
-      { name: 'Tailwind CSS', level: 92 },
-      { name: 'HTML/CSS', level: 98 }
-    ],
-    backend: [
-      { name: 'Node.js', level: 85 },
-      { name: 'Express', level: 82 },
-      { name: 'MongoDB', level: 80 },
-      { name: 'PostgreSQL', level: 78 },
-      { name: 'Firebase', level: 85 }
-    ],
-    tools: [
-      { name: 'Git', level: 90 },
-      { name: 'Docker', level: 75 },
-      { name: 'AWS', level: 70 },
-      { name: 'Figma', level: 80 },
-      { name: 'Jest', level: 85 }
-    ]
+  const projectTechSets = projects.map((project) => new Set(project.tech.map((tech) => tech.toLowerCase())));
+  const calculateSkillLevel = (aliases: string[]) => {
+    if (projectTechSets.length === 0) {
+      return 0;
+    }
+
+    const normalizedAliases = aliases.map((alias) => alias.toLowerCase());
+    const projectsUsingSkill = projectTechSets.filter((techSet) =>
+      normalizedAliases.some((alias) => techSet.has(alias)),
+    ).length;
+
+    return Math.round((projectsUsingSkill / projectTechSets.length) * 100);
   };
+
+  const skills = Object.fromEntries(
+    Object.entries(skillDefinitions).map(([category, skillList]) => [
+      category,
+      skillList.map((skill) => ({
+        name: skill.name,
+        level: calculateSkillLevel(skill.aliases),
+      })),
+    ]),
+  ) as Record<keyof typeof skillDefinitions, Array<{ name: string; level: number }>>;
 
   const skillIcons = [
     { icon: Code2, label: 'Frontend', color: 'text-blue-600' },
