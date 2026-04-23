@@ -4,6 +4,12 @@ import { Code2, Database, Smartphone, Cloud, GitBranch, Figma } from 'lucide-rea
 import Link from 'next/link';
 import { projects, formatProjectCategory } from '../../data/projects';
 
+// Higher values reach high proficiency faster; 0.5 gives strong growth while preserving differentiation.
+const SKILL_SATURATION_GROWTH_FACTOR = 0.5;
+const toSaturationPercentage = (demonstratedProjectCount: number): number => {
+  return Math.round((1 - Math.exp(-SKILL_SATURATION_GROWTH_FACTOR * demonstratedProjectCount)) * 100);
+};
+
 const formatCategoryList = (categoryLabels: string[]) => {
   if (categoryLabels.length === 0) {
     return 'modern software';
@@ -87,10 +93,7 @@ export default function AboutPage() {
       return 0;
     }
 
-    const skillGrowthFactor = 0.5;
-    const saturationScore = 1 - Math.exp(-skillGrowthFactor * projectsUsingSkill);
-
-    return Math.round(saturationScore * 100);
+    return toSaturationPercentage(projectsUsingSkill);
   };
 
   const skills = Object.fromEntries(

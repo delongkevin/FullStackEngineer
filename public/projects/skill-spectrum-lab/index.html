@@ -213,7 +213,15 @@
   </main>
 
   <script>
-    const storageKey = 'skill-spectrum-lab-state-v1';
+    const storageKey = 'skill-spectrum-lab-state';
+    const JEST_RATE_MAX_INCREMENT = 4;
+    const JEST_RATE_MIN = 70;
+    const JEST_RATE_MAX = 99;
+    const QUALITY_WEIGHT_JEST = 0.3;
+    const QUALITY_WEIGHT_FIGMA = 0.2;
+    const STORY_THROUGHPUT_MULTIPLIER = 2.3;
+    const THROUGHPUT_WEIGHT_FACTOR = 0.5;
+    const RISK_PENALTY_MULTIPLIER = 4.2;
     const defaultState = {
       stories: 24,
       risks: 5,
@@ -256,15 +264,20 @@
       persist();
     }
 
+    // Keep metrics within explicit lower and upper bounds.
     function clamp(value, min, max) {
       return Math.min(max, Math.max(min, value));
     }
 
     function recalcConfidence() {
-      const qualityWeight = state.jestRate * 0.3 + state.figmaRate * 0.2;
-      const throughputWeight = Math.min(100, state.stories * 2.3);
-      const riskPenalty = state.risks * 4.2;
-      state.confidence = clamp(Math.round((qualityWeight + throughputWeight * 0.5) - riskPenalty), 0, 100);
+      const qualityWeight = state.jestRate * QUALITY_WEIGHT_JEST + state.figmaRate * QUALITY_WEIGHT_FIGMA;
+      const throughputWeight = Math.min(100, state.stories * STORY_THROUGHPUT_MULTIPLIER);
+      const riskPenalty = state.risks * RISK_PENALTY_MULTIPLIER;
+      state.confidence = clamp(
+        Math.round((qualityWeight + throughputWeight * THROUGHPUT_WEIGHT_FACTOR) - riskPenalty),
+        0,
+        100,
+      );
     }
 
     function render() {
@@ -306,7 +319,11 @@
     });
 
     document.getElementById('runTests').addEventListener('click', () => {
-      state.jestRate = clamp(state.jestRate + Math.floor(Math.random() * 4), 70, 99);
+      state.jestRate = clamp(
+        state.jestRate + Math.floor(Math.random() * JEST_RATE_MAX_INCREMENT),
+        JEST_RATE_MIN,
+        JEST_RATE_MAX,
+      );
       recalcConfidence();
       addLog(`Jest pipeline completed at ${state.jestRate}% pass rate.`);
       persist();
