@@ -14,14 +14,19 @@ export default function AboutPage() {
     .sort(([, countA], [, countB]) => countB - countA)
     .filter(([category]) => category !== 'all')
     .map(([category, count]) => ({
-      category: formatProjectCategory(category),
+      rawCategory: category,
+      label: formatProjectCategory(category),
       count,
     }));
 
-  const categoryLabels = projectCategorySummary.map((item) => item.category.toLowerCase());
-  const categoryListText = categoryLabels.length > 1
-    ? `${categoryLabels.slice(0, -1).join(', ')}, and ${categoryLabels[categoryLabels.length - 1]}`
-    : categoryLabels[0] ?? 'modern software';
+  const categoryLabels = projectCategorySummary.map((item) => item.label.toLowerCase());
+  const categoryListText = categoryLabels.length === 0
+    ? 'modern software'
+    : categoryLabels.length === 1
+      ? categoryLabels[0]
+      : categoryLabels.length === 2
+        ? `${categoryLabels[0]} and ${categoryLabels[1]}`
+        : `${categoryLabels.slice(0, -1).join(', ')}, and ${categoryLabels[categoryLabels.length - 1]}`;
   const introSummaryText = projects.length > 0
     ? `building ${projects.length} portfolio projects across ${categoryListText}`
     : 'designing and shipping modern software solutions';
@@ -157,9 +162,9 @@ export default function AboutPage() {
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
               {projectCategorySummary.map((item) => (
-                <div key={item.category} className="surface-card rounded-xl p-4 text-center">
+                <div key={item.rawCategory} className="surface-card rounded-xl p-4 text-center">
                   <p className="text-3xl font-bold theme-accent-text">{item.count}</p>
-                  <p className="text-sm font-medium theme-text-secondary">{item.category} projects</p>
+                  <p className="text-sm font-medium theme-text-secondary">{item.label} projects</p>
                 </div>
               ))}
             </div>
