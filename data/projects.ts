@@ -933,6 +933,30 @@ export const projects: Project[] = [
     embeddable: true,
     projectPath: '/projects/sap-test-manager',
   },
+  {
+    id: 37,
+    slug: 'skill-spectrum-lab',
+    title: 'Skill Spectrum Lab',
+    description: 'Unified full-stack engineering workspace demo that showcases every core About-page skill in one working project.',
+    fullDescription: 'Skill Spectrum Lab is a practical, interactive portfolio project that unifies frontend, backend, cloud, DevOps, database, design, and testing workflows in one cohesive experience. The demo includes a delivery board, API simulation panel, release pipeline tracker, and architecture map so visitors can quickly validate broad end-to-end engineering capability across all About-page skill domains.',
+    image: '/images/skill-spectrum-lab.svg',
+    tech: ['React', 'TypeScript', 'Next.js', 'JavaScript', 'HTML5', 'CSS3', 'Node.js', 'Python', 'MongoDB', 'PostgreSQL', 'Firebase', 'Git', 'Docker', 'AWS', 'Figma', 'Jest'],
+    liveUrl: '/projects/skill-spectrum-lab/index.html',
+    githubUrl: 'https://github.com/delongkevin/FullStackEngineer',
+    featured: true,
+    category: 'fullstack',
+    features: [
+      'Interactive multi-lane delivery board with status updates and release readiness scoring',
+      'Mock API and integration panel that simulates Node.js, Python, Firebase, MongoDB, and PostgreSQL service calls',
+      'Cloud and DevOps observability cards for AWS, Docker, Git workflow, and deployment checkpoints',
+      'Design system preview section that highlights Figma-to-implementation alignment and responsive UI behavior',
+      'Quality gate with Jest-inspired test run controls and pass-rate analytics',
+      'Persistent session state using browser storage to preserve active sprint data and metric snapshots',
+      'Single-project showcase intentionally mapped to all About-page skill categories for measurable profile uplift',
+    ],
+    embeddable: true,
+    projectPath: '/projects/skill-spectrum-lab',
+  },
 ];
 
 const searchableProjectFields = (project: Project) => {

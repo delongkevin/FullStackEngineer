@@ -78,16 +78,19 @@ export default function AboutPage() {
 
   const projectTechSets = projects.map((project) => new Set(project.tech.map((tech) => tech.toLowerCase())));
   const calculateSkillLevel = (aliases: string[]) => {
-    if (projectTechSets.length === 0) {
-      return 0;
-    }
-
     const normalizedAliases = aliases.map((alias) => alias.toLowerCase());
     const projectsUsingSkill = projectTechSets.filter((techSet) =>
       normalizedAliases.some((alias) => techSet.has(alias)),
     ).length;
 
-    return Math.round((projectsUsingSkill / projectTechSets.length) * 100);
+    if (projectsUsingSkill === 0) {
+      return 0;
+    }
+
+    const skillGrowthFactor = 0.5;
+    const saturationScore = 1 - Math.exp(-skillGrowthFactor * projectsUsingSkill);
+
+    return Math.round(saturationScore * 100);
   };
 
   const skills = Object.fromEntries(
