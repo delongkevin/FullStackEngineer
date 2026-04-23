@@ -5,26 +5,23 @@ import Link from 'next/link';
 import { projects, formatProjectCategory } from '../../data/projects';
 
 export default function AboutPage() {
-  const categoryPriority: Record<(typeof projects)[number]['category'], number> = {
-    mobile: 0,
-    Automotive: 1,
-    Web: 2,
-    fullstack: 3,
-    all: 4,
-  };
-
   const projectCategorySummary = Array.from(
     projects.reduce((counts, project) => {
       counts.set(project.category, (counts.get(project.category) ?? 0) + 1);
       return counts;
     }, new Map<(typeof projects)[number]['category'], number>()),
   )
-    .sort(([categoryA], [categoryB]) => categoryPriority[categoryA] - categoryPriority[categoryB])
+    .sort(([, countA], [, countB]) => countB - countA)
     .filter(([category]) => category !== 'all')
     .map(([category, count]) => ({
       category: formatProjectCategory(category),
       count,
     }));
+
+  const categoryLabels = projectCategorySummary.map((item) => item.category.toLowerCase());
+  const categoryListText = categoryLabels.length > 1
+    ? `${categoryLabels.slice(0, -1).join(', ')}, and ${categoryLabels[categoryLabels.length - 1]}`
+    : categoryLabels[0] ?? 'modern software';
 
   const topTechnologies = Array.from(
     projects.reduce((counts, project) => {
@@ -80,8 +77,8 @@ export default function AboutPage() {
           <section aria-labelledby="about-heading" className="text-center mb-16">
             <h1 id="about-heading" className="text-4xl font-bold theme-text-primary mb-4">About Me</h1>
             <p className="text-xl theme-text-secondary max-w-3xl mx-auto">
-              Passionate engineer building {projects.length} portfolio projects across mobile, automotive,
-              web, and full-stack domains with a focus on scalable architecture and polished user experiences.
+              Passionate engineer building {projects.length} portfolio projects across {categoryListText}
+              with a focus on scalable architecture and polished user experiences.
             </p>
           </section>
 
