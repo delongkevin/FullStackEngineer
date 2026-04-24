@@ -3,6 +3,7 @@ import Footer from '../../components/Footer';
 import { Code2, Database, Smartphone, Cloud, GitBranch, Figma } from 'lucide-react';
 import Link from 'next/link';
 import { projects, formatProjectCategory } from '../../data/projects';
+import { skillDefinitions, calculateSkillLevel } from '../../lib/stats';
 
 const formatCategoryList = (categoryLabels: string[]) => {
   if (categoryLabels.length === 0) {
@@ -18,30 +19,6 @@ const formatCategoryList = (categoryLabels: string[]) => {
   }
 
   return `${categoryLabels.slice(0, -1).join(', ')}, and ${categoryLabels[categoryLabels.length - 1]}`;
-};
-
-const skillDefinitions: Record<'frontend' | 'backend' | 'tools', Array<{ name: string; aliases: string[] }>> = {
-  frontend: [
-    { name: 'React', aliases: ['React', 'React Native'] },
-    { name: 'TypeScript', aliases: ['TypeScript'] },
-    { name: 'Next.js', aliases: ['Next.js'] },
-    { name: 'JavaScript', aliases: ['JavaScript'] },
-    { name: 'HTML/CSS', aliases: ['HTML5', 'CSS3', 'HTML/CSS'] },
-  ],
-  backend: [
-    { name: 'Node.js', aliases: ['Node.js'] },
-    { name: 'Python', aliases: ['Python'] },
-    { name: 'MongoDB', aliases: ['MongoDB'] },
-    { name: 'PostgreSQL', aliases: ['PostgreSQL'] },
-    { name: 'Firebase', aliases: ['Firebase'] },
-  ],
-  tools: [
-    { name: 'Git', aliases: ['Git', 'GitHub'] },
-    { name: 'Docker', aliases: ['Docker'] },
-    { name: 'AWS', aliases: ['AWS'] },
-    { name: 'Figma', aliases: ['Figma'] },
-    { name: 'Jest', aliases: ['Jest'] },
-  ],
 };
 
 export default function AboutPage() {
@@ -77,25 +54,13 @@ export default function AboutPage() {
     .slice(0, 8);
 
   const projectTechSets = projects.map((project) => new Set(project.tech.map((tech) => tech.toLowerCase())));
-  const calculateSkillLevel = (aliases: string[]) => {
-    if (projectTechSets.length === 0) {
-      return 0;
-    }
-
-    const normalizedAliases = aliases.map((alias) => alias.toLowerCase());
-    const projectsUsingSkill = projectTechSets.filter((techSet) =>
-      normalizedAliases.some((alias) => techSet.has(alias)),
-    ).length;
-
-    return Math.round((projectsUsingSkill / projectTechSets.length) * 100);
-  };
 
   const skills = Object.fromEntries(
     Object.entries(skillDefinitions).map(([category, skillList]) => [
       category,
       skillList.map((skill) => ({
         name: skill.name,
-        level: calculateSkillLevel(skill.aliases),
+        level: calculateSkillLevel(skill.aliases, projectTechSets),
       })),
     ]),
   ) as Record<keyof typeof skillDefinitions, Array<{ name: string; level: number }>>;

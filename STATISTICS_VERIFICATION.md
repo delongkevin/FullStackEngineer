@@ -1,16 +1,25 @@
 # About Me Statistics Verification Report
 
 ## Executive Summary
-After comprehensive analysis of the About Me page statistics and project data, I can confirm that **all percentages displayed on the About Me page accurately reflect the actual technologies used in the 36 portfolio projects**.
+After comprehensive analysis of the About Me page statistics and project data, all percentages displayed on the About Me page accurately reflect the actual technologies used in the portfolio projects.
+
+> **Note:** Both the About Me page and this verification script share the same definitions and
+> algorithm via `lib/stats.ts`, so there is a single source of truth.
 
 ## Verification Results
 
 ### Category Breakdown (Verified ✓)
-- **Mobile**: 15 projects (42%)
-- **Full Stack**: 11 projects (31%)
-- **Automotive**: 8 projects (22%)
-- **Web**: 2 projects (6%)
-- **Total**: 36 projects
+
+Category percentages are shown with one decimal place to avoid rounding discrepancies (integer
+rounding can cause totals to differ from 100%).
+
+| Category   | Projects | Share    |
+|------------|----------|----------|
+| Mobile     | 15       | 41.7%    |
+| Full Stack | 11       | 30.6%    |
+| Automotive | 8        | 22.2%    |
+| Web        | 2        | 5.6%     |
+| **Total**  | **36**   | **100%** |
 
 ### Skill Percentages (Verified ✓)
 
@@ -37,13 +46,13 @@ After comprehensive analysis of the About Me page statistics and project data, I
 
 ## Algorithm Verification
 
-The `calculateSkillLevel` function in `app/about/page.tsx` (lines 80-91) correctly:
+The `calculateSkillLevel` function in `lib/stats.ts` (imported by both the About page and this
+report) correctly:
 
 1. ✅ Creates lowercase tech sets for each project
 2. ✅ Matches aliases case-insensitively
 3. ✅ Counts projects that use ANY of the aliases for a skill
-4. ✅ Calculates percentage as: (matching projects / total projects) * 100
-5. ✅ Rounds to nearest whole number
+4. ✅ Calculates percentage as: `round((matching projects / total projects) * 100)`
 
 ## Example Verification: React Skill
 
@@ -52,16 +61,17 @@ Aliases: ['React', 'React Native']
 Projects with "React": [1, 5, 14]
 Projects with "React Native": [8, 13, 15, 16, 23, 24, 25, 26, 27, 28]
 Combined total: 13 projects
-Percentage: (13 / 36) * 100 = 36% ✓
+Percentage: round((13 / 36) * 100) = 36% ✓
 ```
 
-## Conclusion
+## How to Re-run
 
-The About Me page statistics are **100% accurate** and properly reflect the actual project portfolio data. The skill percentage calculation algorithm works correctly, using case-insensitive matching and properly combining multiple aliases (like "React" and "React Native") into a single skill percentage.
-
-No code changes are required - the implementation is correct.
+```bash
+npm run verify-stats
+# or: npx tsx scripts/verify-stats.ts
+```
 
 ---
-*Verified: 2026-04-23*
-*Analysis Method: Manual code review + algorithmic verification*
+*Analysis Method: Shared algorithm (`lib/stats.ts`) + live project data*
 *Project Count: 36*
+*Last verified: Run `npm run verify-stats` to get the latest results*
