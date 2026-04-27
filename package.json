@@ -9,6 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "test": "vitest run",
+    "verify-stats": "npx tsx scripts/verify-stats.ts",
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {

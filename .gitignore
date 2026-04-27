@@ -19,7 +19,11 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
+# Python virtual environment lib directories (but not our TypeScript lib/ folder)
+**/venv/lib/
+**/venv/lib64/
+**/.venv/lib/
+**/.venv/lib64/
 lib64/
 parts/
 sdist/
