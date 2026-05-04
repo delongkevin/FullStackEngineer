@@ -29,6 +29,18 @@ function isGithubReleaseDownloadUrl(url: string): boolean {
   return /^https:\/\/github\.com\/[^/]+\/[^/]+\/releases\/download\/.+\/.+\.apk$/i.test(url);
 }
 
+function isGithubWorkflowUrl(url: string): boolean {
+  return /^https:\/\/github\.com\/[^/]+\/[^/]+\/actions\/workflows\/.+\.yml$/i.test(url);
+}
+
+function getLocalPathFromWorkflowUrl(url: string): string | null {
+  const match = url.match(
+    /^https:\/\/github\.com\/delongkevin\/FullStackEngineer\/actions\/workflows\/(.+\.yml)$/i
+  );
+  if (!match) return null;
+  return path.join(repoRoot, '.github', 'workflows', match[1]);
+}
+
 function getLocalPathFromRepoTreeUrl(url: string): string | null {
   const match = url.match(
     /^https:\/\/github\.com\/delongkevin\/FullStackEngineer\/tree\/main\/(.+)$/
@@ -80,12 +92,18 @@ describe('link integrity', () => {
           isGithubTreeUrl(url) ||
           isGithubReleaseTagUrl(url) ||
           isGithubReleaseDownloadUrl(url) ||
+          isGithubWorkflowUrl(url) ||
           isGithubRepoUrl(url);
         expect(validShape).toBe(true);
 
         const localPath = getLocalPathFromRepoTreeUrl(url);
         if (localPath) {
           expect(existsSync(localPath)).toBe(true);
+        }
+
+        const workflowPath = getLocalPathFromWorkflowUrl(url);
+        if (workflowPath) {
+          expect(existsSync(workflowPath)).toBe(true);
         }
       });
     }

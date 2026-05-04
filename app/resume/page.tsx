@@ -12,10 +12,12 @@ export default function ResumePage() {
   ];
 
   const skills = {
-    "Automotive Protocols": ["AUTOSAR", "SOME/IP", "Service Discovery", "Ethernet", "DoIP", "UDS", "CAN", "CAN FD", "LIN", "SPI"],
-    "Validation & Integration": ["Bench Testing", "Ethernet Stack Validation", "Diagnostics (Diag/COM)", "Tier 1 Support", "Regression Testing", "System Integration"],
-    "Programming": ["C", "Embedded C", "Python", "CAPL"],
-    "Tools": ["CANoe", "Lauterbach", "ISOLAR", "RTC", "JIRA", "Git", "CI/CD"]
+    "Frontend Development": ["React", "React Native", "Next.js", "TypeScript", "JavaScript", "HTML5", "CSS3", "Tailwind CSS", "Responsive Design"],
+    "Backend Development": ["Node.js", "Express", "Python", "RESTful APIs", "WebSocket", "Microservices", "C", "Embedded C"],
+    "Mobile Development": ["iOS (Swift)", "Android (Kotlin)", "Expo", "React Native", "Cross-platform Apps", "Mobile UI/UX"],
+    "Database & Cloud": ["SQL", "PostgreSQL", "Firebase", "AWS", "CI/CD", "Docker", "Git"],
+    "Testing & Quality": ["Jest", "Vitest", "Testing Library", "Unit Testing", "Integration Testing", "Test Automation", "CAPL"],
+    "Automotive & Embedded": ["AUTOSAR", "CAN", "CAN FD", "Ethernet", "DoIP", "UDS", "CANoe", "Embedded Systems"]
   };
 
   const experience = [
@@ -87,19 +89,34 @@ export default function ResumePage() {
 
   const projects = [
     {
-      name: "CANoe ECU Communication Validator",
-      description: "Bench-focused validation utility for CAN/CAN FD messaging, diagnostics checks, and automated trace analysis.",
-      tech: ["Python", "CANoe", "CAN", "CAN FD", "UDS"]
+      name: "Fitness Tracker Mobile App",
+      description: "Cross-platform React Native app with HealthKit/Google Fit integration, workout logging, wearable sync, and goal tracking. Built for iOS and Android with Expo.",
+      tech: ["React Native", "Expo", "Node.js", "HealthKit", "Google Fit", "REST API"]
     },
     {
-      name: "AUTOSAR ECU Diagnostics and Service Validation",
-      description: "Integrated and validated AUTOSAR communication and diagnostics flows, including service-oriented checks and customer-facing issue triage.",
-      tech: ["AUTOSAR", "SOME/IP", "Service Discovery", "DoIP", "UDS", "Ethernet"]
+      name: "Real Estate Marketplace",
+      description: "Full-stack property listing platform with authentication, favorites, search filters, and location services. Includes Jest test suite with 95%+ coverage.",
+      tech: ["React Native", "Expo", "Node.js", "Express", "Jest", "Testing Library"]
     },
     {
-      name: "Validation Report Pipeline",
-      description: "Automated parser and reporting pipeline for test execution outcomes to speed regression feedback cycles.",
-      tech: ["Python", "Jenkins", "CI/CD", "Git"]
+      name: "Personal Finance Tracker",
+      description: "Complete expense and budget management app with category tracking, spending alerts, fraud detection, and Chart.js visualizations for iOS/Android.",
+      tech: ["React Native", "Node.js", "Express", "Chart.js", "RESTful API"]
+    },
+    {
+      name: "Music Streaming Platform",
+      description: "Full-featured music streaming app with playlist management, audio playback controls, search, and social features for sharing favorite tracks.",
+      tech: ["React Native", "Node.js", "Audio APIs", "WebSocket", "REST API"]
+    },
+    {
+      name: "Interactive Portfolio Website",
+      description: "Modern Next.js portfolio with server-side rendering, embeddable projects, responsive design, and comprehensive test coverage using Vitest.",
+      tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Vitest"]
+    },
+    {
+      name: "AUTOSAR ECU Diagnostics Validator",
+      description: "Automated validation framework for AUTOSAR communication and diagnostics flows including SOME/IP, DoIP, UDS, and Ethernet stack testing.",
+      tech: ["Python", "AUTOSAR", "CANoe", "CAN", "Ethernet", "CI/CD"]
     }
   ];
 
@@ -113,7 +130,7 @@ export default function ResumePage() {
           <section aria-labelledby="resume-heading" className="text-center mb-12">
             <h1 id="resume-heading" className="text-4xl font-bold theme-text-primary mb-4">Resume</h1>
               <p className="text-xl theme-text-secondary max-w-2xl mx-auto">
-               AUTOSAR Integration and Validation Engineer specializing in Ethernet communications, diagnostics, and embedded systems quality.
+               Software Engineer - Full Stack specializing in mobile and web development with expertise in React, React Native, Node.js, and cloud technologies.
               </p>
           <div className="mt-6">
             <a
@@ -136,14 +153,14 @@ export default function ResumePage() {
               <div className="relative w-32 h-32 mx-auto mb-4">
                 <Image
                   src="/images/headshot.jpg"
-                  alt="Kevin Delong - AUTOSAR Integration Engineer"
+                  alt="Kevin Delong - Software Engineer - Full Stack"
                   fill
                   className="rounded-full object-cover border-4 border-blue-500"
                   sizes="128px"
                 />
               </div>
               <h2 className="text-xl font-bold theme-text-primary">Kevin Delong</h2>
-              <p className="theme-accent-text font-medium">AUTOSAR Integration Engineer (Ethernet)</p>
+              <p className="theme-accent-text font-medium">Software Engineer - Full Stack</p>
             </div>
           {/* Contact Info */}
               <section aria-labelledby="contact-heading" className="surface-card rounded-xl shadow-lg p-6">
@@ -192,7 +209,7 @@ export default function ResumePage() {
               <section aria-labelledby="summary-heading" className="surface-card rounded-xl shadow-lg p-6">
                 <h2 id="summary-heading" className="text-2xl font-bold theme-text-primary mb-4">Professional Summary</h2>
                 <p className="theme-text-secondary leading-relaxed">
-                Results-oriented Automotive Software Engineer with 10+ years of experience in infotainment and ECU validation, including AUTOSAR-based systems and service-oriented communication. Strong background in C/Embedded C and Python with hands-on expertise in Ethernet, SOME/IP, Service Discovery, DoIP, UDS, and CAN/CAN FD. Proven success supporting customer programs, driving Tier 1 issue resolution, and improving release quality through automation, diagnostics validation, and cross-functional technical leadership.
+                Full-Stack Software Engineer with 10+ years of experience spanning web, mobile, and embedded systems development. Expert in building cross-platform applications using React, React Native, Node.js, and TypeScript with proven success in iOS (Swift), Android (Kotlin), and cloud deployment. Strong background in both modern web technologies and automotive embedded systems (AUTOSAR, CAN, Ethernet). Demonstrated ability to deliver complete solutions from frontend UI to backend APIs, database design, and CI/CD automation. Combines software development expertise with rigorous testing and quality assurance practices to ensure robust, scalable applications.
                 </p>
               </section>
 
@@ -226,7 +243,7 @@ export default function ResumePage() {
               {/* Projects */}
               <section aria-labelledby="projects-heading" className="surface-card rounded-xl shadow-lg p-6">
                 <h2 id="projects-heading" className="text-2xl font-bold theme-text-primary mb-6">Featured Projects</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 gap-6">
                   {projects.map((project, index) => (
                     <div key={index} className="border theme-border rounded-lg p-4 surface-subtle">
                       <h3 className="font-semibold theme-text-primary mb-2">{project.name}</h3>
