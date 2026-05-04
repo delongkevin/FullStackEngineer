@@ -29,6 +29,10 @@ function isGithubReleaseDownloadUrl(url: string): boolean {
   return /^https:\/\/github\.com\/[^/]+\/[^/]+\/releases\/download\/.+\/.+\.apk$/i.test(url);
 }
 
+function isGithubWorkflowUrl(url: string): boolean {
+  return /^https:\/\/github\.com\/[^/]+\/[^/]+\/actions\/workflows\/.+\.yml$/i.test(url);
+}
+
 function getLocalPathFromRepoTreeUrl(url: string): string | null {
   const match = url.match(
     /^https:\/\/github\.com\/delongkevin\/FullStackEngineer\/tree\/main\/(.+)$/
@@ -80,6 +84,7 @@ describe('link integrity', () => {
           isGithubTreeUrl(url) ||
           isGithubReleaseTagUrl(url) ||
           isGithubReleaseDownloadUrl(url) ||
+          isGithubWorkflowUrl(url) ||
           isGithubRepoUrl(url);
         expect(validShape).toBe(true);
 
