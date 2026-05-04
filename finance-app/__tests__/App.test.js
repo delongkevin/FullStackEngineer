@@ -1,4 +1,5 @@
 import React from 'react';
+import { ActivityIndicator } from 'react-native';
 import { render } from '@testing-library/react-native';
 import App from '../App';
 
@@ -11,7 +12,6 @@ jest.mock('@react-native-async-storage/async-storage', () => ({
 describe('Finance Tracker App', () => {
   it('shows a loading indicator while bootstrapping', () => {
     const { UNSAFE_getAllByType } = render(<App />);
-    const { ActivityIndicator } = require('react-native');
     expect(UNSAFE_getAllByType(ActivityIndicator)).toHaveLength(1);
   });
 
