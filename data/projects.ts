@@ -194,7 +194,7 @@ export const projects: Project[] = [
     embeddable: true,
     projectPath: "/projects/PokerApp/PokerApp.html",
     androidUrl: "https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/poker-app-debug.apk",
-    iosUrl: "https://github.com/delongkevin/FullStackEngineer/actions/workflows/release-ios.yml",
+    iosUrl: "https://github.com/delongkevin/FullStackEngineer/tree/main/ios/poker-app",
   }
   ,
   {
@@ -578,7 +578,7 @@ export const projects: Project[] = [
     embeddable: true,
     projectPath: '/projects/fitness-tracker',
     androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/fitness-tracker-app-debug.apk',
-    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/actions/workflows/release-ios.yml',
+    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/fitness-tracker-app',
   },
   {
     id: 24,
@@ -611,7 +611,7 @@ export const projects: Project[] = [
     embeddable: true,
     projectPath: '/projects/finance-dashboard',
     androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/finance-app-debug.apk',
-    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/actions/workflows/release-ios.yml',
+    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/finance-app',
   },
   {
     id: 25,
@@ -650,7 +650,7 @@ export const projects: Project[] = [
     embeddable: true,
     projectPath: '/projects/chat-app',
     androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/chat-app-debug.apk',
-    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/actions/workflows/release-ios.yml',
+    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/chat-app',
   },
   {
     id: 26,
@@ -675,7 +675,7 @@ export const projects: Project[] = [
     embeddable: true,
     projectPath: '/projects/real-estate',
     androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/real-estate-app-debug.apk',
-    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/actions/workflows/release-ios.yml',
+    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/real-estate-app',
   },
   {
     id: 27,
@@ -699,7 +699,7 @@ export const projects: Project[] = [
     embeddable: true,
     projectPath: '/projects/music-streaming',
     androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/music-streaming-app-debug.apk',
-    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/actions/workflows/release-ios.yml',
+    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/music-streaming-app',
   },
   {
     id: 28,
@@ -723,7 +723,7 @@ export const projects: Project[] = [
     embeddable: true,
     projectPath: '/projects/weather-insights',
     androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/weather-app-debug.apk',
-    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/actions/workflows/release-ios.yml',
+    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/weather-app',
   },
   {
     id: 29,
