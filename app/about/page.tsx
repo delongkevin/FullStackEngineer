@@ -2,8 +2,8 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { Code2, Database, Smartphone, Cloud, GitBranch, Figma } from 'lucide-react';
 import Link from 'next/link';
-import { projects, formatProjectCategory } from '../../data/projects';
-import { skillDefinitions, calculateSkillLevel } from '../../lib/stats';
+import { projects, formatProjectCategory, getProjectHref } from '../../data/projects';
+import { skillDefinitions, calculateSkillWithProjects, type ProjectInfo } from '../../lib/stats';
 
 const formatCategoryList = (categoryLabels: string[]) => {
   if (categoryLabels.length === 0) {
@@ -53,17 +53,23 @@ export default function AboutPage() {
     .sort((a, b) => b[1] - a[1])
     .slice(0, 8);
 
-  const projectTechSets = projects.map((project) => new Set(project.tech.map((tech) => tech.toLowerCase())));
+  // Convert projects to ProjectInfo format for skill calculation
+  const projectInfos: ProjectInfo[] = projects.map((p) => ({
+    id: p.id,
+    title: p.title,
+    tech: p.tech,
+    features: p.features,
+  }));
 
+  // Calculate skills with project references and complexity
   const skills = Object.fromEntries(
     Object.entries(skillDefinitions).map(([category, skillList]) => [
       category,
-      skillList.map((skill) => ({
-        name: skill.name,
-        level: calculateSkillLevel(skill.aliases, projectTechSets),
-      })),
+      skillList
+        .map((skill) => calculateSkillWithProjects(skill.aliases, projectInfos))
+        .filter((skill) => skill.projectCount > 0), // Only show skills used in projects
     ]),
-  ) as Record<keyof typeof skillDefinitions, Array<{ name: string; level: number }>>;
+  ) as Record<keyof typeof skillDefinitions, ReturnType<typeof calculateSkillWithProjects>[]>;
 
   const skillIcons = [
     { icon: Code2, label: 'Frontend', color: 'text-blue-600' },
@@ -120,35 +126,57 @@ export default function AboutPage() {
               {/* Detailed Skills */}
               <div className="space-y-6">
                 {Object.entries(skills).map(([category, skillList]) => (
-                  <div key={category}>
-                    <h3 className="font-semibold theme-text-primary mb-3 capitalize">
-                      {category} Development
-                    </h3>
-                    <div className="space-y-3">
-                      {skillList.map((skill) => (
-                        <div key={skill.name}>
-                          <div className="flex justify-between text-sm theme-text-secondary mb-1">
-                            <span>{skill.name}</span>
-                            <span>{skill.level}%</span>
+                  skillList.length > 0 && (
+                    <div key={category}>
+                      <h3 className="font-semibold theme-text-primary mb-3 capitalize">
+                        {category} Development
+                      </h3>
+                      <div className="space-y-4">
+                        {skillList.map((skill) => (
+                          <div key={skill.name}>
+                            <div className="flex justify-between text-sm theme-text-secondary mb-1">
+                              <span className="font-medium">{skill.name}</span>
+                              <span className="text-xs">
+                                {skill.level}% • {skill.projectCount} project{skill.projectCount !== 1 ? 's' : ''}
+                              </span>
+                            </div>
+                            <div
+                              className="w-full surface-subtle rounded-full h-2 mb-2"
+                              role="progressbar"
+                              aria-valuenow={skill.level}
+                              aria-valuemin={0}
+                              aria-valuemax={100}
+                              aria-label={`${skill.name} proficiency: ${skill.level}%`}
+                            >
+                              <div
+                                className="bg-blue-600 h-2 rounded-full transition-all duration-500"
+                                style={{ width: `${skill.level}%` }}
+                                aria-hidden="true"
+                              ></div>
+                            </div>
+                            {/* Project References */}
+                            <div className="flex flex-wrap gap-1 mt-1">
+                              {skill.projects.slice(0, 3).map((project) => (
+                                <Link
+                                  key={project.id}
+                                  href={getProjectHref(projects.find(p => p.id === project.id)!)}
+                                  className="text-xs surface-subtle hover:surface-card rounded px-2 py-0.5 theme-text-secondary hover:theme-accent-text transition-colors"
+                                  title={`${project.title} (Complexity: ${project.complexity})`}
+                                >
+                                  {project.title}
+                                </Link>
+                              ))}
+                              {skill.projects.length > 3 && (
+                                <span className="text-xs theme-text-secondary px-2 py-0.5">
+                                  +{skill.projects.length - 3} more
+                                </span>
+                              )}
+                            </div>
                           </div>
-                          <div 
-                            className="w-full surface-subtle rounded-full h-2"
-                            role="progressbar"
-                            aria-valuenow={skill.level}
-                            aria-valuemin={0}
-                            aria-valuemax={100}
-                            aria-label={`${skill.name} proficiency: ${skill.level}%`}
-                          >
-                            <div 
-                              className="bg-blue-600 h-2 rounded-full transition-all duration-500"
-                              style={{ width: `${skill.level}%` }}
-                              aria-hidden="true"
-                            ></div>
-                          </div>
-                        </div>
-                      ))}
+                        ))}
+                      </div>
                     </div>
-                  </div>
+                  )
                 ))}
               </div>
             </section>
