@@ -54,6 +54,18 @@ describe('stats functions', () => {
   });
 
   describe('calculateProjectComplexity', () => {
+    it('should return 0 when project has no tech or features', () => {
+      const emptyProject: ProjectInfo = {
+        id: 1,
+        title: 'Empty Project',
+        tech: [],
+        features: [],
+      };
+
+      const complexity = calculateProjectComplexity(emptyProject);
+      expect(complexity).toBe(0);
+    });
+
     it('should calculate complexity based on tech and features', () => {
       const simpleProject: ProjectInfo = {
         id: 1,

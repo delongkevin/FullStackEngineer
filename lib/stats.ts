@@ -70,7 +70,7 @@ export function calculateSkillLevel(aliases: string[], projectTechSets: Set<stri
  * Calculate project complexity score based on multiple factors
  *
  * @param project - Project with tech stack and features
- * @returns Complexity score (1-100)
+ * @returns Complexity score (0-100)
  */
 export function calculateProjectComplexity(project: ProjectInfo): number {
   const techCount = project.tech.length;

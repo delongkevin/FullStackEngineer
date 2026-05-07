@@ -60,13 +60,17 @@ export default function AboutPage() {
     tech: p.tech,
     features: p.features,
   }));
+  const projectHrefById = new Map(projects.map((project) => [project.id, getProjectHref(project)]));
 
   // Calculate skills with project references and complexity
   const skills = Object.fromEntries(
     Object.entries(skillDefinitions).map(([category, skillList]) => [
       category,
       skillList
-        .map((skill) => calculateSkillWithProjects(skill.aliases, projectInfos))
+        .map((skill) => ({
+          ...calculateSkillWithProjects(skill.aliases, projectInfos),
+          name: skill.name,
+        }))
         .filter((skill) => skill.projectCount > 0), // Only show skills used in projects
     ]),
   ) as Record<keyof typeof skillDefinitions, ReturnType<typeof calculateSkillWithProjects>[]>;
@@ -156,16 +160,32 @@ export default function AboutPage() {
                             </div>
                             {/* Project References */}
                             <div className="flex flex-wrap gap-1 mt-1">
-                              {skill.projects.slice(0, 3).map((project) => (
-                                <Link
-                                  key={project.id}
-                                  href={getProjectHref(projects.find(p => p.id === project.id)!)}
-                                  className="text-xs surface-subtle hover:surface-card rounded px-2 py-0.5 theme-text-secondary hover:theme-accent-text transition-colors"
-                                  title={`${project.title} (Complexity: ${project.complexity})`}
-                                >
-                                  {project.title}
-                                </Link>
-                              ))}
+                              {skill.projects.slice(0, 3).map((project) => {
+                                const projectHref = projectHrefById.get(project.id);
+
+                                if (!projectHref) {
+                                  return (
+                                    <span
+                                      key={project.id}
+                                      className="text-xs surface-subtle rounded px-2 py-0.5 theme-text-secondary"
+                                      title={`${project.title} (Complexity: ${project.complexity})`}
+                                    >
+                                      {project.title}
+                                    </span>
+                                  );
+                                }
+
+                                return (
+                                  <Link
+                                    key={project.id}
+                                    href={projectHref}
+                                    className="text-xs surface-subtle hover:surface-card rounded px-2 py-0.5 theme-text-secondary hover:theme-accent-text transition-colors"
+                                    title={`${project.title} (Complexity: ${project.complexity})`}
+                                  >
+                                    {project.title}
+                                  </Link>
+                                );
+                              })}
                               {skill.projects.length > 3 && (
                                 <span className="text-xs theme-text-secondary px-2 py-0.5">
                                   +{skill.projects.length - 3} more
