@@ -1,8 +1,9 @@
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import ProjectDemoEmbed from '../../../components/ProjectDemoEmbed';
-import ProjectVideoSection from '../../../components/ProjectVideoSection';
+import InteractiveTutorial from '../../../components/InteractiveTutorial';
 import ProjectViewTracker from '../../../components/ProjectViewTracker';
+import { getTutorialForProject } from '../../../data/tutorials';
 import {
   findProjectByRouteParam,
   formatProjectCategory,
@@ -65,6 +66,7 @@ export default function ProjectDetail({ params }: PageProps) {
   const relatedProjects = projects
     .filter((candidate) => candidate.id !== project.id && candidate.category === project.category)
     .slice(0, 3);
+  const tutorial = getTutorialForProject(project.id);
 
   return (
     <>
@@ -308,8 +310,8 @@ export default function ProjectDetail({ params }: PageProps) {
             </div>
           </div>
 
-          {/* Technical Overview Video */}
-          <ProjectVideoSection videoUrl={project.videoUrl} projectTitle={project.title} />
+          {/* Interactive Tutorial */}
+          <InteractiveTutorial tutorial={tutorial} projectTitle={project.title} />
 
           <section className="mt-10 space-y-6" aria-label="Project navigation and related work">
             <div className="surface-card rounded-xl shadow-lg p-6">

@@ -18,9 +18,6 @@ export interface Project {
   androidUrl?: string;
   /** TestFlight invite URL or Apple App Store link */
   iosUrl?: string;
-  /** YouTube embed URL (https://www.youtube.com/embed/VIDEO_ID) or Vimeo embed URL
-   *  (https://player.vimeo.com/video/VIDEO_ID) for the technical overview video */
-  videoUrl?: string;
 }
 
 export type ProjectCategory = Exclude<Project['category'], 'all'>;
@@ -46,7 +43,7 @@ export const projects: Project[] = [
       "Smooth animations"
     ],
     embeddable: true,
-    projectPath: "/projects/blackjack"
+    projectPath: "/projects/blackjack",
   },
   {
     id: 2,
@@ -67,7 +64,7 @@ export const projects: Project[] = [
       "Mobile-responsive design"
     ],
     embeddable: true,
-    projectPath: "/projects/circle-clicker"
+    projectPath: "/projects/circle-clicker",
   },
   {
     id: 3,
@@ -88,7 +85,7 @@ export const projects: Project[] = [
       "Responsive gameplay"
     ],
     embeddable: true,
-    projectPath: "/projects/color-match"
+    projectPath: "/projects/color-match",
   },
   {
     id: 4,
@@ -109,7 +106,7 @@ export const projects: Project[] = [
       "Real-time ride information"
     ],
     embeddable: true,
-    projectPath: "/projects/ride-sharing"
+    projectPath: "/projects/ride-sharing",
   },
   {
     id: 5,
@@ -130,7 +127,7 @@ export const projects: Project[] = [
       "Professional UI/UX"
     ],
     embeddable: true,
-    projectPath: "/projects/tic-tac-toe"
+    projectPath: "/projects/tic-tac-toe",
   },
   {
     id: 6,
@@ -151,7 +148,7 @@ export const projects: Project[] = [
       "Professional UI/UX"
     ],
     embeddable: false,
-    projectPath: "/projects/can_analyzer/dist/CAN_Analyzer.exe"
+    projectPath: "/projects/can_analyzer/dist/CAN_Analyzer.exe",
   },
   {
     id: 7,
@@ -171,7 +168,7 @@ export const projects: Project[] = [
       "Responsive design"
     ],
     embeddable: false,
-    projectPath: "/projects/ObjectDetection/object_detection.py"
+    projectPath: "/projects/ObjectDetection/object_detection.py",
   },
     {
     id: 8,
@@ -216,7 +213,7 @@ export const projects: Project[] = [
       "Responsive glassmorphism UI"
     ],
     embeddable: true,
-    projectPath: "/projects/calculator"
+    projectPath: "/projects/calculator",
   },
   {
     id: 10,
@@ -237,7 +234,7 @@ export const projects: Project[] = [
       "One-click order confirmation flow"
     ],
     embeddable: true,
-    projectPath: "/projects/restaurant-menu"
+    projectPath: "/projects/restaurant-menu",
   },
   {
     id: 11,
@@ -258,7 +255,7 @@ export const projects: Project[] = [
       "Order confirmation with receipt and localStorage persistence"
     ],
     embeddable: true,
-    projectPath: "/projects/order-system"
+    projectPath: "/projects/order-system",
   },
   {
     id: 12,
@@ -279,7 +276,7 @@ export const projects: Project[] = [
       "Live search, sort options, progress bar, and localStorage sync"
     ],
     embeddable: true,
-    projectPath: "/projects/task-manager"
+    projectPath: "/projects/task-manager",
   },
   {
     id: 13,
