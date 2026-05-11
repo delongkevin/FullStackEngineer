@@ -46,7 +46,8 @@ export const projects: Project[] = [
       "Smooth animations"
     ],
     embeddable: true,
-    projectPath: "/projects/blackjack"
+    projectPath: "/projects/blackjack",
+    // videoUrl: "https://www.youtube.com/embed/VIDEO_ID" // TODO: Add tutorial video
   },
   {
     id: 2,
@@ -67,7 +68,8 @@ export const projects: Project[] = [
       "Mobile-responsive design"
     ],
     embeddable: true,
-    projectPath: "/projects/circle-clicker"
+    projectPath: "/projects/circle-clicker",
+    // videoUrl: "https://www.youtube.com/embed/VIDEO_ID" // TODO: Add tutorial video
   },
   {
     id: 3,
@@ -88,7 +90,8 @@ export const projects: Project[] = [
       "Responsive gameplay"
     ],
     embeddable: true,
-    projectPath: "/projects/color-match"
+    projectPath: "/projects/color-match",
+    // videoUrl: "https://www.youtube.com/embed/VIDEO_ID" // TODO: Add tutorial video
   },
   {
     id: 4,
@@ -109,7 +112,8 @@ export const projects: Project[] = [
       "Real-time ride information"
     ],
     embeddable: true,
-    projectPath: "/projects/ride-sharing"
+    projectPath: "/projects/ride-sharing",
+    // videoUrl: "https://www.youtube.com/embed/VIDEO_ID" // TODO: Add tutorial video
   },
   {
     id: 5,
@@ -130,7 +134,8 @@ export const projects: Project[] = [
       "Professional UI/UX"
     ],
     embeddable: true,
-    projectPath: "/projects/tic-tac-toe"
+    projectPath: "/projects/tic-tac-toe",
+    // videoUrl: "https://www.youtube.com/embed/VIDEO_ID" // TODO: Add tutorial video
   },
   {
     id: 6,
@@ -151,7 +156,8 @@ export const projects: Project[] = [
       "Professional UI/UX"
     ],
     embeddable: false,
-    projectPath: "/projects/can_analyzer/dist/CAN_Analyzer.exe"
+    projectPath: "/projects/can_analyzer/dist/CAN_Analyzer.exe",
+    // videoUrl: "https://www.youtube.com/embed/VIDEO_ID" // TODO: Add tutorial video
   },
   {
     id: 7,
@@ -171,7 +177,8 @@ export const projects: Project[] = [
       "Responsive design"
     ],
     embeddable: false,
-    projectPath: "/projects/ObjectDetection/object_detection.py"
+    projectPath: "/projects/ObjectDetection/object_detection.py",
+    // videoUrl: "https://www.youtube.com/embed/VIDEO_ID" // TODO: Add tutorial video
   },
     {
     id: 8,
@@ -195,6 +202,7 @@ export const projects: Project[] = [
     projectPath: "/projects/PokerApp/PokerApp.html",
     androidUrl: "https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/poker-app-debug.apk",
     iosUrl: "https://github.com/delongkevin/FullStackEngineer/tree/main/ios/poker-app",
+    // videoUrl: "https://www.youtube.com/embed/VIDEO_ID" // TODO: Add tutorial video
   }
   ,
   {
@@ -216,7 +224,8 @@ export const projects: Project[] = [
       "Responsive glassmorphism UI"
     ],
     embeddable: true,
-    projectPath: "/projects/calculator"
+    projectPath: "/projects/calculator",
+    // videoUrl: "https://www.youtube.com/embed/VIDEO_ID" // TODO: Add tutorial video
   },
   {
     id: 10,
@@ -237,7 +246,8 @@ export const projects: Project[] = [
       "One-click order confirmation flow"
     ],
     embeddable: true,
-    projectPath: "/projects/restaurant-menu"
+    projectPath: "/projects/restaurant-menu",
+    // videoUrl: "https://www.youtube.com/embed/VIDEO_ID" // TODO: Add tutorial video
   },
   {
     id: 11,
@@ -258,7 +268,8 @@ export const projects: Project[] = [
       "Order confirmation with receipt and localStorage persistence"
     ],
     embeddable: true,
-    projectPath: "/projects/order-system"
+    projectPath: "/projects/order-system",
+    // videoUrl: "https://www.youtube.com/embed/VIDEO_ID" // TODO: Add tutorial video
   },
   {
     id: 12,
@@ -279,7 +290,8 @@ export const projects: Project[] = [
       "Live search, sort options, progress bar, and localStorage sync"
     ],
     embeddable: true,
-    projectPath: "/projects/task-manager"
+    projectPath: "/projects/task-manager",
+    // videoUrl: "https://www.youtube.com/embed/VIDEO_ID" // TODO: Add tutorial video
   },
   {
     id: 13,
@@ -309,6 +321,7 @@ export const projects: Project[] = [
     projectPath: '/projects/dornerworks-iot',
     androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/medical-iot-monitor-debug.apk',
     iosUrl: 'https://github.com/delongkevin/FullStackEngineer/actions/workflows/release-ios.yml',
+    // videoUrl: "https://www.youtube.com/embed/VIDEO_ID" // TODO: Add tutorial video
   },
   {
     id: 14,
@@ -336,6 +349,7 @@ export const projects: Project[] = [
     projectPath: '/projects/kamps-smart-factory',
     androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/kamps-factory-debug.apk',
     iosUrl: 'https://github.com/delongkevin/FullStackEngineer/actions/workflows/release-ios.yml',
+    // videoUrl: "https://www.youtube.com/embed/VIDEO_ID" // TODO: Add tutorial video
   },
   {
     id: 15,
@@ -362,6 +376,7 @@ export const projects: Project[] = [
     projectPath: '/projects/embedded-video-engineer',
     androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/embedded-video-debug.apk',
     iosUrl: 'https://github.com/delongkevin/FullStackEngineer/actions/workflows/release-ios.yml',
+    // videoUrl: "https://www.youtube.com/embed/VIDEO_ID" // TODO: Add tutorial video
   },
   {
     id: 16,
@@ -391,6 +406,7 @@ export const projects: Project[] = [
     projectPath: '/projects/ComputerStoreApp',
     androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/computer-store-debug.apk',
     iosUrl: 'https://github.com/delongkevin/FullStackEngineer/actions/workflows/release-ios.yml',
+    // videoUrl: "https://www.youtube.com/embed/VIDEO_ID" // TODO: Add tutorial video
   },
   {
     id: 17,
@@ -419,6 +435,7 @@ export const projects: Project[] = [
     projectPath: '/projects/mobile-BookApp_Android',
     androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/book-app-debug.apk',
     iosUrl: 'https://github.com/delongkevin/FullStackEngineer/actions/workflows/release-ios.yml',
+    // videoUrl: "https://www.youtube.com/embed/VIDEO_ID" // TODO: Add tutorial video
   },
   {
     id: 18,
@@ -445,6 +462,7 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: '/projects/avionics-test-systems',
+    // videoUrl: "https://www.youtube.com/embed/VIDEO_ID" // TODO: Add tutorial video
   },
   {
     id: 19,
@@ -471,6 +489,7 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: '/projects/om-platform',
+    // videoUrl: "https://www.youtube.com/embed/VIDEO_ID" // TODO: Add tutorial video
   },
   {
     id: 21,
@@ -496,6 +515,7 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: '/projects/sit-dashboard',
+    // videoUrl: "https://www.youtube.com/embed/VIDEO_ID" // TODO: Add tutorial video
   },
   {
     id: 20,
@@ -521,6 +541,7 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: '/projects/qa-dashboard',
+    // videoUrl: "https://www.youtube.com/embed/VIDEO_ID" // TODO: Add tutorial video
   },
   {
     id: 22,
@@ -547,6 +568,7 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: '/projects/ai-trainer',
+    // videoUrl: "https://www.youtube.com/embed/VIDEO_ID" // TODO: Add tutorial video
   },
   {
     id: 23,
@@ -579,6 +601,7 @@ export const projects: Project[] = [
     projectPath: '/projects/fitness-tracker',
     androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/fitness-tracker-app-debug.apk',
     iosUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/fitness-tracker-app',
+    // videoUrl: "https://www.youtube.com/embed/VIDEO_ID" // TODO: Add tutorial video
   },
   {
     id: 24,
@@ -612,6 +635,7 @@ export const projects: Project[] = [
     projectPath: '/projects/finance-dashboard',
     androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/finance-app-debug.apk',
     iosUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/finance-app',
+    // videoUrl: "https://www.youtube.com/embed/VIDEO_ID" // TODO: Add tutorial video
   },
   {
     id: 25,
@@ -651,6 +675,7 @@ export const projects: Project[] = [
     projectPath: '/projects/chat-app',
     androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/chat-app-debug.apk',
     iosUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/chat-app',
+    // videoUrl: "https://www.youtube.com/embed/VIDEO_ID" // TODO: Add tutorial video
   },
   {
     id: 26,
@@ -676,6 +701,7 @@ export const projects: Project[] = [
     projectPath: '/projects/real-estate',
     androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/real-estate-app-debug.apk',
     iosUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/real-estate-app',
+    // videoUrl: "https://www.youtube.com/embed/VIDEO_ID" // TODO: Add tutorial video
   },
   {
     id: 27,
@@ -700,6 +726,7 @@ export const projects: Project[] = [
     projectPath: '/projects/music-streaming',
     androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/music-streaming-app-debug.apk',
     iosUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/music-streaming-app',
+    // videoUrl: "https://www.youtube.com/embed/VIDEO_ID" // TODO: Add tutorial video
   },
   {
     id: 28,
@@ -724,6 +751,7 @@ export const projects: Project[] = [
     projectPath: '/projects/weather-insights',
     androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/weather-app-debug.apk',
     iosUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/weather-app',
+    // videoUrl: "https://www.youtube.com/embed/VIDEO_ID" // TODO: Add tutorial video
   },
   {
     id: 29,
@@ -749,6 +777,7 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: '/projects/adas-camera-dashboard',
+    // videoUrl: "https://www.youtube.com/embed/VIDEO_ID" // TODO: Add tutorial video
   },
   {
     id: 30,
@@ -773,6 +802,7 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: '/projects/can-fd-analyzer',
+    // videoUrl: "https://www.youtube.com/embed/VIDEO_ID" // TODO: Add tutorial video
   },
   {
     id: 31,
@@ -797,6 +827,7 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: '/projects/hil-test-platform',
+    // videoUrl: "https://www.youtube.com/embed/VIDEO_ID" // TODO: Add tutorial video
   },
   {
     id: 32,
@@ -821,6 +852,7 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: '/projects/autosar-ecu-diagnostics',
+    // videoUrl: "https://www.youtube.com/embed/VIDEO_ID" // TODO: Add tutorial video
   },
   {
     id: 33,
@@ -852,6 +884,7 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: '/projects/accessibility-qa-ai-trainer',
+    // videoUrl: "https://www.youtube.com/embed/VIDEO_ID" // TODO: Add tutorial video
   },
   {
     id: 34,
@@ -884,6 +917,7 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: '/projects/insurance-policy-admin',
+    // videoUrl: "https://www.youtube.com/embed/VIDEO_ID" // TODO: Add tutorial video
   },
   {
     id: 35,
@@ -908,6 +942,7 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: '/projects/capl-diagnostics-demo',
+    // videoUrl: "https://www.youtube.com/embed/VIDEO_ID" // TODO: Add tutorial video
   },
   {
     id: 36,
@@ -932,6 +967,7 @@ export const projects: Project[] = [
     ],
     embeddable: true,
     projectPath: '/projects/sap-test-manager',
+    // videoUrl: "https://www.youtube.com/embed/VIDEO_ID" // TODO: Add tutorial video
   },
 ];
 
