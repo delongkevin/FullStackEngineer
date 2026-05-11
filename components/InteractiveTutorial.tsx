@@ -2,15 +2,14 @@
 
 import { useState } from 'react';
 import { ChevronLeft, ChevronRight, BookOpen, Lightbulb, CheckCircle2 } from 'lucide-react';
-import { getTutorialForProject } from '../data/tutorials';
+import type { ProjectTutorial } from '../data/tutorials';
 
 interface InteractiveTutorialProps {
-  projectId: number;
   projectTitle: string;
+  tutorial?: ProjectTutorial;
 }
 
-export default function InteractiveTutorial({ projectId, projectTitle }: InteractiveTutorialProps) {
-  const tutorial = getTutorialForProject(projectId);
+export default function InteractiveTutorial({ projectTitle, tutorial }: InteractiveTutorialProps) {
   const [currentStep, setCurrentStep] = useState(0);
 
   if (!tutorial || tutorial.steps.length === 0) {
@@ -45,19 +44,15 @@ export default function InteractiveTutorial({ projectId, projectTitle }: Interac
   const isLastStep = currentStep === totalSteps - 1;
 
   const goToNextStep = () => {
-    if (!isLastStep) {
-      setCurrentStep(currentStep + 1);
-    }
+    setCurrentStep((previousStep) => Math.min(previousStep + 1, totalSteps - 1));
   };
 
   const goToPreviousStep = () => {
-    if (!isFirstStep) {
-      setCurrentStep(currentStep - 1);
-    }
+    setCurrentStep((previousStep) => Math.max(previousStep - 1, 0));
   };
 
   const goToStep = (index: number) => {
-    setCurrentStep(index);
+    setCurrentStep(Math.min(Math.max(index, 0), totalSteps - 1));
   };
 
   return (
@@ -75,6 +70,7 @@ export default function InteractiveTutorial({ projectId, projectTitle }: Interac
         {tutorial.steps.map((_, index) => (
           <button
             key={index}
+            type="button"
             onClick={() => goToStep(index)}
             className={`h-2 rounded-full transition-all ${
               index === currentStep
@@ -113,7 +109,7 @@ export default function InteractiveTutorial({ projectId, projectTitle }: Interac
             {step.instructions.map((instruction, index) => (
               <li key={index} className="flex items-start gap-3">
                 <span className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-sm font-semibold">
-                  {index + 1}
+                  <span aria-hidden="true">{index + 1}</span>
                 </span>
                 <span className="theme-text-secondary pt-0.5">{instruction}</span>
               </li>
@@ -131,7 +127,7 @@ export default function InteractiveTutorial({ projectId, projectTitle }: Interac
             <ul className="space-y-2">
               {step.tips.map((tip, index) => (
                 <li key={index} className="flex items-start gap-2">
-                  <span className="text-yellow-500 mt-1">💡</span>
+                  <span className="text-yellow-500 mt-1" aria-hidden="true">💡</span>
                   <span className="theme-text-secondary text-sm">{tip}</span>
                 </li>
               ))}
@@ -143,6 +139,7 @@ export default function InteractiveTutorial({ projectId, projectTitle }: Interac
       {/* Navigation Controls */}
       <div className="flex items-center justify-between">
         <button
+          type="button"
           onClick={goToPreviousStep}
           disabled={isFirstStep}
           className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
@@ -163,6 +160,7 @@ export default function InteractiveTutorial({ projectId, projectTitle }: Interac
         </div>
 
         <button
+          type="button"
           onClick={goToNextStep}
           disabled={isLastStep}
           className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
