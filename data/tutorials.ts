@@ -435,1270 +435,1272 @@ export const projectTutorials: ProjectTutorial[] = [
     ]
   },
   {
-    projectId: 10, // Todo App
+    projectId: 10, // Restaurant Menu Browser
     steps: [
       {
-        title: "Creating Tasks",
-        description: "Manage your daily tasks with this simple todo application.",
+        title: "Browsing the Menu",
+        description: "Explore Bistro Bliss's menu with 20 dishes across 5 categories.",
         instructions: [
-          "Type your task in the input field",
-          "Press Enter or click 'Add' to create a task",
-          "Tasks appear in the list below",
-          "Your tasks are automatically saved"
+          "Click category tabs to filter dishes (Appetizers, Mains, Sides, Desserts, Drinks)",
+          "View dish photos, names, descriptions, and prices",
+          "Look for dietary tags: Vegetarian, Gluten-Free, Spicy",
+          "Use the search bar to find specific dishes"
         ],
         tips: [
-          "Keep tasks short and specific",
-          "Break large projects into smaller tasks"
+          "Dietary filters help find suitable options quickly",
+          "Search works on dish names and descriptions"
         ]
       },
       {
-        title: "Managing Tasks",
-        description: "Complete, edit, and organize your todo items.",
+        title: "Adding to Cart",
+        description: "Build your order with the shopping cart.",
         instructions: [
-          "Click the checkbox to mark tasks complete",
-          "Click the edit icon to modify a task",
-          "Click the delete icon to remove a task",
-          "Completed tasks can be filtered from view"
-        ],
-        tips: [
-          "Review your completed tasks for motivation",
-          "Delete tasks you no longer need"
-        ]
-      },
-      {
-        title: "Filtering & Persistence",
-        description: "Filter tasks and rely on local storage.",
-        instructions: [
-          "Use filter buttons to show All, Active, or Completed",
-          "Tasks persist between browser sessions",
-          "Data is stored locally on your device",
-          "Clear completed tasks with the clear button"
-        ],
-        tips: [
-          "Data is private and stored locally",
-          "No account needed - works offline"
-        ]
-      }
-    ]
-  },
-  {
-    projectId: 11, // Weather App
-    steps: [
-      {
-        title: "Checking Weather",
-        description: "Get current weather conditions for any location.",
-        instructions: [
-          "Type a city name in the search box",
-          "Press Enter or click the search button",
-          "View current temperature and conditions",
-          "Weather data updates automatically"
-        ],
-        tips: [
-          "Search by city name or zip code",
-          "Works for locations worldwide"
-        ]
-      },
-      {
-        title: "Understanding Data",
-        description: "Read weather information and forecasts.",
-        instructions: [
-          "Temperature shown in Fahrenheit or Celsius",
-          "Weather conditions displayed with icons",
-          "View humidity, wind speed, and pressure",
-          "Check the forecast for upcoming days"
-        ],
-        tips: [
-          "Toggle temperature units in settings",
-          "Icons represent current conditions"
-        ]
-      },
-      {
-        title: "Saved Locations",
-        description: "Save your favorite locations for quick access.",
-        instructions: [
-          "Click the star icon to save a location",
-          "Access saved locations from the sidebar",
-          "Remove locations by clicking the X",
-          "Locations are saved locally"
-        ],
-        tips: [
-          "Save home, work, and travel destinations",
-          "Quick access to frequently checked locations"
-        ]
-      }
-    ]
-  },
-  {
-    projectId: 12, // E-commerce Store
-    steps: [
-      {
-        title: "Browsing Products",
-        description: "Explore the product catalog and find items.",
-        instructions: [
-          "Browse products on the homepage",
-          "Use category filters to narrow results",
-          "Click on products to view details",
-          "Read descriptions and specifications"
-        ],
-        tips: [
-          "Use search to find specific items quickly",
-          "Filter by category, price, or ratings"
-        ]
-      },
-      {
-        title: "Shopping Cart",
-        description: "Add items to your cart and manage quantities.",
-        instructions: [
-          "Click 'Add to Cart' on product pages",
-          "View cart by clicking the cart icon",
+          "Click 'Add to Cart' on any menu item",
+          "Cart slides up from the bottom showing your selections",
           "Adjust quantities with +/- buttons",
-          "Remove items by clicking the trash icon"
+          "View running total of your order"
         ],
         tips: [
-          "Cart persists across browser sessions",
-          "Review cart before checking out"
+          "Cart remembers your selections as you browse",
+          "Remove items by reducing quantity to zero"
+        ]
+      },
+      {
+        title: "Placing Your Order",
+        description: "Complete the ordering process.",
+        instructions: [
+          "Review your cart contents and total",
+          "Click 'Place Order' when ready",
+          "Receive order confirmation",
+          "Order details are displayed for your reference"
+        ],
+        tips: [
+          "This is a demo - no actual order is placed",
+          "Try different combinations to see cart in action"
+        ]
+      }
+    ]
+  },
+  {
+    projectId: 11, // Online Grocery Order System
+    steps: [
+      {
+        title: "Shopping for Groceries",
+        description: "Browse ShopQuick's catalog of 22 products across 6 categories.",
+        instructions: [
+          "Click category tabs to view different product types",
+          "See product images, names, and prices",
+          "Click 'Add to Cart' to select items",
+          "Adjust quantities directly in the cart"
+        ],
+        tips: [
+          "Free delivery threshold is shown in cart",
+          "Categories include Produce, Dairy, Bakery, Meat, Snacks, Beverages"
+        ]
+      },
+      {
+        title: "Managing Your Cart",
+        description: "Review and modify your shopping cart.",
+        instructions: [
+          "Click cart icon to open slide-out cart panel",
+          "Use +/- buttons to adjust item quantities",
+          "Remove items by clicking the trash icon",
+          "See subtotal and free delivery progress"
+        ],
+        tips: [
+          "Cart updates prices automatically",
+          "Watch for free delivery threshold"
         ]
       },
       {
         title: "Checkout Process",
-        description: "Complete your purchase securely.",
+        description: "Complete your order with validated checkout form.",
         instructions: [
-          "Click 'Checkout' when ready",
-          "Enter shipping information",
-          "Select payment method",
-          "Review order and confirm purchase"
+          "Click 'Proceed to Checkout' from cart",
+          "Fill in delivery address and contact info",
+          "Enter payment details (card number, expiry, CVV)",
+          "Review order confirmation with receipt"
         ],
         tips: [
-          "Double-check shipping address",
-          "Save addresses for faster future checkouts"
+          "Form validates all fields before submission",
+          "Order history is saved in browser localStorage"
         ]
       }
     ]
   },
   {
-    projectId: 13, // Blog Platform
+    projectId: 12, // Task Manager
     steps: [
       {
-        title: "Reading Posts",
-        description: "Browse and read blog articles.",
+        title: "Creating Tasks",
+        description: "Add and organize tasks with TaskFlow.",
         instructions: [
-          "View latest posts on the homepage",
-          "Click post titles to read full articles",
-          "Use categories to find specific topics",
-          "Search for posts by keyword"
+          "Click 'Add Task' button to create new task",
+          "Enter task title and description",
+          "Select priority level: High, Medium, or Low",
+          "Choose a category: Work, Personal, Shopping, Health, or Learning"
         ],
         tips: [
-          "Subscribe to get notified of new posts",
-          "Share interesting articles on social media"
-        ]
-      },
-      {
-        title: "Creating Content",
-        description: "Write and publish your own blog posts.",
-        instructions: [
-          "Click 'New Post' from the dashboard",
-          "Write your article using the rich text editor",
-          "Add images and format text",
-          "Click 'Publish' to make it live"
-        ],
-        tips: [
-          "Save drafts to continue editing later",
-          "Preview posts before publishing"
-        ]
-      },
-      {
-        title: "Engagement",
-        description: "Interact with readers through comments and likes.",
-        instructions: [
-          "Enable comments on your posts",
-          "Respond to reader comments",
-          "View post analytics and likes",
-          "Share posts across platforms"
-        ],
-        tips: [
-          "Engage with your audience regularly",
-          "Monitor analytics to understand what resonates"
-        ]
-      }
-    ]
-  },
-  {
-    projectId: 14, // Portfolio Website
-    steps: [
-      {
-        title: "Showcase Overview",
-        description: "Present your work professionally.",
-        instructions: [
-          "Homepage displays featured projects",
-          "Navigate using the main menu",
-          "View about section for background",
-          "Contact form for inquiries"
-        ],
-        tips: [
-          "Update regularly with new projects",
-          "Highlight your best work first"
-        ]
-      },
-      {
-        title: "Project Details",
-        description: "Display individual project information.",
-        instructions: [
-          "Click projects to view full details",
-          "Images and descriptions are displayed",
-          "Links to live demos and source code",
-          "Technology stack clearly listed"
-        ],
-        tips: [
-          "Include high-quality screenshots",
-          "Explain your role and contributions"
-        ]
-      },
-      {
-        title: "Contact & Social",
-        description: "Enable visitors to reach out.",
-        instructions: [
-          "Contact form sends messages directly",
-          "Social media links in footer",
-          "Download resume/CV option",
-          "Email address visible for direct contact"
-        ],
-        tips: [
-          "Respond promptly to inquiries",
-          "Keep contact information current"
-        ]
-      }
-    ]
-  },
-  {
-    projectId: 15, // Chat Application
-    steps: [
-      {
-        title: "Joining Conversations",
-        description: "Connect with others in real-time chat.",
-        instructions: [
-          "Create an account or log in",
-          "Browse available chat rooms",
-          "Join a room or create your own",
-          "Start chatting immediately"
-        ],
-        tips: [
-          "Choose appropriate usernames",
-          "Read room rules before posting"
-        ]
-      },
-      {
-        title: "Sending Messages",
-        description: "Communicate effectively in chat rooms.",
-        instructions: [
-          "Type messages in the input box",
-          "Press Enter to send",
-          "Messages appear instantly for all users",
-          "Use emoji picker for expressions"
-        ],
-        tips: [
-          "Be respectful to other users",
-          "Messages are real-time"
-        ]
-      },
-      {
-        title: "Advanced Features",
-        description: "Utilize mentions, attachments, and more.",
-        instructions: [
-          "Type @ to mention specific users",
-          "Click attachment icon to share files",
-          "React to messages with emoji reactions",
-          "View message history by scrolling up"
-        ],
-        tips: [
-          "Mentioned users receive notifications",
-          "File size limits may apply"
-        ]
-      }
-    ]
-  },
-  {
-    projectId: 16, // Task Manager
-    steps: [
-      {
-        title: "Creating Projects",
-        description: "Organize work into projects and tasks.",
-        instructions: [
-          "Click 'New Project' to create a project",
-          "Give it a name and description",
-          "Add team members if collaborative",
-          "Projects appear in your sidebar"
-        ],
-        tips: [
-          "Use projects to separate different areas of work",
-          "Color-code projects for quick identification"
+          "Priority levels are color-coded for quick recognition",
+          "Tasks are saved automatically to localStorage"
         ]
       },
       {
         title: "Managing Tasks",
-        description: "Break projects down into actionable tasks.",
+        description: "Edit, complete, and organize your task list.",
         instructions: [
-          "Add tasks within each project",
-          "Set due dates and priorities",
-          "Assign tasks to team members",
-          "Track task status (To Do, In Progress, Done)"
+          "Click checkbox to mark tasks as complete",
+          "Use edit icon to modify task details",
+          "Click delete icon to remove tasks",
+          "Filter by All, Active, Completed, or High-priority"
         ],
         tips: [
-          "Use priority levels wisely",
-          "Add detailed descriptions to tasks"
+          "Completed tasks show with strikethrough",
+          "Progress bar shows completion percentage"
         ]
       },
       {
-        title: "Collaboration",
-        description: "Work together with your team.",
+        title: "Search & Sort",
+        description: "Find and organize tasks efficiently.",
         instructions: [
-          "Invite team members via email",
-          "Comment on tasks for discussion",
-          "Receive notifications for updates",
-          "View team member activity"
+          "Use search bar to filter by keywords",
+          "Sort tasks by date, priority, or category",
+          "Apply multiple filters simultaneously",
+          "View task statistics in the progress bar"
         ],
         tips: [
-          "Clear communication prevents confusion",
-          "Regular updates keep everyone informed"
+          "Search looks through titles and descriptions",
+          "All changes persist in browser storage"
         ]
       }
     ]
   },
   {
-    projectId: 17, // Recipe Finder
+    projectId: 13, // Medical IoT Device Monitor
     steps: [
       {
-        title: "Searching Recipes",
-        description: "Find recipes based on ingredients or cuisine.",
+        title: "Device Connectivity",
+        description: "Connect to medical IoT devices via Bluetooth Low Energy.",
         instructions: [
-          "Enter ingredients you have available",
-          "Select cuisine type or dietary preferences",
-          "Click search to find matching recipes",
-          "Browse through recipe results"
+          "Launch MedIoT Connect app on iOS or Android",
+          "Enable Bluetooth and grant permissions",
+          "Scan for nearby BLE medical devices",
+          "Pair with cardiac monitors, infusion pumps, or ventilators"
         ],
         tips: [
-          "Enter multiple ingredients for better matches",
-          "Use filters to refine results"
+          "BLE 5.x provides reliable connectivity up to 30 feet",
+          "NFC pairing available for patient wristbands"
         ]
       },
       {
-        title: "Viewing Recipes",
-        description: "Read detailed recipe instructions.",
+        title: "Monitoring Vitals",
+        description: "View real-time medical data from connected devices.",
         instructions: [
-          "Click a recipe to view full details",
-          "See ingredient list with quantities",
-          "Follow step-by-step cooking instructions",
-          "View nutritional information"
+          "View live ECG trace on main dashboard",
+          "Monitor heart rate, SpO₂, temperature, and blood pressure",
+          "Check infusion pump rates and volumes",
+          "View ventilator settings and patient metrics"
         ],
         tips: [
-          "Check serving sizes and adjust accordingly",
-          "Read through all steps before cooking"
+          "All data is HIPAA-compliant and encrypted",
+          "Alerts trigger for out-of-range values"
         ]
       },
       {
-        title: "Saving Favorites",
-        description: "Build your personal recipe collection.",
+        title: "Wearable Integration",
+        description: "Sync with Apple Watch, Wear OS, and Garmin devices.",
         instructions: [
-          "Click the heart icon to save recipes",
-          "Access saved recipes from your profile",
-          "Create custom collections",
-          "Share recipes with friends"
+          "Connect Apple Watch for WatchKit integration",
+          "Pair Wear OS devices for extended monitoring",
+          "Sync with Garmin Connect IQ for fitness data",
+          "View vitals summary on wearable displays"
         ],
         tips: [
-          "Organize recipes by meal type or occasion",
-          "Add personal notes to recipes"
+          "Wearables provide continuous monitoring",
+          "Data syncs automatically via cloud API"
         ]
       }
     ]
   },
   {
-    projectId: 18, // Fitness Tracker
+    projectId: 14, // Kamps Smart Factory Platform
+    steps: [
+      {
+        title: "PLC Integration",
+        description: "Connect to Allen-Bradley and Siemens PLCs for real-time data.",
+        instructions: [
+          "View PLC dashboard showing connected controllers",
+          "Monitor Allen-Bradley Modbus TCP sensor data",
+          "Check Siemens S7 OPC-UA device status",
+          "View real-time MQTT sensor telemetry"
+        ],
+        tips: [
+          "MQTT pub/sub enables real-time updates",
+          "Sensor data refreshes every second"
+        ]
+      },
+      {
+        title: "YOLOv8 Pallet Detection",
+        description: "Monitor AI-powered computer vision for pallet tracking.",
+        instructions: [
+          "View live camera feed with bounding box detection",
+          "See pallet detection at 28 FPS performance",
+          "Review detection confidence scores",
+          "Monitor OpenCV/PyTorch/TensorFlow pipeline"
+        ],
+        tips: [
+          "YOLOv8 provides accurate real-time detection",
+          "Green boxes indicate high-confidence detections"
+        ]
+      },
+      {
+        title: "K3s Microservices Dashboard",
+        description: "Monitor containerized services and observability metrics.",
+        instructions: [
+          "View 7 running microservices in K3s cluster",
+          "Check vision-api, plc-bridge, and api-gateway status",
+          "Monitor Postgres 16 database health",
+          "View Prometheus metrics and Grafana dashboards"
+        ],
+        tips: [
+          "All services run in lightweight K3s cluster",
+          "Grafana provides real-time observability"
+        ]
+      }
+    ]
+  },
+  {
+    projectId: 15, // Embedded Video Systems Engineer
+    steps: [
+      {
+        title: "Codec Configuration",
+        description: "Configure video encoding parameters for H.265/H.264/AV1.",
+        instructions: [
+          "Select codec type from dropdown (H.265, H.264, AV1, MJPEG)",
+          "Adjust bitrate slider for quality vs file size",
+          "Set GOP size for keyframe intervals",
+          "Tune QP (Quantization Parameter) for compression"
+        ],
+        tips: [
+          "H.265 provides best compression efficiency",
+          "Lower QP = higher quality but larger files"
+        ]
+      },
+      {
+        title: "Live Video Monitoring",
+        description: "View real-time 4K video with object detection overlay.",
+        instructions: [
+          "Watch animated 4K video feed at 30fps",
+          "See real-time bounding box object detection",
+          "Monitor video resolution and frame rate",
+          "Check encoding performance metrics"
+        ],
+        tips: [
+          "Bounding boxes show detected objects in frame",
+          "FPS counter indicates real-time performance"
+        ]
+      },
+      {
+        title: "SoC Performance Dashboard",
+        description: "Monitor NXP i.MX8M Plus system resources.",
+        instructions: [
+          "View CPU utilization across all cores",
+          "Monitor GPU/VPU hardware acceleration",
+          "Check SoC temperature and thermal throttling",
+          "Review memory usage and PCIe bandwidth"
+        ],
+        tips: [
+          "VPU acceleration enables efficient video encoding",
+          "Temperature monitoring prevents thermal issues"
+        ]
+      }
+    ]
+  },
+  {
+    projectId: 16, // Computer Store App
+    steps: [
+      {
+        title: "Browsing Products",
+        description: "Explore computers and electronics catalog.",
+        instructions: [
+          "View product catalog with images and prices",
+          "Browse categories for laptops, desktops, accessories",
+          "Use search to find specific products",
+          "Click product cards for detailed specifications"
+        ],
+        tips: [
+          "Available on Android APK and iOS IPA",
+          "Built with Expo for cross-platform compatibility"
+        ]
+      },
+      {
+        title: "Shopping Cart",
+        description: "Manage your selections with cart functionality.",
+        instructions: [
+          "Add products to cart from detail pages",
+          "Adjust quantities with +/- controls",
+          "View running total with price calculations",
+          "Remove items from cart as needed"
+        ],
+        tips: [
+          "Cart persists as you browse",
+          "Real-time price updates"
+        ]
+      },
+      {
+        title: "Checkout with Stripe",
+        description: "Complete purchases with integrated Stripe payments.",
+        instructions: [
+          "Proceed to checkout from cart",
+          "Enter shipping and billing information",
+          "Payment processed via Stripe integration",
+          "Receive order confirmation with details"
+        ],
+        tips: [
+          "Stripe provides secure payment processing",
+          "Push notifications for order updates"
+        ]
+      }
+    ]
+  },
+  {
+    projectId: 17, // Book App Android
+    steps: [
+      {
+        title: "Browsing the Catalog",
+        description: "Explore books with native Android Material Design.",
+        instructions: [
+          "Browse book catalog with cover art",
+          "Filter by genre categories",
+          "View book details including title, author, price",
+          "Native Android app targeting API 26+"
+        ],
+        tips: [
+          "Built with Kotlin for performance",
+          "Material Design provides intuitive UI"
+        ]
+      },
+      {
+        title: "Shopping Cart",
+        description: "Manage your book selections.",
+        instructions: [
+          "Add books to cart from detail view",
+          "Cart fragment shows selected items",
+          "Adjust quantities with controls",
+          "View subtotal and pricing"
+        ],
+        tips: [
+          "Cart uses Fragment architecture",
+          "Quantity controls update price instantly"
+        ]
+      },
+      {
+        title: "Checkout Process",
+        description: "Complete your book order.",
+        instructions: [
+          "Review cart contents before checkout",
+          "Enter delivery information",
+          "Process order through checkout flow",
+          "Track order status after purchase"
+        ],
+        tips: [
+          "Native Android performance",
+          "Order tracking integrated"
+        ]
+      }
+    ]
+  },
+  {
+    projectId: 18, // Avionics Test Systems Engineer
+    steps: [
+      {
+        title: "NI TestStand Sequences",
+        description: "Execute automated test sequences for avionics LRUs.",
+        instructions: [
+          "View TestStand sequence runner with test steps",
+          "Execute LRU Functional, ARINC 429, Power Supply tests",
+          "Monitor CAN Bus and RS-422 test execution",
+          "See animated step-by-step progress"
+        ],
+        tips: [
+          "Each test shows pass/fail status",
+          "Execution times displayed per step"
+        ]
+      },
+      {
+        title: "ARINC 429 Bus Monitor",
+        description: "Monitor aviation data bus with label decoding.",
+        instructions: [
+          "View live ARINC 429 frame trace",
+          "See decoded labels: Altitude, IAS, Heading, Acceleration",
+          "Check SSM/SDI fields and parity validation",
+          "Monitor scrolling bus log with timestamps"
+        ],
+        tips: [
+          "ARINC 429 is aviation standard data bus",
+          "Parity check ensures data integrity"
+        ]
+      },
+      {
+        title: "CAN & Signal Analysis",
+        description: "Analyze CAN ISO 11898 frames and bus load.",
+        instructions: [
+          "View CAN frame trace with ID, DLC, data bytes",
+          "Monitor bus load percentage in real-time",
+          "Check node names and message frequencies",
+          "Analyze signal conditioning and root-cause issues"
+        ],
+        tips: [
+          "High bus load may indicate communication issues",
+          "Frame analysis helps debug protocol problems"
+        ]
+      }
+    ]
+  },
+  {
+    projectId: 19, // SQL & XML Data Operations Platform
+    steps: [
+      {
+        title: "SQL Query Console",
+        description: "Execute SQL queries against in-memory database.",
+        instructions: [
+          "Write SQL in the console editor",
+          "Execute complex JOINs, subqueries, and GROUP BY",
+          "Run aggregation queries and reconciliation checks",
+          "View EXPLAIN plans for query optimization"
+        ],
+        tips: [
+          "500-row in-memory relational database",
+          "Supports full SQL syntax including CTEs"
+        ]
+      },
+      {
+        title: "XML Ingestion Pipeline",
+        description: "Process XML with 5-stage validation pipeline.",
+        instructions: [
+          "Watch animated pipeline: Ingest → Parse → Validate → Transform → Load",
+          "Native DOMParser handles XML parsing",
+          "Real schema validation catches errors",
+          "View error detection and handling"
+        ],
+        tips: [
+          "Each stage shows progress indicators",
+          "Validation ensures XML compliance"
+        ]
+      },
+      {
+        title: "Batch Job Monitoring",
+        description: "Track scheduled ETL and archival jobs.",
+        instructions: [
+          "View 8 scheduled batch jobs with status",
+          "Monitor ETL and archival job execution",
+          "See 24-hour run history chart",
+          "Rerun jobs and view execution logs"
+        ],
+        tips: [
+          "Status indicators show job health",
+          "Logs help troubleshoot failed jobs"
+        ]
+      }
+    ]
+  },
+  {
+    projectId: 20, // Software QA Analyst Platform
+    steps: [
+      {
+        title: "Test Case Management",
+        description: "Create and execute manual test cases across suites.",
+        instructions: [
+          "Browse test suites: Login & Auth, API, Database, UI Regression, CI/CD",
+          "Create new test cases with steps and expected results",
+          "Execute tests and mark as Pass, Fail, Pending, or Blocked",
+          "Filter tests by suite, status, or priority"
+        ],
+        tips: [
+          "Color-coded status makes tracking easy",
+          "Test cases support full CRUD operations"
+        ]
+      },
+      {
+        title: "Defect Tracking",
+        description: "Log and manage defects with Kanban board.",
+        instructions: [
+          "Log new defects with severity and component",
+          "Drag tickets through: Open → In Progress → Resolved → Closed",
+          "Filter by severity: Critical, High, Medium, Low",
+          "View defect metrics and aging"
+        ],
+        tips: [
+          "Kanban board visualizes workflow",
+          "48 sample defects for demo"
+        ]
+      },
+      {
+        title: "SQL Test Validation",
+        description: "Execute SQL queries against test database.",
+        instructions: [
+          "Write SQL queries in validator console",
+          "Query test_cases, defects, and test_runs tables",
+          "Use JOINs, GROUP BY, WHERE, and LIMIT clauses",
+          "View results from in-memory database"
+        ],
+        tips: [
+          "72 test cases, 48 defects, 500 test runs available",
+          "Validate data-driven test scenarios"
+        ]
+      }
+    ]
+  },
+  {
+    projectId: 21, // System Integration Test Management Dashboard
+    steps: [
+      {
+        title: "Test Plan Manager",
+        description: "Create and track integration test plans.",
+        instructions: [
+          "Create Acceptance, Regression, Performance, or Volume test plans",
+          "Assign engineers and target systems",
+          "Set dates and track completion progress",
+          "View progress bars for each plan"
+        ],
+        tips: [
+          "Plan types align with commissioning phases",
+          "Progress tracked automatically from test cases"
+        ]
+      },
+      {
+        title: "Test Case Tracker",
+        description: "Manage test cases across functional areas.",
+        instructions: [
+          "Create test cases for: Conveyor, Sortation, WMS, PLC, Safety, HMI, Network, Database",
+          "Set priority levels and execution status",
+          "Filter by functional area or status",
+          "Full CRUD operations supported"
+        ],
+        tips: [
+          "8 functional areas cover complete system",
+          "Status filters help focus on active work"
+        ]
+      },
+      {
+        title: "Equipment Emulation",
+        description: "Run simulated test suites with device emulation.",
+        instructions: [
+          "View 6-device emulation model",
+          "Monitor Conveyor zones, Sorter, PLC, WMS, and HMI",
+          "Start/stop emulation with controls",
+          "See real-time status indicators"
+        ],
+        tips: [
+          "Animated model shows device interactions",
+          "Useful for testing without physical hardware"
+        ]
+      }
+    ]
+  },
+  {
+    projectId: 22, // AI Code Training Platform
+    steps: [
+      {
+        title: "Challenge Designer",
+        description: "Author coding challenges for AI training.",
+        instructions: [
+          "Create problem statements with constraints",
+          "Define input/output examples",
+          "Add hidden test cases for validation",
+          "Live preview shows formatted problem"
+        ],
+        tips: [
+          "Clear problem statements improve AI understanding",
+          "Include edge cases in test scenarios"
+        ]
+      },
+      {
+        title: "Challenge Library",
+        description: "Browse and select from pre-seeded problems.",
+        instructions: [
+          "View 8 algorithm problems: Two Sum → Serialize Binary Tree",
+          "Filter by difficulty: Easy, Medium, Hard, Expert",
+          "One-click load problems into editor",
+          "See problem descriptions and constraints"
+        ],
+        tips: [
+          "Start with Easy problems to understand format",
+          "Expert problems test advanced concepts"
+        ]
+      },
+      {
+        title: "Multi-Language Showcase",
+        description: "View solutions in 5 programming languages.",
+        instructions: [
+          "See 5 algorithms × 5 languages (25 solutions)",
+          "Languages: JavaScript, TypeScript, Python, Go, Java",
+          "Syntax highlighting with CSS styling",
+          "Time/space complexity badges displayed"
+        ],
+        tips: [
+          "Compare approaches across languages",
+          "Complexity badges show algorithm efficiency"
+        ]
+      }
+    ]
+  },
+  {
+    projectId: 23, // Fitness Tracker App
     steps: [
       {
         title: "Logging Workouts",
-        description: "Track your exercise activities and progress.",
+        description: "Track exercise activities with Apple HealthKit and Google Fit.",
         instructions: [
-          "Click 'New Workout' to start logging",
-          "Select exercise type (cardio, strength, etc.)",
-          "Enter duration, distance, or reps",
-          "Save workout to your history"
+          "Select workout type: Running, Cycling, Swimming, Strength, Yoga, HIIT",
+          "Enter duration, distance, and calories burned",
+          "Set intensity level for the workout",
+          "Data syncs to HealthKit (iOS) or Google Fit (Android)"
         ],
         tips: [
-          "Log workouts consistently for accurate tracking",
-          "Include warm-up and cool-down activities"
+          "Cross-platform React Native with Expo",
+          "HealthKit/Google Fit provide seamless data sync"
         ]
       },
       {
-        title: "Setting Goals",
-        description: "Define and work toward fitness objectives.",
+        title: "Goal Tracking",
+        description: "Set and monitor fitness objectives.",
         instructions: [
-          "Navigate to Goals section",
-          "Set specific, measurable targets",
-          "Choose timeframes for goals",
-          "Track progress with visual charts"
+          "Create weekly or monthly fitness goals",
+          "Track progress toward calorie, distance, or time targets",
+          "View completion percentage and streaks",
+          "Receive notifications for goal milestones"
         ],
         tips: [
-          "Start with achievable goals",
-          "Adjust goals as you progress"
+          "Set realistic goals for better motivation",
+          "Streaks encourage consistency"
         ]
       },
       {
-        title: "Viewing Analytics",
-        description: "Analyze your fitness data and trends.",
+        title: "Wearable Integration",
+        description: "Sync with fitness wearables and smartwatches.",
         instructions: [
-          "View dashboard for overview statistics",
-          "Check weekly and monthly trends",
-          "Compare different workout types",
-          "Export data for detailed analysis"
+          "Connect Apple Watch or Android Wear devices",
+          "Automatic workout detection from wearables",
+          "Heart rate and step data synchronized",
+          "View comprehensive health metrics"
         ],
         tips: [
-          "Look for patterns in your progress",
-          "Use data to adjust your routine"
+          "Wearables provide accurate heart rate data",
+          "Auto-sync keeps data current"
         ]
       }
     ]
   },
   {
-    projectId: 19, // Music Player
+    projectId: 24, // Personal Finance Tracker
     steps: [
       {
-        title: "Building Playlists",
-        description: "Create and organize your music library.",
+        title: "Tracking Transactions",
+        description: "Log income and expenses across 8+ categories.",
         instructions: [
-          "Upload or import your music files",
-          "Browse your library by artist, album, or song",
-          "Create playlists by clicking 'New Playlist'",
-          "Drag and drop songs to playlists"
+          "Add expense or income transactions",
+          "Select category: Food, Transport, Bills, Shopping, etc.",
+          "Enter amount, date, and optional notes",
+          "View transaction history with filters"
         ],
         tips: [
-          "Organize playlists by mood or activity",
-          "Use search to find songs quickly"
+          "Consistent categorization improves insights",
+          "Add notes for better context later"
         ]
       },
       {
-        title: "Playback Controls",
-        description: "Control music playback with ease.",
-        instructions: [
-          "Click play/pause button to control playback",
-          "Use skip buttons to navigate tracks",
-          "Adjust volume with the slider",
-          "Enable shuffle or repeat modes"
-        ],
-        tips: [
-          "Keyboard shortcuts available for quick control",
-          "Queue songs for continuous playback"
-        ]
-      },
-      {
-        title: "Advanced Features",
-        description: "Explore equalizer and audio settings.",
-        instructions: [
-          "Access equalizer for audio customization",
-          "Adjust bass, treble, and frequencies",
-          "Enable crossfade between tracks",
-          "View song lyrics when available"
-        ],
-        tips: [
-          "Experiment with EQ presets",
-          "Crossfade creates seamless transitions"
-        ]
-      }
-    ]
-  },
-  {
-    projectId: 20, // Note Taking App
-    steps: [
-      {
-        title: "Creating Notes",
-        description: "Capture ideas and information quickly.",
-        instructions: [
-          "Click 'New Note' to start writing",
-          "Give your note a title",
-          "Type or paste content in the editor",
-          "Notes auto-save as you type"
-        ],
-        tips: [
-          "Use descriptive titles for easy finding",
-          "Notes are saved automatically"
-        ]
-      },
-      {
-        title: "Formatting & Organization",
-        description: "Format text and organize notes effectively.",
-        instructions: [
-          "Use formatting toolbar for bold, italic, etc.",
-          "Create lists and headings",
-          "Add tags to categorize notes",
-          "Organize notes into folders"
-        ],
-        tips: [
-          "Tags make searching easier",
-          "Use folders for different projects"
-        ]
-      },
-      {
-        title: "Search & Sync",
-        description: "Find notes quickly and keep them synced.",
-        instructions: [
-          "Use search bar to find notes by keyword",
-          "Search looks through titles, content, and tags",
-          "Notes sync across devices automatically",
-          "Access notes offline when needed"
-        ],
-        tips: [
-          "Full-text search finds anything",
-          "Sync keeps your data safe"
-        ]
-      }
-    ]
-  },
-  {
-    projectId: 21, // Budget Tracker
-    steps: [
-      {
-        title: "Adding Transactions",
-        description: "Record your income and expenses.",
-        instructions: [
-          "Click 'Add Transaction' button",
-          "Choose income or expense type",
-          "Enter amount and category",
-          "Add optional notes and save"
-        ],
-        tips: [
-          "Be consistent with categories",
-          "Add transactions as they occur"
-        ]
-      },
-      {
-        title: "Budget Planning",
+        title: "Budgeting",
         description: "Set spending limits and track adherence.",
         instructions: [
-          "Navigate to Budget section",
-          "Set monthly limits for each category",
-          "View progress bars showing spending",
-          "Receive alerts when nearing limits"
+          "Create monthly budgets by category",
+          "Set spending limits for each category",
+          "Monitor spending vs. budget progress",
+          "Receive alerts when approaching limits"
         ],
         tips: [
-          "Review and adjust budgets monthly",
-          "Base budgets on past spending patterns"
+          "Review budgets monthly for adjustments",
+          "Alerts help prevent overspending"
         ]
       },
       {
-        title: "Reports & Analysis",
-        description: "Understand your financial patterns.",
+        title: "Financial Analytics",
+        description: "View spending patterns and fraud detection.",
         instructions: [
-          "View charts showing spending by category",
-          "Check income vs. expenses over time",
-          "Identify trends and anomalies",
-          "Export reports for tax purposes"
+          "See pie charts showing spending by category",
+          "View monthly trends and comparisons",
+          "Fraud detection highlights unusual transactions",
+          "Export data for tax preparation"
         ],
         tips: [
-          "Regular review helps identify savings opportunities",
-          "Use reports to make informed financial decisions"
+          "Analytics reveal spending patterns",
+          "Fraud alerts help catch unauthorized charges"
         ]
       }
     ]
   },
   {
-    projectId: 22, // Photo Gallery
+    projectId: 25, // Real-time Chat & Messaging App
     steps: [
       {
-        title: "Uploading Photos",
-        description: "Build your personal photo collection.",
+        title: "Getting Started",
+        description: "Join real-time conversations with WebSocket messaging.",
         instructions: [
-          "Click 'Upload' button",
-          "Select one or multiple photos",
-          "Photos are automatically organized by date",
-          "Add titles and descriptions"
+          "Register or login with JWT authentication",
+          "See user presence indicators (online/offline)",
+          "Browse available chat rooms or conversations",
+          "Socket.IO provides real-time connectivity"
         ],
         tips: [
-          "Upload high-quality originals",
-          "Organize photos as you upload"
+          "Green dots show online users",
+          "WebSocket fallback ensures connectivity"
         ]
       },
       {
-        title: "Creating Albums",
-        description: "Group related photos into albums.",
+        title: "Messaging Features",
+        description: "Send messages with reactions and typing indicators.",
         instructions: [
-          "Create new album from gallery view",
-          "Select photos to add to album",
-          "Name and describe your album",
-          "Share albums with others"
+          "Type messages in the input field",
+          "See typing indicators when others are writing",
+          "React to messages with emoji reactions",
+          "Messages appear instantly for all users"
         ],
         tips: [
-          "Albums help organize by event or theme",
-          "Set cover photos for albums"
+          "Typing indicators prevent message collisions",
+          "Reactions provide quick responses"
         ]
       },
       {
-        title: "Viewing & Sharing",
-        description: "Enjoy your photos and share with others.",
+        title: "User Presence",
+        description: "Track who's online and active.",
         instructions: [
-          "Click photos to view full-size",
-          "Use arrow keys to navigate",
-          "Zoom and pan on photos",
-          "Share via link or social media"
+          "View online status for all contacts",
+          "See last active timestamps",
+          "Presence updates in real-time",
+          "Know when messages are read"
         ],
         tips: [
-          "Slideshow mode for presentations",
-          "Control sharing permissions carefully"
+          "Presence helps coordinate conversations",
+          "Cross-platform with Expo support"
         ]
       }
     ]
   },
   {
-    projectId: 23, // Quiz Game
+    projectId: 26, // Real Estate Marketplace App
     steps: [
       {
-        title: "Starting a Quiz",
-        description: "Test your knowledge across various topics.",
+        title: "Property Search",
+        description: "Find properties with advanced filters.",
         instructions: [
-          "Select a quiz category",
-          "Choose difficulty level",
-          "Click 'Start Quiz' to begin",
-          "Read each question carefully"
+          "Search properties by location",
+          "Filter by price range and property type",
+          "Apply amenity filters: parking, pool, gym, etc.",
+          "View property cards with key details"
         ],
         tips: [
-          "Start with easier categories",
-          "No time limit unless specified"
+          "Multiple filters narrow results effectively",
+          "Save searches for quick access"
         ]
       },
       {
-        title: "Answering Questions",
-        description: "Select answers and progress through the quiz.",
+        title: "Property Details & Favorites",
+        description: "View details and save favorite properties.",
         instructions: [
-          "Read the question and all answer options",
-          "Click your chosen answer",
-          "Immediate feedback shows if correct",
-          "Click 'Next' to continue"
+          "Click properties to see full details",
+          "View photos, floor plans, and descriptions",
+          "Add to favorites with quick tap",
+          "Access favorites list anytime"
         ],
         tips: [
-          "Read all options before answering",
-          "Incorrect answers show the right one"
+          "Favorites sync across devices",
+          "Compare multiple properties easily"
         ]
       },
       {
-        title: "Scoring & Review",
-        description: "View your results and improve.",
+        title: "Tour Booking",
+        description: "Schedule property viewings.",
         instructions: [
-          "Final score shown at quiz end",
-          "Review all questions and answers",
-          "See which you got right or wrong",
-          "Try again to improve your score"
+          "Select available tour times",
+          "Choose in-person or virtual tour",
+          "Receive booking confirmation",
+          "Manage scheduled tours in profile"
         ],
         tips: [
-          "Learn from incorrect answers",
-          "Challenge friends to beat your score"
+          "Virtual tours available for many properties",
+          "Book multiple tours for same day"
         ]
       }
     ]
   },
   {
-    projectId: 24, // Markdown Editor
+    projectId: 27, // Music Streaming App
     steps: [
       {
-        title: "Writing Markdown",
-        description: "Create formatted documents with simple syntax.",
+        title: "Browsing Music",
+        description: "Explore playlists, artists, and albums.",
         instructions: [
-          "Type markdown syntax in the left pane",
-          "Preview appears live in the right pane",
-          "Use # for headings, ** for bold, * for italic",
-          "Create lists with - or numbers"
+          "Browse featured playlists on home screen",
+          "Search for artists, songs, or albums",
+          "View artist profiles and discographies",
+          "Mobile-first card design for easy browsing"
         ],
         tips: [
-          "Learn basic markdown syntax quickly",
-          "Preview updates as you type"
+          "Discover Weekly updates every Monday",
+          "Save favorite playlists for quick access"
         ]
       },
       {
-        title: "Advanced Formatting",
-        description: "Use tables, code blocks, and links.",
+        title: "Now Playing Controls",
+        description: "Control music playback with transport controls.",
         instructions: [
-          "Create links: [text](url)",
-          "Add images: ![alt](image-url)",
-          "Code blocks: wrap in triple backticks",
-          "Tables using pipes and dashes"
+          "Play/pause with center button",
+          "Skip forward/backward between tracks",
+          "Adjust volume with slider",
+          "See album art and track info"
         ],
         tips: [
-          "Syntax highlighting available for code",
-          "Tables great for structured data"
+          "Swipe gestures for quick controls",
+          "Background playback supported"
         ]
       },
       {
-        title: "Exporting Documents",
-        description: "Save and share your markdown files.",
+        title: "Recommendations",
+        description: "Discover new music with personalized suggestions.",
         instructions: [
-          "Click 'Export' to save as .md file",
-          "Export to HTML for web publishing",
-          "Copy rendered HTML if needed",
-          "Files auto-save locally"
+          "View Recently Played section",
+          "Check Recommended for You playlists",
+          "Explore genre-based recommendations",
+          "Build your own playlists"
         ],
         tips: [
-          "Markdown is portable across platforms",
-          "HTML export ready for websites"
+          "Recommendations improve with listening history",
+          "Create collaborative playlists with friends"
         ]
       }
     ]
   },
   {
-    projectId: 25, // Drawing App
+    projectId: 28, // Weather Insights App
     steps: [
       {
-        title: "Canvas Basics",
-        description: "Start creating digital artwork.",
+        title: "Current Conditions",
+        description: "View current weather metrics and conditions.",
         instructions: [
-          "Select brush or pencil tool",
-          "Click and drag to draw",
-          "Choose colors from the palette",
-          "Adjust brush size with slider"
+          "See current temperature and feels-like temp",
+          "Check humidity percentage",
+          "View wind speed and direction",
+          "Weather icons show current conditions"
         ],
         tips: [
-          "Experiment with different brush sizes",
-          "Use color picker for custom colors"
+          "Location permission required for local weather",
+          "Data updates every 15 minutes"
         ]
       },
       {
-        title: "Using Tools",
-        description: "Explore shapes, eraser, and fill tools.",
+        title: "Hourly Forecast",
+        description: "Plan your day with 24-hour forecast.",
         instructions: [
-          "Select shape tool for circles, rectangles",
-          "Use eraser to remove parts of drawing",
-          "Fill tool adds color to enclosed areas",
-          "Undo/redo buttons for mistakes"
+          "Scroll through 24-hour forecast strip",
+          "See hourly temperature changes",
+          "Weather icons show expected conditions",
+          "Plan activities around weather"
         ],
         tips: [
-          "Hold shift for perfect shapes",
-          "Layer tools available for complex art"
+          "Swipe left/right to view all hours",
+          "Icons indicate rain, clouds, sun, etc."
         ]
       },
       {
-        title: "Saving Your Work",
-        description: "Export and share your creations.",
+        title: "7-Day Outlook",
+        description: "View extended forecast with highs and lows.",
         instructions: [
-          "Click 'Save' to download as PNG",
-          "Export as JPG or SVG format",
-          "Share directly to social media",
-          "Clear canvas to start fresh"
+          "See 7-day weather outlook",
+          "Daily high and low temperatures",
+          "Weather conditions for each day",
+          "Plan ahead for week's weather"
         ],
         tips: [
-          "PNG preserves transparency",
-          "Save frequently to avoid losing work"
+          "Extended forecast helps plan activities",
+          "Weather alerts shown when active"
         ]
       }
     ]
   },
   {
-    projectId: 26, // Code Editor
+    projectId: 29, // ADAS Camera Software Test Dashboard
     steps: [
       {
-        title: "Writing Code",
-        description: "Professional code editor with syntax highlighting.",
+        title: "Surround-View Monitoring",
+        description: "Monitor 5-channel camera system for ADAS ECU.",
         instructions: [
-          "Select programming language from dropdown",
-          "Type or paste your code",
-          "Syntax highlighting applies automatically",
-          "Line numbers displayed for reference"
+          "View front, rear, left, right, and cargo camera feeds",
+          "Animated mock RTSP streams simulate live video",
+          "Check resolution and FPS overlays",
+          "Verify all camera channels operational"
         ],
         tips: [
-          "Supports multiple programming languages",
-          "Auto-indentation helps formatting"
+          "Each camera shows resolution and frame rate",
+          "Green status indicates healthy feed"
         ]
       },
       {
-        title: "Code Features",
-        description: "Use autocomplete, formatting, and linting.",
+        title: "USS Parking Grid",
+        description: "Test 12-sensor ultrasonic parking system.",
         instructions: [
-          "Press Ctrl+Space for autocomplete",
-          "Format code with Ctrl+Shift+F",
-          "Linting highlights errors and warnings",
-          "Bracket matching shows pairs"
+          "View 12 USS sensors arranged around vehicle",
+          "Real-time proximity distance animation",
+          "Zone coloring: green (clear), yellow (warn), red (critical)",
+          "Test parking assist features"
         ],
         tips: [
-          "Autocomplete speeds up coding",
-          "Fix linting errors before running"
+          "Sensors detect obstacles up to 2.5 meters",
+          "Color-coded zones show threat levels"
         ]
       },
       {
-        title: "Running & Sharing",
-        description: "Execute code and share with others.",
+        title: "Automated Test Execution",
+        description: "Run 80+ test cases across ADAS modules.",
         instructions: [
-          "Click 'Run' to execute code",
-          "View output in the console panel",
-          "Share code via unique link",
-          "Download as file for local use"
+          "Execute test suites: Camera, USS, Autonomous Driving, Trailer",
+          "Monitor live pass/fail/in-progress status",
+          "View test case details and results",
+          "Check not-executed tests"
         ],
         tips: [
-          "Console shows errors and output",
-          "Shared links preserve code state"
+          "80+ test cases cover complete ECU functionality",
+          "Status updates in real-time during execution"
         ]
       }
     ]
   },
   {
-    projectId: 27, // Timer App
+    projectId: 30, // CAN-FD Network Analyzer & Protocol Decoder
     steps: [
       {
-        title: "Setting Timers",
-        description: "Create countdowns for any purpose.",
+        title: "Frame Trace & Decoding",
+        description: "Monitor CAN/CAN-FD frames with DBC signal decoding.",
         instructions: [
-          "Enter hours, minutes, and seconds",
-          "Click 'Start' to begin countdown",
-          "Timer counts down to zero",
-          "Sound plays when timer completes"
+          "View scrolling frame trace with timestamps",
+          "See message ID, frame type, DLC, and hex data",
+          "DBC signals decoded and displayed",
+          "Filter frames by ID or message type"
         ],
         tips: [
-          "Use for cooking, studying, or workouts",
-          "Multiple timers can run simultaneously"
+          "DBC database includes 8 message definitions",
+          "Frame trace scrolls automatically"
         ]
       },
       {
-        title: "Stopwatch Mode",
-        description: "Track elapsed time accurately.",
+        title: "Bus Load & ECU Status",
+        description: "Monitor network health and node activity.",
         instructions: [
-          "Switch to Stopwatch tab",
-          "Click 'Start' to begin counting up",
-          "Use 'Lap' to record split times",
-          "Reset or stop as needed"
+          "View semicircle bus load gauge",
+          "7-second history area chart shows trends",
+          "8 ECU node status list with activity indicators",
+          "Message frequency table per node"
         ],
         tips: [
-          "Lap times recorded with timestamps",
-          "Perfect for racing or intervals"
+          "High bus load (>80%) may indicate issues",
+          "Inactive nodes shown with gray status"
         ]
       },
       {
-        title: "Pomodoro Technique",
-        description: "Use built-in productivity timer.",
+        title: "Signal Plots & Export",
+        description: "Visualize signals and export trace data.",
         instructions: [
-          "Select Pomodoro mode",
-          "Default 25-minute work intervals",
-          "Automatic 5-minute break timers",
-          "Longer breaks after 4 pomodoros"
+          "View decoded signals: ENG_Status, VehDynamics, ADAS_Fusion, etc.",
+          "Real-time signal value updates",
+          "Export trace to Vector ASC format",
+          "Compatible with CANalyzer and CANoe"
         ],
         tips: [
-          "Customize interval lengths in settings",
-          "Great for focused work sessions"
+          "ASC export enables offline analysis",
+          "Signal plots show trends over time"
         ]
       }
     ]
   },
   {
-    projectId: 28, // URL Shortener
+    projectId: 31, // HIL / SiL Automotive Test Platform
     steps: [
       {
-        title: "Shortening URLs",
-        description: "Create short, shareable links.",
+        title: "Test Sequence Execution",
+        description: "Run automated HIL test sequences.",
         instructions: [
-          "Paste long URL into input field",
-          "Click 'Shorten' button",
-          "Short URL generated instantly",
-          "Copy to clipboard with one click"
+          "Execute 21 test cases across 5 suites",
+          "Suites: Camera, USS, ADAS, Trailer, Power/Safety",
+          "View per-test progress bars",
+          "Monitor test duration and status"
         ],
         tips: [
-          "Works with any valid URL",
-          "Short URLs are easier to share"
+          "Tests run in sequence automatically",
+          "Progress bars show real-time execution"
         ]
       },
       {
-        title: "Custom Aliases",
-        description: "Create memorable custom short links.",
+        title: "Analog I/O Monitoring",
+        description: "Monitor real-time hardware I/O signals.",
         instructions: [
-          "Enter desired custom alias",
-          "Check availability",
-          "If available, create custom short URL",
-          "Custom links are permanent"
+          "View 6 ADC inputs: VBAT, ECU temp, Camera temp, USS Vcc, Brake, Throttle",
+          "Monitor 4 DAC outputs: AEB, LKA torque, ACC, Park buzzer",
+          "Real-time value updates",
+          "Voltage ranges displayed"
         ],
         tips: [
-          "Custom aliases are first-come, first-served",
-          "Use brand names or keywords"
+          "ADC inputs simulate sensor readings",
+          "DAC outputs control actuators"
         ]
       },
       {
-        title: "Analytics",
-        description: "Track clicks and link performance.",
+        title: "4-Channel Oscilloscope",
+        description: "Visualize signals with scope display.",
         instructions: [
-          "View click count for each link",
-          "See referrer sources",
-          "Check geographic distribution",
-          "Monitor trends over time"
+          "View 4-channel oscilloscope canvas",
+          "Selectable channels: RPM, Speed, Throttle, Brake",
+          "Color-coded signal traces",
+          "Trigger line for event capture"
         ],
         tips: [
-          "Analytics help measure engagement",
-          "Data updates in real-time"
+          "Scope helps debug signal timing",
+          "Trigger on rising/falling edges"
         ]
       }
     ]
   },
   {
-    projectId: 29, // File Converter
+    projectId: 32, // AUTOSAR ECU Software Component Studio
     steps: [
       {
-        title: "Uploading Files",
-        description: "Convert between various file formats.",
+        title: "SWC Composition Diagram",
+        description: "View animated AUTOSAR software component architecture.",
         instructions: [
-          "Click 'Choose File' or drag and drop",
-          "File type detected automatically",
-          "See available conversion options",
-          "Select desired output format"
+          "Interactive canvas shows 7 SWCs",
+          "Components: CameraAcq, ImgProcessing, ADAS_Fusion, USSManager, etc.",
+          "Bezier RTE port arrows show connections",
+          "Animated data flow between components"
         ],
         tips: [
-          "Supports images, documents, audio, video",
-          "File size limits may apply"
+          "RTE (Runtime Environment) connects all SWCs",
+          "Ports show sender-receiver and client-server interfaces"
         ]
       },
       {
-        title: "Conversion Options",
-        description: "Configure quality and settings.",
+        title: "BSW Stack Visualization",
+        description: "Explore AUTOSAR Basic Software layers.",
         instructions: [
-          "Adjust quality slider if applicable",
-          "Set resolution for image/video conversion",
-          "Choose compression level",
-          "Preview settings before converting"
+          "View 6 BSW layers from MCAL to Application",
+          "MCAL: TC399 TriCore drivers",
+          "ECU Abstraction, Services (DCM/DEM/NvM), RTE",
+          "Application SWCs at top layer"
         ],
         tips: [
-          "Higher quality = larger file size",
-          "Balance quality with file size needs"
+          "BSW provides hardware abstraction",
+          "Classic AUTOSAR R21-11 architecture"
         ]
       },
       {
-        title: "Downloading Results",
-        description: "Get your converted files.",
+        title: "UDS Diagnostics & DTCs",
+        description: "Manage diagnostics with ISO 14229 UDS.",
         instructions: [
-          "Click 'Convert' to process",
-          "Wait for conversion to complete",
-          "Download converted file",
-          "Files deleted from server after download"
+          "View 8 predefined Diagnostic Trouble Codes",
+          "Check freeze-frame data for each DTC",
+          "Fault path and severity indicators",
+          "MIL (Malfunction Indicator Lamp) status",
+          "Clear DTCs with command button"
         ],
         tips: [
-          "Conversion time depends on file size",
-          "Your files remain private"
+          "UDS ISO 14229 is automotive diagnostic standard",
+          "Freeze-frame captures conditions when fault occurred"
         ]
       }
     ]
   },
   {
-    projectId: 30, // Crypto Tracker
+    projectId: 33, // Accessibility QA Engineer – AI Trainer Platform
     steps: [
       {
-        title: "Viewing Prices",
-        description: "Monitor cryptocurrency market prices.",
+        title: "WCAG Accessibility Auditor",
+        description: "Check color contrast and WCAG 2.1 compliance.",
         instructions: [
-          "Main dashboard shows top cryptocurrencies",
-          "Prices update in real-time",
-          "View 24h price change percentages",
-          "Sort by price, volume, or market cap"
+          "Enter foreground and background hex colors",
+          "Calculate contrast ratio automatically",
+          "See AA/AAA pass/fail badges for text sizes",
+          "WCAG 2.1 Level AA and AAA compliance checked"
         ],
         tips: [
-          "Green indicates price increase",
-          "Red indicates price decrease"
+          "Minimum 4.5:1 for normal text (AA)",
+          "7:1 ratio required for AAA compliance"
         ]
       },
       {
-        title: "Adding to Watchlist",
-        description: "Track your favorite cryptocurrencies.",
+        title: "ARIA Validator",
+        description: "Validate HTML for proper ARIA usage.",
         instructions: [
-          "Click star icon to add to watchlist",
-          "Watchlist shows your selected coins",
-          "Remove items by clicking star again",
-          "Watchlist saved to your account"
+          "Paste HTML snippet into validator",
+          "Receive parsed ARIA tree structure",
+          "See critical/warning/pass issue annotations",
+          "Fix ARIA attribute errors"
         ],
         tips: [
-          "Focus on coins you're interested in",
-          "Receive alerts for price changes"
+          "Proper ARIA improves screen reader support",
+          "Fix critical issues first"
         ]
       },
       {
-        title: "Portfolio Tracking",
-        description: "Monitor your crypto investments.",
+        title: "Keyboard Navigation Tester",
+        description: "Audit tab order and keyboard accessibility.",
         instructions: [
-          "Add holdings with quantity and purchase price",
-          "View total portfolio value",
-          "See profit/loss for each holding",
-          "Charts show portfolio allocation"
+          "Test tabindex-ordered focus flow",
+          "Visual highlight shows focus order",
+          "WCAG 2.4.7 compliance report generated",
+          "Identify keyboard trap issues"
         ],
         tips: [
-          "Update holdings as you trade",
-          "Track performance over time"
+          "All interactive elements must be keyboard accessible",
+          "Logical tab order improves usability"
         ]
       }
     ]
   },
   {
-    projectId: 31, // QR Code Generator
+    projectId: 34, // Insurance Policy Administration System
     steps: [
       {
-        title: "Creating QR Codes",
-        description: "Generate QR codes for URLs, text, or contacts.",
+        title: "Policy Dashboard",
+        description: "View P&C insurance portfolio metrics.",
         instructions: [
-          "Select QR code type (URL, text, contact, etc.)",
-          "Enter the information to encode",
-          "QR code generates instantly",
-          "Preview shows how it will scan"
+          "See KPI cards: total policies, written premium, loss ratio, avg age",
+          "Canvas bar chart shows 12-month premium trends",
+          "Donut chart displays line-of-business split",
+          "Review 8 realistic P&C policies in table"
         ],
         tips: [
-          "Test QR codes before printing",
-          "Ensure data is accurate before generating"
+          "Policy table shows PolicyNumber, Insured, LOB, Premium",
+          "Status badges: Active/Pending/Cancelled"
         ]
       },
       {
-        title: "Customization",
-        description: "Style your QR codes with colors and logos.",
+        title: "Policy Builder",
+        description: "Create new P&C insurance policies.",
         instructions: [
-          "Choose foreground and background colors",
-          "Upload logo to embed in center",
-          "Adjust error correction level",
-          "Maintain scannability while customizing"
+          "Select from all 50 US states",
+          "Choose LOB: Auto, Property, General Liability, Workers Comp",
+          "Dynamic coverage checkboxes by LOB",
+          "Auto: Liability/Collision/Comprehensive",
+          "Property: Building/BPP/BI, GL: PremOps/Products, WC: Part A/B"
         ],
         tips: [
-          "High contrast improves scanning",
-          "Don't make logos too large"
+          "Coverage options change based on LOB selection",
+          "ISO bureau rate engine calculates premium"
         ]
       },
       {
-        title: "Downloading & Using",
-        description: "Export QR codes for various uses.",
+        title: "ACORD Forms & REST API",
+        description: "Serialize policies to ACORD XML/JSON.",
         instructions: [
-          "Download as PNG, SVG, or PDF",
-          "Choose size and resolution",
-          "Print for physical use",
-          "Include in digital materials"
+          "Generate ACORD 25 Certificate of Liability",
+          "Export policies to XML or JSON format",
+          "REST API studio for policy operations",
+          "Clean architecture with SOLID principles"
         ],
         tips: [
-          "SVG format scales without quality loss",
-          "Test scanning at intended size"
+          "ACORD is insurance industry standard",
+          "API supports CRUD operations"
         ]
       }
     ]
   },
   {
-    projectId: 32, // Typing Speed Test
+    projectId: 35, // CAPL Diagnostics & CAN Verification Demo
     steps: [
       {
-        title: "Starting the Test",
-        description: "Measure your typing speed and accuracy.",
+        title: "DID Operations",
+        description: "Test ReadDataByIdentifier and WriteDataByIdentifier.",
         instructions: [
-          "Click 'Start Test' to begin",
-          "Text to type appears on screen",
-          "Begin typing in the input area",
-          "Timer starts with first keystroke"
+          "Execute ReadDataByIdentifier for feature calibration",
+          "Test WriteDataByIdentifier for status updates",
+          "Verify DID responses match specifications",
+          "Check data byte formatting"
         ],
         tips: [
-          "Sit with proper posture",
-          "Look at the text, not your keyboard"
+          "DIDs provide access to ECU parameters",
+          "Common DIDs: VIN, calibration, sensor data"
         ]
       },
       {
-        title: "During the Test",
-        description: "Type accurately and quickly.",
+        title: "RID Routine Control",
+        description: "Simulate routine control operations.",
         instructions: [
-          "Type the displayed text exactly",
-          "Errors highlighted in red",
-          "Backspace to correct mistakes",
-          "Timer shows remaining time"
+          "Start camera self-test routine",
+          "Execute trailer alignment assist routine",
+          "Check ADAS readiness verification",
+          "Monitor routine completion status"
         ],
         tips: [
-          "Accuracy is as important as speed",
-          "Focus on consistent rhythm"
+          "RID routines perform ECU self-tests",
+          "Status byte indicates routine progress"
         ]
       },
       {
-        title: "Viewing Results",
-        description: "Analyze your typing performance.",
+        title: "DTC Handling",
+        description: "Manage Diagnostic Trouble Codes.",
         instructions: [
-          "WPM (words per minute) calculated",
-          "Accuracy percentage displayed",
-          "See corrected vs. uncorrected errors",
-          "Track improvement over time"
+          "Monitor active DTCs in real-time",
+          "Interpret status byte for DTC state",
+          "Execute clear DTC command",
+          "Re-validate after DTC clear operation"
         ],
         tips: [
-          "Practice regularly to improve",
-          "Aim for 95%+ accuracy"
+          "Status byte: test failed, pending, confirmed, warning",
+          "Clear DTCs only after resolving root cause"
         ]
       }
     ]
   },
   {
-    projectId: 33, // Expense Splitter
+    projectId: 36, // SAP Test Manager Greenfield Command Center
     steps: [
       {
-        title: "Creating a Group",
-        description: "Split expenses fairly among friends.",
+        title: "Executive Overview",
+        description: "Monitor program KPIs and risk metrics.",
         instructions: [
-          "Create a new expense group",
-          "Add participants' names",
-          "Enter group trip or event name",
-          "Invite others to join"
+          "View dynamic KPIs for test program health",
+          "Check risk index scoring",
+          "Review steering-committee narrative generation",
+          "Track overall program status"
         ],
         tips: [
-          "Use for trips, meals, or shared costs",
-          "Add everyone before entering expenses"
+          "Red KPIs indicate areas needing attention",
+          "Risk index aggregates multiple factors"
         ]
       },
       {
-        title: "Adding Expenses",
-        description: "Record who paid and who owes.",
+        title: "Test Strategy & Governance",
+        description: "Manage test phases and quality gates.",
         instructions: [
-          "Click 'Add Expense'",
-          "Enter amount and description",
-          "Select who paid",
-          "Choose who the expense is for"
+          "Edit SIT/E2E/UAT/cutover/hyper-care master plan",
+          "Track progress for each test phase",
+          "Make quality gate decisions",
+          "Adjust timelines and resources"
         ],
         tips: [
-          "Split equally or custom amounts",
-          "Add expenses as they occur"
+          "Quality gates prevent premature phase advancement",
+          "Master plan keeps all stakeholders aligned"
         ]
       },
       {
-        title: "Settlement",
-        description: "See who owes whom and settle up.",
+        title: "Defect Control Center",
+        description: "Triage and track defects.",
         instructions: [
-          "View balance for each person",
-          "App calculates optimal settlements",
-          "Mark debts as paid when settled",
-          "Export summary for record-keeping"
+          "Monitor defects by severity and status",
+          "View triage metrics and aging reports",
+          "Log new defects with workflow",
+          "Track resolution progress"
         ],
         tips: [
-          "Optimize to minimize transactions",
-          "Settle up before trip ends"
-        ]
-      }
-    ]
-  },
-  {
-    projectId: 34, // Flashcard App
-    steps: [
-      {
-        title: "Creating Decks",
-        description: "Organize flashcards into study decks.",
-        instructions: [
-          "Click 'New Deck' to create a collection",
-          "Give your deck a name and subject",
-          "Add description and tags",
-          "Decks appear in your library"
-        ],
-        tips: [
-          "Organize by topic or exam",
-          "Keep decks focused on one subject"
-        ]
-      },
-      {
-        title: "Making Flashcards",
-        description: "Create effective study cards.",
-        instructions: [
-          "Add cards to your deck",
-          "Write question on front",
-          "Write answer on back",
-          "Add images or formatting if needed"
-        ],
-        tips: [
-          "Keep cards simple and focused",
-          "One concept per card works best"
-        ]
-      },
-      {
-        title: "Studying",
-        description: "Review flashcards and track progress.",
-        instructions: [
-          "Select deck to study",
-          "Click to flip cards",
-          "Mark cards as Easy, Good, or Hard",
-          "Spaced repetition schedules reviews"
-        ],
-        tips: [
-          "Study regularly for best retention",
-          "Honest self-assessment improves learning"
-        ]
-      }
-    ]
-  },
-  {
-    projectId: 35, // Habit Tracker
-    steps: [
-      {
-        title: "Adding Habits",
-        description: "Define habits you want to build or track.",
-        instructions: [
-          "Click 'New Habit' to add one",
-          "Name your habit clearly",
-          "Set frequency (daily, weekly, etc.)",
-          "Choose category and icon"
-        ],
-        tips: [
-          "Start with just a few habits",
-          "Make habits specific and measurable"
-        ]
-      },
-      {
-        title: "Daily Tracking",
-        description: "Log your habit completion each day.",
-        instructions: [
-          "Check off habits as completed",
-          "View today's habits on dashboard",
-          "Add notes for context",
-          "Streaks tracked automatically"
-        ],
-        tips: [
-          "Log at consistent time each day",
-          "Even small progress counts"
-        ]
-      },
-      {
-        title: "Progress & Insights",
-        description: "Visualize your habit formation.",
-        instructions: [
-          "View calendar heatmap of completion",
-          "See current streaks and records",
-          "Check completion percentages",
-          "Identify patterns in behavior"
-        ],
-        tips: [
-          "Celebrate milestone streaks",
-          "Use data to adjust habits"
-        ]
-      }
-    ]
-  },
-  {
-    projectId: 36, // Snake Game
-    steps: [
-      {
-        title: "Game Basics",
-        description: "Classic snake game with modern features.",
-        instructions: [
-          "Press arrow keys or WASD to move",
-          "Eat red food pellets to grow",
-          "Avoid hitting walls or yourself",
-          "Game speeds up as you score"
-        ],
-        tips: [
-          "Plan your path ahead",
-          "Create space to maneuver"
-        ]
-      },
-      {
-        title: "Scoring Strategy",
-        description: "Maximize your score with smart play.",
-        instructions: [
-          "Each food pellet increases score",
-          "Longer snake = higher score multiplier",
-          "Collect special items for bonus points",
-          "Survival time adds to score"
-        ],
-        tips: [
-          "Don't chase food into corners",
-          "Use edges strategically"
-        ]
-      },
-      {
-        title: "Advanced Play",
-        description: "Master techniques for high scores.",
-        instructions: [
-          "Learn to spiral for space management",
-          "Use speed boosts wisely",
-          "Practice tight maneuvers",
-          "Study patterns of successful runs"
-        ],
-        tips: [
-          "Patience often beats speed",
-          "Watch replays of top scores"
+          "Severity levels guide prioritization",
+          "Defect aging highlights stale issues"
         ]
       }
     ]
