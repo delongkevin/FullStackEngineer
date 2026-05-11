@@ -2,17 +2,18 @@ name: Release iOS Apps
 
 on:
   workflow_dispatch:
-    inputs:
-      tag:
-        description: 'Release tag (e.g. v1.0.0)'
-        required: false
-        default: 'v1.0.0'
   push:
-    tags:
-      - 'v*'
+    branches:
+      - main
+    paths:
+      - 'ios/**'
+      - '.github/workflows/release-ios.yml'
 
 permissions:
   contents: write
+
+env:
+  RELEASE_TAG: ios-artifacts-latest
 
 jobs:
   build-and-release:
@@ -28,20 +29,9 @@ jobs:
       - name: Install xcpretty
         run: gem install xcpretty --no-document
 
-      - name: Resolve tag
-        run: |
-          TAG="${{ github.event.inputs.tag }}"
-          if [ -z "$TAG" ]; then
-            TAG="${{ github.ref_name }}"
-          fi
-          if [ -z "$TAG" ] || [ "$TAG" = "main" ]; then
-            TAG="v1.0.0"
-          fi
-          echo "TAG=$TAG" >> "$GITHUB_ENV"
-
       - name: Generate Xcode projects and build
         run: |
-          TAG="${{ env.TAG }}"
+          TAG="${{ env.RELEASE_TAG }}"
           mkdir -p release-ios
 
           declare -A APPS
@@ -74,7 +64,7 @@ jobs:
               exit 1
             fi
 
-            ZIP_NAME="${name}-${TAG}-ios-sim.zip"
+            ZIP_NAME="${name}-ios-sim.zip"
             ditto -c -k --keepParent "$APP_PATH" "release-ios/$ZIP_NAME"
             echo "Packaged: $ZIP_NAME"
           done
@@ -87,7 +77,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          TAG="${{ env.TAG }}"
+          TAG="${{ env.RELEASE_TAG }}"
 
           NOTES="## 🍎 iOS App Downloads
 
@@ -101,12 +91,12 @@ jobs:
 
           | App | Archive | Description |
           |-----|---------|-------------|
-          | 📚 Book Store | \`BookStore-${TAG}-ios-sim.zip\` | SwiftUI bookstore — browse, cart & checkout |
-          | 🛒 Computer Store | \`ComputerStore-${TAG}-ios-sim.zip\` | SwiftUI computer & electronics e-commerce |
-          | ♠️ Poker App | \`PokerApp-${TAG}-ios-sim.zip\` | SwiftUI poker game with betting & chip count |
-          | 🏭 Kamps Smart Factory | \`KampsSmartFactory-${TAG}-ios-sim.zip\` | SwiftUI IoT Smart Factory dashboard |
-          | 📹 Embedded Video | \`EmbeddedVideoEngineer-${TAG}-ios-sim.zip\` | SwiftUI multi-camera embedded video viewer |
-          | 🏥 Medical IoT Monitor | \`MedicalIoTMonitor-${TAG}-ios-sim.zip\` | SwiftUI simulated medical vitals dashboard — heart rate, SpO₂, BP & alerts |
+          | 📚 Book Store | \`BookStore-ios-sim.zip\` | SwiftUI bookstore — browse, cart & checkout |
+          | 🛒 Computer Store | \`ComputerStore-ios-sim.zip\` | SwiftUI computer & electronics e-commerce |
+          | ♠️ Poker App | \`PokerApp-ios-sim.zip\` | SwiftUI poker game with betting & chip count |
+          | 🏭 Kamps Smart Factory | \`KampsSmartFactory-ios-sim.zip\` | SwiftUI IoT Smart Factory dashboard |
+          | 📹 Embedded Video | \`EmbeddedVideoEngineer-ios-sim.zip\` | SwiftUI multi-camera embedded video viewer |
+          | 🏥 Medical IoT Monitor | \`MedicalIoTMonitor-ios-sim.zip\` | SwiftUI simulated medical vitals dashboard — heart rate, SpO₂, BP & alerts |
 
           ### Installation Steps (Simulator)
           1. Download a \`.zip\` archive from the assets below
@@ -120,7 +110,7 @@ jobs:
           else
             echo "Creating release $TAG..."
             gh release create "$TAG" release-ios/*.zip \
-              --title "🍎 iOS Apps $TAG" \
+              --title "🍎 iOS Apps (Latest)" \
               --notes "$NOTES" \
               --latest
           fi
