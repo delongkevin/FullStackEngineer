@@ -26,7 +26,7 @@ function isGithubReleaseTagUrl(url: string): boolean {
 }
 
 function isGithubReleaseDownloadUrl(url: string): boolean {
-  return /^https:\/\/github\.com\/[^/]+\/[^/]+\/releases\/download\/.+\/.+\.apk$/i.test(url);
+  return /^https:\/\/github\.com\/[^/]+\/[^/]+\/releases\/download\/.+\/.*\.(apk|zip)$/i.test(url);
 }
 
 function isGithubWorkflowUrl(url: string): boolean {
