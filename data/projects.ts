@@ -575,7 +575,7 @@ export const projects: Project[] = [
     embeddable: true,
     projectPath: '/projects/fitness-tracker',
     androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/fitness-tracker-app-debug.apk',
-    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/fitness-tracker-app',
+    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/ios-artifacts-latest/FitnessTracker-ios-sim.zip',
   },
   {
     id: 24,
@@ -608,7 +608,7 @@ export const projects: Project[] = [
     embeddable: true,
     projectPath: '/projects/finance-dashboard',
     androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/finance-app-debug.apk',
-    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/finance-app',
+    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/ios-artifacts-latest/FinanceTracker-ios-sim.zip',
   },
   {
     id: 25,
@@ -647,7 +647,7 @@ export const projects: Project[] = [
     embeddable: true,
     projectPath: '/projects/chat-app',
     androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/chat-app-debug.apk',
-    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/chat-app',
+    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/ios-artifacts-latest/ChatApp-ios-sim.zip',
   },
   {
     id: 26,
@@ -672,7 +672,7 @@ export const projects: Project[] = [
     embeddable: true,
     projectPath: '/projects/real-estate',
     androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/real-estate-app-debug.apk',
-    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/real-estate-app',
+    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/ios-artifacts-latest/RealEstate-ios-sim.zip',
   },
   {
     id: 27,
@@ -696,7 +696,7 @@ export const projects: Project[] = [
     embeddable: true,
     projectPath: '/projects/music-streaming',
     androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/music-streaming-app-debug.apk',
-    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/music-streaming-app',
+    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/ios-artifacts-latest/MusicStreaming-ios-sim.zip',
   },
   {
     id: 28,
@@ -720,7 +720,7 @@ export const projects: Project[] = [
     embeddable: true,
     projectPath: '/projects/weather-insights',
     androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/weather-app-debug.apk',
-    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/weather-app',
+    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/ios-artifacts-latest/WeatherInsights-ios-sim.zip',
   },
   {
     id: 29,
@@ -998,4 +998,3 @@ export const getProjectMetaDescription = (project: Project): string => {
 
   return `${source.slice(0, 157).trimEnd()}...`;
 };
-
