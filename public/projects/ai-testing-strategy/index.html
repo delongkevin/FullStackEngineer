@@ -130,6 +130,8 @@ body {
 }
 
 .nav-tab {
+  background: transparent;
+  border: none;
   padding: 12px 20px;
   font-size: 13px;
   font-weight: 600;
@@ -140,6 +142,11 @@ body {
   transition: all 0.2s;
   letter-spacing: 0.4px;
   text-transform: uppercase;
+}
+
+.nav-tab:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
 }
 
 .nav-tab:hover {
@@ -503,17 +510,78 @@ canvas {
   color: var(--text2);
 }
 
+/* Coalition Board */
+.coalition-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.coalition-card {
+  background: var(--panel2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px;
+}
+
+.coalition-role {
+  font-size: 10px;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.coalition-owner {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 4px 0;
+}
+
+.coalition-task {
+  font-size: 11px;
+  color: var(--text2);
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .grid2,
   .grid3,
-  .grid4 {
+  .grid4,
+  .coalition-grid {
     grid-template-columns: 1fr;
   }
 
   .header {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .cov-item {
+    flex-wrap: wrap;
+  }
+
+  .cov-label,
+  .cov-val {
+    min-width: auto;
+    width: 100%;
+    text-align: left;
+  }
+
+  .cov-bar-wrap {
+    width: 100%;
+    margin: 8px 0;
+  }
+}
+
+@media (max-width: 1024px) {
+  .header-stats {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .content {
+    padding: 16px;
   }
 }
 </style>
@@ -549,13 +617,13 @@ canvas {
 </div>
 
 <!-- Navigation -->
-<div class="nav">
-  <div class="nav-tab active" onclick="switchTab('overview')">Overview</div>
-  <div class="nav-tab" onclick="switchTab('testExecution')">Test Execution</div>
-  <div class="nav-tab" onclick="switchTab('aiValidation')">AI Model Validation</div>
-  <div class="nav-tab" onclick="switchTab('toolsIntegration')">Tools & Integration</div>
-  <div class="nav-tab" onclick="switchTab('defectTracking')">Defect Tracking</div>
-  <div class="nav-tab" onclick="switchTab('analytics')">Analytics & Reports</div>
+<div class="nav" role="tablist" aria-label="AI testing dashboard tabs">
+  <button class="nav-tab active" type="button" role="tab" data-tab="overview" aria-selected="true" aria-controls="tab-overview" onclick="switchTab('overview', this)">Overview</button>
+  <button class="nav-tab" type="button" role="tab" data-tab="testExecution" aria-selected="false" aria-controls="tab-testExecution" onclick="switchTab('testExecution', this)">Test Execution</button>
+  <button class="nav-tab" type="button" role="tab" data-tab="aiValidation" aria-selected="false" aria-controls="tab-aiValidation" onclick="switchTab('aiValidation', this)">AI Model Validation</button>
+  <button class="nav-tab" type="button" role="tab" data-tab="toolsIntegration" aria-selected="false" aria-controls="tab-toolsIntegration" onclick="switchTab('toolsIntegration', this)">Tools & Integration</button>
+  <button class="nav-tab" type="button" role="tab" data-tab="defectTracking" aria-selected="false" aria-controls="tab-defectTracking" onclick="switchTab('defectTracking', this)">Defect Tracking</button>
+  <button class="nav-tab" type="button" role="tab" data-tab="analytics" aria-selected="false" aria-controls="tab-analytics" onclick="switchTab('analytics', this)">Analytics & Reports</button>
 </div>
 
 <!-- Content -->
@@ -675,6 +743,20 @@ canvas {
         <div class="log-box" id="testLog">
           <!-- Populated by JavaScript -->
         </div>
+      </div>
+    </div>
+
+    <div class="panel" style="margin-top: 16px;">
+      <div class="panel-head">
+        Coalition Alignment Command Board
+        <button class="btn btn-secondary" onclick="advanceMilestone()">Advance Milestone</button>
+      </div>
+      <div class="panel-body">
+        <div style="display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; margin-bottom: 12px;">
+          <div style="font-size: 12px; color: var(--text2);">Current Program Milestone: <span id="milestoneLabel" style="color: var(--accent); font-weight: 700;">Requirements Freeze</span></div>
+          <div style="font-size: 11px; color: var(--green);">Alignment Score: <span id="alignmentScore">86%</span></div>
+        </div>
+        <div class="coalition-grid" id="coalitionBoard"></div>
       </div>
     </div>
 
@@ -986,13 +1068,15 @@ canvas {
       <div class="panel">
         <div class="panel-head">
           CAPL Script Example
-          <button class="btn btn-secondary" onclick="downloadCAPL()">Download</button>
+          <button class="btn btn-secondary" onclick="downloadCAPL()">Download UDS Template</button>
         </div>
         <div class="panel-body">
           <div style="background: #050a10; border: 1px solid var(--border); border-radius: 6px; padding: 12px; font-family: monospace; font-size: 11px; line-height: 1.6; color: var(--text); max-height: 300px; overflow-y: auto;">
 <span style="color: #a78bfa;">// ADAS Lane Keep Assist Test</span>
 <span style="color: #f59e0b;">variables</span> {
   <span style="color: #22c55e;">message</span> LKA_Status msg;
+  <span style="color: #22c55e;">diagnosticRequest</span> reqReadDid;
+  <span style="color: #22c55e;">diagnosticResponse</span> resReadDid;
   <span style="color: #22c55e;">msTimer</span> testTimer;
   <span style="color: #22c55e;">int</span> testResult = 0;
 }
@@ -1000,6 +1084,10 @@ canvas {
 <span style="color: #f59e0b;">on</span> <span style="color: #00b4d8;">start</span> {
   <span style="color: #a78bfa;">// Initialize test environment</span>
   <span style="color: #f59e0b;">write</span>(<span style="color: #22c55e;">"Starting LKA validation test..."</span>);
+  reqReadDid.SetPrimitiveByte(0, 0x22); <span style="color: #a78bfa;">// UDS ReadDataByIdentifier</span>
+  reqReadDid.SetPrimitiveByte(1, 0xF1);
+  reqReadDid.SetPrimitiveByte(2, 0x90); <span style="color: #a78bfa;">// DID 0xF190 VIN</span>
+  output(reqReadDid);
   setTimer(testTimer, 100);
 }
 
@@ -1017,6 +1105,12 @@ canvas {
   <span style="color: #f59e0b;">if</span> (<span style="color: #f59e0b;">this</span>.TorqueApplied == 1) {
     testResult = 1;
     <span style="color: #f59e0b;">write</span>(<span style="color: #22c55e;">"✓ LKA responded correctly"</span>);
+  }
+}
+
+<span style="color: #f59e0b;">on</span> <span style="color: #00b4d8;">diagResponse</span> reqReadDid {
+  <span style="color: #f59e0b;">if</span> (this.GetPrimitiveByte(0) == 0x62) {
+    <span style="color: #f59e0b;">write</span>(<span style="color: #22c55e;">"✓ DID 0xF190 response received"</span>);
   }
 }
           </div>
@@ -1171,12 +1265,23 @@ canvas {
 
 <script>
 // Tab Switching
-function switchTab(tabName) {
-  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+function switchTab(tabName, tabElement) {
+  document.querySelectorAll('.nav-tab').forEach(t => {
+    t.classList.remove('active');
+    t.setAttribute('aria-selected', 'false');
+  });
   document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
 
-  event.target.classList.add('active');
-  document.getElementById('tab-' + tabName).classList.add('active');
+  const activeTab = tabElement || document.querySelector(`.nav-tab[data-tab="${tabName}"]`);
+  if (activeTab) {
+    activeTab.classList.add('active');
+    activeTab.setAttribute('aria-selected', 'true');
+  }
+
+  const tabContent = document.getElementById('tab-' + tabName);
+  if (tabContent) {
+    tabContent.classList.add('active');
+  }
 }
 
 // Sample Data
@@ -1212,6 +1317,15 @@ const defects = [
   { id: 'DEF-2403', severity: 'Medium', desc: 'CAN message timeout on startup', module: 'Network', status: 'In Progress', assignee: 'K. Brown' },
   { id: 'DEF-2404', severity: 'Low', desc: 'UI display refresh rate inconsistent', module: 'HMI', status: 'Resolved', assignee: 'L. Davis' },
   { id: 'DEF-2405', severity: 'Critical', desc: 'ECU diagnostic response missing', module: 'Diagnostics', status: 'Open', assignee: 'R. Wilson' },
+];
+
+const coalitionMilestones = ['Requirements Freeze', 'HIL Calibration', 'Pilot Validation', 'Safety Audit'];
+let milestoneIndex = 0;
+const coalitionOwners = [
+  { role: 'AI Validation Lead', owner: 'Priya S.', task: 'Close edge-case false negatives for rain/night scenes', status: 'Aligned' },
+  { role: 'Vehicle Integration', owner: 'Marcus T.', task: 'Sync CANape calibrations with dSPACE bench profile', status: 'In Review' },
+  { role: 'Safety & Compliance', owner: 'Elena R.', task: 'Prepare ISO 26262 evidence package for ASIL-B signoff', status: 'Aligned' },
+  { role: 'Program Delivery', owner: 'Jordan K.', task: 'Coordinate test gates with supplier and plant launch teams', status: 'Action Needed' },
 ];
 
 // Populate HIL Test Table
@@ -1280,12 +1394,18 @@ const logEntries = [
   '[14:23:45] <span class="log-info">Starting test execution...</span>',
   '[14:23:46] <span class="log-ok">✓ HIL system connected</span>',
   '[14:23:47] <span class="log-ok">✓ CANoe network initialized</span>',
-  '[14:23:48] <span class="log-info">Running TC_AEB_001...</span>',
-  '[14:23:49] <span class="log-ok">✓ TC_AEB_001 PASSED (1.24s)</span>',
-  '[14:23:50] <span class="log-info">Running TC_LKA_002...</span>',
-  '[14:23:51] <span class="log-ok">✓ TC_LKA_002 PASSED (0.87s)</span>',
-  '[14:23:52] <span class="log-info">Running TC_OBJ_003...</span>',
-  '[14:23:53] <span class="log-warn">⚠ TC_OBJ_003 In Progress...</span>',
+  '[14:23:48] <span class="log-info">UDS 0x22 DID 0xF190 request sent to ADAS ECU</span>',
+  '[14:23:49] <span class="log-ok">✓ UDS 0x62 DID 0xF190 VIN response validated</span>',
+  '[14:23:50] <span class="log-info">RoutineControl RID 0xFF00 started for camera self-check</span>',
+  '[14:23:51] <span class="log-ok">✓ RID 0xFF00 completed with status PASSED</span>',
+  '[14:23:52] <span class="log-info">CAN 0x451 trailer-angle frame received (20ms period)</span>',
+  '[14:23:53] <span class="log-ok">✓ CAN period and DLC verification passed</span>',
+  '[14:23:54] <span class="log-info">Running TC_AEB_001...</span>',
+  '[14:23:55] <span class="log-ok">✓ TC_AEB_001 PASSED (1.24s)</span>',
+  '[14:23:56] <span class="log-info">Running TC_LKA_002...</span>',
+  '[14:23:57] <span class="log-ok">✓ TC_LKA_002 PASSED (0.87s)</span>',
+  '[14:23:58] <span class="log-info">Running TC_OBJ_003...</span>',
+  '[14:23:59] <span class="log-warn">⚠ TC_OBJ_003 In Progress...</span>',
 ];
 
 function populateLog() {
@@ -1296,6 +1416,27 @@ function populateLog() {
 
 function clearLog() {
   document.getElementById('testLog').innerHTML = '';
+}
+
+function populateCoalitionBoard() {
+  const board = document.getElementById('coalitionBoard');
+  board.innerHTML = coalitionOwners.map((owner) => `
+    <div class="coalition-card">
+      <div class="coalition-role">${owner.role}</div>
+      <div class="coalition-owner">${owner.owner}</div>
+      <div class="coalition-task">${owner.task}</div>
+      <div style="margin-top: 8px;">
+        <span class="badge badge-${owner.status === 'Aligned' ? 'pass' : owner.status === 'In Review' ? 'inprog' : 'fail'}">${owner.status}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function advanceMilestone() {
+  milestoneIndex = (milestoneIndex + 1) % coalitionMilestones.length;
+  document.getElementById('milestoneLabel').textContent = coalitionMilestones[milestoneIndex];
+  const score = 86 + (milestoneIndex * 4);
+  document.getElementById('alignmentScore').textContent = `${Math.min(score, 98)}%`;
 }
 
 // Run Test Suite
@@ -1573,6 +1714,7 @@ window.addEventListener('DOMContentLoaded', () => {
   populateAIScenarios();
   populateDefects();
   populateLog();
+  populateCoalitionBoard();
 
   // Load Chart.js
   const script = document.createElement('script');
@@ -1583,9 +1725,10 @@ window.addEventListener('DOMContentLoaded', () => {
   // Simulate live updates
   setInterval(() => {
     const progress = document.getElementById('testProgress');
-    const current = parseInt(progress.style.width);
+    const current = Number.parseFloat(progress.style.width) || 0;
     if (current < 100) {
-      progress.style.width = (current + Math.random() * 2) + '%';
+      const nextProgress = Math.min(100, current + (Math.random() * 2));
+      progress.style.width = nextProgress >= 99.9 ? '100%' : `${nextProgress.toFixed(1)}%`;
     }
   }, 5000);
 });
