@@ -618,12 +618,12 @@ canvas {
 
 <!-- Navigation -->
 <div class="nav" role="tablist" aria-label="AI testing dashboard tabs">
-  <button class="nav-tab active" type="button" role="tab" data-tab="overview" aria-selected="true" aria-controls="tab-overview" onclick="switchTab('overview', this)">Overview</button>
-  <button class="nav-tab" type="button" role="tab" data-tab="testExecution" aria-selected="false" aria-controls="tab-testExecution" onclick="switchTab('testExecution', this)">Test Execution</button>
-  <button class="nav-tab" type="button" role="tab" data-tab="aiValidation" aria-selected="false" aria-controls="tab-aiValidation" onclick="switchTab('aiValidation', this)">AI Model Validation</button>
-  <button class="nav-tab" type="button" role="tab" data-tab="toolsIntegration" aria-selected="false" aria-controls="tab-toolsIntegration" onclick="switchTab('toolsIntegration', this)">Tools & Integration</button>
-  <button class="nav-tab" type="button" role="tab" data-tab="defectTracking" aria-selected="false" aria-controls="tab-defectTracking" onclick="switchTab('defectTracking', this)">Defect Tracking</button>
-  <button class="nav-tab" type="button" role="tab" data-tab="analytics" aria-selected="false" aria-controls="tab-analytics" onclick="switchTab('analytics', this)">Analytics & Reports</button>
+  <button class="nav-tab active" type="button" role="tab" data-tab="overview" aria-selected="true" aria-controls="tab-overview" onclick="switchTab('overview', this)" onkeydown="handleTabKeydown(event, 'overview')">Overview</button>
+  <button class="nav-tab" type="button" role="tab" data-tab="testExecution" aria-selected="false" aria-controls="tab-testExecution" onclick="switchTab('testExecution', this)" onkeydown="handleTabKeydown(event, 'testExecution')">Test Execution</button>
+  <button class="nav-tab" type="button" role="tab" data-tab="aiValidation" aria-selected="false" aria-controls="tab-aiValidation" onclick="switchTab('aiValidation', this)" onkeydown="handleTabKeydown(event, 'aiValidation')">AI Model Validation</button>
+  <button class="nav-tab" type="button" role="tab" data-tab="toolsIntegration" aria-selected="false" aria-controls="tab-toolsIntegration" onclick="switchTab('toolsIntegration', this)" onkeydown="handleTabKeydown(event, 'toolsIntegration')">Tools & Integration</button>
+  <button class="nav-tab" type="button" role="tab" data-tab="defectTracking" aria-selected="false" aria-controls="tab-defectTracking" onclick="switchTab('defectTracking', this)" onkeydown="handleTabKeydown(event, 'defectTracking')">Defect Tracking</button>
+  <button class="nav-tab" type="button" role="tab" data-tab="analytics" aria-selected="false" aria-controls="tab-analytics" onclick="switchTab('analytics', this)" onkeydown="handleTabKeydown(event, 'analytics')">Analytics & Reports</button>
 </div>
 
 <!-- Content -->
@@ -749,7 +749,7 @@ canvas {
     <div class="panel" style="margin-top: 16px;">
       <div class="panel-head">
         Coalition Alignment Command Board
-        <button class="btn btn-secondary" onclick="advanceMilestone()">Advance Milestone</button>
+        <button class="btn btn-secondary" onclick="advanceMilestoneAndUpdateScore()" aria-label="Advance to next program milestone">Advance Milestone</button>
       </div>
       <div class="panel-body">
         <div style="display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; margin-bottom: 12px;">
@@ -1266,6 +1266,10 @@ canvas {
 <script>
 // Tab Switching
 function switchTab(tabName, tabElement) {
+  if (!allowedTabs.has(tabName)) {
+    return;
+  }
+
   document.querySelectorAll('.nav-tab').forEach(t => {
     t.classList.remove('active');
     t.setAttribute('aria-selected', 'false');
@@ -1281,6 +1285,27 @@ function switchTab(tabName, tabElement) {
   const tabContent = document.getElementById('tab-' + tabName);
   if (tabContent) {
     tabContent.classList.add('active');
+  }
+}
+
+function handleTabKeydown(event, tabName) {
+  const tabs = Array.from(document.querySelectorAll('.nav-tab'));
+  const currentIndex = tabs.indexOf(event.currentTarget);
+
+  if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+    event.preventDefault();
+    const nextIndex = event.key === 'ArrowRight'
+      ? (currentIndex + 1) % tabs.length
+      : (currentIndex - 1 + tabs.length) % tabs.length;
+    const nextTab = tabs[nextIndex];
+    nextTab.focus();
+    switchTab(nextTab.dataset.tab, nextTab);
+    return;
+  }
+
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault();
+    switchTab(tabName, event.currentTarget);
   }
 }
 
@@ -1321,6 +1346,16 @@ const defects = [
 
 const coalitionMilestones = ['Requirements Freeze', 'HIL Calibration', 'Pilot Validation', 'Safety Audit'];
 let milestoneIndex = 0;
+const BASE_ALIGNMENT_SCORE = 86;
+const MILESTONE_SCORE_INCREMENT = 4;
+const MAX_ALIGNMENT_SCORE = 98;
+let alignmentScoreValue = BASE_ALIGNMENT_SCORE;
+const allowedTabs = new Set(['overview', 'testExecution', 'aiValidation', 'toolsIntegration', 'defectTracking', 'analytics']);
+const coalitionStatusClassMap = {
+  Aligned: 'pass',
+  'In Review': 'inprog',
+  'Action Needed': 'fail',
+};
 const coalitionOwners = [
   { role: 'AI Validation Lead', owner: 'Priya S.', task: 'Close edge-case false negatives for rain/night scenes', status: 'Aligned' },
   { role: 'Vehicle Integration', owner: 'Marcus T.', task: 'Sync CANape calibrations with dSPACE bench profile', status: 'In Review' },
@@ -1418,6 +1453,10 @@ function clearLog() {
   document.getElementById('testLog').innerHTML = '';
 }
 
+function getCoalitionStatusBadgeClass(status) {
+  return coalitionStatusClassMap[status] || 'fail';
+}
+
 function populateCoalitionBoard() {
   const board = document.getElementById('coalitionBoard');
   board.innerHTML = coalitionOwners.map((owner) => `
@@ -1426,17 +1465,17 @@ function populateCoalitionBoard() {
       <div class="coalition-owner">${owner.owner}</div>
       <div class="coalition-task">${owner.task}</div>
       <div style="margin-top: 8px;">
-        <span class="badge badge-${owner.status === 'Aligned' ? 'pass' : owner.status === 'In Review' ? 'inprog' : 'fail'}">${owner.status}</span>
+        <span class="badge badge-${getCoalitionStatusBadgeClass(owner.status)}">${owner.status}</span>
       </div>
     </div>
   `).join('');
 }
 
-function advanceMilestone() {
+function advanceMilestoneAndUpdateScore() {
   milestoneIndex = (milestoneIndex + 1) % coalitionMilestones.length;
   document.getElementById('milestoneLabel').textContent = coalitionMilestones[milestoneIndex];
-  const score = 86 + (milestoneIndex * 4);
-  document.getElementById('alignmentScore').textContent = `${Math.min(score, 98)}%`;
+  alignmentScoreValue = Math.min(MAX_ALIGNMENT_SCORE, alignmentScoreValue + MILESTONE_SCORE_INCREMENT);
+  document.getElementById('alignmentScore').textContent = `${alignmentScoreValue}%`;
 }
 
 // Run Test Suite
@@ -1725,10 +1764,11 @@ window.addEventListener('DOMContentLoaded', () => {
   // Simulate live updates
   setInterval(() => {
     const progress = document.getElementById('testProgress');
-    const current = Number.parseFloat(progress.style.width) || 0;
+    const current = parseFloat(progress.style.width) || 0;
     if (current < 100) {
       const nextProgress = Math.min(100, current + (Math.random() * 2));
-      progress.style.width = nextProgress >= 99.9 ? '100%' : `${nextProgress.toFixed(1)}%`;
+      const roundedProgress = Math.ceil(nextProgress);
+      progress.style.width = `${roundedProgress}%`;
     }
   }, 5000);
 });
