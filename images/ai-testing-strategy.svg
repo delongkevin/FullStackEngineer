@@ -1,0 +1,178 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='800' height='450' viewBox='0 0 800 600'>
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a1628;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a2f4a;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="panelGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e3a5f;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#0f1e30;stop-opacity:0.9" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="600" fill="#07101d"/>
+  <rect x="8" y="8" width="784" height="584" rx="18" fill="url(#bgGrad)" stroke="#7dd3fc" stroke-width="3"/>
+  <rect x="20" y="20" width="760" height="560" rx="14" fill="none" stroke="#0ea5e9" stroke-opacity="0.45" stroke-width="2"/>
+
+  <!-- Header -->
+  <rect x="20" y="20" width="760" height="60" rx="8" fill="#0d1b2a" stroke="#56c7ff" stroke-width="2"/>
+  <text x="40" y="48" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#67e8f9">AI Testing Strategy Dashboard</text>
+  <text x="40" y="66" font-family="Arial, sans-serif" font-size="11" fill="#94a3b8">Automotive Software Validation • dSPACE • CANoe • Python • CAPL</text>
+
+  <!-- Live indicator -->
+  <circle cx="740" cy="48" r="6" fill="#22c55e">
+    <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <text x="710" y="53" font-family="Arial, sans-serif" font-size="10" fill="#22c55e">LIVE</text>
+
+  <!-- Main content grid -->
+  <!-- Test Coverage Panel -->
+  <rect x="20" y="100" width="370" height="220" rx="6" fill="url(#panelGrad)" stroke="#2d5f8d" stroke-width="1.5"/>
+  <text x="30" y="120" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#e2e8f0">Test Coverage Analysis</text>
+
+  <!-- Coverage bars -->
+  <g>
+    <text x="30" y="145" font-family="monospace" font-size="10" fill="#94a3b8">Camera Systems</text>
+    <rect x="140" y="135" width="220" height="14" rx="3" fill="#1a2f4a"/>
+    <rect x="140" y="135" width="187" height="14" rx="3" fill="#22c55e"/>
+    <text x="365" y="145" font-family="monospace" font-size="10" fill="#22c55e">85%</text>
+
+    <text x="30" y="170" font-family="monospace" font-size="10" fill="#94a3b8">ADAS Features</text>
+    <rect x="140" y="160" width="220" height="14" rx="3" fill="#1a2f4a"/>
+    <rect x="140" y="160" width="198" height="14" rx="3" fill="#22c55e"/>
+    <text x="365" y="170" font-family="monospace" font-size="10" fill="#22c55e">90%</text>
+
+    <text x="30" y="195" font-family="monospace" font-size="10" fill="#94a3b8">AI Models</text>
+    <rect x="140" y="185" width="220" height="14" rx="3" fill="#1a2f4a"/>
+    <rect x="140" y="185" width="165" height="14" rx="3" fill="#f59e0b"/>
+    <text x="365" y="195" font-family="monospace" font-size="10" fill="#f59e0b">75%</text>
+
+    <text x="30" y="220" font-family="monospace" font-size="10" fill="#94a3b8">Data Pipelines</text>
+    <rect x="140" y="210" width="220" height="14" rx="3" fill="#1a2f4a"/>
+    <rect x="140" y="210" width="203" height="14" rx="3" fill="#22c55e"/>
+    <text x="365" y="220" font-family="monospace" font-size="10" fill="#22c55e">92%</text>
+
+    <text x="30" y="245" font-family="monospace" font-size="10" fill="#94a3b8">CAN Networks</text>
+    <rect x="140" y="235" width="220" height="14" rx="3" fill="#1a2f4a"/>
+    <rect x="140" y="235" width="209" height="14" rx="3" fill="#22c55e"/>
+    <text x="365" y="245" font-family="monospace" font-size="10" fill="#22c55e">95%</text>
+  </g>
+
+  <!-- Metrics cards -->
+  <g>
+    <text x="30" y="280" font-family="Arial, sans-serif" font-size="11" fill="#94a3b8">Test Execution</text>
+    <text x="30" y="300" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#00b4d8">1,247</text>
+
+    <text x="180" y="280" font-family="Arial, sans-serif" font-size="11" fill="#94a3b8">Pass Rate</text>
+    <text x="180" y="300" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#22c55e">94.2%</text>
+  </g>
+
+  <!-- HIL Test Status Panel -->
+  <rect x="410" y="100" width="370" height="220" rx="6" fill="url(#panelGrad)" stroke="#2d5f8d" stroke-width="1.5"/>
+  <text x="420" y="120" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#e2e8f0">HIL Test Execution Status</text>
+
+  <!-- Status table -->
+  <g>
+    <text x="420" y="145" font-family="monospace" font-size="9" fill="#64748b">TEST CASE</text>
+    <text x="570" y="145" font-family="monospace" font-size="9" fill="#64748b">STATUS</text>
+    <text x="680" y="145" font-family="monospace" font-size="9" fill="#64748b">TIME</text>
+
+    <text x="420" y="165" font-family="monospace" font-size="10" fill="#e2e8f0">TC_AEB_001</text>
+    <rect x="570" y="155" width="45" height="16" rx="3" fill="#0d2b12" stroke="#22c55e" stroke-width="1"/>
+    <text x="575" y="166" font-family="monospace" font-size="9" fill="#22c55e">PASS</text>
+    <text x="680" y="165" font-family="monospace" font-size="10" fill="#94a3b8">1.2s</text>
+
+    <text x="420" y="185" font-family="monospace" font-size="10" fill="#e2e8f0">TC_LKA_002</text>
+    <rect x="570" y="175" width="45" height="16" rx="3" fill="#0d2b12" stroke="#22c55e" stroke-width="1"/>
+    <text x="575" y="186" font-family="monospace" font-size="9" fill="#22c55e">PASS</text>
+    <text x="680" y="185" font-family="monospace" font-size="10" fill="#94a3b8">0.8s</text>
+
+    <text x="420" y="205" font-family="monospace" font-size="10" fill="#e2e8f0">TC_OBJ_003</text>
+    <rect x="570" y="195" width="60" height="16" rx="3" fill="#2b1f0d" stroke="#f59e0b" stroke-width="1"/>
+    <text x="575" y="206" font-family="monospace" font-size="9" fill="#f59e0b">RUNNING</text>
+    <text x="680" y="205" font-family="monospace" font-size="10" fill="#94a3b8">-</text>
+
+    <text x="420" y="225" font-family="monospace" font-size="10" fill="#e2e8f0">TC_CAM_004</text>
+    <rect x="570" y="215" width="45" height="16" rx="3" fill="#1a2234" stroke="#6b7280" stroke-width="1"/>
+    <text x="575" y="226" font-family="monospace" font-size="9" fill="#6b7280">QUEUE</text>
+    <text x="680" y="225" font-family="monospace" font-size="10" fill="#94a3b8">-</text>
+
+    <text x="420" y="245" font-family="monospace" font-size="10" fill="#e2e8f0">TC_CAN_005</text>
+    <rect x="570" y="235" width="45" height="16" rx="3" fill="#1a2234" stroke="#6b7280" stroke-width="1"/>
+    <text x="575" y="246" font-family="monospace" font-size="9" fill="#6b7280">QUEUE</text>
+    <text x="680" y="245" font-family="monospace" font-size="10" fill="#94a3b8">-</text>
+  </g>
+
+  <!-- Tool stack -->
+  <text x="420" y="280" font-family="Arial, sans-serif" font-size="11" fill="#94a3b8">Active Tools</text>
+  <rect x="420" y="285" width="70" height="22" rx="4" fill="#1a2f4a" stroke="#2d5f8d" stroke-width="1"/>
+  <text x="428" y="300" font-family="Arial, sans-serif" font-size="10" fill="#00b4d8">dSPACE</text>
+  <rect x="495" y="285" width="60" height="22" rx="4" fill="#1a2f4a" stroke="#2d5f8d" stroke-width="1"/>
+  <text x="503" y="300" font-family="Arial, sans-serif" font-size="10" fill="#00b4d8">CANoe</text>
+  <rect x="560" y="285" width="60" height="22" rx="4" fill="#1a2f4a" stroke="#2d5f8d" stroke-width="1"/>
+  <text x="568" y="300" font-family="Arial, sans-serif" font-size="10" fill="#00b4d8">Python</text>
+
+  <!-- AI Model Validation Panel -->
+  <rect x="20" y="340" width="370" height="240" rx="6" fill="url(#panelGrad)" stroke="#2d5f8d" stroke-width="1.5"/>
+  <text x="30" y="360" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#e2e8f0">AI Model Validation</text>
+
+  <!-- Model metrics -->
+  <g>
+    <text x="30" y="385" font-family="monospace" font-size="10" fill="#94a3b8">Object Detection</text>
+    <text x="30" y="400" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#22c55e">98.7% mAP</text>
+
+    <text x="200" y="385" font-family="monospace" font-size="10" fill="#94a3b8">Lane Detection</text>
+    <text x="200" y="400" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#22c55e">96.3% IoU</text>
+
+    <text x="30" y="430" font-family="monospace" font-size="10" fill="#94a3b8">Inference Time</text>
+    <text x="30" y="445" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#00b4d8">12.4ms</text>
+
+    <text x="200" y="430" font-family="monospace" font-size="10" fill="#94a3b8">FPS</text>
+    <text x="200" y="445" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#00b4d8">80.6</text>
+  </g>
+
+  <!-- Test scenario graph -->
+  <text x="30" y="475" font-family="monospace" font-size="10" fill="#94a3b8">Test Scenarios (Last 10)</text>
+  <polyline points="30,555 70,520 110,530 150,500 190,515 230,490 270,505 310,485 350,500 370,480"
+            fill="none" stroke="#00b4d8" stroke-width="2"/>
+  <line x1="30" y1="560" x2="370" y2="560" stroke="#2d5f8d" stroke-width="1"/>
+  <line x1="30" y1="480" x2="30" y2="560" stroke="#2d5f8d" stroke-width="1"/>
+
+  <!-- Defect Tracking Panel -->
+  <rect x="410" y="340" width="370" height="240" rx="6" fill="url(#panelGrad)" stroke="#2d5f8d" stroke-width="1.5"/>
+  <text x="420" y="360" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#e2e8f0">Defect Tracking & Analytics</text>
+
+  <!-- Defect pie chart representation -->
+  <circle cx="530" cy="440" r="60" fill="none" stroke="#1a2f4a" stroke-width="30"/>
+  <circle cx="530" cy="440" r="60" fill="none" stroke="#22c55e" stroke-width="30"
+          stroke-dasharray="300 377" transform="rotate(-90 530 440)"/>
+  <circle cx="530" cy="440" r="60" fill="none" stroke="#f59e0b" stroke-width="30"
+          stroke-dasharray="50 377" stroke-dashoffset="-300" transform="rotate(-90 530 440)"/>
+  <circle cx="530" cy="440" r="60" fill="none" stroke="#ef4444" stroke-width="30"
+          stroke-dasharray="27 377" stroke-dashoffset="-350" transform="rotate(-90 530 440)"/>
+
+  <text x="530" y="440" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#e2e8f0" text-anchor="middle">127</text>
+  <text x="530" y="458" font-family="Arial, sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">Total Defects</text>
+
+  <!-- Legend -->
+  <g>
+    <circle cx="625" cy="400" r="5" fill="#22c55e"/>
+    <text x="635" y="404" font-family="Arial, sans-serif" font-size="10" fill="#e2e8f0">Resolved (95)</text>
+
+    <circle cx="625" cy="420" r="5" fill="#f59e0b"/>
+    <text x="635" y="424" font-family="Arial, sans-serif" font-size="10" fill="#e2e8f0">In Progress (19)</text>
+
+    <circle cx="625" cy="440" r="5" fill="#ef4444"/>
+    <text x="635" y="444" font-family="Arial, sans-serif" font-size="10" fill="#e2e8f0">Critical (13)</text>
+  </g>
+
+  <!-- Metrics -->
+  <g>
+    <text x="420" y="530" font-family="monospace" font-size="10" fill="#94a3b8">Avg. Resolution Time</text>
+    <text x="420" y="550" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#00b4d8">2.3 days</text>
+
+    <text x="600" y="530" font-family="monospace" font-size="10" fill="#94a3b8">ISTQB Certified Team</text>
+    <text x="600" y="550" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#22c55e">8/10</text>
+  </g>
+</svg>
