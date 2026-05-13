@@ -1,0 +1,1595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AI-Driven Automotive Testing Strategy Platform</title>
+<style>
+:root {
+  --bg: #0a0e14;
+  --panel: #111827;
+  --panel2: #1a2234;
+  --border: #1e3a5f;
+  --accent: #00b4d8;
+  --accent2: #0077b6;
+  --green: #22c55e;
+  --red: #ef4444;
+  --yellow: #f59e0b;
+  --gray: #6b7280;
+  --text: #e2e8f0;
+  --text2: #94a3b8;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Header */
+.header {
+  background: linear-gradient(90deg, #010b18 0%, #03213b 50%, #010b18 100%);
+  border-bottom: 2px solid var(--border);
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.logo-text {
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.3px;
+}
+
+.logo-sub {
+  font-size: 11px;
+  color: var(--text2);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.header-stats {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.hstat {
+  text-align: center;
+}
+
+.hstat-val {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.hstat-lbl {
+  font-size: 10px;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.live-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #0d2b12;
+  border: 1px solid var(--green);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 12px;
+  color: var(--green);
+}
+
+.pulse {
+  width: 10px;
+  height: 10px;
+  background: var(--green);
+  border-radius: 50%;
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.7);
+  }
+}
+
+/* Navigation */
+.nav {
+  background: #080e18;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  overflow-x: auto;
+  padding: 0 20px;
+}
+
+.nav-tab {
+  padding: 12px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text2);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+  transition: all 0.2s;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+
+.nav-tab:hover {
+  color: var(--text);
+}
+
+.nav-tab.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* Content Layout */
+.content {
+  padding: 20px;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.grid3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+}
+
+.grid4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.panel-head {
+  background: var(--panel2);
+  padding: 10px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.panel-body {
+  padding: 16px;
+}
+
+/* Metric Cards */
+.metric-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+}
+
+.metric-val {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.metric-lbl {
+  font-size: 10px;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-top: 4px;
+}
+
+/* Badges */
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.badge-pass {
+  background: #0d2b12;
+  color: var(--green);
+  border: 1px solid #166534;
+}
+
+.badge-fail {
+  background: #2b0d0d;
+  color: var(--red);
+  border: 1px solid #991b1b;
+}
+
+.badge-inprog {
+  background: #2b1f0d;
+  color: var(--yellow);
+  border: 1px solid #92400e;
+}
+
+.badge-notexec {
+  background: #1a1f2e;
+  color: var(--gray);
+  border: 1px solid #374151;
+}
+
+/* Progress Bar */
+.prog-bar-wrap {
+  background: #1a2234;
+  border-radius: 4px;
+  height: 10px;
+  overflow: hidden;
+  margin-top: 6px;
+}
+
+.prog-bar {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 1s ease;
+}
+
+/* Tables */
+.test-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.test-table th {
+  background: #0d1520;
+  padding: 8px 12px;
+  text-align: left;
+  font-size: 10px;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid var(--border);
+}
+
+.test-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid #1a2234;
+  vertical-align: middle;
+}
+
+.test-table tr:hover td {
+  background: #12192a;
+}
+
+.tc-id {
+  font-family: monospace;
+  color: var(--accent);
+  font-size: 11px;
+}
+
+/* Log Box */
+.log-box {
+  background: #050a10;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  height: 200px;
+  overflow-y: auto;
+  padding: 10px;
+  font-family: monospace;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.log-entry {
+  margin-bottom: 2px;
+}
+
+.log-ts {
+  color: #475569;
+}
+
+.log-info {
+  color: var(--text2);
+}
+
+.log-ok {
+  color: var(--green);
+}
+
+.log-err {
+  color: var(--red);
+}
+
+.log-warn {
+  color: var(--yellow);
+}
+
+/* Buttons */
+.btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--accent2);
+}
+
+.btn-secondary {
+  background: var(--panel2);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.btn-secondary:hover {
+  background: var(--border);
+}
+
+/* Tool Cards */
+.tool-card {
+  background: var(--panel2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.tool-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--accent);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.tool-info h3 {
+  font-size: 13px;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+
+.tool-info p {
+  font-size: 10px;
+  color: var(--text2);
+}
+
+/* Chart */
+canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Coverage Item */
+.cov-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.cov-label {
+  font-size: 12px;
+  color: var(--text2);
+  min-width: 140px;
+}
+
+.cov-bar-wrap {
+  flex: 1;
+  background: #1a2234;
+  border-radius: 4px;
+  height: 18px;
+  overflow: hidden;
+  margin: 0 12px;
+}
+
+.cov-bar {
+  height: 100%;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  padding-left: 8px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.cov-val {
+  font-size: 13px;
+  font-weight: 700;
+  min-width: 50px;
+  text-align: right;
+}
+
+/* Defect List */
+.defect-list {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.defect-item {
+  background: var(--panel2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 8px;
+}
+
+.defect-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.defect-id {
+  font-family: monospace;
+  font-size: 11px;
+  color: var(--accent);
+}
+
+.defect-desc {
+  font-size: 12px;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.defect-meta {
+  display: flex;
+  gap: 12px;
+  font-size: 10px;
+  color: var(--text2);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .grid2,
+  .grid3,
+  .grid4 {
+    grid-template-columns: 1fr;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div class="header-left">
+    <div>
+      <div class="logo-text">AI-Driven Automotive Testing Strategy</div>
+      <div class="logo-sub">Principal Software Engineer • Columbus, OH</div>
+    </div>
+  </div>
+  <div class="header-stats">
+    <div class="hstat">
+      <div class="hstat-val" id="totalTests">1,247</div>
+      <div class="hstat-lbl">Total Tests</div>
+    </div>
+    <div class="hstat">
+      <div class="hstat-val" id="passRate" style="color: var(--green)">94.2%</div>
+      <div class="hstat-lbl">Pass Rate</div>
+    </div>
+    <div class="hstat">
+      <div class="hstat-val" id="coverage">87.5%</div>
+      <div class="hstat-lbl">Coverage</div>
+    </div>
+  </div>
+  <div class="live-badge">
+    <div class="pulse"></div>
+    LIVE TESTING
+  </div>
+</div>
+
+<!-- Navigation -->
+<div class="nav">
+  <div class="nav-tab active" onclick="switchTab('overview')">Overview</div>
+  <div class="nav-tab" onclick="switchTab('testExecution')">Test Execution</div>
+  <div class="nav-tab" onclick="switchTab('aiValidation')">AI Model Validation</div>
+  <div class="nav-tab" onclick="switchTab('toolsIntegration')">Tools & Integration</div>
+  <div class="nav-tab" onclick="switchTab('defectTracking')">Defect Tracking</div>
+  <div class="nav-tab" onclick="switchTab('analytics')">Analytics & Reports</div>
+</div>
+
+<!-- Content -->
+<div class="content">
+
+  <!-- Overview Tab -->
+  <div class="tab-content active" id="tab-overview">
+
+    <!-- Metrics -->
+    <div class="grid4" style="margin-bottom: 20px;">
+      <div class="metric-card">
+        <div class="metric-val">1,247</div>
+        <div class="metric-lbl">Test Cases Executed</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val" style="color: var(--green)">1,175</div>
+        <div class="metric-lbl">Passed</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val" style="color: var(--red)">72</div>
+        <div class="metric-lbl">Failed</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val" style="color: var(--yellow)">2.3</div>
+        <div class="metric-lbl">Avg Resolution (Days)</div>
+      </div>
+    </div>
+
+    <!-- Test Coverage & HIL Status -->
+    <div class="grid2">
+
+      <!-- Test Coverage -->
+      <div class="panel">
+        <div class="panel-head">Test Coverage Analysis</div>
+        <div class="panel-body">
+
+          <div class="cov-item">
+            <div class="cov-label">Camera Systems</div>
+            <div class="cov-bar-wrap">
+              <div class="cov-bar" style="width: 85%; background: var(--green);"></div>
+            </div>
+            <div class="cov-val" style="color: var(--green)">85%</div>
+          </div>
+
+          <div class="cov-item">
+            <div class="cov-label">ADAS Features</div>
+            <div class="cov-bar-wrap">
+              <div class="cov-bar" style="width: 92%; background: var(--green);"></div>
+            </div>
+            <div class="cov-val" style="color: var(--green)">92%</div>
+          </div>
+
+          <div class="cov-item">
+            <div class="cov-label">AI Models</div>
+            <div class="cov-bar-wrap">
+              <div class="cov-bar" style="width: 78%; background: var(--yellow);"></div>
+            </div>
+            <div class="cov-val" style="color: var(--yellow)">78%</div>
+          </div>
+
+          <div class="cov-item">
+            <div class="cov-label">Data Pipelines</div>
+            <div class="cov-bar-wrap">
+              <div class="cov-bar" style="width: 95%; background: var(--green);"></div>
+            </div>
+            <div class="cov-val" style="color: var(--green)">95%</div>
+          </div>
+
+          <div class="cov-item">
+            <div class="cov-label">CAN Networks</div>
+            <div class="cov-bar-wrap">
+              <div class="cov-bar" style="width: 88%; background: var(--green);"></div>
+            </div>
+            <div class="cov-val" style="color: var(--green)">88%</div>
+          </div>
+
+          <div class="cov-item">
+            <div class="cov-label">ECU Diagnostics</div>
+            <div class="cov-bar-wrap">
+              <div class="cov-bar" style="width: 91%; background: var(--green);"></div>
+            </div>
+            <div class="cov-val" style="color: var(--green)">91%</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- HIL Test Status -->
+      <div class="panel">
+        <div class="panel-head">HIL Test Execution Status</div>
+        <div class="panel-body">
+          <table class="test-table">
+            <thead>
+              <tr>
+                <th>Test Case</th>
+                <th>Module</th>
+                <th>Status</th>
+                <th>Time</th>
+              </tr>
+            </thead>
+            <tbody id="hilTestTable">
+              <!-- Populated by JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Test Execution Log -->
+    <div class="panel">
+      <div class="panel-head">
+        Live Test Execution Log
+        <button class="btn btn-secondary" onclick="clearLog()">Clear</button>
+      </div>
+      <div class="panel-body">
+        <div class="log-box" id="testLog">
+          <!-- Populated by JavaScript -->
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Test Execution Tab -->
+  <div class="tab-content" id="tab-testExecution">
+
+    <div class="grid2">
+
+      <!-- Test Suite Control -->
+      <div class="panel">
+        <div class="panel-head">Test Suite Control</div>
+        <div class="panel-body">
+          <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+            <button class="btn btn-primary" onclick="runTestSuite('adas')">Run ADAS Suite</button>
+            <button class="btn btn-primary" onclick="runTestSuite('camera')">Run Camera Suite</button>
+            <button class="btn btn-primary" onclick="runTestSuite('can')">Run CAN Suite</button>
+          </div>
+
+          <div style="margin-bottom: 12px;">
+            <div style="font-size: 11px; color: var(--text2); margin-bottom: 4px;">Test Progress</div>
+            <div class="prog-bar-wrap">
+              <div class="prog-bar" id="testProgress" style="width: 68%; background: var(--accent);"></div>
+            </div>
+            <div style="font-size: 11px; color: var(--text2); margin-top: 4px;">850 / 1,247 tests executed</div>
+          </div>
+
+          <div style="background: var(--panel2); padding: 12px; border-radius: 6px;">
+            <div style="font-size: 11px; color: var(--text2); margin-bottom: 8px;">Active Test Frameworks</div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <span class="badge badge-pass">dSPACE HIL</span>
+              <span class="badge badge-pass">CANoe</span>
+              <span class="badge badge-pass">Python pytest</span>
+              <span class="badge badge-pass">CAPL Scripts</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Test Results -->
+      <div class="panel">
+        <div class="panel-head">Recent Test Results</div>
+        <div class="panel-body">
+          <table class="test-table">
+            <thead>
+              <tr>
+                <th>Test ID</th>
+                <th>Description</th>
+                <th>Result</th>
+                <th>Duration</th>
+              </tr>
+            </thead>
+            <tbody id="recentTestsTable">
+              <!-- Populated by JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Test Script Generator -->
+    <div class="panel" style="margin-top: 16px;">
+      <div class="panel-head">Test Script Generator (CAPL/Python)</div>
+      <div class="panel-body">
+        <div class="grid2">
+          <div>
+            <label style="display: block; font-size: 11px; color: var(--text2); margin-bottom: 6px;">Test Type</label>
+            <select id="scriptType" style="width: 100%; padding: 8px; background: var(--panel2); border: 1px solid var(--border); border-radius: 4px; color: var(--text); font-size: 12px;">
+              <option>ADAS Lane Keep Assist</option>
+              <option>Camera Object Detection</option>
+              <option>CAN Message Validation</option>
+              <option>ECU Diagnostic Test</option>
+              <option>AI Model Performance</option>
+            </select>
+          </div>
+          <div>
+            <label style="display: block; font-size: 11px; color: var(--text2); margin-bottom: 6px;">Language</label>
+            <select id="scriptLang" style="width: 100%; padding: 8px; background: var(--panel2); border: 1px solid var(--border); border-radius: 4px; color: var(--text); font-size: 12px;">
+              <option>Python</option>
+              <option>CAPL</option>
+              <option>JavaScript</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn btn-primary" onclick="generateScript()" style="margin-top: 12px;">Generate Test Script</button>
+        <div id="generatedScript" style="display: none; margin-top: 12px; background: #050a10; border: 1px solid var(--border); border-radius: 6px; padding: 12px; font-family: monospace; font-size: 11px; line-height: 1.6; color: var(--text); max-height: 300px; overflow-y: auto;">
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- AI Model Validation Tab -->
+  <div class="tab-content" id="tab-aiValidation">
+
+    <div class="grid3" style="margin-bottom: 16px;">
+      <div class="metric-card">
+        <div class="metric-val" style="color: var(--green)">98.7%</div>
+        <div class="metric-lbl">Object Detection mAP</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val" style="color: var(--green)">96.3%</div>
+        <div class="metric-lbl">Lane Detection IoU</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val" style="color: var(--accent)">12.4ms</div>
+        <div class="metric-lbl">Avg Inference Time</div>
+      </div>
+    </div>
+
+    <div class="grid2">
+
+      <!-- AI Model Performance -->
+      <div class="panel">
+        <div class="panel-head">AI Model Performance Metrics</div>
+        <div class="panel-body">
+          <canvas id="aiPerformanceChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Data Pipeline Validation -->
+      <div class="panel">
+        <div class="panel-head">Data Pipeline Validation</div>
+        <div class="panel-body">
+          <div style="margin-bottom: 16px;">
+            <div style="font-size: 12px; color: var(--text); margin-bottom: 8px;">Training Dataset Quality</div>
+            <div class="prog-bar-wrap">
+              <div class="prog-bar" style="width: 94%; background: var(--green);"></div>
+            </div>
+            <div style="font-size: 10px; color: var(--text2); margin-top: 4px;">94% - 47,832 validated samples</div>
+          </div>
+
+          <div style="margin-bottom: 16px;">
+            <div style="font-size: 12px; color: var(--text); margin-bottom: 8px;">Validation Set Integrity</div>
+            <div class="prog-bar-wrap">
+              <div class="prog-bar" style="width: 97%; background: var(--green);"></div>
+            </div>
+            <div style="font-size: 10px; color: var(--text2); margin-top: 4px;">97% - 12,458 validated samples</div>
+          </div>
+
+          <div style="margin-bottom: 16px;">
+            <div style="font-size: 12px; color: var(--text); margin-bottom: 8px;">Edge Case Coverage</div>
+            <div class="prog-bar-wrap">
+              <div class="prog-bar" style="width: 82%; background: var(--yellow);"></div>
+            </div>
+            <div style="font-size: 10px; color: var(--text2); margin-top: 4px;">82% - 3,247 edge case scenarios</div>
+          </div>
+
+          <div style="background: var(--panel2); padding: 12px; border-radius: 6px;">
+            <div style="font-size: 11px; color: var(--text2); margin-bottom: 8px;">Analytics Tools Active</div>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <span class="badge badge-pass">TensorBoard</span>
+              <span class="badge badge-pass">MLflow</span>
+              <span class="badge badge-pass">Weights & Biases</span>
+              <span class="badge badge-pass">Custom Metrics</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Test Scenario Results -->
+    <div class="panel" style="margin-top: 16px;">
+      <div class="panel-head">AI Model Test Scenario Results</div>
+      <div class="panel-body">
+        <table class="test-table">
+          <thead>
+            <tr>
+              <th>Scenario ID</th>
+              <th>Description</th>
+              <th>Accuracy</th>
+              <th>Precision</th>
+              <th>Recall</th>
+              <th>F1 Score</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="aiScenarioTable">
+            <!-- Populated by JavaScript -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Tools & Integration Tab -->
+  <div class="tab-content" id="tab-toolsIntegration">
+
+    <div class="panel" style="margin-bottom: 16px;">
+      <div class="panel-head">Active Testing Tools & Frameworks</div>
+      <div class="panel-body">
+
+        <div class="grid3">
+
+          <div class="tool-card">
+            <div class="tool-icon">dS</div>
+            <div class="tool-info">
+              <h3>dSPACE HIL</h3>
+              <p>Hardware-in-the-Loop testing platform</p>
+              <span class="badge badge-pass" style="margin-top: 4px;">Connected</span>
+            </div>
+          </div>
+
+          <div class="tool-card">
+            <div class="tool-icon" style="background: var(--green);">CA</div>
+            <div class="tool-info">
+              <h3>CANoe</h3>
+              <p>CAN network analysis & simulation</p>
+              <span class="badge badge-pass" style="margin-top: 4px;">Active</span>
+            </div>
+          </div>
+
+          <div class="tool-card">
+            <div class="tool-icon" style="background: var(--yellow);">CP</div>
+            <div class="tool-info">
+              <h3>CANape</h3>
+              <p>ECU calibration & measurement</p>
+              <span class="badge badge-pass" style="margin-top: 4px;">Running</span>
+            </div>
+          </div>
+
+          <div class="tool-card">
+            <div class="tool-icon" style="background: var(--accent2);">DV</div>
+            <div class="tool-info">
+              <h3>DIVA</h3>
+              <p>Data analysis & visualization</p>
+              <span class="badge badge-pass" style="margin-top: 4px;">Online</span>
+            </div>
+          </div>
+
+          <div class="tool-card">
+            <div class="tool-icon" style="background: #3776ab;">Py</div>
+            <div class="tool-info">
+              <h3>Python Test Suite</h3>
+              <p>pytest + custom frameworks</p>
+              <span class="badge badge-pass" style="margin-top: 4px;">Ready</span>
+            </div>
+          </div>
+
+          <div class="tool-card">
+            <div class="tool-icon" style="background: #f7df1e; color: #000;">JS</div>
+            <div class="tool-info">
+              <h3>JavaScript Automation</h3>
+              <p>Node.js test orchestration</p>
+              <span class="badge badge-pass" style="margin-top: 4px;">Ready</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Integration Configuration -->
+    <div class="grid2">
+
+      <div class="panel">
+        <div class="panel-head">Tool Integration Status</div>
+        <div class="panel-body">
+
+          <div style="margin-bottom: 16px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+              <span style="font-size: 12px; color: var(--text);">dSPACE RTI Integration</span>
+              <span class="badge badge-pass">Configured</span>
+            </div>
+            <div style="font-size: 10px; color: var(--text2);">Real-time interface connected to HIL system</div>
+          </div>
+
+          <div style="margin-bottom: 16px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+              <span style="font-size: 12px; color: var(--text);">CANoe Test Automation</span>
+              <span class="badge badge-pass">Active</span>
+            </div>
+            <div style="font-size: 10px; color: var(--text2);">CAPL scripts executing on 4 network channels</div>
+          </div>
+
+          <div style="margin-bottom: 16px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+              <span style="font-size: 12px; color: var(--text);">Open Test Framework</span>
+              <span class="badge badge-pass">Ready</span>
+            </div>
+            <div style="font-size: 10px; color: var(--text2);">API connections verified, 847 test cases loaded</div>
+          </div>
+
+          <div style="margin-bottom: 16px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+              <span style="font-size: 12px; color: var(--text);">Python Analytics Pipeline</span>
+              <span class="badge badge-pass">Running</span>
+            </div>
+            <div style="font-size: 10px; color: var(--text2);">Processing test results in real-time</div>
+          </div>
+
+          <div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+              <span style="font-size: 12px; color: var(--text);">CI/CD Integration</span>
+              <span class="badge badge-pass">Enabled</span>
+            </div>
+            <div style="font-size: 10px; color: var(--text2);">Jenkins pipeline executing scheduled test runs</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- CAPL Script Example -->
+      <div class="panel">
+        <div class="panel-head">
+          CAPL Script Example
+          <button class="btn btn-secondary" onclick="downloadCAPL()">Download</button>
+        </div>
+        <div class="panel-body">
+          <div style="background: #050a10; border: 1px solid var(--border); border-radius: 6px; padding: 12px; font-family: monospace; font-size: 11px; line-height: 1.6; color: var(--text); max-height: 300px; overflow-y: auto;">
+<span style="color: #a78bfa;">// ADAS Lane Keep Assist Test</span>
+<span style="color: #f59e0b;">variables</span> {
+  <span style="color: #22c55e;">message</span> LKA_Status msg;
+  <span style="color: #22c55e;">msTimer</span> testTimer;
+  <span style="color: #22c55e;">int</span> testResult = 0;
+}
+
+<span style="color: #f59e0b;">on</span> <span style="color: #00b4d8;">start</span> {
+  <span style="color: #a78bfa;">// Initialize test environment</span>
+  <span style="color: #f59e0b;">write</span>(<span style="color: #22c55e;">"Starting LKA validation test..."</span>);
+  setTimer(testTimer, 100);
+}
+
+<span style="color: #f59e0b;">on</span> <span style="color: #00b4d8;">timer</span> testTimer {
+  <span style="color: #a78bfa;">// Send test stimuli</span>
+  msg.LaneDepartureLeft = 1;
+  msg.TorqueRequest = 0.5;
+  <span style="color: #f59e0b;">output</span>(msg);
+
+  <span style="color: #a78bfa;">// Wait for ECU response</span>
+  setTimer(testTimer, 50);
+}
+
+<span style="color: #f59e0b;">on</span> <span style="color: #00b4d8;">message</span> LKA_Response {
+  <span style="color: #f59e0b;">if</span> (<span style="color: #f59e0b;">this</span>.TorqueApplied == 1) {
+    testResult = 1;
+    <span style="color: #f59e0b;">write</span>(<span style="color: #22c55e;">"✓ LKA responded correctly"</span>);
+  }
+}
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Defect Tracking Tab -->
+  <div class="tab-content" id="tab-defectTracking">
+
+    <div class="grid3" style="margin-bottom: 16px;">
+      <div class="metric-card">
+        <div class="metric-val" style="color: var(--red)">127</div>
+        <div class="metric-lbl">Total Defects</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val" style="color: var(--green)">95</div>
+        <div class="metric-lbl">Resolved</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-val" style="color: var(--red)">13</div>
+        <div class="metric-lbl">Critical</div>
+      </div>
+    </div>
+
+    <div class="grid2">
+
+      <!-- Defect List -->
+      <div class="panel">
+        <div class="panel-head">Active Defects</div>
+        <div class="panel-body">
+          <div class="defect-list" id="defectList">
+            <!-- Populated by JavaScript -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Defect Metrics -->
+      <div class="panel">
+        <div class="panel-head">Defect Metrics</div>
+        <div class="panel-body">
+          <canvas id="defectChart"></canvas>
+
+          <div style="margin-top: 20px; padding: 12px; background: var(--panel2); border-radius: 6px;">
+            <div style="font-size: 11px; color: var(--text2); margin-bottom: 8px;">Defect Resolution Stats</div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+              <div>
+                <div style="font-size: 10px; color: var(--text2);">Avg Resolution Time</div>
+                <div style="font-size: 16px; font-weight: 700; color: var(--accent);">2.3 days</div>
+              </div>
+              <div>
+                <div style="font-size: 10px; color: var(--text2);">Resolution Rate</div>
+                <div style="font-size: 16px; font-weight: 700; color: var(--green);">74.8%</div>
+              </div>
+              <div>
+                <div style="font-size: 10px; color: var(--text2);">Critical Pending</div>
+                <div style="font-size: 16px; font-weight: 700; color: var(--red);">13</div>
+              </div>
+              <div>
+                <div style="font-size: 10px; color: var(--text2);">This Week</div>
+                <div style="font-size: 16px; font-weight: 700; color: var(--yellow);">+8</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Analytics & Reports Tab -->
+  <div class="tab-content" id="tab-analytics">
+
+    <div class="grid2">
+
+      <!-- Test Trend Chart -->
+      <div class="panel">
+        <div class="panel-head">Test Execution Trend (30 Days)</div>
+        <div class="panel-body">
+          <canvas id="trendChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Team Performance -->
+      <div class="panel">
+        <div class="panel-head">Team Performance & Certifications</div>
+        <div class="panel-body">
+
+          <div style="margin-bottom: 20px;">
+            <div style="font-size: 12px; color: var(--text); margin-bottom: 12px;">Team Certifications</div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <div style="background: var(--panel2); padding: 10px; border-radius: 6px;">
+                <div style="font-size: 10px; color: var(--text2);">ISTQB Certified</div>
+                <div style="font-size: 18px; font-weight: 700; color: var(--green);">8 / 10</div>
+              </div>
+              <div style="background: var(--panel2); padding: 10px; border-radius: 6px;">
+                <div style="font-size: 10px; color: var(--text2);">IREB Certified</div>
+                <div style="font-size: 18px; font-weight: 700; color: var(--green);">5 / 10</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-bottom: 20px;">
+            <div style="font-size: 12px; color: var(--text); margin-bottom: 12px;">Test Coverage by Module</div>
+            <canvas id="coverageChart"></canvas>
+          </div>
+
+          <div>
+            <div style="font-size: 12px; color: var(--text); margin-bottom: 8px;">Innovation Metrics</div>
+            <div style="background: var(--panel2); padding: 12px; border-radius: 6px;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                <span style="font-size: 11px; color: var(--text2);">AI-Driven Test Generation</span>
+                <span style="font-size: 11px; color: var(--green);">+42% efficiency</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                <span style="font-size: 11px; color: var(--text2);">Automated Defect Detection</span>
+                <span style="font-size: 11px; color: var(--green);">+38% accuracy</span>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span style="font-size: 11px; color: var(--text2);">Test Execution Time</span>
+                <span style="font-size: 11px; color: var(--green);">-25% reduction</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Export Reports -->
+    <div class="panel" style="margin-top: 16px;">
+      <div class="panel-head">Export Reports</div>
+      <div class="panel-body">
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <button class="btn btn-primary" onclick="exportReport('pdf')">Export PDF Report</button>
+          <button class="btn btn-primary" onclick="exportReport('excel')">Export Excel Data</button>
+          <button class="btn btn-primary" onclick="exportReport('csv')">Export CSV Data</button>
+          <button class="btn btn-secondary" onclick="generateComplianceReport()">Generate Compliance Report</button>
+        </div>
+        <div id="exportStatus" style="margin-top: 12px; font-size: 12px; color: var(--text2);"></div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+// Tab Switching
+function switchTab(tabName) {
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+
+  event.target.classList.add('active');
+  document.getElementById('tab-' + tabName).classList.add('active');
+}
+
+// Sample Data
+const hilTests = [
+  { id: 'TC_AEB_001', module: 'ADAS', status: 'pass', time: '1.2s' },
+  { id: 'TC_LKA_002', module: 'ADAS', status: 'pass', time: '0.8s' },
+  { id: 'TC_OBJ_003', module: 'Camera', status: 'inprog', time: '-' },
+  { id: 'TC_CAM_004', module: 'Camera', status: 'notexec', time: '-' },
+  { id: 'TC_CAN_005', module: 'Network', status: 'notexec', time: '-' },
+  { id: 'TC_ECU_006', module: 'Diagnostics', status: 'pass', time: '2.1s' },
+  { id: 'TC_USS_007', module: 'Sensors', status: 'pass', time: '1.5s' },
+];
+
+const recentTests = [
+  { id: 'TC_AEB_001', desc: 'Emergency braking response time', result: 'pass', duration: '1.24s' },
+  { id: 'TC_LKA_002', desc: 'Lane keeping torque validation', result: 'pass', duration: '0.87s' },
+  { id: 'TC_OBJ_003', desc: 'Object detection accuracy', result: 'inprog', duration: '-' },
+  { id: 'TC_CAM_004', desc: 'Camera calibration test', result: 'fail', duration: '3.45s' },
+  { id: 'TC_CAN_005', desc: 'CAN message timing', result: 'pass', duration: '0.52s' },
+];
+
+const aiScenarios = [
+  { id: 'AI_OBJ_001', desc: 'Vehicle Detection', accuracy: '98.7%', precision: '97.2%', recall: '98.1%', f1: '97.6%', status: 'pass' },
+  { id: 'AI_OBJ_002', desc: 'Pedestrian Detection', accuracy: '96.3%', precision: '95.8%', recall: '96.7%', f1: '96.2%', status: 'pass' },
+  { id: 'AI_LANE_001', desc: 'Lane Boundary Detection', accuracy: '94.5%', precision: '93.9%', recall: '95.1%', f1: '94.5%', status: 'pass' },
+  { id: 'AI_SIGN_001', desc: 'Traffic Sign Recognition', accuracy: '97.8%', precision: '97.3%', recall: '98.2%', f1: '97.7%', status: 'pass' },
+  { id: 'AI_EDGE_001', desc: 'Edge Case Handling', accuracy: '82.4%', precision: '81.7%', recall: '83.1%', f1: '82.4%', status: 'inprog' },
+];
+
+const defects = [
+  { id: 'DEF-2401', severity: 'Critical', desc: 'AEB system delayed response in wet conditions', module: 'ADAS', status: 'In Progress', assignee: 'J. Smith' },
+  { id: 'DEF-2402', severity: 'High', desc: 'Lane detection fails at sharp curves', module: 'Camera', status: 'Open', assignee: 'M. Johnson' },
+  { id: 'DEF-2403', severity: 'Medium', desc: 'CAN message timeout on startup', module: 'Network', status: 'In Progress', assignee: 'K. Brown' },
+  { id: 'DEF-2404', severity: 'Low', desc: 'UI display refresh rate inconsistent', module: 'HMI', status: 'Resolved', assignee: 'L. Davis' },
+  { id: 'DEF-2405', severity: 'Critical', desc: 'ECU diagnostic response missing', module: 'Diagnostics', status: 'Open', assignee: 'R. Wilson' },
+];
+
+// Populate HIL Test Table
+function populateHILTests() {
+  const tbody = document.getElementById('hilTestTable');
+  tbody.innerHTML = hilTests.map(t => `
+    <tr>
+      <td><span class="tc-id">${t.id}</span></td>
+      <td>${t.module}</td>
+      <td><span class="badge badge-${t.status}">${t.status.toUpperCase()}</span></td>
+      <td>${t.time}</td>
+    </tr>
+  `).join('');
+}
+
+// Populate Recent Tests Table
+function populateRecentTests() {
+  const tbody = document.getElementById('recentTestsTable');
+  tbody.innerHTML = recentTests.map(t => `
+    <tr>
+      <td><span class="tc-id">${t.id}</span></td>
+      <td>${t.desc}</td>
+      <td><span class="badge badge-${t.result}">${t.result.toUpperCase()}</span></td>
+      <td>${t.duration}</td>
+    </tr>
+  `).join('');
+}
+
+// Populate AI Scenario Table
+function populateAIScenarios() {
+  const tbody = document.getElementById('aiScenarioTable');
+  tbody.innerHTML = aiScenarios.map(s => `
+    <tr>
+      <td><span class="tc-id">${s.id}</span></td>
+      <td>${s.desc}</td>
+      <td>${s.accuracy}</td>
+      <td>${s.precision}</td>
+      <td>${s.recall}</td>
+      <td>${s.f1}</td>
+      <td><span class="badge badge-${s.status}">${s.status.toUpperCase()}</span></td>
+    </tr>
+  `).join('');
+}
+
+// Populate Defect List
+function populateDefects() {
+  const list = document.getElementById('defectList');
+  list.innerHTML = defects.map(d => `
+    <div class="defect-item">
+      <div class="defect-header">
+        <span class="defect-id">${d.id}</span>
+        <span class="badge badge-${d.severity === 'Critical' ? 'fail' : d.severity === 'High' ? 'inprog' : 'notexec'}">${d.severity}</span>
+      </div>
+      <div class="defect-desc">${d.desc}</div>
+      <div class="defect-meta">
+        <span>Module: ${d.module}</span>
+        <span>Status: ${d.status}</span>
+        <span>Assignee: ${d.assignee}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+// Test Log
+const logEntries = [
+  '[14:23:45] <span class="log-info">Starting test execution...</span>',
+  '[14:23:46] <span class="log-ok">✓ HIL system connected</span>',
+  '[14:23:47] <span class="log-ok">✓ CANoe network initialized</span>',
+  '[14:23:48] <span class="log-info">Running TC_AEB_001...</span>',
+  '[14:23:49] <span class="log-ok">✓ TC_AEB_001 PASSED (1.24s)</span>',
+  '[14:23:50] <span class="log-info">Running TC_LKA_002...</span>',
+  '[14:23:51] <span class="log-ok">✓ TC_LKA_002 PASSED (0.87s)</span>',
+  '[14:23:52] <span class="log-info">Running TC_OBJ_003...</span>',
+  '[14:23:53] <span class="log-warn">⚠ TC_OBJ_003 In Progress...</span>',
+];
+
+function populateLog() {
+  const log = document.getElementById('testLog');
+  log.innerHTML = logEntries.map(e => `<div class="log-entry"><span class="log-ts">${e.split(']')[0]}]</span> ${e.split(']')[1]}</div>`).join('');
+  log.scrollTop = log.scrollHeight;
+}
+
+function clearLog() {
+  document.getElementById('testLog').innerHTML = '';
+}
+
+// Run Test Suite
+function runTestSuite(suite) {
+  const log = document.getElementById('testLog');
+  const timestamp = new Date().toLocaleTimeString();
+  log.innerHTML += `<div class="log-entry"><span class="log-ts">[${timestamp}]</span> <span class="log-info">Starting ${suite.toUpperCase()} test suite...</span></div>`;
+  log.scrollTop = log.scrollHeight;
+
+  setTimeout(() => {
+    const ts2 = new Date().toLocaleTimeString();
+    log.innerHTML += `<div class="log-entry"><span class="log-ts">[${ts2}]</span> <span class="log-ok">✓ ${suite.toUpperCase()} suite completed successfully</span></div>`;
+    log.scrollTop = log.scrollHeight;
+  }, 2000);
+}
+
+// Generate Script
+function generateScript() {
+  const type = document.getElementById('scriptType').value;
+  const lang = document.getElementById('scriptLang').value;
+  const output = document.getElementById('generatedScript');
+
+  let script = '';
+
+  if (lang === 'Python') {
+    script = `# ${type} Test Script
+import pytest
+import numpy as np
+from test_framework import TestCase, verify
+
+class Test${type.replace(/\s+/g, '')}(TestCase):
+    def setup_method(self):
+        """Initialize test environment"""
+        self.test_data = self.load_test_data()
+        self.expected_results = self.load_expected()
+
+    def test_${type.toLowerCase().replace(/\s+/g, '_')}(self):
+        """Execute ${type} validation"""
+        result = self.execute_test(self.test_data)
+        assert verify(result, self.expected_results)
+        print(f"✓ Test passed: {result.accuracy}%")
+
+    def teardown_method(self):
+        """Cleanup test resources"""
+        self.cleanup()
+
+if __name__ == "__main__":
+    pytest.main([__file__, "-v"])`;
+  } else if (lang === 'CAPL') {
+    script = `// ${type} Test Script
+variables {
+  message TestMsg msg;
+  msTimer testTimer;
+  int testResult = 0;
+}
+
+on start {
+  write("Starting ${type} test...");
+  setTimer(testTimer, 100);
+}
+
+on timer testTimer {
+  msg.signal1 = 1;
+  output(msg);
+  setTimer(testTimer, 50);
+}
+
+on message ResponseMsg {
+  if (this.status == 1) {
+    testResult = 1;
+    write("✓ Test passed");
+  }
+}`;
+  } else {
+    script = `// ${type} Test Script
+const assert = require('assert');
+const testFramework = require('./test-framework');
+
+describe('${type}', function() {
+  let testData;
+
+  before(function() {
+    testData = testFramework.loadTestData();
+  });
+
+  it('should validate ${type.toLowerCase()}', async function() {
+    const result = await testFramework.executeTest(testData);
+    assert.equal(result.status, 'pass');
+    console.log('✓ Test passed:', result.accuracy + '%');
+  });
+
+  after(function() {
+    testFramework.cleanup();
+  });
+});`;
+  }
+
+  output.style.display = 'block';
+  output.textContent = script;
+}
+
+// Download CAPL
+function downloadCAPL() {
+  alert('CAPL script would be downloaded as: lka_test.can');
+}
+
+// Export Report
+function exportReport(format) {
+  const status = document.getElementById('exportStatus');
+  status.textContent = `Generating ${format.toUpperCase()} report...`;
+  status.style.color = 'var(--yellow)';
+
+  setTimeout(() => {
+    status.textContent = `✓ Report exported successfully as test_report.${format}`;
+    status.style.color = 'var(--green)';
+  }, 2000);
+}
+
+// Generate Compliance Report
+function generateComplianceReport() {
+  const status = document.getElementById('exportStatus');
+  status.textContent = 'Generating ISO 26262 compliance report...';
+  status.style.color = 'var(--yellow)';
+
+  setTimeout(() => {
+    status.textContent = '✓ Compliance report generated: iso26262_compliance.pdf';
+    status.style.color = 'var(--green)';
+  }, 2500);
+}
+
+// Charts
+function createCharts() {
+  // AI Performance Chart
+  const aiCtx = document.getElementById('aiPerformanceChart').getContext('2d');
+  const gradient = aiCtx.createLinearGradient(0, 0, 0, 300);
+  gradient.addColorStop(0, 'rgba(0, 180, 216, 0.3)');
+  gradient.addColorStop(1, 'rgba(0, 180, 216, 0.0)');
+
+  new Chart(aiCtx, {
+    type: 'line',
+    data: {
+      labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6'],
+      datasets: [{
+        label: 'Model Accuracy (%)',
+        data: [94.2, 95.8, 96.5, 97.1, 98.3, 98.7],
+        borderColor: '#00b4d8',
+        backgroundColor: gradient,
+        tension: 0.4,
+        fill: true
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false }
+      },
+      scales: {
+        y: {
+          beginAtZero: false,
+          min: 90,
+          grid: { color: '#1e3a5f' },
+          ticks: { color: '#94a3b8' }
+        },
+        x: {
+          grid: { color: '#1e3a5f' },
+          ticks: { color: '#94a3b8' }
+        }
+      }
+    }
+  });
+
+  // Defect Chart
+  const defectCtx = document.getElementById('defectChart').getContext('2d');
+  new Chart(defectCtx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Resolved', 'In Progress', 'Critical'],
+      datasets: [{
+        data: [95, 19, 13],
+        backgroundColor: ['#22c55e', '#f59e0b', '#ef4444'],
+        borderColor: '#111827',
+        borderWidth: 2
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: { color: '#e2e8f0' }
+        }
+      }
+    }
+  });
+
+  // Trend Chart
+  const trendCtx = document.getElementById('trendChart').getContext('2d');
+  new Chart(trendCtx, {
+    type: 'line',
+    data: {
+      labels: ['Day 1', 'Day 5', 'Day 10', 'Day 15', 'Day 20', 'Day 25', 'Day 30'],
+      datasets: [
+        {
+          label: 'Tests Executed',
+          data: [850, 920, 1010, 1085, 1120, 1190, 1247],
+          borderColor: '#00b4d8',
+          tension: 0.4
+        },
+        {
+          label: 'Tests Passed',
+          data: [795, 868, 955, 1025, 1058, 1125, 1175],
+          borderColor: '#22c55e',
+          tension: 0.4
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          labels: { color: '#e2e8f0' }
+        }
+      },
+      scales: {
+        y: {
+          grid: { color: '#1e3a5f' },
+          ticks: { color: '#94a3b8' }
+        },
+        x: {
+          grid: { color: '#1e3a5f' },
+          ticks: { color: '#94a3b8' }
+        }
+      }
+    }
+  });
+
+  // Coverage Chart
+  const covCtx = document.getElementById('coverageChart').getContext('2d');
+  new Chart(covCtx, {
+    type: 'bar',
+    data: {
+      labels: ['Camera', 'ADAS', 'AI Models', 'Pipelines', 'CAN', 'ECU'],
+      datasets: [{
+        label: 'Coverage %',
+        data: [85, 92, 78, 95, 88, 91],
+        backgroundColor: '#00b4d8',
+        borderRadius: 4
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { display: false }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          max: 100,
+          grid: { color: '#1e3a5f' },
+          ticks: { color: '#94a3b8' }
+        },
+        x: {
+          grid: { display: false },
+          ticks: { color: '#94a3b8' }
+        }
+      }
+    }
+  });
+}
+
+// Initialize
+window.addEventListener('DOMContentLoaded', () => {
+  populateHILTests();
+  populateRecentTests();
+  populateAIScenarios();
+  populateDefects();
+  populateLog();
+
+  // Load Chart.js
+  const script = document.createElement('script');
+  script.src = 'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js';
+  script.onload = createCharts;
+  document.head.appendChild(script);
+
+  // Simulate live updates
+  setInterval(() => {
+    const progress = document.getElementById('testProgress');
+    const current = parseInt(progress.style.width);
+    if (current < 100) {
+      progress.style.width = (current + Math.random() * 2) + '%';
+    }
+  }, 5000);
+});
+</script>
+
+</body>
+</html>
