@@ -12,30 +12,9 @@ interface InteractiveTutorialProps {
 export default function InteractiveTutorial({ projectTitle, tutorial }: InteractiveTutorialProps) {
   const [currentStep, setCurrentStep] = useState(0);
 
+  // Don't render anything if no tutorial is available
   if (!tutorial || tutorial.steps.length === 0) {
-    return (
-      <section className="surface-card rounded-xl shadow-lg p-6 mt-8" aria-label="Interactive tutorial">
-        <div className="flex items-center gap-3 mb-4">
-          <BookOpen size={22} className="text-blue-500" aria-hidden="true" />
-          <h2 className="text-2xl font-bold theme-text-primary">How to Use This Project</h2>
-        </div>
-        <div
-          className="flex flex-col items-center justify-center rounded-lg text-center gap-4 py-16 px-6"
-          style={{
-            background: 'var(--surface-2)',
-            border: '2px dashed var(--border-soft)',
-          }}
-        >
-          <BookOpen size={56} className="text-blue-400 opacity-60" aria-hidden="true" />
-          <div>
-            <p className="text-lg font-semibold theme-text-primary">Tutorial Coming Soon</p>
-            <p className="theme-text-secondary text-sm mt-2 max-w-md">
-              A step-by-step interactive guide for this project will be added here soon.
-            </p>
-          </div>
-        </div>
-      </section>
-    );
+    return null;
   }
 
   const step = tutorial.steps[currentStep];

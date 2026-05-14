@@ -24,6 +24,11 @@ function isValidEmbedUrl(url: string): boolean {
 export default function ProjectVideoSection({ videoUrl, projectTitle }: ProjectVideoSectionProps) {
   const hasVideo = !!videoUrl && isValidEmbedUrl(videoUrl);
 
+  // Don't render anything if no video is available
+  if (!hasVideo) {
+    return null;
+  }
+
   return (
     <section className="surface-card rounded-xl shadow-lg p-6 mt-8" aria-label="Technical overview video">
       <div className="flex items-center gap-3 mb-4">
@@ -35,34 +40,16 @@ export default function ProjectVideoSection({ videoUrl, projectTitle }: ProjectV
         implementation highlights of this project.
       </p>
 
-      {hasVideo ? (
-        <div className="relative w-full overflow-hidden rounded-lg bg-black" style={{ paddingTop: '56.25%' }}>
-          <iframe
-            src={videoUrl}
-            className="absolute inset-0 w-full h-full border-0"
-            title={`${projectTitle} – Technical Overview`}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowFullScreen
-            loading="lazy"
-          />
-        </div>
-      ) : (
-        <div
-          className="flex flex-col items-center justify-center rounded-lg text-center gap-4 py-16 px-6"
-          style={{
-            background: 'var(--surface-2)',
-            border: '2px dashed var(--border-soft)',
-          }}
-        >
-          <PlayCircle size={56} className="text-blue-400 opacity-60" aria-hidden="true" />
-          <div>
-            <p className="text-lg font-semibold theme-text-primary">Video Presentation Coming Soon</p>
-            <p className="theme-text-secondary text-sm mt-2 max-w-md">
-              A video walkthrough for this project will be added here soon.
-            </p>
-          </div>
-        </div>
-      )}
+      <div className="relative w-full overflow-hidden rounded-lg bg-black" style={{ paddingTop: '56.25%' }}>
+        <iframe
+          src={videoUrl}
+          className="absolute inset-0 w-full h-full border-0"
+          title={`${projectTitle} – Technical Overview`}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+          loading="lazy"
+        />
+      </div>
     </section>
   );
 }
