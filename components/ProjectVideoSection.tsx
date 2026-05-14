@@ -1,6 +1,6 @@
 'use client';
 
-import { PlayCircle, Video } from 'lucide-react';
+import { Video } from 'lucide-react';
 
 interface ProjectVideoSectionProps {
   videoUrl?: string;
