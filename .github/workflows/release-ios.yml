@@ -7,6 +7,12 @@ on:
       - main
     paths:
       - 'ios/**'
+      - 'fitness-tracker-app/**'
+      - 'finance-app/**'
+      - 'chat-app/**'
+      - 'real-estate-app/**'
+      - 'music-streaming-app/**'
+      - 'weather-app/**'
       - '.github/workflows/release-ios.yml'
 
 permissions:
@@ -14,6 +20,7 @@ permissions:
 
 env:
   RELEASE_TAG: ios-artifacts-latest
+  EXPO_NODE_VERSION: '20'
 
 jobs:
   build-and-release:
@@ -29,7 +36,12 @@ jobs:
       - name: Install xcpretty
         run: gem install xcpretty --no-document
 
-      - name: Generate Xcode projects and build
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.EXPO_NODE_VERSION }}
+
+      - name: Generate iOS artifacts (native + Expo)
         run: |
           TAG="${{ env.RELEASE_TAG }}"
           mkdir -p release-ios
@@ -64,11 +76,82 @@ jobs:
               exit 1
             fi
 
-            ZIP_NAME="${name}-ios-sim.zip"
-            ditto -c -k --keepParent "$APP_PATH" "release-ios/$ZIP_NAME"
-            echo "Packaged: $ZIP_NAME"
+            IPA_NAME="${name}-ios-sim.ipa"
+            TMP_DIR="$(mktemp -d)"
+            mkdir -p "$TMP_DIR/Payload"
+            cp -R "$APP_PATH" "$TMP_DIR/Payload/"
+            (cd "$TMP_DIR" && ditto -c -k --sequesterRsrc --keepParent Payload "$GITHUB_WORKSPACE/release-ios/$IPA_NAME")
+            rm -rf "$TMP_DIR"
+            echo "Packaged: $IPA_NAME"
           done
           set +o pipefail
+
+          EXPO_APPS=(
+            fitness-tracker-app
+            finance-app
+            chat-app
+            real-estate-app
+            music-streaming-app
+            weather-app
+          )
+
+          for app_dir in "${EXPO_APPS[@]}"; do
+            echo "▶ Building Expo iOS simulator IPA: $app_dir"
+
+            (
+              cd "$app_dir"
+              if [ -f package-lock.json ]; then
+                npm ci --legacy-peer-deps || npm install --legacy-peer-deps --no-audit --no-fund
+              else
+                npm install --legacy-peer-deps --no-audit --no-fund
+              fi
+
+              npx expo prebuild --platform ios --clean
+
+              if [ -d ios ]; then
+                npx pod-install --non-interactive
+              else
+                echo "::error::Expo prebuild did not create an ios/ directory for $app_dir."
+                exit 1
+              fi
+
+              WORKSPACE=$(ls ios/*.xcworkspace 2>/dev/null | head -1)
+              if [ -z "$WORKSPACE" ]; then
+                echo "::error::Failed to locate an Xcode workspace under $app_dir/ios."
+                exit 1
+              fi
+
+              SCHEME=$(xcodebuild -list -json -workspace "$WORKSPACE" | /usr/bin/python3 -c "import json,sys; data=json.load(sys.stdin); print(data['workspace']['schemes'][0])")
+              if [ -z "$SCHEME" ]; then
+                echo "::error::Failed to detect Xcode scheme for $app_dir."
+                exit 1
+              fi
+
+              DERIVED_DATA_PATH="$GITHUB_WORKSPACE/build/expo-$app_dir"
+              xcodebuild \
+                -workspace "$WORKSPACE" \
+                -scheme "$SCHEME" \
+                -sdk iphonesimulator \
+                -configuration Debug \
+                -derivedDataPath "$DERIVED_DATA_PATH" \
+                CODE_SIGNING_ALLOWED=NO \
+                build 2>&1 | xcpretty
+
+              APP_PATH=$(find "$DERIVED_DATA_PATH/Build/Products" -maxdepth 3 -name '*.app' -type d | head -1)
+              if [ -z "$APP_PATH" ]; then
+                echo "::error::Failed to locate a built .app for $app_dir under $DERIVED_DATA_PATH."
+                exit 1
+              fi
+
+              IPA_NAME="${app_dir}-ios-sim.ipa"
+              TMP_DIR="$(mktemp -d)"
+              mkdir -p "$TMP_DIR/Payload"
+              cp -R "$APP_PATH" "$TMP_DIR/Payload/"
+              (cd "$TMP_DIR" && ditto -c -k --sequesterRsrc --keepParent Payload "$GITHUB_WORKSPACE/release-ios/$IPA_NAME")
+              rm -rf "$TMP_DIR"
+              echo "Packaged: $IPA_NAME"
+            )
+          done
 
           echo "iOS artifacts:"
           ls -lh release-ios/
@@ -81,35 +164,40 @@ jobs:
 
           NOTES="## 🍎 iOS App Downloads
 
-          Simulator builds are provided as \`.zip\` archives containing \`.app\` bundles.
-          Drag a \`.app\` bundle into a running iOS Simulator to install it.
+          Simulator builds are provided as \`.ipa\` archives (a ZIP) containing \`.app\` bundles.
+          Unzip the \`.ipa\` and drag the \`.app\` bundle into a running iOS Simulator to install it.
 
           > **Note:** These are simulator builds (x86_64 / arm64 simulator slice).
           > Device (IPA) builds require an Apple Developer account and code-signing certificates.
 
           ### Available Apps
 
-          | App | Archive | Description |
+          | App | Download | Description |
           |-----|---------|-------------|
-          | 📚 Book Store | \`BookStore-ios-sim.zip\` | SwiftUI bookstore — browse, cart & checkout |
-          | 🛒 Computer Store | \`ComputerStore-ios-sim.zip\` | SwiftUI computer & electronics e-commerce |
-          | ♠️ Poker App | \`PokerApp-ios-sim.zip\` | SwiftUI poker game with betting & chip count |
-          | 🏭 Kamps Smart Factory | \`KampsSmartFactory-ios-sim.zip\` | SwiftUI IoT Smart Factory dashboard |
-          | 📹 Embedded Video | \`EmbeddedVideoEngineer-ios-sim.zip\` | SwiftUI multi-camera embedded video viewer |
-          | 🏥 Medical IoT Monitor | \`MedicalIoTMonitor-ios-sim.zip\` | SwiftUI simulated medical vitals dashboard — heart rate, SpO₂, BP & alerts |
+          | 📚 Book Store | \`BookStore-ios-sim.ipa\` | SwiftUI bookstore — browse, cart & checkout |
+          | 🛒 Computer Store | \`ComputerStore-ios-sim.ipa\` | SwiftUI computer & electronics e-commerce |
+          | ♠️ Poker App | \`PokerApp-ios-sim.ipa\` | SwiftUI poker game with betting & chip count |
+          | 🏭 Kamps Smart Factory | \`KampsSmartFactory-ios-sim.ipa\` | SwiftUI IoT Smart Factory dashboard |
+          | 📹 Embedded Video | \`EmbeddedVideoEngineer-ios-sim.ipa\` | SwiftUI multi-camera embedded video viewer |
+          | 🏥 Medical IoT Monitor | \`MedicalIoTMonitor-ios-sim.ipa\` | SwiftUI simulated medical vitals dashboard — heart rate, SpO₂, BP & alerts |
+          | 🏋️ Fitness Tracker | \`fitness-tracker-app-ios-sim.ipa\` | Expo + React Native fitness tracking |
+          | 💳 Finance Tracker | \`finance-app-ios-sim.ipa\` | Expo + React Native personal finance |
+          | 💬 Chat App | \`chat-app-ios-sim.ipa\` | Expo + React Native real-time chat |
+          | 🏠 Real Estate | \`real-estate-app-ios-sim.ipa\` | Expo + React Native listings + maps |
+          | 🎵 Music Streaming | \`music-streaming-app-ios-sim.ipa\` | Expo + React Native streaming UI |
+          | 🌦️ Weather App | \`weather-app-ios-sim.ipa\` | Expo + React Native weather dashboard |
 
           ### Installation Steps (Simulator)
-          1. Download a \`.zip\` archive from the assets below
-          2. Unzip to extract the \`.app\` bundle
-          3. Open Xcode → Simulator → File → Open Simulator Device Log (or drag \`.app\` directly onto running simulator)
-          4. Alternatively: \`xcrun simctl install booted <path/to/App.app>\`"
+          1. Download a \`.ipa\` archive from the assets below
+          2. Rename \`.ipa\` → \`.zip\` (optional) and unzip to extract the \`Payload/<App>.app\` bundle
+          3. Drag the \`.app\` onto a running Simulator, or run: \`xcrun simctl install booted <path/to/App.app>\`"
 
           if gh release view "$TAG" &>/dev/null; then
             echo "Release $TAG already exists — uploading iOS archives..."
-            gh release upload "$TAG" release-ios/*.zip --clobber
+            gh release upload "$TAG" release-ios/*.ipa --clobber
           else
             echo "Creating release $TAG..."
-            gh release create "$TAG" release-ios/*.zip \
+            gh release create "$TAG" release-ios/*.ipa \
               --title "🍎 iOS Apps (Latest)" \
               --notes "$NOTES" \
               --latest

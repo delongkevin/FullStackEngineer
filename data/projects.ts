@@ -16,7 +16,7 @@ export interface Project {
   projectPath?: string;
   /** Direct APK download URL or Google Play Store link */
   androidUrl?: string;
-  /** TestFlight invite URL or Apple App Store link */
+  /** Direct IPA download URL or TestFlight/App Store link */
   iosUrl?: string;
   /** YouTube or Vimeo embed URL for a technical overview video */
   videoUrl?: string;
@@ -193,7 +193,7 @@ export const projects: Project[] = [
     embeddable: true,
     projectPath: "/projects/PokerApp/PokerApp.html",
     androidUrl: "https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/poker-app-debug.apk",
-    iosUrl: "https://github.com/delongkevin/FullStackEngineer/releases/download/ios-artifacts-latest/PokerApp-ios-sim.zip",
+    iosUrl: "https://github.com/delongkevin/FullStackEngineer/releases/download/ios-artifacts-latest/PokerApp-ios-sim.ipa",
   }
   ,
   {
@@ -307,7 +307,7 @@ export const projects: Project[] = [
     embeddable: true,
     projectPath: '/projects/dornerworks-iot',
     androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/medical-iot-monitor-debug.apk',
-    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/ios-artifacts-latest/MedicalIoTMonitor-ios-sim.zip',
+    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/ios-artifacts-latest/MedicalIoTMonitor-ios-sim.ipa',
   },
   {
     id: 14,
@@ -334,7 +334,7 @@ export const projects: Project[] = [
     embeddable: true,
     projectPath: '/projects/kamps-smart-factory',
     androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/kamps-factory-debug.apk',
-    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/ios-artifacts-latest/KampsSmartFactory-ios-sim.zip',
+    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/ios-artifacts-latest/KampsSmartFactory-ios-sim.ipa',
   },
   {
     id: 15,
@@ -360,7 +360,7 @@ export const projects: Project[] = [
     embeddable: true,
     projectPath: '/projects/embedded-video-engineer',
     androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/embedded-video-debug.apk',
-    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/ios-artifacts-latest/EmbeddedVideoEngineer-ios-sim.zip',
+    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/ios-artifacts-latest/EmbeddedVideoEngineer-ios-sim.ipa',
   },
   {
     id: 16,
@@ -389,7 +389,7 @@ export const projects: Project[] = [
     embeddable: true,
     projectPath: '/projects/ComputerStoreApp',
     androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/computer-store-debug.apk',
-    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/ios-artifacts-latest/ComputerStore-ios-sim.zip',
+    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/ios-artifacts-latest/ComputerStore-ios-sim.ipa',
   },
   {
     id: 17,
@@ -417,7 +417,7 @@ export const projects: Project[] = [
     embeddable: true,
     projectPath: '/projects/mobile-BookApp_Android',
     androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/book-app-debug.apk',
-    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/ios-artifacts-latest/BookStore-ios-sim.zip',
+    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/ios-artifacts-latest/BookStore-ios-sim.ipa',
   },
   {
     id: 18,
@@ -577,7 +577,7 @@ export const projects: Project[] = [
     embeddable: true,
     projectPath: '/projects/fitness-tracker',
     androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/fitness-tracker-app-debug.apk',
-    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/ios-artifacts-latest/fitness-tracker-app-ios-sim.zip',
+    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/ios-artifacts-latest/fitness-tracker-app-ios-sim.ipa',
   },
   {
     id: 24,
@@ -610,7 +610,7 @@ export const projects: Project[] = [
     embeddable: true,
     projectPath: '/projects/finance-dashboard',
     androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/finance-app-debug.apk',
-    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/ios-artifacts-latest/finance-app-ios-sim.zip',
+    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/ios-artifacts-latest/finance-app-ios-sim.ipa',
   },
   {
     id: 25,
@@ -649,7 +649,7 @@ export const projects: Project[] = [
     embeddable: true,
     projectPath: '/projects/chat-app',
     androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/chat-app-debug.apk',
-    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/ios-artifacts-latest/chat-app-ios-sim.zip',
+    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/ios-artifacts-latest/chat-app-ios-sim.ipa',
   },
   {
     id: 26,
@@ -674,7 +674,7 @@ export const projects: Project[] = [
     embeddable: true,
     projectPath: '/projects/real-estate',
     androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/real-estate-app-debug.apk',
-    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/ios-artifacts-latest/real-estate-app-ios-sim.zip',
+    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/ios-artifacts-latest/real-estate-app-ios-sim.ipa',
   },
   {
     id: 27,
@@ -698,7 +698,7 @@ export const projects: Project[] = [
     embeddable: true,
     projectPath: '/projects/music-streaming',
     androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/music-streaming-app-debug.apk',
-    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/ios-artifacts-latest/music-streaming-app-ios-sim.zip',
+    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/ios-artifacts-latest/music-streaming-app-ios-sim.ipa',
   },
   {
     id: 28,
@@ -722,7 +722,7 @@ export const projects: Project[] = [
     embeddable: true,
     projectPath: '/projects/weather-insights',
     androidUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/android-artifacts-latest/weather-app-debug.apk',
-    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/ios-artifacts-latest/weather-app-ios-sim.zip',
+    iosUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/ios-artifacts-latest/weather-app-ios-sim.ipa',
   },
   {
     id: 29,

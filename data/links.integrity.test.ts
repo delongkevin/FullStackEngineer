@@ -26,7 +26,7 @@ function isGithubReleaseTagUrl(url: string): boolean {
 }
 
 function isGithubReleaseDownloadUrl(url: string): boolean {
-  return /^https:\/\/github\.com\/[^/]+\/[^/]+\/releases\/download\/.+\/.+\.(apk|zip)$/i.test(url);
+  return /^https:\/\/github\.com\/[^/]+\/[^/]+\/releases\/download\/.+\/.+\.(apk|ipa)$/i.test(url);
 }
 
 function isGithubWorkflowUrl(url: string): boolean {
@@ -95,6 +95,14 @@ describe('link integrity', () => {
           isGithubWorkflowUrl(url) ||
           isGithubRepoUrl(url);
         expect(validShape).toBe(true);
+
+        if (url.includes('/releases/download/android-artifacts-latest/')) {
+          expect(url.toLowerCase().endsWith('.apk')).toBe(true);
+        }
+
+        if (url.includes('/releases/download/ios-artifacts-latest/')) {
+          expect(url.toLowerCase().endsWith('.ipa')).toBe(true);
+        }
 
         const localPath = getLocalPathFromRepoTreeUrl(url);
         if (localPath) {

@@ -16,6 +16,7 @@ import { ExternalLink, Github, ArrowLeft, Smartphone, Download } from 'lucide-re
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Metadata } from 'next';
+import MobileDownloadLink from '../../../components/MobileDownloadLink';
 
 const siteUrl = 'https://delongkevin.github.io/FullStackEngineer';
 
@@ -178,38 +179,62 @@ export default function ProjectDetail({ params }: PageProps) {
                     </p>
                     <div className="flex flex-wrap gap-3">
                       {project.androidUrl && (
-                        <a
-                          href={project.androidUrl}
-                          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg hover:opacity-90 transition-colors text-sm font-medium"
-                          style={{ background: 'var(--surface-3)', color: 'var(--text-1)', border: '1px solid var(--border-soft)' }}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={`${project.androidUrl.includes('/releases/') ? 'Download' : 'View Android source for'} ${project.title}`}
-                        >
-                          {project.androidUrl.includes('/releases/') ? (
-                            <Download size={16} aria-hidden="true" />
+                        <>
+                          {project.androidUrl.includes('/releases/download/') ? (
+                            <MobileDownloadLink
+                              href={project.androidUrl}
+                              platform="android"
+                              projectTitle={project.title}
+                              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg hover:opacity-90 transition-colors text-sm font-medium"
+                              style={{ background: 'var(--surface-3)', color: 'var(--text-1)', border: '1px solid var(--border-soft)' }}
+                              ariaLabel={`Download ${project.title} Android APK`}
+                            >
+                              <Download size={16} aria-hidden="true" />
+                              <span>🤖 Android APK</span>
+                            </MobileDownloadLink>
                           ) : (
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                            <a
+                              href={project.androidUrl}
+                              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg hover:opacity-90 transition-colors text-sm font-medium"
+                              style={{ background: 'var(--surface-3)', color: 'var(--text-1)', border: '1px solid var(--border-soft)' }}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              aria-label={`View Android source for ${project.title}`}
+                            >
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                              <span>🤖 Android Source</span>
+                            </a>
                           )}
-                          <span>🤖 {project.androidUrl.includes('/releases/') ? 'Android APK' : 'Android Source'}</span>
-                        </a>
+                        </>
                       )}
                       {project.iosUrl && project.iosUrl !== project.androidUrl && (
-                        <a
-                          href={project.iosUrl}
-                          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg hover:opacity-90 transition-colors text-sm font-medium"
-                          style={{ background: 'var(--surface-3)', color: 'var(--text-1)', border: '1px solid var(--border-soft)' }}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={`${project.iosUrl.includes('/releases/') ? 'Download' : 'View iOS source for'} ${project.title}`}
-                        >
-                          {project.iosUrl.includes('/releases/') ? (
-                            <Download size={16} aria-hidden="true" />
+                        <>
+                          {project.iosUrl.includes('/releases/download/') ? (
+                            <MobileDownloadLink
+                              href={project.iosUrl}
+                              platform="ios"
+                              projectTitle={project.title}
+                              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg hover:opacity-90 transition-colors text-sm font-medium"
+                              style={{ background: 'var(--surface-3)', color: 'var(--text-1)', border: '1px solid var(--border-soft)' }}
+                              ariaLabel={`Download ${project.title} iOS IPA`}
+                            >
+                              <Download size={16} aria-hidden="true" />
+                              <span>🍎 iOS IPA</span>
+                            </MobileDownloadLink>
                           ) : (
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                            <a
+                              href={project.iosUrl}
+                              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg hover:opacity-90 transition-colors text-sm font-medium"
+                              style={{ background: 'var(--surface-3)', color: 'var(--text-1)', border: '1px solid var(--border-soft)' }}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              aria-label={`View iOS source for ${project.title}`}
+                            >
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                              <span>🍎 iOS Source</span>
+                            </a>
                           )}
-                          <span>🍎 {project.iosUrl.includes('/releases/') ? 'iOS App' : 'iOS Source'}</span>
-                        </a>
+                        </>
                       )}
                       {project.iosUrl && project.iosUrl === project.androidUrl && (
                         <a
