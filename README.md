@@ -32,6 +32,15 @@ This repository contains:
 - **Mobile Applications** - React Native and Android projects
 - **Desktop & Data Analysis** - Python applications for automotive and computer vision
 
+## 📱 Mobile App Downloads
+
+Pre-built mobile applications are available for download:
+
+- **Android APKs**: [Download from GitHub Releases](https://github.com/delongkevin/FullStackEngineer/releases/tag/android-artifacts-latest)
+- **iOS Simulators**: [Download from GitHub Releases](https://github.com/delongkevin/FullStackEngineer/releases/tag/ios-artifacts-latest)
+
+**Want to build the apps yourself?** See our comprehensive [Mobile App Build Guide](./docs/BUILD_MOBILE_APPS.md) for step-by-step instructions on compiling Android APKs and iOS apps from source.
+
 ## 🎮 Featured Projects
 
 ### Web Games

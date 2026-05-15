@@ -4,6 +4,7 @@ import ProjectDemoEmbed from '../../../components/ProjectDemoEmbed';
 import InteractiveTutorial from '../../../components/InteractiveTutorial';
 import ProjectVideoSection from '../../../components/ProjectVideoSection';
 import ProjectViewTracker from '../../../components/ProjectViewTracker';
+import MobileAppDownload from '../../../components/MobileAppDownload';
 import { getTutorialForProject } from '../../../data/tutorials';
 import {
   findProjectByRouteParam,
@@ -12,7 +13,7 @@ import {
   getProjectRouteKey,
   projects,
 } from '../../../data/projects';
-import { ExternalLink, Github, ArrowLeft, Smartphone, Download } from 'lucide-react';
+import { ExternalLink, Github, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Metadata } from 'next';
@@ -167,66 +168,12 @@ export default function ProjectDetail({ params }: PageProps) {
                   </a>
                 </div>
 
-                {/* App Store Download Buttons */}
-                {(project.androidUrl || project.iosUrl) && (
-                  <div className="mt-4 pt-4 border-t theme-border">
-                    <p className="text-sm font-semibold theme-text-secondary mb-3 flex items-center gap-2">
-                      <Smartphone size={16} aria-hidden="true" />
-                      {project.androidUrl?.includes('/releases/') || project.iosUrl?.includes('/releases/')
-                        ? 'Download the App'
-                        : 'Mobile Source Code'}
-                    </p>
-                    <div className="flex flex-wrap gap-3">
-                      {project.androidUrl && (
-                        <a
-                          href={project.androidUrl}
-                          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg hover:opacity-90 transition-colors text-sm font-medium"
-                          style={{ background: 'var(--surface-3)', color: 'var(--text-1)', border: '1px solid var(--border-soft)' }}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={`${project.androidUrl.includes('/releases/') ? 'Download' : 'View Android source for'} ${project.title}`}
-                        >
-                          {project.androidUrl.includes('/releases/') ? (
-                            <Download size={16} aria-hidden="true" />
-                          ) : (
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-                          )}
-                          <span>🤖 {project.androidUrl.includes('/releases/') ? 'Android APK' : 'Android Source'}</span>
-                        </a>
-                      )}
-                      {project.iosUrl && project.iosUrl !== project.androidUrl && (
-                        <a
-                          href={project.iosUrl}
-                          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg hover:opacity-90 transition-colors text-sm font-medium"
-                          style={{ background: 'var(--surface-3)', color: 'var(--text-1)', border: '1px solid var(--border-soft)' }}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={`${project.iosUrl.includes('/releases/') ? 'Download' : 'View iOS source for'} ${project.title}`}
-                        >
-                          {project.iosUrl.includes('/releases/') ? (
-                            <Download size={16} aria-hidden="true" />
-                          ) : (
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-                          )}
-                          <span>🍎 {project.iosUrl.includes('/releases/') ? 'iOS App' : 'iOS Source'}</span>
-                        </a>
-                      )}
-                      {project.iosUrl && project.iosUrl === project.androidUrl && (
-                        <a
-                          href={project.iosUrl}
-                          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg hover:opacity-90 transition-colors text-sm font-medium"
-                          style={{ background: 'var(--surface-3)', color: 'var(--text-1)', border: '1px solid var(--border-soft)' }}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={`View React Native source for ${project.title}`}
-                        >
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-                          <span>📱 React Native Source</span>
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                )}
+                {/* Mobile App Download Section with Fallback Instructions */}
+                <MobileAppDownload
+                  androidUrl={project.androidUrl}
+                  iosUrl={project.iosUrl}
+                  projectTitle={project.title}
+                />
               </div>
             </div>
           </div>
