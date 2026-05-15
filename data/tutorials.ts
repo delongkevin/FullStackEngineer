@@ -1704,6 +1704,95 @@ export const projectTutorials: ProjectTutorial[] = [
         ]
       }
     ]
+  },
+  {
+    projectId: 37, // AI Testing Strategy Project
+    steps: [
+      {
+        title: "HIL Test Execution Dashboard",
+        description: "Monitor real-time test execution with dSPACE integration.",
+        instructions: [
+          "View live test case status on the HIL execution dashboard",
+          "Monitor pass/fail verdicts as tests execute",
+          "Track execution times for each test case",
+          "See real-time progress updates from dSPACE HIL system"
+        ],
+        tips: [
+          "Dashboard shows 850/1,247 tests executed with live updates",
+          "dSPACE integration provides hardware-in-the-loop validation"
+        ]
+      },
+      {
+        title: "Test Coverage Analysis",
+        description: "Track comprehensive test coverage across all modules.",
+        instructions: [
+          "View coverage by module: Camera Systems (85%), ADAS (92%), AI Models (78%)",
+          "Monitor Data Pipelines (95%), CAN Networks (88%), ECU Diagnostics (91%)",
+          "Identify coverage gaps requiring additional test cases",
+          "Review test suite completeness metrics"
+        ],
+        tips: [
+          "Higher coverage percentages reduce production defects",
+          "Focus on modules below 90% coverage first"
+        ]
+      },
+      {
+        title: "AI Model Validation Metrics",
+        description: "Validate AI model performance and accuracy.",
+        instructions: [
+          "Check Object Detection accuracy: 98.7% mAP",
+          "Monitor Lane Detection performance: 96.3% IoU",
+          "Review inference time: 12.4ms for real-time capability",
+          "Track FPS performance: 80.6 FPS for smooth operation"
+        ],
+        tips: [
+          "mAP (mean Average Precision) measures detection accuracy",
+          "IoU (Intersection over Union) evaluates segmentation quality"
+        ]
+      },
+      {
+        title: "Automated Test Script Generator",
+        description: "Generate test scripts in Python, CAPL, and JavaScript.",
+        instructions: [
+          "Select test type: ADAS, Camera, CAN, ECU Diagnostics, or AI Model",
+          "Choose programming language: Python, CAPL, or JavaScript",
+          "Generate automated test scripts with one click",
+          "Download and integrate scripts into your test framework"
+        ],
+        tips: [
+          "CAPL scripts integrate with Vector CANoe/CANalyzer",
+          "Python pytest scripts support continuous integration"
+        ]
+      },
+      {
+        title: "Industry Tool Integration",
+        description: "Monitor connected testing tools and their status.",
+        instructions: [
+          "Verify dSPACE HIL connection status (connected)",
+          "Check CANoe activity status (active)",
+          "Monitor CANape runtime status (running)",
+          "Confirm DIVA online status and tool readiness"
+        ],
+        tips: [
+          "All tools must show 'connected' or 'active' status",
+          "Integration enables end-to-end test automation"
+        ]
+      },
+      {
+        title: "Defect Tracking & Analytics",
+        description: "Track and resolve defects with comprehensive metrics.",
+        instructions: [
+          "View 127 total defects with 95 resolved",
+          "Monitor 13 critical pending defects requiring attention",
+          "Check 2.3 day average resolution time",
+          "Track 74.8% overall resolution rate"
+        ],
+        tips: [
+          "Critical defects should be prioritized immediately",
+          "Resolution time trends indicate team efficiency"
+        ]
+      }
+    ]
   }
 ];
 
