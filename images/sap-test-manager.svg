@@ -1,6 +1,6 @@
-<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="SAP Test Manager Greenfield Demo">
+<svg width='800' height='450' viewBox='0 0 800 450' fill='none' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='SAP Test Manager Greenfield Demo'>
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+    <linearGradient id="bg" x1="0" y1="0" x2="800" y2="450" gradientUnits="userSpaceOnUse">
       <stop stop-color="#0F172A"/>
       <stop offset="1" stop-color="#1D4ED8"/>
     </linearGradient>
@@ -9,23 +9,23 @@
       <stop offset="1" stop-color="#334155"/>
     </linearGradient>
   </defs>
-  <rect width="1200" height="630" fill="url(#bg)"/>
-  <rect x="70" y="70" width="1060" height="490" rx="24" fill="url(#card)" stroke="#60A5FA" stroke-opacity="0.45"/>
-  <text x="120" y="170" fill="#E2E8F0" font-size="56" font-family="Inter,Arial,sans-serif" font-weight="700">SAP Test Manager</text>
-  <text x="120" y="230" fill="#93C5FD" font-size="34" font-family="Inter,Arial,sans-serif" font-weight="500">Greenfield Implementation Command Center</text>
+  <rect width="800" height="450" fill="url(#bg)"/>
+  <rect x="47" y="50" width="706" height="350" rx="16" fill="url(#card)" stroke="#60A5FA" stroke-opacity="0.45"/>
+  <text x="80" y="121" fill="#E2E8F0" font-size="37" font-family="Inter,Arial,sans-serif" font-weight="700">SAP Test Manager</text>
+  <text x="80" y="164" fill="#93C5FD" font-size="23" font-family="Inter,Arial,sans-serif" font-weight="500">Greenfield Implementation Command Center</text>
 
-  <rect x="120" y="280" width="280" height="90" rx="14" fill="#0F172A" stroke="#475569"/>
-  <rect x="430" y="280" width="280" height="90" rx="14" fill="#0F172A" stroke="#475569"/>
-  <rect x="740" y="280" width="280" height="90" rx="14" fill="#0F172A" stroke="#475569"/>
+  <rect x="80" y="200" width="187" height="64" rx="9" fill="#0F172A" stroke="#475569"/>
+  <rect x="287" y="200" width="187" height="64" rx="9" fill="#0F172A" stroke="#475569"/>
+  <rect x="493" y="200" width="187" height="64" rx="9" fill="#0F172A" stroke="#475569"/>
 
-  <text x="145" y="320" fill="#94A3B8" font-size="20" font-family="Inter,Arial,sans-serif">SIT / E2E / UAT</text>
-  <text x="145" y="350" fill="#22C55E" font-size="28" font-family="Inter,Arial,sans-serif" font-weight="700">Quality Gates</text>
+  <text x="97" y="228" fill="#94A3B8" font-size="13" font-family="Inter,Arial,sans-serif">SIT / E2E / UAT</text>
+  <text x="97" y="250" fill="#22C55E" font-size="19" font-family="Inter,Arial,sans-serif" font-weight="700">Quality Gates</text>
 
-  <text x="455" y="320" fill="#94A3B8" font-size="20" font-family="Inter,Arial,sans-serif">Defect Governance</text>
-  <text x="455" y="350" fill="#F59E0B" font-size="28" font-family="Inter,Arial,sans-serif" font-weight="700">Risk Control</text>
+  <text x="303" y="228" fill="#94A3B8" font-size="13" font-family="Inter,Arial,sans-serif">Defect Governance</text>
+  <text x="303" y="250" fill="#F59E0B" font-size="19" font-family="Inter,Arial,sans-serif" font-weight="700">Risk Control</text>
 
-  <text x="765" y="320" fill="#94A3B8" font-size="20" font-family="Inter,Arial,sans-serif">Go-Live Readiness</text>
-  <text x="765" y="350" fill="#60A5FA" font-size="28" font-family="Inter,Arial,sans-serif" font-weight="700">SteerCo Decisions</text>
+  <text x="510" y="228" fill="#94A3B8" font-size="13" font-family="Inter,Arial,sans-serif">Go-Live Readiness</text>
+  <text x="510" y="250" fill="#60A5FA" font-size="19" font-family="Inter,Arial,sans-serif" font-weight="700">SteerCo Decisions</text>
 
-  <text x="120" y="455" fill="#CBD5E1" font-size="24" font-family="Inter,Arial,sans-serif">qTest · Tosca · NeoLoad · Azure DevOps · Hyper Care</text>
+  <text x="80" y="325" fill="#CBD5E1" font-size="16" font-family="Inter,Arial,sans-serif">qTest · Tosca · NeoLoad · Azure DevOps · Hyper Care</text>
 </svg>
