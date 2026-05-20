@@ -1,4 +1,4 @@
-import { Github, Linkedin, Mail, Twitter } from 'lucide-react';
+import { Github, Mail, Twitter } from 'lucide-react';
 
 export default function Footer() {
   const socialLinks = [
@@ -6,11 +6,6 @@ export default function Footer() {
       icon: Github, 
       href: 'https://github.com/delongkevin', 
       label: 'GitHub' 
-    },
-    { 
-      icon: Linkedin, 
-      href: 'https://www.linkedin.com/in/kevin-delong-50726135b/', 
-      label: 'LinkedIn' 
     },
     { 
       icon: Twitter, 

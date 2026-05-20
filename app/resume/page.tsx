@@ -1,6 +1,6 @@
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import { Download, Mail, Phone, MapPin, ExternalLink } from 'lucide-react';
+import { Mail, Phone, MapPin, ExternalLink } from 'lucide-react';
 import Image from 'next/image';
 
 export default function ResumePage() {
@@ -132,18 +132,7 @@ export default function ResumePage() {
               <p className="text-xl theme-text-secondary max-w-2xl mx-auto">
                Software Engineer - Full Stack specializing in mobile and web development with expertise in React, React Native, Node.js, and cloud technologies.
               </p>
-          <div className="mt-6">
-            <a
-              href="/resume.pdf"
-              className="btn-primary inline-flex items-center gap-2"
-              download="Kevin_Delong_Resume.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Download size={20} aria-hidden="true" />
-              Download PDF Version
-            </a>
-          </div>          </section>
+          </section>
 
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Sidebar */}

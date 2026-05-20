@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import { Mail, Phone, MapPin, Send, Loader2, Linkedin, Github, Twitter, Heart } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Loader2, Github, Twitter, Heart } from 'lucide-react';
 
 export default function ContactPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -130,15 +130,6 @@ export default function ContactPage() {
               <div className="mt-8">
                 <h3 className="font-semibold theme-text-primary mb-4">Follow Me</h3>
           <div className="flex space-x-4">
-                                    <a
-                    href="https://www.linkedin.com/in/kevin-delong-50726135b/"
-                    className="surface-subtle theme-text-secondary hover:opacity-80 w-10 h-10 rounded-full flex items-center justify-center transition-colors"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="LinkedIn profile"
-                  >
-                    <Linkedin size={20} aria-hidden="true" />
-                  </a>
                                     <a
                                       href="https://github.com/delongkevin"
                     className="surface-subtle theme-text-secondary hover:opacity-80 w-10 h-10 rounded-full flex items-center justify-center transition-colors"
