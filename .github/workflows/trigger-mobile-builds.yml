@@ -24,12 +24,7 @@ jobs:
         run: |
           set -euo pipefail
 
-          if [[ ! "$REF" =~ ^[A-Za-z0-9._/-]+$ ]]; then
-            echo "::error::Ref '$REF' contains unsupported characters."
-            exit 1
-          fi
-
-          if [[ "$REF" == *".."* || "$REF" == *"//"* || "$REF" == /* || "$REF" == */ ]]; then
+          if [[ ! "$REF" =~ ^[A-Za-z0-9._/-]+$ || "$REF" == *".."* || "$REF" == *"//"* || "$REF" == /* || "$REF" == */ ]]; then
             echo "::error::Ref '$REF' has an invalid format."
             exit 1
           fi
@@ -40,20 +35,23 @@ jobs:
             "commits/$REF"
           )
           matched_endpoint=""
-          error_log=""
+          error_logs=()
 
           for endpoint in "${endpoints[@]}"; do
             if output="$(gh api "repos/$REPO/$endpoint" 2>&1)"; then
               matched_endpoint="$endpoint"
               break
             fi
-            error_log="${error_log}\n[$endpoint]\n$output\n"
+            error_logs+=("[$endpoint]\n$output\n")
           done
 
           if [[ -n "$matched_endpoint" ]]; then
             echo "Using ref: $REF"
           else
-            printf "GitHub API ref validation errors:%b\n" "$error_log"
+            printf "GitHub API ref validation errors:\n"
+            for error in "${error_logs[@]}"; do
+              printf "%b" "$error"
+            done
             echo "::error::Ref '$REF' does not exist as a branch, tag, or commit in $REPO."
             exit 1
           fi
