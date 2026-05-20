@@ -24,15 +24,16 @@ jobs:
         run: |
           set -euo pipefail
 
-          if [[ ! "$REF" =~ ^[A-Za-z0-9._/-]+$ || "$REF" == *".."* || "$REF" == *"//"* || "$REF" == /* || "$REF" == */ ]]; then
+          if [[ ! "$REF" =~ ^[A-Za-z0-9._/-]+$ || "$REF" == *".."* || "$REF" == *"//"* || "$REF" == /* || "$REF" == */ || "$REF" == ./* || "$REF" == *"/./"* ]]; then
             echo "::error::Ref '$REF' has an invalid format."
             exit 1
           fi
 
+          safe_ref="$(printf '%s' "$REF")"
           endpoints=(
-            "git/refs/heads/$REF"
-            "git/refs/tags/$REF"
-            "commits/$REF"
+            "git/refs/heads/$safe_ref"
+            "git/refs/tags/$safe_ref"
+            "commits/$safe_ref"
           )
           matched_endpoint=""
           error_logs=()
