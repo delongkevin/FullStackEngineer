@@ -1,0 +1,27 @@
+name: Trigger Mobile App Builds
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: 'Branch or tag ref to build'
+        required: true
+        default: 'main'
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  trigger-mobile-workflows:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Android build workflow
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run release-android.yml --ref "${{ github.event.inputs.ref }}"
+
+      - name: Trigger iOS build workflow
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run release-ios.yml --ref "${{ github.event.inputs.ref }}"
