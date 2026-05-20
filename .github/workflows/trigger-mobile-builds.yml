@@ -1,0 +1,75 @@
+name: Trigger Mobile App Builds
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: 'Branch or tag ref to build'
+        required: true
+        default: 'main'
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  trigger-mobile-workflows:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate ref and target workflows
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          REF: ${{ github.event.inputs.ref }}
+        run: |
+          set -euo pipefail
+
+          if [[ ! "$REF" =~ ^[A-Za-z0-9._/-]+$ || "$REF" == *".."* || "$REF" == *"//"* || "$REF" == /* || "$REF" == */ || "$REF" == ./* || "$REF" == *"/./"* ]]; then
+            echo "::error::Ref '$REF' has an invalid format."
+            exit 1
+          fi
+
+          safe_ref="$(printf '%s' "$REF")"
+          endpoints=(
+            "git/refs/heads/$safe_ref"
+            "git/refs/tags/$safe_ref"
+            "commits/$safe_ref"
+          )
+          matched_endpoint=""
+          error_logs=()
+
+          for endpoint in "${endpoints[@]}"; do
+            if output="$(gh api "repos/$REPO/$endpoint" 2>&1)"; then
+              matched_endpoint="$endpoint"
+              break
+            fi
+            error_logs+=("[$endpoint]\n$output\n")
+          done
+
+          if [[ -n "$matched_endpoint" ]]; then
+            echo "Using ref: $REF"
+          else
+            printf "GitHub API ref validation errors:\n"
+            for error in "${error_logs[@]}"; do
+              printf "%b" "$error"
+            done
+            echo "::error::Ref '$REF' does not exist as a branch, tag, or commit in $REPO."
+            exit 1
+          fi
+
+          gh workflow view release-android.yml --repo "$REPO" >/dev/null
+          gh workflow view release-ios.yml --repo "$REPO" >/dev/null
+
+      - name: Trigger Android and iOS build workflows
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          if ! gh workflow run release-android.yml --repo "${{ github.repository }}" --ref "${{ github.event.inputs.ref }}"; then
+            echo "::error::Failed to dispatch release-android.yml."
+            exit 1
+          fi
+          if ! gh workflow run release-ios.yml --repo "${{ github.repository }}" --ref "${{ github.event.inputs.ref }}"; then
+            echo "::error::Failed to dispatch release-ios.yml."
+            exit 1
+          fi
