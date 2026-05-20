@@ -59,7 +59,6 @@ export default function RootLayout({
     url: siteUrl,
     sameAs: [
       'https://github.com/delongkevin',
-      'https://www.linkedin.com/in/kevin-delong-50726135b/',
       'https://x.com/delongkevin1446',
     ],
   };

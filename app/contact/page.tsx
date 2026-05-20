@@ -1,81 +1,14 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import { Mail, Phone, MapPin, Send, Loader2, Linkedin, Github, Twitter, Heart, MessageCircle } from 'lucide-react';
-
-declare global {
-  interface Window {
-    Tawk_API?: {
-      onLoad?: () => void;
-      onStatusChange?: (status: string) => void;
-      maximize?: () => void;
-      popup?: () => void;
-    };
-    Tawk_LoadStart?: Date;
-  }
-}
+import { Mail, Phone, MapPin, Send, Loader2, Github, Twitter, Heart } from 'lucide-react';
 
 export default function ContactPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState('');
   const [errors, setErrors] = useState<{ name?: string; email?: string; subject?: string; message?: string }>({});
-  const [chatStatus, setChatStatus] = useState<'loading' | 'online' | 'offline'>('loading');
-
-  // Fallback IDs ensure chat still works for static export workflows where runtime env is unavailable.
-  const defaultTawkPropertyId = '69d51cf32bcfb31c3daa3057';
-  const defaultTawkWidgetId = '1jlk7i5ot';
-
-  const tawkPropertyId = process.env.NEXT_PUBLIC_TAWK_PROPERTY_ID || defaultTawkPropertyId;
-  const tawkWidgetId = process.env.NEXT_PUBLIC_TAWK_WIDGET_ID || defaultTawkWidgetId;
-  const chatEnabled = Boolean(tawkPropertyId && tawkWidgetId);
-
-  useEffect(() => {
-    if (!chatEnabled) {
-      setChatStatus('offline');
-      return;
-    }
-
-    const scriptId = 'tawkto-chat-script';
-
-    window.Tawk_API = window.Tawk_API || {};
-    window.Tawk_LoadStart = new Date();
-
-    window.Tawk_API.onStatusChange = (status: string) => {
-      if (status === 'online') {
-        setChatStatus('online');
-        return;
-      }
-      setChatStatus('offline');
-    };
-
-    window.Tawk_API.onLoad = () => {
-      // Keep loading state until first status callback arrives.
-      setChatStatus((prev) => (prev === 'loading' ? 'offline' : prev));
-    };
-
-    if (!document.getElementById(scriptId)) {
-      const script = document.createElement('script');
-      script.id = scriptId;
-      script.async = true;
-      script.src = `https://embed.tawk.to/${tawkPropertyId}/${tawkWidgetId}`;
-      script.charset = 'UTF-8';
-      script.setAttribute('crossorigin', '*');
-      document.body.appendChild(script);
-    }
-  }, [chatEnabled, tawkPropertyId, tawkWidgetId]);
-
-  const handleStartChat = () => {
-    if (!chatEnabled) {
-      return;
-    }
-    if (window.Tawk_API?.maximize) {
-      window.Tawk_API.maximize();
-      return;
-    }
-    window.Tawk_API?.popup?.();
-  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -133,56 +66,7 @@ export default function ContactPage() {
             {/* Contact Information */}
             <div className="lg:col-span-1">
               <h2 className="text-2xl font-bold theme-text-primary mb-6">Contact Information</h2>
-
-              <div className="surface-card rounded-xl p-5 mb-6 shadow-sm">
-                <div className="flex items-center justify-between gap-4 mb-3">
-                  <div className="flex items-center gap-2">
-                    <MessageCircle className="text-blue-600" size={18} aria-hidden="true" />
-                    <h3 className="font-semibold theme-text-primary">Live Chat</h3>
-                  </div>
-                  <span
-                    className={`inline-flex items-center gap-2 px-2.5 py-1 rounded-full text-xs font-medium ${
-                      chatStatus === 'online'
-                        ? 'bg-green-100 text-green-700'
-                        : chatStatus === 'loading'
-                        ? 'bg-yellow-100 text-yellow-700'
-                        : 'bg-red-100 text-red-700'
-                    }`}
-                  >
-                    <span
-                      className={`h-2 w-2 rounded-full ${
-                        chatStatus === 'online'
-                          ? 'bg-green-500'
-                          : chatStatus === 'loading'
-                          ? 'bg-yellow-500'
-                          : 'bg-red-500'
-                      }`}
-                      aria-hidden="true"
-                    />
-                    {chatStatus === 'online' ? 'Online' : chatStatus === 'loading' ? 'Checking' : 'Offline'}
-                  </span>
-                </div>
-                <p className="text-sm theme-text-secondary mb-3">
-                  {chatStatus === 'online'
-                    ? 'I am online now. Start a live chat for the fastest response.'
-                    : 'If I am offline, please use the form below and I will get back to you quickly.'}
-                </p>
-                <button
-                  type="button"
-                  onClick={handleStartChat}
-                  disabled={!chatEnabled}
-                  className="w-full inline-flex items-center justify-center gap-2 btn-primary px-4 py-2.5 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                >
-                  <MessageCircle size={16} aria-hidden="true" />
-                  Start Live Chat
-                </button>
-                {!chatEnabled && (
-                  <p className="text-xs theme-text-tertiary mt-2">
-                    Live chat is disabled. Add Netlify env vars NEXT_PUBLIC_TAWK_PROPERTY_ID and NEXT_PUBLIC_TAWK_WIDGET_ID.
-                  </p>
-                )}
-              </div>
-              
+               
               <div className="space-y-6">
                                 <div className="flex items-start">
                   <div className="bg-blue-100 p-3 rounded-full mr-4" aria-hidden="true">
@@ -246,15 +130,6 @@ export default function ContactPage() {
               <div className="mt-8">
                 <h3 className="font-semibold theme-text-primary mb-4">Follow Me</h3>
           <div className="flex space-x-4">
-                                    <a
-                    href="https://www.linkedin.com/in/kevin-delong-50726135b/"
-                    className="surface-subtle theme-text-secondary hover:opacity-80 w-10 h-10 rounded-full flex items-center justify-center transition-colors"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="LinkedIn profile"
-                  >
-                    <Linkedin size={20} aria-hidden="true" />
-                  </a>
                                     <a
                                       href="https://github.com/delongkevin"
                     className="surface-subtle theme-text-secondary hover:opacity-80 w-10 h-10 rounded-full flex items-center justify-center transition-colors"
