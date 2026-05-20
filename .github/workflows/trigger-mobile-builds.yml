@@ -16,12 +16,32 @@ jobs:
   trigger-mobile-workflows:
     runs-on: ubuntu-latest
     steps:
+      - name: Validate ref and target workflows
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          REF: ${{ github.event.inputs.ref }}
+        run: |
+          set -euo pipefail
+
+          if gh api "repos/$REPO/git/ref/heads/$REF" >/dev/null 2>&1 || \
+             gh api "repos/$REPO/git/ref/tags/$REF" >/dev/null 2>&1 || \
+             gh api "repos/$REPO/commits/$REF" >/dev/null 2>&1; then
+            echo "Using ref: $REF"
+          else
+            echo "::error::Ref '$REF' does not exist as a branch, tag, or commit in $REPO."
+            exit 1
+          fi
+
+          gh workflow view release-android.yml --repo "$REPO" >/dev/null
+          gh workflow view release-ios.yml --repo "$REPO" >/dev/null
+
       - name: Trigger Android build workflow
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh workflow run release-android.yml --ref "${{ github.event.inputs.ref }}"
+        run: gh workflow run release-android.yml --repo "${{ github.repository }}" --ref "${{ github.event.inputs.ref }}"
 
       - name: Trigger iOS build workflow
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh workflow run release-ios.yml --ref "${{ github.event.inputs.ref }}"
+        run: gh workflow run release-ios.yml --repo "${{ github.repository }}" --ref "${{ github.event.inputs.ref }}"
