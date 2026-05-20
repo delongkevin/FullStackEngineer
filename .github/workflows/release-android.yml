@@ -237,21 +237,24 @@ jobs:
             python - "$colors_file" <<'PY'
             from pathlib import Path
             import sys
+            import xml.etree.ElementTree as ET
 
             path = Path(sys.argv[1])
-            text = path.read_text() if path.exists() else ""
+            try:
+                root = ET.fromstring(path.read_text()) if path.exists() else ET.Element("resources")
+                if root.tag != "resources":
+                    raise ValueError("Unexpected root element")
+            except Exception:
+                root = ET.Element("resources")
 
-            if "<resources" not in text:
-                text = "<resources>\n</resources>\n"
-            elif "</resources>" not in text:
-                text = text.rstrip() + "\n</resources>\n"
-
-            if 'name="splashscreen_background"' not in text:
-                text = text.replace(
-                    "</resources>",
-                    "  <color name=\"splashscreen_background\">#ffffff</color>\n</resources>",
-                )
-                path.write_text(text)
+            has_splash_background = any(
+                child.tag == "color" and child.attrib.get("name") == "splashscreen_background"
+                for child in root
+            )
+            if not has_splash_background:
+                color = ET.SubElement(root, "color", {"name": "splashscreen_background"})
+                color.text = "#ffffff"
+                path.write_text(ET.tostring(root, encoding="unicode") + "\n")
             PY
           fi
 
