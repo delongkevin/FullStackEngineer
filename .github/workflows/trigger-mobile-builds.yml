@@ -34,17 +34,26 @@ jobs:
             exit 1
           fi
 
-          if gh api "repos/$REPO/git/ref/heads/$REF" >/dev/null || \
-             gh api "repos/$REPO/git/ref/tags/$REF" >/dev/null || \
-             gh api "repos/$REPO/commits/$REF" >/dev/null; then
+          endpoints=(
+            "git/ref/heads/$REF"
+            "git/ref/tags/$REF"
+            "commits/$REF"
+          )
+          matched_endpoint=""
+          error_log=""
+
+          for endpoint in "${endpoints[@]}"; do
+            if output="$(gh api "repos/$REPO/$endpoint" 2>&1)"; then
+              matched_endpoint="$endpoint"
+              break
+            fi
+            error_log="${error_log}\n[$endpoint]\n$output\n"
+          done
+
+          if [[ -n "$matched_endpoint" ]]; then
             echo "Using ref: $REF"
           else
-            echo "GitHub API branch check response:"
-            gh api "repos/$REPO/git/ref/heads/$REF" || true
-            echo "GitHub API tag check response:"
-            gh api "repos/$REPO/git/ref/tags/$REF" || true
-            echo "GitHub API commit check response:"
-            gh api "repos/$REPO/commits/$REF" || true
+            printf "GitHub API ref validation errors:%b\n" "$error_log"
             echo "::error::Ref '$REF' does not exist as a branch, tag, or commit in $REPO."
             exit 1
           fi
