@@ -24,6 +24,11 @@ jobs:
         run: |
           set -euo pipefail
 
+          if [[ ! "$REF" =~ ^[A-Za-z0-9._/-]+$ ]]; then
+            echo "::error::Ref '$REF' contains unsupported characters."
+            exit 1
+          fi
+
           if gh api "repos/$REPO/git/ref/heads/$REF" >/dev/null 2>&1 || \
              gh api "repos/$REPO/git/ref/tags/$REF" >/dev/null 2>&1 || \
              gh api "repos/$REPO/commits/$REF" >/dev/null 2>&1; then
@@ -36,12 +41,10 @@ jobs:
           gh workflow view release-android.yml --repo "$REPO" >/dev/null
           gh workflow view release-ios.yml --repo "$REPO" >/dev/null
 
-      - name: Trigger Android build workflow
+      - name: Trigger Android and iOS build workflows
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh workflow run release-android.yml --repo "${{ github.repository }}" --ref "${{ github.event.inputs.ref }}"
-
-      - name: Trigger iOS build workflow
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh workflow run release-ios.yml --repo "${{ github.repository }}" --ref "${{ github.event.inputs.ref }}"
+        run: |
+          set -euo pipefail
+          gh workflow run release-android.yml --repo "${{ github.repository }}" --ref "${{ github.event.inputs.ref }}"
+          gh workflow run release-ios.yml --repo "${{ github.repository }}" --ref "${{ github.event.inputs.ref }}"
