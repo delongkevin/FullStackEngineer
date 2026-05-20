@@ -35,8 +35,8 @@ jobs:
           fi
 
           endpoints=(
-            "git/ref/heads/$REF"
-            "git/ref/tags/$REF"
+            "git/refs/heads/$REF"
+            "git/refs/tags/$REF"
             "commits/$REF"
           )
           matched_endpoint=""
