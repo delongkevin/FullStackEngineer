@@ -31,20 +31,11 @@ jobs:
 
       - name: Generate Xcode projects and build
         run: |
-          TAG="${{ env.RELEASE_TAG }}"
           mkdir -p release-ios
 
-          declare -A APPS
-          APPS[book-app]="BookStore"
-          APPS[computer-store]="ComputerStore"
-          APPS[poker-app]="PokerApp"
-          APPS[kamps-factory]="KampsSmartFactory"
-          APPS[embedded-video]="EmbeddedVideoEngineer"
-          APPS[medical-iot-monitor]="MedicalIoTMonitor"
-
           set -o pipefail
-          for dir in "${!APPS[@]}"; do
-            name="${APPS[$dir]}"
+          while IFS='|' read -r dir name; do
+            [ -n "$dir" ] || continue
             echo "▶ Generating $name.xcodeproj..."
             (cd "ios/$dir" && xcodegen generate)
 
@@ -67,7 +58,14 @@ jobs:
             ZIP_NAME="${name}-ios-sim.zip"
             ditto -c -k --keepParent "$APP_PATH" "release-ios/$ZIP_NAME"
             echo "Packaged: $ZIP_NAME"
-          done
+          done <<'EOF'
+          book-app|BookStore
+          computer-store|ComputerStore
+          poker-app|PokerApp
+          kamps-factory|KampsSmartFactory
+          embedded-video|EmbeddedVideoEngineer
+          medical-iot-monitor|MedicalIoTMonitor
+          EOF
           set +o pipefail
 
           echo "iOS artifacts:"

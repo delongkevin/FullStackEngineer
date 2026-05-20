@@ -130,18 +130,33 @@ jobs:
       - name: Align Expo Android toolchain for CI
         working-directory: ${{ matrix.app_dir }}
         run: |
-          VERSION_CATALOG="node_modules/react-native/gradle/libs.versions.toml"
+          set -euo pipefail
 
-          if [ ! -f "$VERSION_CATALOG" ]; then
-            echo "Missing React Native Gradle version catalog: $VERSION_CATALOG"
-            exit 1
+          patch_version_catalog() {
+            version_catalog="$1"
+
+            sed -i "s/^compileSdk = \".*\"/compileSdk = \"${EXPO_ANDROID_COMPILE_SDK}\"/" "$version_catalog"
+            sed -i "s/^targetSdk = \".*\"/targetSdk = \"${EXPO_ANDROID_COMPILE_SDK}\"/" "$version_catalog"
+            sed -i "s/^buildTools = \".*\"/buildTools = \"${EXPO_ANDROID_BUILD_TOOLS}\"/" "$version_catalog"
+            sed -i "s/^agp = \".*\"/agp = \"${EXPO_ANDROID_AGP}\"/" "$version_catalog"
+            sed -i "s/^kotlin = \".*\"/kotlin = \"${EXPO_ANDROID_KOTLIN}\"/" "$version_catalog"
+          }
+
+          found_version_catalog=false
+          for version_catalog in \
+            node_modules/react-native/gradle/libs.versions.toml \
+            node_modules/@react-native/gradle-plugin/gradle/libs.versions.toml
+          do
+            if [ -f "$version_catalog" ]; then
+              echo "Patching Android toolchain catalog: $version_catalog"
+              patch_version_catalog "$version_catalog"
+              found_version_catalog=true
+            fi
+          done
+
+          if [ "$found_version_catalog" = false ]; then
+            echo "No React Native version catalog found; using the app's default Android toolchain."
           fi
-
-          sed -i "s/^compileSdk = \".*\"/compileSdk = \"${EXPO_ANDROID_COMPILE_SDK}\"/" "$VERSION_CATALOG"
-          sed -i "s/^targetSdk = \".*\"/targetSdk = \"${EXPO_ANDROID_COMPILE_SDK}\"/" "$VERSION_CATALOG"
-          sed -i "s/^buildTools = \".*\"/buildTools = \"${EXPO_ANDROID_BUILD_TOOLS}\"/" "$VERSION_CATALOG"
-          sed -i "s/^agp = \".*\"/agp = \"${EXPO_ANDROID_AGP}\"/" "$VERSION_CATALOG"
-          sed -i "s/^kotlin = \".*\"/kotlin = \"${EXPO_ANDROID_KOTLIN}\"/" "$VERSION_CATALOG"
 
       - name: Generate native Android project
         working-directory: ${{ matrix.app_dir }}
@@ -149,9 +164,11 @@ jobs:
           CI: '1'
         run: npx expo prebuild --platform android --clean
 
-      - name: Override generated Android SDK settings
+      - name: Normalize generated Android project for CI
         working-directory: ${{ matrix.app_dir }}/android
         run: |
+          set -euo pipefail
+
           set_property() {
             key="$1"
             value="$2"
@@ -168,8 +185,72 @@ jobs:
           set_property android.buildToolsVersion "$EXPO_ANDROID_BUILD_TOOLS"
           set_property android.kotlinVersion "$EXPO_ANDROID_KOTLIN"
           set_property org.gradle.java.home "$JAVA_HOME"
+          set_property android.suppressUnsupportedCompileSdk "$EXPO_ANDROID_COMPILE_SDK"
+
+          python - build.gradle <<'PY'
+          from pathlib import Path
+          import os
+          import re
+          import sys
+
+          path = Path(sys.argv[1])
+          text = path.read_text()
+
+          substitutions = [
+              (
+                  r"(buildToolsVersion = findProperty\('android\.buildToolsVersion'\) \?: ')[^']+(')",
+                  rf"\g<1>{os.environ['EXPO_ANDROID_BUILD_TOOLS']}\g<2>",
+              ),
+              (
+                  r"(compileSdkVersion = Integer\.parseInt\(findProperty\('android\.compileSdkVersion'\) \?: ')[^']+('\))",
+                  rf"\g<1>{os.environ['EXPO_ANDROID_COMPILE_SDK']}\g<2>",
+              ),
+              (
+                  r"(targetSdkVersion = Integer\.parseInt\(findProperty\('android\.targetSdkVersion'\) \?: ')[^']+('\))",
+                  rf"\g<1>{os.environ['EXPO_ANDROID_COMPILE_SDK']}\g<2>",
+              ),
+              (
+                  r"(kotlinVersion = findProperty\('android\.kotlinVersion'\) \?: ')[^']+(')",
+                  rf"\g<1>{os.environ['EXPO_ANDROID_KOTLIN']}\g<2>",
+              ),
+          ]
+
+          for pattern, replacement in substitutions:
+              text = re.sub(pattern, replacement, text)
+
+          text = re.sub(
+              r"com\.android\.tools\.build:gradle:[0-9.]+",
+              f"com.android.tools.build:gradle:{os.environ['EXPO_ANDROID_AGP']}",
+              text,
+          )
+
+          path.write_text(text)
+          PY
 
           sed -i "s#distributionUrl=.*#distributionUrl=https\\://services.gradle.org/distributions/gradle-${EXPO_ANDROID_GRADLE}-all.zip#" gradle/wrapper/gradle-wrapper.properties
+
+          splash_file="app/src/main/res/drawable/splashscreen.xml"
+          colors_file="app/src/main/res/values/colors.xml"
+
+          if [ -f "$splash_file" ] && grep -q '@color/splashscreen_background' "$splash_file"; then
+            mkdir -p "$(dirname "$colors_file")"
+            python - "$colors_file" <<'PY'
+            from pathlib import Path
+            import sys
+
+            path = Path(sys.argv[1])
+            text = path.read_text() if path.exists() else "<resources>\n</resources>\n"
+
+            if 'name="splashscreen_background"' not in text:
+                if "</resources>" not in text:
+                    text += "\n</resources>\n"
+                text = text.replace(
+                    "</resources>",
+                    "  <color name=\"splashscreen_background\">#ffffff</color>\n</resources>",
+                )
+                path.write_text(text)
+            PY
+          fi
 
       - name: Build debug APK
         working-directory: ${{ matrix.app_dir }}/android
