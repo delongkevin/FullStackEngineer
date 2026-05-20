@@ -46,5 +46,11 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-          gh workflow run release-android.yml --repo "${{ github.repository }}" --ref "${{ github.event.inputs.ref }}"
-          gh workflow run release-ios.yml --repo "${{ github.repository }}" --ref "${{ github.event.inputs.ref }}"
+          if ! gh workflow run release-android.yml --repo "${{ github.repository }}" --ref "${{ github.event.inputs.ref }}"; then
+            echo "::error::Failed to dispatch release-android.yml."
+            exit 1
+          fi
+          if ! gh workflow run release-ios.yml --repo "${{ github.repository }}" --ref "${{ github.event.inputs.ref }}"; then
+            echo "::error::Failed to dispatch release-ios.yml."
+            exit 1
+          fi
