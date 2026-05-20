@@ -239,11 +239,14 @@ jobs:
             import sys
 
             path = Path(sys.argv[1])
-            text = path.read_text() if path.exists() else "<resources>\n</resources>\n"
+            text = path.read_text() if path.exists() else ""
+
+            if "<resources" not in text:
+                text = "<resources>\n</resources>\n"
+            elif "</resources>" not in text:
+                text = text.rstrip() + "\n</resources>\n"
 
             if 'name="splashscreen_background"' not in text:
-                if "</resources>" not in text:
-                    text += "\n</resources>\n"
                 text = text.replace(
                     "</resources>",
                     "  <color name=\"splashscreen_background\">#ffffff</color>\n</resources>",
