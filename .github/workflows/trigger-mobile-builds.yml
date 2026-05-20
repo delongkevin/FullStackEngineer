@@ -29,11 +29,22 @@ jobs:
             exit 1
           fi
 
-          if gh api "repos/$REPO/git/ref/heads/$REF" >/dev/null 2>&1 || \
-             gh api "repos/$REPO/git/ref/tags/$REF" >/dev/null 2>&1 || \
-             gh api "repos/$REPO/commits/$REF" >/dev/null 2>&1; then
+          if [[ "$REF" == *".."* || "$REF" == *"//"* || "$REF" == /* || "$REF" == */ ]]; then
+            echo "::error::Ref '$REF' has an invalid format."
+            exit 1
+          fi
+
+          if gh api "repos/$REPO/git/ref/heads/$REF" >/dev/null || \
+             gh api "repos/$REPO/git/ref/tags/$REF" >/dev/null || \
+             gh api "repos/$REPO/commits/$REF" >/dev/null; then
             echo "Using ref: $REF"
           else
+            echo "GitHub API branch check response:"
+            gh api "repos/$REPO/git/ref/heads/$REF" || true
+            echo "GitHub API tag check response:"
+            gh api "repos/$REPO/git/ref/tags/$REF" || true
+            echo "GitHub API commit check response:"
+            gh api "repos/$REPO/commits/$REF" || true
             echo "::error::Ref '$REF' does not exist as a branch, tag, or commit in $REPO."
             exit 1
           fi
