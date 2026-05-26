@@ -87,10 +87,10 @@ export default function Header() {
   return (
     <header className="fixed top-0 w-full theme-header backdrop-blur-md z-50 border-b">
       <nav className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Main navigation">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-14 sm:h-16 gap-2">
           {/* Logo */}
-          <div className="flex-shrink-0">
-            <Link href="/" className="text-2xl font-bold theme-accent-text">
+          <div className="flex-shrink min-w-0">
+            <Link href="/" className="text-lg sm:text-2xl font-bold theme-accent-text truncate block">
               Kevin Delong
             </Link>
           </div>
@@ -123,7 +123,7 @@ export default function Header() {
             <button
               ref={menuButtonRef}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="theme-text-secondary hover:opacity-80 p-2"
+              className="theme-text-secondary hover:opacity-80 p-2 min-h-[44px] min-w-[44px]"
               aria-expanded={isMenuOpen}
               aria-controls="mobile-menu"
               aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}

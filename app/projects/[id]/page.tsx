@@ -88,28 +88,6 @@ export default function ProjectDetail({ params }: PageProps) {
       
       <main id="main-content" className="pt-24 pb-16 min-h-screen">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="sticky top-20 z-30 mb-6 surface-card rounded-xl shadow-md px-4 py-3 flex flex-wrap items-center gap-3">
-            <p className="text-sm font-semibold theme-text-secondary">Quick Actions</p>
-            <a
-              href={project.liveUrl}
-              className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700"
-              target={project.liveUrl.startsWith('http') ? '_blank' : '_self'}
-              rel={project.liveUrl.startsWith('http') ? 'noopener noreferrer' : ''}
-            >
-              <ExternalLink size={16} aria-hidden="true" />
-              Open Demo
-            </a>
-            <a
-              href={project.githubUrl}
-              className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border theme-border theme-text-secondary text-sm font-semibold hover:opacity-90 surface-subtle"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Github size={16} aria-hidden="true" />
-              Source Code
-            </a>
-          </div>
-
           {/* Back Button */}
           <Link
             href="/projects"

@@ -127,16 +127,16 @@ export default function ResumePage() {
       <main id="main-content" className="pt-24 pb-16 min-h-screen">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
-          <section aria-labelledby="resume-heading" className="text-center mb-12">
-            <h1 id="resume-heading" className="text-4xl font-bold theme-text-primary mb-4">Resume</h1>
-              <p className="text-xl theme-text-secondary max-w-2xl mx-auto">
+          <section aria-labelledby="resume-heading" className="text-center mb-10 sm:mb-12">
+            <h1 id="resume-heading" className="text-3xl sm:text-4xl font-bold theme-text-primary mb-4">Resume</h1>
+              <p className="text-base sm:text-xl theme-text-secondary max-w-2xl mx-auto">
                Software Engineer - Full Stack specializing in mobile and web development with expertise in React, React Native, Node.js, and cloud technologies.
               </p>
           </section>
 
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 sm:gap-8">
           {/* Sidebar */}
-          <div className="lg:col-span-1 space-y-8">
+          <div className="lg:col-span-1 order-2 lg:order-1 space-y-6 sm:space-y-8">
             {/* Headshot */}
             <div className="surface-card rounded-xl shadow-lg p-6 text-center">
               <div className="relative w-32 h-32 mx-auto mb-4">
@@ -193,7 +193,7 @@ export default function ResumePage() {
             </div>
 
             {/* Main Content */}
-            <div className="lg:col-span-3 space-y-8">
+            <div className="lg:col-span-3 order-1 lg:order-2 space-y-6 sm:space-y-8">
               {/* Summary */}
               <section aria-labelledby="summary-heading" className="surface-card rounded-xl shadow-lg p-6">
                 <h2 id="summary-heading" className="text-2xl font-bold theme-text-primary mb-4">Professional Summary</h2>

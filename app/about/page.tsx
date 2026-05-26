@@ -91,15 +91,15 @@ export default function AboutPage() {
       <main id="main-content" className="pt-24 pb-16 min-h-screen">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Hero Section */}
-          <section aria-labelledby="about-heading" className="text-center mb-16">
-            <h1 id="about-heading" className="text-4xl font-bold theme-text-primary mb-4">About Me</h1>
-            <p className="text-xl theme-text-secondary max-w-3xl mx-auto">
+          <section aria-labelledby="about-heading" className="text-center mb-12 sm:mb-16">
+            <h1 id="about-heading" className="text-3xl sm:text-4xl font-bold theme-text-primary mb-4">About Me</h1>
+            <p className="text-base sm:text-xl theme-text-secondary max-w-3xl mx-auto">
               Passionate engineer {introSummaryText} with a focus on scalable architecture and polished user experiences.
             </p>
           </section>
 
           {/* About Content */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 mb-14 sm:mb-16">
             <section aria-labelledby="journey-heading">
               <h2 id="journey-heading" className="text-2xl font-bold theme-text-primary mb-6">My Journey</h2>
               <div className="space-y-4 theme-text-secondary">
@@ -116,10 +116,10 @@ export default function AboutPage() {
               <h2 id="skills-heading" className="text-2xl font-bold theme-text-primary mb-6">Skills & Technologies</h2>
               
               {/* Skill Categories */}
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-8">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mb-8">
                 {skillIcons.map((item) => (
                   <div key={item.label} className="text-center">
-                    <div className={`surface-subtle w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3 ${item.color}`} aria-hidden="true">
+                    <div className={`surface-subtle w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center mx-auto mb-3 ${item.color}`} aria-hidden="true">
                       <item.icon size={32} aria-hidden="true" />
                     </div>
                     <span className="text-sm font-medium theme-text-secondary">{item.label}</span>
@@ -207,7 +207,7 @@ export default function AboutPage() {
               Project Portfolio Overview
             </h2>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mb-8">
               {projectCategorySummary.map((item) => (
                 <div key={item.rawCategory} className="surface-card rounded-xl p-4 text-center">
                   <p className="text-3xl font-bold theme-accent-text">{item.count}</p>

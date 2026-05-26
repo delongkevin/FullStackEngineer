@@ -54,23 +54,23 @@ export default function ContactPage() {
       <main id="main-content" className="pt-24 pb-16 min-h-screen">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
-          <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold theme-text-primary mb-4">Get In Touch</h1>
-            <p className="text-xl theme-text-secondary max-w-2xl mx-auto">
+          <div className="text-center mb-10 sm:mb-12">
+            <h1 className="text-3xl sm:text-4xl font-bold theme-text-primary mb-4">Get In Touch</h1>
+            <p className="text-base sm:text-xl theme-text-secondary max-w-2xl mx-auto">
               Have a project in mind or want to collaborate? I'd love to hear from you. 
               Send me a message and I'll respond as soon as possible.
              </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 sm:gap-12">
             {/* Contact Information */}
             <div className="lg:col-span-1">
               <h2 className="text-2xl font-bold theme-text-primary mb-6">Contact Information</h2>
                
               <div className="space-y-6">
                                 <div className="flex items-start">
-                  <div className="bg-blue-100 p-3 rounded-full mr-4" aria-hidden="true">
-                    <Mail className="text-blue-600" size={20} />
+                  <div className="p-3 rounded-full mr-4" aria-hidden="true" style={{ background: 'var(--accent-soft)' }}>
+                    <Mail className="theme-accent-text" size={20} />
                   </div>
                   <div>
                     <h3 className="font-semibold theme-text-primary">Email</h3>
@@ -80,8 +80,8 @@ export default function ContactPage() {
                 </div>
 
                                 <div className="flex items-start">
-                  <div className="bg-green-100 p-3 rounded-full mr-4" aria-hidden="true">
-                    <Phone className="text-green-600" size={20} />
+                  <div className="p-3 rounded-full mr-4" aria-hidden="true" style={{ background: 'var(--accent-soft)' }}>
+                    <Phone className="theme-accent-text" size={20} />
                   </div>
                   <div>
                     <h3 className="font-semibold theme-text-primary">Phone</h3>
@@ -91,8 +91,8 @@ export default function ContactPage() {
                 </div>
 
                                 <div className="flex items-start">
-                  <div className="bg-purple-100 p-3 rounded-full mr-4" aria-hidden="true">
-                    <MapPin className="text-purple-600" size={20} />
+                  <div className="p-3 rounded-full mr-4" aria-hidden="true" style={{ background: 'var(--accent-soft)' }}>
+                    <MapPin className="theme-accent-text" size={20} />
                   </div>
                   <div>
                     <h3 className="font-semibold theme-text-primary">Location</h3>
@@ -101,8 +101,8 @@ export default function ContactPage() {
                   </div>
                 </div>
                             <div className="flex items-start">
-                <div className="bg-pink-100 p-3 rounded-full mr-4" aria-hidden="true">
-                  <Heart className="text-pink-600" size={30} />
+                <div className="p-3 rounded-full mr-4" aria-hidden="true" style={{ background: 'var(--accent-soft)' }}>
+                  <Heart className="theme-accent-text" size={28} />
                 </div>
                 <div>
                   <h3 className="font-semibold theme-text-primary">Support My Work</h3>
@@ -111,7 +111,7 @@ export default function ContactPage() {
                   </p>
                   <a
                     href="https://account.venmo.com/u/KDelong147"
-                    className="inline-flex items-center gap-2 text-pink-600 hover:text-pink-700 font-medium transition-colors"
+                    className="inline-flex items-center gap-2 theme-accent-text hover:opacity-85 font-medium transition-colors"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -132,7 +132,7 @@ export default function ContactPage() {
           <div className="flex space-x-4">
                                     <a
                                       href="https://github.com/delongkevin"
-                    className="surface-subtle theme-text-secondary hover:opacity-80 w-10 h-10 rounded-full flex items-center justify-center transition-colors"
+                    className="surface-subtle theme-text-secondary hover:opacity-80 w-11 h-11 rounded-full flex items-center justify-center transition-colors"
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="GitHub profile"
@@ -141,7 +141,7 @@ export default function ContactPage() {
                   </a>
                                     <a
                     href="https://x.com/delongkevin1446"
-                    className="surface-subtle theme-text-secondary hover:opacity-80 w-10 h-10 rounded-full flex items-center justify-center transition-colors"
+                    className="surface-subtle theme-text-secondary hover:opacity-80 w-11 h-11 rounded-full flex items-center justify-center transition-colors"
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Twitter profile"
@@ -160,7 +160,7 @@ export default function ContactPage() {
                 method="POST"
                 data-netlify="true"
                 noValidate
-                className="surface-card rounded-2xl shadow-lg p-8"
+                className="surface-card rounded-2xl shadow-lg p-5 sm:p-8"
               >
                 <input type="hidden" name="form-name" value="contact"/>
                 
@@ -177,7 +177,7 @@ export default function ContactPage() {
                       aria-required="true"
                       aria-invalid={errors.name ? "true" : "false"}
                       aria-describedby={errors.name ? "name-error" : undefined}
-                      className="w-full px-4 py-3 theme-input rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                      className="w-full px-4 py-3 theme-input rounded-lg text-base focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                       placeholder="Enter your name"
                     />
                     {errors.name && (
@@ -199,7 +199,7 @@ export default function ContactPage() {
                       aria-required="true"
                       aria-invalid={errors.email ? "true" : "false"}
                       aria-describedby={errors.email ? "email-error" : undefined}
-                      className="w-full px-4 py-3 theme-input rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                      className="w-full px-4 py-3 theme-input rounded-lg text-base focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                       placeholder="Enter your email"
                     />
                     {errors.email && (
@@ -222,7 +222,7 @@ export default function ContactPage() {
                     aria-required="true"
                     aria-invalid={errors.subject ? "true" : "false"}
                     aria-describedby={errors.subject ? "subject-error" : undefined}
-                    className="w-full px-4 py-3 theme-input rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                    className="w-full px-4 py-3 theme-input rounded-lg text-base focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                     placeholder="What's this about?"
                   />
                   {errors.subject && (
@@ -244,7 +244,7 @@ export default function ContactPage() {
                     aria-invalid={errors.message ? "true" : "false"}
                     aria-describedby={errors.message ? "message-error" : undefined}
                     rows={6}
-                    className="w-full px-4 py-3 theme-input rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-vertical"
+                    className="w-full px-4 py-3 theme-input rounded-lg text-base focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors resize-vertical"
                     placeholder="Tell me about your project..."
                   ></textarea>
                   {errors.message && (

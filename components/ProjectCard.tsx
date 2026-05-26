@@ -17,11 +17,11 @@ export default function ProjectCard({
   compactMeta = false,
 }: ProjectCardProps) {
   const categoryLabel = formatProjectCategory(project.category);
-  const imageHeightClassName = cardSize === 'sm' ? 'h-36' : cardSize === 'lg' ? 'h-56' : 'h-48';
+  const imageHeightClassName = cardSize === 'sm' ? 'h-36 sm:h-40' : cardSize === 'lg' ? 'h-52 sm:h-56' : 'h-44 sm:h-48';
   const contentPaddingClassName = cardSize === 'sm' ? 'p-4' : cardSize === 'lg' ? 'p-7' : 'p-6';
 
   return (
-    <div className="surface-card rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:transform hover:scale-[1.02] group">
+    <div className="surface-card rounded-xl shadow-lg overflow-hidden sm:hover:shadow-xl transition-all duration-300 sm:hover:transform sm:hover:scale-[1.02] group">
       {/* Project Image - FIXED: Using actual image */}
       <div className={`${imageHeightClassName} relative overflow-hidden`}>
         {/* Replace the gradient div with Image component */}
@@ -37,7 +37,7 @@ export default function ProjectCard({
         />
         
         {/* Overlay with project info */}
-        <div className="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+        <div className="absolute inset-0 bg-black bg-opacity-40 opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
           <div className="text-center text-white p-4">
             <div className="text-xl font-bold mb-2">{project.title}</div>
             <div className="text-sm opacity-90">{categoryLabel}</div>
@@ -52,7 +52,7 @@ export default function ProjectCard({
         
         {/* Featured Badge */}
         {project.featured && (
-          <div className="absolute top-4 right-4 bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full text-sm font-medium flex items-center z-10">
+          <div className="absolute top-4 right-4 bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full text-xs sm:text-sm font-medium flex items-center z-10">
             <Star size={14} className="mr-1 fill-current" aria-hidden="true" />
             Featured
           </div>
@@ -60,14 +60,14 @@ export default function ProjectCard({
         
         {/* Interactive Badge */}
         {project.embeddable && (
-          <div className="absolute top-4 left-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium z-10">
+          <div className="absolute top-4 left-4 bg-green-500 text-white px-3 py-1 rounded-full text-xs sm:text-sm font-medium z-10">
             Interactive
           </div>
         )}
 
         {/* Mobile Platform Badges */}
         {(project.androidUrl || project.iosUrl) && !project.embeddable && (
-          <div className="absolute top-4 left-4 bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-medium z-10">
+          <div className="absolute top-4 left-4 bg-purple-600 text-white px-3 py-1 rounded-full text-xs sm:text-sm font-medium z-10">
             📱 Mobile App
           </div>
         )}
@@ -95,7 +95,7 @@ export default function ProjectCard({
       
       {/* Rest of the component remains the same */}
       <div className={contentPaddingClassName}>
-        <h3 className="text-xl font-bold theme-text-primary mb-2 group-hover:text-blue-600 transition-colors">
+        <h3 className="text-xl font-bold theme-text-primary mb-2 sm:group-hover:text-[var(--accent)] transition-colors">
           {project.title}
         </h3>
         <p className="theme-text-secondary mb-4 line-clamp-2">{project.description}</p>

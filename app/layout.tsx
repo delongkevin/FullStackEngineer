@@ -1,8 +1,16 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
+import { Fraunces, IBM_Plex_Sans, Manrope, Merriweather, Sora, Space_Grotesk } from 'next/font/google';
 import './globals.css';
 
 const siteUrl = 'https://delongkevin.github.io/FullStackEngineer';
+
+const manrope = Manrope({ subsets: ['latin'], variable: '--font-manrope' });
+const sora = Sora({ subsets: ['latin'], variable: '--font-sora' });
+const ibmPlexSans = IBM_Plex_Sans({ subsets: ['latin'], weight: ['400', '500', '600', '700'], variable: '--font-ibm-plex-sans' });
+const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], variable: '--font-space-grotesk' });
+const merriweather = Merriweather({ subsets: ['latin'], weight: ['400', '700'], variable: '--font-merriweather' });
+const fraunces = Fraunces({ subsets: ['latin'], variable: '--font-fraunces' });
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -64,8 +72,11 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en">
-      <body className="font-sans">
+    <html
+      lang="en"
+      className={`${manrope.variable} ${sora.variable} ${ibmPlexSans.variable} ${spaceGrotesk.variable} ${merriweather.variable} ${fraunces.variable}`}
+    >
+      <body>
         {plausibleDomain ? (
           <Script
             defer

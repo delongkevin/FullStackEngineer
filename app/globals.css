@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 :root {
+  --font-sans-base: var(--font-manrope), 'Avenir Next', 'Segoe UI', 'Helvetica Neue', sans-serif;
+  --font-heading-base: var(--font-sora), 'Avenir Next', 'Segoe UI', sans-serif;
+  --font-body: var(--font-sans-base);
+  --font-heading: var(--font-heading-base);
   --surface-0: #f6f8fc;
   --surface-1: #ffffff;
   --surface-2: #eef4ff;
@@ -16,6 +20,7 @@
   --accent: #2563eb;
   --accent-strong: #1d4ed8;
   --accent-soft: #dbeafe;
+  --accent-rgb: 37, 99, 235;
   --success: #16a34a;
   --warning: #d97706;
   --danger: #dc2626;
@@ -55,6 +60,43 @@ html[data-theme='contrast'] {
   --accent: #facc15;
   --accent-strong: #fde047;
   --accent-soft: #2b2400;
+  --accent-rgb: 250, 204, 21;
+}
+
+html[data-accent='teal'] {
+  --accent: #0d9488;
+  --accent-strong: #0f766e;
+  --accent-soft: #ccfbf1;
+  --accent-rgb: 13, 148, 136;
+}
+
+html[data-accent='amber'] {
+  --accent: #d97706;
+  --accent-strong: #b45309;
+  --accent-soft: #fef3c7;
+  --accent-rgb: 217, 119, 6;
+}
+
+html[data-accent='rose'] {
+  --accent: #e11d48;
+  --accent-strong: #be123c;
+  --accent-soft: #ffe4e6;
+  --accent-rgb: 225, 29, 72;
+}
+
+html[data-font-family='system'] {
+  --font-body: var(--font-manrope), 'Avenir Next', 'Segoe UI', 'Helvetica Neue', sans-serif;
+  --font-heading: var(--font-sora), 'Avenir Next', 'Segoe UI', sans-serif;
+}
+
+html[data-font-family='classic'] {
+  --font-body: var(--font-merriweather), 'Georgia', serif;
+  --font-heading: var(--font-fraunces), var(--font-merriweather), 'Georgia', serif;
+}
+
+html[data-font-family='tech'] {
+  --font-body: var(--font-ibm-plex-sans), 'Segoe UI', sans-serif;
+  --font-heading: var(--font-space-grotesk), var(--font-ibm-plex-sans), sans-serif;
 }
 
 html[data-theme='light'][data-theme-tone='soft'] {
@@ -143,8 +185,12 @@ html[data-font-scale='lg'] {
   
   body {
     @apply antialiased;
+    font-family: var(--font-body);
     color: var(--text-1);
-    background: radial-gradient(1200px 500px at 100% -10%, rgba(59, 130, 246, 0.18) 0%, transparent 52%), var(--surface-0);
+    background:
+      radial-gradient(1200px 500px at 100% -10%, rgba(var(--accent-rgb), 0.2) 0%, transparent 52%),
+      radial-gradient(900px 380px at -10% 18%, rgba(var(--accent-rgb), 0.08) 0%, transparent 60%),
+      var(--surface-0);
     filter: brightness(var(--ui-brightness));
     transition:
       background-color var(--theme-transition-duration) ease,
@@ -159,6 +205,22 @@ html[data-font-scale='lg'] {
   textarea {
     transform: scale(var(--control-scale));
     transform-origin: center;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.015em;
+  }
+
+  @media (max-width: 640px) {
+    html {
+      font-size: clamp(15px, 3.5vw, var(--base-font-size));
+    }
   }
 }
 
@@ -252,7 +314,10 @@ html[data-font-scale='lg'] {
   }
 
   .app-shell-bg {
-    background: radial-gradient(1200px 500px at 100% -10%, rgba(59, 130, 246, 0.16) 0%, transparent 52%), var(--surface-0);
+    background:
+      radial-gradient(1200px 500px at 100% -10%, rgba(var(--accent-rgb), 0.16) 0%, transparent 52%),
+      radial-gradient(900px 380px at -10% 18%, rgba(var(--accent-rgb), 0.06) 0%, transparent 60%),
+      var(--surface-0);
   }
 }
 

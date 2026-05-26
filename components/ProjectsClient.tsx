@@ -233,9 +233,9 @@ export default function ProjectsClient() {
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold theme-text-primary mb-4">My Projects</h1>
-        <p className="text-xl theme-text-secondary max-w-2xl mx-auto">
+      <div className="text-center mb-10 sm:mb-12">
+        <h1 className="text-3xl sm:text-4xl font-bold theme-text-primary mb-4">My Projects</h1>
+        <p className="text-base sm:text-xl theme-text-secondary max-w-2xl mx-auto">
           A collection of my work spanning frontend, full-stack, automotive, and mobile development.
           Each project represents unique challenges and learning experiences.
         </p>
@@ -383,13 +383,13 @@ export default function ProjectsClient() {
         </div>
       </div>
 
-      <div className="flex flex-wrap justify-center gap-4 mb-12">
+      <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-10 sm:mb-12">
         {projectCategories.map((category) => (
           <button
             key={category}
             onClick={() => handleFilterChange(category)}
             aria-pressed={filter === category}
-            className={`px-6 py-3 rounded-full font-medium transition-all min-h-[44px] ${
+            className={`px-5 sm:px-6 py-2.5 sm:py-3 rounded-full font-medium transition-all min-h-[44px] ${
               filter === category
                 ? 'bg-blue-600 text-white shadow-lg'
                 : 'surface-subtle theme-text-secondary hover:opacity-90'
