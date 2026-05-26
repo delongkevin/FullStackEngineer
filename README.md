@@ -19,6 +19,15 @@ npm run dev
 npm run build
 ```
 
+### Android Multi-App APK Build (Linux/devcontainer)
+```bash
+chmod +x scripts/build-all-android-apks.sh
+scripts/build-all-android-apks.sh
+```
+
+Useful flags:
+- `--skip-clean` skip `clean` and run only `assembleDebug`
+
 ### Preview Production Build
 ```bash
 npx serve out
