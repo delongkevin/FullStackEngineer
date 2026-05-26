@@ -45,6 +45,14 @@ export default function ProjectDetail({ params }: PageProps) {
     );
   }
 
+  const isDirectAndroidDownload = (url: string) =>
+    url.includes('/releases/download/') ||
+    url.includes('/apk-artifacts/') ||
+    /\.apk($|\?)/i.test(url);
+
+  const isDirectIosDownload = (url: string) =>
+    url.includes('/releases/download/') || /\.(ipa|zip)($|\?)/i.test(url);
+
   const projectJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
@@ -172,7 +180,7 @@ export default function ProjectDetail({ params }: PageProps) {
                   <div className="mt-4 pt-4 border-t theme-border">
                     <p className="text-sm font-semibold theme-text-secondary mb-3 flex items-center gap-2">
                       <Smartphone size={16} aria-hidden="true" />
-                      {project.androidUrl?.includes('/releases/') || project.iosUrl?.includes('/releases/')
+                      {(project.androidUrl && isDirectAndroidDownload(project.androidUrl)) || (project.iosUrl && isDirectIosDownload(project.iosUrl))
                         ? 'Download the App'
                         : 'Mobile Source Code'}
                     </p>
@@ -182,16 +190,17 @@ export default function ProjectDetail({ params }: PageProps) {
                           href={project.androidUrl}
                           className="inline-flex items-center gap-2 px-4 py-2 rounded-lg hover:opacity-90 transition-colors text-sm font-medium"
                           style={{ background: 'var(--surface-3)', color: 'var(--text-1)', border: '1px solid var(--border-soft)' }}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={`${project.androidUrl.includes('/releases/') ? 'Download' : 'View Android source for'} ${project.title}`}
+                          target={project.androidUrl.startsWith('/') ? '_self' : '_blank'}
+                          rel={project.androidUrl.startsWith('/') ? '' : 'noopener noreferrer'}
+                          download={isDirectAndroidDownload(project.androidUrl) ? true : undefined}
+                          aria-label={`${isDirectAndroidDownload(project.androidUrl) ? 'Download' : 'View Android source for'} ${project.title}`}
                         >
-                          {project.androidUrl.includes('/releases/') ? (
+                          {isDirectAndroidDownload(project.androidUrl) ? (
                             <Download size={16} aria-hidden="true" />
                           ) : (
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
                           )}
-                          <span>🤖 {project.androidUrl.includes('/releases/') ? 'Android APK' : 'Android Source'}</span>
+                          <span>🤖 {isDirectAndroidDownload(project.androidUrl) ? 'Android APK' : 'Android Source'}</span>
                         </a>
                       )}
                       {project.iosUrl && project.iosUrl !== project.androidUrl && (
@@ -199,16 +208,17 @@ export default function ProjectDetail({ params }: PageProps) {
                           href={project.iosUrl}
                           className="inline-flex items-center gap-2 px-4 py-2 rounded-lg hover:opacity-90 transition-colors text-sm font-medium"
                           style={{ background: 'var(--surface-3)', color: 'var(--text-1)', border: '1px solid var(--border-soft)' }}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label={`${project.iosUrl.includes('/releases/') ? 'Download' : 'View iOS source for'} ${project.title}`}
+                          target={project.iosUrl.startsWith('/') ? '_self' : '_blank'}
+                          rel={project.iosUrl.startsWith('/') ? '' : 'noopener noreferrer'}
+                          download={isDirectIosDownload(project.iosUrl) ? true : undefined}
+                          aria-label={`${isDirectIosDownload(project.iosUrl) ? 'Download' : 'View iOS source for'} ${project.title}`}
                         >
-                          {project.iosUrl.includes('/releases/') ? (
+                          {isDirectIosDownload(project.iosUrl) ? (
                             <Download size={16} aria-hidden="true" />
                           ) : (
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
                           )}
-                          <span>🍎 {project.iosUrl.includes('/releases/') ? 'iOS App' : 'iOS Source'}</span>
+                          <span>🍎 {isDirectIosDownload(project.iosUrl) ? 'iOS App' : 'iOS Source'}</span>
                         </a>
                       )}
                       {project.iosUrl && project.iosUrl === project.androidUrl && (

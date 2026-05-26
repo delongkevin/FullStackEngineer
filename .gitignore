@@ -56,3 +56,4 @@ android-sdk/
 # Generated Gradle caches/artifacts
 **/.gradle/
 android/apk-artifacts/
+public/apk-artifacts/*.apk

@@ -13,6 +13,10 @@ function isLocalSitePath(value: string): boolean {
   return value.startsWith('/');
 }
 
+function isLocalApkDownloadPath(value: string): boolean {
+  return /^\/apk-artifacts\/.+\.apk$/i.test(value);
+}
+
 function isGithubRepoUrl(url: string): boolean {
   return /^https:\/\/github\.com\/[^/]+\/[^/]+\/?$/.test(url);
 }
@@ -89,12 +93,20 @@ describe('link integrity', () => {
 
       mobileUrls.forEach((url) => {
         const validShape =
+          isLocalApkDownloadPath(url) ||
           isGithubTreeUrl(url) ||
           isGithubReleaseTagUrl(url) ||
           isGithubReleaseDownloadUrl(url) ||
           isGithubWorkflowUrl(url) ||
           isGithubRepoUrl(url);
         expect(validShape).toBe(true);
+
+        if (isLocalApkDownloadPath(url)) {
+          const localPublicPath = asPublicPath(url);
+          const generatedArtifactPath = path.join(repoRoot, 'public', 'apk-artifacts', '.gitkeep');
+          expect(existsSync(localPublicPath) || existsSync(generatedArtifactPath)).toBe(true);
+          return;
+        }
 
         const localPath = getLocalPathFromRepoTreeUrl(url);
         if (localPath) {

@@ -79,7 +79,7 @@ export default function ProjectCard({
               <>
                 {project.androidUrl && (
                   <span className="bg-green-700 text-white px-2 py-0.5 rounded-full text-xs font-medium">
-                    🤖 {project.androidUrl.includes('/releases/') ? 'APK' : 'Android'}
+                    🤖 {(project.androidUrl.includes('/releases/download/') || project.androidUrl.includes('/apk-artifacts/') || /\.apk($|\?)/i.test(project.androidUrl)) ? 'APK' : 'Android'}
                   </span>
                 )}
                 {project.iosUrl && (

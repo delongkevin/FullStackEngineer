@@ -25,6 +25,8 @@ chmod +x scripts/build-all-android-apks.sh
 scripts/build-all-android-apks.sh
 ```
 
+This command writes downloadable APKs to `public/apk-artifacts/` so portfolio Android links can download directly.
+
 Useful flags:
 - `--skip-clean` skip `clean` and run only `assembleDebug`
 

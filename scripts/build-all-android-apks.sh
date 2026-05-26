@@ -8,7 +8,7 @@ set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 ANDROID_DIR="$REPO_ROOT/android"
-ARTIFACT_DIR="$ANDROID_DIR/apk-artifacts"
+ARTIFACT_DIR="$REPO_ROOT/public/apk-artifacts"
 LOCAL_SDK_DEFAULT="$REPO_ROOT/android-sdk"
 SKIP_CLEAN=0
 
