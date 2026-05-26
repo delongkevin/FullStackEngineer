@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { Monitor, Moon, Sun, Contrast, Type, Minus, Plus } from 'lucide-react';
+import { createPortal } from 'react-dom';
 
 type ThemeMode = 'light' | 'dark' | 'contrast';
 type ThemeTone = 'soft' | 'balanced' | 'vivid';
@@ -100,6 +101,20 @@ export default function UxControls() {
     return () => document.removeEventListener('keydown', onKeyDown);
   }, []);
 
+  useEffect(() => {
+    if (!isDisplayOpen) {
+      document.body.style.removeProperty('overflow');
+      return;
+    }
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [isDisplayOpen]);
+
   const adjustFontScale = (direction: 'up' | 'down') => {
     const order: FontScale[] = ['sm', 'md', 'lg'];
     setPrefs((current) => {
@@ -117,8 +132,23 @@ export default function UxControls() {
 
   const renderDisplayPanelContent = () => (
     <>
-      <p className="text-sm font-semibold theme-text-primary mb-1">Display Preferences</p>
-      <p className="text-xs theme-text-secondary mb-3">Tune palette, typography, spacing, and readability for any screen.</p>
+      <div className="sticky top-0 z-10 -mx-4 px-4 pt-1 pb-3 mb-3 surface-card border-b theme-border">
+        <div className="w-12 h-1.5 mx-auto mb-3 rounded-full" style={{ background: 'var(--border-soft)' }} aria-hidden="true" />
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <p className="text-sm font-semibold theme-text-primary mb-1">Display Preferences</p>
+            <p className="text-xs theme-text-secondary">Tune palette, typography, spacing, and readability for any screen.</p>
+          </div>
+          <button
+            type="button"
+            onClick={() => setIsDisplayOpen(false)}
+            className="px-3 py-1.5 rounded-lg border theme-border text-xs font-semibold theme-text-secondary surface-subtle hover:opacity-90"
+            aria-label="Close display preferences"
+          >
+            Done
+          </button>
+        </div>
+      </div>
 
       <div className="space-y-2 mb-4">
         <p className="text-xs font-semibold uppercase tracking-wide theme-text-tertiary">Theme</p>
@@ -310,6 +340,28 @@ export default function UxControls() {
     </>
   );
 
+  const displayOverlay = (
+    <div
+      className="fixed inset-0 z-[90] flex items-end md:items-start md:justify-end"
+      style={{ background: 'var(--overlay-bg)' }}
+      onClick={() => setIsDisplayOpen(false)}
+    >
+      <div
+        id="display-controls"
+        className="w-full md:w-80 md:mt-20 md:mr-4 rounded-t-2xl md:rounded-xl surface-card p-4 shadow-xl overflow-y-auto"
+        style={{
+          maxHeight: 'min(90dvh, calc(100svh - 0.75rem))',
+          paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 1rem)',
+        }}
+        role="dialog"
+        aria-label="Display preferences"
+        onClick={(event) => event.stopPropagation()}
+      >
+        {renderDisplayPanelContent()}
+      </div>
+    </div>
+  );
+
   return (
     <>
       <div className="flex items-center gap-2">
@@ -326,23 +378,7 @@ export default function UxControls() {
         </button>
       </div>
 
-      {isDisplayOpen && (
-        <div
-          className="fixed inset-0 z-[65] flex items-end md:items-start md:justify-end"
-          style={{ background: 'var(--overlay-bg)' }}
-          onClick={() => setIsDisplayOpen(false)}
-        >
-          <div
-            id="display-controls"
-            className="w-full md:w-80 md:mt-20 md:mr-4 rounded-t-2xl md:rounded-xl surface-card p-4 shadow-xl max-h-[85vh] overflow-y-auto"
-            role="dialog"
-            aria-label="Display preferences"
-            onClick={(event) => event.stopPropagation()}
-          >
-            {renderDisplayPanelContent()}
-          </div>
-        </div>
-      )}
+      {isMounted && isDisplayOpen ? createPortal(displayOverlay, document.body) : null}
 
     </>
   );
