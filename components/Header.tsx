@@ -116,7 +116,9 @@ export default function Header() {
             </div>
           </div>
 
-          <UxControls />
+          <div className="hidden md:flex">
+            <UxControls />
+          </div>
 
           {/* Mobile menu button */}
           <div className="md:hidden">
