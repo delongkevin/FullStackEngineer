@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.yourname.bookstore.R
 import com.yourname.bookstore.databinding.FragmentOrderConfirmationBinding
 import java.text.SimpleDateFormat
 import java.util.*
@@ -35,8 +36,7 @@ class OrderConfirmationFragment : Fragment() {
         binding.estimatedDelivery.text = "Estimated delivery: ${getDeliveryDate()}"
         
         binding.continueShoppingButton.setOnClickListener {
-            // Navigate back to book list and clear back stack
-            findNavController().popBackStack()
+            findNavController().popBackStack(R.id.bookListFragment, false)
         }
     }
     

@@ -10,7 +10,7 @@ import {
 import { ordersAPI } from '../services/api';
 
 const OrderTrackingScreen = ({ route }) => {
-  const { orderId } = route.params;
+  const orderId = route?.params?.orderId;
   const [order, setOrder] = useState(null);
   const [tracking, setTracking] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -21,9 +21,22 @@ const OrderTrackingScreen = ({ route }) => {
 
   const loadOrderDetails = async () => {
     try {
+      let targetOrderId = orderId;
+
+      if (!targetOrderId) {
+        const allOrders = await ordersAPI.getOrders();
+        if (!allOrders.length) {
+          setOrder(null);
+          setTracking(null);
+          return;
+        }
+
+        targetOrderId = allOrders[0].id;
+      }
+
       const [orderData, trackingData] = await Promise.all([
-        ordersAPI.getOrder(orderId),
-        ordersAPI.trackOrder(orderId),
+        ordersAPI.getOrder(targetOrderId),
+        ordersAPI.trackOrder(targetOrderId),
       ]);
       setOrder(orderData);
       setTracking(trackingData);

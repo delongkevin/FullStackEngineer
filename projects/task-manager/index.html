@@ -168,6 +168,37 @@
       margin-left: auto;
     }
 
+    .notice {
+      margin: 12px 0 4px;
+      min-height: 0;
+    }
+
+    .notice-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(15, 23, 42, 0.72);
+      color: #f8fafc;
+      box-shadow: 0 8px 22px rgba(15, 23, 42, 0.18);
+      font-size: 0.92rem;
+    }
+
+    .notice-btn {
+      border: 1px solid rgba(255,255,255,0.32);
+      background: rgba(255,255,255,0.12);
+      color: #f8fafc;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
     .action-btn {
       border: 1.5px solid var(--border);
       background: var(--card);
@@ -542,8 +573,11 @@
       <div class="toolbar-actions">
         <button class="action-btn" type="button" onclick="clearCompleted()">Clear completed</button>
         <button class="action-btn" type="button" onclick="exportTasks()">Export</button>
+        <button class="action-btn" type="button" onclick="triggerImport()">Import</button>
       </div>
     </div>
+
+    <div class="notice" id="action-notice" aria-live="polite"></div>
 
     <!-- Task list -->
     <div class="task-list" id="task-list"></div>
@@ -552,7 +586,7 @@
 
   <!-- Edit Modal -->
   <div class="modal-overlay" id="edit-modal">
-    <div class="modal" role="dialog" aria-modal="true" aria-label="Edit task">
+    <div class="modal" role="dialog" aria-modal="true" aria-label="Edit task" tabindex="-1">
       <div class="modal-header">
         <h2>✏️ Edit Task</h2>
         <button class="close-btn" onclick="closeModal()" aria-label="Close">✕</button>
@@ -589,10 +623,40 @@
     // ── STORAGE ───────────────────────────────────────────────────────────
     const STORE_KEY = 'taskflow_tasks';
     const PREF_KEY = 'taskflow_prefs_v1';
+    const IMPORT_KEY = 'taskflow_import';
+    let lastFocusedElement = null;
+    let undoSnapshot = null;
+    let undoLabel = '';
 
     function loadTasks() {
-      try { return JSON.parse(localStorage.getItem(STORE_KEY)) || []; }
+      try {
+        const raw = localStorage.getItem(STORE_KEY);
+        if (!raw) return [];
+
+        const parsed = JSON.parse(raw);
+        if (!Array.isArray(parsed)) return [];
+
+        return parsed
+          .map(normalizeTask)
+          .filter(Boolean);
+      }
       catch { return []; }
+    }
+
+    function normalizeTask(task) {
+      if (!task || typeof task !== 'object') return null;
+      if (typeof task.title !== 'string' || !task.title.trim()) return null;
+
+      return {
+        id: Number.isFinite(Number(task.id)) ? Number(task.id) : Date.now() + Math.floor(Math.random() * 1000),
+        title: task.title.trim(),
+        desc: typeof task.desc === 'string' ? task.desc : '',
+        priority: ['low', 'medium', 'high'].includes(task.priority) ? task.priority : 'medium',
+        category: typeof task.category === 'string' ? task.category : 'Other',
+        dueDate: typeof task.dueDate === 'string' ? task.dueDate : '',
+        done: Boolean(task.done),
+        created: Number.isFinite(Number(task.created)) ? Number(task.created) : Date.now(),
+      };
     }
 
     function saveTasks(tasks) {
@@ -625,6 +689,39 @@
       } catch {
         // Ignore malformed preferences.
       }
+    }
+
+    function showNotice(message, undoText = '', snapshotTasks = null) {
+      const notice = document.getElementById('action-notice');
+      if (!notice) return;
+
+      undoSnapshot = snapshotTasks ? snapshotTasks.map((task) => ({ ...task })) : null;
+      undoLabel = message;
+
+      notice.innerHTML = `
+        <div class="notice-bar">
+          <span>${message}</span>
+          ${snapshotTasks ? `<button class="notice-btn" type="button" onclick="undoLastAction()">${undoText}</button>` : ''}
+        </div>
+      `;
+    }
+
+    function clearNotice() {
+      const notice = document.getElementById('action-notice');
+      if (notice) {
+        notice.innerHTML = '';
+      }
+      undoSnapshot = null;
+      undoLabel = '';
+    }
+
+    function undoLastAction() {
+      if (!undoSnapshot) return;
+      tasks = undoSnapshot.map((task) => ({ ...task }));
+      saveTasks(tasks);
+      clearNotice();
+      renderTasks();
+      updateStats();
     }
 
     // ── STATE ─────────────────────────────────────────────────────────────
@@ -666,6 +763,7 @@
       };
       tasks.unshift(task);
       saveTasks(tasks);
+      clearNotice();
       document.getElementById('new-title').value = '';
       document.getElementById('new-desc').value  = '';
       document.getElementById('new-due').value = '';
@@ -676,14 +774,25 @@
     // ── TOGGLE DONE ───────────────────────────────────────────────────────
     function toggleDone(id) {
       const t = tasks.find(t => t.id === id);
-      if (t) { t.done = !t.done; saveTasks(tasks); renderTasks(); updateStats(); }
+      if (t) {
+        t.done = !t.done;
+        saveTasks(tasks);
+        clearNotice();
+        renderTasks();
+        updateStats();
+      }
     }
 
     // ── DELETE ────────────────────────────────────────────────────────────
     function deleteTask(id) {
       if (!confirm('Delete this task?')) return;
+      const deletedTask = tasks.find((task) => task.id === id);
+      const snapshot = tasks.map((task) => ({ ...task }));
       tasks = tasks.filter(t => t.id !== id);
       saveTasks(tasks);
+      if (deletedTask) {
+        showNotice(`Deleted "${deletedTask.title}".`, 'Undo', snapshot);
+      }
       renderTasks();
       updateStats();
     }
@@ -692,6 +801,7 @@
     function openEdit(id) {
       const t = tasks.find(t => t.id === id);
       if (!t) return;
+      lastFocusedElement = document.activeElement;
       editingId = id;
       document.getElementById('edit-title').value    = t.title;
       document.getElementById('edit-desc').value     = t.desc || '';
@@ -699,6 +809,7 @@
       document.getElementById('edit-due').value = t.dueDate || '';
       document.getElementById('edit-category').value = t.category;
       document.getElementById('edit-modal').classList.add('open');
+      document.getElementById('edit-title').focus();
     }
 
     function saveEdit() {
@@ -712,15 +823,37 @@
       saveTasks(tasks);
       closeModal();
       renderTasks();
+      updateStats();
     }
 
     function closeModal() {
       editingId = null;
       document.getElementById('edit-modal').classList.remove('open');
+      if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
+        lastFocusedElement.focus();
+      }
     }
 
     document.getElementById('edit-modal').addEventListener('click', function(e) {
       if (e.target === this) closeModal();
+    });
+
+    document.getElementById('edit-modal').addEventListener('keydown', function(event) {
+      if (event.key !== 'Tab') return;
+
+      const focusable = Array.from(this.querySelectorAll('button, input, textarea, select, [tabindex]:not([tabindex="-1"])'));
+      if (focusable.length === 0) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     });
 
     // ── FILTER ────────────────────────────────────────────────────────────
@@ -832,10 +965,61 @@
       if (completedCount === 0) return;
       if (!confirm('Clear all completed tasks?')) return;
 
+      const snapshot = tasks.map((task) => ({ ...task }));
+      const completedSnapshot = tasks.filter((task) => task.done).map((task) => ({ ...task }));
       tasks = tasks.filter((task) => !task.done);
       saveTasks(tasks);
+      showNotice(`Cleared ${completedSnapshot.length} completed task${completedSnapshot.length !== 1 ? 's' : ''}.`, 'Undo', snapshot);
       renderTasks();
       updateStats();
+    }
+
+    function triggerImport() {
+      let input = document.getElementById(IMPORT_KEY);
+      if (!input) {
+        input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'application/json';
+        input.id = IMPORT_KEY;
+        input.style.display = 'none';
+        document.body.appendChild(input);
+        input.addEventListener('change', handleImportFile);
+      }
+
+      input.value = '';
+      input.click();
+    }
+
+    function handleImportFile(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const parsed = JSON.parse(String(reader.result || '[]'));
+          if (!Array.isArray(parsed)) {
+            alert('Import file must contain an array of tasks.');
+            return;
+          }
+
+          const imported = parsed.map(normalizeTask).filter(Boolean);
+          if (imported.length === 0) {
+            alert('No valid tasks found in the import file.');
+            return;
+          }
+
+          tasks = [...imported, ...tasks];
+          saveTasks(tasks);
+          clearNotice();
+          renderTasks();
+          updateStats();
+        } catch {
+          alert('Unable to import tasks. Please choose a valid JSON export.');
+        }
+      };
+
+      reader.readAsText(file);
     }
 
     function exportTasks() {
@@ -849,16 +1033,18 @@
 
     // ── UTILS ─────────────────────────────────────────────────────────────
     function escHtml(s) {
-      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
     }
 
     function formatDate(ts) {
       const d = new Date(ts);
+      if (Number.isNaN(d.getTime())) return 'Invalid date';
       return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
     }
 
     function formatDueDate(iso) {
       const d = new Date(iso + 'T00:00:00');
+      if (Number.isNaN(d.getTime())) return 'Invalid date';
       return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
     }
 

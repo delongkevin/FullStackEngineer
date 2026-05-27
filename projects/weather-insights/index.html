@@ -215,6 +215,36 @@
 
     const hours = ['1 PM', '4 PM', '7 PM', '10 PM'];
     const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    const CITY_COORDS = {
+      austin: { latitude: 30.2672, longitude: -97.7431 },
+      seattle: { latitude: 47.6062, longitude: -122.3321 },
+      denver: { latitude: 39.7392, longitude: -104.9903 }
+    };
+    const WEATHER_CACHE_KEY = 'weather_insights_cache_v1';
+    const WEATHER_CACHE_TTL_MS = 15 * 60 * 1000;
+    const WEATHER_CODE_LABELS = {
+      0: 'Clear',
+      1: 'Mostly Clear',
+      2: 'Partly Cloudy',
+      3: 'Cloudy',
+      45: 'Fog',
+      48: 'Fog',
+      51: 'Drizzle',
+      53: 'Drizzle',
+      55: 'Heavy Drizzle',
+      61: 'Light Rain',
+      63: 'Rain',
+      65: 'Heavy Rain',
+      71: 'Light Snow',
+      73: 'Snow',
+      75: 'Heavy Snow',
+      80: 'Rain Showers',
+      81: 'Rain Showers',
+      82: 'Heavy Showers',
+      95: 'Thunderstorm',
+      96: 'Thunderstorm',
+      99: 'Severe Thunderstorm'
+    };
     const cityEl = document.getElementById('city');
     const unitBtn = document.getElementById('unitBtn');
     const alertsBtn = document.getElementById('alertsBtn');
@@ -226,6 +256,140 @@
     let isMetric = false;
     let alertsEnabled = true;
     let favoriteCity = '';
+
+    function loadWeatherCache() {
+      try {
+        const raw = localStorage.getItem(WEATHER_CACHE_KEY);
+        return raw ? JSON.parse(raw) : {};
+      } catch {
+        return {};
+      }
+    }
+
+    function saveWeatherCache(cache) {
+      try {
+        localStorage.setItem(WEATHER_CACHE_KEY, JSON.stringify(cache));
+      } catch {
+        // Best effort cache persistence.
+      }
+    }
+
+    function mapWeatherCode(code) {
+      return WEATHER_CODE_LABELS[code] || 'Unknown';
+    }
+
+    function iconForCode(code) {
+      if (code >= 95) return 'Storm';
+      if (code >= 80) return 'Showers';
+      if (code >= 71) return 'Snow';
+      if (code >= 61) return 'Rain';
+      if (code >= 45) return 'Fog';
+      if (code >= 1) return 'Cloud';
+      return 'Sun';
+    }
+
+    function calculateRisk(data) {
+      const score = Math.min(10, Math.round((data.humidity / 20) + (data.windMph / 7) + (data.uv / 2)));
+      const level = score >= 7 ? 'High' : score >= 4 ? 'Moderate' : 'Low';
+      return `${level} (${score}/10)`;
+    }
+
+    function deriveAlert(data) {
+      if (data.uv >= 8) {
+        return 'Heat advisory: Limit strenuous activity during peak afternoon UV.';
+      }
+
+      if (data.windMph >= 20) {
+        return 'Wind advisory: Strong gusts expected. Secure outdoor items.';
+      }
+
+      if (data.precipChance >= 70) {
+        return 'Road advisory: Wet conditions likely. Allow extra commute time.';
+      }
+
+      return 'No severe advisories in your selected city right now.';
+    }
+
+    async function fetchCityWeather(cityKey) {
+      const coords = CITY_COORDS[cityKey];
+      if (!coords) {
+        return weatherData[cityKey];
+      }
+
+      const url = new URL('https://api.open-meteo.com/v1/forecast');
+      url.searchParams.set('latitude', coords.latitude);
+      url.searchParams.set('longitude', coords.longitude);
+      url.searchParams.set('hourly', 'temperature_2m,weather_code,precipitation_probability');
+      url.searchParams.set('daily', 'temperature_2m_max,weather_code');
+      url.searchParams.set('current', 'temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,uv_index,weather_code,precipitation_probability');
+      url.searchParams.set('temperature_unit', 'fahrenheit');
+      url.searchParams.set('wind_speed_unit', 'mph');
+      url.searchParams.set('forecast_days', '7');
+      url.searchParams.set('timezone', 'auto');
+
+      const response = await fetch(url.toString());
+      if (!response.ok) {
+        throw new Error(`Failed weather fetch (${response.status})`);
+      }
+
+      const payload = await response.json();
+      const current = payload.current;
+      const hourly = payload.hourly;
+      const daily = payload.daily;
+      if (!current || !hourly || !daily) {
+        throw new Error('Provider payload missing required fields');
+      }
+
+      const hourStart = new Date();
+      const hourLabels = [];
+      const hourlyF = [];
+      const hourlySky = [];
+      for (let i = 0; i < 4; i += 1) {
+        const d = new Date(hourStart.getTime() + (i * 3 * 60 * 60 * 1000));
+        hourLabels.push(d.toLocaleTimeString([], { hour: 'numeric' }));
+        hourlyF.push(Math.round(hourly.temperature_2m[i]));
+        hourlySky.push(iconForCode(hourly.weather_code[i]));
+      }
+
+      const weekF = daily.temperature_2m_max.slice(0, 7).map((v) => Math.round(v));
+      const next = {
+        currentF: Math.round(current.temperature_2m),
+        feelsF: Math.round(current.apparent_temperature),
+        condition: mapWeatherCode(current.weather_code),
+        windMph: Math.round(current.wind_speed_10m),
+        humidity: Math.round(current.relative_humidity_2m),
+        uv: Math.round(current.uv_index || 0),
+        precipChance: Math.round(current.precipitation_probability || 0),
+        risk: 'Low (1/10)',
+        alert: '',
+        hourlySky,
+        hourlyF,
+        weekF,
+        dynamicHours: hourLabels,
+        fetchedAt: new Date().toISOString(),
+        source: 'provider'
+      };
+
+      next.risk = calculateRisk(next);
+      next.alert = deriveAlert(next);
+      return next;
+    }
+
+    async function ensureCityData(cityKey) {
+      const cache = loadWeatherCache();
+      const cachedEntry = cache[cityKey];
+      const isFresh = cachedEntry && (Date.now() - cachedEntry.savedAt) < WEATHER_CACHE_TTL_MS;
+
+      if (isFresh) {
+        weatherData[cityKey] = { ...cachedEntry.data, source: 'cache' };
+        return;
+      }
+
+      const latest = await fetchCityWeather(cityKey);
+      weatherData[cityKey] = latest;
+      cache[cityKey] = { data: latest, savedAt: Date.now() };
+      saveWeatherCache(cache);
+    }
 
     function toC(f) {
       return Math.round((f - 32) * 5 / 9);
@@ -275,9 +439,20 @@
       return cityKey ? cityKey.charAt(0).toUpperCase() + cityKey.slice(1) : 'None';
     }
 
-    function renderWeather() {
+    async function renderWeather() {
       const city = cityEl.value;
+      const statusEl = document.getElementById('lastUpdated');
+
+      statusEl.textContent = 'Refreshing live weather...';
+
+      try {
+        await ensureCityData(city);
+      } catch {
+        statusEl.textContent = 'Live provider unavailable. Showing fallback data.';
+      }
+
       const data = weatherData[city];
+      const hourSource = Array.isArray(data.dynamicHours) ? data.dynamicHours : hours;
       document.getElementById('temp').textContent = tempLabel(data.currentF);
       document.getElementById('summary').textContent = data.condition + ' - Feels like ' + tempLabel(data.feelsF);
 
@@ -288,7 +463,9 @@
       document.getElementById('risk').textContent = 'Outdoor Risk Index: ' + data.risk;
       document.getElementById('alert').style.display = alertsEnabled ? 'block' : 'none';
       document.getElementById('alert').textContent = data.alert;
-      document.getElementById('lastUpdated').textContent = 'Updated ' + new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+      document.getElementById('lastUpdated').textContent =
+        'Updated ' + new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' }) +
+        ' · Source: ' + (data.source || 'fallback');
       favoriteBtn.textContent = 'Favorite: ' + formatFavoriteLabel(favoriteCity);
       favoriteHint.textContent = favoriteCity
         ? 'Press F to jump to ' + formatFavoriteLabel(favoriteCity)
@@ -299,7 +476,7 @@
         const cell = document.createElement('div');
         cell.className = 'pill';
         cell.innerHTML =
-          '<div>' + hours[idx] + '</div>' +
+          '<div>' + hourSource[idx] + '</div>' +
           '<div style="font-size: 16px; margin: 4px 0;">' + data.hourlySky[idx] + '</div>' +
           '<strong>' + tempLabel(t) + '</strong>';
         forecast.appendChild(cell);
@@ -319,7 +496,7 @@
       savePrefs();
     }
 
-    cityEl.addEventListener('change', renderWeather);
+    cityEl.addEventListener('change', () => { renderWeather(); });
     unitBtn.addEventListener('click', () => {
       isMetric = !isMetric;
       unitBtn.textContent = isMetric ? 'Switch to F' : 'Switch to C';

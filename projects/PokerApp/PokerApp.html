@@ -553,6 +553,8 @@
             'royal-flush': 10
         };
 
+        const SAVE_KEY = 'poker_app_saved_state_v1';
+
         // Initialize the game
         document.addEventListener('DOMContentLoaded', function() {
             initializeGame();
@@ -585,6 +587,61 @@
             
             // Disable game controls until a new game starts
             disableGameControls();
+            loadSavedGame();
+        }
+
+        function persistGame() {
+            try {
+                localStorage.setItem(SAVE_KEY, JSON.stringify({
+                    players: gameState.players,
+                    communityCards: gameState.communityCards,
+                    pot: gameState.pot,
+                    currentBet: gameState.currentBet,
+                    currentPlayerIndex: gameState.currentPlayerIndex,
+                    dealerPosition: gameState.dealerPosition,
+                    smallBlindPosition: gameState.smallBlindPosition,
+                    bigBlindPosition: gameState.bigBlindPosition,
+                    smallBlindAmount: gameState.smallBlindAmount,
+                    bigBlindAmount: gameState.bigBlindAmount,
+                    gamePhase: gameState.gamePhase,
+                    betAmount: gameState.betAmount,
+                    lastRaiseAmount: gameState.lastRaiseAmount,
+                    bettingRoundComplete: gameState.bettingRoundComplete,
+                    deck: gameState.deck,
+                    actionRequired: gameState.actionRequired,
+                    firstPlayerIndex: gameState.firstPlayerIndex,
+                    gameActive: gameState.gameActive
+                }));
+            } catch (error) {
+                console.warn('Unable to persist poker state', error);
+            }
+        }
+
+        function loadSavedGame() {
+            try {
+                const raw = localStorage.getItem(SAVE_KEY);
+                if (!raw) {
+                    updateUI();
+                    updatePlayerPositions();
+                    return;
+                }
+
+                const saved = JSON.parse(raw);
+                Object.assign(gameState, saved);
+                updateUI();
+                updatePlayerPositions();
+
+                if (gameState.gameActive) {
+                    enableGameControls();
+                    if (gameState.currentPlayerIndex === 0) {
+                        enablePlayerControls();
+                    }
+                }
+            } catch (error) {
+                console.warn('Unable to restore poker state', error);
+                updateUI();
+                updatePlayerPositions();
+            }
         }
 
         function setupEventListeners() {
@@ -664,6 +721,7 @@
             
             // Clear game log
             document.getElementById('log-entries').innerHTML = '';
+            localStorage.removeItem(SAVE_KEY);
             
             // Start a new hand
             startNewHand();
@@ -745,6 +803,8 @@
                 // AI player's turn
                 simulateAIPlayer();
             }
+
+            persistGame();
         }
 
         function createDeck() {
@@ -876,6 +936,7 @@
             
             // Update bet controls
             updateBetControls();
+            persistGame();
         }
 
         function updatePlayerPositions() {
@@ -1046,12 +1107,13 @@
 
         function allIn() {
             const player = gameState.players[0];
+            if (player.stack <= 0) return;
+
             gameState.betAmount = player.stack;
             player.isAllIn = true;
-            player.hasActed = true;
             updateBetControls();
-            
             addLogEntry(`${player.name} goes all in with $${player.stack}`);
+            placeBet();
         }
 
         function nextPlayer() {
@@ -1279,6 +1341,8 @@
                     startNewHand();
                 }, 3000);
             }
+
+            persistGame();
         }
 
         function evaluateHand(playerCards, communityCards) {

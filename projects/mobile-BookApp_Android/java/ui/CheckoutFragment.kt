@@ -7,19 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import com.yourname.bookstore.R
 import com.yourname.bookstore.databinding.FragmentCheckoutBinding
 import com.yourname.bookstore.models.Order
 import com.yourname.bookstore.viewmodel.BookStoreViewModel
-import java.util.UUID
 
 class CheckoutFragment : Fragment() {
     
     private var _binding: FragmentCheckoutBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: BookStoreViewModel by viewModels()
+    private val viewModel: BookStoreViewModel by activityViewModels()
     
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -64,10 +64,18 @@ class CheckoutFragment : Fragment() {
     
     private fun setupPlaceOrderButton() {
         binding.placeOrderButton.setOnClickListener {
-            if (validateForm()) {
+            if (validateForm() && validateCart()) {
                 processPayment()
             }
         }
+    }
+
+    private fun validateCart(): Boolean {
+        val hasItems = !viewModel.cartItems.value.isNullOrEmpty()
+        if (!hasItems) {
+            showError("Your cart is empty")
+        }
+        return hasItems
     }
     
     private fun validateForm(): Boolean {
@@ -122,33 +130,24 @@ class CheckoutFragment : Fragment() {
             binding.progressBar.visibility = View.GONE
             binding.placeOrderButton.isEnabled = true
             
-            // Create order
-            val order = createOrder(selectedPayment)
+            val order = viewModel.placeOrder(
+                shippingAddress = binding.shippingAddress.text.toString(),
+                paymentMethod = selectedPayment
+            )
+
+            if (order == null) {
+                showError("Unable to create order. Please try again.")
+                return@postDelayed
+            }
+
             completeOrder(order)
         }, 2000)
     }
     
-    private fun createOrder(paymentMethod: String): Order {
-        val items = viewModel.cartItems.value ?: emptyList()
-        val total = viewModel.totalAmount.value ?: 0.0
-        
-        return Order(
-            id = UUID.randomUUID().toString().substring(0, 8).toUpperCase(),
-            items = items,
-            totalAmount = total,
-            timestamp = System.currentTimeMillis(),
-            status = "Processing",
-            shippingAddress = binding.shippingAddress.text.toString(),
-            paymentMethod = paymentMethod
-        )
-    }
-    
     private fun completeOrder(order: Order) {
-        viewModel.clearCart()
-        
         val action = CheckoutFragmentDirections.actionCheckoutFragmentToOrderConfirmationFragment(
-            orderId = order.id,
-            totalAmount = order.totalAmount.toFloat()
+            order.id,
+            order.totalAmount.toFloat()
         )
         findNavController().navigate(action)
     }

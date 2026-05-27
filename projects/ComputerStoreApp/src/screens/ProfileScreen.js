@@ -89,7 +89,15 @@ const ProfileScreen = ({ navigation }) => {
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
             <Text style={styles.sectionTitle}>Recent Orders</Text>
-            <TouchableOpacity onPress={() => navigation.navigate('OrderTracking')}>
+            <TouchableOpacity
+              onPress={() => {
+                if (!recentOrders.length) {
+                  Alert.alert('No orders', 'You do not have any orders to track yet.');
+                  return;
+                }
+                navigation.navigate('OrderTracking', { orderId: recentOrders[0].id });
+              }}
+            >
               <Text style={styles.seeAllText}>See All</Text>
             </TouchableOpacity>
           </View>

@@ -10,9 +10,11 @@ import {
   Alert,
 } from 'react-native';
 import { useCart } from '../context/CartContext';
+import { ordersAPI } from '../services/api';
 
 const CheckoutScreen = ({ navigation }) => {
   const { cart, getCartTotal, clearCart } = useCart();
+  const [submitting, setSubmitting] = useState(false);
   const [paymentInfo, setPaymentInfo] = useState({
     cardNumber: '',
     expiryDate: '',
@@ -27,26 +29,47 @@ const CheckoutScreen = ({ navigation }) => {
     country: '',
   });
 
-  const handlePlaceOrder = () => {
+  const handlePlaceOrder = async () => {
     // Basic validation
     if (!shippingInfo.fullName || !shippingInfo.address || !paymentInfo.cardNumber) {
       Alert.alert('Error', 'Please fill in all required fields');
       return;
     }
 
-    Alert.alert(
-      'Order Confirmed!',
-      'Thank you for your purchase! Your order has been placed successfully.',
-      [
-        {
-          text: 'OK',
-          onPress: () => {
-            clearCart();
-            navigation.navigate('Home');
-          },
+    try {
+      setSubmitting(true);
+
+      const createdOrder = await ordersAPI.createOrder({
+        items: cart.items,
+        shippingInfo,
+        paymentSummary: {
+          cardholderName: paymentInfo.cardholderName,
+          cardLast4: paymentInfo.cardNumber.slice(-4),
         },
-      ]
-    );
+        subtotal: total,
+        shipping,
+        tax,
+        total: finalTotal,
+      });
+
+      Alert.alert(
+        'Order Confirmed!',
+        'Thank you for your purchase! Your order has been placed successfully.',
+        [
+          {
+            text: 'OK',
+            onPress: () => {
+              clearCart();
+              navigation.navigate('OrderTracking', { orderId: createdOrder.id });
+            },
+          },
+        ]
+      );
+    } catch (_error) {
+      Alert.alert('Error', 'Failed to place order. Please try again.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const total = getCartTotal();
@@ -159,8 +182,10 @@ const CheckoutScreen = ({ navigation }) => {
         </View>
 
         {/* Place Order Button */}
-        <TouchableOpacity style={styles.placeOrderButton} onPress={handlePlaceOrder}>
-          <Text style={styles.placeOrderText}>Place Order - ${finalTotal.toFixed(2)}</Text>
+        <TouchableOpacity style={styles.placeOrderButton} onPress={handlePlaceOrder} disabled={submitting}>
+          <Text style={styles.placeOrderText}>
+            {submitting ? 'Placing Order...' : `Place Order - $${finalTotal.toFixed(2)}`}
+          </Text>
         </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>

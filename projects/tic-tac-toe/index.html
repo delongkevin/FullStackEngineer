@@ -244,6 +244,19 @@
 
     <script type="text/babel">
         const { useState, useEffect } = React;
+        const SCORE_KEY = 'tic_tac_toe_scores_v1';
+        const SESSION_KEY = 'tic_tac_toe_session_v1';
+
+        function safeLoad(key, fallback) {
+            try {
+                const raw = localStorage.getItem(key);
+                if (!raw) return fallback;
+                const parsed = JSON.parse(raw);
+                return parsed ?? fallback;
+            } catch {
+                return fallback;
+            }
+        }
 
         const Square = ({ value, onClick, isWinning, index, winner }) => {
             return (
@@ -259,11 +272,36 @@
         };
 
         const Board = () => {
-            const [squares, setSquares] = useState(Array(9).fill(null));
-            const [isXNext, setIsXNext] = useState(true);
-            const [winner, setWinner] = useState(null);
-            const [winningLine, setWinningLine] = useState([]);
-            const [scores, setScores] = useState({ X: 0, O: 0, draws: 0 });
+            const savedSession = safeLoad(SESSION_KEY, null);
+            const [squares, setSquares] = useState(
+                Array.isArray(savedSession?.squares) && savedSession.squares.length === 9
+                    ? savedSession.squares
+                    : Array(9).fill(null)
+            );
+            const [isXNext, setIsXNext] = useState(typeof savedSession?.isXNext === 'boolean' ? savedSession.isXNext : true);
+            const [winner, setWinner] = useState(savedSession?.winner ?? null);
+            const [winningLine, setWinningLine] = useState(Array.isArray(savedSession?.winningLine) ? savedSession.winningLine : []);
+            const [scores, setScores] = useState(() => {
+                const savedScores = safeLoad(SCORE_KEY, { X: 0, O: 0, draws: 0 });
+                return {
+                    X: Number(savedScores?.X) || 0,
+                    O: Number(savedScores?.O) || 0,
+                    draws: Number(savedScores?.draws) || 0,
+                };
+            });
+
+            useEffect(() => {
+                localStorage.setItem(SCORE_KEY, JSON.stringify(scores));
+            }, [scores]);
+
+            useEffect(() => {
+                localStorage.setItem(SESSION_KEY, JSON.stringify({
+                    squares,
+                    isXNext,
+                    winner,
+                    winningLine,
+                }));
+            }, [squares, isXNext, winner, winningLine]);
 
             useEffect(() => {
                 // Check for winner after each move
@@ -320,6 +358,10 @@
                 setWinningLine([]);
             };
 
+            const resetScores = () => {
+                setScores({ X: 0, O: 0, draws: 0 });
+            };
+
             const renderSquare = (i) => {
                 return (
                     <Square
@@ -372,6 +414,9 @@
                     
                     <button className="reset-btn" onClick={resetGame}>
                         {winner ? 'New Game' : 'Reset Board'}
+                    </button>
+                    <button className="reset-btn" onClick={resetScores} style={{ marginTop: '8px', background: '#4b5563' }}>
+                        Reset Scoreboard
                     </button>
                     
                     <h2 className="visually-hidden">Score Board</h2>

@@ -5,7 +5,16 @@ plugins {
 }
 
 android {
+    namespace = "com.yourname.bookstore"
     compileSdk = 34
+
+    sourceSets {
+        getByName("main") {
+            java.srcDirs("../java")
+            res.srcDirs("../res")
+            manifest.srcFile("src/main/AndroidManifest.xml")
+        }
+    }
 
     defaultConfig {
         applicationId = "com.yourname.bookstore"
@@ -27,6 +36,15 @@ android {
                 "proguard-rules.pro"
             )
         }
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = "17"
     }
 }
 
