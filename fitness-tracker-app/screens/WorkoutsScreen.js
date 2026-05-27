@@ -11,8 +11,7 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import moment from 'moment';
-
-const API_URL = 'http://localhost:5000/api';
+import { API_URL } from '../config/api';
 const WORKOUT_TYPES = ['running', 'cycling', 'swimming', 'gym', 'yoga', 'walking'];
 const INTENSITIES = ['light', 'moderate', 'intense', 'very_intense'];
 

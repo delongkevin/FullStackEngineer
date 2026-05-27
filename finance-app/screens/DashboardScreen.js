@@ -10,8 +10,7 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import { BarChart } from 'react-native-chart-kit';
-
-const API_URL = 'http://localhost:5001/api';
+import { API_URL } from '../config/api';
 const screenWidth = Dimensions.get('window').width - 40;
 
 export default function DashboardScreen({ userId }) {
@@ -164,11 +163,10 @@ export default function DashboardScreen({ userId }) {
                 <View style={styles.section}>
                   <Text style={styles.sectionTitle}>Top Spending</Text>
                   <View style={styles.card}>
-                    {Object.entries(
-                      Object.entries(analytics.categoryBreakdown)
-                        .sort(([, a], [, b]) => b - a)
-                        .slice(0, 5)
-                    ).map(([category, amount]) => (
+                    {Object.entries(analytics.categoryBreakdown)
+                      .sort(([, a], [, b]) => b - a)
+                      .slice(0, 5)
+                      .map(([category, amount]) => (
                       <View key={category} style={styles.categoryRow}>
                         <Text style={styles.categoryName}>{category}</Text>
                         <Text style={styles.categoryAmount}>

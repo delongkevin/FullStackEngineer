@@ -46,18 +46,18 @@ export default function ChatsScreen({ navigation }) {
       
       if (storedToken) {
         axios.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
-        await fetchConversations();
+        await fetchConversations(storedToken);
       }
     } catch (error) {
       Alert.alert('Error', 'Failed to initialize screen');
     }
   };
 
-  const fetchConversations = async () => {
+  const fetchConversations = async (authToken = token) => {
     try {
       setLoading(true);
       const response = await axios.get(`${API_BASE_URL}/api/conversations`, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${authToken}` }
       });
       setConversations(response.data);
     } catch (error) {

@@ -639,6 +639,41 @@ let sortMode = 'featured';
 let promoCode = '';
 let promoDiscount = 0;
 const ORDER_HISTORY_STORAGE_KEY = 'shopquick_orders';
+const CART_STORAGE_KEY = 'shopquick_cart';
+
+function saveCart() {
+  try {
+    const compactCart = Object.values(cart).map((entry) => ({
+      id: entry.product.id,
+      qty: entry.qty
+    }));
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(compactCart));
+  } catch (_) {
+    // Best effort local persistence.
+  }
+}
+
+function loadCart() {
+  try {
+    const raw = localStorage.getItem(CART_STORAGE_KEY);
+    if (!raw) return {};
+
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return {};
+
+    const next = {};
+    parsed.forEach((entry) => {
+      const product = PRODUCTS.find((candidate) => candidate.id === entry.id);
+      if (product && Number.isFinite(entry.qty) && entry.qty > 0) {
+        next[product.id] = { product, qty: Math.floor(entry.qty) };
+      }
+    });
+
+    return next;
+  } catch (_) {
+    return {};
+  }
+}
 
 // ── RENDER PRODUCTS ───────────────────────────────────────────────────────
 function buildCatStrip() {
@@ -708,6 +743,7 @@ function changeQty(id, delta) {
   const next = Math.max(0, cur + delta);
   if (next === 0) delete cart[id];
   else cart[id] = { product, qty: next };
+  saveCart();
   updateCartBadge();
   renderProducts();
   if (document.getElementById('cart-panel').classList.contains('open')) renderPanel();
@@ -796,6 +832,11 @@ function applyPromo() {
 }
 
 function goCheckout() {
+  if (cartCount() === 0) {
+    alert('Your cart is empty. Add a few items before checking out.');
+    return;
+  }
+
   closeCart();
   renderCheckoutSummary();
   showPage('checkout');
@@ -805,6 +846,15 @@ function goCheckout() {
 function renderCheckoutSummary() {
   recomputePromoDiscount();
   const entries = Object.values(cart);
+
+  if (entries.length === 0) {
+    document.getElementById('checkout-summary').innerHTML = `
+      <h3>Order Summary</h3>
+      <p style="color:var(--muted)">Your cart is currently empty.</p>
+    `;
+    return;
+  }
+
   document.getElementById('checkout-summary').innerHTML = `
     <h3>Order Summary</h3>
     ${entries.map(e => `
@@ -863,11 +913,63 @@ function validate() {
     valid = false;
   }
 
+  const phoneEl = document.getElementById('phone');
+  const phoneDigits = phoneEl.value.replace(/\D/g, '');
+  if (phoneEl.value && phoneDigits.length < 10) {
+    phoneEl.classList.add('input-error');
+    document.getElementById('err-phone').textContent = 'Enter a valid phone number.';
+    valid = false;
+  }
+
+  const zipEl = document.getElementById('zip');
+  if (zipEl.value && !/^\d{5}(-\d{4})?$/.test(zipEl.value.trim())) {
+    zipEl.classList.add('input-error');
+    document.getElementById('err-zip').textContent = 'Enter a valid ZIP code.';
+    valid = false;
+  }
+
+  const cardEl = document.getElementById('card-num');
+  const cardDigits = cardEl.value.replace(/\s/g, '');
+  if (cardEl.value && !/^\d{13,19}$/.test(cardDigits)) {
+    cardEl.classList.add('input-error');
+    document.getElementById('err-card-num').textContent = 'Enter a valid card number.';
+    valid = false;
+  }
+
+  const expiryEl = document.getElementById('expiry');
+  if (expiryEl.value) {
+    const match = expiryEl.value.match(/^(\d{2})\/(\d{2})$/);
+    const month = match ? Number(match[1]) : 0;
+    const year = match ? Number(match[2]) : -1;
+    const now = new Date();
+    const currentYear = now.getFullYear() % 100;
+    const currentMonth = now.getMonth() + 1;
+
+    const expired = !match || month < 1 || month > 12 || year < currentYear || (year === currentYear && month < currentMonth);
+    if (expired) {
+      expiryEl.classList.add('input-error');
+      document.getElementById('err-expiry').textContent = 'Enter a valid, non-expired MM/YY.';
+      valid = false;
+    }
+  }
+
+  const cvvEl = document.getElementById('cvv');
+  if (cvvEl.value && !/^\d{3,4}$/.test(cvvEl.value.trim())) {
+    cvvEl.classList.add('input-error');
+    document.getElementById('err-cvv').textContent = 'Enter a valid CVV.';
+    valid = false;
+  }
+
   return valid;
 }
 
 function placeOrder(e) {
   e.preventDefault();
+  if (cartCount() === 0) {
+    alert('Your cart is empty. Please add items before placing an order.');
+    showPage('shop');
+    return;
+  }
   if (!validate()) return;
 
   const fname = document.getElementById('fname').value.trim();
@@ -878,6 +980,7 @@ function placeOrder(e) {
     id: orderNum,
     customer: fname,
     items: Object.values(cart).map(e => ({
+      productId: e.product.id,
       name: e.product.name, emoji: e.product.emoji,
       qty: e.qty, price: e.product.price
     })),
@@ -911,6 +1014,7 @@ function showConfirmation(order) {
   cart = {};
   promoCode = '';
   promoDiscount = 0;
+  saveCart();
   updateCartBadge();
   renderProducts();
   renderOrderHistory();
@@ -949,13 +1053,15 @@ function reorder(orderId) {
 
   cart = {};
   order.items.forEach((item) => {
-    const product = PRODUCTS.find((candidate) => candidate.name === item.name);
+    const product = PRODUCTS.find((candidate) => candidate.id === item.productId)
+      || PRODUCTS.find((candidate) => candidate.name === item.name);
     if (product) {
       cart[product.id] = { product, qty: item.qty };
     }
   });
   promoCode = '';
   promoDiscount = 0;
+  saveCart();
   updateCartBadge();
   renderProducts();
   openCart();
@@ -992,6 +1098,9 @@ document.getElementById('hero-sort').addEventListener('change', (event) => {
 });
 
 buildCatStrip();
+cart = loadCart();
+saveCart();
+updateCartBadge();
 renderProducts();
 renderOrderHistory();
 </script>

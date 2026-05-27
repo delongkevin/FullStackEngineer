@@ -17,6 +17,32 @@ const bookings = new Map();
 const favorites = new Map();
 const reviews = new Map();
 
+function createAvatar(name) {
+  return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=random`;
+}
+
+function serializeUser(user) {
+  return user ? { ...user, password: undefined } : null;
+}
+
+function createUser({ userId, name, email, password, phone = '', avatar, userType = 'buyer', createdAt = new Date() }) {
+  const user = {
+    userId,
+    name,
+    email,
+    password,
+    phone,
+    avatar: avatar || createAvatar(name),
+    userType,
+    createdAt,
+    savedProperties: [],
+    bookings: []
+  };
+
+  users.set(userId, user);
+  return user;
+}
+
 // Mock property data
 const initializeProperties = () => {
   const mockProperties = [
@@ -138,7 +164,54 @@ const initializeProperties = () => {
   });
 };
 
+const initializeUsers = () => {
+  if (users.size > 0) {
+    return;
+  }
+
+  createUser({
+    userId: 'buyer_demo',
+    name: 'Maya Brown',
+    email: 'buyer@example.com',
+    password: 'password123',
+    phone: '+1 (555) 010-2000',
+    userType: 'buyer',
+    createdAt: new Date('2024-01-05')
+  });
+
+  createUser({
+    userId: 'agent_001',
+    name: 'John Smith',
+    email: 'john@realtor.com',
+    password: 'password123',
+    phone: '+1 (555) 010-1000',
+    userType: 'agent',
+    createdAt: new Date('2023-11-20')
+  });
+
+  createUser({
+    userId: 'agent_002',
+    name: 'Sarah Johnson',
+    email: 'sarah@realtor.com',
+    password: 'password123',
+    phone: '+1 (555) 010-1001',
+    userType: 'agent',
+    createdAt: new Date('2023-12-12')
+  });
+
+  createUser({
+    userId: 'agent_003',
+    name: 'Chris Lee',
+    email: 'chris@realtor.com',
+    password: 'password123',
+    phone: '+1 (555) 010-1002',
+    userType: 'agent',
+    createdAt: new Date('2023-10-08')
+  });
+};
+
 initializeProperties();
+initializeUsers();
 
 // Middleware
 app.use(cors());
@@ -171,20 +244,7 @@ app.post('/api/auth/register', (req, res) => {
   }
 
   const userId = `user_${Date.now()}`;
-  const user = {
-    userId,
-    name,
-    email,
-    password,
-    phone: phone || '',
-    avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=random`,
-    userType: 'buyer',
-    createdAt: new Date(),
-    savedProperties: [],
-    bookings: []
-  };
-
-  users.set(userId, user);
+  const user = createUser({ userId, name, email, password, phone });
   const token = jwt.sign({ userId }, JWT_SECRET, { expiresIn: '30d' });
   
   res.status(201).json({
@@ -192,7 +252,7 @@ app.post('/api/auth/register', (req, res) => {
     name,
     email,
     token,
-    user: { ...user, password: undefined }
+    user: serializeUser(user)
   });
 });
 
@@ -215,8 +275,36 @@ app.post('/api/auth/login', (req, res) => {
     name: user.name,
     email: user.email,
     token,
-    user: { ...user, password: undefined }
+    user: serializeUser(user)
   });
+});
+
+app.get('/api/users/me', verifyToken, (req, res) => {
+  const user = users.get(req.userId);
+  if (!user) return res.status(404).json({ error: 'User not found' });
+  res.json(serializeUser(user));
+});
+
+app.put('/api/users/me', verifyToken, (req, res) => {
+  const user = users.get(req.userId);
+  if (!user) return res.status(404).json({ error: 'User not found' });
+
+  const { name, email, phone, avatar } = req.body;
+
+  if (email && Array.from(users.values()).some((candidate) => candidate.email === email && candidate.userId !== req.userId)) {
+    return res.status(400).json({ error: 'Email already exists' });
+  }
+
+  const updatedUser = {
+    ...user,
+    name: name || user.name,
+    email: email || user.email,
+    phone: phone ?? user.phone,
+    avatar: avatar || user.avatar
+  };
+
+  users.set(req.userId, updatedUser);
+  res.json(serializeUser(updatedUser));
 });
 
 // ============= PROPERTY ROUTES =============
@@ -312,6 +400,9 @@ app.post('/api/favorites/:propertyId', verifyToken, (req, res) => {
   const user = users.get(req.userId);
   if (!user) return res.status(404).json({ error: 'User not found' });
 
+  const property = properties.get(req.params.propertyId);
+  if (!property) return res.status(404).json({ error: 'Property not found' });
+
   if (!user.savedProperties) user.savedProperties = [];
   
   if (!user.savedProperties.includes(req.params.propertyId)) {
@@ -350,6 +441,18 @@ app.post('/api/bookings', verifyToken, (req, res) => {
 
   const property = properties.get(propertyId);
   if (!property) return res.status(404).json({ error: 'Property not found' });
+
+  const conflicting = Array.from(bookings.values()).find(
+    (booking) =>
+      booking.propertyId === propertyId &&
+      booking.tourDate === tourDate &&
+      booking.tourTime === tourTime &&
+      booking.status !== 'cancelled'
+  );
+
+  if (conflicting) {
+    return res.status(409).json({ error: 'This tour slot is already booked. Please pick another time.' });
+  }
 
   const bookingId = `booking_${Date.now()}`;
   const booking = {

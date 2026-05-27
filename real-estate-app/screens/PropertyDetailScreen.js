@@ -36,16 +36,15 @@ export default function PropertyDetailScreen({ route, navigation }) {
   const initializeScreen = async () => {
     const storedToken = await AsyncStorage.getItem('userToken');
     setToken(storedToken);
-    await checkIfFavorited();
+    await checkIfFavorited(storedToken);
     await fetchReviews();
   };
 
-  const checkIfFavorited = async () => {
+  const checkIfFavorited = async (authToken = token) => {
     try {
-      const storedToken = await AsyncStorage.getItem('userToken');
-      if (storedToken) {
+      if (authToken) {
         const response = await axios.get(`${API_BASE_URL}/api/favorites`, {
-          headers: { Authorization: `Bearer ${storedToken}` }
+          headers: { Authorization: `Bearer ${authToken}` }
         });
         setIsFavorited(response.data.some(p => p.propertyId === property.propertyId));
       }

@@ -271,6 +271,7 @@
     let memory = 0;
     const MAX_DIGITS = 12;
     const HISTORY_STORAGE_KEY = 'portfolio_calculator_history_v1';
+    const STATE_STORAGE_KEY = 'portfolio_calculator_state_v1';
 
     const $cur  = document.getElementById('current');
     const $expr = document.getElementById('expression');
@@ -282,6 +283,7 @@
       $expr.textContent = prev && operator
         ? formatNum(prev) + ' ' + opSymbol(operator)
         : '';
+      persistState();
     }
 
     function formatNum(n) {
@@ -350,6 +352,34 @@
     function clearAll() {
       current = '0'; prev = ''; operator = null; justCalc = false;
       render();
+    }
+
+    function persistState() {
+      localStorage.setItem(STATE_STORAGE_KEY, JSON.stringify({
+        current,
+        prev,
+        operator,
+        justCalc,
+        memory,
+      }));
+    }
+
+    function loadState() {
+      const raw = localStorage.getItem(STATE_STORAGE_KEY);
+      if (!raw) {
+        return;
+      }
+
+      try {
+        const saved = JSON.parse(raw);
+        if (typeof saved.current === 'string') current = saved.current;
+        if (typeof saved.prev === 'string') prev = saved.prev;
+        if (['+', '-', '*', '/'].includes(saved.operator)) operator = saved.operator;
+        if (typeof saved.justCalc === 'boolean') justCalc = saved.justCalc;
+        if (typeof saved.memory === 'number' && Number.isFinite(saved.memory)) memory = saved.memory;
+      } catch {
+        // Ignore malformed storage values.
+      }
     }
 
     function announce(message) {
@@ -459,12 +489,18 @@
       else if (e.key === '/') { e.preventDefault(); setOp('/'); }
       else if (e.key === 'Enter' || e.key === '=') calculate();
       else if (e.key === 'Backspace') {
-        if (current.length > 1) current = current.slice(0, -1);
-        else current = '0';
+        if (current === 'Error') {
+          current = '0';
+        } else if (current.length > 1) {
+          current = current.slice(0, -1);
+        } else {
+          current = '0';
+        }
         render();
       } else if (e.key === 'Escape') clearAll();
     });
 
+    loadState();
     loadHistory();
     render();
   </script>

@@ -29,15 +29,15 @@ export default function BookingsScreen() {
     const storedToken = await AsyncStorage.getItem('userToken');
     setToken(storedToken);
     if (storedToken) {
-      await fetchBookings();
+      await fetchBookings(storedToken);
     }
   };
 
-  const fetchBookings = async () => {
+  const fetchBookings = async (authToken = token) => {
     try {
       setLoading(true);
       const response = await axios.get(`${API_BASE_URL}/api/bookings`, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${authToken}` }
       });
       setBookings(response.data);
     } catch (error) {

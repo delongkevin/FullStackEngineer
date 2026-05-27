@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.yourname.bookstore.adapters.BookAdapter
@@ -16,7 +16,7 @@ class BookListFragment : Fragment() {
     
     private var _binding: FragmentBookListBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: BookStoreViewModel by viewModels()
+    private val viewModel: BookStoreViewModel by activityViewModels()
     private lateinit var bookAdapter: BookAdapter
     
     override fun onCreateView(

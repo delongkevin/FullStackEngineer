@@ -20,8 +20,16 @@ const LoginSchema = Yup.object().shape({
   password: Yup.string().min(6, 'Password too short').required('Password is required'),
 });
 
+const RegisterSchema = Yup.object().shape({
+  email: Yup.string().email('Invalid email').required('Email is required'),
+  password: Yup.string().min(6, 'Password too short').required('Password is required'),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref('password')], 'Passwords must match')
+    .required('Confirm password is required'),
+});
+
 const LoginScreen = ({ navigation }) => {
-  const { login, loading, error, clearError } = useAuth();
+  const { login, register, loading, error, clearError } = useAuth();
   const [isLogin, setIsLogin] = useState(true);
 
   const handleAuth = async (values) => {
@@ -31,8 +39,11 @@ const LoginScreen = ({ navigation }) => {
     if (isLogin) {
       result = await login(values.email, values.password);
     } else {
-      // For registration, you would call register API
-      result = await login(values.email, values.password); // Temporary
+      result = await register({
+        name: values.email.split('@')[0],
+        email: values.email,
+        password: values.password,
+      });
     }
 
     if (result.success) {
@@ -62,7 +73,7 @@ const LoginScreen = ({ navigation }) => {
 
           <Formik
             initialValues={{ email: '', password: '', confirmPassword: '' }}
-            validationSchema={isLogin ? LoginSchema : LoginSchema} // Add registration schema
+            validationSchema={isLogin ? LoginSchema : RegisterSchema}
             onSubmit={handleAuth}
           >
             {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
@@ -107,7 +118,10 @@ const LoginScreen = ({ navigation }) => {
                 {!isLogin && (
                   <View style={styles.inputContainer}>
                     <TextInput
-                      style={styles.input}
+                      style={[
+                        styles.input,
+                        errors.confirmPassword && touched.confirmPassword && styles.inputError
+                      ]}
                       placeholder="Confirm Password"
                       placeholderTextColor="#999"
                       onChangeText={handleChange('confirmPassword')}
@@ -115,6 +129,9 @@ const LoginScreen = ({ navigation }) => {
                       value={values.confirmPassword}
                       secureTextEntry
                     />
+                    {errors.confirmPassword && touched.confirmPassword && (
+                      <Text style={styles.errorText}>{errors.confirmPassword}</Text>
+                    )}
                   </View>
                 )}
 

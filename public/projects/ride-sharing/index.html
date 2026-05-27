@@ -872,16 +872,120 @@
     </footer>
 
     <script>
+        const APP_STATE_KEY = 'rideshare_entertainment_state_v1';
+
+        function createDefaultState() {
+            return {
+                activeTab: 'games',
+                climate: {
+                    tempF: 72,
+                    isFahrenheit: true,
+                    fanSpeeds: []
+                },
+                assistant: {
+                    lastQuestion: '',
+                    lastAnswer: ''
+                },
+                media: {
+                    isPlaying: false,
+                    trackIndex: 0,
+                    volume: 70
+                },
+                games: {
+                    activeGame: null,
+                    ticTacToe: {
+                        board: Array(9).fill(''),
+                        currentPlayer: 'X',
+                        gameOver: false
+                    },
+                    trivia: {
+                        currentIndex: 0,
+                        score: 0,
+                        questionLocked: false
+                    },
+                    memory: {
+                        matchedPairs: 0
+                    }
+                }
+            };
+        }
+
+        function loadAppState() {
+            try {
+                const raw = localStorage.getItem(APP_STATE_KEY);
+                if (!raw) return createDefaultState();
+
+                const parsed = JSON.parse(raw);
+                return {
+                    ...createDefaultState(),
+                    ...parsed,
+                    climate: {
+                        ...createDefaultState().climate,
+                        ...(parsed.climate || {})
+                    },
+                    assistant: {
+                        ...createDefaultState().assistant,
+                        ...(parsed.assistant || {})
+                    },
+                    media: {
+                        ...createDefaultState().media,
+                        ...(parsed.media || {})
+                    },
+                    games: {
+                        ...createDefaultState().games,
+                        ...(parsed.games || {}),
+                        ticTacToe: {
+                            ...createDefaultState().games.ticTacToe,
+                            ...((parsed.games && parsed.games.ticTacToe) || {})
+                        },
+                        trivia: {
+                            ...createDefaultState().games.trivia,
+                            ...((parsed.games && parsed.games.trivia) || {})
+                        },
+                        memory: {
+                            ...createDefaultState().games.memory,
+                            ...((parsed.games && parsed.games.memory) || {})
+                        }
+                    }
+                };
+            } catch (_) {
+                return createDefaultState();
+            }
+        }
+
+        function saveAppState() {
+            try {
+                localStorage.setItem(APP_STATE_KEY, JSON.stringify(appState));
+            } catch (_) {
+                // Best effort persistence.
+            }
+        }
+
+        function setActiveTab(tabId) {
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.tab === tabId);
+            });
+            document.querySelectorAll('.tab-pane').forEach(pane => {
+                pane.classList.toggle('active', pane.id === tabId);
+            });
+
+            if (tabId === 'games' && !appState.games.activeGame) {
+                document.querySelectorAll('.game-screen').forEach(screen => {
+                    screen.style.display = 'none';
+                });
+                document.querySelector('.games-grid').style.display = 'grid';
+            }
+
+            appState.activeTab = tabId;
+            saveAppState();
+        }
+
+        const appState = loadAppState();
+
         // Tab functionality
         document.querySelectorAll('.tab-button').forEach(button => {
             button.addEventListener('click', () => {
-                // Remove active class from all tabs and buttons
-                document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
-                document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
-                
-                // Add active class to clicked tab
-                button.classList.add('active');
-                document.getElementById(button.dataset.tab).classList.add('active');
+                setActiveTab(button.dataset.tab);
                 
                 // If returning to games tab, hide all game screens
                 if (button.dataset.tab === 'games') {
@@ -889,6 +993,8 @@
                         screen.style.display = 'none';
                     });
                     document.querySelector('.games-grid').style.display = 'grid';
+                    appState.games.activeGame = null;
+                    saveAppState();
                 }
             });
         });
@@ -901,8 +1007,8 @@
         });
         
         // Climate control functionality
-        let currentTemp = 72;
-        let isFahrenheit = true;
+        let currentTemp = Number(appState.climate.tempF) || 72;
+        let isFahrenheit = Boolean(appState.climate.isFahrenheit);
         
         document.getElementById('temp-up').addEventListener('click', () => {
             currentTemp++;
@@ -926,13 +1032,20 @@
         function updateTempDisplay() {
             let displayTemp = isFahrenheit ? currentTemp : Math.round((currentTemp - 32) * 5/9);
             document.getElementById('current-temp').textContent = `${displayTemp}°${isFahrenheit ? 'F' : 'C'}`;
+            appState.climate.tempF = currentTemp;
+            appState.climate.isFahrenheit = isFahrenheit;
+            saveAppState();
         }
         
         // Fan speed buttons
         document.querySelectorAll('.fan-speed .speed-btn').forEach(btn => {
             btn.addEventListener('click', () => {
-                btn.parentElement.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+                const parent = btn.parentElement;
+                const parentIndex = Array.from(document.querySelectorAll('.fan-speed')).indexOf(parent);
+                parent.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
+                appState.climate.fanSpeeds[parentIndex] = btn.textContent.trim();
+                saveAppState();
             });
         });
         
@@ -950,6 +1063,9 @@
         function askQuestion() {
             const question = document.getElementById('question-input').value.trim();
             if (!question) return;
+
+            appState.assistant.lastQuestion = question;
+            saveAppState();
             
             const answerDisplay = document.getElementById('answer-display');
             answerDisplay.innerHTML = '<div>Thinking...</div>';
@@ -973,18 +1089,55 @@
                 }
                 
                 answerDisplay.innerHTML = `<div>${answer}</div>`;
+                appState.assistant.lastAnswer = answer;
+                saveAppState();
             }, 1000);
             
             document.getElementById('question-input').value = '';
         }
         
         // Music player functionality
-        let isPlaying = false;
+        const tracks = [
+            'Chill Vibes Playlist',
+            'Road Trip Mix',
+            'Acoustic Focus',
+            'Late Night Jazz'
+        ];
+        let isPlaying = Boolean(appState.media.isPlaying);
+        let currentTrackIndex = Number(appState.media.trackIndex) || 0;
+
+        function updateNowPlaying() {
+            const nowPlaying = document.getElementById('now-playing');
+            nowPlaying.textContent = `Now Playing: ${tracks[currentTrackIndex]}`;
+            document.getElementById('play-btn').textContent = isPlaying ? '⏸️' : '▶️';
+            appState.media.isPlaying = isPlaying;
+            appState.media.trackIndex = currentTrackIndex;
+            saveAppState();
+        }
         
         document.getElementById('play-btn').addEventListener('click', () => {
             isPlaying = !isPlaying;
-            document.getElementById('play-btn').textContent = isPlaying ? '⏸️' : '▶️';
+            updateNowPlaying();
         });
+
+        document.getElementById('prev-btn').addEventListener('click', () => {
+            currentTrackIndex = (currentTrackIndex - 1 + tracks.length) % tracks.length;
+            updateNowPlaying();
+        });
+
+        document.getElementById('next-btn').addEventListener('click', () => {
+            currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
+            updateNowPlaying();
+        });
+
+        const volumeSlider = document.querySelector('.volume-slider');
+        if (volumeSlider) {
+            volumeSlider.value = appState.media.volume;
+            volumeSlider.addEventListener('input', () => {
+                appState.media.volume = Number(volumeSlider.value);
+                saveAppState();
+            });
+        }
         
         // Star rating functionality
         document.querySelectorAll('.star').forEach(star => {
@@ -1006,10 +1159,12 @@
                 const game = card.dataset.game;
                 document.querySelector('.games-grid').style.display = 'none';
                 document.getElementById(`${game}-screen`).style.display = 'flex';
+                appState.games.activeGame = game;
+                saveAppState();
                 
                 // Initialize the selected game
                 if (game === 'tic-tac-toe') {
-                    initTicTacToe();
+                    initTicTacToe(false);
                 } else if (game === 'trivia') {
                     initTrivia();
                 } else if (game === 'memory') {
@@ -1025,29 +1180,43 @@
                     screen.style.display = 'none';
                 });
                 document.querySelector('.games-grid').style.display = 'grid';
+                appState.games.activeGame = null;
+                saveAppState();
             });
         });
         
         // Tic Tac Toe Game
-        function initTicTacToe() {
+        function initTicTacToe(forceReset = true) {
             const board = document.getElementById('tic-tac-toe-board');
             board.innerHTML = '';
+
+            if (forceReset) {
+                appState.games.ticTacToe = {
+                    board: Array(9).fill(''),
+                    currentPlayer: 'X',
+                    gameOver: false
+                };
+            }
+            ticTacToeState = {
+                ...appState.games.ticTacToe,
+                board: Array.isArray(appState.games.ticTacToe.board) ? [...appState.games.ticTacToe.board] : Array(9).fill('')
+            };
             
             for (let i = 0; i < 9; i++) {
                 const cell = document.createElement('div');
                 cell.className = 'ttt-cell';
                 cell.dataset.index = i;
                 cell.addEventListener('click', handleTicTacToeClick);
+                cell.textContent = ticTacToeState.board[i] || '';
                 board.appendChild(cell);
             }
-            
-            document.getElementById('ttt-status').textContent = "Your turn (X)";
-            
-            ticTacToeState = {
-                board: Array(9).fill(''),
-                currentPlayer: 'X',
-                gameOver: false
-            };
+
+            if (ticTacToeState.gameOver) {
+                document.getElementById('ttt-status').textContent = 'Game over. Restart to play again.';
+            } else {
+                document.getElementById('ttt-status').textContent = `Player ${ticTacToeState.currentPlayer}'s turn`;
+            }
+            saveAppState();
         }
         
         function handleTicTacToeClick(e) {
@@ -1062,17 +1231,23 @@
             if (checkTicTacToeWin()) {
                 document.getElementById('ttt-status').textContent = `Player ${ticTacToeState.currentPlayer} wins!`;
                 ticTacToeState.gameOver = true;
+                appState.games.ticTacToe = { ...ticTacToeState, board: [...ticTacToeState.board] };
+                saveAppState();
                 return;
             }
             
             if (ticTacToeState.board.every(cell => cell !== '')) {
                 document.getElementById('ttt-status').textContent = "It's a tie!";
                 ticTacToeState.gameOver = true;
+                appState.games.ticTacToe = { ...ticTacToeState, board: [...ticTacToeState.board] };
+                saveAppState();
                 return;
             }
             
             ticTacToeState.currentPlayer = ticTacToeState.currentPlayer === 'X' ? 'O' : 'X';
             document.getElementById('ttt-status').textContent = `Player ${ticTacToeState.currentPlayer}'s turn`;
+            appState.games.ticTacToe = { ...ticTacToeState, board: [...ticTacToeState.board] };
+            saveAppState();
         }
         
         function checkTicTacToeWin() {
@@ -1112,6 +1287,7 @@
         let currentTriviaIndex = 0;
         
         function initTrivia() {
+            currentTriviaIndex = Number(appState.games.trivia.currentIndex) || 0;
             showTriviaQuestion();
         }
         
@@ -1149,13 +1325,21 @@
             
             if (selectedIndex === question.correct) {
                 document.getElementById('trivia-status').textContent = "Correct!";
+                appState.games.trivia.score += 1;
             } else {
                 document.getElementById('trivia-status').textContent = "Incorrect!";
             }
+
+            appState.games.trivia.currentIndex = currentTriviaIndex;
+            appState.games.trivia.questionLocked = true;
+            saveAppState();
         }
         
         function nextTriviaQuestion() {
             currentTriviaIndex = (currentTriviaIndex + 1) % triviaQuestions.length;
+            appState.games.trivia.currentIndex = currentTriviaIndex;
+            appState.games.trivia.questionLocked = false;
+            saveAppState();
             showTriviaQuestion();
         }
         
@@ -1216,6 +1400,8 @@
                 document.getElementById('memory-status').textContent = `Matches: ${memoryGameState.matchedPairs}/6`;
                 memoryGameState.flippedCards = [];
                 memoryGameState.canFlip = true;
+                appState.games.memory.matchedPairs = memoryGameState.matchedPairs;
+                saveAppState();
                 
                 if (memoryGameState.matchedPairs === 6) {
                     document.getElementById('memory-status').textContent = "Congratulations! You've matched all pairs!";
@@ -1238,8 +1424,39 @@
         document.getElementById('trivia-next').addEventListener('click', nextTriviaQuestion);
         document.getElementById('memory-restart').addEventListener('click', initMemoryGame);
         
-        // Initialize the app with Tic Tac Toe ready
-        initTicTacToe();
+        // Hydrate UI from persisted state
+        setActiveTab(appState.activeTab || 'games');
+        document.querySelectorAll('#temp-scale .speed-btn').forEach(btn => {
+            btn.classList.toggle('active', (btn.textContent === '°F' && isFahrenheit) || (btn.textContent === '°C' && !isFahrenheit));
+        });
+        document.querySelectorAll('.fan-speed').forEach((group, idx) => {
+            const desired = appState.climate.fanSpeeds[idx];
+            if (!desired) return;
+            group.querySelectorAll('.speed-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.textContent.trim() === desired);
+            });
+        });
+        updateTempDisplay();
+
+        const answerDisplay = document.getElementById('answer-display');
+        if (appState.assistant.lastAnswer) {
+            answerDisplay.innerHTML = `<div>${appState.assistant.lastAnswer}</div>`;
+        }
+        updateNowPlaying();
+
+        if (appState.games.activeGame) {
+            document.querySelector('.games-grid').style.display = 'none';
+            document.getElementById(`${appState.games.activeGame}-screen`).style.display = 'flex';
+            if (appState.games.activeGame === 'tic-tac-toe') {
+                initTicTacToe(false);
+            } else if (appState.games.activeGame === 'trivia') {
+                initTrivia();
+            } else if (appState.games.activeGame === 'memory') {
+                initMemoryGame();
+            }
+        } else {
+            initTicTacToe(false);
+        }
     </script>
   <!-- Portfolio QoL Enhancer -->
   <script>(function(){if(window.__portfolioQolEnhancer)return;window.__portfolioQolEnhancer=1;var b=document.createElement("button");b.type="button";b.setAttribute("aria-label","Scroll to top");b.textContent="Top";b.style.cssText="position:fixed;right:14px;bottom:14px;z-index:2147483000;border:1px solid rgba(148,163,184,.7);background:rgba(15,23,42,.88);color:#f8fafc;border-radius:999px;font:700 12px/1 Trebuchet MS,Segoe UI,sans-serif;padding:8px 11px;cursor:pointer;opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .16s ease,transform .16s ease";document.body.appendChild(b);function sync(){var visible=window.scrollY>200;b.style.opacity=visible?"1":"0";b.style.transform=visible?"translateY(0)":"translateY(8px)";b.style.pointerEvents=visible?"auto":"none";}b.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});document.addEventListener("keydown",function(e){var t=e.target&&e.target.tagName;if(t==="INPUT"||t==="TEXTAREA"||t==="SELECT")return;if(e.key==="t"||e.key==="T"){window.scrollTo({top:0,behavior:"smooth"});}});window.addEventListener("scroll",sync,{passive:true});sync();})();</script>

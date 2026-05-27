@@ -39,15 +39,15 @@ export default function FavoritesScreen({ navigation }) {
     const storedToken = await AsyncStorage.getItem('userToken');
     setToken(storedToken);
     if (storedToken) {
-      await fetchFavorites();
+      await fetchFavorites(storedToken);
     }
   };
 
-  const fetchFavorites = async () => {
+  const fetchFavorites = async (authToken = token) => {
     try {
       setLoading(true);
       const response = await axios.get(`${API_BASE_URL}/api/favorites`, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${authToken}` }
       });
       setFavorites(response.data);
     } catch (error) {

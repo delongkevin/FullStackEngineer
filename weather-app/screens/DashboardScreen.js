@@ -7,6 +7,7 @@ export default function DashboardScreen() {
   const { settings } = useSettings();
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [error, setError] = useState('');
   const [location, setLocation] = useState({ city: 'Loading', state: '' });
   const [weather, setWeather] = useState({
     temperature: 0,
@@ -22,11 +23,18 @@ export default function DashboardScreen() {
   }, []);
 
   async function load() {
-    setLoading(true);
-    const [loc, current] = await Promise.all([getCurrentLocation(), fetchCurrentWeather()]);
-    setLocation({ city: loc.city, state: loc.state });
-    setWeather(current);
-    setLoading(false);
+    try {
+      setError('');
+      setLoading(true);
+      const loc = await getCurrentLocation();
+      const current = await fetchCurrentWeather(loc);
+      setLocation({ city: loc.city, state: loc.state });
+      setWeather(current);
+    } catch (_error) {
+      setError('Unable to refresh weather right now. Showing latest available data.');
+    } finally {
+      setLoading(false);
+    }
   }
 
   async function onRefresh() {
@@ -58,10 +66,12 @@ export default function DashboardScreen() {
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
     >
       <Text style={styles.city}>{location.city}, {location.state}</Text>
+      {error ? <Text style={styles.error}>{error}</Text> : null}
       <Text style={styles.temp}>{displayTemp}°{tempUnit}</Text>
       <Text style={styles.summary}>{weather.summary} - Feels like {displayFeels}°{tempUnit}</Text>
       <Text style={styles.meta}>Humidity {weather.humidity}% · Wind {displayWind} {windUnit} · UV {weather.uv}</Text>
       <Text style={styles.risk}>Outdoor Risk Index: {riskLabel} ({Math.round(riskScore)})</Text>
+      <Text style={styles.source}>Data source: {weather.source || 'provider'}</Text>
     </ScrollView>
   );
 }
@@ -86,5 +96,15 @@ const styles = StyleSheet.create({
   temp: { color: '#fff', fontSize: 72, fontWeight: '700', marginVertical: 8 },
   summary: { color: '#ecfeff', fontSize: 16 },
   meta: { color: '#cfe7ff', marginTop: 8 },
-  risk: { color: '#fef3c7', marginTop: 8, fontWeight: '700' }
+  risk: { color: '#fef3c7', marginTop: 8, fontWeight: '700' },
+  source: { color: '#cbd5e1', marginTop: 10, fontSize: 12 },
+  error: {
+    color: '#fee2e2',
+    backgroundColor: 'rgba(127,29,29,0.35)',
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 8,
+    marginTop: 8,
+    marginBottom: 8
+  }
 });

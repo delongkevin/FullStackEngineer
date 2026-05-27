@@ -10,14 +10,14 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import { LineChart, BarChart } from 'react-native-chart-kit';
-
-const API_URL = 'http://localhost:5000/api';
+import { API_URL } from '../config/api';
 const screenWidth = Dimensions.get('window').width - 40;
 
 export default function HealthScreen({ userId }) {
   const [healthData, setHealthData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const [error, setError] = useState('');
   const [wearables, setWearables] = useState([]);
 
   useEffect(() => {
@@ -28,14 +28,15 @@ export default function HealthScreen({ userId }) {
   }, [userId]);
 
   const fetchHealthData = async () => {
-    setLoading(true);
     try {
+      setError('');
       const response = await axios.get(
         `${API_URL}/healthkit/${userId}?metric=all`
       );
       setHealthData(response.data);
     } catch (error) {
       console.error('Error fetching health data:', error);
+      setError('Unable to load health metrics right now. Showing the last successful data, if available.');
     } finally {
       setLoading(false);
     }
@@ -52,8 +53,9 @@ export default function HealthScreen({ userId }) {
 
   const onRefresh = async () => {
     setRefreshing(true);
-    await fetchHealthData();
-    await fetchWearables();
+    setLoading(true);
+    await Promise.allSettled([fetchHealthData(), fetchWearables()]);
+    setLoading(false);
     setRefreshing(false);
   };
 
@@ -83,6 +85,21 @@ export default function HealthScreen({ userId }) {
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }
     >
+      {error ? (
+        <View style={styles.errorCard}>
+          <Text style={styles.errorText}>{error}</Text>
+        </View>
+      ) : null}
+
+      {!healthData ? (
+        <View style={styles.emptyState}>
+          <Text style={styles.emptyTitle}>No health data yet</Text>
+          <Text style={styles.emptyBody}>
+            Pull to refresh or log in again to restore your metrics.
+          </Text>
+        </View>
+      ) : null}
+
       {/* Heart Rate */}
       {healthData?.heartRate && (
         <View style={styles.section}>
@@ -297,6 +314,41 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  errorCard: {
+    marginHorizontal: 20,
+    marginTop: 20,
+    marginBottom: 6,
+    padding: 12,
+    borderRadius: 12,
+    backgroundColor: '#fff3f3',
+    borderWidth: 1,
+    borderColor: '#fecaca',
+  },
+  errorText: {
+    color: '#b91c1c',
+    fontSize: 13,
+    lineHeight: 18,
+  },
+  emptyState: {
+    marginHorizontal: 20,
+    marginTop: 16,
+    marginBottom: 8,
+    padding: 16,
+    borderRadius: 12,
+    backgroundColor: '#fff',
+    elevation: 1,
+  },
+  emptyTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#1565C0',
+    marginBottom: 4,
+  },
+  emptyBody: {
+    fontSize: 13,
+    lineHeight: 18,
+    color: '#666',
   },
   section: {
     marginHorizontal: 20,

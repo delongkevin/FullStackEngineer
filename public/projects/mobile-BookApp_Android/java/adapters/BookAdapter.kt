@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.yourname.bookstore.R
 import com.yourname.bookstore.databinding.ItemBookBinding
 import com.yourname.bookstore.models.Book
 

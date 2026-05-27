@@ -16,8 +16,32 @@ export const PLAYLISTS = [
 ];
 
 export const TRACKS = [
-  { id: 't1', title: 'Refactor Dreams', artist: 'Loop Theory', duration: '4:11' },
-  { id: 't2', title: 'Night Deploy', artist: 'Merge Request', duration: '2:58' },
-  { id: 't3', title: 'Pixel Skyline', artist: 'Neon Drift', duration: '3:42' },
-  { id: 't4', title: 'Sapphire Terminal', artist: 'Cloud Echo', duration: '3:27' }
+  {
+    id: 't1',
+    title: 'Refactor Dreams',
+    artist: 'Loop Theory',
+    duration: '4:11',
+    streamUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3'
+  },
+  {
+    id: 't2',
+    title: 'Night Deploy',
+    artist: 'Merge Request',
+    duration: '2:58',
+    streamUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3'
+  },
+  {
+    id: 't3',
+    title: 'Pixel Skyline',
+    artist: 'Neon Drift',
+    duration: '3:42',
+    streamUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3'
+  },
+  {
+    id: 't4',
+    title: 'Sapphire Terminal',
+    artist: 'Cloud Echo',
+    duration: '3:27',
+    streamUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3'
+  }
 ];

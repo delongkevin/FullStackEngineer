@@ -9,6 +9,40 @@ jest.mock('@react-native-async-storage/async-storage', () => ({
   removeItem: jest.fn().mockResolvedValue(null),
 }));
 
+jest.mock('expo-av', () => ({
+  Audio: {
+    Sound: {
+      createAsync: jest.fn().mockImplementation(async (_source, _initialStatus, onPlaybackStatusUpdate) => {
+        const sound = {
+          unloadAsync: jest.fn().mockResolvedValue(undefined),
+          playAsync: jest.fn().mockResolvedValue(undefined),
+          pauseAsync: jest.fn().mockResolvedValue(undefined),
+        };
+
+        if (typeof onPlaybackStatusUpdate === 'function') {
+          onPlaybackStatusUpdate({
+            isLoaded: true,
+            positionMillis: 0,
+            durationMillis: 241000,
+            isPlaying: false,
+            didJustFinish: false,
+          });
+        }
+
+        return {
+          sound,
+          status: {
+            isLoaded: true,
+            positionMillis: 0,
+            durationMillis: 241000,
+            isPlaying: false,
+          },
+        };
+      }),
+    },
+  },
+}));
+
 describe('Music Streaming App', () => {
   it('shows a loading indicator while bootstrapping', () => {
     const { UNSAFE_getAllByType } = render(<App />);

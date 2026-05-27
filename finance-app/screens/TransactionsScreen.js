@@ -7,12 +7,10 @@ import {
   TouchableOpacity,
   TextInput,
   ActivityIndicator,
-  Modal,
 } from 'react-native';
 import axios from 'axios';
 import moment from 'moment';
-
-const API_URL = 'http://localhost:5001/api';
+import { API_URL } from '../config/api';
 const CATEGORIES = ['Food', 'Transport', 'Entertainment', 'Bills', 'Shopping', 'Healthcare', 'Education', 'Other'];
 
 export default function TransactionsScreen({ userId }) {

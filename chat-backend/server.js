@@ -23,6 +23,173 @@ const conversations = new Map();
 const messages = new Map();
 const userSessions = new Map();
 
+function createAvatar(name) {
+  return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=random`;
+}
+
+function serializeUser(user) {
+  return user ? { ...user, password: undefined } : null;
+}
+
+function createUser({ userId, name, email, password, avatar, isOnline = false, lastSeen = new Date() }) {
+  const user = {
+    userId,
+    name,
+    email,
+    password,
+    avatar: avatar || createAvatar(name),
+    createdAt: new Date(),
+    isOnline,
+    lastSeen,
+  };
+
+  users.set(userId, user);
+  return user;
+}
+
+function seedConversation(participantA, participantB, seedMessages = []) {
+  const conversationId = [participantA, participantB].sort().join('_');
+
+  if (!conversations.has(conversationId)) {
+    conversations.set(conversationId, {
+      conversationId,
+      participants: [participantA, participantB],
+      createdAt: new Date(),
+      type: 'direct'
+    });
+    messages.set(conversationId, []);
+  }
+
+  const conversationMessages = messages.get(conversationId);
+  seedMessages.forEach((message, index) => {
+    conversationMessages.push({
+      messageId: message.messageId || `msg_seed_${conversationMessages.length + index + 1}`,
+      conversationId,
+      senderId: message.senderId,
+      senderName: users.get(message.senderId)?.name,
+      recipientId: message.recipientId,
+      text: message.text,
+      type: 'text',
+      attachmentUrl: null,
+      timestamp: message.timestamp || new Date(),
+      isRead: Boolean(message.isRead),
+      reactions: message.reactions || []
+    });
+  });
+
+  return conversationId;
+}
+
+function getConversationRecipient(conversationId, senderId) {
+  const conversation = conversations.get(conversationId);
+  if (!conversation) {
+    return null;
+  }
+
+  return conversation.participants.find((participantId) => participantId !== senderId) || null;
+}
+
+function markUserOnline(userId, isOnline) {
+  const user = users.get(userId);
+  if (!user) {
+    return null;
+  }
+
+  user.isOnline = isOnline;
+  user.lastSeen = new Date();
+  users.set(userId, user);
+  return user;
+}
+
+function broadcastPresence(userId, isOnline) {
+  io.emit('presence:updated', {
+    userId,
+    isOnline,
+    lastSeen: new Date()
+  });
+}
+
+function broadcastConversationMessage(message) {
+  io.to(message.conversationId).emit(`message:${message.conversationId}`, message);
+}
+
+function broadcastReaction(message) {
+  io.to(message.conversationId).emit(`reaction:${message.messageId}`, message);
+}
+
+function ensureSeedData() {
+  if (users.size > 0) {
+    return;
+  }
+
+  const alice = createUser({
+    userId: 'user_alice',
+    name: 'Alice Johnson',
+    email: 'alice@example.com',
+    password: 'password123'
+  });
+
+  const ben = createUser({
+    userId: 'user_ben',
+    name: 'Ben Carter',
+    email: 'ben@example.com',
+    password: 'password123'
+  });
+
+  const chloe = createUser({
+    userId: 'user_chloe',
+    name: 'Chloe Rivera',
+    email: 'chloe@example.com',
+    password: 'password123'
+  });
+
+  const dylan = createUser({
+    userId: 'user_dylan',
+    name: 'Dylan Patel',
+    email: 'dylan@example.com',
+    password: 'password123'
+  });
+
+  seedConversation(alice.userId, ben.userId, [
+    {
+      senderId: ben.userId,
+      recipientId: alice.userId,
+      text: 'Did you see the latest build? The message flow is looking good.',
+      isRead: true,
+      timestamp: new Date(Date.now() - 1000 * 60 * 35)
+    },
+    {
+      senderId: alice.userId,
+      recipientId: ben.userId,
+      text: 'Yes. I am wiring the realtime path now.',
+      isRead: true,
+      timestamp: new Date(Date.now() - 1000 * 60 * 30)
+    }
+  ]);
+
+  seedConversation(alice.userId, chloe.userId, [
+    {
+      senderId: chloe.userId,
+      recipientId: alice.userId,
+      text: 'Need a quick review on the profile screen before release.',
+      isRead: false,
+      timestamp: new Date(Date.now() - 1000 * 60 * 12)
+    }
+  ]);
+
+  seedConversation(ben.userId, dylan.userId, [
+    {
+      senderId: dylan.userId,
+      recipientId: ben.userId,
+      text: 'Presence tracking and typing indicators should be covered in the next pass.',
+      isRead: false,
+      timestamp: new Date(Date.now() - 1000 * 60 * 8)
+    }
+  ]);
+}
+
+ensureSeedData();
+
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -55,18 +222,7 @@ app.post('/api/auth/register', (req, res) => {
   }
 
   const userId = `user_${Date.now()}`;
-  const user = {
-    userId,
-    name,
-    email,
-    password,
-    avatar: avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=random`,
-    createdAt: new Date(),
-    isOnline: false,
-    lastSeen: new Date()
-  };
-
-  users.set(userId, user);
+  const user = createUser({ userId, name, email, password, avatar });
 
   const token = jwt.sign({ userId }, JWT_SECRET, { expiresIn: '30d' });
   res.status(201).json({
@@ -74,7 +230,7 @@ app.post('/api/auth/register', (req, res) => {
     name,
     email,
     token,
-    user: { ...user, password: undefined }
+    user: serializeUser(user)
   });
 });
 
@@ -98,7 +254,7 @@ app.post('/api/auth/login', (req, res) => {
     name: user.name,
     email: user.email,
     token,
-    user: { ...user, password: undefined }
+    user: serializeUser(user)
   });
 });
 
@@ -108,15 +264,12 @@ app.post('/api/auth/login', (req, res) => {
 app.get('/api/users/me', verifyToken, (req, res) => {
   const user = users.get(req.userId);
   if (!user) return res.status(404).json({ error: 'User not found' });
-  res.json({ ...user, password: undefined });
+  res.json(serializeUser(user));
 });
 
 // Get all users (for user discovery)
 app.get('/api/users', verifyToken, (req, res) => {
-  const allUsers = Array.from(users.values()).map(u => ({
-    ...u,
-    password: undefined
-  }));
+  const allUsers = Array.from(users.values()).map((u) => serializeUser(u));
   res.json(allUsers);
 });
 
@@ -126,11 +279,9 @@ app.post('/api/users/status', verifyToken, (req, res) => {
   const user = users.get(req.userId);
   if (!user) return res.status(404).json({ error: 'User not found' });
   
-  user.isOnline = isOnline;
-  user.lastSeen = new Date();
-  users.set(req.userId, user);
+  markUserOnline(req.userId, isOnline);
   
-  res.json({ success: true, user: { ...user, password: undefined } });
+  res.json({ success: true, user: serializeUser(users.get(req.userId)) });
 });
 
 // Get user presence
@@ -233,7 +384,9 @@ app.get('/api/messages/:conversationId', verifyToken, (req, res) => {
   const offset = parseInt(req.query.offset) || 0;
 
   const convMessages = messages.get(req.params.conversationId) || [];
-  const messageList = convMessages.slice(-limit - offset, -offset || undefined).reverse();
+  const endIndex = offset > 0 ? Math.max(convMessages.length - offset, 0) : convMessages.length;
+  const startIndex = Math.max(endIndex - limit, 0);
+  const messageList = convMessages.slice(startIndex, endIndex);
 
   res.json({
     conversationId: req.params.conversationId,
@@ -263,6 +416,7 @@ app.post('/api/messages', verifyToken, (req, res) => {
     conversationId,
     senderId: req.userId,
     senderName: users.get(req.userId).name,
+    recipientId: getConversationRecipient(conversationId, req.userId),
     text,
     type,
     attachmentUrl,
@@ -278,7 +432,7 @@ app.post('/api/messages', verifyToken, (req, res) => {
   messages.get(conversationId).push(message);
 
   // Broadcast to Socket.IO
-  io.emit(`message:${conversationId}`, message);
+  broadcastConversationMessage(message);
 
   res.status(201).json(message);
 });
@@ -294,6 +448,7 @@ app.put('/api/messages/:messageId/read', verifyToken, (req, res) => {
   if (!message) return res.status(404).json({ error: 'Message not found' });
 
   message.isRead = true;
+  broadcastConversationMessage(message);
   res.json(message);
 });
 
@@ -316,7 +471,7 @@ app.post('/api/messages/:messageId/reaction', verifyToken, (req, res) => {
     message.reactions.push({ userId: req.userId, emoji, userName: users.get(req.userId).name });
   }
 
-  io.emit(`reaction:${req.params.messageId}`, message);
+  broadcastReaction(message);
   res.json(message);
 });
 
@@ -333,19 +488,16 @@ io.on('connection', (socket) => {
       jwt.verify(token, JWT_SECRET);
       userSessions.set(userId, socket.id);
       
-      const user = users.get(userId);
-      if (user) {
-        user.isOnline = true;
-        user.lastSeen = new Date();
-        users.set(userId, user);
-      }
+      markUserOnline(userId, true);
+
+      conversations.forEach((conversation) => {
+        if (conversation.participants.includes(userId)) {
+          socket.join(conversation.conversationId);
+        }
+      });
       
       // Notify all users of presence change
-      io.emit('presence:updated', {
-        userId,
-        isOnline: true,
-        lastSeen: new Date()
-      });
+      broadcastPresence(userId, true);
       
       socket.emit('user:joined', { success: true, userId });
     } catch (error) {
@@ -356,21 +508,34 @@ io.on('connection', (socket) => {
   // Typing indicator
   socket.on('message:typing', (data) => {
     const { conversationId, userId, isTyping } = data;
-    socket.broadcast.emit(`typing:${conversationId}`, {
+    socket.to(conversationId).emit(`typing:${conversationId}`, {
       userId,
       userName: users.get(userId)?.name,
       isTyping
     });
   });
 
+  socket.on('conversation:join', (data) => {
+    const { conversationId, userId } = data;
+    const conversation = conversations.get(conversationId);
+
+    if (!conversation || !conversation.participants.includes(userId)) {
+      return;
+    }
+
+    socket.join(conversationId);
+  });
+
   // Real-time message received
   socket.on('message:send', (data) => {
     const { conversationId, text, senderId, attachmentUrl } = data;
+    const recipientId = getConversationRecipient(conversationId, senderId);
     const message = {
       messageId: `msg_${Date.now()}`,
       conversationId,
       senderId,
       senderName: users.get(senderId)?.name,
+      recipientId,
       text,
       attachmentUrl,
       timestamp: new Date(),
@@ -383,7 +548,7 @@ io.on('connection', (socket) => {
     }
     messages.get(conversationId).push(message);
 
-    io.emit(`message:${conversationId}`, message);
+    broadcastConversationMessage(message);
   });
 
   // User leaves
@@ -392,19 +557,10 @@ io.on('connection', (socket) => {
     
     for (const [userId, socketId] of userSessions.entries()) {
       if (socketId === socket.id) {
-        const user = users.get(userId);
-        if (user) {
-          user.isOnline = false;
-          user.lastSeen = new Date();
-          users.set(userId, user);
-        }
+        markUserOnline(userId, false);
         
         userSessions.delete(userId);
-        io.emit('presence:updated', {
-          userId,
-          isOnline: false,
-          lastSeen: new Date()
-        });
+        broadcastPresence(userId, false);
         break;
       }
     }

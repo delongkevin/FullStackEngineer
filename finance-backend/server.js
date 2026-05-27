@@ -23,6 +23,69 @@ const fraudAlerts = [];
 // Categories for transactions
 const EXPENSE_CATEGORIES = ['Food', 'Transport', 'Entertainment', 'Bills', 'Shopping', 'Healthcare', 'Education', 'Other'];
 
+function ensureSeedData() {
+  if (users.size > 0) {
+    return;
+  }
+
+  const demoUserId = 'user_demo_finance';
+  const demoUser = {
+    id: demoUserId,
+    name: 'Finance Demo',
+    email: 'demo@fintrack.com',
+    salary: 6500,
+    currency: 'USD',
+    balance: 4825,
+    createdAt: new Date(),
+    stats: {
+      totalSpent: 1175,
+      totalIncome: 6500,
+      averageMonthlySpending: 1175,
+      savingsRate: 81.9,
+    },
+  };
+
+  users.set(demoUserId, demoUser);
+  userIdCounter = 2;
+
+  const demoTransactions = [
+    { id: 'txn_demo_1', type: 'income', amount: 6500, category: 'Other', description: 'Salary', date: new Date(), timestamp: new Date(), status: 'completed' },
+    { id: 'txn_demo_2', type: 'expense', amount: 150, category: 'Food', description: 'Groceries', date: new Date(), timestamp: new Date(), status: 'completed' },
+    { id: 'txn_demo_3', type: 'expense', amount: 85, category: 'Transport', description: 'Fuel', date: new Date(), timestamp: new Date(), status: 'completed' },
+    { id: 'txn_demo_4', type: 'expense', amount: 940, category: 'Bills', description: 'Rent utilities', date: new Date(), timestamp: new Date(), status: 'completed' },
+  ];
+
+  demoTransactions.forEach((txn) => {
+    transactions.set(txn.id, {
+      ...txn,
+      userId: demoUserId,
+    });
+  });
+
+  budgets.set('budget_demo_1', {
+    id: 'budget_demo_1',
+    userId: demoUserId,
+    category: 'Food',
+    limit: 450,
+    period: 'month',
+    spent: 150,
+    createdAt: new Date(),
+  });
+
+  goals.set('goal_demo_1', {
+    id: 'goal_demo_1',
+    userId: demoUserId,
+    name: 'Emergency Fund',
+    targetAmount: 10000,
+    currentAmount: 2500,
+    deadline: new Date(Date.now() + 200 * 24 * 60 * 60 * 1000),
+    progress: 25,
+    createdAt: new Date(),
+  });
+}
+
+ensureSeedData();
+
 // Routes
 
 // Health Check
@@ -38,11 +101,17 @@ app.post('/api/auth/register', (req, res) => {
     return res.status(400).json({ error: 'Name and email required' });
   }
 
+  const normalizedEmail = String(email).trim().toLowerCase();
+  const existing = Array.from(users.values()).find((u) => u.email.toLowerCase() === normalizedEmail);
+  if (existing) {
+    return res.status(409).json({ error: 'Email already registered' });
+  }
+
   const userId = `user_${userIdCounter++}`;
   const user = {
     id: userId,
     name,
-    email,
+    email: normalizedEmail,
     salary: salary || 5000,
     currency,
     balance: salary || 5000,
@@ -62,8 +131,14 @@ app.post('/api/auth/register', (req, res) => {
 // User Login
 app.post('/api/auth/login', (req, res) => {
   const { email } = req.body;
+
+  if (!email) {
+    return res.status(400).json({ error: 'Email required' });
+  }
+
+  const normalizedEmail = String(email).trim().toLowerCase();
   
-  const user = Array.from(users.values()).find(u => u.email === email);
+  const user = Array.from(users.values()).find(u => u.email.toLowerCase() === normalizedEmail);
   if (!user) {
     return res.status(401).json({ error: 'Invalid credentials' });
   }

@@ -1,20 +1,31 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, RefreshControl, StyleSheet, Text, View } from 'react-native';
-import { fetchForecast } from '../services/weatherService';
+import { ActivityIndicator, FlatList, RefreshControl, StyleSheet, Text, View } from 'react-native';
+import { fetchForecast, getCurrentLocation } from '../services/weatherService';
 import { useSettings } from '../context/SettingsContext';
 
 export default function ForecastScreen() {
   const { settings } = useSettings();
   const [days, setDays] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     load();
   }, []);
 
   async function load() {
-    const forecast = await fetchForecast();
-    setDays(forecast);
+    try {
+      setError('');
+      setLoading(true);
+      const loc = await getCurrentLocation();
+      const forecast = await fetchForecast(loc);
+      setDays(forecast);
+    } catch (_error) {
+      setError('Unable to refresh forecast right now.');
+    } finally {
+      setLoading(false);
+    }
   }
 
   async function onRefresh() {
@@ -26,10 +37,17 @@ export default function ForecastScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>4-Day Forecast</Text>
+      {error ? <Text style={styles.error}>{error}</Text> : null}
+      {loading ? (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#ffffff" />
+        </View>
+      ) : (
       <FlatList
         data={days}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         keyExtractor={(item) => item.id}
+        ListEmptyComponent={<Text style={styles.empty}>No forecast data available.</Text>}
         renderItem={({ item }) => (
           <View style={styles.row}>
             <Text style={styles.day}>{item.day}</Text>
@@ -42,13 +60,23 @@ export default function ForecastScreen() {
           </View>
         )}
       />
+      )}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#125d99', padding: 16 },
+  loadingContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   title: { color: '#fff', fontSize: 24, fontWeight: '700', marginBottom: 10 },
+  error: {
+    color: '#fee2e2',
+    backgroundColor: 'rgba(127,29,29,0.35)',
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 8,
+    marginBottom: 10
+  },
   row: {
     backgroundColor: '#1f78bf',
     borderRadius: 10,
@@ -59,5 +87,6 @@ const styles = StyleSheet.create({
   },
   day: { color: '#fff', fontWeight: '700' },
   icon: { color: '#fff' },
-  temp: { color: '#e6f4ff' }
+  temp: { color: '#e6f4ff' },
+  empty: { color: '#dbeafe', textAlign: 'center', marginTop: 24 }
 });

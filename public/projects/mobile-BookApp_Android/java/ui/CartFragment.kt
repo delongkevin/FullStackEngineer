@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yourname.bookstore.adapters.CartAdapter
@@ -16,7 +16,7 @@ class CartFragment : Fragment() {
     
     private var _binding: FragmentCartBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: BookStoreViewModel by viewModels()
+    private val viewModel: BookStoreViewModel by activityViewModels()
     private lateinit var cartAdapter: CartAdapter
     
     override fun onCreateView(

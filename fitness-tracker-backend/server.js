@@ -13,6 +13,7 @@ app.use(express.json());
 // In-memory database (for demo purposes)
 const users = new Map();
 const workouts = new Map();
+const goals = new Map();
 let userIdCounter = 1;
 
 // Mock HealthKit/Google Fit integration data
@@ -23,6 +24,62 @@ const healthKitData = {
   water: [2.1, 1.8, 2.5, 2.0, 2.3, 1.9, 2.2],
   sleep: [7.2, 6.8, 8.1, 7.5, 8.3, 7.1, 7.6]
 };
+
+function ensureSeedData() {
+  if (users.size > 0) {
+    return;
+  }
+
+  const demoUserId = 'user_demo_fitness';
+  const demoUser = {
+    id: demoUserId,
+    name: 'Fitness Demo',
+    email: 'demo@fittrack.com',
+    age: 29,
+    weight: 72,
+    height: 178,
+    goal: 'maintain',
+    joinedDate: new Date(),
+    stats: {
+      totalWorkouts: 1,
+      totalCalories: 420,
+      totalDistance: 6.5,
+      bestStreak: 3,
+      currentStreak: 1,
+    },
+  };
+
+  users.set(demoUserId, demoUser);
+  userIdCounter = 2;
+
+  const demoWorkout = {
+    id: 'workout_demo_1',
+    userId: demoUserId,
+    type: 'running',
+    duration: 42,
+    distance: 6.5,
+    calories: 420,
+    intensity: 'moderate',
+    notes: 'Seed workout',
+    date: new Date(),
+    timestamp: new Date(),
+  };
+  workouts.set(demoWorkout.id, demoWorkout);
+
+  const demoGoal = {
+    id: 'goal_demo_1',
+    userId: demoUserId,
+    name: 'Weekly 20km',
+    target: 20,
+    type: 'distance',
+    deadline: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+    progress: 6.5,
+    created: new Date(),
+  };
+  goals.set(demoGoal.id, demoGoal);
+}
+
+ensureSeedData();
 
 // Routes
 
@@ -39,11 +96,17 @@ app.post('/api/auth/register', (req, res) => {
     return res.status(400).json({ error: 'Name and email required' });
   }
 
+  const normalizedEmail = String(email).trim().toLowerCase();
+  const existing = Array.from(users.values()).find((u) => u.email.toLowerCase() === normalizedEmail);
+  if (existing) {
+    return res.status(409).json({ error: 'Email already registered' });
+  }
+
   const userId = `user_${userIdCounter++}`;
   const user = {
     id: userId,
     name,
-    email,
+    email: normalizedEmail,
     age: age || 25,
     weight: weight || 70,
     height: height || 175,
@@ -65,8 +128,14 @@ app.post('/api/auth/register', (req, res) => {
 // User Login
 app.post('/api/auth/login', (req, res) => {
   const { email } = req.body;
+
+  if (!email) {
+    return res.status(400).json({ error: 'Email required' });
+  }
+
+  const normalizedEmail = String(email).trim().toLowerCase();
   
-  const user = Array.from(users.values()).find(u => u.email === email);
+  const user = Array.from(users.values()).find(u => u.email.toLowerCase() === normalizedEmail);
   if (!user) {
     return res.status(401).json({ error: 'Invalid credentials' });
   }
@@ -242,6 +311,12 @@ app.get('/api/wearables/:userId', (req, res) => {
 // Goals Management
 app.post('/api/goals/:userId', (req, res) => {
   const { name, target, type, deadline } = req.body;
+
+  const user = users.get(req.params.userId);
+  if (!user) {
+    return res.status(404).json({ error: 'User not found' });
+  }
+
   const goalId = `goal_${Date.now()}`;
   
   const goal = {
@@ -255,7 +330,17 @@ app.post('/api/goals/:userId', (req, res) => {
     created: new Date()
   };
 
+  goals.set(goalId, goal);
+
   res.status(201).json(goal);
+});
+
+app.get('/api/goals/:userId', (req, res) => {
+  const userGoals = Array.from(goals.values())
+    .filter((goal) => goal.userId === req.params.userId)
+    .sort((a, b) => new Date(b.created) - new Date(a.created));
+
+  res.json(userGoals);
 });
 
 // Error handling

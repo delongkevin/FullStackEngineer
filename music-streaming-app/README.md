@@ -17,6 +17,7 @@ npm run start
 - Search screen with live filtering of track catalog
 - Library screen with persisted recently played and saved playlists
 - Player screen with queue selection and playback state
+- Player screen with actual audio playback, queue selection, and time-based progress
 - Profile screen with sign-out workflow
 - Playlist save/unsave from Home and automatic recently played tracking from Player
 - Listening analytics with total plays, minutes listened, and top track insights in Profile

@@ -77,6 +77,11 @@ export default function ChatScreen({ route, navigation }) {
           userId: storedUserId,
           token: storedToken
         });
+
+        newSocket.emit('conversation:join', {
+          conversationId,
+          userId: storedUserId
+        });
       });
 
       newSocket.on(`message:${conversationId}`, (message) => {

@@ -8,6 +8,7 @@ import {
   Image,
   SafeAreaView,
   TextInput,
+  ScrollView,
 } from 'react-native';
 import { products, categories } from '../data/products';
 import { useCart } from '../context/CartContext';

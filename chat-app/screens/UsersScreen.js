@@ -49,18 +49,18 @@ export default function UsersScreen({ navigation }) {
 
       if (storedToken) {
         axios.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
-        await fetchUsers();
+        await fetchUsers(storedToken);
       }
     } catch (error) {
       Alert.alert('Error', 'Failed to initialize screen');
     }
   };
 
-  const fetchUsers = async () => {
+  const fetchUsers = async (authToken = token) => {
     try {
       setLoading(true);
       const response = await axios.get(`${API_BASE_URL}/api/users`, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${authToken}` }
       });
 
       // Filter out current user

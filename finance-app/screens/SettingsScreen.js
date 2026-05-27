@@ -9,8 +9,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import axios from 'axios';
-
-const API_URL = 'http://localhost:5001/api';
+import { API_URL } from '../config/api';
 
 export default function SettingsScreen({ userId, onLogout }) {
   const [user, setUser] = useState(null);

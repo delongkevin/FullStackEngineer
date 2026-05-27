@@ -50,23 +50,23 @@ export default function ProfileScreen({ navigation, onLogout }) {
 
       if (storedToken) {
         axios.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
-        await fetchUserData();
+        await fetchUserData(storedToken);
       }
     } catch (error) {
       Alert.alert('Error', 'Failed to initialize screen');
     }
   };
 
-  const fetchUserData = async () => {
+  const fetchUserData = async (authToken = token) => {
     try {
       setLoading(true);
 
       const [userResponse, statsResponse] = await Promise.all([
         axios.get(`${API_BASE_URL}/api/users/me`, {
-          headers: { Authorization: `Bearer ${token}` }
+          headers: { Authorization: `Bearer ${authToken}` }
         }),
         axios.get(`${API_BASE_URL}/api/stats/user`, {
-          headers: { Authorization: `Bearer ${token}` }
+          headers: { Authorization: `Bearer ${authToken}` }
         })
       ]);
 

@@ -36,24 +36,24 @@ export default function ProfileScreen() {
 
       if (storedToken) {
         axios.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
-        await fetchUserData();
+        await fetchUserData(storedToken);
       }
     } catch (error) {
       Alert.alert('Error', 'Failed to initialize profile');
     }
   };
 
-  const fetchUserData = async () => {
+  const fetchUserData = async (authToken = token) => {
     try {
       setLoading(true);
 
       // Fetch user and stats
       const userResponse = await axios.get(`${API_BASE_URL}/api/users/me`, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${authToken}` }
       });
 
       const statsResponse = await axios.get(`${API_BASE_URL}/api/properties-stats`, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${authToken}` }
       }).catch(() => null);
 
       setUser(userResponse.data);
@@ -97,15 +97,20 @@ export default function ProfileScreen() {
 
   const saveChanges = async () => {
     try {
-      setUser(prev => ({
-        ...prev,
-        name: editData.name,
-        phone: editData.phone
-      }));
+      const response = await axios.put(
+        `${API_BASE_URL}/api/users/me`,
+        {
+          name: editData.name,
+          phone: editData.phone
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      setUser(response.data);
       setIsEditMode(false);
       Alert.alert('Success', 'Profile updated successfully');
     } catch (error) {
-      Alert.alert('Error', 'Failed to update profile');
+      Alert.alert('Error', error.response?.data?.error || 'Failed to update profile');
     }
   };
 
