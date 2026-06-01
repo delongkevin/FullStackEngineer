@@ -1,0 +1,47 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='800' height='450' viewBox='0 0 800 450' fill='none' role='img' aria-label='Enterprise ERP Workbench'>
+  <defs>
+    <linearGradient id='bg' x1='0' y1='0' x2='800' y2='450' gradientUnits='userSpaceOnUse'>
+      <stop stop-color='#08111f'/>
+      <stop offset='1' stop-color='#0f2f4f'/>
+    </linearGradient>
+    <linearGradient id='card' x1='0' y1='0' x2='1' y2='1'>
+      <stop stop-color='#12213a'/>
+      <stop offset='1' stop-color='#233b5c'/>
+    </linearGradient>
+    <linearGradient id='accent' x1='0' y1='0' x2='1' y2='1'>
+      <stop stop-color='#60a5fa'/>
+      <stop offset='1' stop-color='#34d399'/>
+    </linearGradient>
+  </defs>
+  <rect width='800' height='450' fill='url(#bg)'/>
+  <circle cx='700' cy='70' r='110' fill='#60a5fa' fill-opacity='0.14'/>
+  <circle cx='140' cy='390' r='140' fill='#34d399' fill-opacity='0.08'/>
+  <rect x='44' y='44' width='712' height='362' rx='24' fill='url(#card)' stroke='#7dd3fc' stroke-opacity='0.26'/>
+
+  <rect x='74' y='72' width='50' height='50' rx='14' fill='url(#accent)'/>
+  <text x='140' y='95' fill='#E2E8F0' font-size='34' font-family='Inter,Arial,sans-serif' font-weight='700'>Enterprise ERP Workbench</text>
+  <text x='140' y='126' fill='#93C5FD' font-size='19' font-family='Inter,Arial,sans-serif' font-weight='500'>WPF · MVVM · SQL Server · Manufacturing Support</text>
+
+  <rect x='74' y='160' width='198' height='88' rx='14' fill='#0b1728' stroke='#35506f'/>
+  <rect x='289' y='160' width='198' height='88' rx='14' fill='#0b1728' stroke='#35506f'/>
+  <rect x='504' y='160' width='198' height='88' rx='14' fill='#0b1728' stroke='#35506f'/>
+
+  <text x='94' y='191' fill='#94A3B8' font-size='13' font-family='Inter,Arial,sans-serif'>ERP / MRP</text>
+  <text x='94' y='219' fill='#22C55E' font-size='24' font-family='Inter,Arial,sans-serif' font-weight='700'>Work Orders</text>
+
+  <text x='309' y='191' fill='#94A3B8' font-size='13' font-family='Inter,Arial,sans-serif'>SQL Server</text>
+  <text x='309' y='219' fill='#60A5FA' font-size='24' font-family='Inter,Arial,sans-serif' font-weight='700'>DDL / DML</text>
+
+  <text x='524' y='191' fill='#94A3B8' font-size='13' font-family='Inter,Arial,sans-serif'>Support Desk</text>
+  <text x='524' y='219' fill='#F59E0B' font-size='24' font-family='Inter,Arial,sans-serif' font-weight='700'>Bug Fixes</text>
+
+  <rect x='74' y='272' width='312' height='98' rx='16' fill='#09111d' stroke='#35506f'/>
+  <text x='94' y='301' fill='#CBD5E1' font-size='18' font-family='Inter,Arial,sans-serif' font-weight='600'>Architecture</text>
+  <text x='94' y='329' fill='#94A3B8' font-size='14' font-family='Inter,Arial,sans-serif'>Domain-Driven Design · Dependency Injection</text>
+  <text x='94' y='354' fill='#94A3B8' font-size='14' font-family='Inter,Arial,sans-serif'>Service-Oriented Layers · WPF MVVM</text>
+
+  <rect x='410' y='272' width='292' height='98' rx='16' fill='#09111d' stroke='#35506f'/>
+  <text x='430' y='301' fill='#CBD5E1' font-size='18' font-family='Inter,Arial,sans-serif' font-weight='600'>Engineering Tools</text>
+  <text x='430' y='329' fill='#94A3B8' font-size='14' font-family='Inter,Arial,sans-serif'>Report Writer · Data Repair · Capacity Math</text>
+  <text x='430' y='354' fill='#94A3B8' font-size='14' font-family='Inter,Arial,sans-serif'>Mentor Playbook · Release Notes</text>
+</svg>
