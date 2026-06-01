@@ -141,7 +141,7 @@
 
   <!-- Defect Tracking Panel -->
   <rect x="410" y="265" width="370" height="170" rx="6" fill="url(#panelGrad)" stroke="#2d5f8d" stroke-width="1.5"/>
-  <text x="420" y="282" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#e2e8f0">Defect Tracking & Analytics</text>
+  <text x="420" y="282" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#e2e8f0">Defect Tracking &amp; Analytics</text>
 
   <!-- Defect pie chart representation -->
   <circle cx="510" cy="345" r="50" fill="none" stroke="#1a2f4a" stroke-width="25"/>
