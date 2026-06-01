@@ -123,6 +123,7 @@ describe('projects data', () => {
         expect(project.liveUrl).toMatch(/\.html$/i);
       });
     });
+
   });
 
   describe('featured projects', () => {

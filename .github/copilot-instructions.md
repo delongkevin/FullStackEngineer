@@ -23,6 +23,13 @@ This repository is a multi-project portfolio workspace, but the primary user-fac
 - Before finishing, ensure all affected projects compile successfully and that there are no obvious structural flaws in the mobile or web UI.
 - If validation fails, fix the root cause in the affected slice instead of leaving a workaround.
 
+## Per-Change Deep Review Gate
+- Perform a focused code review for each change batch before finalizing: identify likely regressions, route/path conflicts, data-contract mismatches, and runtime behavior changes.
+- For every modified feature, validate both the direct fix and at least one adjacent workflow that could be impacted (for example: detail route + embedded route, card link + detail page, API write + analytics read).
+- Treat static assets as production code: verify path correctness, filename resolution, and format validity (especially SVG XML validity) when a change touches images or embeds.
+- Add or update automated tests for each regression class discovered during the change, not only for the original bug.
+- Do not push if any new warnings, diagnostics, or failing checks remain in the affected scope; resolve them first or document a concrete blocker.
+
 ## Commit And Push Gate
 - If all affected applications compile successfully and there is no functional or visual breakage in the web or mobile use cases, commit and push the completed work.
 - If a dependency or environment issue blocks compilation, document the exact blocker and the concrete fix needed before attempting to push.

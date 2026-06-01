@@ -66,7 +66,7 @@ describe('link integrity', () => {
   it.each(projects.filter((p) => p.embeddable))(
     'embeddable project "$title" points to an existing HTML file',
     (project) => {
-      expect(project.liveUrl).toMatch(/^\/projects\/.+\.html$/i);
+      expect(project.liveUrl).toMatch(/^\/(projects|demos)\/.+\.html$/i);
       expect(existsSync(asPublicPath(project.liveUrl))).toBe(true);
     }
   );

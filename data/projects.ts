@@ -940,7 +940,7 @@ export const projects: Project[] = [
     fullDescription: 'A professional-grade AI-driven automotive testing strategy platform designed for Principal Software Engineer roles in intelligent vehicle systems. This platform demonstrates end-to-end testing leadership for AI-driven automotive environments, featuring: real-time HIL test execution with dSPACE integration; comprehensive test coverage analysis across camera systems, ADAS features, AI models, data pipelines, CAN networks, and ECU diagnostics; AI model validation with performance metrics (mAP, IoU, inference time, FPS); automated test script generation for CAPL, Python, and JavaScript; industry-standard tool integration (dSPACE, CANoe, CANape, DIVA, Open Test); defect tracking and analytics with severity management; team performance monitoring with ISTQB/IREB certification tracking; test execution trending and compliance reporting; and export capabilities for PDF, Excel, and ISO 26262 compliance reports. The platform showcases expertise in automotive software validation, AI model testing, cross-functional collaboration, and continuous improvement through data-driven analytics.',
     image: '/images/ai-testing-strategy.svg',
     tech: ['dSPACE', 'CANoe', 'CANape', 'DIVA', 'Open Test', 'Python', 'JavaScript', 'CAPL', 'pytest', 'AI Testing', 'ADAS', 'Automotive', 'HIL Testing', 'Test Automation', 'Defect Tracking', 'ISO 26262', 'ISTQB', 'Chart.js', 'HTML5', 'CSS3'],
-    liveUrl: '/projects/ai-testing-strategy/index.html',
+    liveUrl: '/demos/ai-testing-strategy/index.html',
     githubUrl: 'https://github.com/delongkevin/FullStackEngineer',
     featured: true,
     category: 'Automotive',
