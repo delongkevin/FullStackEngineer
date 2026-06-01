@@ -964,6 +964,31 @@ export const projects: Project[] = [
     embeddable: true,
     projectPath: '/projects/ai-testing-strategy',
   },
+  {
+    id: 38,
+    slug: 'enterprise-erp-workbench',
+    title: 'Enterprise ERP Workbench',
+    description: 'Windows desktop ERP/MRP operations suite with WPF, MVVM, SQL Server, and service-oriented architecture patterns for manufacturing support.',
+    fullDescription: 'Enterprise ERP Workbench is a Windows desktop business systems demo built with C# and the .NET Framework using WPF, MVVM, domain-driven design, dependency injection, and a service-oriented architecture. It models a manufacturing ERP/MRP environment with work orders, inventory, purchasing, production scheduling, and support workflows. The project highlights SQL Server schema design, DDL and DML scripts, stored procedures, reporting, data correction tools, bug-fix triage, and documentation practices that align with enterprise software support and delivery responsibilities.',
+    image: '/images/enterprise-erp-workbench.svg',
+    tech: ['C#', '.NET Framework', 'WPF', 'MVVM', 'SQL Server', 'T-SQL', 'DDD', 'IoC', 'Dependency Injection', 'SOA', 'ERP/MRP', 'Windows Desktop'],
+    liveUrl: '/projects/enterprise-erp-workbench/index.html',
+    githubUrl: 'https://github.com/delongkevin/FullStackEngineer',
+    featured: true,
+    category: 'fullstack',
+    features: [
+      'WPF desktop shell with MVVM navigation, commands, and reusable view models for enterprise workflow screens',
+      'Manufacturing ERP/MRP modules for work orders, inventory, purchasing, production scheduling, and quality holds',
+      'Service-oriented application layer with domain-driven entities, repositories, and dependency injection composition root',
+      'SQL Server DDL, DML, schema migrations, and stored procedures for operational data management',
+      'Support desk tools for bug fixes, data alteration, and audit-friendly incident resolution',
+      'Operational reporting for WIP, throughput, shortages, and exception analysis',
+      'Engineering utilities for capacity planning, load calculations, and math-heavy estimate checks',
+      'Junior engineer handoff notes, review checklist, and release documentation workflow',
+    ],
+    embeddable: true,
+    projectPath: '/projects/enterprise-erp-workbench',
+  },
 ];
 
 const searchableProjectFields = (project: Project) => {

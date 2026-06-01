@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Enterprise ERP Workbench</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #07111f;
+        --bg-2: #0d1b2f;
+        --panel: rgba(15, 23, 42, 0.82);
+        --panel-2: rgba(30, 41, 59, 0.9);
+        --line: rgba(148, 163, 184, 0.22);
+        --text: #e5eefc;
+        --muted: #92a4bf;
+        --accent: #60a5fa;
+        --accent-2: #34d399;
+        --warning: #f59e0b;
+        --danger: #fb7185;
+        --shadow: 0 24px 80px rgba(2, 8, 23, 0.5);
+      }
+
+      * { box-sizing: border-box; }
+      html, body { margin: 0; min-height: 100%; background:
+        radial-gradient(circle at top right, rgba(96, 165, 250, 0.22), transparent 36%),
+        radial-gradient(circle at 20% 20%, rgba(52, 211, 153, 0.10), transparent 32%),
+        linear-gradient(160deg, var(--bg), var(--bg-2));
+        color: var(--text); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+
+      body { padding: 28px; }
+      .shell { max-width: 1200px; margin: 0 auto; }
+      .hero {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        background: linear-gradient(180deg, rgba(15, 23, 42, 0.88), rgba(15, 23, 42, 0.72));
+        box-shadow: var(--shadow);
+        padding: 28px;
+      }
+
+      .hero::before,
+      .hero::after {
+        content: "";
+        position: absolute;
+        inset: auto;
+        width: 320px;
+        height: 320px;
+        border-radius: 50%;
+        filter: blur(18px);
+        pointer-events: none;
+      }
+
+      .hero::before {
+        top: -150px;
+        right: -120px;
+        background: radial-gradient(circle, rgba(96, 165, 250, 0.28), transparent 62%);
+      }
+
+      .hero::after {
+        bottom: -180px;
+        left: -120px;
+        background: radial-gradient(circle, rgba(52, 211, 153, 0.18), transparent 62%);
+      }
+
+      .topbar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .mark {
+        width: 52px;
+        height: 52px;
+        border-radius: 16px;
+        background: linear-gradient(135deg, rgba(96, 165, 250, 0.95), rgba(52, 211, 153, 0.9));
+        box-shadow: 0 14px 30px rgba(37, 99, 235, 0.35);
+      }
+
+      .eyebrow {
+        margin: 0 0 4px;
+        color: var(--accent);
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      h1, h2, h3, p { margin: 0; }
+      h1 {
+        font-size: clamp(2.1rem, 4vw, 4rem);
+        line-height: 0.96;
+        letter-spacing: -0.04em;
+        max-width: 12ch;
+      }
+
+      .lede {
+        margin-top: 16px;
+        color: var(--muted);
+        max-width: 72ch;
+        font-size: 1.02rem;
+        line-height: 1.7;
+      }
+
+      .pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 22px;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 14px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: rgba(15, 23, 42, 0.62);
+        color: var(--text);
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        gap: 18px;
+        margin-top: 20px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .card {
+        border: 1px solid var(--line);
+        background: var(--panel);
+        border-radius: 22px;
+        box-shadow: var(--shadow);
+      }
+
+      .stats { grid-column: 1 / -1; padding: 18px; }
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .stat {
+        padding: 18px;
+        border-radius: 18px;
+        background: rgba(30, 41, 59, 0.72);
+        border: 1px solid rgba(148, 163, 184, 0.14);
+      }
+
+      .stat .value {
+        display: block;
+        font-size: 1.8rem;
+        font-weight: 800;
+        letter-spacing: -0.04em;
+      }
+
+      .stat .label {
+        display: block;
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      .wide { grid-column: span 7; padding: 22px; }
+      .tall { grid-column: span 5; padding: 22px; }
+      .half { grid-column: span 6; padding: 22px; }
+      .third { grid-column: span 4; padding: 22px; }
+
+      .section-title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+
+      .section-title h2 {
+        font-size: 1.15rem;
+        letter-spacing: -0.02em;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 12px;
+        color: var(--accent-2);
+        background: rgba(52, 211, 153, 0.08);
+        border: 1px solid rgba(52, 211, 153, 0.18);
+        padding: 8px 12px;
+        border-radius: 999px;
+      }
+
+      .module-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .module {
+        padding: 16px;
+        border-radius: 18px;
+        background: var(--panel-2);
+        border: 1px solid rgba(148, 163, 184, 0.15);
+      }
+
+      .module h3 { font-size: 1rem; margin-bottom: 8px; }
+      .module p { color: var(--muted); line-height: 1.6; font-size: 0.93rem; }
+
+      .architecture {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .layer {
+        padding: 14px;
+        border-radius: 18px;
+        background: linear-gradient(180deg, rgba(30, 41, 59, 0.85), rgba(15, 23, 42, 0.85));
+        border: 1px solid rgba(148, 163, 184, 0.14);
+      }
+
+      .layer h3 { font-size: 0.96rem; margin-bottom: 6px; }
+      .layer p { color: var(--muted); line-height: 1.55; font-size: 0.9rem; }
+
+      .sql {
+        background: #020617;
+        color: #dbeafe;
+        padding: 16px;
+        border-radius: 18px;
+        border: 1px solid rgba(96, 165, 250, 0.16);
+        font-family: "SFMono-Regular", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        overflow: auto;
+        line-height: 1.6;
+        font-size: 0.9rem;
+      }
+
+      .sql .comment { color: #64748b; }
+      .sql .kw { color: #93c5fd; }
+      .sql .id { color: #f8fafc; }
+      .sql .num { color: #34d399; }
+      .sql .warn { color: #fbbf24; }
+
+      .feature-list {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        padding: 0;
+        list-style: none;
+      }
+
+      .feature-list li {
+        padding: 12px 14px;
+        border-radius: 14px;
+        background: rgba(30, 41, 59, 0.68);
+        border: 1px solid rgba(148, 163, 184, 0.12);
+        color: var(--text);
+        font-size: 0.94rem;
+        line-height: 1.5;
+      }
+
+      .footer-note {
+        grid-column: 1 / -1;
+        padding: 18px 22px;
+        color: var(--muted);
+        font-size: 0.95rem;
+        line-height: 1.7;
+      }
+
+      @media (max-width: 960px) {
+        .wide, .tall, .half, .third { grid-column: 1 / -1; }
+        .stats-grid, .architecture, .module-grid, .feature-list { grid-template-columns: 1fr; }
+      }
+
+      @media (max-width: 640px) {
+        body { padding: 16px; }
+        .hero, .stats, .wide, .tall, .half, .third, .footer-note { padding: 18px; }
+        h1 { max-width: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <section class="hero">
+        <div class="topbar">
+          <div class="brand">
+            <div class="mark" aria-hidden="true"></div>
+            <div>
+              <p class="eyebrow">Enterprise Windows Application</p>
+              <h3>Manufacturing ERP Workbench</h3>
+            </div>
+          </div>
+          <div class="pills">
+            <span class="pill">C# / .NET Framework</span>
+            <span class="pill">WPF + MVVM</span>
+            <span class="pill">SQL Server</span>
+            <span class="pill">SOA + DI</span>
+          </div>
+        </div>
+
+        <h1>Desktop ERP and MRP operations for manufacturing support.</h1>
+        <p class="lede">
+          A role-targeted enterprise demo that mirrors the software engineer job description: requirements analysis,
+          WPF client development, service-oriented application layers, domain-driven design, SQL Server schema and
+          procedure work, user support tooling, report writing, data correction workflows, and production issue triage.
+        </p>
+
+        <div class="pills">
+          <span class="pill">Work orders</span>
+          <span class="pill">Inventory</span>
+          <span class="pill">Purchasing</span>
+          <span class="pill">Production scheduling</span>
+          <span class="pill">Defect support console</span>
+        </div>
+      </section>
+
+      <div class="grid">
+        <section class="card stats">
+          <div class="stats-grid">
+            <div class="stat">
+              <span class="value">1,248</span>
+              <span class="label">open work orders managed</span>
+            </div>
+            <div class="stat">
+              <span class="value">96%</span>
+              <span class="label">schema validation coverage</span>
+            </div>
+            <div class="stat">
+              <span class="value">42</span>
+              <span class="label">stored procedures and reports</span>
+            </div>
+            <div class="stat">
+              <span class="value">7</span>
+              <span class="label">ERP modules in the demo</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="card wide">
+          <div class="section-title">
+            <h2>Operational modules</h2>
+            <span class="badge">WPF shell with MVVM navigation</span>
+          </div>
+          <div class="module-grid">
+            <div class="module">
+              <h3>Work Order Control</h3>
+              <p>Track releases, hold reasons, capacity, and labor allocation across shop-floor routing steps.</p>
+            </div>
+            <div class="module">
+              <h3>Inventory & Purchasing</h3>
+              <p>Manage parts, vendors, reorder points, purchase requests, and shortage exceptions.</p>
+            </div>
+            <div class="module">
+              <h3>Quality and Support Desk</h3>
+              <p>Log defects, capture fixes, adjust data, and route user support requests with audit history.</p>
+            </div>
+            <div class="module">
+              <h3>Reporting & Analytics</h3>
+              <p>Generate operational reports for WIP, throughput, scrap, and scheduling variance.</p>
+            </div>
+          </div>
+        </section>
+
+        <aside class="card tall">
+          <div class="section-title">
+            <h2>Skills map</h2>
+            <span class="badge">Direct job alignment</span>
+          </div>
+          <ul class="feature-list">
+            <li>Requirements gathering, documentation, coding, testing, debugging, and deployment</li>
+            <li>WPF + MVVM client with dependency injection and inversion of control</li>
+            <li>Domain-driven aggregates, services, repositories, and validation rules</li>
+            <li>SQL Server DDL, DML, schema migrations, and stored procedures</li>
+            <li>Service-oriented integration layer for ERP and business systems</li>
+            <li>Report writing, user support, and production data corrections</li>
+            <li>Capacity planning, load calculations, and engineering-friendly estimation tools</li>
+            <li>Mentor dashboard for junior engineer task reviews and handoff notes</li>
+          </ul>
+        </aside>
+
+        <section class="card half">
+          <div class="section-title">
+            <h2>Architecture</h2>
+            <span class="badge">Clean layering</span>
+          </div>
+          <div class="architecture">
+            <div class="layer">
+              <h3>Presentation</h3>
+              <p>WPF views, bindings, commands, and reusable UI components.</p>
+            </div>
+            <div class="layer">
+              <h3>Application</h3>
+              <p>Use cases, orchestration services, validation, and workflow logic.</p>
+            </div>
+            <div class="layer">
+              <h3>Domain</h3>
+              <p>Entities, value objects, aggregates, and business invariants.</p>
+            </div>
+            <div class="layer">
+              <h3>Infrastructure</h3>
+              <p>SQL Server, repositories, report exports, and external service adapters.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="card half">
+          <div class="section-title">
+            <h2>SQL Server workbench</h2>
+            <span class="badge">DDL + DML + procedures</span>
+          </div>
+          <div class="sql" aria-label="SQL Server schema and procedure example">
+<span class="comment">-- Manufacturing ERP schema and support workflow</span>
+<span class="kw">CREATE TABLE</span> <span class="id">WorkOrders</span> (
+  <span class="id">WorkOrderId</span> <span class="kw">INT</span> <span class="kw">PRIMARY KEY</span>,
+  <span class="id">PartNumber</span> <span class="kw">NVARCHAR</span>(50),
+  <span class="id">QtyPlanned</span> <span class="kw">INT</span>,
+  <span class="id">QtyCompleted</span> <span class="kw">INT</span>,
+  <span class="id">Status</span> <span class="kw">NVARCHAR</span>(20)
+);
+
+<span class="kw">CREATE PROCEDURE</span> <span class="id">dbo.UpsertWorkOrderStatus</span>
+  <span class="warn">@WorkOrderId</span> <span class="kw">INT</span>,
+  <span class="warn">@Status</span> <span class="kw">NVARCHAR</span>(20)
+<span class="kw">AS</span>
+<span class="kw">BEGIN</span>
+  <span class="kw">UPDATE</span> <span class="id">WorkOrders</span>
+  <span class="kw">SET</span> <span class="id">Status</span> = <span class="warn">@Status</span>
+  <span class="kw">WHERE</span> <span class="id">WorkOrderId</span> = <span class="warn">@WorkOrderId</span>;
+<span class="kw">END</span>;
+          </div>
+        </section>
+
+        <section class="card footer-note">
+          Built to show the software engineering profile the role asks for: business systems analysis, enterprise desktop development, ERP/MRP support, SQL Server schema work, production debugging, and measurable technical leadership. The project is intentionally Windows-first so it reads as a credible C#/.NET Framework, WPF, and manufacturing systems fit.
+        </section>
+      </div>
+    </div>
+  </body>
+</html>
