@@ -45,8 +45,9 @@ jest.mock('expo-av', () => ({
 
 describe('Music Streaming App', () => {
   it('shows a loading indicator while bootstrapping', () => {
-    const { UNSAFE_getAllByType } = render(<App />);
+    const { UNSAFE_getAllByType, findByText } = render(<App />);
     expect(UNSAFE_getAllByType(ActivityIndicator)).toHaveLength(1);
+    return findByText('Music Streaming');
   });
 
   it('shows the login screen when no session is stored', async () => {

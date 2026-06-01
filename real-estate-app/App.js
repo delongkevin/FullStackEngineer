@@ -110,7 +110,7 @@ function AuthStack() {
 function AppStack() {
   return (
     <Tab.Navigator
-      screenOptions={({ route }) => ({
+      screenOptions={{
         headerShown: true,
         tabBarActiveTintColor: '#059669',
         tabBarInactiveTintColor: '#9ca3af',
@@ -120,7 +120,7 @@ function AppStack() {
           paddingTop: 5,
           height: 60
         }
-      })}
+      }}
     >
       <Tab.Screen 
         name="SearchTab" 
@@ -208,73 +208,6 @@ export default function App() {
       dispatch({
         isLoading: false,
         isSignout: false,
-        userToken: null,
-        userId: null
-      });
-    }
-  };
-
-  const authContext = {
-    signIn: async (credentials) => {
-      try {
-        const response = await axios.post('http://localhost:3001/api/auth/login', {
-          email: credentials.email,
-          password: credentials.password
-        });
-        
-        const { token, userId } = response.data;
-        await AsyncStorage.setItem('userToken', token);
-        await AsyncStorage.setItem('userId', userId);
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        
-        dispatch({
-          isLoading: false,
-          isSignout: false,
-          userToken: token,
-          userId: userId
-        });
-        
-        return { success: true };
-      } catch (error) {
-        return { success: false, error: error.response?.data?.error || 'Login failed' };
-      }
-    },
-    
-    signUp: async (credentials) => {
-      try {
-        const response = await axios.post('http://localhost:3001/api/auth/register', {
-          name: credentials.name,
-          email: credentials.email,
-          password: credentials.password,
-          phone: credentials.phone
-        });
-        
-        const { token, userId } = response.data;
-        await AsyncStorage.setItem('userToken', token);
-        await AsyncStorage.setItem('userId', userId);
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        
-        dispatch({
-          isLoading: false,
-          isSignout: false,
-          userToken: token,
-          userId: userId
-        });
-        
-        return { success: true };
-      } catch (error) {
-        return { success: false, error: error.response?.data?.error || 'Registration failed' };
-      }
-    },
-    
-    signOut: async () => {
-      await AsyncStorage.removeItem('userToken');
-      await AsyncStorage.removeItem('userId');
-      delete axios.defaults.headers.common['Authorization'];
-      
-      dispatch({
-        isLoading: false,
-        isSignout: true,
         userToken: null,
         userId: null
       });

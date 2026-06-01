@@ -139,7 +139,7 @@ export default function ProjectCard({
               href={project.liveUrl}
               className="flex items-center gap-2 theme-text-secondary hover:opacity-80 transition-colors p-2 min-h-[44px] min-w-[44px] justify-center"
               target={project.liveUrl.startsWith('http') ? '_blank' : '_self'}
-              rel={project.liveUrl.startsWith('http') ? 'noopener noreferrer' : ''}
+              rel={project.liveUrl.startsWith('http') ? 'noopener noreferrer' : undefined}
               aria-label={`View live demo of ${project.title}`}
             >
               <ExternalLink size={18} aria-hidden="true" />

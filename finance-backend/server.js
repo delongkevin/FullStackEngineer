@@ -163,7 +163,7 @@ app.put('/api/users/:userId', (req, res) => {
   }
 
   const { salary, currency } = req.body;
-  if (salary) user.salary = salary;
+  if (salary !== undefined) user.salary = Number(salary);
   if (currency) user.currency = currency;
 
   users.set(req.params.userId, user);
@@ -179,12 +179,22 @@ app.post('/api/transactions', (req, res) => {
     return res.status(404).json({ error: 'User not found' });
   }
 
+  const normalizedType = type === 'income' ? 'income' : type === 'expense' ? 'expense' : null;
+  if (!normalizedType) {
+    return res.status(400).json({ error: 'Transaction type must be income or expense' });
+  }
+
+  const parsedAmount = Number(amount);
+  if (!Number.isFinite(parsedAmount) || parsedAmount < 0) {
+    return res.status(400).json({ error: 'Amount must be a valid non-negative number' });
+  }
+
   const transactionId = `txn_${Date.now()}`;
   const transaction = {
     id: transactionId,
     userId,
-    type: type || 'expense', // 'expense' or 'income'
-    amount: amount || 0,
+    type: normalizedType,
+    amount: parsedAmount,
     category: category || 'Other',
     description: description || '',
     date: date || new Date(),
@@ -193,22 +203,22 @@ app.post('/api/transactions', (req, res) => {
   };
 
   // Update balance
-  if (type === 'expense') {
-    user.balance -= amount;
-    user.stats.totalSpent += amount;
-  } else if (type === 'income') {
-    user.balance += amount;
-    user.stats.totalIncome += amount;
+  if (normalizedType === 'expense') {
+    user.balance -= parsedAmount;
+    user.stats.totalSpent += parsedAmount;
+  } else {
+    user.balance += parsedAmount;
+    user.stats.totalIncome += parsedAmount;
   }
 
   // Check for fraud (spending more than 50% of balance at once)
-  if (type === 'expense' && amount > user.salary * 0.5) {
+  if (normalizedType === 'expense' && parsedAmount > user.salary * 0.5) {
     fraudAlerts.push({
       id: `alert_${Date.now()}`,
       userId,
       type: 'high_expense',
-      message: `Unusual spending detected: $${amount}`,
-      amount,
+      message: `Unusual spending detected: $${parsedAmount}`,
+      amount: parsedAmount,
       timestamp: new Date(),
       resolved: false,
     });
@@ -223,6 +233,11 @@ app.post('/api/transactions', (req, res) => {
 // Get User Transactions
 app.get('/api/transactions/:userId', (req, res) => {
   const { limit = 50, skip = 0, category, type } = req.query;
+
+  const parsedLimit = Number.parseInt(String(limit), 10);
+  const parsedSkip = Number.parseInt(String(skip), 10);
+  const safeLimit = Number.isNaN(parsedLimit) ? 50 : Math.max(1, parsedLimit);
+  const safeSkip = Number.isNaN(parsedSkip) ? 0 : Math.max(0, parsedSkip);
   
   let userTransactions = Array.from(transactions.values())
     .filter(t => t.userId === req.params.userId);
@@ -237,9 +252,9 @@ app.get('/api/transactions/:userId', (req, res) => {
   userTransactions.sort((a, b) => new Date(b.date) - new Date(a.date));
 
   const total = userTransactions.length;
-  const paginated = userTransactions.slice(parseInt(skip), parseInt(skip) + parseInt(limit));
+  const paginated = userTransactions.slice(safeSkip, safeSkip + safeLimit);
 
-  res.json({ transactions: paginated, total, limit, skip });
+  res.json({ transactions: paginated, total, limit: safeLimit, skip: safeSkip });
 });
 
 // Get Transaction Summary
@@ -283,12 +298,13 @@ app.post('/api/budgets/:userId', (req, res) => {
     return res.status(404).json({ error: 'User not found' });
   }
 
+  const parsedLimit = Number(limit);
   const budgetId = `budget_${Date.now()}`;
   const budget = {
     id: budgetId,
     userId: req.params.userId,
     category: category || 'Other',
-    limit: limit || 0,
+    limit: Number.isFinite(parsedLimit) && parsedLimit >= 0 ? parsedLimit : 0,
     period,
     spent: 0,
     createdAt: new Date(),
@@ -330,16 +346,21 @@ app.get('/api/budgets/:userId', (req, res) => {
 // Financial Goals
 app.post('/api/goals/:userId', (req, res) => {
   const { name, targetAmount, currentAmount = 0, deadline } = req.body;
+
+  const parsedTargetAmount = Number(targetAmount);
+  const parsedCurrentAmount = Number(currentAmount);
+  const safeTargetAmount = Number.isFinite(parsedTargetAmount) && parsedTargetAmount >= 0 ? parsedTargetAmount : 0;
+  const safeCurrentAmount = Number.isFinite(parsedCurrentAmount) && parsedCurrentAmount >= 0 ? parsedCurrentAmount : 0;
   
   const goalId = `goal_${Date.now()}`;
   const goal = {
     id: goalId,
     userId: req.params.userId,
     name: name || 'New Goal',
-    targetAmount: targetAmount || 0,
-    currentAmount: currentAmount || 0,
+    targetAmount: safeTargetAmount,
+    currentAmount: safeCurrentAmount,
     deadline: deadline || new Date(Date.now() + 365 * 24 * 60 * 60 * 1000),
-    progress: currentAmount / (targetAmount || 1) * 100,
+    progress: safeCurrentAmount / (safeTargetAmount || 1) * 100,
     createdAt: new Date(),
   };
 
@@ -364,7 +385,12 @@ app.post('/api/payments/process', (req, res) => {
     return res.status(404).json({ error: 'User not found' });
   }
 
-  if (user.balance < amount) {
+  const parsedAmount = Number(amount);
+  if (!Number.isFinite(parsedAmount) || parsedAmount <= 0) {
+    return res.status(400).json({ error: 'Payment amount must be a valid number greater than 0' });
+  }
+
+  if (user.balance < parsedAmount) {
     return res.status(402).json({ error: 'Insufficient funds' });
   }
 
@@ -372,7 +398,7 @@ app.post('/api/payments/process', (req, res) => {
   const payment = {
     id: paymentId,
     userId,
-    amount,
+    amount: parsedAmount,
     cardLast4,
     description,
     status: 'succeeded',
@@ -380,7 +406,7 @@ app.post('/api/payments/process', (req, res) => {
   };
 
   // Deduct from balance
-  user.balance -= amount;
+  user.balance -= parsedAmount;
   users.set(userId, user);
 
   res.status(201).json(payment);

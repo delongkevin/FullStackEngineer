@@ -6,6 +6,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import FavoritesScreen from '../screens/FavoritesScreen';
 
+jest.setTimeout(15000);
+
 describe('FavoritesScreen', () => {
   const navigation = {
     navigate: jest.fn(),

@@ -15,7 +15,18 @@ const io = socketIO(server, {
 });
 
 const PORT = process.env.PORT || 3000;
-const JWT_SECRET = process.env.JWT_SECRET || 'your_secret_key';
+const JWT_SECRET = process.env.JWT_SECRET;
+const IS_PRODUCTION = process.env.NODE_ENV === 'production';
+
+if (!JWT_SECRET && IS_PRODUCTION) {
+  throw new Error('JWT_SECRET environment variable is required in production');
+}
+
+if (!JWT_SECRET) {
+  console.warn('[security] JWT_SECRET is not set. Using development-only fallback secret.');
+}
+
+const EFFECTIVE_JWT_SECRET = JWT_SECRET || 'dev-only-insecure-secret-change-me';
 
 // In-memory data storage (upgradable to MongoDB/Firebase)
 const users = new Map();
@@ -25,6 +36,10 @@ const userSessions = new Map();
 
 function createAvatar(name) {
   return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=random`;
+}
+
+function normalizeEmail(email) {
+  return String(email).trim().toLowerCase();
 }
 
 function serializeUser(user) {
@@ -199,7 +214,7 @@ const verifyToken = (req, res, next) => {
   const token = req.headers.authorization?.split(' ')[1];
   if (!token) return res.status(401).json({ error: 'No token provided' });
   try {
-    const decoded = jwt.verify(token, JWT_SECRET);
+    const decoded = jwt.verify(token, EFFECTIVE_JWT_SECRET);
     req.userId = decoded.userId;
     next();
   } catch (error) {
@@ -217,14 +232,16 @@ app.post('/api/auth/register', (req, res) => {
     return res.status(400).json({ error: 'Missing required fields' });
   }
 
-  if (Array.from(users.values()).some(u => u.email === email)) {
+  const normalizedEmail = normalizeEmail(email);
+
+  if (Array.from(users.values()).some((u) => normalizeEmail(u.email) === normalizedEmail)) {
     return res.status(400).json({ error: 'Email already exists' });
   }
 
   const userId = `user_${Date.now()}`;
-  const user = createUser({ userId, name, email, password, avatar });
+  const user = createUser({ userId, name, email: normalizedEmail, password, avatar });
 
-  const token = jwt.sign({ userId }, JWT_SECRET, { expiresIn: '30d' });
+  const token = jwt.sign({ userId }, EFFECTIVE_JWT_SECRET, { expiresIn: '30d' });
   res.status(201).json({
     userId,
     name,
@@ -242,13 +259,14 @@ app.post('/api/auth/login', (req, res) => {
     return res.status(400).json({ error: 'Email and password required' });
   }
 
-  const user = Array.from(users.values()).find(u => u.email === email);
+  const normalizedEmail = normalizeEmail(email);
+  const user = Array.from(users.values()).find((u) => normalizeEmail(u.email) === normalizedEmail);
   
   if (!user || user.password !== password) {
     return res.status(401).json({ error: 'Invalid credentials' });
   }
 
-  const token = jwt.sign({ userId: user.userId }, JWT_SECRET, { expiresIn: '30d' });
+  const token = jwt.sign({ userId: user.userId }, EFFECTIVE_JWT_SECRET, { expiresIn: '30d' });
   res.json({
     userId: user.userId,
     name: user.name,
@@ -380,8 +398,10 @@ app.get('/api/messages/:conversationId', verifyToken, (req, res) => {
     return res.status(404).json({ error: 'Conversation not found' });
   }
 
-  const limit = parseInt(req.query.limit) || 50;
-  const offset = parseInt(req.query.offset) || 0;
+  const parsedLimit = Number.parseInt(String(req.query.limit ?? 50), 10);
+  const parsedOffset = Number.parseInt(String(req.query.offset ?? 0), 10);
+  const limit = Number.isNaN(parsedLimit) ? 50 : Math.max(1, parsedLimit);
+  const offset = Number.isNaN(parsedOffset) ? 0 : Math.max(0, parsedOffset);
 
   const convMessages = messages.get(req.params.conversationId) || [];
   const endIndex = offset > 0 ? Math.max(convMessages.length - offset, 0) : convMessages.length;

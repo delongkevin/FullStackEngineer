@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   Alert,
   Linking,
-  Share,
   Modal,
   TextInput,
   FlatList
@@ -19,7 +18,7 @@ import moment from 'moment';
 
 const API_BASE_URL = 'http://localhost:3001';
 
-export default function PropertyDetailScreen({ route, navigation }) {
+export default function PropertyDetailScreen({ route }) {
   const { property } = route.params;
   const [isFavorited, setIsFavorited] = useState(false);
   const [token, setToken] = useState(null);
@@ -130,17 +129,6 @@ export default function PropertyDetailScreen({ route, navigation }) {
         { text: 'Cancel', onPress: () => {}, style: 'cancel' }
       ]
     );
-  };
-
-  const handleShare = async () => {
-    try {
-      await Share.share({
-        message: `Check out this property: ${property.title} in ${property.city}. Listed at $${property.price.toLocaleString()}`,
-        title: property.title
-      });
-    } catch (error) {
-      Alert.alert('Error', 'Failed to share property');
-    }
   };
 
   const renderReview = ({ item: review }) => (
@@ -269,7 +257,7 @@ export default function PropertyDetailScreen({ route, navigation }) {
           <Text style={styles.sectionTitle}>Reviews</Text>
           <FlatList
             data={reviews}
-            renderItem={renderReviewItem}
+            renderItem={renderReview}
             keyExtractor={(item) => item.reviewId}
             scrollEnabled={false}
           />
@@ -328,16 +316,6 @@ export default function PropertyDetailScreen({ route, navigation }) {
     </ScrollView>
   );
 }
-
-const renderReviewItem = ({ item: review }) => (
-  <View style={styles.reviewItem}>
-    <View style={styles.reviewHeader}>
-      <Text style={styles.reviewerName}>{review.userName}</Text>
-      <Text style={styles.reviewRating}>⭐ {review.rating}</Text>
-    </View>
-    <Text style={styles.reviewComment}>{review.comment}</Text>
-  </View>
-);
 
 const styles = StyleSheet.create({
   container: {

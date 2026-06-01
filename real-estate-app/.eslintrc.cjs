@@ -13,9 +13,18 @@ module.exports = {
       jsx: true
     }
   },
-  extends: ['eslint:recommended'],
+  plugins: ['react'],
+  extends: ['eslint:recommended', 'plugin:react/recommended'],
+  settings: {
+    react: {
+      version: 'detect'
+    }
+  },
   rules: {
     'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+    'react/jsx-uses-vars': 'error',
+    'react/react-in-jsx-scope': 'off',
+    'react/prop-types': 'off',
     'no-undef': 'off',
     'no-useless-escape': 'off'
   }

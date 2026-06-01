@@ -17,8 +17,8 @@ const API_BASE_URL = 'http://localhost:3001';
 
 export default function PropertyListScreen({ route, navigation }) {
   const { properties: initialProperties = [] } = route.params || {};
-  const [properties, setProperties] = useState(initialProperties);
-  const [loading, setLoading] = useState(false);
+  const [properties] = useState(initialProperties);
+  const [loading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [token, setToken] = useState(null);
   const [favorites, setFavorites] = useState([]);

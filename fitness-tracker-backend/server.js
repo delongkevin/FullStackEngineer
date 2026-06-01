@@ -160,9 +160,9 @@ app.put('/api/users/:userId', (req, res) => {
   }
 
   const { weight, height, goal } = req.body;
-  if (weight) user.weight = weight;
-  if (height) user.height = height;
-  if (goal) user.goal = goal;
+  if (weight !== undefined) user.weight = Number(weight);
+  if (height !== undefined) user.height = Number(height);
+  if (goal !== undefined) user.goal = goal;
 
   users.set(req.params.userId, user);
   res.json(user);

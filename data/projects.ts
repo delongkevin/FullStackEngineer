@@ -1003,10 +1003,15 @@ const searchableProjectFields = (project: Project) => {
 };
 
 export const getProjectHref = (project: Project): string => {
-  return `/projects/${project.id}`;
+  return `/projects/${getProjectRouteKey(project)}`;
 };
 
 export const getProjectRouteKey = (project: Project): string => {
+  const normalizedSlug = project.slug?.trim();
+  if (normalizedSlug) {
+    return normalizedSlug;
+  }
+
   return project.id.toString();
 };
 

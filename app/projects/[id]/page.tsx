@@ -16,6 +16,7 @@ import { ExternalLink, Github, ArrowLeft, Smartphone, Download } from 'lucide-re
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 
 const siteUrl = 'https://delongkevin.github.io/FullStackEngineer';
 
@@ -29,20 +30,7 @@ export default function ProjectDetail({ params }: PageProps) {
   const project = findProjectByRouteParam(params.id);
 
   if (!project) {
-    return (
-      <>
-        <Header />
-        <div className="pt-24 pb-16 min-h-screen flex items-center justify-center">
-          <div className="text-center">
-            <h1 className="text-2xl font-bold theme-text-primary mb-4">Project Not Found</h1>
-            <Link href="/projects" className="theme-accent-text hover:opacity-80">
-              ← Back to Projects
-            </Link>
-          </div>
-        </div>
-        <Footer />
-      </>
-    );
+    notFound();
   }
 
   const isDirectAndroidDownload = (url: string) =>
@@ -135,7 +123,7 @@ export default function ProjectDetail({ params }: PageProps) {
                     href={project.liveUrl}
                     className="btn-primary inline-flex items-center gap-2"
                     target={project.liveUrl.startsWith('http') ? '_blank' : '_self'}
-                    rel={project.liveUrl.startsWith('http') ? 'noopener noreferrer' : ''}
+                    rel={project.liveUrl.startsWith('http') ? 'noopener noreferrer' : undefined}
                     aria-label={project.embeddable ? `Open interactive demo of ${project.title}` : `View live demo of ${project.title}`}
                   >
                     <ExternalLink size={20} aria-hidden="true" />
@@ -169,7 +157,7 @@ export default function ProjectDetail({ params }: PageProps) {
                           className="inline-flex items-center gap-2 px-4 py-2 rounded-lg hover:opacity-90 transition-colors text-sm font-medium"
                           style={{ background: 'var(--surface-3)', color: 'var(--text-1)', border: '1px solid var(--border-soft)' }}
                           target={project.androidUrl.startsWith('/') ? '_self' : '_blank'}
-                          rel={project.androidUrl.startsWith('/') ? '' : 'noopener noreferrer'}
+                          rel={project.androidUrl.startsWith('/') ? undefined : 'noopener noreferrer'}
                           download={isDirectAndroidDownload(project.androidUrl) ? true : undefined}
                           aria-label={`${isDirectAndroidDownload(project.androidUrl) ? 'Download' : 'View Android source for'} ${project.title}`}
                         >
@@ -187,7 +175,7 @@ export default function ProjectDetail({ params }: PageProps) {
                           className="inline-flex items-center gap-2 px-4 py-2 rounded-lg hover:opacity-90 transition-colors text-sm font-medium"
                           style={{ background: 'var(--surface-3)', color: 'var(--text-1)', border: '1px solid var(--border-soft)' }}
                           target={project.iosUrl.startsWith('/') ? '_self' : '_blank'}
-                          rel={project.iosUrl.startsWith('/') ? '' : 'noopener noreferrer'}
+                          rel={project.iosUrl.startsWith('/') ? undefined : 'noopener noreferrer'}
                           download={isDirectIosDownload(project.iosUrl) ? true : undefined}
                           aria-label={`${isDirectIosDownload(project.iosUrl) ? 'Download' : 'View iOS source for'} ${project.title}`}
                         >
@@ -367,7 +355,7 @@ export default function ProjectDetail({ params }: PageProps) {
 
 // Generate static pages for each project
 export async function generateStaticParams() {
-  return projects.map((project) => ({ id: project.id.toString() }));
+  return projects.map((project) => ({ id: getProjectRouteKey(project) }));
 }
 
 // Generate metadata for SEO

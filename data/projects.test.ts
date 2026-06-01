@@ -1,4 +1,6 @@
 import { describe, it, expect } from 'vitest';
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
 import {
   findProjectByRouteParam,
   findProjectById,
@@ -59,6 +61,12 @@ describe('projects data', () => {
   describe('image paths validation', () => {
     it.each(projects)('project "$title" should have valid image path format', (project) => {
       expect(project.image).toMatch(/^\/images\/[\w-]+\.(jpg|png|gif|webp|svg)$/i);
+    });
+
+    it.each(projects)('project "$title" should reference an existing image file', (project) => {
+      const imagePath = project.image.startsWith('/') ? project.image.slice(1) : project.image;
+      const absolutePath = join(process.cwd(), 'public', imagePath.replace(/^images\//, 'images/'));
+      expect(existsSync(absolutePath)).toBe(true);
     });
   });
 
@@ -141,6 +149,21 @@ describe('projects data', () => {
       const firstProject = projects[0];
       const resolved = findProjectByRouteParam(firstProject.id.toString());
       expect(resolved?.id).toBe(firstProject.id);
+    });
+
+    it('should prefer slug route key when a slug is present', () => {
+      const projectWithSlug = projects.find((project) => typeof project.slug === 'string' && project.slug.length > 0);
+      expect(projectWithSlug).toBeDefined();
+
+      const routeKey = getProjectRouteKey(projectWithSlug!);
+      expect(routeKey).toBe(projectWithSlug!.slug);
+      expect(getProjectHref(projectWithSlug!)).toBe(`/projects/${projectWithSlug!.slug}`);
+
+      const resolvedBySlug = findProjectByRouteParam(projectWithSlug!.slug!);
+      expect(resolvedBySlug?.id).toBe(projectWithSlug!.id);
+
+      const resolvedById = findProjectByRouteParam(projectWithSlug!.id.toString());
+      expect(resolvedById?.id).toBe(projectWithSlug!.id);
     });
 
     it('should resolve projects by id helper', () => {

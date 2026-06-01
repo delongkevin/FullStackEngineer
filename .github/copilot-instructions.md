@@ -45,6 +45,15 @@ This repository is a multi-project portfolio workspace, but the primary user-fac
 - Run the narrowest relevant check after changes: `npm run test`, `npm run build`, `npm run lint`, or `npm run verify-stats` depending on the area touched.
 - For project catalog changes, validate the related tests in `data/` and `config/` when applicable.
 - For UI changes, confirm the page still renders correctly in the browser and remains responsive.
+- For project image updates, verify the referenced file exists under `public/images` and, for SVG assets, validate XML correctness (for example with `xmllint`) so malformed entities like raw `&` do not break rendering.
+
+## Weekly Deep Review And Report
+- Perform a deep repository review once per week, even when no feature work is requested.
+- Prioritize findings by severity: `critical`, `high`, `medium`, `low`, then include concrete file references and root-cause notes.
+- Implement safe, high-impact fixes discovered during the review when confidence is high and changes are localized.
+- For remaining findings, provide an actionable remediation plan with estimated risk and affected areas.
+- Publish a concise weekly report covering: checks run, bugs fixed, enhancements proposed, deferred risks, and recommended follow-up tasks.
+- Re-run relevant validation commands after each weekly-fix batch and include pass/fail outcomes in the report.
 
 ## Mobile Apps
 - When editing Android or iOS subprojects, make sure their dependencies are installed before validating builds.

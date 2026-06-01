@@ -13,7 +13,7 @@ export const formatNumber = (number, decimals = 0) => {
   return number.toLocaleString('en-US', { maximumFractionDigits: decimals });
 };
 
-export const formatDate = (date, format = 'MMM DD, YYYY') => {
+export const formatDate = (date) => {
   const d = new Date(date);
   const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
     'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];

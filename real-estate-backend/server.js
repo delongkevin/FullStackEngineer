@@ -8,7 +8,18 @@ require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
-const JWT_SECRET = process.env.JWT_SECRET || 'your_secret_key';
+const JWT_SECRET = process.env.JWT_SECRET;
+const IS_PRODUCTION = process.env.NODE_ENV === 'production';
+
+if (!JWT_SECRET && IS_PRODUCTION) {
+  throw new Error('JWT_SECRET environment variable is required in production');
+}
+
+if (!JWT_SECRET) {
+  console.warn('[security] JWT_SECRET is not set. Using development-only fallback secret.');
+}
+
+const EFFECTIVE_JWT_SECRET = JWT_SECRET || 'dev-only-insecure-secret-change-me';
 
 // In-memory data storage (upgradable to MongoDB/Firebase)
 const users = new Map();
@@ -19,6 +30,10 @@ const reviews = new Map();
 
 function createAvatar(name) {
   return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=random`;
+}
+
+function normalizeEmail(email) {
+  return String(email).trim().toLowerCase();
 }
 
 function serializeUser(user) {
@@ -222,7 +237,7 @@ const verifyToken = (req, res, next) => {
   const token = req.headers.authorization?.split(' ')[1];
   if (!token) return res.status(401).json({ error: 'No token provided' });
   try {
-    const decoded = jwt.verify(token, JWT_SECRET);
+    const decoded = jwt.verify(token, EFFECTIVE_JWT_SECRET);
     req.userId = decoded.userId;
     next();
   } catch (error) {
@@ -239,13 +254,15 @@ app.post('/api/auth/register', (req, res) => {
     return res.status(400).json({ error: 'Missing required fields' });
   }
 
-  if (Array.from(users.values()).some(u => u.email === email)) {
+  const normalizedEmail = normalizeEmail(email);
+
+  if (Array.from(users.values()).some((u) => normalizeEmail(u.email) === normalizedEmail)) {
     return res.status(400).json({ error: 'Email already exists' });
   }
 
   const userId = `user_${Date.now()}`;
-  const user = createUser({ userId, name, email, password, phone });
-  const token = jwt.sign({ userId }, JWT_SECRET, { expiresIn: '30d' });
+  const user = createUser({ userId, name, email: normalizedEmail, password, phone });
+  const token = jwt.sign({ userId }, EFFECTIVE_JWT_SECRET, { expiresIn: '30d' });
   
   res.status(201).json({
     userId,
@@ -263,13 +280,14 @@ app.post('/api/auth/login', (req, res) => {
     return res.status(400).json({ error: 'Email and password required' });
   }
 
-  const user = Array.from(users.values()).find(u => u.email === email);
+  const normalizedEmail = normalizeEmail(email);
+  const user = Array.from(users.values()).find((u) => normalizeEmail(u.email) === normalizedEmail);
   
   if (!user || user.password !== password) {
     return res.status(401).json({ error: 'Invalid credentials' });
   }
 
-  const token = jwt.sign({ userId: user.userId }, JWT_SECRET, { expiresIn: '30d' });
+  const token = jwt.sign({ userId: user.userId }, EFFECTIVE_JWT_SECRET, { expiresIn: '30d' });
   res.json({
     userId: user.userId,
     name: user.name,
@@ -291,14 +309,16 @@ app.put('/api/users/me', verifyToken, (req, res) => {
 
   const { name, email, phone, avatar } = req.body;
 
-  if (email && Array.from(users.values()).some((candidate) => candidate.email === email && candidate.userId !== req.userId)) {
+  const normalizedEmail = email ? normalizeEmail(email) : null;
+
+  if (normalizedEmail && Array.from(users.values()).some((candidate) => normalizeEmail(candidate.email) === normalizedEmail && candidate.userId !== req.userId)) {
     return res.status(400).json({ error: 'Email already exists' });
   }
 
   const updatedUser = {
     ...user,
     name: name || user.name,
-    email: email || user.email,
+    email: normalizedEmail || user.email,
     phone: phone ?? user.phone,
     avatar: avatar || user.avatar
   };
@@ -311,13 +331,17 @@ app.put('/api/users/me', verifyToken, (req, res) => {
 
 app.get('/api/properties', (req, res) => {
   const { type, minPrice, maxPrice, bedrooms, city, forSale, forRent, search } = req.query;
+
+  const parsedMinPrice = Number.parseInt(String(minPrice ?? ''), 10);
+  const parsedMaxPrice = Number.parseInt(String(maxPrice ?? ''), 10);
+  const parsedBedrooms = Number.parseInt(String(bedrooms ?? ''), 10);
   
   let filtered = Array.from(properties.values());
 
   if (type) filtered = filtered.filter(p => p.type === type);
-  if (minPrice) filtered = filtered.filter(p => p.price >= parseInt(minPrice));
-  if (maxPrice) filtered = filtered.filter(p => p.price <= parseInt(maxPrice));
-  if (bedrooms) filtered = filtered.filter(p => p.bedrooms >= parseInt(bedrooms));
+  if (!Number.isNaN(parsedMinPrice)) filtered = filtered.filter(p => p.price >= parsedMinPrice);
+  if (!Number.isNaN(parsedMaxPrice)) filtered = filtered.filter(p => p.price <= parsedMaxPrice);
+  if (!Number.isNaN(parsedBedrooms)) filtered = filtered.filter(p => p.bedrooms >= parsedBedrooms);
   if (city) filtered = filtered.filter(p => p.city.toLowerCase().includes(city.toLowerCase()));
   if (forSale === 'true') filtered = filtered.filter(p => p.forSale);
   if (forRent === 'true') filtered = filtered.filter(p => p.forRent);
@@ -509,8 +533,14 @@ app.put('/api/bookings/:bookingId', verifyToken, (req, res) => {
 app.post('/api/reviews', verifyToken, (req, res) => {
   const { propertyId, rating, comment } = req.body;
 
-  if (!propertyId || !rating) {
+  const parsedRating = Number.parseInt(String(rating), 10);
+
+  if (!propertyId || Number.isNaN(parsedRating)) {
     return res.status(400).json({ error: 'Missing required fields' });
+  }
+
+  if (parsedRating < 1 || parsedRating > 5) {
+    return res.status(400).json({ error: 'Rating must be an integer between 1 and 5' });
   }
 
   const property = properties.get(propertyId);
@@ -522,7 +552,7 @@ app.post('/api/reviews', verifyToken, (req, res) => {
     propertyId,
     userId: req.userId,
     userName: users.get(req.userId)?.name || 'User',
-    rating: parseInt(rating),
+    rating: parsedRating,
     comment: comment || '',
     createdAt: new Date()
   };

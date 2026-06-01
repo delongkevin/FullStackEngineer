@@ -6,8 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
-  Alert,
-  FlatList
+  Alert
 } from 'react-native';
 import axios from 'axios';
 
