@@ -535,14 +535,14 @@
     <div class="card section">
       <div class="card-title">Quick Queries</div>
       <div>
-        <span class="query-chip" onclick="setSQL('SELECT * FROM test_cases WHERE status = \'Fail\' ORDER BY priority;')">Failed TCs</span>
-        <span class="query-chip" onclick="setSQL('SELECT suite, COUNT(*) AS total, SUM(CASE WHEN status=\'Pass\' THEN 1 ELSE 0 END) AS passed FROM test_cases GROUP BY suite;')">Pass Rate by Suite</span>
-        <span class="query-chip" onclick="setSQL('SELECT severity, COUNT(*) AS count FROM defects WHERE status = \'Open\' GROUP BY severity ORDER BY CASE severity WHEN \'Critical\' THEN 1 WHEN \'High\' THEN 2 WHEN \'Medium\' THEN 3 ELSE 4 END;')">Open Defects by Severity</span>
-        <span class="query-chip" onclick="setSQL('SELECT d.component, COUNT(*) AS defect_count FROM defects d WHERE d.status != \'Closed\' GROUP BY d.component ORDER BY defect_count DESC;')">Defects by Component</span>
-        <span class="query-chip" onclick="setSQL('SELECT tc.title, tr.result, tr.duration_ms, tr.executed_at FROM test_runs tr JOIN test_cases tc ON tr.tc_id = tc.id WHERE tr.result = \'Fail\' ORDER BY tr.executed_at DESC LIMIT 10;')">Recent Failures</span>
+        <span class="query-chip" onclick="setSQL('SELECT * FROM test_cases WHERE status = &apos;Fail&apos; ORDER BY priority;')">Failed TCs</span>
+        <span class="query-chip" onclick="setSQL('SELECT suite, COUNT(*) AS total, SUM(CASE WHEN status=&apos;Pass&apos; THEN 1 ELSE 0 END) AS passed FROM test_cases GROUP BY suite;')">Pass Rate by Suite</span>
+        <span class="query-chip" onclick="setSQL('SELECT severity, COUNT(*) AS count FROM defects WHERE status = &apos;Open&apos; GROUP BY severity ORDER BY CASE severity WHEN &apos;Critical&apos; THEN 1 WHEN &apos;High&apos; THEN 2 WHEN &apos;Medium&apos; THEN 3 ELSE 4 END;')">Open Defects by Severity</span>
+        <span class="query-chip" onclick="setSQL('SELECT d.component, COUNT(*) AS defect_count FROM defects d WHERE d.status != &apos;Closed&apos; GROUP BY d.component ORDER BY defect_count DESC;')">Defects by Component</span>
+        <span class="query-chip" onclick="setSQL('SELECT tc.title, tr.result, tr.duration_ms, tr.executed_at FROM test_runs tr JOIN test_cases tc ON tr.tc_id = tc.id WHERE tr.result = &apos;Fail&apos; ORDER BY tr.executed_at DESC LIMIT 10;')">Recent Failures</span>
         <span class="query-chip" onclick="setSQL('SELECT executor, COUNT(*) AS runs, ROUND(AVG(duration_ms)) AS avg_ms FROM test_runs GROUP BY executor ORDER BY runs DESC;')">Runs by Executor</span>
-        <span class="query-chip" onclick="setSQL('SELECT * FROM test_cases WHERE assignee = \'Alice\' AND status IN (\'Fail\',\'Blocked\');')">Blocked (Alice)</span>
-        <span class="query-chip" onclick="setSQL('SELECT result, COUNT(*) AS cnt, ROUND(100.0*COUNT(*)/500,1)||\'%\' AS pct FROM test_runs GROUP BY result;')">Overall Pass %</span>
+        <span class="query-chip" onclick="setSQL('SELECT * FROM test_cases WHERE assignee = &apos;Alice&apos; AND status IN (&apos;Fail&apos;,&apos;Blocked&apos;);')">Blocked (Alice)</span>
+        <span class="query-chip" onclick="setSQL('SELECT result, COUNT(*) AS cnt, ROUND(100.0*COUNT(*)/500,1)||&apos;%&apos; AS pct FROM test_runs GROUP BY result;')">Overall Pass %</span>
       </div>
     </div>
     <div class="card section">
