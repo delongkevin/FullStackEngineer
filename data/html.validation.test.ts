@@ -54,7 +54,7 @@ describe('HTML files validation', () => {
 
         if (matches) {
           // Filter out false positives: JavaScript template literals inside script tags
-          const scriptTagRegex = /<script[^>]*>([\s\S]*?)<\/script>/gi;
+          const scriptTagRegex = /<script\b[^>]*>([\s\S]*?)<\/script\b[^>]*>/gi;
           const scriptContents: string[] = [];
           let scriptMatch;
 
