@@ -60,13 +60,13 @@ Also valid — Inline handler with backslash escaping inside a single-quoted Jav
 ## Files Modified
 
 1. **public/projects/qa-dashboard/index.html**
-   - Fixed 7 onclick attributes containing SQL queries
-   - Replaced all `\'` with `&apos;` in HTML attributes
+   - Fixed 7 inline onclick handlers containing SQL queries
+   - Updated handlers to pass SQL as a double-quoted JavaScript string (`&quot;...&quot;`) so embedded apostrophes in SQL don’t require `\'`
    - Lines affected: 538-545
 
 2. **public/projects/insurance-policy-admin/index.html**
    - Fixed 1 dynamically generated onclick attribute
-   - Changed from `\'` to `&quot;` for function parameter
+   - Updated generated HTML to use `&quot;...&quot;` for the method argument
    - Line affected: 840
 
 3. **data/html.validation.test.ts** (NEW FILE)
