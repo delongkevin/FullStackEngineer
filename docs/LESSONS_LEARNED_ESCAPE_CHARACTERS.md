@@ -16,17 +16,22 @@
 
 ### The Problem
 
-HTML attributes that contain JavaScript code (like `onclick`) need escaping that works for both HTML and the JavaScript snippet.
+HTML attributes that contain JavaScript code (like `onclick`) must properly encode special characters. The issue occurred when single quotes inside JavaScript function calls were escaped using backslash notation (`\'`) rather than HTML entities.
 
-A safe approach is to avoid entity-encoded apostrophes inside single-quoted JS strings. Instead, pass string arguments using double quotes in JavaScript, and encode those quotes for HTML.
+**Incorrect Pattern** (breaks HTML parsing):
+```html
+<span onclick="setSQL('SELECT * FROM table WHERE col = \'value\';')">Button</span>
+```
 
-Preferred pattern:
+**Correct Pattern** (double-quoted JS string with `&quot;`):
+```html
+<span onclick="setSQL(&quot;SELECT * FROM table WHERE col = 'value';&quot;)">Button</span>
+```
 
-    <span onclick="setSQL(&quot;SELECT * FROM table WHERE col = 'value';&quot;)">Button</span>
-
-Also works (but is easier to get wrong in generated HTML strings):
-
-    <span onclick="setSQL('SELECT * FROM table WHERE col = \'value\';')">Button</span>
+**Alternative Correct Pattern** (single-quoted attribute, double-quoted JS string):
+```html
+<span onclick='setSQL("SELECT * FROM table WHERE col = &apos;value&apos;;")'>Button</span>
+```
 
 ### Why It Breaks
 
@@ -65,9 +70,10 @@ Also valid — Inline handler with backslash escaping inside a single-quoted Jav
    - Line affected: 840
 
 3. **data/html.validation.test.ts** (NEW FILE)
-   - Creates a validation test suite that scans all `index.html` files found under `public/projects/**` and `public/demos/**`
-   - Fails when HTML contains `on*` attributes with backslash-escaped quotes (e.g. `\'`) that can break inline handler code
-   - Skips directories that do not contain an `index.html`
+   - Created comprehensive validation test suite
+   - Scans all HTML files in public/projects and public/demos
+   - Detects improper escape sequences in HTML attributes (including inside script tags that generate HTML)
+   - Validates all HTML event handler attributes for backslash-escaped quotes
 
 ## Prevention Strategy
 
@@ -76,7 +82,7 @@ Also valid — Inline handler with backslash escaping inside a single-quoted Jav
 A new test file `data/html.validation.test.ts` has been created that:
 - Validates all HTML files in public/projects and public/demos directories
 - Detects escaped quotes in HTML attributes (specifically onclick handlers)
-- Distinguishes between valid JavaScript code in `<script>` tags and invalid escapes in attributes
+- Detects escaped quotes in HTML attributes (specifically onclick handlers) and in script tags that generate HTML strings with inline event handlers
 - Runs as part of the regular test suite (`npm run test`)
 - Will fail CI builds if new escape character issues are introduced
 
@@ -156,7 +162,7 @@ npm run lint
 - Insurance Policy Admin (`/projects/insurance-policy-admin`) - API request buttons now work correctly
 
 ### Testing Results
-- All automated tests pass (including the new HTML validation suite)
+- All tests pass with the HTML validation suite integrated
 - No ESLint warnings or errors
 - Build completes successfully
 - No regressions detected
