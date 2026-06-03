@@ -97,10 +97,13 @@ describe('HTML files validation', () => {
 
         if (matches && matches.length > 0) {
           const lines: number[] = [];
+          let fromIndex = 0;
           matches.forEach(match => {
-            const beforeMatch = content.substring(0, content.indexOf(match));
+            const matchIndex = content.indexOf(match, fromIndex);
+            const beforeMatch = content.substring(0, matchIndex);
             const lineNumber = beforeMatch.split('\n').length;
             lines.push(lineNumber);
+            fromIndex = matchIndex + match.length;
           });
 
           expect.fail(
