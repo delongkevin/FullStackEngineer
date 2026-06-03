@@ -52,38 +52,22 @@ describe('HTML files validation', () => {
         const problematicPattern = /\s+\w+="[^"]*\\'[^"]*"/g;
         const matches = content.match(problematicPattern);
 
-        if (matches) {
-          // Filter out false positives: JavaScript template literals inside script tags
-          const scriptTagRegex = /<script\b[^>]*>([\s\S]*?)<\/script\b[^>]*>/gi;
-          const scriptContents: string[] = [];
-          let scriptMatch;
-
-          while ((scriptMatch = scriptTagRegex.exec(content)) !== null) {
-            scriptContents.push(scriptMatch[1]);
-          }
-
-          // Check if the matches are actually in HTML attributes (not in script tags)
-          const realIssues = matches.filter(match => {
-            return !scriptContents.some(script => script.includes(match));
+        if (matches && matches.length > 0) {
+          const lines: number[] = [];
+          let fromIndex = 0;
+          matches.forEach(issue => {
+            const issueIndex = content.indexOf(issue, fromIndex);
+            const beforeIssue = content.substring(0, issueIndex);
+            const lineNumber = beforeIssue.split('\n').length;
+            lines.push(lineNumber);
+            fromIndex = issueIndex + issue.length;
           });
 
-          if (realIssues.length > 0) {
-            const lines: number[] = [];
-            let fromIndex = 0;
-            realIssues.forEach(issue => {
-              const issueIndex = content.indexOf(issue, fromIndex);
-              const beforeIssue = content.substring(0, issueIndex);
-              const lineNumber = beforeIssue.split('\n').length;
-              lines.push(lineNumber);
-              fromIndex = issueIndex + issue.length;
-            });
-
-            expect.fail(
-              `Found ${realIssues.length} escaped single quote(s) in HTML attributes at lines: ${lines.join(', ')}\n` +
-              `These should use HTML entities (&apos; or &#39;) or double quotes instead.\n` +
-              `Examples found:\n${realIssues.slice(0, 3).map(m => `  - ${m.trim().substring(0, 80)}...`).join('\n')}`
-            );
-          }
+          expect.fail(
+            `Found ${matches.length} escaped single quote(s) in HTML attributes at lines: ${lines.join(', ')}\n` +
+            `These should use HTML entities (&apos; or &#39;) or double quotes instead.\n` +
+            `Examples found:\n${matches.slice(0, 3).map(m => `  - ${m.trim().substring(0, 80)}...`).join('\n')}`
+          );
         }
 
         // If we get here, no issues found
