@@ -28,11 +28,6 @@ HTML attributes that contain JavaScript code (like `onclick`) must properly enco
 <span onclick="setSQL(&quot;SELECT * FROM table WHERE col = 'value';&quot;)">Button</span>
 ```
 
-**Alternative Correct Pattern** (single-quoted attribute, double-quoted JS string):
-```html
-<span onclick='setSQL("SELECT * FROM table WHERE col = &apos;value&apos;;")'>Button</span>
-```
-
 ### Why It Breaks
 
 When the browser parses HTML, it encounters:
@@ -91,8 +86,8 @@ A new test file `data/html.validation.test.ts` has been created that:
 
 ✅ **DO**:
 ```html
-<!-- Use HTML entities in attributes -->
-<button onclick="func('value&apos;s')">Click</button>
+<!-- Use double-quoted JS string in double-quoted attributes -->
+<button onclick="func(&quot;value's&quot;)">Click</button>
 <button onclick='func("value")'>Click</button>
 
 <!-- Use JavaScript escapes in script tags -->
