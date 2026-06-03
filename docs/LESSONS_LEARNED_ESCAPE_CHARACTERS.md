@@ -81,7 +81,6 @@ Also valid — Inline handler with backslash escaping inside a single-quoted Jav
 
 A new test file `data/html.validation.test.ts` has been created that:
 - Validates all HTML files in public/projects and public/demos directories
-- Detects escaped quotes in HTML attributes (specifically onclick handlers)
 - Detects escaped quotes in HTML attributes (specifically onclick handlers) and in script tags that generate HTML strings with inline event handlers
 - Runs as part of the regular test suite (`npm run test`)
 - Will fail CI builds if new escape character issues are introduced
