@@ -541,8 +541,8 @@
         <span class="query-chip" onclick="setSQL('SELECT d.component, COUNT(*) AS defect_count FROM defects d WHERE d.status != &apos;Closed&apos; GROUP BY d.component ORDER BY defect_count DESC;')">Defects by Component</span>
         <span class="query-chip" onclick="setSQL('SELECT tc.title, tr.result, tr.duration_ms, tr.executed_at FROM test_runs tr JOIN test_cases tc ON tr.tc_id = tc.id WHERE tr.result = &apos;Fail&apos; ORDER BY tr.executed_at DESC LIMIT 10;')">Recent Failures</span>
         <span class="query-chip" onclick="setSQL('SELECT executor, COUNT(*) AS runs, ROUND(AVG(duration_ms)) AS avg_ms FROM test_runs GROUP BY executor ORDER BY runs DESC;')">Runs by Executor</span>
-        <span class="query-chip" onclick="setSQL('SELECT * FROM test_cases WHERE assignee = &apos;Alice&apos; AND status IN (&apos;Fail&apos;,&apos;Blocked&apos;);')">Blocked (Alice)</span>
-        <span class="query-chip" onclick="setSQL('SELECT result, COUNT(*) AS cnt, ROUND(100.0*COUNT(*)/500,1)||&apos;%&apos; AS pct FROM test_runs GROUP BY result;')">Overall Pass %</span>
+        <span class="query-chip" onclick="setSQL(&quot;SELECT * FROM test_cases WHERE assignee = 'Alice' AND status IN ('Fail','Blocked');&quot;)">Blocked (Alice)</span>
+        <span class="query-chip" onclick="setSQL(&quot;SELECT result, COUNT(*) AS cnt, ROUND(100.0*COUNT(*)/500,1)||'%' AS pct FROM test_runs GROUP BY result;&quot;)">Overall Pass %</span>
       </div>
     </div>
     <div class="card section">
