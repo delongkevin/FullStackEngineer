@@ -3,6 +3,12 @@
 @tailwind utilities;
 
 :root {
+  --font-manrope: 'Avenir Next';
+  --font-sora: 'Avenir Next';
+  --font-ibm-plex-sans: 'Segoe UI';
+  --font-space-grotesk: 'Segoe UI';
+  --font-merriweather: 'Georgia';
+  --font-fraunces: 'Georgia';
   --font-sans-base: var(--font-manrope), 'Avenir Next', 'Segoe UI', 'Helvetica Neue', sans-serif;
   --font-heading-base: var(--font-sora), 'Avenir Next', 'Segoe UI', sans-serif;
   --font-body: var(--font-sans-base);
