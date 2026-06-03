@@ -43,22 +43,19 @@ When the browser parses HTML, it encounters:
 
 ### Valid vs Invalid Usage
 
-**VALID** - JavaScript escape in `<script>` tags:
-```javascript
-<script>
-  const message = 'You\'re awesome!'; // ✓ Valid in JavaScript
-</script>
-```
+VALID — JavaScript escaping in `<script>` tags:
 
-**INVALID** - JavaScript escape in HTML attributes:
-```html
-<button onclick="alert('You\'re awesome!')">Click</button> <!-- ✗ Invalid -->
-```
+    <script>
+      const message = 'You\'re awesome!'; // ✓ valid JavaScript
+    </script>
 
-**VALID** - HTML entity in HTML attributes:
-```html
-<button onclick="alert('You&apos;re awesome!')">Click</button> <!-- ✓ Valid -->
-```
+VALID — Inline handler using a double-quoted JavaScript string (no apostrophe escaping needed):
+
+    <button onclick="alert(&quot;You're awesome!&quot;)">Click</button> <!-- ✓ valid -->
+
+Also valid — Inline handler with backslash escaping inside a single-quoted JavaScript string:
+
+    <button onclick="alert('You\'re awesome!')">Click</button> <!-- ✓ valid -->
 
 ## Files Modified
 
