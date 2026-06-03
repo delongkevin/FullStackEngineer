@@ -69,10 +69,13 @@ describe('HTML files validation', () => {
 
           if (realIssues.length > 0) {
             const lines: number[] = [];
+            let fromIndex = 0;
             realIssues.forEach(issue => {
-              const beforeIssue = content.substring(0, content.indexOf(issue));
+              const issueIndex = content.indexOf(issue, fromIndex);
+              const beforeIssue = content.substring(0, issueIndex);
               const lineNumber = beforeIssue.split('\n').length;
               lines.push(lineNumber);
+              fromIndex = issueIndex + issue.length;
             });
 
             expect.fail(
