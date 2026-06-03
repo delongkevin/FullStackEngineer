@@ -158,7 +158,7 @@ npm run lint
 - Insurance Policy Admin (`/projects/insurance-policy-admin`) - API request buttons now work correctly
 
 ### Testing Results
-- All 777 tests pass (74 new HTML validation tests added)
+- All automated tests pass (including the new HTML validation suite)
 - No ESLint warnings or errors
 - Build completes successfully
 - No regressions detected
