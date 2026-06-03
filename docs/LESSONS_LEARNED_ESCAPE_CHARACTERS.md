@@ -44,13 +44,9 @@ VALID — JavaScript escaping in `<script>` tags:
       const message = 'You\'re awesome!'; // ✓ valid JavaScript
     </script>
 
-VALID — Inline handler using a double-quoted JavaScript string (no apostrophe escaping needed):
+VALID — Inline handler using a double-quoted JavaScript string (apostrophe needs no escaping inside `"..."` strings):
 
-    <button onclick="alert(&quot;You're awesome!&quot;)">Click</button> <!-- ✓ valid -->
-
-Also valid — Inline handler with backslash escaping inside a single-quoted JavaScript string:
-
-    <button onclick="alert('You\'re awesome!')">Click</button> <!-- ✓ valid -->
+    <button onclick="alert(&quot;You're awesome!&quot;)">Click</button> <!-- ✓ valid: apostrophe safe inside double-quoted JS string -->
 
 ## Files Modified
 
