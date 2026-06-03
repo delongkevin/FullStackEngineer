@@ -3,14 +3,14 @@
 @tailwind utilities;
 
 :root {
-  --font-manrope: 'Avenir Next';
-  --font-sora: 'Avenir Next';
-  --font-ibm-plex-sans: 'Segoe UI';
-  --font-space-grotesk: 'Segoe UI';
-  --font-merriweather: 'Georgia';
-  --font-fraunces: 'Georgia';
-  --font-sans-base: var(--font-manrope), 'Avenir Next', 'Segoe UI', 'Helvetica Neue', sans-serif;
-  --font-heading-base: var(--font-sora), 'Avenir Next', 'Segoe UI', sans-serif;
+  --font-manrope: 'Avenir Next', 'Segoe UI', 'Helvetica Neue', sans-serif;
+  --font-sora: 'Avenir Next', 'Segoe UI', sans-serif;
+  --font-ibm-plex-sans: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --font-space-grotesk: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --font-merriweather: Georgia, 'Times New Roman', serif;
+  --font-fraunces: Georgia, 'Times New Roman', serif;
+  --font-sans-base: var(--font-manrope);
+  --font-heading-base: var(--font-sora);
   --font-body: var(--font-sans-base);
   --font-heading: var(--font-heading-base);
   --surface-0: #f6f8fc;
@@ -91,18 +91,18 @@ html[data-accent='rose'] {
 }
 
 html[data-font-family='system'] {
-  --font-body: var(--font-manrope), 'Avenir Next', 'Segoe UI', 'Helvetica Neue', sans-serif;
-  --font-heading: var(--font-sora), 'Avenir Next', 'Segoe UI', sans-serif;
+  --font-body: var(--font-manrope);
+  --font-heading: var(--font-sora);
 }
 
 html[data-font-family='classic'] {
-  --font-body: var(--font-merriweather), 'Georgia', serif;
-  --font-heading: var(--font-fraunces), var(--font-merriweather), 'Georgia', serif;
+  --font-body: var(--font-merriweather);
+  --font-heading: var(--font-fraunces);
 }
 
 html[data-font-family='tech'] {
-  --font-body: var(--font-ibm-plex-sans), 'Segoe UI', sans-serif;
-  --font-heading: var(--font-space-grotesk), var(--font-ibm-plex-sans), sans-serif;
+  --font-body: var(--font-ibm-plex-sans);
+  --font-heading: var(--font-space-grotesk);
 }
 
 html[data-theme='light'][data-theme-tone='soft'] {
