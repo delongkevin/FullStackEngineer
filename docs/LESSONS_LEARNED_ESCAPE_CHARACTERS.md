@@ -16,22 +16,17 @@
 
 ### The Problem
 
-HTML attributes that contain JavaScript code (like `onclick`) must properly encode special characters. The issue occurred when single quotes inside JavaScript function calls were escaped using backslash notation (`\'`) rather than HTML entities.
+HTML attributes that contain JavaScript code (like `onclick`) need escaping that works for both HTML and the JavaScript snippet.
 
-**Incorrect Pattern** (breaks HTML parsing):
-```html
-<span onclick="setSQL('SELECT * FROM table WHERE col = \'value\';')">Button</span>
-```
+A safe approach is to avoid entity-encoded apostrophes inside single-quoted JS strings. Instead, pass string arguments using double quotes in JavaScript, and encode those quotes for HTML.
 
-**Correct Pattern** (using HTML entities):
-```html
-<span onclick="setSQL('SELECT * FROM table WHERE col = &apos;value&apos;;')">Button</span>
-```
+Preferred pattern:
 
-**Alternative Correct Pattern** (using double quotes):
-```html
-<span onclick='setSQL("SELECT * FROM table WHERE col = \"value\";")'>Button</span>
-```
+    <span onclick="setSQL(&quot;SELECT * FROM table WHERE col = 'value';&quot;)">Button</span>
+
+Also works (but is easier to get wrong in generated HTML strings):
+
+    <span onclick="setSQL('SELECT * FROM table WHERE col = \'value\';')">Button</span>
 
 ### Why It Breaks
 
