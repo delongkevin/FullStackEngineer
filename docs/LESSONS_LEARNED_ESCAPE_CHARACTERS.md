@@ -65,11 +65,9 @@ Also valid — Inline handler with backslash escaping inside a single-quoted Jav
    - Line affected: 840
 
 3. **data/html.validation.test.ts** (NEW FILE)
-   - Created comprehensive validation test suite
-   - Scans all HTML files in public/projects and public/demos
-   - Detects improper escape sequences in HTML attributes
-   - Differentiates between valid JavaScript escapes in `<script>` tags and invalid escapes in attributes
-   - Tests: 77 total (74 passed, 3 skipped for missing files)
+   - Creates a validation test suite that scans all `index.html` files found under `public/projects/**` and `public/demos/**`
+   - Fails when HTML contains `on*` attributes with backslash-escaped quotes (e.g. `\'`) that can break inline handler code
+   - Skips directories that do not contain an `index.html`
 
 ## Prevention Strategy
 
