@@ -1003,6 +1003,7 @@ const searchableProjectFields = (project: Project) => {
 };
 
 export const normalizeProjectLiveUrl = (rawUrl: string): string => {
+  const FALLBACK_URL = '/';
   const withoutWrappingQuotes = rawUrl.trim().replace(/^(['"])([\s\S]*)\1$/, '$2');
   const decodedEntities = withoutWrappingQuotes
     .replace(/&amp;/gi, '&')
@@ -1010,12 +1011,28 @@ export const normalizeProjectLiveUrl = (rawUrl: string): string => {
     .replace(/&apos;|&#39;/gi, "'");
 
   const normalized = decodedEntities.replace(/\\\//g, '/').replace(/\\/g, '/');
+  const withLeadingSlash =
+    normalized.startsWith('projects/') || normalized.startsWith('demos/')
+      ? `/${normalized}`
+      : normalized.startsWith('./')
+        ? `/${normalized.slice(2)}`
+        : normalized;
 
-  if (normalized.startsWith('projects/') || normalized.startsWith('demos/')) {
-    return `/${normalized}`;
+  if (
+    !withLeadingSlash ||
+    withLeadingSlash.startsWith('//') ||
+    /[\u0000-\u001F\u007F]/.test(withLeadingSlash) ||
+    /(^|\/)\.\.(\/|$)/.test(withLeadingSlash) ||
+    /^(?:javascript|data|vbscript):/i.test(withLeadingSlash)
+  ) {
+    return FALLBACK_URL;
   }
 
-  return normalized;
+  if (/^(https?:\/\/|\/)/i.test(withLeadingSlash)) {
+    return withLeadingSlash;
+  }
+
+  return FALLBACK_URL;
 };
 
 export const getProjectHref = (project: Project): string => {

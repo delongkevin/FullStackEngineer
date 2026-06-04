@@ -82,12 +82,24 @@ describe('projects data', () => {
     });
 
     it('should normalize escaped and HTML-encoded live URLs', () => {
+      expect(normalizeProjectLiveUrl('/projects/qa-dashboard/index.html?mode=full&amp;view=embed')).toBe(
+        '/projects/qa-dashboard/index.html?mode=full&view=embed'
+      );
       expect(
         normalizeProjectLiveUrl(' "/projects\\/qa-dashboard\\/index.html?mode=full&amp;view=embed" ')
       ).toBe('/projects/qa-dashboard/index.html?mode=full&view=embed');
       expect(normalizeProjectLiveUrl(" 'projects\\/qa-dashboard\\/index.html' ")).toBe(
         '/projects/qa-dashboard/index.html'
       );
+      expect(normalizeProjectLiveUrl('https:\\/\\/example.com\\/demo?x=1&amp;y=2')).toBe(
+        'https://example.com/demo?x=1&y=2'
+      );
+    });
+
+    it('should reject unsafe live URLs after normalization', () => {
+      expect(normalizeProjectLiveUrl('javascript:alert(1)')).toBe('/');
+      expect(normalizeProjectLiveUrl('/projects/../secrets/index.html')).toBe('/');
+      expect(normalizeProjectLiveUrl('//example.com/unsafe')).toBe('/');
     });
   });
 
