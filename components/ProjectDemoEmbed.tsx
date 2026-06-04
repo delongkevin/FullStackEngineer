@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Copy, ExternalLink, RefreshCw } from 'lucide-react';
+import { normalizeProjectLiveUrl } from '../data/projects';
 
 interface ProjectDemoEmbedProps {
   liveUrl: string;
@@ -10,6 +11,7 @@ interface ProjectDemoEmbedProps {
 }
 
 export default function ProjectDemoEmbed({ liveUrl, title, category }: ProjectDemoEmbedProps) {
+  const normalizedLiveUrl = normalizeProjectLiveUrl(liveUrl);
   const [iframeKey, setIframeKey] = useState(0);
   const [copyStatus, setCopyStatus] = useState<'idle' | 'copied' | 'error'>('idle');
   const [demoHeight, setDemoHeight] = useState<'short' | 'medium' | 'tall' | 'full'>(() => {
@@ -30,7 +32,7 @@ export default function ProjectDemoEmbed({ liveUrl, title, category }: ProjectDe
 
   const handleCopyLink = async () => {
     try {
-      await navigator.clipboard.writeText(liveUrl);
+      await navigator.clipboard.writeText(normalizedLiveUrl);
       setCopyStatus('copied');
     } catch {
       setCopyStatus('error');
@@ -57,9 +59,9 @@ export default function ProjectDemoEmbed({ liveUrl, title, category }: ProjectDe
             Reload Demo
           </button>
           <a
-            href={liveUrl}
-            target={liveUrl.startsWith('http') ? '_blank' : '_self'}
-            rel={liveUrl.startsWith('http') ? 'noopener noreferrer' : ''}
+            href={normalizedLiveUrl}
+            target={normalizedLiveUrl.startsWith('http') ? '_blank' : '_self'}
+            rel={normalizedLiveUrl.startsWith('http') ? 'noopener noreferrer' : ''}
             className="inline-flex items-center gap-2 px-3 py-2 rounded-lg border theme-border theme-chip text-sm hover:opacity-90 transition-colors"
           >
             <ExternalLink size={16} aria-hidden="true" />
@@ -103,7 +105,7 @@ export default function ProjectDemoEmbed({ liveUrl, title, category }: ProjectDe
       </p>
       <iframe
         key={iframeKey}
-        src={liveUrl}
+        src={normalizedLiveUrl}
         className="w-full border-0 rounded-lg surface-card"
         title={`Interactive demo of ${title} - ${category} project`}
         aria-describedby="demo-description"

@@ -7,6 +7,7 @@ import {
   getProjectMetaDescription,
   getProjectHref,
   getProjectRouteKey,
+  normalizeProjectLiveUrl,
   projects,
   searchProjects,
 } from './projects';
@@ -79,6 +80,38 @@ describe('projects data', () => {
       expect(project.liveUrl).toBeDefined();
       expect(project.liveUrl.length).toBeGreaterThan(0);
     });
+
+    it('should normalize escaped and HTML-encoded live URLs', () => {
+      expect(normalizeProjectLiveUrl('/projects/qa-dashboard/index.html?mode=full&amp;view=embed')).toBe(
+        '/projects/qa-dashboard/index.html?mode=full&view=embed'
+      );
+      expect(
+        normalizeProjectLiveUrl(' "/projects\\/qa-dashboard\\/index.html?mode=full&amp;view=embed" ')
+      ).toBe('/projects/qa-dashboard/index.html?mode=full&view=embed');
+      expect(normalizeProjectLiveUrl(" 'projects\\/qa-dashboard\\/index.html' ")).toBe(
+        '/projects/qa-dashboard/index.html'
+      );
+      expect(normalizeProjectLiveUrl('https:\\/\\/example.com\\/demo?x=1&amp;y=2')).toBe(
+        'https://example.com/demo?x=1&y=2'
+      );
+    });
+
+    it('should handle double-encoded entities without double-unescaping', () => {
+      // Double-encoded &amp;amp; should decode to &amp; (not to &)
+      expect(normalizeProjectLiveUrl('/projects/demo.html?a=1&amp;amp;b=2')).toBe(
+        '/projects/demo.html?a=1&amp;b=2'
+      );
+      // Double-encoded &#34; sequences should only decode once
+      expect(normalizeProjectLiveUrl('/projects/demo.html?text=&amp;quot;hello&amp;quot;')).toBe(
+        '/projects/demo.html?text=&quot;hello&quot;'
+      );
+    });
+
+    it('should reject unsafe live URLs after normalization', () => {
+      expect(normalizeProjectLiveUrl('javascript:alert(1)')).toBe('/');
+      expect(normalizeProjectLiveUrl('/projects/../secrets/index.html')).toBe('/');
+      expect(normalizeProjectLiveUrl('//example.com/unsafe')).toBe('/');
+    });
   });
 
   describe('tech stack validation', () => {
@@ -121,6 +154,15 @@ describe('projects data', () => {
       const embeddableProjects = projects.filter((p) => p.embeddable);
       embeddableProjects.forEach((project) => {
         expect(project.liveUrl).toMatch(/\.html$/i);
+      });
+    });
+
+    it('should keep embeddable project live URLs normalized to existing local HTML files', () => {
+      const embeddableProjects = projects.filter((p) => p.embeddable);
+      embeddableProjects.forEach((project) => {
+        const normalizedLiveUrl = normalizeProjectLiveUrl(project.liveUrl);
+        expect(normalizedLiveUrl).toMatch(/^\/(projects|demos)\/.+\.html$/i);
+        expect(existsSync(join(process.cwd(), 'public', normalizedLiveUrl.slice(1)))).toBe(true);
       });
     });
 

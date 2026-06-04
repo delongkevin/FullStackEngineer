@@ -1002,6 +1002,50 @@ const searchableProjectFields = (project: Project) => {
   ].join(' ').toLowerCase();
 };
 
+export const normalizeProjectLiveUrl = (rawUrl: string): string => {
+  const FALLBACK_URL = '/';
+  const withoutWrappingQuotes = rawUrl.trim().replace(/^(['"])([\s\S]*)\1$/, '$2');
+
+  // Decode HTML entities in a single pass to prevent double-unescaping
+  const decodedEntities = withoutWrappingQuotes.replace(
+    /&(?:amp|quot|apos|#34|#39);/gi,
+    (match) => {
+      switch (match.toLowerCase()) {
+        case '&amp;': return '&';
+        case '&quot;':
+        case '&#34;': return '"';
+        case '&apos;':
+        case '&#39;': return "'";
+        default: return match;
+      }
+    }
+  );
+
+  const normalized = decodedEntities.replace(/\\\//g, '/').replace(/\\/g, '/');
+  const withLeadingSlash =
+    normalized.startsWith('projects/') || normalized.startsWith('demos/')
+      ? `/${normalized}`
+      : normalized.startsWith('./')
+        ? `/${normalized.slice(2)}`
+        : normalized;
+
+  if (
+    !withLeadingSlash ||
+    withLeadingSlash.startsWith('//') ||
+    /[\u0000-\u001F\u007F]/.test(withLeadingSlash) ||
+    /(^|\/)\.\.(\/|$)/.test(withLeadingSlash) ||
+    /^(?:javascript|data|vbscript):/i.test(withLeadingSlash)
+  ) {
+    return FALLBACK_URL;
+  }
+
+  if (/^(https?:\/\/|\/)/i.test(withLeadingSlash)) {
+    return withLeadingSlash;
+  }
+
+  return FALLBACK_URL;
+};
+
 export const getProjectHref = (project: Project): string => {
   return `/projects/${getProjectRouteKey(project)}`;
 };
