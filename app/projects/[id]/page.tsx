@@ -10,6 +10,7 @@ import {
   formatProjectCategory,
   getProjectMetaDescription,
   getProjectRouteKey,
+  normalizeProjectLiveUrl,
   projects,
 } from '../../../data/projects';
 import { ExternalLink, Github, ArrowLeft, Smartphone, Download } from 'lucide-react';
@@ -58,6 +59,7 @@ export default function ProjectDetail({ params }: PageProps) {
   };
 
   const currentProjectIndex = projects.findIndex((entry) => entry.id === project.id);
+  const normalizedLiveUrl = normalizeProjectLiveUrl(project.liveUrl);
   const previousProject = currentProjectIndex > 0 ? projects[currentProjectIndex - 1] : undefined;
   const nextProject = currentProjectIndex < projects.length - 1 ? projects[currentProjectIndex + 1] : undefined;
   const relatedProjects = projects
@@ -120,10 +122,10 @@ export default function ProjectDetail({ params }: PageProps) {
                 
                 <div className="flex gap-4">
                   <a
-                    href={project.liveUrl}
+                    href={normalizedLiveUrl}
                     className="btn-primary inline-flex items-center gap-2"
-                    target={project.liveUrl.startsWith('http') ? '_blank' : '_self'}
-                    rel={project.liveUrl.startsWith('http') ? 'noopener noreferrer' : undefined}
+                    target={normalizedLiveUrl.startsWith('http') ? '_blank' : '_self'}
+                    rel={normalizedLiveUrl.startsWith('http') ? 'noopener noreferrer' : undefined}
                     aria-label={project.embeddable ? `Open interactive demo of ${project.title}` : `View live demo of ${project.title}`}
                   >
                     <ExternalLink size={20} aria-hidden="true" />
@@ -215,7 +217,7 @@ export default function ProjectDetail({ params }: PageProps) {
             <div className="surface-card rounded-xl shadow-lg p-6">
               <h2 className="text-2xl font-bold theme-text-primary mb-6">Interactive Demo</h2>
               <ProjectDemoEmbed
-                liveUrl={project.liveUrl}
+                liveUrl={normalizedLiveUrl}
                 title={project.title}
                 category={project.category}
               />

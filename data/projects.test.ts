@@ -7,6 +7,7 @@ import {
   getProjectMetaDescription,
   getProjectHref,
   getProjectRouteKey,
+  normalizeProjectLiveUrl,
   projects,
   searchProjects,
 } from './projects';
@@ -79,6 +80,15 @@ describe('projects data', () => {
       expect(project.liveUrl).toBeDefined();
       expect(project.liveUrl.length).toBeGreaterThan(0);
     });
+
+    it('should normalize escaped and HTML-encoded live URLs', () => {
+      expect(
+        normalizeProjectLiveUrl(' "/projects\\/qa-dashboard\\/index.html?mode=full&amp;view=embed" ')
+      ).toBe('/projects/qa-dashboard/index.html?mode=full&view=embed');
+      expect(normalizeProjectLiveUrl(" 'projects\\/qa-dashboard\\/index.html' ")).toBe(
+        '/projects/qa-dashboard/index.html'
+      );
+    });
   });
 
   describe('tech stack validation', () => {
@@ -121,6 +131,15 @@ describe('projects data', () => {
       const embeddableProjects = projects.filter((p) => p.embeddable);
       embeddableProjects.forEach((project) => {
         expect(project.liveUrl).toMatch(/\.html$/i);
+      });
+    });
+
+    it('should keep embeddable project live URLs normalized to existing local HTML files', () => {
+      const embeddableProjects = projects.filter((p) => p.embeddable);
+      embeddableProjects.forEach((project) => {
+        const normalizedLiveUrl = normalizeProjectLiveUrl(project.liveUrl);
+        expect(normalizedLiveUrl).toMatch(/^\/(projects|demos)\/.+\.html$/i);
+        expect(existsSync(join(process.cwd(), 'public', normalizedLiveUrl.slice(1)))).toBe(true);
       });
     });
 

@@ -1002,6 +1002,22 @@ const searchableProjectFields = (project: Project) => {
   ].join(' ').toLowerCase();
 };
 
+export const normalizeProjectLiveUrl = (rawUrl: string): string => {
+  const withoutWrappingQuotes = rawUrl.trim().replace(/^(['"])([\s\S]*)\1$/, '$2');
+  const decodedEntities = withoutWrappingQuotes
+    .replace(/&amp;/gi, '&')
+    .replace(/&quot;|&#34;/gi, '"')
+    .replace(/&apos;|&#39;/gi, "'");
+
+  const normalized = decodedEntities.replace(/\\\//g, '/').replace(/\\/g, '/');
+
+  if (normalized.startsWith('projects/') || normalized.startsWith('demos/')) {
+    return `/${normalized}`;
+  }
+
+  return normalized;
+};
+
 export const getProjectHref = (project: Project): string => {
   return `/projects/${getProjectRouteKey(project)}`;
 };

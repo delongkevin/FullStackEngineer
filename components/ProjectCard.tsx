@@ -1,5 +1,5 @@
 import { ExternalLink, Github, Star, Play } from 'lucide-react';
-import { Project, formatProjectCategory, getProjectHref } from '../data/projects';
+import { Project, formatProjectCategory, getProjectHref, normalizeProjectLiveUrl } from '../data/projects';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -17,6 +17,7 @@ export default function ProjectCard({
   compactMeta = false,
 }: ProjectCardProps) {
   const categoryLabel = formatProjectCategory(project.category);
+  const normalizedLiveUrl = normalizeProjectLiveUrl(project.liveUrl);
   const imageHeightClassName = cardSize === 'sm' ? 'h-36 sm:h-40' : cardSize === 'lg' ? 'h-52 sm:h-56' : 'h-44 sm:h-48';
   const contentPaddingClassName = cardSize === 'sm' ? 'p-4' : cardSize === 'lg' ? 'p-7' : 'p-6';
 
@@ -136,10 +137,10 @@ export default function ProjectCard({
           </Link>
           <div className="flex gap-4">
             <a
-              href={project.liveUrl}
+              href={normalizedLiveUrl}
               className="flex items-center gap-2 theme-text-secondary hover:opacity-80 transition-colors p-2 min-h-[44px] min-w-[44px] justify-center"
-              target={project.liveUrl.startsWith('http') ? '_blank' : '_self'}
-              rel={project.liveUrl.startsWith('http') ? 'noopener noreferrer' : undefined}
+              target={normalizedLiveUrl.startsWith('http') ? '_blank' : '_self'}
+              rel={normalizedLiveUrl.startsWith('http') ? 'noopener noreferrer' : undefined}
               aria-label={`View live demo of ${project.title}`}
             >
               <ExternalLink size={18} aria-hidden="true" />
