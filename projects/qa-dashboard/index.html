@@ -1,1 +1,1794 @@
-<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="/_next/static/css/6bf4ff073c45ccdc.css" crossorigin="" data-precedence="next"/><link rel="preload" as="script" fetchPriority="low" href="/_next/static/chunks/webpack-6ca410362e9e7186.js" crossorigin=""/><script src="/_next/static/chunks/fd9d1056-456948113883b121.js" async="" crossorigin=""></script><script src="/_next/static/chunks/472-7ca237d430370e09.js" async="" crossorigin=""></script><script src="/_next/static/chunks/main-app-626cee463d6fe0c2.js" async="" crossorigin=""></script><script src="/_next/static/chunks/383-23d7520fe27f6da1.js" async=""></script><script src="/_next/static/chunks/413-0066863adaac6978.js" async=""></script><script src="/_next/static/chunks/689-0b1f225f0c141f4d.js" async=""></script><script src="/_next/static/chunks/565-63fc7560b8b16033.js" async=""></script><script src="/_next/static/chunks/app/projects/%5Bid%5D/page-e8b7be92ba49648e.js" async=""></script><title>Software QA Analyst Platform - Kevin Delong | Kevin Delong</title><meta name="description" content="Full-stack QA platform — Selenium/Python test automation, live SQL validator against in-memory DB, Kanban defect tracker, CI/CD pipeline monitor, and manual..."/><link rel="author" href="https://delongkevin.github.io/FullStackEngineer"/><meta name="author" content="Kevin Douglas Delong"/><meta name="keywords" content="Kevin Delong,Full Stack Engineer,React,Next.js,Mobile Development,Automotive Software"/><meta name="creator" content="Kevin Douglas Delong"/><meta name="publisher" content="Kevin Douglas Delong"/><meta name="robots" content="index, follow"/><meta name="googlebot" content="index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"/><link rel="canonical" href="https://delongkevin.github.io/FullStackEngineer/projects/qa-dashboard/"/><meta property="og:title" content="Software QA Analyst Platform - Kevin Delong"/><meta property="og:description" content="Full-stack QA platform — Selenium/Python test automation, live SQL validator against in-memory DB, Kanban defect tracker, CI/CD pipeline monitor, and manual..."/><meta property="og:url" content="https://delongkevin.github.io/FullStackEngineer/projects/qa-dashboard/"/><meta property="og:image" content="https://delongkevin.github.io/FullStackEngineer/images/qa-dashboard.png"/><meta property="og:type" content="article"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="Software QA Analyst Platform - Kevin Delong"/><meta name="twitter:description" content="Full-stack QA platform — Selenium/Python test automation, live SQL validator against in-memory DB, Kanban defect tracker, CI/CD pipeline monitor, and manual..."/><meta name="twitter:image" content="https://delongkevin.github.io/FullStackEngineer/images/qa-dashboard.png"/><script src="/_next/static/chunks/polyfills-c67a75d1b6f99dc8.js" crossorigin="" noModule=""></script></head><body><script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Kevin Douglas Delong","jobTitle":"Full-Stack Engineer","email":"mailto:delong.kevin@gmail.com","url":"https://delongkevin.github.io/FullStackEngineer","sameAs":["https://github.com/delongkevin","https://x.com/delongkevin1446"]}</script><a href="#main-content" class="skip-link">Skip to main content</a><div class="min-h-screen app-shell-bg"><header class="fixed top-0 w-full theme-header backdrop-blur-md z-50 border-b"><nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Main navigation"><div class="flex justify-between items-center h-14 sm:h-16 gap-2"><div class="flex-shrink min-w-0"><a class="text-lg sm:text-2xl font-bold theme-accent-text truncate block" href="/">Kevin Delong</a></div><div class="hidden md:block"><div class="ml-10 flex items-baseline space-x-8"><a class="px-4 py-3 rounded-md text-sm font-medium transition-colors min-h-[44px] flex items-center theme-text-secondary hover:opacity-80" href="/">Home</a><a aria-current="page" class="px-4 py-3 rounded-md text-sm font-medium transition-colors min-h-[44px] flex items-center theme-accent-text surface-subtle" href="/projects/">Projects</a><a class="px-4 py-3 rounded-md text-sm font-medium transition-colors min-h-[44px] flex items-center theme-text-secondary hover:opacity-80" href="/resume/">Resume</a><a class="px-4 py-3 rounded-md text-sm font-medium transition-colors min-h-[44px] flex items-center theme-text-secondary hover:opacity-80" href="/about/">About</a><a class="px-4 py-3 rounded-md text-sm font-medium transition-colors min-h-[44px] flex items-center theme-text-secondary hover:opacity-80" href="/contact/">Contact</a></div></div><div class="hidden md:flex"><div class="flex items-center gap-2"><button type="button" class="inline-flex items-center gap-2 px-3 py-2 rounded-lg border theme-border text-sm font-semibold theme-text-primary hover:opacity-90 surface-card" aria-expanded="false" aria-controls="display-controls"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-monitor" aria-hidden="true"><rect width="20" height="14" x="2" y="3" rx="2"></rect><line x1="8" x2="16" y1="21" y2="21"></line><line x1="12" x2="12" y1="17" y2="21"></line></svg><span class="hidden sm:inline">Display</span></button></div></div><div class="md:hidden"><button class="theme-text-secondary hover:opacity-80 p-2 min-h-[44px] min-w-[44px]" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open navigation menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu" aria-hidden="true"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button></div></div></nav></header><script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Software QA Analyst Platform","applicationCategory":"fullstack","operatingSystem":"Web, Android, iOS","description":"Full-stack QA platform — Selenium/Python test automation, live SQL validator against in-memory DB, Kanban defect tracker, CI/CD pipeline monitor, and manual test case management tailored for a QA Analyst role.","image":"https://delongkevin.github.io/FullStackEngineer/images/qa-dashboard.png","url":"https://delongkevin.github.io/FullStackEngineer/projects/qa-dashboard/","codeRepository":"https://github.com/delongkevin/FullStackEngineer","author":{"@type":"Person","name":"Kevin Douglas Delong"}}</script><main id="main-content" class="pt-24 pb-16 min-h-screen"><div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"><a class="inline-flex items-center gap-2 theme-accent-text hover:opacity-80 mb-6" aria-label="Back to all projects" href="/projects/"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left" aria-hidden="true"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg>Back to Projects</a><div class="surface-card rounded-xl shadow-lg p-8 mb-8"><div class="flex flex-col lg:flex-row gap-8"><div class="lg:w-1/3"><div class="relative h-64 rounded-lg overflow-hidden"><img alt="Software QA Analyst Platform screenshot" loading="lazy" decoding="async" data-nimg="fill" class="object-cover" style="position:absolute;height:100%;width:100%;left:0;top:0;right:0;bottom:0;color:transparent" src="/images/qa-dashboard.png"/></div></div><div class="lg:w-2/3"><h1 class="text-3xl font-bold theme-text-primary mb-4">Software QA Analyst Platform</h1><p class="text-xl theme-text-secondary mb-6">QAPlatform is an interactive demo built for a Software QA Analyst role. It showcases five integrated capabilities: a Test Case Manager for designing, filtering, and executing manual and automated tests across Login &amp; Auth, API, Database, UI Regression, and CI/CD suites; a Kanban Defect Tracker with Open/In-Progress/Resolved/Closed columns and severity tagging; a SQL Validator that executes complex JOINs, GROUP BY aggregations, and WHERE filters against an in-memory relational database of 72 test cases, 48 defects, and 500 test run records; a Selenium + Python Automation panel displaying real pytest test scripts for Selenium WebDriver, requests, pyodbc (SSMS), and Snowflake connectors with live mock execution output; and a CI/CD Pipeline view simulating an Azure DevOps build with 8 stages (Checkout, Lint, Unit Tests, Docker Build, Integration Tests, DB Migrate, AKS Deploy, Smoke Tests) and interactive trigger. The responsive dark-themed UI targets web, Android, and iOS with professional QA tooling aesthetics.</p><div class="flex flex-wrap gap-4 mb-6"><span class="px-4 py-2 theme-chip rounded-full font-medium">Python</span><span class="px-4 py-2 theme-chip rounded-full font-medium">Selenium</span><span class="px-4 py-2 theme-chip rounded-full font-medium">pytest</span><span class="px-4 py-2 theme-chip rounded-full font-medium">SQL</span><span class="px-4 py-2 theme-chip rounded-full font-medium">JavaScript</span><span class="px-4 py-2 theme-chip rounded-full font-medium">HTML5</span><span class="px-4 py-2 theme-chip rounded-full font-medium">CSS3</span><span class="px-4 py-2 theme-chip rounded-full font-medium">Snowflake</span><span class="px-4 py-2 theme-chip rounded-full font-medium">SSMS</span><span class="px-4 py-2 theme-chip rounded-full font-medium">Azure DevOps</span><span class="px-4 py-2 theme-chip rounded-full font-medium">Docker</span><span class="px-4 py-2 theme-chip rounded-full font-medium">AKS</span><span class="px-4 py-2 theme-chip rounded-full font-medium">REST API</span><span class="px-4 py-2 theme-chip rounded-full font-medium">PostgreSQL</span></div><div class="flex gap-4"><a href="/projects/qa-dashboard/index.html" class="btn-primary inline-flex items-center gap-2" target="_self" aria-label="Open interactive demo of Software QA Analyst Platform"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" x2="21" y1="14" y2="3"></line></svg>View Demo</a><a href="https://github.com/delongkevin/FullStackEngineer" class="btn-secondary inline-flex items-center gap-2" target="_blank" rel="noopener noreferrer" aria-label="View source code for Software QA Analyst Platform on GitHub"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg>View Code</a></div></div></div></div><div class="grid grid-cols-1 lg:grid-cols-3 gap-8"><div class="lg:col-span-2"><div class="surface-card rounded-xl shadow-lg p-6"><h2 class="text-2xl font-bold theme-text-primary mb-6">Interactive Demo</h2><div class="surface-subtle rounded-lg p-6 min-h-[600px]"><div class="flex flex-wrap items-center justify-between gap-3 mb-4"><p class="text-sm theme-text-secondary">Run the interactive demo directly in this page, or open it in a dedicated tab for full-screen testing.</p><div class="flex flex-wrap gap-2"><button type="button" class="inline-flex items-center gap-2 px-3 py-2 rounded-lg border theme-border text-sm theme-text-secondary hover:opacity-90 transition-colors surface-card"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-refresh-cw" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path><path d="M8 16H3v5"></path></svg>Reload Demo</button><a href="/projects/qa-dashboard/index.html" target="_self" rel="" class="inline-flex items-center gap-2 px-3 py-2 rounded-lg border theme-border theme-chip text-sm hover:opacity-90 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" x2="21" y1="14" y2="3"></line></svg>Open Demo</a><button type="button" class="inline-flex items-center gap-2 px-3 py-2 rounded-lg border theme-border text-sm theme-text-secondary hover:opacity-90 transition-colors surface-card" aria-live="polite"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>Copy Link</button></div></div><div class="mb-4 flex flex-wrap items-center gap-2"><p class="text-xs font-semibold uppercase tracking-wide theme-text-tertiary">Demo Size</p><button type="button" class="px-3 py-1.5 rounded-full border text-xs font-semibold surface-card theme-text-secondary theme-border hover:opacity-90">Short</button><button type="button" class="px-3 py-1.5 rounded-full border text-xs font-semibold bg-blue-600 text-white border-blue-600">Medium</button><button type="button" class="px-3 py-1.5 rounded-full border text-xs font-semibold surface-card theme-text-secondary theme-border hover:opacity-90">Tall</button><button type="button" class="px-3 py-1.5 rounded-full border text-xs font-semibold surface-card theme-text-secondary theme-border hover:opacity-90">Full</button></div><p id="demo-description" class="sr-only">This interactive demo allows you to try <!-- -->Software QA Analyst Platform<!-- -->. Use keyboard navigation to interact with the embedded content.</p><iframe src="/projects/qa-dashboard/index.html" class="w-full border-0 rounded-lg surface-card" title="Interactive demo of Software QA Analyst Platform - fullstack project" aria-describedby="demo-description" loading="lazy" sandbox="allow-forms allow-scripts allow-same-origin" style="min-height:680px;height:680px"></iframe></div></div></div><div class="space-y-6"><details open="" class="surface-card rounded-xl shadow-lg p-6"><summary class="text-lg font-semibold theme-text-primary mb-4 cursor-pointer">Project Information</summary><div class="space-y-3 mt-4"><div><span class="text-sm theme-text-tertiary">Category:</span><div class="font-medium theme-text-primary">Full Stack</div></div><div><span class="text-sm theme-text-tertiary">Status:</span><div class="font-medium text-green-600">Completed</div></div><div><span class="text-sm theme-text-tertiary">Type:</span><div class="font-medium theme-text-primary">Interactive Demo</div></div></div></details><details open="" class="surface-card rounded-xl shadow-lg p-6"><summary class="text-lg font-semibold theme-text-primary mb-4 cursor-pointer">Technology Stack</summary><div class="flex flex-wrap gap-2 mt-4"><span class="px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm">Python</span><span class="px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm">Selenium</span><span class="px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm">pytest</span><span class="px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm">SQL</span><span class="px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm">JavaScript</span><span class="px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm">HTML5</span><span class="px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm">CSS3</span><span class="px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm">Snowflake</span><span class="px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm">SSMS</span><span class="px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm">Azure DevOps</span><span class="px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm">Docker</span><span class="px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm">AKS</span><span class="px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm">REST API</span><span class="px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm">PostgreSQL</span></div></details></div></div><section class="surface-card rounded-xl shadow-lg p-6 mt-8" aria-label="Interactive tutorial"><div class="flex items-center gap-3 mb-4"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-500" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg><h2 class="text-2xl font-bold theme-text-primary">How to Use <!-- -->Software QA Analyst Platform</h2></div><p class="theme-text-secondary mb-6 text-sm">Follow this interactive guide to learn all the features and how to use this application effectively.</p><div class="flex items-center justify-center gap-2 mb-6"><button type="button" class="h-2 rounded-full transition-all w-8 bg-blue-500" aria-label="Go to step 1" aria-current="step"></button><button type="button" class="h-2 rounded-full transition-all w-2 bg-gray-300 hover:bg-gray-400" aria-label="Go to step 2"></button><button type="button" class="h-2 rounded-full transition-all w-2 bg-gray-300 hover:bg-gray-400" aria-label="Go to step 3"></button></div><div class="rounded-lg p-6 mb-6" style="background:var(--surface-2)"><div class="mb-4"><div class="flex items-center justify-between mb-2"><span class="text-sm font-semibold text-blue-600">Step <!-- -->1<!-- --> of <!-- -->3</span><span class="text-xs theme-text-tertiary">33<!-- -->% Complete</span></div><h3 class="text-2xl font-bold theme-text-primary mb-2">Test Case Management</h3><p class="theme-text-secondary">Create and execute manual test cases across suites.</p></div><div class="mb-6"><h4 class="text-lg font-semibold theme-text-primary mb-3 flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>Instructions</h4><ol class="space-y-3"><li class="flex items-start gap-3"><span class="flex-shrink-0 w-6 h-6 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-sm font-semibold"><span aria-hidden="true">1</span></span><span class="theme-text-secondary pt-0.5">Browse test suites: Login &amp; Auth, API, Database, UI Regression, CI/CD</span></li><li class="flex items-start gap-3"><span class="flex-shrink-0 w-6 h-6 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-sm font-semibold"><span aria-hidden="true">2</span></span><span class="theme-text-secondary pt-0.5">Create new test cases with steps and expected results</span></li><li class="flex items-start gap-3"><span class="flex-shrink-0 w-6 h-6 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-sm font-semibold"><span aria-hidden="true">3</span></span><span class="theme-text-secondary pt-0.5">Execute tests and mark as Pass, Fail, Pending, or Blocked</span></li><li class="flex items-start gap-3"><span class="flex-shrink-0 w-6 h-6 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-sm font-semibold"><span aria-hidden="true">4</span></span><span class="theme-text-secondary pt-0.5">Filter tests by suite, status, or priority</span></li></ol></div><div class="rounded-lg p-4" style="background:var(--surface-1);border:1px solid var(--border-soft)"><h4 class="text-base font-semibold theme-text-primary mb-2 flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-yellow-500" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path><path d="M9 18h6"></path><path d="M10 22h4"></path></svg>Pro Tips</h4><ul class="space-y-2"><li class="flex items-start gap-2"><span class="text-yellow-500 mt-1" aria-hidden="true">💡</span><span class="theme-text-secondary text-sm">Color-coded status makes tracking easy</span></li><li class="flex items-start gap-2"><span class="text-yellow-500 mt-1" aria-hidden="true">💡</span><span class="theme-text-secondary text-sm">Test cases support full CRUD operations</span></li></ul></div></div><div class="flex items-center justify-between"><button type="button" disabled="" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors bg-gray-200 text-gray-400 cursor-not-allowed" aria-label="Previous step"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>Previous</button><div class="text-center"><p class="text-sm theme-text-tertiary">Step <!-- -->1<!-- --> of <!-- -->3</p></div><button type="button" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors bg-blue-500 text-white hover:bg-blue-600" aria-label="Next step">Next<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></button></div></section><section class="mt-10 space-y-6" aria-label="Project navigation and related work"><div class="surface-card rounded-xl shadow-lg p-6"><h2 class="text-xl font-bold theme-text-primary mb-4">Continue Exploring</h2><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><a class="block rounded-lg surface-subtle p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors" href="/projects/sit-dashboard/"><p class="text-sm theme-text-tertiary">Previous project</p><p class="font-semibold theme-text-primary">System Integration Test Management Dashboard</p></a><a class="block rounded-lg surface-subtle p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors" href="/projects/ai-trainer/"><p class="text-sm theme-text-tertiary">Next project</p><p class="font-semibold theme-text-primary">AI Code Training Platform</p></a></div></div><div class="surface-card rounded-xl shadow-lg p-6"><h2 class="text-xl font-bold theme-text-primary mb-4">Related Projects</h2><div class="grid grid-cols-1 md:grid-cols-3 gap-4"><a class="rounded-lg surface-subtle p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors" href="/projects/11/"><p class="font-semibold theme-text-primary">Online Grocery Order System</p><p class="text-sm theme-text-secondary mt-1 line-clamp-2">Full-stack retail ordering app with product catalog, cart, checkout form, and order persistence</p></a><a class="rounded-lg surface-subtle p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors" href="/projects/12/"><p class="font-semibold theme-text-primary">Task Manager</p><p class="text-sm theme-text-secondary mt-1 line-clamp-2">Full-stack task management app with CRUD, priority levels, filters, search, and localStorage sync</p></a><a class="rounded-lg surface-subtle p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors" href="/projects/kamps-smart-factory/"><p class="font-semibold theme-text-primary">Kamps Smart Factory Platform</p><p class="text-sm theme-text-secondary mt-1 line-clamp-2">Industry 4.0 mobile dashboard showcasing PLC integration, YOLOv8 pallet detection, K3s microservices, Prometheus/Grafana observability, MQTT pub/sub, and full CI/CD — built for Kamps</p></a></div></div></section></div></main><footer class="py-10 sm:py-12" aria-label="Site footer" style="background:var(--surface-1);color:var(--text-1);border-top:1px solid var(--border-soft)"><div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"><div class="flex flex-col md:flex-row justify-between items-center"><div class="mb-6 md:mb-0 text-center md:text-left"><h3 class="text-xl sm:text-2xl font-bold theme-text-primary">Kevin Delong</h3><p class="theme-text-secondary mt-2">Full Stack &amp; Frontend Developer</p></div><div class="flex space-x-4 sm:space-x-6"><a href="https://github.com/delongkevin" class="theme-text-secondary hover:opacity-80 transition-colors w-11 h-11 rounded-full surface-subtle flex items-center justify-center" aria-label="GitHub" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg></a><a href="https://x.com/delongkevin1446" class="theme-text-secondary hover:opacity-80 transition-colors w-11 h-11 rounded-full surface-subtle flex items-center justify-center" aria-label="Twitter" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-twitter" aria-hidden="true"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg></a><a href="mailto:delong.kevin@gmail.com" class="theme-text-secondary hover:opacity-80 transition-colors w-11 h-11 rounded-full surface-subtle flex items-center justify-center" aria-label="Email" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg></a></div></div><div class="border-t theme-border mt-8 pt-8 text-center theme-text-secondary"><p>© <!-- -->2026<!-- --> Kevin Douglas Delong. All rights reserved.</p><p class="mt-2 text-sm">Phone: (810) 287-7409 | Email: delong.kevin@gmail.com</p></div></div></footer></div><script src="/_next/static/chunks/webpack-6ca410362e9e7186.js" crossorigin="" async=""></script><script>(self.__next_f=self.__next_f||[]).push([0]);self.__next_f.push([2,null])</script><script>self.__next_f.push([1,"1:HL[\"/_next/static/css/6bf4ff073c45ccdc.css\",\"style\",{\"crossOrigin\":\"\"}]\n0:\"$L2\"\n"])</script><script>self.__next_f.push([1,"3:I[3728,[],\"\"]\n5:I[9928,[],\"\"]\n6:I[6954,[],\"\"]\n7:I[7264,[],\"\"]\n9:I[4689,[\"383\",\"static/chunks/383-23d7520fe27f6da1.js\",\"413\",\"static/chunks/413-0066863adaac6978.js\",\"689\",\"static/chunks/689-0b1f225f0c141f4d.js\",\"565\",\"static/chunks/565-63fc7560b8b16033.js\",\"626\",\"static/chunks/app/projects/%5Bid%5D/page-e8b7be92ba49648e.js\"],\"\"]\na:I[2070,[\"383\",\"static/chunks/383-23d7520fe27f6da1.js\",\"413\",\"static/chunks/413-0066863adaac6978.js\",\"689\",\"static/chunks/689-0b1f225f0c141f4d.js\",\"565\",\"static/chunks/565-63fc756"])</script><script>self.__next_f.push([1,"0b8b16033.js\",\"626\",\"static/chunks/app/projects/%5Bid%5D/page-e8b7be92ba49648e.js\"],\"\"]\nb:I[8326,[\"383\",\"static/chunks/383-23d7520fe27f6da1.js\",\"413\",\"static/chunks/413-0066863adaac6978.js\",\"689\",\"static/chunks/689-0b1f225f0c141f4d.js\",\"565\",\"static/chunks/565-63fc7560b8b16033.js\",\"626\",\"static/chunks/app/projects/%5Bid%5D/page-e8b7be92ba49648e.js\"],\"\"]\nc:I[413,[\"383\",\"static/chunks/383-23d7520fe27f6da1.js\",\"413\",\"static/chunks/413-0066863adaac6978.js\",\"689\",\"static/chunks/689-0b1f225f0c141f4d.js\",\"565\",\"st"])</script><script>self.__next_f.push([1,"atic/chunks/565-63fc7560b8b16033.js\",\"626\",\"static/chunks/app/projects/%5Bid%5D/page-e8b7be92ba49648e.js\"],\"Image\"]\nd:I[4045,[\"383\",\"static/chunks/383-23d7520fe27f6da1.js\",\"413\",\"static/chunks/413-0066863adaac6978.js\",\"689\",\"static/chunks/689-0b1f225f0c141f4d.js\",\"565\",\"static/chunks/565-63fc7560b8b16033.js\",\"626\",\"static/chunks/app/projects/%5Bid%5D/page-e8b7be92ba49648e.js\"],\"\"]\ne:I[410,[\"383\",\"static/chunks/383-23d7520fe27f6da1.js\",\"413\",\"static/chunks/413-0066863adaac6978.js\",\"689\",\"static/chunks/689-0b"])</script><script>self.__next_f.push([1,"1f225f0c141f4d.js\",\"565\",\"static/chunks/565-63fc7560b8b16033.js\",\"626\",\"static/chunks/app/projects/%5Bid%5D/page-e8b7be92ba49648e.js\"],\"\"]\nf:I[5918,[\"383\",\"static/chunks/383-23d7520fe27f6da1.js\",\"413\",\"static/chunks/413-0066863adaac6978.js\",\"689\",\"static/chunks/689-0b1f225f0c141f4d.js\",\"565\",\"static/chunks/565-63fc7560b8b16033.js\",\"626\",\"static/chunks/app/projects/%5Bid%5D/page-e8b7be92ba49648e.js\"],\"\"]\n"])</script><script>self.__next_f.push([1,"2:[[[\"$\",\"link\",\"0\",{\"rel\":\"stylesheet\",\"href\":\"/_next/static/css/6bf4ff073c45ccdc.css\",\"precedence\":\"next\",\"crossOrigin\":\"\"}]],[\"$\",\"$L3\",null,{\"buildId\":\"UrAT3cg7EcLp7h1HMfPVi\",\"assetPrefix\":\"\",\"initialCanonicalUrl\":\"/projects/qa-dashboard/\",\"initialTree\":[\"\",{\"children\":[\"projects\",{\"children\":[[\"id\",\"qa-dashboard\",\"d\"],{\"children\":[\"__PAGE__?{\\\"id\\\":\\\"qa-dashboard\\\"}\",{}]}]}]},\"$undefined\",\"$undefined\",true],\"initialHead\":[false,\"$L4\"],\"globalErrorComponent\":\"$5\",\"children\":[null,[\"$\",\"html\",null,{\"lang\":\"en\",\"children\":[\"$\",\"body\",null,{\"children\":[null,[\"$\",\"script\",null,{\"type\":\"application/ld+json\",\"dangerouslySetInnerHTML\":{\"__html\":\"{\\\"@context\\\":\\\"https://schema.org\\\",\\\"@type\\\":\\\"Person\\\",\\\"name\\\":\\\"Kevin Douglas Delong\\\",\\\"jobTitle\\\":\\\"Full-Stack Engineer\\\",\\\"email\\\":\\\"mailto:delong.kevin@gmail.com\\\",\\\"url\\\":\\\"https://delongkevin.github.io/FullStackEngineer\\\",\\\"sameAs\\\":[\\\"https://github.com/delongkevin\\\",\\\"https://x.com/delongkevin1446\\\"]}\"}}],[\"$\",\"a\",null,{\"href\":\"#main-content\",\"className\":\"skip-link\",\"children\":\"Skip to main content\"}],[\"$\",\"div\",null,{\"className\":\"min-h-screen app-shell-bg\",\"children\":[\"$\",\"$L6\",null,{\"parallelRouterKey\":\"children\",\"segmentPath\":[\"children\"],\"loading\":\"$undefined\",\"loadingStyles\":\"$undefined\",\"loadingScripts\":\"$undefined\",\"hasLoading\":false,\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L7\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":[[\"$\",\"title\",null,{\"children\":\"404: This page could not be found.\"}],[\"$\",\"div\",null,{\"style\":{\"fontFamily\":\"system-ui,\\\"Segoe UI\\\",Roboto,Helvetica,Arial,sans-serif,\\\"Apple Color Emoji\\\",\\\"Segoe UI Emoji\\\"\",\"height\":\"100vh\",\"textAlign\":\"center\",\"display\":\"flex\",\"flexDirection\":\"column\",\"alignItems\":\"center\",\"justifyContent\":\"center\"},\"children\":[\"$\",\"div\",null,{\"children\":[[\"$\",\"style\",null,{\"dangerouslySetInnerHTML\":{\"__html\":\"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}\"}}],[\"$\",\"h1\",null,{\"className\":\"next-error-h1\",\"style\":{\"display\":\"inline-block\",\"margin\":\"0 20px 0 0\",\"padding\":\"0 23px 0 0\",\"fontSize\":24,\"fontWeight\":500,\"verticalAlign\":\"top\",\"lineHeight\":\"49px\"},\"children\":\"404\"}],[\"$\",\"div\",null,{\"style\":{\"display\":\"inline-block\"},\"children\":[\"$\",\"h2\",null,{\"style\":{\"fontSize\":14,\"fontWeight\":400,\"lineHeight\":\"49px\",\"margin\":0},\"children\":\"This page could not be found.\"}]}]]}]}]],\"notFoundStyles\":[],\"childProp\":{\"current\":[\"$\",\"$L6\",null,{\"parallelRouterKey\":\"children\",\"segmentPath\":[\"children\",\"projects\",\"children\"],\"loading\":\"$undefined\",\"loadingStyles\":\"$undefined\",\"loadingScripts\":\"$undefined\",\"hasLoading\":false,\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L7\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":\"$undefined\",\"notFoundStyles\":\"$undefined\",\"childProp\":{\"current\":[\"$\",\"$L6\",null,{\"parallelRouterKey\":\"children\",\"segmentPath\":[\"children\",\"projects\",\"children\",[\"id\",\"qa-dashboard\",\"d\"],\"children\"],\"loading\":\"$undefined\",\"loadingStyles\":\"$undefined\",\"loadingScripts\":\"$undefined\",\"hasLoading\":false,\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L7\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":\"$undefined\",\"notFoundStyles\":\"$undefined\",\"childProp\":{\"current\":[\"$L8\",[[\"$\",\"$L9\",null,{}],[\"$\",\"$La\",null,{\"projectId\":20}],[\"$\",\"script\",null,{\"type\":\"application/ld+json\",\"dangerouslySetInnerHTML\":{\"__html\":\"{\\\"@context\\\":\\\"https://schema.org\\\",\\\"@type\\\":\\\"SoftwareApplication\\\",\\\"name\\\":\\\"Software QA Analyst Platform\\\",\\\"applicationCategory\\\":\\\"fullstack\\\",\\\"operatingSystem\\\":\\\"Web, Android, iOS\\\",\\\"description\\\":\\\"Full-stack QA platform — Selenium/Python test automation, live SQL validator against in-memory DB, Kanban defect tracker, CI/CD pipeline monitor, and manual test case management tailored for a QA Analyst role.\\\",\\\"image\\\":\\\"https://delongkevin.github.io/FullStackEngineer/images/qa-dashboard.png\\\",\\\"url\\\":\\\"https://delongkevin.github.io/FullStackEngineer/projects/qa-dashboard/\\\",\\\"codeRepository\\\":\\\"https://github.com/delongkevin/FullStackEngineer\\\",\\\"author\\\":{\\\"@type\\\":\\\"Person\\\",\\\"name\\\":\\\"Kevin Douglas Delong\\\"}}\"}}],[\"$\",\"main\",null,{\"id\":\"main-content\",\"className\":\"pt-24 pb-16 min-h-screen\",\"children\":[\"$\",\"div\",null,{\"className\":\"max-w-6xl mx-auto px-4 sm:px-6 lg:px-8\",\"children\":[[\"$\",\"$Lb\",null,{\"href\":\"/projects\",\"className\":\"inline-flex items-center gap-2 theme-accent-text hover:opacity-80 mb-6\",\"aria-label\":\"Back to all projects\",\"children\":[[\"$\",\"svg\",null,{\"xmlns\":\"http://www.w3.org/2000/svg\",\"width\":20,\"height\":20,\"viewBox\":\"0 0 24 24\",\"fill\":\"none\",\"stroke\":\"currentColor\",\"strokeWidth\":2,\"strokeLinecap\":\"round\",\"strokeLinejoin\":\"round\",\"className\":\"lucide lucide-arrow-left\",\"aria-hidden\":\"true\",\"children\":[[\"$\",\"path\",\"1l729n\",{\"d\":\"m12 19-7-7 7-7\"}],[\"$\",\"path\",\"x3x0zl\",{\"d\":\"M19 12H5\"}],\"$undefined\"]}],\"Back to Projects\"]}],[\"$\",\"div\",null,{\"className\":\"surface-card rounded-xl shadow-lg p-8 mb-8\",\"children\":[\"$\",\"div\",null,{\"className\":\"flex flex-col lg:flex-row gap-8\",\"children\":[[\"$\",\"div\",null,{\"className\":\"lg:w-1/3\",\"children\":[\"$\",\"div\",null,{\"className\":\"relative h-64 rounded-lg overflow-hidden\",\"children\":[\"$\",\"$Lc\",null,{\"src\":\"/images/qa-dashboard.png\",\"alt\":\"Software QA Analyst Platform screenshot\",\"fill\":true,\"className\":\"object-cover\",\"sizes\":\"(max-width: 1024px) 100vw, 33vw\"}]}]}],[\"$\",\"div\",null,{\"className\":\"lg:w-2/3\",\"children\":[[\"$\",\"h1\",null,{\"className\":\"text-3xl font-bold theme-text-primary mb-4\",\"children\":\"Software QA Analyst Platform\"}],[\"$\",\"p\",null,{\"className\":\"text-xl theme-text-secondary mb-6\",\"children\":\"QAPlatform is an interactive demo built for a Software QA Analyst role. It showcases five integrated capabilities: a Test Case Manager for designing, filtering, and executing manual and automated tests across Login \u0026 Auth, API, Database, UI Regression, and CI/CD suites; a Kanban Defect Tracker with Open/In-Progress/Resolved/Closed columns and severity tagging; a SQL Validator that executes complex JOINs, GROUP BY aggregations, and WHERE filters against an in-memory relational database of 72 test cases, 48 defects, and 500 test run records; a Selenium + Python Automation panel displaying real pytest test scripts for Selenium WebDriver, requests, pyodbc (SSMS), and Snowflake connectors with live mock execution output; and a CI/CD Pipeline view simulating an Azure DevOps build with 8 stages (Checkout, Lint, Unit Tests, Docker Build, Integration Tests, DB Migrate, AKS Deploy, Smoke Tests) and interactive trigger. The responsive dark-themed UI targets web, Android, and iOS with professional QA tooling aesthetics.\"}],[\"$\",\"div\",null,{\"className\":\"flex flex-wrap gap-4 mb-6\",\"children\":[[\"$\",\"span\",\"Python\",{\"className\":\"px-4 py-2 theme-chip rounded-full font-medium\",\"children\":\"Python\"}],[\"$\",\"span\",\"Selenium\",{\"className\":\"px-4 py-2 theme-chip rounded-full font-medium\",\"children\":\"Selenium\"}],[\"$\",\"span\",\"pytest\",{\"className\":\"px-4 py-2 theme-chip rounded-full font-medium\",\"children\":\"pytest\"}],[\"$\",\"span\",\"SQL\",{\"className\":\"px-4 py-2 theme-chip rounded-full font-medium\",\"children\":\"SQL\"}],[\"$\",\"span\",\"JavaScript\",{\"className\":\"px-4 py-2 theme-chip rounded-full font-medium\",\"children\":\"JavaScript\"}],[\"$\",\"span\",\"HTML5\",{\"className\":\"px-4 py-2 theme-chip rounded-full font-medium\",\"children\":\"HTML5\"}],[\"$\",\"span\",\"CSS3\",{\"className\":\"px-4 py-2 theme-chip rounded-full font-medium\",\"children\":\"CSS3\"}],[\"$\",\"span\",\"Snowflake\",{\"className\":\"px-4 py-2 theme-chip rounded-full font-medium\",\"children\":\"Snowflake\"}],[\"$\",\"span\",\"SSMS\",{\"className\":\"px-4 py-2 theme-chip rounded-full font-medium\",\"children\":\"SSMS\"}],[\"$\",\"span\",\"Azure DevOps\",{\"className\":\"px-4 py-2 theme-chip rounded-full font-medium\",\"children\":\"Azure DevOps\"}],[\"$\",\"span\",\"Docker\",{\"className\":\"px-4 py-2 theme-chip rounded-full font-medium\",\"children\":\"Docker\"}],[\"$\",\"span\",\"AKS\",{\"className\":\"px-4 py-2 theme-chip rounded-full font-medium\",\"children\":\"AKS\"}],[\"$\",\"span\",\"REST API\",{\"className\":\"px-4 py-2 theme-chip rounded-full font-medium\",\"children\":\"REST API\"}],[\"$\",\"span\",\"PostgreSQL\",{\"className\":\"px-4 py-2 theme-chip rounded-full font-medium\",\"children\":\"PostgreSQL\"}]]}],[\"$\",\"div\",null,{\"className\":\"flex gap-4\",\"children\":[[\"$\",\"a\",null,{\"href\":\"/projects/qa-dashboard/index.html\",\"className\":\"btn-primary inline-flex items-center gap-2\",\"target\":\"_self\",\"rel\":\"$undefined\",\"aria-label\":\"Open interactive demo of Software QA Analyst Platform\",\"children\":[[\"$\",\"svg\",null,{\"xmlns\":\"http://www.w3.org/2000/svg\",\"width\":20,\"height\":20,\"viewBox\":\"0 0 24 24\",\"fill\":\"none\",\"stroke\":\"currentColor\",\"strokeWidth\":2,\"strokeLinecap\":\"round\",\"strokeLinejoin\":\"round\",\"className\":\"lucide lucide-external-link\",\"aria-hidden\":\"true\",\"children\":[[\"$\",\"path\",\"a6xqqp\",{\"d\":\"M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6\"}],[\"$\",\"polyline\",\"mznyad\",{\"points\":\"15 3 21 3 21 9\"}],[\"$\",\"line\",\"18c3s4\",{\"x1\":\"10\",\"x2\":\"21\",\"y1\":\"14\",\"y2\":\"3\"}],\"$undefined\"]}],\"View Demo\"]}],[\"$\",\"a\",null,{\"href\":\"https://github.com/delongkevin/FullStackEngineer\",\"className\":\"btn-secondary inline-flex items-center gap-2\",\"target\":\"_blank\",\"rel\":\"noopener noreferrer\",\"aria-label\":\"View source code for Software QA Analyst Platform on GitHub\",\"children\":[[\"$\",\"svg\",null,{\"xmlns\":\"http://www.w3.org/2000/svg\",\"width\":20,\"height\":20,\"viewBox\":\"0 0 24 24\",\"fill\":\"none\",\"stroke\":\"currentColor\",\"strokeWidth\":2,\"strokeLinecap\":\"round\",\"strokeLinejoin\":\"round\",\"className\":\"lucide lucide-github\",\"aria-hidden\":\"true\",\"children\":[[\"$\",\"path\",\"tonef\",{\"d\":\"M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4\"}],[\"$\",\"path\",\"9comsn\",{\"d\":\"M9 18c-4.51 2-5-2-7-2\"}],\"$undefined\"]}],\"View Code\"]}]]}],\"$undefined\"]}]]}]}],[\"$\",\"div\",null,{\"className\":\"grid grid-cols-1 lg:grid-cols-3 gap-8\",\"children\":[[\"$\",\"div\",null,{\"className\":\"lg:col-span-2\",\"children\":[\"$\",\"div\",null,{\"className\":\"surface-card rounded-xl shadow-lg p-6\",\"children\":[[\"$\",\"h2\",null,{\"className\":\"text-2xl font-bold theme-text-primary mb-6\",\"children\":\"Interactive Demo\"}],[\"$\",\"$Ld\",null,{\"liveUrl\":\"/projects/qa-dashboard/index.html\",\"title\":\"Software QA Analyst Platform\",\"category\":\"fullstack\"}]]}]}],[\"$\",\"div\",null,{\"className\":\"space-y-6\",\"children\":[[\"$\",\"details\",null,{\"open\":true,\"className\":\"surface-card rounded-xl shadow-lg p-6\",\"children\":[[\"$\",\"summary\",null,{\"className\":\"text-lg font-semibold theme-text-primary mb-4 cursor-pointer\",\"children\":\"Project Information\"}],[\"$\",\"div\",null,{\"className\":\"space-y-3 mt-4\",\"children\":[[\"$\",\"div\",null,{\"children\":[[\"$\",\"span\",null,{\"className\":\"text-sm theme-text-tertiary\",\"children\":\"Category:\"}],[\"$\",\"div\",null,{\"className\":\"font-medium theme-text-primary\",\"children\":\"Full Stack\"}]]}],[\"$\",\"div\",null,{\"children\":[[\"$\",\"span\",null,{\"className\":\"text-sm theme-text-tertiary\",\"children\":\"Status:\"}],[\"$\",\"div\",null,{\"className\":\"font-medium text-green-600\",\"children\":\"Completed\"}]]}],[\"$\",\"div\",null,{\"children\":[[\"$\",\"span\",null,{\"className\":\"text-sm theme-text-tertiary\",\"children\":\"Type:\"}],[\"$\",\"div\",null,{\"className\":\"font-medium theme-text-primary\",\"children\":\"Interactive Demo\"}]]}],\"$undefined\"]}]]}],[\"$\",\"details\",null,{\"open\":true,\"className\":\"surface-card rounded-xl shadow-lg p-6\",\"children\":[[\"$\",\"summary\",null,{\"className\":\"text-lg font-semibold theme-text-primary mb-4 cursor-pointer\",\"children\":\"Technology Stack\"}],[\"$\",\"div\",null,{\"className\":\"flex flex-wrap gap-2 mt-4\",\"children\":[[\"$\",\"span\",\"Python\",{\"className\":\"px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm\",\"children\":\"Python\"}],[\"$\",\"span\",\"Selenium\",{\"className\":\"px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm\",\"children\":\"Selenium\"}],[\"$\",\"span\",\"pytest\",{\"className\":\"px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm\",\"children\":\"pytest\"}],[\"$\",\"span\",\"SQL\",{\"className\":\"px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm\",\"children\":\"SQL\"}],[\"$\",\"span\",\"JavaScript\",{\"className\":\"px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm\",\"children\":\"JavaScript\"}],[\"$\",\"span\",\"HTML5\",{\"className\":\"px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm\",\"children\":\"HTML5\"}],[\"$\",\"span\",\"CSS3\",{\"className\":\"px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm\",\"children\":\"CSS3\"}],[\"$\",\"span\",\"Snowflake\",{\"className\":\"px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm\",\"children\":\"Snowflake\"}],[\"$\",\"span\",\"SSMS\",{\"className\":\"px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm\",\"children\":\"SSMS\"}],[\"$\",\"span\",\"Azure DevOps\",{\"className\":\"px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm\",\"children\":\"Azure DevOps\"}],[\"$\",\"span\",\"Docker\",{\"className\":\"px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm\",\"children\":\"Docker\"}],[\"$\",\"span\",\"AKS\",{\"className\":\"px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm\",\"children\":\"AKS\"}],[\"$\",\"span\",\"REST API\",{\"className\":\"px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm\",\"children\":\"REST API\"}],[\"$\",\"span\",\"PostgreSQL\",{\"className\":\"px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm\",\"children\":\"PostgreSQL\"}]]}]]}]]}]]}],[\"$\",\"$Le\",null,{\"tutorial\":{\"projectId\":20,\"steps\":[{\"title\":\"Test Case Management\",\"description\":\"Create and execute manual test cases across suites.\",\"instructions\":[\"Browse test suites: Login \u0026 Auth, API, Database, UI Regression, CI/CD\",\"Create new test cases with steps and expected results\",\"Execute tests and mark as Pass, Fail, Pending, or Blocked\",\"Filter tests by suite, status, or priority\"],\"tips\":[\"Color-coded status makes tracking easy\",\"Test cases support full CRUD operations\"]},{\"title\":\"Defect Tracking\",\"description\":\"Log and manage defects with Kanban board.\",\"instructions\":[\"Log new defects with severity and component\",\"Drag tickets through: Open → In Progress → Resolved → Closed\",\"Filter by severity: Critical, High, Medium, Low\",\"View defect metrics and aging\"],\"tips\":[\"Kanban board visualizes workflow\",\"48 sample defects for demo\"]},{\"title\":\"SQL Test Validation\",\"description\":\"Execute SQL queries against test database.\",\"instructions\":[\"Write SQL queries in validator console\",\"Query test_cases, defects, and test_runs tables\",\"Use JOINs, GROUP BY, WHERE, and LIMIT clauses\",\"View results from in-memory database\"],\"tips\":[\"72 test cases, 48 defects, 500 test runs available\",\"Validate data-driven test scenarios\"]}]},\"projectTitle\":\"Software QA Analyst Platform\"}],[\"$\",\"$Lf\",null,{\"videoUrl\":\"$undefined\",\"projectTitle\":\"Software QA Analyst Platform\"}],[\"$\",\"section\",null,{\"className\":\"mt-10 space-y-6\",\"aria-label\":\"Project navigation and related work\",\"children\":[[\"$\",\"div\",null,{\"className\":\"surface-card rounded-xl shadow-lg p-6\",\"children\":[[\"$\",\"h2\",null,{\"className\":\"text-xl font-bold theme-text-primary mb-4\",\"children\":\"Continue Exploring\"}],[\"$\",\"div\",null,{\"className\":\"grid grid-cols-1 md:grid-cols-2 gap-4\",\"children\":[[\"$\",\"$Lb\",null,{\"href\":\"/projects/sit-dashboard\",\"className\":\"block rounded-lg surface-subtle p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors\",\"children\":[[\"$\",\"p\",null,{\"className\":\"text-sm theme-text-tertiary\",\"children\":\"Previous project\"}],[\"$\",\"p\",null,{\"className\":\"font-semibold theme-text-primary\",\"children\":\"System Integration Test Management Dashboard\"}]]}],[\"$\",\"$Lb\",null,{\"href\":\"/projects/ai-trainer\",\"className\":\"block rounded-lg surface-subtle p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors\",\"children\":[[\"$\",\"p\",null,{\"className\":\"text-sm theme-text-tertiary\",\"children\":\"Next project\"}],[\"$\",\"p\",null,{\"className\":\"font-semibold theme-text-primary\",\"children\":\"AI Code Training Platform\"}]]}]]}]]}],[\"$\",\"div\",null,{\"className\":\"surface-card rounded-xl shadow-lg p-6\",\"children\":[[\"$\",\"h2\",null,{\"className\":\"text-xl font-bold theme-text-primary mb-4\",\"children\":\"Related Projects\"}],[\"$\",\"div\",null,{\"className\":\"grid grid-cols-1 md:grid-cols-3 gap-4\",\"children\":[[\"$\",\"$Lb\",\"11\",{\"href\":\"/projects/11\",\"className\":\"rounded-lg surface-subtle p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors\",\"children\":[[\"$\",\"p\",null,{\"className\":\"font-semibold theme-text-primary\",\"children\":\"Online Grocery Order System\"}],[\"$\",\"p\",null,{\"className\":\"text-sm theme-text-secondary mt-1 line-clamp-2\",\"children\":\"Full-stack retail ordering app with product catalog, cart, checkout form, and order persistence\"}]]}],[\"$\",\"$Lb\",\"12\",{\"href\":\"/projects/12\",\"className\":\"rounded-lg surface-subtle p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors\",\"children\":[[\"$\",\"p\",null,{\"className\":\"font-semibold theme-text-primary\",\"children\":\"Task Manager\"}],[\"$\",\"p\",null,{\"className\":\"text-sm theme-text-secondary mt-1 line-clamp-2\",\"children\":\"Full-stack task management app with CRUD, priority levels, filters, search, and localStorage sync\"}]]}],[\"$\",\"$Lb\",\"14\",{\"href\":\"/projects/kamps-smart-factory\",\"className\":\"rounded-lg surface-subtle p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors\",\"children\":[[\"$\",\"p\",null,{\"className\":\"font-semibold theme-text-primary\",\"children\":\"Kamps Smart Factory Platform\"}],[\"$\",\"p\",null,{\"className\":\"text-sm theme-text-secondary mt-1 line-clamp-2\",\"children\":\"Industry 4.0 mobile dashboard showcasing PLC integration, YOLOv8 pallet detection, K3s microservices, Prometheus/Grafana observability, MQTT pub/sub, and full CI/CD — built for Kamps\"}]]}]]}]]}]]}]]}]}],[\"$\",\"footer\",null,{\"className\":\"py-10 sm:py-12\",\"aria-label\":\"Site footer\",\"style\":{\"background\":\"var(--surface-1)\",\"color\":\"var(--text-1)\",\"borderTop\":\"1px solid var(--border-soft)\"},\"children\":[\"$\",\"div\",null,{\"className\":\"max-w-6xl mx-auto px-4 sm:px-6 lg:px-8\",\"children\":[[\"$\",\"div\",null,{\"className\":\"flex flex-col md:flex-row justify-between items-center\",\"children\":[[\"$\",\"div\",null,{\"className\":\"mb-6 md:mb-0 text-center md:text-left\",\"children\":[[\"$\",\"h3\",null,{\"className\":\"text-xl sm:text-2xl font-bold theme-text-primary\",\"children\":\"Kevin Delong\"}],[\"$\",\"p\",null,{\"className\":\"theme-text-secondary mt-2\",\"children\":\"Full Stack \u0026 Frontend Developer\"}]]}],[\"$\",\"div\",null,{\"className\":\"flex space-x-4 sm:space-x-6\",\"children\":[[\"$\",\"a\",\"GitHub\",{\"href\":\"https://github.com/delongkevin\",\"className\":\"theme-text-secondary hover:opacity-80 transition-colors w-11 h-11 rounded-full surface-subtle flex items-center justify-center\",\"aria-label\":\"GitHub\",\"target\":\"_blank\",\"rel\":\"noopener noreferrer\",\"children\":[\"$\",\"svg\",null,{\"xmlns\":\"http://www.w3.org/2000/svg\",\"width\":24,\"height\":24,\"viewBox\":\"0 0 24 24\",\"fill\":\"none\",\"stroke\":\"currentColor\",\"strokeWidth\":2,\"strokeLinecap\":\"round\",\"strokeLinejoin\":\"round\",\"className\":\"lucide lucide-github\",\"aria-hidden\":\"true\",\"children\":[[\"$\",\"path\",\"tonef\",{\"d\":\"M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4\"}],[\"$\",\"path\",\"9comsn\",{\"d\":\"M9 18c-4.51 2-5-2-7-2\"}],\"$undefined\"]}]}],[\"$\",\"a\",\"Twitter\",{\"href\":\"https://x.com/delongkevin1446\",\"className\":\"theme-text-secondary hover:opacity-80 transition-colors w-11 h-11 rounded-full surface-subtle flex items-center justify-center\",\"aria-label\":\"Twitter\",\"target\":\"_blank\",\"rel\":\"noopener noreferrer\",\"children\":[\"$\",\"svg\",null,{\"xmlns\":\"http://www.w3.org/2000/svg\",\"width\":24,\"height\":24,\"viewBox\":\"0 0 24 24\",\"fill\":\"none\",\"stroke\":\"currentColor\",\"strokeWidth\":2,\"strokeLinecap\":\"round\",\"strokeLinejoin\":\"round\",\"className\":\"lucide lucide-twitter\",\"aria-hidden\":\"true\",\"children\":[[\"$\",\"path\",\"pff0z6\",{\"d\":\"M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z\"}],\"$undefined\"]}]}],[\"$\",\"a\",\"Email\",{\"href\":\"mailto:delong.kevin@gmail.com\",\"className\":\"theme-text-secondary hover:opacity-80 transition-colors w-11 h-11 rounded-full surface-subtle flex items-center justify-center\",\"aria-label\":\"Email\",\"target\":\"_blank\",\"rel\":\"noopener noreferrer\",\"children\":[\"$\",\"svg\",null,{\"xmlns\":\"http://www.w3.org/2000/svg\",\"width\":24,\"height\":24,\"viewBox\":\"0 0 24 24\",\"fill\":\"none\",\"stroke\":\"currentColor\",\"strokeWidth\":2,\"strokeLinecap\":\"round\",\"strokeLinejoin\":\"round\",\"className\":\"lucide lucide-mail\",\"aria-hidden\":\"true\",\"children\":[[\"$\",\"rect\",\"18n3k1\",{\"width\":\"20\",\"height\":\"16\",\"x\":\"2\",\"y\":\"4\",\"rx\":\"2\"}],[\"$\",\"path\",\"1ocrg3\",{\"d\":\"m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7\"}],\"$undefined\"]}]}]]}]]}],[\"$\",\"div\",null,{\"className\":\"border-t theme-border mt-8 pt-8 text-center theme-text-secondary\",\"children\":[[\"$\",\"p\",null,{\"children\":[\"© \",2026,\" Kevin Douglas Delong. All rights reserved.\"]}],[\"$\",\"p\",null,{\"className\":\"mt-2 text-sm\",\"children\":\"Phone: (810) 287-7409 | Email: delong.kevin@gmail.com\"}]]}]]}]}]],null],\"segment\":\"__PAGE__?{\\\"id\\\":\\\"qa-dashboard\\\"}\"},\"styles\":null}],\"segment\":[\"id\",\"qa-dashboard\",\"d\"]},\"styles\":null}],\"segment\":\"projects\"},\"styles\":null}]}]]}]}],null]}]]\n"])</script><script>self.__next_f.push([1,"4:[[\"$\",\"meta\",\"0\",{\"name\":\"viewport\",\"content\":\"width=device-width, initial-scale=1\"}],[\"$\",\"meta\",\"1\",{\"charSet\":\"utf-8\"}],[\"$\",\"title\",\"2\",{\"children\":\"Software QA Analyst Platform - Kevin Delong | Kevin Delong\"}],[\"$\",\"meta\",\"3\",{\"name\":\"description\",\"content\":\"Full-stack QA platform — Selenium/Python test automation, live SQL validator against in-memory DB, Kanban defect tracker, CI/CD pipeline monitor, and manual...\"}],[\"$\",\"link\",\"4\",{\"rel\":\"author\",\"href\":\"https://delongkevin.github.io/FullStackEngineer\"}],[\"$\",\"meta\",\"5\",{\"name\":\"author\",\"content\":\"Kevin Douglas Delong\"}],[\"$\",\"meta\",\"6\",{\"name\":\"keywords\",\"content\":\"Kevin Delong,Full Stack Engineer,React,Next.js,Mobile Development,Automotive Software\"}],[\"$\",\"meta\",\"7\",{\"name\":\"creator\",\"content\":\"Kevin Douglas Delong\"}],[\"$\",\"meta\",\"8\",{\"name\":\"publisher\",\"content\":\"Kevin Douglas Delong\"}],[\"$\",\"meta\",\"9\",{\"name\":\"robots\",\"content\":\"index, follow\"}],[\"$\",\"meta\",\"10\",{\"name\":\"googlebot\",\"content\":\"index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1\"}],[\"$\",\"link\",\"11\",{\"rel\":\"canonical\",\"href\":\"https://delongkevin.github.io/FullStackEngineer/projects/qa-dashboard/\"}],[\"$\",\"meta\",\"12\",{\"property\":\"og:title\",\"content\":\"Software QA Analyst Platform - Kevin Delong\"}],[\"$\",\"meta\",\"13\",{\"property\":\"og:description\",\"content\":\"Full-stack QA platform — Selenium/Python test automation, live SQL validator against in-memory DB, Kanban defect tracker, CI/CD pipeline monitor, and manual...\"}],[\"$\",\"meta\",\"14\",{\"property\":\"og:url\",\"content\":\"https://delongkevin.github.io/FullStackEngineer/projects/qa-dashboard/\"}],[\"$\",\"meta\",\"15\",{\"property\":\"og:image\",\"content\":\"https://delongkevin.github.io/FullStackEngineer/images/qa-dashboard.png\"}],[\"$\",\"meta\",\"16\",{\"property\":\"og:type\",\"content\":\"article\"}],[\"$\",\"meta\",\"17\",{\"name\":\"twitter:card\",\"content\":\"summary_large_image\"}],[\"$\",\"meta\",\"18\",{\"name\":\"twitter:title\",\"content\":\"Software QA Analyst Platform - Kevin Delong\"}],[\"$\",\"meta\",\"19\",{\"name\":\"twitter:description\",\"content\":\"Full-stack QA platform — Selenium/Python test automation, live SQL validator against in-memory DB, Kanban defect tracker, CI/CD pipeline monitor, and manual...\"}],[\"$\",\"meta\",\"20\",{\"name\":\"twitter:image\",\"content\":\"https://delongkevin.github.io/FullStackEngineer/images/qa-dashboard.png\"}]]\n"])</script><script>self.__next_f.push([1,"8:null\n"])</script><script>self.__next_f.push([1,""])</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Software QA Analyst Platform</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0d1117;
+      --card: #161b22;
+      --border: #30363d;
+      --accent: #58a6ff;
+      --success: #3fb950;
+      --danger: #f85149;
+      --warning: #d29922;
+      --purple: #bc8cff;
+      --text: #c9d1d9;
+      --muted: #8b949e;
+      --header-h: 56px;
+      --nav-h: 48px;
+    }
+    html, body { height: 100%; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 14px;
+      display: flex;
+      flex-direction: column;
+    }
+    /* ── Header ─────────────────────────────────────── */
+    header {
+      height: var(--header-h);
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      gap: 14px;
+      flex-shrink: 0;
+    }
+    header .logo { font-size: 20px; font-weight: 700; color: var(--accent); white-space: nowrap; }
+    header .logo span { color: var(--text); }
+    header .tagline { color: var(--muted); font-size: 12px; }
+    header .badge-env {
+      margin-left: auto;
+      background: rgba(63,185,80,.15);
+      border: 1px solid var(--success);
+      color: var(--success);
+      border-radius: 20px;
+      padding: 3px 10px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    /* ── Tab nav ─────────────────────────────────────── */
+    nav {
+      height: var(--nav-h);
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: flex-end;
+      padding: 0 16px;
+      gap: 4px;
+      flex-shrink: 0;
+      overflow-x: auto;
+    }
+    nav button {
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      white-space: nowrap;
+      transition: color .15s;
+    }
+    nav button:hover { color: var(--text); }
+    nav button.active { color: var(--accent); border-bottom-color: var(--accent); }
+    /* ── Main scroll area ──────────────────────────── */
+    main { flex: 1; overflow-y: auto; padding: 20px; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+    /* ── Cards / Grids ───────────────────────────── */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .card-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      margin-bottom: 12px;
+    }
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .kpi {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+    .kpi .value { font-size: 28px; font-weight: 700; line-height: 1.1; }
+    .kpi .label { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .kpi .delta { font-size: 11px; margin-top: 4px; }
+    .kpi .delta.up { color: var(--success); }
+    .kpi .delta.dn { color: var(--danger); }
+    /* ── Tables ──────────────────────────────────── */
+    .tbl-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th { text-align: left; padding: 8px 12px; color: var(--muted); font-weight: 600;
+         border-bottom: 1px solid var(--border); white-space: nowrap; }
+    td { padding: 8px 12px; border-bottom: 1px solid rgba(48,54,61,.5); vertical-align: middle; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(88,166,255,.04); }
+    /* ── Badges ──────────────────────────────────── */
+    .badge {
+      display: inline-block;
+      border-radius: 20px;
+      padding: 2px 9px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .badge-pass   { background: rgba(63,185,80,.15);  color: var(--success); }
+    .badge-fail   { background: rgba(248,81,73,.15);  color: var(--danger); }
+    .badge-block  { background: rgba(210,153,34,.15); color: var(--warning); }
+    .badge-pending{ background: rgba(88,166,255,.12); color: var(--accent); }
+    .badge-open   { background: rgba(248,81,73,.15);  color: var(--danger); }
+    .badge-inprog { background: rgba(210,153,34,.15); color: var(--warning); }
+    .badge-resolved{ background: rgba(63,185,80,.15); color: var(--success); }
+    .badge-closed  { background: rgba(139,148,158,.2); color: var(--muted); }
+    .badge-critical{ background: rgba(248,81,73,.25); color: #ff7b72; border:1px solid rgba(248,81,73,.4); }
+    .badge-high   { background: rgba(210,153,34,.2);  color: #f0b429; border:1px solid rgba(210,153,34,.4); }
+    .badge-medium { background: rgba(88,166,255,.15); color: var(--accent); }
+    .badge-low    { background: rgba(139,148,158,.2); color: var(--muted); }
+    /* ── Buttons ─────────────────────────────────── */
+    .btn {
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 14px;
+      transition: filter .15s, transform .1s;
+    }
+    .btn:hover { filter: brightness(1.15); }
+    .btn:active { transform: scale(.96); }
+    .btn-primary { background: var(--accent); color: #0d1117; }
+    .btn-success { background: var(--success); color: #0d1117; }
+    .btn-danger  { background: var(--danger);  color: #fff; }
+    .btn-ghost   { background: rgba(48,54,61,.6); color: var(--text); border: 1px solid var(--border); }
+    .btn-sm      { padding: 4px 10px; font-size: 11px; }
+    /* ── Forms ───────────────────────────────────── */
+    .form-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
+    .form-group { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 140px; }
+    label { font-size: 11px; color: var(--muted); font-weight: 600; }
+    input, select, textarea {
+      background: #0d1117;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font-size: 13px;
+      padding: 7px 10px;
+      outline: none;
+      transition: border-color .2s;
+      font-family: inherit;
+    }
+    input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+    select option { background: #161b22; }
+    textarea { resize: vertical; }
+    /* ── Progress bar ────────────────────────────── */
+    .progress-bar {
+      background: rgba(48,54,61,.8);
+      border-radius: 4px;
+      height: 6px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width .5s ease;
+    }
+    /* ── Section spacing ─────────────────────────── */
+    .section { margin-bottom: 20px; }
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .section-title { font-size: 16px; font-weight: 700; }
+    /* ── Two-column layout ───────────────────────── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+    /* ── Kanban ──────────────────────────────────── */
+    .kanban { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    @media (max-width: 760px) { .kanban { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 460px) { .kanban { grid-template-columns: 1fr; } }
+    .kanban-col {
+      background: rgba(22,27,34,.7);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      min-height: 300px;
+    }
+    .kanban-col-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .6px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .col-count {
+      background: var(--border);
+      border-radius: 20px;
+      padding: 1px 7px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .defect-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .defect-card:hover { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+    .defect-card .dc-title { font-size: 12px; font-weight: 600; margin-bottom: 6px; line-height: 1.4; }
+    .defect-card .dc-meta { display: flex; gap: 6px; flex-wrap: wrap; }
+    /* ── SQL ──────────────────────────────────────── */
+    .sql-editor {
+      background: #0d1117;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-family: 'SF Mono', 'Fira Code', Consolas, monospace;
+      font-size: 13px;
+      color: #e2e8f0;
+      padding: 12px;
+      width: 100%;
+      min-height: 120px;
+    }
+    .sql-result-wrap {
+      margin-top: 14px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow-x: auto;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    .sql-result-wrap table { min-width: 500px; }
+    .sql-msg { padding: 14px 16px; color: var(--muted); font-size: 13px; }
+    .sql-msg.ok  { color: var(--success); }
+    .sql-msg.err { color: var(--danger); }
+    .query-chip {
+      display: inline-block;
+      background: rgba(88,166,255,.1);
+      border: 1px solid rgba(88,166,255,.25);
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 11px;
+      color: var(--accent);
+      cursor: pointer;
+      transition: background .15s;
+      margin: 3px;
+    }
+    .query-chip:hover { background: rgba(88,166,255,.2); }
+    /* ── Terminal / Log ──────────────────────────── */
+    .terminal {
+      background: #0a0c10;
+      border: 1px solid #2a3040;
+      border-radius: 6px;
+      padding: 14px;
+      font-family: 'SF Mono', 'Fira Code', Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.7;
+      min-height: 200px;
+      max-height: 380px;
+      overflow-y: auto;
+      color: #a0c4a0;
+      white-space: pre-wrap;
+    }
+    .terminal .t-time { color: #5a6a7a; }
+    .terminal .t-ok   { color: var(--success); }
+    .terminal .t-fail { color: var(--danger); }
+    .terminal .t-warn { color: var(--warning); }
+    .terminal .t-info { color: var(--accent); }
+    /* ── Pipeline ─────────────────────────────────── */
+    .pipeline { display: flex; align-items: stretch; gap: 0; overflow-x: auto; padding-bottom: 6px; }
+    .pipe-stage {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      min-width: 140px;
+      text-align: center;
+      position: relative;
+    }
+    .pipe-stage:not(:last-child)::after {
+      content: '→';
+      position: absolute;
+      right: -14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-size: 16px;
+      z-index: 1;
+    }
+    .pipe-stage:not(:first-child) { margin-left: 20px; }
+    .pipe-stage .ps-icon { font-size: 24px; margin-bottom: 6px; }
+    .pipe-stage .ps-name { font-size: 12px; font-weight: 700; margin-bottom: 4px; }
+    .pipe-stage .ps-dur  { font-size: 11px; color: var(--muted); }
+    .pipe-pass { border-color: var(--success); }
+    .pipe-fail { border-color: var(--danger); }
+    .pipe-run  { border-color: var(--warning); animation: pulse-border 1s infinite alternate; }
+    @keyframes pulse-border { from { box-shadow: 0 0 0 0 rgba(210,153,34,.3); }
+                               to   { box-shadow: 0 0 0 4px rgba(210,153,34,.3); } }
+    .pipe-skip { opacity: .45; }
+    /* ── Chart bars ──────────────────────────────── */
+    .bar-chart { display: flex; flex-direction: column; gap: 8px; }
+    .bar-row { display: flex; align-items: center; gap: 10px; }
+    .bar-label { width: 100px; font-size: 11px; color: var(--muted); text-align: right; flex-shrink: 0; }
+    .bar-track { flex: 1; background: rgba(48,54,61,.7); border-radius: 4px; height: 18px; position: relative; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 6px; font-size: 10px; font-weight: 700; color: #0d1117; transition: width .6s ease; }
+    .bar-val { width: 36px; font-size: 11px; color: var(--text); text-align: right; flex-shrink: 0; }
+    /* ── Misc ─────────────────────────────────────── */
+    .tag { display: inline-block; background: rgba(48,54,61,.8); border-radius: 4px; padding: 2px 7px; font-size: 11px; color: var(--muted); margin: 2px; }
+    .divider { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+    .mono { font-family: 'SF Mono', Consolas, monospace; font-size: 12px; }
+    .text-success { color: var(--success); }
+    .text-danger  { color: var(--danger); }
+    .text-warning { color: var(--warning); }
+    .text-accent  { color: var(--accent); }
+    .text-muted   { color: var(--muted); }
+    .flex-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .gap-4 { gap: 4px; }
+    .mt-8 { margin-top: 8px; }
+    .mt-14 { margin-top: 14px; }
+    /* ── Activity feed ───────────────────────────── */
+    .activity-list { display: flex; flex-direction: column; gap: 0; }
+    .activity-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 9px 0;
+      border-bottom: 1px solid rgba(48,54,61,.5);
+    }
+    .activity-item:last-child { border-bottom: none; }
+    .act-icon { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; }
+    .act-body { flex: 1; }
+    .act-body .act-title { font-size: 12px; line-height: 1.4; }
+    .act-body .act-time  { font-size: 11px; color: var(--muted); margin-top: 1px; }
+    /* ── Modal ───────────────────────────────────── */
+    .modal-bg {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.7);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-bg.open { display: flex; }
+    .modal {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      width: 100%;
+      max-width: 540px;
+      max-height: 80vh;
+      overflow-y: auto;
+      padding: 20px;
+    }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+    .modal-title { font-size: 16px; font-weight: 700; }
+    .modal-close { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 20px; line-height: 1; padding: 2px 6px; border-radius: 4px; }
+    .modal-close:hover { background: rgba(248,81,73,.15); color: var(--danger); }
+    /* ── Scrollbar ───────────────────────────────── */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #484f58; }
+    /* ── Toast ───────────────────────────────────── */
+    #toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 18px;
+      font-size: 13px;
+      z-index: 200;
+      transform: translateY(80px);
+      opacity: 0;
+      transition: transform .3s, opacity .3s;
+      max-width: 300px;
+    }
+    #toast.show { transform: translateY(0); opacity: 1; }
+    /* ── Inline stat chips ──────────────────────── */
+    .stat-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+    .stat-chip { background: rgba(22,27,34,.9); border: 1px solid var(--border); border-radius: 6px; padding: 6px 12px; font-size: 12px; }
+    .stat-chip .sc-val { font-weight: 700; font-size: 18px; display: block; }
+    /* ── Trending sparkline (CSS-only) ──────────── */
+    .sparkline { display: inline-flex; align-items: flex-end; gap: 2px; height: 28px; }
+    .spark-bar { width: 4px; background: var(--accent); border-radius: 2px 2px 0 0; opacity: .7; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">QA<span>Platform</span></div>
+  <div class="tagline">Software QA Analyst · Automated &amp; Manual Testing</div>
+  <div class="badge-env">● ENV: STAGING</div>
+</header>
+
+<nav id="main-nav">
+  <button class="active" data-tab="dashboard">📊 Dashboard</button>
+  <button data-tab="testcases">🧪 Test Cases</button>
+  <button data-tab="defects">🐛 Defect Tracker</button>
+  <button data-tab="sql">🗄️ SQL Validator</button>
+  <button data-tab="automation">🤖 Automation</button>
+  <button data-tab="cicd">⚙️ CI/CD Pipeline</button>
+</nav>
+
+<main>
+
+  <!-- ════════════════════════ DASHBOARD ════════════════════════ -->
+  <div id="tab-dashboard" class="tab-panel active">
+    <div class="kpi-grid" id="kpi-grid"></div>
+    <div class="two-col">
+      <div>
+        <div class="card section">
+          <div class="card-title">Test Suite Coverage by Module</div>
+          <div class="bar-chart" id="coverage-chart"></div>
+        </div>
+        <div class="card section">
+          <div class="card-title">Pass / Fail Trend — Last 7 Runs</div>
+          <div id="trend-chart" style="padding:6px 0;"></div>
+        </div>
+      </div>
+      <div>
+        <div class="card section">
+          <div class="card-title">Recent Activity</div>
+          <div class="activity-list" id="activity-list"></div>
+        </div>
+        <div class="card section">
+          <div class="card-title">Environment Health</div>
+          <div id="env-health"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ TEST CASES ════════════════════════ -->
+  <div id="tab-testcases" class="tab-panel">
+    <div class="section-header">
+      <div class="section-title">Test Cases</div>
+      <div class="flex-row">
+        <select id="tc-filter-suite" style="width:140px;">
+          <option value="">All Suites</option>
+          <option>Login &amp; Auth</option>
+          <option>API Endpoints</option>
+          <option>Database</option>
+          <option>UI Regression</option>
+          <option>CI/CD Pipeline</option>
+        </select>
+        <select id="tc-filter-status" style="width:120px;">
+          <option value="">All Status</option>
+          <option>Pass</option><option>Fail</option>
+          <option>Pending</option><option>Blocked</option>
+        </select>
+        <button class="btn btn-primary" onclick="openNewTCModal()">+ New Test Case</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="tbl-wrap">
+        <table id="tc-table">
+          <thead>
+            <tr>
+              <th>ID</th><th>Title</th><th>Suite</th><th>Priority</th>
+              <th>Status</th><th>Assignee</th><th>Last Run</th><th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="tc-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ DEFECT TRACKER ════════════════════ -->
+  <div id="tab-defects" class="tab-panel">
+    <div class="section-header">
+      <div class="section-title">Defect Tracker</div>
+      <button class="btn btn-primary" onclick="openNewDefectModal()">+ Log Defect</button>
+    </div>
+    <div class="kanban" id="kanban-board"></div>
+  </div>
+
+  <!-- ════════════════════════ SQL VALIDATOR ════════════════════ -->
+  <div id="tab-sql" class="tab-panel">
+    <div class="section-title" style="margin-bottom:14px;">SQL Validator — In-Memory QA Database</div>
+    <div class="stat-row">
+      <div class="stat-chip"><span class="sc-val text-accent">3</span>Tables</div>
+      <div class="stat-chip"><span class="sc-val text-success">500</span>test_runs rows</div>
+      <div class="stat-chip"><span class="sc-val text-warning">48</span>defects rows</div>
+      <div class="stat-chip"><span class="sc-val text-accent">72</span>test_cases rows</div>
+    </div>
+    <div class="card section">
+      <div class="card-title">Schema Reference</div>
+      <div class="flex-row" style="gap:8px;flex-wrap:wrap;">
+        <span class="tag mono">test_cases(id, title, suite, priority, status, assignee)</span>
+        <span class="tag mono">defects(id, title, severity, status, component, reporter)</span>
+        <span class="tag mono">test_runs(id, tc_id, result, duration_ms, executed_at, executor)</span>
+      </div>
+    </div>
+    <div class="card section">
+      <div class="card-title">Quick Queries</div>
+      <div>
+        <span class="query-chip" onclick="setSQL(&quot;SELECT * FROM test_cases WHERE status = 'Fail' ORDER BY priority;&quot;)">Failed TCs</span>
+        <span class="query-chip" onclick="setSQL(&quot;SELECT suite, COUNT(*) AS total, SUM(CASE WHEN status='Pass' THEN 1 ELSE 0 END) AS passed FROM test_cases GROUP BY suite;&quot;)">Pass Rate by Suite</span>
+        <span class="query-chip" onclick="setSQL(&quot;SELECT severity, COUNT(*) AS count FROM defects WHERE status = 'Open' GROUP BY severity ORDER BY CASE severity WHEN 'Critical' THEN 1 WHEN 'High' THEN 2 WHEN 'Medium' THEN 3 ELSE 4 END;&quot;)">Open Defects by Severity</span>
+        <span class="query-chip" onclick="setSQL(&quot;SELECT d.component, COUNT(*) AS defect_count FROM defects d WHERE d.status != 'Closed' GROUP BY d.component ORDER BY defect_count DESC;&quot;)">Defects by Component</span>
+        <span class="query-chip" onclick="setSQL(&quot;SELECT tc.title, tr.result, tr.duration_ms, tr.executed_at FROM test_runs tr JOIN test_cases tc ON tr.tc_id = tc.id WHERE tr.result = 'Fail' ORDER BY tr.executed_at DESC LIMIT 10;&quot;)">Recent Failures</span>
+        <span class="query-chip" onclick="setSQL('SELECT executor, COUNT(*) AS runs, ROUND(AVG(duration_ms)) AS avg_ms FROM test_runs GROUP BY executor ORDER BY runs DESC;')">Runs by Executor</span>
+        <span class="query-chip" onclick="setSQL(&quot;SELECT * FROM test_cases WHERE assignee = 'Alice' AND status IN ('Fail','Blocked');&quot;)">Blocked (Alice)</span>
+        <span class="query-chip" onclick="setSQL(&quot;SELECT result, COUNT(*) AS cnt, ROUND(100.0*COUNT(*)/500,1)||'%' AS pct FROM test_runs GROUP BY result;&quot;)">Overall Pass %</span>
+      </div>
+    </div>
+    <div class="card section">
+      <div class="card-title">Query Editor</div>
+      <textarea id="sql-input" class="sql-editor" rows="5" spellcheck="false"
+        placeholder="Enter SQL query...&#10;Example: SELECT * FROM defects WHERE severity = 'Critical';"></textarea>
+      <div class="flex-row mt-8">
+        <button class="btn btn-primary" onclick="runSQL()">▶ Execute Query</button>
+        <button class="btn btn-ghost" onclick="document.getElementById('sql-input').value=''">Clear</button>
+        <span id="sql-timing" class="text-muted" style="font-size:11px;margin-left:auto;"></span>
+      </div>
+      <div id="sql-result"></div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ AUTOMATION ════════════════════════ -->
+  <div id="tab-automation" class="tab-panel">
+    <div class="section-title" style="margin-bottom:14px;">Selenium + Python Automation Framework</div>
+    <div class="two-col">
+      <div>
+        <div class="card section">
+          <div class="card-title">Test Suites</div>
+          <div id="auto-suite-list"></div>
+        </div>
+        <div class="card section">
+          <div class="card-title">Automation KPIs</div>
+          <div class="bar-chart" id="auto-kpi-bars"></div>
+        </div>
+      </div>
+      <div>
+        <div class="card section">
+          <div class="card-title">Script Preview — Selected Suite</div>
+          <div class="terminal" id="script-preview" style="min-height:180px;color:#cdd6f4;"></div>
+        </div>
+        <div class="card section">
+          <div class="card-title">Execution Log</div>
+          <div class="flex-row" style="margin-bottom:8px;">
+            <button class="btn btn-success" onclick="runAutomation()">▶ Run Suite</button>
+            <button class="btn btn-ghost" onclick="clearLog()">Clear Log</button>
+            <span id="auto-status" class="badge" style="margin-left:auto;"></span>
+          </div>
+          <div class="terminal" id="auto-log"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ CI/CD PIPELINE ════════════════════ -->
+  <div id="tab-cicd" class="tab-panel">
+    <div class="section-title" style="margin-bottom:14px;">CI/CD Pipeline — Azure DevOps</div>
+    <div class="card section">
+      <div class="section-header" style="margin-bottom:10px;">
+        <div>
+          <div style="font-size:13px;font-weight:600;">Build #<span id="build-num">1047</span></div>
+          <div style="font-size:11px;color:var(--muted);">Branch: <span class="mono text-accent">main</span> · Triggered by: <span id="triggered-by">Alice (push)</span></div>
+        </div>
+        <div class="flex-row">
+          <button class="btn btn-primary btn-sm" onclick="triggerBuild()">⚡ Trigger Build</button>
+          <span id="pipeline-status" class="badge badge-pass">✓ PASSED</span>
+        </div>
+      </div>
+      <div class="pipeline" id="pipeline-stages"></div>
+    </div>
+    <div class="two-col">
+      <div class="card section">
+        <div class="card-title">Build History — Last 8 Runs</div>
+        <div id="build-history"></div>
+      </div>
+      <div class="card section">
+        <div class="card-title">Test Stage Breakdown</div>
+        <div id="stage-breakdown"></div>
+      </div>
+    </div>
+    <div class="card section">
+      <div class="card-title">Pipeline Log</div>
+      <div class="terminal" id="pipeline-log" style="max-height:260px;"></div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ── Modals ─────────────────────────────────────────────────── -->
+<div class="modal-bg" id="modal-tc">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">New Test Case</div>
+      <button class="modal-close" onclick="closeModal('modal-tc')">×</button>
+    </div>
+    <div class="form-row">
+      <div class="form-group" style="flex:2;">
+        <label>Title *</label>
+        <input id="tc-title" type="text" placeholder="e.g. Verify login with valid credentials">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Test Suite</label>
+        <select id="tc-suite">
+          <option>Login &amp; Auth</option><option>API Endpoints</option>
+          <option>Database</option><option>UI Regression</option><option>CI/CD Pipeline</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Priority</label>
+        <select id="tc-priority">
+          <option>Critical</option><option>High</option><option>Medium</option><option>Low</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Assignee</label>
+        <select id="tc-assignee">
+          <option>Alice</option><option>Bob</option><option>Carol</option><option>Dave</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group" style="flex:1;">
+        <label>Steps / Notes</label>
+        <textarea id="tc-steps" rows="3" placeholder="1. Navigate to /login&#10;2. Enter credentials&#10;3. Click Submit"></textarea>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:6px;">
+      <button class="btn btn-ghost" onclick="closeModal('modal-tc')">Cancel</button>
+      <button class="btn btn-primary" onclick="addTestCase()">Create</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="modal-defect">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Log New Defect</div>
+      <button class="modal-close" onclick="closeModal('modal-defect')">×</button>
+    </div>
+    <div class="form-row">
+      <div class="form-group" style="flex:2;">
+        <label>Title *</label>
+        <input id="def-title" type="text" placeholder="e.g. Login button unresponsive on iOS Safari">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Severity</label>
+        <select id="def-severity">
+          <option>Critical</option><option>High</option><option>Medium</option><option>Low</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Component</label>
+        <select id="def-component">
+          <option>Auth</option><option>API</option><option>Database</option>
+          <option>UI</option><option>Pipeline</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Reporter</label>
+        <select id="def-reporter">
+          <option>Alice</option><option>Bob</option><option>Carol</option><option>Dave</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Steps to Reproduce</label>
+        <textarea id="def-steps" rows="3" placeholder="1. Open app&#10;2. Click Login&#10;3. Observe error"></textarea>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:6px;">
+      <button class="btn btn-ghost" onclick="closeModal('modal-defect')">Cancel</button>
+      <button class="btn btn-danger" onclick="addDefect()">Log Defect</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════════════════════════
+//  DATA STORE
+// ══════════════════════════════════════════════════════════════
+let nextTcId = 100;
+let nextDefId = 50;
+
+const SUITES = ['Login & Auth','API Endpoints','Database','UI Regression','CI/CD Pipeline'];
+const ASSIGNEES = ['Alice','Bob','Carol','Dave'];
+const COMPONENTS = ['Auth','API','Database','UI','Pipeline'];
+const PRIORITIES = ['Critical','High','Medium','Low'];
+const SEVERITIES = ['Critical','High','Medium','Low'];
+
+let testCases = [
+  {id:'TC-001',title:'Verify login with valid credentials',suite:'Login & Auth',priority:'Critical',status:'Pass',assignee:'Alice',lastRun:'2 min ago'},
+  {id:'TC-002',title:'Verify login with invalid password returns 401',suite:'Login & Auth',priority:'High',status:'Pass',assignee:'Alice',lastRun:'2 min ago'},
+  {id:'TC-003',title:'Verify JWT token expiry after 60 min',suite:'Login & Auth',priority:'High',status:'Pass',assignee:'Bob',lastRun:'2 min ago'},
+  {id:'TC-004',title:'Verify password reset email is sent',suite:'Login & Auth',priority:'Medium',status:'Pending',assignee:'Carol',lastRun:'1 hr ago'},
+  {id:'TC-005',title:'GET /api/users returns 200 with valid token',suite:'API Endpoints',priority:'Critical',status:'Pass',assignee:'Bob',lastRun:'5 min ago'},
+  {id:'TC-006',title:'POST /api/orders creates record in DB',suite:'API Endpoints',priority:'High',status:'Pass',assignee:'Bob',lastRun:'5 min ago'},
+  {id:'TC-007',title:'DELETE /api/users/:id removes all related data',suite:'API Endpoints',priority:'High',status:'Fail',assignee:'Dave',lastRun:'5 min ago'},
+  {id:'TC-008',title:'Rate limiting returns 429 after 100 req/min',suite:'API Endpoints',priority:'Medium',status:'Pass',assignee:'Carol',lastRun:'5 min ago'},
+  {id:'TC-009',title:'Verify orders table foreign key constraints',suite:'Database',priority:'High',status:'Pass',assignee:'Alice',lastRun:'10 min ago'},
+  {id:'TC-010',title:'Validate stored procedure sp_reconcile_daily',suite:'Database',priority:'Critical',status:'Fail',assignee:'Alice',lastRun:'10 min ago'},
+  {id:'TC-011',title:'Snowflake data load matches source row count',suite:'Database',priority:'High',status:'Pass',assignee:'Dave',lastRun:'10 min ago'},
+  {id:'TC-012',title:'SSMS index fragmentation < 30% after rebuild',suite:'Database',priority:'Medium',status:'Pass',assignee:'Dave',lastRun:'10 min ago'},
+  {id:'TC-013',title:'Home page renders within 2 seconds on Chrome',suite:'UI Regression',priority:'High',status:'Pass',assignee:'Carol',lastRun:'15 min ago'},
+  {id:'TC-014',title:'Form validation shows inline errors on submit',suite:'UI Regression',priority:'Medium',status:'Pass',assignee:'Carol',lastRun:'15 min ago'},
+  {id:'TC-015',title:'Mobile viewport layout matches design spec',suite:'UI Regression',priority:'Medium',status:'Blocked',assignee:'Bob',lastRun:'30 min ago'},
+  {id:'TC-016',title:'Pipeline lint stage fails fast on syntax error',suite:'CI/CD Pipeline',priority:'High',status:'Pass',assignee:'Dave',lastRun:'20 min ago'},
+  {id:'TC-017',title:'Docker image is tagged with git SHA on push',suite:'CI/CD Pipeline',priority:'Medium',status:'Pass',assignee:'Dave',lastRun:'20 min ago'},
+];
+
+let defects = [
+  {id:'DEF-001',title:'DELETE /api/users/:id does not cascade to sessions table',severity:'Critical',status:'Open',component:'API',reporter:'Alice'},
+  {id:'DEF-002',title:'sp_reconcile_daily fails with NULL customer_id',severity:'High',status:'Open',component:'Database',reporter:'Alice'},
+  {id:'DEF-003',title:'Mobile viewport overflows on iPhone SE (375px)',severity:'Medium',status:'In Progress',component:'UI',reporter:'Bob'},
+  {id:'DEF-004',title:'JWT not invalidated after password change',severity:'High',status:'In Progress',component:'Auth',reporter:'Carol'},
+  {id:'DEF-005',title:'Snowflake stage file cleanup job skipped on weekend',severity:'Low',status:'In Progress',component:'Pipeline',reporter:'Dave'},
+  {id:'DEF-006',title:'Login page CSRF token missing on Safari iOS 16',severity:'Critical',status:'Open',component:'Auth',reporter:'Bob'},
+  {id:'DEF-007',title:'API rate limiter counts OPTIONS preflight requests',severity:'Medium',status:'Resolved',component:'API',reporter:'Carol'},
+  {id:'DEF-008',title:'Orders index fragmented after 10K inserts',severity:'Low',status:'Closed',component:'Database',reporter:'Dave'},
+  {id:'DEF-009',title:'Selenium grid node disconnects after 30 min idle',severity:'High',status:'Open',component:'Pipeline',reporter:'Alice'},
+  {id:'DEF-010',title:'Form error tooltip clips outside viewport on Firefox',severity:'Low',status:'Resolved',component:'UI',reporter:'Carol'},
+];
+
+// ── In-memory SQL tables ───────────────────────────────────────
+function buildSqlDB() {
+  const db = { test_cases: [], defects: [], test_runs: [] };
+  const suites = SUITES;
+  const statuses = ['Pass','Fail','Pending','Blocked'];
+  const results = ['Pass','Fail','Skip'];
+  const executors = ['selenium-grid-1','selenium-grid-2','local-chrome','github-actions'];
+  for (let i = 1; i <= 72; i++) {
+    db.test_cases.push({
+      id: i,
+      title: `Test Case ${i} — ${suites[i % suites.length]}`,
+      suite: suites[i % suites.length],
+      priority: PRIORITIES[i % 4],
+      status: statuses[i % 4],
+      assignee: ASSIGNEES[i % 4]
+    });
+  }
+  for (let i = 1; i <= 48; i++) {
+    db.defects.push({
+      id: i,
+      title: `Defect ${i} in ${COMPONENTS[i % COMPONENTS.length]}`,
+      severity: SEVERITIES[i % 4],
+      status: ['Open','In Progress','Resolved','Closed'][i % 4],
+      component: COMPONENTS[i % COMPONENTS.length],
+      reporter: ASSIGNEES[i % 4]
+    });
+  }
+  const base = new Date('2024-12-01').getTime();
+  for (let i = 1; i <= 500; i++) {
+    db.test_runs.push({
+      id: i,
+      tc_id: (i % 72) + 1,
+      result: results[i % 3 === 0 ? 1 : (i % 7 === 0 ? 2 : 0)],
+      duration_ms: 800 + Math.floor(Math.sin(i) * 300 + 300),
+      executed_at: new Date(base + i * 3600000).toISOString().slice(0,19).replace('T',' '),
+      executor: executors[i % 4]
+    });
+  }
+  return db;
+}
+const SQLDB = buildSqlDB();
+
+// ══════════════════════════════════════════════════════════════
+//  TAB NAVIGATION
+// ══════════════════════════════════════════════════════════════
+document.getElementById('main-nav').addEventListener('click', e => {
+  const btn = e.target.closest('button[data-tab]');
+  if (!btn) return;
+  document.querySelectorAll('#main-nav button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+});
+
+// ══════════════════════════════════════════════════════════════
+//  DASHBOARD
+// ══════════════════════════════════════════════════════════════
+function renderDashboard() {
+  const pass  = testCases.filter(t => t.status === 'Pass').length;
+  const fail  = testCases.filter(t => t.status === 'Fail').length;
+  const pend  = testCases.filter(t => t.status === 'Pending').length;
+  const block = testCases.filter(t => t.status === 'Blocked').length;
+  const total = testCases.length;
+  const openDef = defects.filter(d => d.status === 'Open').length;
+  const critDef = defects.filter(d => d.severity === 'Critical' && d.status !== 'Closed').length;
+  const pct = Math.round(pass / total * 100);
+
+  const kpiData = [
+    {label:'Total Test Cases', value: total,   color:'var(--text)',    delta:'+3 this week', dir:'up'},
+    {label:'Pass Rate',        value: pct+'%', color:'var(--success)', delta:'+2% vs last run', dir:'up'},
+    {label:'Failures',         value: fail,    color:'var(--danger)',  delta:'-1 vs last run', dir:'up'},
+    {label:'Open Defects',     value: openDef, color:'var(--warning)', delta:`${critDef} critical`, dir:'dn'},
+    {label:'Automation %',     value:'79%',    color:'var(--accent)',  delta:'+4% this sprint', dir:'up'},
+    {label:'Pending Review',   value: pend+block, color:'var(--muted)', delta:'needs triage', dir:'dn'},
+  ];
+  document.getElementById('kpi-grid').innerHTML = kpiData.map(k => `
+    <div class="kpi">
+      <div class="value" style="color:${k.color}">${k.value}</div>
+      <div class="label">${k.label}</div>
+      <div class="delta ${k.dir}">${k.dir==='up'?'↑':'↓'} ${k.delta}</div>
+    </div>`).join('');
+
+  const suiteStats = SUITES.map(s => {
+    const tcs = testCases.filter(t => t.suite === s);
+    const p = tcs.filter(t => t.status === 'Pass').length;
+    const pct = tcs.length ? Math.round(p / tcs.length * 100) : 0;
+    return { suite: s, pct };
+  });
+  document.getElementById('coverage-chart').innerHTML = suiteStats.map(s => {
+    const col = s.pct >= 80 ? 'var(--success)' : s.pct >= 60 ? 'var(--warning)' : 'var(--danger)';
+    return `<div class="bar-row">
+      <div class="bar-label">${s.suite.split(' ')[0]}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${s.pct}%;background:${col};">${s.pct>20?s.pct+'%':''}</div></div>
+      <div class="bar-val">${s.pct}%</div>
+    </div>`;
+  }).join('');
+
+  // Trend sparkline
+  const runs = [82,79,85,81,88,84,pct];
+  document.getElementById('trend-chart').innerHTML = `
+    <div style="display:flex;align-items:flex-end;gap:6px;height:60px;padding:0 8px;">
+      ${runs.map((v,i) => {
+        const h = Math.round(v * 0.55);
+        const col = v >= 85 ? 'var(--success)' : v >= 75 ? 'var(--warning)' : 'var(--danger)';
+        return `<div style="display:flex;flex-direction:column;align-items:center;flex:1;gap:3px;">
+          <div style="font-size:10px;color:var(--muted);">${v}%</div>
+          <div style="width:100%;height:${h}px;background:${col};border-radius:3px 3px 0 0;opacity:${i===6?1:.7};"></div>
+          <div style="font-size:10px;color:var(--muted);">${['M','T','W','T','F','S','T'][i]}</div>
+        </div>`;
+      }).join('')}
+    </div>`;
+
+  const activities = [
+    {icon:'🔴',bg:'rgba(248,81,73,.15)',title:'<strong>DEF-006</strong> CSRF token missing on Safari — logged by Bob',time:'3 min ago'},
+    {icon:'✅',bg:'rgba(63,185,80,.15)',title:'<strong>TC-005..TC-008</strong> API suite ran — 3 Pass, 1 Fail',time:'5 min ago'},
+    {icon:'🤖',bg:'rgba(88,166,255,.15)',title:'Selenium suite <strong>Login & Auth</strong> completed in 42s',time:'8 min ago'},
+    {icon:'⚙️',bg:'rgba(210,153,34,.15)',title:'Build <strong>#1047</strong> deployed to staging — Alice',time:'12 min ago'},
+    {icon:'🐛',bg:'rgba(248,81,73,.15)',title:'<strong>DEF-009</strong> Selenium node disconnect — assigned to Dave',time:'18 min ago'},
+    {icon:'📊',bg:'rgba(188,140,255,.15)',title:'Daily SQL reconciliation report generated — 0 mismatches',time:'1 hr ago'},
+  ];
+  document.getElementById('activity-list').innerHTML = activities.map(a => `
+    <div class="activity-item">
+      <div class="act-icon" style="background:${a.bg}">${a.icon}</div>
+      <div class="act-body">
+        <div class="act-title">${a.title}</div>
+        <div class="act-time">${a.time}</div>
+      </div>
+    </div>`).join('');
+
+  const envs = [
+    {name:'Production',url:'app.example.com',  status:'Healthy', col:'var(--success)'},
+    {name:'Staging',   url:'staging.example.com',status:'Healthy',col:'var(--success)'},
+    {name:'QA',        url:'qa.example.com',    status:'Degraded',col:'var(--warning)'},
+    {name:'Dev',       url:'dev.example.com',   status:'Healthy', col:'var(--success)'},
+  ];
+  document.getElementById('env-health').innerHTML = envs.map(e => `
+    <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(48,54,61,.5);">
+      <div style="width:8px;height:8px;border-radius:50%;background:${e.col};flex-shrink:0;"></div>
+      <div style="flex:1;"><div style="font-size:13px;font-weight:600;">${e.name}</div>
+        <div style="font-size:11px;color:var(--muted);">${e.url}</div></div>
+      <div style="font-size:12px;color:${e.col};">${e.status}</div>
+    </div>`).join('');
+}
+
+// ══════════════════════════════════════════════════════════════
+//  TEST CASES
+// ══════════════════════════════════════════════════════════════
+function statusBadge(s) {
+  const map = {Pass:'pass',Fail:'fail',Pending:'pending',Blocked:'block'};
+  return `<span class="badge badge-${map[s]||'pending'}">${s}</span>`;
+}
+function priorityBadge(p) {
+  const map = {Critical:'critical',High:'high',Medium:'medium',Low:'low'};
+  return `<span class="badge badge-${map[p]||'low'}">${p}</span>`;
+}
+
+function renderTestCases() {
+  const suiteF  = document.getElementById('tc-filter-suite').value;
+  const statusF = document.getElementById('tc-filter-status').value;
+  const rows = testCases.filter(t =>
+    (!suiteF  || t.suite  === suiteF) &&
+    (!statusF || t.status === statusF)
+  );
+  const tbody = document.getElementById('tc-tbody');
+  tbody.innerHTML = '';
+  rows.forEach(t => {
+    const tr = document.createElement('tr');
+
+    const idTd = document.createElement('td');
+    idTd.className = 'mono text-muted';
+    idTd.textContent = t.id;
+    tr.appendChild(idTd);
+
+    const titleTd = document.createElement('td');
+    titleTd.textContent = t.title;
+    tr.appendChild(titleTd);
+
+    const suiteTd = document.createElement('td');
+    const suiteSpan = document.createElement('span');
+    suiteSpan.className = 'tag';
+    suiteSpan.textContent = t.suite;
+    suiteTd.appendChild(suiteSpan);
+    tr.appendChild(suiteTd);
+
+    const priorityTd = document.createElement('td');
+    priorityTd.innerHTML = priorityBadge(t.priority);
+    tr.appendChild(priorityTd);
+
+    const statusTd = document.createElement('td');
+    statusTd.innerHTML = statusBadge(t.status);
+    tr.appendChild(statusTd);
+
+    const assigneeTd = document.createElement('td');
+    assigneeTd.textContent = t.assignee;
+    tr.appendChild(assigneeTd);
+
+    const lastRunTd = document.createElement('td');
+    lastRunTd.className = 'text-muted';
+    lastRunTd.style.fontSize = '11px';
+    lastRunTd.textContent = t.lastRun;
+    tr.appendChild(lastRunTd);
+
+    const actionsTd = document.createElement('td');
+    const actionsDiv = document.createElement('div');
+    actionsDiv.style.display = 'flex';
+    actionsDiv.style.gap = '6px';
+
+    const runBtn = document.createElement('button');
+    runBtn.className = 'btn btn-ghost btn-sm';
+    runBtn.textContent = '▶ Run';
+    runBtn.addEventListener('click', function() { runTestCase(t.id); });
+    actionsDiv.appendChild(runBtn);
+
+    const cycleBtn = document.createElement('button');
+    cycleBtn.className = 'btn btn-ghost btn-sm';
+    cycleBtn.textContent = '⟳ Status';
+    cycleBtn.addEventListener('click', function() { cycleStatus(t.id); });
+    actionsDiv.appendChild(cycleBtn);
+
+    actionsTd.appendChild(actionsDiv);
+    tr.appendChild(actionsTd);
+
+    tbody.appendChild(tr);
+  });
+}
+
+function cycleStatus(id) {
+  const tc = testCases.find(t => t.id === id);
+  if (!tc) return;
+  const cycle = ['Pass','Fail','Pending','Blocked'];
+  tc.status = cycle[(cycle.indexOf(tc.status) + 1) % cycle.length];
+  tc.lastRun = 'just now';
+  renderTestCases();
+  renderDashboard();
+  toast(`${id} status → ${tc.status}`);
+}
+
+function runTestCase(id) {
+  const tc = testCases.find(t => t.id === id);
+  if (!tc) return;
+  tc.lastRun = 'just now';
+  const outcomes = ['Pass','Pass','Pass','Fail'];
+  tc.status = outcomes[Math.floor(Math.random() * outcomes.length)];
+  renderTestCases();
+  renderDashboard();
+  toast(`${id}: ${tc.status} (${Math.round(Math.random()*2000+500)}ms)`);
+}
+
+document.getElementById('tc-filter-suite').addEventListener('change', renderTestCases);
+document.getElementById('tc-filter-status').addEventListener('change', renderTestCases);
+
+function openNewTCModal() { document.getElementById('modal-tc').classList.add('open'); }
+function addTestCase() {
+  const title = document.getElementById('tc-title').value.trim();
+  if (!title) { toast('Title is required','error'); return; }
+  const id = 'TC-' + String(nextTcId++).padStart(3,'0');
+  testCases.unshift({
+    id, title,
+    suite: document.getElementById('tc-suite').value,
+    priority: document.getElementById('tc-priority').value,
+    status: 'Pending',
+    assignee: document.getElementById('tc-assignee').value,
+    lastRun: 'never'
+  });
+  document.getElementById('tc-title').value = '';
+  document.getElementById('tc-steps').value = '';
+  closeModal('modal-tc');
+  renderTestCases();
+  renderDashboard();
+  toast(`${id} created`);
+}
+
+// ══════════════════════════════════════════════════════════════
+//  DEFECT TRACKER
+// ══════════════════════════════════════════════════════════════
+function renderKanban() {
+  const cols = [
+    {key:'Open',       label:'Open',        color:'var(--danger)',  icon:'🔴'},
+    {key:'In Progress',label:'In Progress', color:'var(--warning)', icon:'🟡'},
+    {key:'Resolved',   label:'Resolved',    color:'var(--success)', icon:'🟢'},
+    {key:'Closed',     label:'Closed',      color:'var(--muted)',   icon:'⚫'},
+  ];
+  const board = document.getElementById('kanban-board');
+  board.innerHTML = '';
+
+  cols.forEach(col => {
+    const colEl = document.createElement('div');
+    colEl.className = 'kanban-col';
+
+    const titleEl = document.createElement('div');
+    titleEl.className = 'kanban-col-title';
+    titleEl.style.color = col.color;
+    titleEl.textContent = col.icon + ' ' + col.label + ' ';
+
+    const countSpan = document.createElement('span');
+    countSpan.className = 'col-count';
+    const items = defects.filter(d => d.status === col.key);
+    countSpan.textContent = String(items.length);
+    titleEl.appendChild(countSpan);
+    colEl.appendChild(titleEl);
+
+    if (items.length === 0) {
+      const emptyEl = document.createElement('div');
+      emptyEl.className = 'text-muted';
+      emptyEl.style.fontSize = '12px';
+      emptyEl.style.padding = '10px 0';
+      emptyEl.textContent = 'No items';
+      colEl.appendChild(emptyEl);
+    } else {
+      items.forEach(d => {
+        const cardEl = document.createElement('div');
+        cardEl.className = 'defect-card';
+        cardEl.addEventListener('click', function() { advanceDefect(d.id); });
+
+        const titleDiv = document.createElement('div');
+        titleDiv.className = 'dc-title';
+        titleDiv.textContent = d.title;
+        cardEl.appendChild(titleDiv);
+
+        const metaDiv = document.createElement('div');
+        metaDiv.className = 'dc-meta';
+
+        const severitySpan = document.createElement('span');
+        severitySpan.className = 'badge badge-' + d.severity.toLowerCase();
+        severitySpan.textContent = d.severity;
+        metaDiv.appendChild(severitySpan);
+
+        const componentSpan = document.createElement('span');
+        componentSpan.className = 'tag';
+        componentSpan.textContent = d.component;
+        metaDiv.appendChild(componentSpan);
+
+        const idSpan = document.createElement('span');
+        idSpan.className = 'text-muted';
+        idSpan.style.fontSize = '10px';
+        idSpan.style.marginLeft = 'auto';
+        idSpan.textContent = d.id;
+        metaDiv.appendChild(idSpan);
+
+        cardEl.appendChild(metaDiv);
+        colEl.appendChild(cardEl);
+      });
+    }
+
+    board.appendChild(colEl);
+  });
+}
+
+function advanceDefect(id) {
+  const d = defects.find(x => x.id === id);
+  if (!d) return;
+  const cycle = ['Open','In Progress','Resolved','Closed'];
+  const next = cycle[(cycle.indexOf(d.status) + 1) % cycle.length];
+  d.status = next;
+  renderKanban();
+  toast(`${id} → ${next}`);
+}
+
+function openNewDefectModal() { document.getElementById('modal-defect').classList.add('open'); }
+function addDefect() {
+  const title = document.getElementById('def-title').value.trim();
+  if (!title) { toast('Title is required','error'); return; }
+  const id = 'DEF-' + String(nextDefId++).padStart(3,'0');
+  defects.unshift({
+    id, title,
+    severity:  document.getElementById('def-severity').value,
+    status:    'Open',
+    component: document.getElementById('def-component').value,
+    reporter:  document.getElementById('def-reporter').value,
+  });
+  document.getElementById('def-title').value = '';
+  document.getElementById('def-steps').value = '';
+  closeModal('modal-defect');
+  renderKanban();
+  renderDashboard();
+  toast(`${id} logged`);
+}
+
+// ══════════════════════════════════════════════════════════════
+//  SQL VALIDATOR
+// ══════════════════════════════════════════════════════════════
+function setSQL(q) {
+  document.getElementById('sql-input').value = q;
+  document.getElementById('sql-result').innerHTML = '';
+  document.getElementById('sql-timing').textContent = '';
+}
+
+function runSQL() {
+  const raw = document.getElementById('sql-input').value.trim();
+  if (!raw) return;
+  const t0 = performance.now();
+  try {
+    const result = execSQL(raw);
+    const t1 = performance.now();
+    document.getElementById('sql-timing').textContent = `⏱ ${(t1-t0).toFixed(1)} ms`;
+    if (typeof result === 'string') {
+      document.getElementById('sql-result').innerHTML =
+        `<div class="sql-msg ok">${result}</div>`;
+    } else if (result.length === 0) {
+      document.getElementById('sql-result').innerHTML =
+        `<div class="sql-msg ok">✓ Query returned 0 rows.</div>`;
+    } else {
+      const cols = Object.keys(result[0]);
+      document.getElementById('sql-result').innerHTML = `
+        <div class="sql-result-wrap">
+          <table>
+            <thead><tr>${cols.map(c=>`<th>${esc(c)}</th>`).join('')}</tr></thead>
+            <tbody>${result.map(r=>`<tr>${cols.map(c=>`<td>${esc(r[c]??'')}</td>`).join('')}</tr>`).join('')}</tbody>
+          </table>
+        </div>
+        <div class="sql-msg ok">✓ ${result.length} row(s) returned.</div>`;
+    }
+  } catch(e) {
+    document.getElementById('sql-timing').textContent = '';
+    document.getElementById('sql-result').innerHTML =
+      `<div class="sql-msg err">✗ ${esc(e.message)}</div>`;
+  }
+}
+
+function execSQL(sql) {
+  const q = sql.replace(/\s+/g,' ').trim();
+  const upper = q.toUpperCase();
+
+  // Parse FROM clause to get table
+  const fromMatch = upper.match(/FROM\s+(\w+)/);
+  if (!fromMatch) throw new Error("Missing FROM clause");
+  const tbl = fromMatch[1].toLowerCase();
+  if (!SQLDB[tbl]) throw new Error(`Unknown table: ${tbl}`);
+
+  let rows = SQLDB[tbl].map(r => ({...r}));
+
+  // JOIN support
+  const joinMatch = upper.match(/JOIN\s+(\w+)\s+ON\s+(\w+)\.(\w+)\s*=\s*(\w+)\.(\w+)/);
+  if (joinMatch) {
+    const joinTbl = joinMatch[1].toLowerCase();
+    if (!SQLDB[joinTbl]) throw new Error(`Unknown join table: ${joinTbl}`);
+    const [,, t1,c1, t2,c2] = joinMatch.map(s=>s&&s.toLowerCase());
+    const joinRows = SQLDB[joinTbl];
+    const [leftCol, rightCol] = t1 === tbl ? [c1,c2] : [c2,c1];
+    rows = rows.map(r => {
+      const match = joinRows.find(j => String(j[rightCol]) === String(r[leftCol]));
+      return match ? {...r, ...Object.fromEntries(Object.entries(match).map(([k,v]) => [k===rightCol?'_j_'+k:k,v]))} : null;
+    }).filter(Boolean);
+  }
+
+  // WHERE clause
+  const whereMatch = q.match(/WHERE\s+(.+?)(?:\s+GROUP BY|\s+ORDER BY|\s+LIMIT|$)/i);
+  if (whereMatch) {
+    const cond = whereMatch[1];
+    rows = rows.filter(r => evalWhere(r, cond));
+  }
+
+  // GROUP BY + aggregate
+  const groupMatch = q.match(/GROUP BY\s+(.+?)(?:\s+ORDER BY|\s+LIMIT|$)/i);
+  if (groupMatch) {
+    const groupCols = groupMatch[1].split(',').map(s=>s.trim().replace(/^\w+\./,'').toLowerCase());
+    const groups = {};
+    rows.forEach(r => {
+      const key = groupCols.map(c => r[c]).join('|');
+      if (!groups[key]) groups[key] = { _rows: [], ...Object.fromEntries(groupCols.map(c=>[c,r[c]])) };
+      groups[key]._rows.push(r);
+    });
+    rows = Object.values(groups).map(g => {
+      const out = {};
+      groupCols.forEach(c => out[c] = g[c]);
+      // Process SELECT columns for aggregates
+      const selMatch = q.match(/SELECT\s+(.+?)\s+FROM/i);
+      if (selMatch) {
+        const selParts = selMatch[1].split(',').map(s=>s.trim());
+        selParts.forEach(part => {
+          const aggM = part.match(/(\w+)\s*\(\s*(.+?)\s*\)\s*(?:AS\s+(\w+))?/i);
+          if (aggM) {
+            const [,fn,col,alias] = aggM;
+            const key = (alias || `${fn}(${col})`).toLowerCase();
+            const vals = g._rows.map(r => parseFloat(r[col.toLowerCase()])).filter(v=>!isNaN(v));
+            if (fn.toLowerCase() === 'count') out[alias||'count(*)'] = g._rows.length;
+            else if (fn.toLowerCase() === 'sum') out[key] = vals.reduce((a,b)=>a+b,0);
+            else if (fn.toLowerCase() === 'avg') out[key] = vals.length ? (vals.reduce((a,b)=>a+b,0)/vals.length).toFixed(2) : 0;
+            else if (fn.toLowerCase() === 'round') {
+              // ROUND(AVG(...))
+              const innerM = col.match(/avg\((.+?)\)/i);
+              if (innerM) { const v2 = g._rows.map(r=>parseFloat(r[innerM[1].toLowerCase()])).filter(v=>!isNaN(v)); out[alias||'round'] = v2.length ? Math.round(v2.reduce((a,b)=>a+b,0)/v2.length) : 0; }
+            }
+          }
+          // Inline CASE / string concat for pct
+          if (/\|\|/.test(part)) {
+            const alias2 = part.match(/AS\s+(\w+)/i);
+            if (alias2) { const cntM = part.match(/COUNT\(\*\)/i); const n = g._rows.length; out[alias2[1]] = `${Math.round(100*n/500)}%`; }
+          }
+          // CASE WHEN
+          if (/CASE\s+WHEN/i.test(part)) {
+            const caseM = part.match(/SUM\s*\(\s*CASE\s+WHEN\s+(\w+)\s*=\s*'(\w+)'\s+THEN\s+1\s+ELSE\s+0\s+END\s*\)\s*(?:AS\s+(\w+))?/i);
+            if (caseM) {
+              const [,col2,val,alias3] = caseM;
+              const k = alias3 || 'sum_case';
+              out[k] = g._rows.filter(r => String(r[col2.toLowerCase()]) === val).length;
+            }
+          }
+        });
+      }
+      return out;
+    });
+  }
+
+  // ORDER BY
+  const orderMatch = q.match(/ORDER BY\s+(.+?)(?:\s+LIMIT|$)/i);
+  if (orderMatch) {
+    const orderStr = orderMatch[1];
+    const parts = orderStr.split(',').map(s=>s.trim());
+    rows = [...rows].sort((a,b) => {
+      for (const part of parts) {
+        // CASE col WHEN 'v' THEN n ... ELSE n END
+        const caseM = part.match(/CASE\s+(\w+)\s+((?:WHEN\s+'.+?'\s+THEN\s+\d+\s*)+)ELSE\s+(\d+)\s+END/i);
+        if (caseM) {
+          const caseCol = caseM[1].toLowerCase();
+          const elseVal = parseInt(caseM[3]);
+          const whenParts = [...caseM[2].matchAll(/WHEN\s+'([^']+)'\s+THEN\s+(\d+)/gi)];
+          const rank = (r) => {
+            const v = String(r[caseCol]);
+            const w = whenParts.find(wp => wp[1] === v);
+            return w ? parseInt(w[2]) : elseVal;
+          };
+          const cmp = rank(a) - rank(b);
+          if (cmp !== 0) return cmp;
+          continue;
+        }
+        // Simple col [ASC|DESC]
+        const m = part.match(/^(?:\w+\.)?(\w+)\s*(ASC|DESC)?$/i);
+        if (m) {
+          const [,col,dir] = m;
+          const av = a[col.toLowerCase()], bv = b[col.toLowerCase()];
+          const cmp = String(av).localeCompare(String(bv), undefined, {numeric:true});
+          if (cmp !== 0) return dir && dir.toUpperCase()==='DESC' ? -cmp : cmp;
+        }
+      }
+      return 0;
+    });
+  }
+
+  // LIMIT
+  const limitMatch = q.match(/LIMIT\s+(\d+)/i);
+  if (limitMatch) rows = rows.slice(0, parseInt(limitMatch[1]));
+
+  // SELECT columns (unless *, or GROUP BY already handled projection)
+  const selMatch2 = q.match(/SELECT\s+(.+?)\s+FROM/i);
+  if (selMatch2 && selMatch2[1].trim() !== '*') {
+    if (!groupMatch) {
+      const cols = selMatch2[1].split(',').map(s => s.trim().toLowerCase());
+      rows = rows.map(r => {
+        const out = {};
+        cols.forEach(c => {
+          const noAlias = c.replace(/\s+as\s+\S+/i,'').trim();
+          const baseCol = noAlias.replace(/^\w+\./,''); // strip table qualifier
+          const aliasM = c.match(/\s+as\s+(\S+)/i);
+          const key = aliasM ? aliasM[1] : baseCol;
+          out[key] = r[baseCol] !== undefined ? r[baseCol] : r[noAlias] !== undefined ? r[noAlias] : '';
+        });
+        return out;
+      });
+    }
+  }
+
+  return rows.slice(0, 200); // hard cap
+}
+
+function evalWhere(row, cond) {
+  // Strip optional table-qualifier from column names (e.g. d.status → status)
+  const stripQ = c => c.replace(/^\w+\./,'');
+  // Handle IN (...) with strings
+  const inMatch = cond.match(/(?:\w+\.)?(\w+)\s+IN\s*\((.+?)\)/i);
+  if (inMatch) {
+    const col = stripQ(inMatch[1].toLowerCase());
+    const vals = inMatch[2].split(',').map(s => s.trim().replace(/^'|'$/g,''));
+    return vals.includes(String(row[col]));
+  }
+  // Handle !=
+  const neq = cond.match(/(?:\w+\.)?(\w+)\s*!=\s*'([^']+)'/i);
+  if (neq) return String(row[stripQ(neq[1].toLowerCase())]) !== neq[2];
+  // Standard = with string
+  const eqStr = cond.match(/(?:\w+\.)?(\w+)\s*=\s*'([^']+)'/i);
+  if (eqStr) return String(row[stripQ(eqStr[1].toLowerCase())]) === eqStr[2];
+  // Standard = with number
+  const eqNum = cond.match(/(?:\w+\.)?(\w+)\s*=\s*(\d+)/i);
+  if (eqNum) return String(row[stripQ(eqNum[1].toLowerCase())]) === eqNum[2];
+  // AND / OR (simple)
+  if (/\s+AND\s+/i.test(cond)) return cond.split(/\s+AND\s+/i).every(c => evalWhere(row, c.trim()));
+  if (/\s+OR\s+/i.test(cond)) return cond.split(/\s+OR\s+/i).some(c => evalWhere(row, c.trim()));
+  return true;
+}
+
+// ══════════════════════════════════════════════════════════════
+//  AUTOMATION
+// ══════════════════════════════════════════════════════════════
+const AUTO_SUITES = [
+  {
+    name: 'Login & Auth Suite',
+    tests: ['test_valid_login','test_invalid_login_401','test_jwt_expiry','test_logout_clears_session','test_csrf_protection'],
+    pass: 4, fail: 1,
+    script: `# conftest.py / test_auth.py  |  Selenium + pytest
+import pytest, time
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+BASE_URL = "https://staging.example.com"
+
+@pytest.fixture(scope="module")
+def driver():
+    options = webdriver.ChromeOptions()
+    options.add_argument("--headless")
+    options.add_argument("--no-sandbox")
+    d = webdriver.Chrome(options=options)
+    yield d
+    d.quit()
+
+def test_valid_login(driver):
+    driver.get(f"{BASE_URL}/login")
+    WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.ID, "email"))
+    )
+    driver.find_element(By.ID, "email").send_keys("qa@example.com")
+    driver.find_element(By.ID, "password").send_keys("SecurePass!1")
+    driver.find_element(By.CSS_SELECTOR, "button[type='submit']").click()
+    WebDriverWait(driver, 10).until(EC.url_contains("/dashboard"))
+    assert "/dashboard" in driver.current_url
+
+def test_invalid_login_401(driver):
+    driver.get(f"{BASE_URL}/login")
+    driver.find_element(By.ID, "email").send_keys("bad@example.com")
+    driver.find_element(By.ID, "password").send_keys("wrongpass")
+    driver.find_element(By.CSS_SELECTOR, "button[type='submit']").click()
+    err = WebDriverWait(driver, 5).until(
+        EC.presence_of_element_located((By.CLASS_NAME, "error-banner"))
+    )
+    assert "Invalid credentials" in err.text
+
+def test_jwt_expiry(driver):
+    # Simulate token expiry — 401 after 3600s
+    import requests
+    r = requests.get(f"{BASE_URL}/api/me",
+        headers={"Authorization": "Bearer expired_token_here"})
+    assert r.status_code == 401`
+  },
+  {
+    name: 'API Endpoint Suite',
+    tests: ['test_get_users_200','test_post_order_creates_db','test_delete_user_cascade','test_rate_limit_429','test_auth_header_required'],
+    pass: 4, fail: 1,
+    script: `# test_api.py  |  requests + pytest + SQL validation
+import pytest, requests, psycopg2
+
+BASE = "https://staging.example.com/api"
+TOKEN = "Bearer test_token_abc123"
+HEADERS = {"Authorization": TOKEN, "Content-Type": "application/json"}
+
+def get_db():
+    return psycopg2.connect(
+        host="db.staging.example.com", dbname="qa_db",
+        user="qa_user", password="qa_pass"
+    )
+
+def test_get_users_200():
+    r = requests.get(f"{BASE}/users", headers=HEADERS)
+    assert r.status_code == 200
+    data = r.json()
+    assert isinstance(data, list) and len(data) > 0
+
+def test_post_order_creates_db():
+    payload = {"product_id": 42, "quantity": 2, "customer_id": 7}
+    r = requests.post(f"{BASE}/orders", json=payload, headers=HEADERS)
+    assert r.status_code == 201
+    order_id = r.json()["id"]
+    # Validate in DB
+    conn = get_db()
+    cur = conn.cursor()
+    cur.execute("SELECT id FROM orders WHERE id = %s", (order_id,))
+    assert cur.fetchone() is not None, "Order not found in DB"
+    conn.close()
+
+def test_delete_user_cascade():
+    # TC-007: known failing — sessions not cascade-deleted
+    r = requests.delete(f"{BASE}/users/99", headers=HEADERS)
+    assert r.status_code == 204
+    conn = get_db()
+    cur = conn.cursor()
+    cur.execute("SELECT id FROM sessions WHERE user_id = 99")
+    rows = cur.fetchall()
+    assert len(rows) == 0, f"FAIL: {len(rows)} orphan sessions remain"
+
+def test_rate_limit_429():
+    for _ in range(102):
+        r = requests.get(f"{BASE}/users", headers=HEADERS)
+    assert r.status_code == 429`
+  },
+  {
+    name: 'Database Validation Suite',
+    tests: ['test_fk_constraints','test_sp_reconcile','test_snowflake_row_count','test_index_fragmentation','test_null_guard'],
+    pass: 4, fail: 1,
+    script: `# test_database.py  |  SQL + pyodbc + Snowflake connector
+import pytest, pyodbc, snowflake.connector
+
+# ── SSMS (SQL Server) ──────────────────────────────────────────
+@pytest.fixture(scope="module")
+def ssms_conn():
+    return pyodbc.connect(
+        "DRIVER={ODBC Driver 18 for SQL Server};"
+        "SERVER=ssms.staging.example.com;"
+        "DATABASE=AppDB;UID=qa_user;PWD=qa_pass"
+    )
+
+def test_fk_constraints(ssms_conn):
+    cur = ssms_conn.cursor()
+    cur.execute("""
+        SELECT COUNT(*) FROM orders o
+        LEFT JOIN customers c ON o.customer_id = c.id
+        WHERE c.id IS NULL
+    """)
+    orphans = cur.fetchone()[0]
+    assert orphans == 0, f"{orphans} orders with missing customer FK"
+
+def test_sp_reconcile(ssms_conn):
+    cur = ssms_conn.cursor()
+    cur.execute("EXEC sp_reconcile_daily @date = CAST(GETDATE() AS DATE)")
+    cur.nextset()  # Advance past result set
+    cur.execute("SELECT mismatch_count FROM reconcile_log WHERE run_date = CAST(GETDATE() AS DATE)")
+    row = cur.fetchone()
+    assert row is not None and row[0] == 0, "Reconciliation mismatches found"
+
+# ── Snowflake ──────────────────────────────────────────────────
+@pytest.fixture(scope="module")
+def sf_conn():
+    return snowflake.connector.connect(
+        user="qa_user", password="qa_pass",
+        account="myorg.us-east-1",
+        warehouse="COMPUTE_WH", database="PROD_DB", schema="PUBLIC"
+    )
+
+def test_snowflake_row_count(sf_conn):
+    cur = sf_conn.cursor()
+    cur.execute("SELECT COUNT(*) FROM PROD_DB.PUBLIC.TRANSACTIONS WHERE DATE(LOAD_TIMESTAMP) = CURRENT_DATE()")
+    sf_count = cur.fetchone()[0]
+    # Compare against source SSMS
+    assert sf_count >= 1000, f"Only {sf_count} rows loaded — expected ≥ 1000"`
+  },
+];
+
+let selectedSuite = 0;
+let autoRunning = false;
+
+function renderAutomation() {
+  const list = document.getElementById('auto-suite-list');
+  list.innerHTML = AUTO_SUITES.map((s,i) => {
+    const total = s.tests.length;
+    const pct = Math.round(s.pass/total*100);
+    return `<div onclick="selectSuite(${i})" style="padding:10px;border-radius:6px;cursor:pointer;border:1px solid ${i===selectedSuite?'var(--accent)':'var(--border)'};margin-bottom:8px;background:${i===selectedSuite?'rgba(88,166,255,.07)':'transparent'};">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+        <div style="font-size:13px;font-weight:600;">${s.name}</div>
+        <div style="font-size:11px;color:${pct===100?'var(--success)':'var(--warning)'};">${pct}% pass</div>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${pct}%;background:${pct===100?'var(--success)':'var(--warning)'}"></div></div>
+      <div style="font-size:11px;color:var(--muted);margin-top:5px;">${s.pass} pass · ${s.fail} fail · ${total} tests</div>
+    </div>`;
+  }).join('');
+
+  // Script preview
+  const suite = AUTO_SUITES[selectedSuite];
+  document.getElementById('script-preview').innerHTML =
+    suite.script.split('\n').map(line => {
+      if (line.startsWith('#')) return `<span style="color:#6e7681;">${esc(line)}</span>`;
+      if (/^def |^class |^@pytest/.test(line)) return `<span style="color:#d2a8ff;">${esc(line)}</span>`;
+      if (/import |from /.test(line)) return `<span style="color:#ff7b72;">${esc(line)}</span>`;
+      if (/".*?"/.test(line) || /'.*?'/.test(line)) return `<span style="color:#a5d6ff;">${esc(line)}</span>`;
+      return esc(line);
+    }).join('\n');
+
+  const kpiData = [
+    {label:'Automation Coverage', pct:79, col:'var(--accent)'},
+    {label:'Avg Execution Time',  pct:68, col:'var(--success)', suffix:'42s'},
+    {label:'Flaky Test Rate',     pct:4,  col:'var(--danger)', suffix:'4%'},
+    {label:'CI Pass Rate',        pct:93, col:'var(--success)', suffix:'93%'},
+  ];
+  document.getElementById('auto-kpi-bars').innerHTML = kpiData.map(k => `
+    <div class="bar-row">
+      <div class="bar-label">${k.label}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${k.pct}%;background:${k.col};">${k.pct>15?k.suffix||k.pct+'%':''}</div></div>
+      <div class="bar-val">${k.suffix||k.pct+'%'}</div>
+    </div>`).join('');
+}
+
+function selectSuite(i) {
+  selectedSuite = i;
+  renderAutomation();
+}
+
+function runAutomation() {
+  if (autoRunning) return;
+  autoRunning = true;
+  const log = document.getElementById('auto-log');
+  const statusEl = document.getElementById('auto-status');
+  const suite = AUTO_SUITES[selectedSuite];
+  log.innerHTML = '';
+  statusEl.className = 'badge badge-pending';
+  statusEl.textContent = 'RUNNING';
+
+  const lines = [
+    ['info', `pytest ${suite.name.toLowerCase().replace(/ /g,'_')}.py -v --tb=short`],
+    ['info', `Selenium Grid: chrome 120.0 @ grid.staging.example.com:4444`],
+    ['info', `Collected ${suite.tests.length} tests`],
+  ];
+  suite.tests.forEach((t, i) => {
+    const result = i < suite.pass ? 'ok' : 'fail';
+    const dur = (800 + Math.random()*1800).toFixed(0);
+    lines.push([result, `${result==='ok'?'PASSED':'FAILED'} ${t} (${dur}ms)`]);
+  });
+  lines.push(['info', '─'.repeat(50)]);
+  const passedLine = `${suite.pass} passed, ${suite.fail} failed in ${(suite.tests.length * 1.3).toFixed(1)}s`;
+  lines.push([suite.fail > 0 ? 'fail' : 'ok', passedLine]);
+
+  let i = 0;
+  const interval = setInterval(() => {
+    if (i >= lines.length) {
+      clearInterval(interval);
+      autoRunning = false;
+      statusEl.className = `badge ${suite.fail>0?'badge-fail':'badge-pass'}`;
+      statusEl.textContent = suite.fail > 0 ? `${suite.fail} FAILED` : 'ALL PASSED';
+      return;
+    }
+    const [type, msg] = lines[i++];
+    const time = new Date().toTimeString().slice(0,8);
+    const cls = {ok:'t-ok',fail:'t-fail',info:'t-info',warn:'t-warn'}[type]||'t-info';
+    log.innerHTML += `<div><span class="t-time">[${time}] </span><span class="${cls}">${esc(msg)}</span></div>`;
+    log.scrollTop = log.scrollHeight;
+  }, 220);
+}
+
+function clearLog() {
+  document.getElementById('auto-log').innerHTML = '';
+  document.getElementById('auto-status').className = 'badge';
+  document.getElementById('auto-status').textContent = '';
+}
+
+// ══════════════════════════════════════════════════════════════
+//  CI/CD PIPELINE
+// ══════════════════════════════════════════════════════════════
+const PIPE_STAGES_DEF = [
+  {name:'Checkout',   icon:'📦', dur:'3s',  status:'pass'},
+  {name:'Lint',       icon:'🔍', dur:'12s', status:'pass'},
+  {name:'Unit Tests', icon:'🧪', dur:'48s', status:'pass'},
+  {name:'Build',      icon:'🔨', dur:'1m 22s',status:'pass'},
+  {name:'Int. Tests', icon:'🤖', dur:'2m 15s',status:'pass'},
+  {name:'DB Migrate', icon:'🗄️', dur:'18s', status:'pass'},
+  {name:'Deploy',     icon:'🚀', dur:'35s', status:'pass'},
+  {name:'Smoke Tests',icon:'💨', dur:'22s', status:'pass'},
+];
+
+const BUILD_HISTORY = [
+  {num:1047,ref:'a3f91c',msg:'Fix cascade delete in user service',who:'Alice',time:'5m ago',status:'pass'},
+  {num:1046,ref:'d82e5a',msg:'Add rate limiter middleware',who:'Bob',time:'1h ago',status:'pass'},
+  {num:1045,ref:'c11b42',msg:'Snowflake cleanup job fix',who:'Dave',time:'3h ago',status:'pass'},
+  {num:1044,ref:'7f3d09',msg:'Mobile viewport overflow fix',who:'Carol',time:'5h ago',status:'fail'},
+  {num:1043,ref:'b90c22',msg:'sp_reconcile NULL guard',who:'Alice',time:'8h ago',status:'fail'},
+  {num:1042,ref:'e44a71',msg:'Add Selenium grid node config',who:'Dave',time:'1d ago',status:'pass'},
+  {num:1041,ref:'f12380',msg:'JWT invalidation on password change',who:'Carol',time:'1d ago',status:'pass'},
+  {num:1040,ref:'a98d33',msg:'Update Snowflake connector to 3.6',who:'Bob',time:'2d ago',status:'pass'},
+];
+
+const STAGE_BREAKDOWN = [
+  {name:'Unit Tests',    total:217, pass:217, fail:0},
+  {name:'Integration',   total:84,  pass:81,  fail:3},
+  {name:'API Tests',     total:42,  pass:42,  fail:0},
+  {name:'Selenium UI',   total:38,  pass:34,  fail:4},
+  {name:'DB Validation', total:29,  pass:28,  fail:1},
+  {name:'Smoke',         total:12,  pass:12,  fail:0},
+];
+
+let pipeRunning = false;
+
+function renderPipeline(stages) {
+  document.getElementById('pipeline-stages').innerHTML = stages.map(s => {
+    const cls = s.status === 'pass' ? 'pipe-pass' : s.status === 'fail' ? 'pipe-fail' : s.status === 'run' ? 'pipe-run' : 'pipe-skip';
+    const icon = s.status === 'pass' ? '✅' : s.status === 'fail' ? '❌' : s.status === 'run' ? '⏳' : '⏸';
+    return `<div class="pipe-stage ${cls}">
+      <div class="ps-icon">${s.icon}</div>
+      <div class="ps-name">${s.name}</div>
+      <div class="ps-dur">${icon} ${s.status==='run'?'running...':s.dur}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderBuildHistory() {
+  document.getElementById('build-history').innerHTML = BUILD_HISTORY.map(b => `
+    <div style="display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid rgba(48,54,61,.5);">
+      <div style="width:8px;height:8px;border-radius:50%;background:${b.status==='pass'?'var(--success)':'var(--danger)'};flex-shrink:0;"></div>
+      <div style="font-size:12px;color:var(--muted);width:36px;">#${b.num}</div>
+      <div style="flex:1;">
+        <div style="font-size:12px;">${b.msg}</div>
+        <div style="font-size:11px;color:var(--muted);">${b.who} · <span class="mono">${b.ref}</span> · ${b.time}</div>
+      </div>
+      <span class="badge ${b.status==='pass'?'badge-pass':'badge-fail'}">${b.status==='pass'?'✓ Pass':'✗ Fail'}</span>
+    </div>`).join('');
+}
+
+function renderStageBreakdown() {
+  document.getElementById('stage-breakdown').innerHTML = `
+    <table><thead><tr><th>Stage</th><th>Total</th><th>Pass</th><th>Fail</th><th>Pass %</th></tr></thead>
+    <tbody>${STAGE_BREAKDOWN.map(s => {
+      const pct = Math.round(s.pass/s.total*100);
+      return `<tr>
+        <td>${s.name}</td>
+        <td>${s.total}</td>
+        <td class="text-success">${s.pass}</td>
+        <td class="${s.fail>0?'text-danger':'text-muted'}">${s.fail}</td>
+        <td><span style="color:${pct===100?'var(--success)':pct>=90?'var(--warning)':'var(--danger)'};">${pct}%</span></td>
+      </tr>`;
+    }).join('')}</tbody></table>`;
+}
+
+function triggerBuild() {
+  if (pipeRunning) return;
+  pipeRunning = true;
+  const num = parseInt(document.getElementById('build-num').textContent) + 1;
+  document.getElementById('build-num').textContent = num;
+  document.getElementById('triggered-by').textContent = 'You (manual trigger)';
+  document.getElementById('pipeline-status').className = 'badge badge-pending';
+  document.getElementById('pipeline-status').textContent = '⏳ RUNNING';
+
+  const log = document.getElementById('pipeline-log');
+  log.innerHTML = '';
+
+  const stages = PIPE_STAGES_DEF.map(s => ({...s, status:'skip'}));
+  renderPipeline(stages);
+
+  const logLines = [
+    [0,'info',`Build #${num} triggered — branch: main, SHA: ${Math.random().toString(16).slice(2,9)}`],
+    [0,'info','Agent: ubuntu-latest (GitHub Actions / Azure DevOps)'],
+    [1,'info','✓ Checkout complete (3s)'],
+    [2,'info','Running ESLint + Flake8...'],
+    [2,'ok','✓ Lint passed — 0 errors, 0 warnings (12s)'],
+    [3,'info','pytest unit tests — 217 tests...'],
+    [3,'ok','✓ 217 passed, 0 failed (48s)'],
+    [4,'info','Building Docker image qa-platform:latest...'],
+    [4,'ok','✓ Docker build complete — pushed to registry (1m 22s)'],
+    [5,'info','Running integration tests on staging...'],
+    [5,'warn','⚠ 3 integration tests flaky — retrying...'],
+    [5,'ok','✓ 81/84 passed, 3 skipped (2m 15s)'],
+    [6,'info','Running DB migrations on staging...'],
+    [6,'ok','✓ 2 migrations applied (18s)'],
+    [7,'info','Deploying to AKS staging cluster...'],
+    [7,'ok','✓ Rolling update complete — 3/3 pods healthy (35s)'],
+    [8,'info','Running smoke tests against staging...'],
+    [8,'ok','✓ All 12 smoke tests passed (22s)'],
+    [8,'ok','✅ Build PASSED — deployed to staging'],
+  ];
+
+  let li = 0;
+  const advance = setInterval(() => {
+    if (li >= logLines.length) {
+      clearInterval(advance);
+      pipeRunning = false;
+      document.getElementById('pipeline-status').className = 'badge badge-pass';
+      document.getElementById('pipeline-status').textContent = '✓ PASSED';
+      return;
+    }
+    const [stageIdx, type, msg] = logLines[li++];
+    // advance pipeline stage indicator
+    if (stageIdx > 0 && stageIdx <= stages.length) {
+      if (stages[stageIdx-1].status === 'skip') stages[stageIdx-1].status = 'pass';
+      if (stageIdx < stages.length && stages[stageIdx].status === 'skip') stages[stageIdx].status = 'run';
+      renderPipeline(stages);
+    }
+    const time = new Date().toTimeString().slice(0,8);
+    const cls = {ok:'t-ok',fail:'t-fail',info:'t-info',warn:'t-warn'}[type]||'t-info';
+    log.innerHTML += `<div><span class="t-time">[${time}] </span><span class="${cls}">${esc(msg)}</span></div>`;
+    log.scrollTop = log.scrollHeight;
+  }, 350);
+}
+
+// ══════════════════════════════════════════════════════════════
+//  UTILITIES
+// ══════════════════════════════════════════════════════════════
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function toast(msg, type) {
+  const el = document.getElementById('toast');
+  el.textContent = (type === 'error' ? '✗ ' : '✓ ') + msg;
+  el.style.borderColor = type === 'error' ? 'var(--danger)' : 'var(--success)';
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2500);
+}
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.modal-bg').forEach(bg =>
+  bg.addEventListener('click', e => { if (e.target === bg) bg.classList.remove('open'); })
+);
+
+// ══════════════════════════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════════════════════════
+renderDashboard();
+renderTestCases();
+renderKanban();
+renderAutomation();
+renderPipeline(PIPE_STAGES_DEF);
+renderBuildHistory();
+renderStageBreakdown();
+
+// Seed pipeline log
+(function seedLog() {
+  const log = document.getElementById('pipeline-log');
+  const lines = [
+    ['ok','Build #1047 completed successfully — branch: main, 5m ago'],
+    ['ok','217 unit tests passed · 81/84 integration tests passed'],
+    ['warn','3 integration tests flaky (retry recovered)'],
+    ['ok','Docker image tagged: qa-platform:a3f91c — pushed to registry'],
+    ['ok','AKS rolling update: 3/3 pods healthy (staging)'],
+    ['ok','12/12 smoke tests passed — deployment verified'],
+  ];
+  lines.forEach(([t,m]) => {
+    const cls = {ok:'t-ok',fail:'t-fail',warn:'t-warn',info:'t-info'}[t];
+    log.innerHTML += `<div><span class="t-time">[build #1047] </span><span class="${cls}">${esc(m)}</span></div>`;
+  });
+})();
+</script>
+  <!-- Portfolio QoL Enhancer -->
+  <script>(function(){if(window.__portfolioQolEnhancer)return;window.__portfolioQolEnhancer=1;var b=document.createElement("button");b.type="button";b.setAttribute("aria-label","Scroll to top");b.textContent="Top";b.style.cssText="position:fixed;right:14px;bottom:14px;z-index:2147483000;border:1px solid rgba(148,163,184,.7);background:rgba(15,23,42,.88);color:#f8fafc;border-radius:999px;font:700 12px/1 Trebuchet MS,Segoe UI,sans-serif;padding:8px 11px;cursor:pointer;opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .16s ease,transform .16s ease";document.body.appendChild(b);function sync(){var visible=window.scrollY>200;b.style.opacity=visible?"1":"0";b.style.transform=visible?"translateY(0)":"translateY(8px)";b.style.pointerEvents=visible?"auto":"none";}b.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});document.addEventListener("keydown",function(e){var t=e.target&&e.target.tagName;if(t==="INPUT"||t==="TEXTAREA"||t==="SELECT")return;if(e.key==="t"||e.key==="T"){window.scrollTo({top:0,behavior:"smooth"});}});window.addEventListener("scroll",sync,{passive:true});sync();})();</script>
+</body>
+</html>

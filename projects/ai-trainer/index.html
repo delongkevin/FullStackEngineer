@@ -1,1 +1,1416 @@
-<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="/_next/static/css/6bf4ff073c45ccdc.css" crossorigin="" data-precedence="next"/><link rel="preload" as="script" fetchPriority="low" href="/_next/static/chunks/webpack-6ca410362e9e7186.js" crossorigin=""/><script src="/_next/static/chunks/fd9d1056-456948113883b121.js" async="" crossorigin=""></script><script src="/_next/static/chunks/472-7ca237d430370e09.js" async="" crossorigin=""></script><script src="/_next/static/chunks/main-app-626cee463d6fe0c2.js" async="" crossorigin=""></script><script src="/_next/static/chunks/383-23d7520fe27f6da1.js" async=""></script><script src="/_next/static/chunks/413-0066863adaac6978.js" async=""></script><script src="/_next/static/chunks/689-0b1f225f0c141f4d.js" async=""></script><script src="/_next/static/chunks/565-63fc7560b8b16033.js" async=""></script><script src="/_next/static/chunks/app/projects/%5Bid%5D/page-e8b7be92ba49648e.js" async=""></script><title>AI Code Training Platform - Kevin Delong | Kevin Delong</title><meta name="description" content="Full-stack AI Code Trainer platform — design coding challenges, showcase multi-language solutions, evaluate AI-generated code for accuracy and quality, and d..."/><link rel="author" href="https://delongkevin.github.io/FullStackEngineer"/><meta name="author" content="Kevin Douglas Delong"/><meta name="keywords" content="Kevin Delong,Full Stack Engineer,React,Next.js,Mobile Development,Automotive Software"/><meta name="creator" content="Kevin Douglas Delong"/><meta name="publisher" content="Kevin Douglas Delong"/><meta name="robots" content="index, follow"/><meta name="googlebot" content="index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"/><link rel="canonical" href="https://delongkevin.github.io/FullStackEngineer/projects/ai-trainer/"/><meta property="og:title" content="AI Code Training Platform - Kevin Delong"/><meta property="og:description" content="Full-stack AI Code Trainer platform — design coding challenges, showcase multi-language solutions, evaluate AI-generated code for accuracy and quality, and d..."/><meta property="og:url" content="https://delongkevin.github.io/FullStackEngineer/projects/ai-trainer/"/><meta property="og:image" content="https://delongkevin.github.io/FullStackEngineer/images/ai-trainer.jpg"/><meta property="og:type" content="article"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="AI Code Training Platform - Kevin Delong"/><meta name="twitter:description" content="Full-stack AI Code Trainer platform — design coding challenges, showcase multi-language solutions, evaluate AI-generated code for accuracy and quality, and d..."/><meta name="twitter:image" content="https://delongkevin.github.io/FullStackEngineer/images/ai-trainer.jpg"/><script src="/_next/static/chunks/polyfills-c67a75d1b6f99dc8.js" crossorigin="" noModule=""></script></head><body><script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Kevin Douglas Delong","jobTitle":"Full-Stack Engineer","email":"mailto:delong.kevin@gmail.com","url":"https://delongkevin.github.io/FullStackEngineer","sameAs":["https://github.com/delongkevin","https://x.com/delongkevin1446"]}</script><a href="#main-content" class="skip-link">Skip to main content</a><div class="min-h-screen app-shell-bg"><header class="fixed top-0 w-full theme-header backdrop-blur-md z-50 border-b"><nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Main navigation"><div class="flex justify-between items-center h-14 sm:h-16 gap-2"><div class="flex-shrink min-w-0"><a class="text-lg sm:text-2xl font-bold theme-accent-text truncate block" href="/">Kevin Delong</a></div><div class="hidden md:block"><div class="ml-10 flex items-baseline space-x-8"><a class="px-4 py-3 rounded-md text-sm font-medium transition-colors min-h-[44px] flex items-center theme-text-secondary hover:opacity-80" href="/">Home</a><a aria-current="page" class="px-4 py-3 rounded-md text-sm font-medium transition-colors min-h-[44px] flex items-center theme-accent-text surface-subtle" href="/projects/">Projects</a><a class="px-4 py-3 rounded-md text-sm font-medium transition-colors min-h-[44px] flex items-center theme-text-secondary hover:opacity-80" href="/resume/">Resume</a><a class="px-4 py-3 rounded-md text-sm font-medium transition-colors min-h-[44px] flex items-center theme-text-secondary hover:opacity-80" href="/about/">About</a><a class="px-4 py-3 rounded-md text-sm font-medium transition-colors min-h-[44px] flex items-center theme-text-secondary hover:opacity-80" href="/contact/">Contact</a></div></div><div class="hidden md:flex"><div class="flex items-center gap-2"><button type="button" class="inline-flex items-center gap-2 px-3 py-2 rounded-lg border theme-border text-sm font-semibold theme-text-primary hover:opacity-90 surface-card" aria-expanded="false" aria-controls="display-controls"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-monitor" aria-hidden="true"><rect width="20" height="14" x="2" y="3" rx="2"></rect><line x1="8" x2="16" y1="21" y2="21"></line><line x1="12" x2="12" y1="17" y2="21"></line></svg><span class="hidden sm:inline">Display</span></button></div></div><div class="md:hidden"><button class="theme-text-secondary hover:opacity-80 p-2 min-h-[44px] min-w-[44px]" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open navigation menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu" aria-hidden="true"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button></div></div></nav></header><script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"AI Code Training Platform","applicationCategory":"fullstack","operatingSystem":"Web, Android, iOS","description":"Full-stack AI Code Trainer platform — design coding challenges, showcase multi-language solutions, evaluate AI-generated code for accuracy and quality, and deliver structured feedback to shape next-generation AI models.","image":"https://delongkevin.github.io/FullStackEngineer/images/ai-trainer.jpg","url":"https://delongkevin.github.io/FullStackEngineer/projects/ai-trainer/","codeRepository":"https://github.com/delongkevin/FullStackEngineer","author":{"@type":"Person","name":"Kevin Douglas Delong"}}</script><main id="main-content" class="pt-24 pb-16 min-h-screen"><div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"><a class="inline-flex items-center gap-2 theme-accent-text hover:opacity-80 mb-6" aria-label="Back to all projects" href="/projects/"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left" aria-hidden="true"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg>Back to Projects</a><div class="surface-card rounded-xl shadow-lg p-8 mb-8"><div class="flex flex-col lg:flex-row gap-8"><div class="lg:w-1/3"><div class="relative h-64 rounded-lg overflow-hidden"><img alt="AI Code Training Platform screenshot" loading="lazy" decoding="async" data-nimg="fill" class="object-cover" style="position:absolute;height:100%;width:100%;left:0;top:0;right:0;bottom:0;color:transparent" src="/images/ai-trainer.jpg"/></div></div><div class="lg:w-2/3"><h1 class="text-3xl font-bold theme-text-primary mb-4">AI Code Training Platform</h1><p class="text-xl theme-text-secondary mb-6">AI Code Training Platform is an interactive demonstration built for a Backend Software Engineer – AI Trainer role at DataAnnotation. It showcases five integrated capabilities: a Challenge Designer for authoring well-structured coding problems (constraints, I/O examples, hidden test cases) with a live preview panel and an 8-problem pre-seeded library spanning Easy to Expert difficulty; a Language Showcase presenting 5 classic algorithms (Binary Search, LRU Cache, Graph BFS, Quicksort, Fibonacci) each implemented in JavaScript, TypeScript, Python, Go, and Java with inline syntax highlighting and time/space complexity badges; a Code Evaluator that ingests a pasted solution, runs it against 5 test cases, surfaces categorized issues (Critical/Warning/Info) with line references, and reports code quality metrics including cyclomatic complexity and naming conventions; a Feedback Studio for reviewing AI-generated code submissions across four scored dimensions (Correctness, Efficiency, Clarity, Robustness) with free-form feedback and submission workflow; and an Analytics Dashboard with KPI cards, Canvas-rendered charts (language distribution, difficulty donut, 12-week quality trend, category bars), activity feed, contributor leaderboard, and per-category data quality breakdown table.</p><div class="flex flex-wrap gap-4 mb-6"><span class="px-4 py-2 theme-chip rounded-full font-medium">JavaScript</span><span class="px-4 py-2 theme-chip rounded-full font-medium">TypeScript</span><span class="px-4 py-2 theme-chip rounded-full font-medium">Python</span><span class="px-4 py-2 theme-chip rounded-full font-medium">Go</span><span class="px-4 py-2 theme-chip rounded-full font-medium">Java</span><span class="px-4 py-2 theme-chip rounded-full font-medium">HTML5</span><span class="px-4 py-2 theme-chip rounded-full font-medium">CSS3</span><span class="px-4 py-2 theme-chip rounded-full font-medium">Canvas API</span><span class="px-4 py-2 theme-chip rounded-full font-medium">Data Structures &amp; Algorithms</span><span class="px-4 py-2 theme-chip rounded-full font-medium">Code Quality Analysis</span><span class="px-4 py-2 theme-chip rounded-full font-medium">AI Training</span></div><div class="flex gap-4"><a href="/projects/ai-trainer/index.html" class="btn-primary inline-flex items-center gap-2" target="_self" aria-label="Open interactive demo of AI Code Training Platform"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" x2="21" y1="14" y2="3"></line></svg>View Demo</a><a href="https://github.com/delongkevin/FullStackEngineer" class="btn-secondary inline-flex items-center gap-2" target="_blank" rel="noopener noreferrer" aria-label="View source code for AI Code Training Platform on GitHub"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg>View Code</a></div></div></div></div><div class="grid grid-cols-1 lg:grid-cols-3 gap-8"><div class="lg:col-span-2"><div class="surface-card rounded-xl shadow-lg p-6"><h2 class="text-2xl font-bold theme-text-primary mb-6">Interactive Demo</h2><div class="surface-subtle rounded-lg p-6 min-h-[600px]"><div class="flex flex-wrap items-center justify-between gap-3 mb-4"><p class="text-sm theme-text-secondary">Run the interactive demo directly in this page, or open it in a dedicated tab for full-screen testing.</p><div class="flex flex-wrap gap-2"><button type="button" class="inline-flex items-center gap-2 px-3 py-2 rounded-lg border theme-border text-sm theme-text-secondary hover:opacity-90 transition-colors surface-card"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-refresh-cw" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path><path d="M8 16H3v5"></path></svg>Reload Demo</button><a href="/projects/ai-trainer/index.html" target="_self" rel="" class="inline-flex items-center gap-2 px-3 py-2 rounded-lg border theme-border theme-chip text-sm hover:opacity-90 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" x2="21" y1="14" y2="3"></line></svg>Open Demo</a><button type="button" class="inline-flex items-center gap-2 px-3 py-2 rounded-lg border theme-border text-sm theme-text-secondary hover:opacity-90 transition-colors surface-card" aria-live="polite"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>Copy Link</button></div></div><div class="mb-4 flex flex-wrap items-center gap-2"><p class="text-xs font-semibold uppercase tracking-wide theme-text-tertiary">Demo Size</p><button type="button" class="px-3 py-1.5 rounded-full border text-xs font-semibold surface-card theme-text-secondary theme-border hover:opacity-90">Short</button><button type="button" class="px-3 py-1.5 rounded-full border text-xs font-semibold bg-blue-600 text-white border-blue-600">Medium</button><button type="button" class="px-3 py-1.5 rounded-full border text-xs font-semibold surface-card theme-text-secondary theme-border hover:opacity-90">Tall</button><button type="button" class="px-3 py-1.5 rounded-full border text-xs font-semibold surface-card theme-text-secondary theme-border hover:opacity-90">Full</button></div><p id="demo-description" class="sr-only">This interactive demo allows you to try <!-- -->AI Code Training Platform<!-- -->. Use keyboard navigation to interact with the embedded content.</p><iframe src="/projects/ai-trainer/index.html" class="w-full border-0 rounded-lg surface-card" title="Interactive demo of AI Code Training Platform - fullstack project" aria-describedby="demo-description" loading="lazy" sandbox="allow-forms allow-scripts allow-same-origin" style="min-height:680px;height:680px"></iframe></div></div></div><div class="space-y-6"><details open="" class="surface-card rounded-xl shadow-lg p-6"><summary class="text-lg font-semibold theme-text-primary mb-4 cursor-pointer">Project Information</summary><div class="space-y-3 mt-4"><div><span class="text-sm theme-text-tertiary">Category:</span><div class="font-medium theme-text-primary">Full Stack</div></div><div><span class="text-sm theme-text-tertiary">Status:</span><div class="font-medium text-green-600">Completed</div></div><div><span class="text-sm theme-text-tertiary">Type:</span><div class="font-medium theme-text-primary">Interactive Demo</div></div></div></details><details open="" class="surface-card rounded-xl shadow-lg p-6"><summary class="text-lg font-semibold theme-text-primary mb-4 cursor-pointer">Technology Stack</summary><div class="flex flex-wrap gap-2 mt-4"><span class="px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm">JavaScript</span><span class="px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm">TypeScript</span><span class="px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm">Python</span><span class="px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm">Go</span><span class="px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm">Java</span><span class="px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm">HTML5</span><span class="px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm">CSS3</span><span class="px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm">Canvas API</span><span class="px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm">Data Structures &amp; Algorithms</span><span class="px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm">Code Quality Analysis</span><span class="px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm">AI Training</span></div></details></div></div><section class="surface-card rounded-xl shadow-lg p-6 mt-8" aria-label="Interactive tutorial"><div class="flex items-center gap-3 mb-4"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-500" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg><h2 class="text-2xl font-bold theme-text-primary">How to Use <!-- -->AI Code Training Platform</h2></div><p class="theme-text-secondary mb-6 text-sm">Follow this interactive guide to learn all the features and how to use this application effectively.</p><div class="flex items-center justify-center gap-2 mb-6"><button type="button" class="h-2 rounded-full transition-all w-8 bg-blue-500" aria-label="Go to step 1" aria-current="step"></button><button type="button" class="h-2 rounded-full transition-all w-2 bg-gray-300 hover:bg-gray-400" aria-label="Go to step 2"></button><button type="button" class="h-2 rounded-full transition-all w-2 bg-gray-300 hover:bg-gray-400" aria-label="Go to step 3"></button></div><div class="rounded-lg p-6 mb-6" style="background:var(--surface-2)"><div class="mb-4"><div class="flex items-center justify-between mb-2"><span class="text-sm font-semibold text-blue-600">Step <!-- -->1<!-- --> of <!-- -->3</span><span class="text-xs theme-text-tertiary">33<!-- -->% Complete</span></div><h3 class="text-2xl font-bold theme-text-primary mb-2">Challenge Designer</h3><p class="theme-text-secondary">Author coding challenges for AI training.</p></div><div class="mb-6"><h4 class="text-lg font-semibold theme-text-primary mb-3 flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>Instructions</h4><ol class="space-y-3"><li class="flex items-start gap-3"><span class="flex-shrink-0 w-6 h-6 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-sm font-semibold"><span aria-hidden="true">1</span></span><span class="theme-text-secondary pt-0.5">Create problem statements with constraints</span></li><li class="flex items-start gap-3"><span class="flex-shrink-0 w-6 h-6 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-sm font-semibold"><span aria-hidden="true">2</span></span><span class="theme-text-secondary pt-0.5">Define input/output examples</span></li><li class="flex items-start gap-3"><span class="flex-shrink-0 w-6 h-6 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-sm font-semibold"><span aria-hidden="true">3</span></span><span class="theme-text-secondary pt-0.5">Add hidden test cases for validation</span></li><li class="flex items-start gap-3"><span class="flex-shrink-0 w-6 h-6 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-sm font-semibold"><span aria-hidden="true">4</span></span><span class="theme-text-secondary pt-0.5">Live preview shows formatted problem</span></li></ol></div><div class="rounded-lg p-4" style="background:var(--surface-1);border:1px solid var(--border-soft)"><h4 class="text-base font-semibold theme-text-primary mb-2 flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-yellow-500" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path><path d="M9 18h6"></path><path d="M10 22h4"></path></svg>Pro Tips</h4><ul class="space-y-2"><li class="flex items-start gap-2"><span class="text-yellow-500 mt-1" aria-hidden="true">💡</span><span class="theme-text-secondary text-sm">Clear problem statements improve AI understanding</span></li><li class="flex items-start gap-2"><span class="text-yellow-500 mt-1" aria-hidden="true">💡</span><span class="theme-text-secondary text-sm">Include edge cases in test scenarios</span></li></ul></div></div><div class="flex items-center justify-between"><button type="button" disabled="" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors bg-gray-200 text-gray-400 cursor-not-allowed" aria-label="Previous step"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>Previous</button><div class="text-center"><p class="text-sm theme-text-tertiary">Step <!-- -->1<!-- --> of <!-- -->3</p></div><button type="button" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors bg-blue-500 text-white hover:bg-blue-600" aria-label="Next step">Next<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></button></div></section><section class="mt-10 space-y-6" aria-label="Project navigation and related work"><div class="surface-card rounded-xl shadow-lg p-6"><h2 class="text-xl font-bold theme-text-primary mb-4">Continue Exploring</h2><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><a class="block rounded-lg surface-subtle p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors" href="/projects/qa-dashboard/"><p class="text-sm theme-text-tertiary">Previous project</p><p class="font-semibold theme-text-primary">Software QA Analyst Platform</p></a><a class="block rounded-lg surface-subtle p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors" href="/projects/fitness-tracker/"><p class="text-sm theme-text-tertiary">Next project</p><p class="font-semibold theme-text-primary">Fitness Tracker App</p></a></div></div><div class="surface-card rounded-xl shadow-lg p-6"><h2 class="text-xl font-bold theme-text-primary mb-4">Related Projects</h2><div class="grid grid-cols-1 md:grid-cols-3 gap-4"><a class="rounded-lg surface-subtle p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors" href="/projects/11/"><p class="font-semibold theme-text-primary">Online Grocery Order System</p><p class="text-sm theme-text-secondary mt-1 line-clamp-2">Full-stack retail ordering app with product catalog, cart, checkout form, and order persistence</p></a><a class="rounded-lg surface-subtle p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors" href="/projects/12/"><p class="font-semibold theme-text-primary">Task Manager</p><p class="text-sm theme-text-secondary mt-1 line-clamp-2">Full-stack task management app with CRUD, priority levels, filters, search, and localStorage sync</p></a><a class="rounded-lg surface-subtle p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors" href="/projects/kamps-smart-factory/"><p class="font-semibold theme-text-primary">Kamps Smart Factory Platform</p><p class="text-sm theme-text-secondary mt-1 line-clamp-2">Industry 4.0 mobile dashboard showcasing PLC integration, YOLOv8 pallet detection, K3s microservices, Prometheus/Grafana observability, MQTT pub/sub, and full CI/CD — built for Kamps</p></a></div></div></section></div></main><footer class="py-10 sm:py-12" aria-label="Site footer" style="background:var(--surface-1);color:var(--text-1);border-top:1px solid var(--border-soft)"><div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"><div class="flex flex-col md:flex-row justify-between items-center"><div class="mb-6 md:mb-0 text-center md:text-left"><h3 class="text-xl sm:text-2xl font-bold theme-text-primary">Kevin Delong</h3><p class="theme-text-secondary mt-2">Full Stack &amp; Frontend Developer</p></div><div class="flex space-x-4 sm:space-x-6"><a href="https://github.com/delongkevin" class="theme-text-secondary hover:opacity-80 transition-colors w-11 h-11 rounded-full surface-subtle flex items-center justify-center" aria-label="GitHub" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg></a><a href="https://x.com/delongkevin1446" class="theme-text-secondary hover:opacity-80 transition-colors w-11 h-11 rounded-full surface-subtle flex items-center justify-center" aria-label="Twitter" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-twitter" aria-hidden="true"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg></a><a href="mailto:delong.kevin@gmail.com" class="theme-text-secondary hover:opacity-80 transition-colors w-11 h-11 rounded-full surface-subtle flex items-center justify-center" aria-label="Email" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg></a></div></div><div class="border-t theme-border mt-8 pt-8 text-center theme-text-secondary"><p>© <!-- -->2026<!-- --> Kevin Douglas Delong. All rights reserved.</p><p class="mt-2 text-sm">Phone: (810) 287-7409 | Email: delong.kevin@gmail.com</p></div></div></footer></div><script src="/_next/static/chunks/webpack-6ca410362e9e7186.js" crossorigin="" async=""></script><script>(self.__next_f=self.__next_f||[]).push([0]);self.__next_f.push([2,null])</script><script>self.__next_f.push([1,"1:HL[\"/_next/static/css/6bf4ff073c45ccdc.css\",\"style\",{\"crossOrigin\":\"\"}]\n0:\"$L2\"\n"])</script><script>self.__next_f.push([1,"3:I[3728,[],\"\"]\n5:I[9928,[],\"\"]\n6:I[6954,[],\"\"]\n7:I[7264,[],\"\"]\n9:I[4689,[\"383\",\"static/chunks/383-23d7520fe27f6da1.js\",\"413\",\"static/chunks/413-0066863adaac6978.js\",\"689\",\"static/chunks/689-0b1f225f0c141f4d.js\",\"565\",\"static/chunks/565-63fc7560b8b16033.js\",\"626\",\"static/chunks/app/projects/%5Bid%5D/page-e8b7be92ba49648e.js\"],\"\"]\na:I[2070,[\"383\",\"static/chunks/383-23d7520fe27f6da1.js\",\"413\",\"static/chunks/413-0066863adaac6978.js\",\"689\",\"static/chunks/689-0b1f225f0c141f4d.js\",\"565\",\"static/chunks/565-63fc756"])</script><script>self.__next_f.push([1,"0b8b16033.js\",\"626\",\"static/chunks/app/projects/%5Bid%5D/page-e8b7be92ba49648e.js\"],\"\"]\nb:I[8326,[\"383\",\"static/chunks/383-23d7520fe27f6da1.js\",\"413\",\"static/chunks/413-0066863adaac6978.js\",\"689\",\"static/chunks/689-0b1f225f0c141f4d.js\",\"565\",\"static/chunks/565-63fc7560b8b16033.js\",\"626\",\"static/chunks/app/projects/%5Bid%5D/page-e8b7be92ba49648e.js\"],\"\"]\nc:I[413,[\"383\",\"static/chunks/383-23d7520fe27f6da1.js\",\"413\",\"static/chunks/413-0066863adaac6978.js\",\"689\",\"static/chunks/689-0b1f225f0c141f4d.js\",\"565\",\"st"])</script><script>self.__next_f.push([1,"atic/chunks/565-63fc7560b8b16033.js\",\"626\",\"static/chunks/app/projects/%5Bid%5D/page-e8b7be92ba49648e.js\"],\"Image\"]\ne:I[4045,[\"383\",\"static/chunks/383-23d7520fe27f6da1.js\",\"413\",\"static/chunks/413-0066863adaac6978.js\",\"689\",\"static/chunks/689-0b1f225f0c141f4d.js\",\"565\",\"static/chunks/565-63fc7560b8b16033.js\",\"626\",\"static/chunks/app/projects/%5Bid%5D/page-e8b7be92ba49648e.js\"],\"\"]\nf:I[410,[\"383\",\"static/chunks/383-23d7520fe27f6da1.js\",\"413\",\"static/chunks/413-0066863adaac6978.js\",\"689\",\"static/chunks/689-0b"])</script><script>self.__next_f.push([1,"1f225f0c141f4d.js\",\"565\",\"static/chunks/565-63fc7560b8b16033.js\",\"626\",\"static/chunks/app/projects/%5Bid%5D/page-e8b7be92ba49648e.js\"],\"\"]\n10:I[5918,[\"383\",\"static/chunks/383-23d7520fe27f6da1.js\",\"413\",\"static/chunks/413-0066863adaac6978.js\",\"689\",\"static/chunks/689-0b1f225f0c141f4d.js\",\"565\",\"static/chunks/565-63fc7560b8b16033.js\",\"626\",\"static/chunks/app/projects/%5Bid%5D/page-e8b7be92ba49648e.js\"],\"\"]\nd:T510,"])</script><script>self.__next_f.push([1,"AI Code Training Platform is an interactive demonstration built for a Backend Software Engineer – AI Trainer role at DataAnnotation. It showcases five integrated capabilities: a Challenge Designer for authoring well-structured coding problems (constraints, I/O examples, hidden test cases) with a live preview panel and an 8-problem pre-seeded library spanning Easy to Expert difficulty; a Language Showcase presenting 5 classic algorithms (Binary Search, LRU Cache, Graph BFS, Quicksort, Fibonacci) each implemented in JavaScript, TypeScript, Python, Go, and Java with inline syntax highlighting and time/space complexity badges; a Code Evaluator that ingests a pasted solution, runs it against 5 test cases, surfaces categorized issues (Critical/Warning/Info) with line references, and reports code quality metrics including cyclomatic complexity and naming conventions; a Feedback Studio for reviewing AI-generated code submissions across four scored dimensions (Correctness, Efficiency, Clarity, Robustness) with free-form feedback and submission workflow; and an Analytics Dashboard with KPI cards, Canvas-rendered charts (language distribution, difficulty donut, 12-week quality trend, category bars), activity feed, contributor leaderboard, and per-category data quality breakdown table."])</script><script>self.__next_f.push([1,"2:[[[\"$\",\"link\",\"0\",{\"rel\":\"stylesheet\",\"href\":\"/_next/static/css/6bf4ff073c45ccdc.css\",\"precedence\":\"next\",\"crossOrigin\":\"\"}]],[\"$\",\"$L3\",null,{\"buildId\":\"UrAT3cg7EcLp7h1HMfPVi\",\"assetPrefix\":\"\",\"initialCanonicalUrl\":\"/projects/ai-trainer/\",\"initialTree\":[\"\",{\"children\":[\"projects\",{\"children\":[[\"id\",\"ai-trainer\",\"d\"],{\"children\":[\"__PAGE__?{\\\"id\\\":\\\"ai-trainer\\\"}\",{}]}]}]},\"$undefined\",\"$undefined\",true],\"initialHead\":[false,\"$L4\"],\"globalErrorComponent\":\"$5\",\"children\":[null,[\"$\",\"html\",null,{\"lang\":\"en\",\"children\":[\"$\",\"body\",null,{\"children\":[null,[\"$\",\"script\",null,{\"type\":\"application/ld+json\",\"dangerouslySetInnerHTML\":{\"__html\":\"{\\\"@context\\\":\\\"https://schema.org\\\",\\\"@type\\\":\\\"Person\\\",\\\"name\\\":\\\"Kevin Douglas Delong\\\",\\\"jobTitle\\\":\\\"Full-Stack Engineer\\\",\\\"email\\\":\\\"mailto:delong.kevin@gmail.com\\\",\\\"url\\\":\\\"https://delongkevin.github.io/FullStackEngineer\\\",\\\"sameAs\\\":[\\\"https://github.com/delongkevin\\\",\\\"https://x.com/delongkevin1446\\\"]}\"}}],[\"$\",\"a\",null,{\"href\":\"#main-content\",\"className\":\"skip-link\",\"children\":\"Skip to main content\"}],[\"$\",\"div\",null,{\"className\":\"min-h-screen app-shell-bg\",\"children\":[\"$\",\"$L6\",null,{\"parallelRouterKey\":\"children\",\"segmentPath\":[\"children\"],\"loading\":\"$undefined\",\"loadingStyles\":\"$undefined\",\"loadingScripts\":\"$undefined\",\"hasLoading\":false,\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L7\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":[[\"$\",\"title\",null,{\"children\":\"404: This page could not be found.\"}],[\"$\",\"div\",null,{\"style\":{\"fontFamily\":\"system-ui,\\\"Segoe UI\\\",Roboto,Helvetica,Arial,sans-serif,\\\"Apple Color Emoji\\\",\\\"Segoe UI Emoji\\\"\",\"height\":\"100vh\",\"textAlign\":\"center\",\"display\":\"flex\",\"flexDirection\":\"column\",\"alignItems\":\"center\",\"justifyContent\":\"center\"},\"children\":[\"$\",\"div\",null,{\"children\":[[\"$\",\"style\",null,{\"dangerouslySetInnerHTML\":{\"__html\":\"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}\"}}],[\"$\",\"h1\",null,{\"className\":\"next-error-h1\",\"style\":{\"display\":\"inline-block\",\"margin\":\"0 20px 0 0\",\"padding\":\"0 23px 0 0\",\"fontSize\":24,\"fontWeight\":500,\"verticalAlign\":\"top\",\"lineHeight\":\"49px\"},\"children\":\"404\"}],[\"$\",\"div\",null,{\"style\":{\"display\":\"inline-block\"},\"children\":[\"$\",\"h2\",null,{\"style\":{\"fontSize\":14,\"fontWeight\":400,\"lineHeight\":\"49px\",\"margin\":0},\"children\":\"This page could not be found.\"}]}]]}]}]],\"notFoundStyles\":[],\"childProp\":{\"current\":[\"$\",\"$L6\",null,{\"parallelRouterKey\":\"children\",\"segmentPath\":[\"children\",\"projects\",\"children\"],\"loading\":\"$undefined\",\"loadingStyles\":\"$undefined\",\"loadingScripts\":\"$undefined\",\"hasLoading\":false,\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L7\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":\"$undefined\",\"notFoundStyles\":\"$undefined\",\"childProp\":{\"current\":[\"$\",\"$L6\",null,{\"parallelRouterKey\":\"children\",\"segmentPath\":[\"children\",\"projects\",\"children\",[\"id\",\"ai-trainer\",\"d\"],\"children\"],\"loading\":\"$undefined\",\"loadingStyles\":\"$undefined\",\"loadingScripts\":\"$undefined\",\"hasLoading\":false,\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L7\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":\"$undefined\",\"notFoundStyles\":\"$undefined\",\"childProp\":{\"current\":[\"$L8\",[[\"$\",\"$L9\",null,{}],[\"$\",\"$La\",null,{\"projectId\":22}],[\"$\",\"script\",null,{\"type\":\"application/ld+json\",\"dangerouslySetInnerHTML\":{\"__html\":\"{\\\"@context\\\":\\\"https://schema.org\\\",\\\"@type\\\":\\\"SoftwareApplication\\\",\\\"name\\\":\\\"AI Code Training Platform\\\",\\\"applicationCategory\\\":\\\"fullstack\\\",\\\"operatingSystem\\\":\\\"Web, Android, iOS\\\",\\\"description\\\":\\\"Full-stack AI Code Trainer platform — design coding challenges, showcase multi-language solutions, evaluate AI-generated code for accuracy and quality, and deliver structured feedback to shape next-generation AI models.\\\",\\\"image\\\":\\\"https://delongkevin.github.io/FullStackEngineer/images/ai-trainer.jpg\\\",\\\"url\\\":\\\"https://delongkevin.github.io/FullStackEngineer/projects/ai-trainer/\\\",\\\"codeRepository\\\":\\\"https://github.com/delongkevin/FullStackEngineer\\\",\\\"author\\\":{\\\"@type\\\":\\\"Person\\\",\\\"name\\\":\\\"Kevin Douglas Delong\\\"}}\"}}],[\"$\",\"main\",null,{\"id\":\"main-content\",\"className\":\"pt-24 pb-16 min-h-screen\",\"children\":[\"$\",\"div\",null,{\"className\":\"max-w-6xl mx-auto px-4 sm:px-6 lg:px-8\",\"children\":[[\"$\",\"$Lb\",null,{\"href\":\"/projects\",\"className\":\"inline-flex items-center gap-2 theme-accent-text hover:opacity-80 mb-6\",\"aria-label\":\"Back to all projects\",\"children\":[[\"$\",\"svg\",null,{\"xmlns\":\"http://www.w3.org/2000/svg\",\"width\":20,\"height\":20,\"viewBox\":\"0 0 24 24\",\"fill\":\"none\",\"stroke\":\"currentColor\",\"strokeWidth\":2,\"strokeLinecap\":\"round\",\"strokeLinejoin\":\"round\",\"className\":\"lucide lucide-arrow-left\",\"aria-hidden\":\"true\",\"children\":[[\"$\",\"path\",\"1l729n\",{\"d\":\"m12 19-7-7 7-7\"}],[\"$\",\"path\",\"x3x0zl\",{\"d\":\"M19 12H5\"}],\"$undefined\"]}],\"Back to Projects\"]}],[\"$\",\"div\",null,{\"className\":\"surface-card rounded-xl shadow-lg p-8 mb-8\",\"children\":[\"$\",\"div\",null,{\"className\":\"flex flex-col lg:flex-row gap-8\",\"children\":[[\"$\",\"div\",null,{\"className\":\"lg:w-1/3\",\"children\":[\"$\",\"div\",null,{\"className\":\"relative h-64 rounded-lg overflow-hidden\",\"children\":[\"$\",\"$Lc\",null,{\"src\":\"/images/ai-trainer.jpg\",\"alt\":\"AI Code Training Platform screenshot\",\"fill\":true,\"className\":\"object-cover\",\"sizes\":\"(max-width: 1024px) 100vw, 33vw\"}]}]}],[\"$\",\"div\",null,{\"className\":\"lg:w-2/3\",\"children\":[[\"$\",\"h1\",null,{\"className\":\"text-3xl font-bold theme-text-primary mb-4\",\"children\":\"AI Code Training Platform\"}],[\"$\",\"p\",null,{\"className\":\"text-xl theme-text-secondary mb-6\",\"children\":\"$d\"}],[\"$\",\"div\",null,{\"className\":\"flex flex-wrap gap-4 mb-6\",\"children\":[[\"$\",\"span\",\"JavaScript\",{\"className\":\"px-4 py-2 theme-chip rounded-full font-medium\",\"children\":\"JavaScript\"}],[\"$\",\"span\",\"TypeScript\",{\"className\":\"px-4 py-2 theme-chip rounded-full font-medium\",\"children\":\"TypeScript\"}],[\"$\",\"span\",\"Python\",{\"className\":\"px-4 py-2 theme-chip rounded-full font-medium\",\"children\":\"Python\"}],[\"$\",\"span\",\"Go\",{\"className\":\"px-4 py-2 theme-chip rounded-full font-medium\",\"children\":\"Go\"}],[\"$\",\"span\",\"Java\",{\"className\":\"px-4 py-2 theme-chip rounded-full font-medium\",\"children\":\"Java\"}],[\"$\",\"span\",\"HTML5\",{\"className\":\"px-4 py-2 theme-chip rounded-full font-medium\",\"children\":\"HTML5\"}],[\"$\",\"span\",\"CSS3\",{\"className\":\"px-4 py-2 theme-chip rounded-full font-medium\",\"children\":\"CSS3\"}],[\"$\",\"span\",\"Canvas API\",{\"className\":\"px-4 py-2 theme-chip rounded-full font-medium\",\"children\":\"Canvas API\"}],[\"$\",\"span\",\"Data Structures \u0026 Algorithms\",{\"className\":\"px-4 py-2 theme-chip rounded-full font-medium\",\"children\":\"Data Structures \u0026 Algorithms\"}],[\"$\",\"span\",\"Code Quality Analysis\",{\"className\":\"px-4 py-2 theme-chip rounded-full font-medium\",\"children\":\"Code Quality Analysis\"}],[\"$\",\"span\",\"AI Training\",{\"className\":\"px-4 py-2 theme-chip rounded-full font-medium\",\"children\":\"AI Training\"}]]}],[\"$\",\"div\",null,{\"className\":\"flex gap-4\",\"children\":[[\"$\",\"a\",null,{\"href\":\"/projects/ai-trainer/index.html\",\"className\":\"btn-primary inline-flex items-center gap-2\",\"target\":\"_self\",\"rel\":\"$undefined\",\"aria-label\":\"Open interactive demo of AI Code Training Platform\",\"children\":[[\"$\",\"svg\",null,{\"xmlns\":\"http://www.w3.org/2000/svg\",\"width\":20,\"height\":20,\"viewBox\":\"0 0 24 24\",\"fill\":\"none\",\"stroke\":\"currentColor\",\"strokeWidth\":2,\"strokeLinecap\":\"round\",\"strokeLinejoin\":\"round\",\"className\":\"lucide lucide-external-link\",\"aria-hidden\":\"true\",\"children\":[[\"$\",\"path\",\"a6xqqp\",{\"d\":\"M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6\"}],[\"$\",\"polyline\",\"mznyad\",{\"points\":\"15 3 21 3 21 9\"}],[\"$\",\"line\",\"18c3s4\",{\"x1\":\"10\",\"x2\":\"21\",\"y1\":\"14\",\"y2\":\"3\"}],\"$undefined\"]}],\"View Demo\"]}],[\"$\",\"a\",null,{\"href\":\"https://github.com/delongkevin/FullStackEngineer\",\"className\":\"btn-secondary inline-flex items-center gap-2\",\"target\":\"_blank\",\"rel\":\"noopener noreferrer\",\"aria-label\":\"View source code for AI Code Training Platform on GitHub\",\"children\":[[\"$\",\"svg\",null,{\"xmlns\":\"http://www.w3.org/2000/svg\",\"width\":20,\"height\":20,\"viewBox\":\"0 0 24 24\",\"fill\":\"none\",\"stroke\":\"currentColor\",\"strokeWidth\":2,\"strokeLinecap\":\"round\",\"strokeLinejoin\":\"round\",\"className\":\"lucide lucide-github\",\"aria-hidden\":\"true\",\"children\":[[\"$\",\"path\",\"tonef\",{\"d\":\"M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4\"}],[\"$\",\"path\",\"9comsn\",{\"d\":\"M9 18c-4.51 2-5-2-7-2\"}],\"$undefined\"]}],\"View Code\"]}]]}],\"$undefined\"]}]]}]}],[\"$\",\"div\",null,{\"className\":\"grid grid-cols-1 lg:grid-cols-3 gap-8\",\"children\":[[\"$\",\"div\",null,{\"className\":\"lg:col-span-2\",\"children\":[\"$\",\"div\",null,{\"className\":\"surface-card rounded-xl shadow-lg p-6\",\"children\":[[\"$\",\"h2\",null,{\"className\":\"text-2xl font-bold theme-text-primary mb-6\",\"children\":\"Interactive Demo\"}],[\"$\",\"$Le\",null,{\"liveUrl\":\"/projects/ai-trainer/index.html\",\"title\":\"AI Code Training Platform\",\"category\":\"fullstack\"}]]}]}],[\"$\",\"div\",null,{\"className\":\"space-y-6\",\"children\":[[\"$\",\"details\",null,{\"open\":true,\"className\":\"surface-card rounded-xl shadow-lg p-6\",\"children\":[[\"$\",\"summary\",null,{\"className\":\"text-lg font-semibold theme-text-primary mb-4 cursor-pointer\",\"children\":\"Project Information\"}],[\"$\",\"div\",null,{\"className\":\"space-y-3 mt-4\",\"children\":[[\"$\",\"div\",null,{\"children\":[[\"$\",\"span\",null,{\"className\":\"text-sm theme-text-tertiary\",\"children\":\"Category:\"}],[\"$\",\"div\",null,{\"className\":\"font-medium theme-text-primary\",\"children\":\"Full Stack\"}]]}],[\"$\",\"div\",null,{\"children\":[[\"$\",\"span\",null,{\"className\":\"text-sm theme-text-tertiary\",\"children\":\"Status:\"}],[\"$\",\"div\",null,{\"className\":\"font-medium text-green-600\",\"children\":\"Completed\"}]]}],[\"$\",\"div\",null,{\"children\":[[\"$\",\"span\",null,{\"className\":\"text-sm theme-text-tertiary\",\"children\":\"Type:\"}],[\"$\",\"div\",null,{\"className\":\"font-medium theme-text-primary\",\"children\":\"Interactive Demo\"}]]}],\"$undefined\"]}]]}],[\"$\",\"details\",null,{\"open\":true,\"className\":\"surface-card rounded-xl shadow-lg p-6\",\"children\":[[\"$\",\"summary\",null,{\"className\":\"text-lg font-semibold theme-text-primary mb-4 cursor-pointer\",\"children\":\"Technology Stack\"}],[\"$\",\"div\",null,{\"className\":\"flex flex-wrap gap-2 mt-4\",\"children\":[[\"$\",\"span\",\"JavaScript\",{\"className\":\"px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm\",\"children\":\"JavaScript\"}],[\"$\",\"span\",\"TypeScript\",{\"className\":\"px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm\",\"children\":\"TypeScript\"}],[\"$\",\"span\",\"Python\",{\"className\":\"px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm\",\"children\":\"Python\"}],[\"$\",\"span\",\"Go\",{\"className\":\"px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm\",\"children\":\"Go\"}],[\"$\",\"span\",\"Java\",{\"className\":\"px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm\",\"children\":\"Java\"}],[\"$\",\"span\",\"HTML5\",{\"className\":\"px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm\",\"children\":\"HTML5\"}],[\"$\",\"span\",\"CSS3\",{\"className\":\"px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm\",\"children\":\"CSS3\"}],[\"$\",\"span\",\"Canvas API\",{\"className\":\"px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm\",\"children\":\"Canvas API\"}],[\"$\",\"span\",\"Data Structures \u0026 Algorithms\",{\"className\":\"px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm\",\"children\":\"Data Structures \u0026 Algorithms\"}],[\"$\",\"span\",\"Code Quality Analysis\",{\"className\":\"px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm\",\"children\":\"Code Quality Analysis\"}],[\"$\",\"span\",\"AI Training\",{\"className\":\"px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm\",\"children\":\"AI Training\"}]]}]]}]]}]]}],[\"$\",\"$Lf\",null,{\"tutorial\":{\"projectId\":22,\"steps\":[{\"title\":\"Challenge Designer\",\"description\":\"Author coding challenges for AI training.\",\"instructions\":[\"Create problem statements with constraints\",\"Define input/output examples\",\"Add hidden test cases for validation\",\"Live preview shows formatted problem\"],\"tips\":[\"Clear problem statements improve AI understanding\",\"Include edge cases in test scenarios\"]},{\"title\":\"Challenge Library\",\"description\":\"Browse and select from pre-seeded problems.\",\"instructions\":[\"View 8 algorithm problems: Two Sum → Serialize Binary Tree\",\"Filter by difficulty: Easy, Medium, Hard, Expert\",\"One-click load problems into editor\",\"See problem descriptions and constraints\"],\"tips\":[\"Start with Easy problems to understand format\",\"Expert problems test advanced concepts\"]},{\"title\":\"Multi-Language Showcase\",\"description\":\"View solutions in 5 programming languages.\",\"instructions\":[\"See 5 algorithms × 5 languages (25 solutions)\",\"Languages: JavaScript, TypeScript, Python, Go, Java\",\"Syntax highlighting with CSS styling\",\"Time/space complexity badges displayed\"],\"tips\":[\"Compare approaches across languages\",\"Complexity badges show algorithm efficiency\"]}]},\"projectTitle\":\"AI Code Training Platform\"}],[\"$\",\"$L10\",null,{\"videoUrl\":\"$undefined\",\"projectTitle\":\"AI Code Training Platform\"}],[\"$\",\"section\",null,{\"className\":\"mt-10 space-y-6\",\"aria-label\":\"Project navigation and related work\",\"children\":[[\"$\",\"div\",null,{\"className\":\"surface-card rounded-xl shadow-lg p-6\",\"children\":[[\"$\",\"h2\",null,{\"className\":\"text-xl font-bold theme-text-primary mb-4\",\"children\":\"Continue Exploring\"}],[\"$\",\"div\",null,{\"className\":\"grid grid-cols-1 md:grid-cols-2 gap-4\",\"children\":[[\"$\",\"$Lb\",null,{\"href\":\"/projects/qa-dashboard\",\"className\":\"block rounded-lg surface-subtle p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors\",\"children\":[[\"$\",\"p\",null,{\"className\":\"text-sm theme-text-tertiary\",\"children\":\"Previous project\"}],[\"$\",\"p\",null,{\"className\":\"font-semibold theme-text-primary\",\"children\":\"Software QA Analyst Platform\"}]]}],[\"$\",\"$Lb\",null,{\"href\":\"/projects/fitness-tracker\",\"className\":\"block rounded-lg surface-subtle p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors\",\"children\":[[\"$\",\"p\",null,{\"className\":\"text-sm theme-text-tertiary\",\"children\":\"Next project\"}],[\"$\",\"p\",null,{\"className\":\"font-semibold theme-text-primary\",\"children\":\"Fitness Tracker App\"}]]}]]}]]}],[\"$\",\"div\",null,{\"className\":\"surface-card rounded-xl shadow-lg p-6\",\"children\":[[\"$\",\"h2\",null,{\"className\":\"text-xl font-bold theme-text-primary mb-4\",\"children\":\"Related Projects\"}],[\"$\",\"div\",null,{\"className\":\"grid grid-cols-1 md:grid-cols-3 gap-4\",\"children\":[[\"$\",\"$Lb\",\"11\",{\"href\":\"/projects/11\",\"className\":\"rounded-lg surface-subtle p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors\",\"children\":[[\"$\",\"p\",null,{\"className\":\"font-semibold theme-text-primary\",\"children\":\"Online Grocery Order System\"}],[\"$\",\"p\",null,{\"className\":\"text-sm theme-text-secondary mt-1 line-clamp-2\",\"children\":\"Full-stack retail ordering app with product catalog, cart, checkout form, and order persistence\"}]]}],[\"$\",\"$Lb\",\"12\",{\"href\":\"/projects/12\",\"className\":\"rounded-lg surface-subtle p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors\",\"children\":[[\"$\",\"p\",null,{\"className\":\"font-semibold theme-text-primary\",\"children\":\"Task Manager\"}],[\"$\",\"p\",null,{\"className\":\"text-sm theme-text-secondary mt-1 line-clamp-2\",\"children\":\"Full-stack task management app with CRUD, priority levels, filters, search, and localStorage sync\"}]]}],[\"$\",\"$Lb\",\"14\",{\"href\":\"/projects/kamps-smart-factory\",\"className\":\"rounded-lg surface-subtle p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors\",\"children\":[[\"$\",\"p\",null,{\"className\":\"font-semibold theme-text-primary\",\"children\":\"Kamps Smart Factory Platform\"}],[\"$\",\"p\",null,{\"className\":\"text-sm theme-text-secondary mt-1 line-clamp-2\",\"children\":\"Industry 4.0 mobile dashboard showcasing PLC integration, YOLOv8 pallet detection, K3s microservices, Prometheus/Grafana observability, MQTT pub/sub, and full CI/CD — built for Kamps\"}]]}]]}]]}]]}]]}]}],[\"$\",\"footer\",null,{\"className\":\"py-10 sm:py-12\",\"aria-label\":\"Site footer\",\"style\":{\"background\":\"var(--surface-1)\",\"color\":\"var(--text-1)\",\"borderTop\":\"1px solid var(--border-soft)\"},\"children\":[\"$\",\"div\",null,{\"className\":\"max-w-6xl mx-auto px-4 sm:px-6 lg:px-8\",\"children\":[[\"$\",\"div\",null,{\"className\":\"flex flex-col md:flex-row justify-between items-center\",\"children\":[[\"$\",\"div\",null,{\"className\":\"mb-6 md:mb-0 text-center md:text-left\",\"children\":[[\"$\",\"h3\",null,{\"className\":\"text-xl sm:text-2xl font-bold theme-text-primary\",\"children\":\"Kevin Delong\"}],[\"$\",\"p\",null,{\"className\":\"theme-text-secondary mt-2\",\"children\":\"Full Stack \u0026 Frontend Developer\"}]]}],[\"$\",\"div\",null,{\"className\":\"flex space-x-4 sm:space-x-6\",\"children\":[[\"$\",\"a\",\"GitHub\",{\"href\":\"https://github.com/delongkevin\",\"className\":\"theme-text-secondary hover:opacity-80 transition-colors w-11 h-11 rounded-full surface-subtle flex items-center justify-center\",\"aria-label\":\"GitHub\",\"target\":\"_blank\",\"rel\":\"noopener noreferrer\",\"children\":[\"$\",\"svg\",null,{\"xmlns\":\"http://www.w3.org/2000/svg\",\"width\":24,\"height\":24,\"viewBox\":\"0 0 24 24\",\"fill\":\"none\",\"stroke\":\"currentColor\",\"strokeWidth\":2,\"strokeLinecap\":\"round\",\"strokeLinejoin\":\"round\",\"className\":\"lucide lucide-github\",\"aria-hidden\":\"true\",\"children\":[[\"$\",\"path\",\"tonef\",{\"d\":\"M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4\"}],[\"$\",\"path\",\"9comsn\",{\"d\":\"M9 18c-4.51 2-5-2-7-2\"}],\"$undefined\"]}]}],[\"$\",\"a\",\"Twitter\",{\"href\":\"https://x.com/delongkevin1446\",\"className\":\"theme-text-secondary hover:opacity-80 transition-colors w-11 h-11 rounded-full surface-subtle flex items-center justify-center\",\"aria-label\":\"Twitter\",\"target\":\"_blank\",\"rel\":\"noopener noreferrer\",\"children\":[\"$\",\"svg\",null,{\"xmlns\":\"http://www.w3.org/2000/svg\",\"width\":24,\"height\":24,\"viewBox\":\"0 0 24 24\",\"fill\":\"none\",\"stroke\":\"currentColor\",\"strokeWidth\":2,\"strokeLinecap\":\"round\",\"strokeLinejoin\":\"round\",\"className\":\"lucide lucide-twitter\",\"aria-hidden\":\"true\",\"children\":[[\"$\",\"path\",\"pff0z6\",{\"d\":\"M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z\"}],\"$undefined\"]}]}],[\"$\",\"a\",\"Email\",{\"href\":\"mailto:delong.kevin@gmail.com\",\"className\":\"theme-text-secondary hover:opacity-80 transition-colors w-11 h-11 rounded-full surface-subtle flex items-center justify-center\",\"aria-label\":\"Email\",\"target\":\"_blank\",\"rel\":\"noopener noreferrer\",\"children\":[\"$\",\"svg\",null,{\"xmlns\":\"http://www.w3.org/2000/svg\",\"width\":24,\"height\":24,\"viewBox\":\"0 0 24 24\",\"fill\":\"none\",\"stroke\":\"currentColor\",\"strokeWidth\":2,\"strokeLinecap\":\"round\",\"strokeLinejoin\":\"round\",\"className\":\"lucide lucide-mail\",\"aria-hidden\":\"true\",\"children\":[[\"$\",\"rect\",\"18n3k1\",{\"width\":\"20\",\"height\":\"16\",\"x\":\"2\",\"y\":\"4\",\"rx\":\"2\"}],[\"$\",\"path\",\"1ocrg3\",{\"d\":\"m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7\"}],\"$undefined\"]}]}]]}]]}],[\"$\",\"div\",null,{\"className\":\"border-t theme-border mt-8 pt-8 text-center theme-text-secondary\",\"children\":[[\"$\",\"p\",null,{\"children\":[\"© \",2026,\" Kevin Douglas Delong. All rights reserved.\"]}],[\"$\",\"p\",null,{\"className\":\"mt-2 text-sm\",\"children\":\"Phone: (810) 287-7409 | Email: delong.kevin@gmail.com\"}]]}]]}]}]],null],\"segment\":\"__PAGE__?{\\\"id\\\":\\\"ai-trainer\\\"}\"},\"styles\":null}],\"segment\":[\"id\",\"ai-trainer\",\"d\"]},\"styles\":null}],\"segment\":\"projects\"},\"styles\":null}]}]]}]}],null]}]]\n"])</script><script>self.__next_f.push([1,"4:[[\"$\",\"meta\",\"0\",{\"name\":\"viewport\",\"content\":\"width=device-width, initial-scale=1\"}],[\"$\",\"meta\",\"1\",{\"charSet\":\"utf-8\"}],[\"$\",\"title\",\"2\",{\"children\":\"AI Code Training Platform - Kevin Delong | Kevin Delong\"}],[\"$\",\"meta\",\"3\",{\"name\":\"description\",\"content\":\"Full-stack AI Code Trainer platform — design coding challenges, showcase multi-language solutions, evaluate AI-generated code for accuracy and quality, and d...\"}],[\"$\",\"link\",\"4\",{\"rel\":\"author\",\"href\":\"https://delongkevin.github.io/FullStackEngineer\"}],[\"$\",\"meta\",\"5\",{\"name\":\"author\",\"content\":\"Kevin Douglas Delong\"}],[\"$\",\"meta\",\"6\",{\"name\":\"keywords\",\"content\":\"Kevin Delong,Full Stack Engineer,React,Next.js,Mobile Development,Automotive Software\"}],[\"$\",\"meta\",\"7\",{\"name\":\"creator\",\"content\":\"Kevin Douglas Delong\"}],[\"$\",\"meta\",\"8\",{\"name\":\"publisher\",\"content\":\"Kevin Douglas Delong\"}],[\"$\",\"meta\",\"9\",{\"name\":\"robots\",\"content\":\"index, follow\"}],[\"$\",\"meta\",\"10\",{\"name\":\"googlebot\",\"content\":\"index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1\"}],[\"$\",\"link\",\"11\",{\"rel\":\"canonical\",\"href\":\"https://delongkevin.github.io/FullStackEngineer/projects/ai-trainer/\"}],[\"$\",\"meta\",\"12\",{\"property\":\"og:title\",\"content\":\"AI Code Training Platform - Kevin Delong\"}],[\"$\",\"meta\",\"13\",{\"property\":\"og:description\",\"content\":\"Full-stack AI Code Trainer platform — design coding challenges, showcase multi-language solutions, evaluate AI-generated code for accuracy and quality, and d...\"}],[\"$\",\"meta\",\"14\",{\"property\":\"og:url\",\"content\":\"https://delongkevin.github.io/FullStackEngineer/projects/ai-trainer/\"}],[\"$\",\"meta\",\"15\",{\"property\":\"og:image\",\"content\":\"https://delongkevin.github.io/FullStackEngineer/images/ai-trainer.jpg\"}],[\"$\",\"meta\",\"16\",{\"property\":\"og:type\",\"content\":\"article\"}],[\"$\",\"meta\",\"17\",{\"name\":\"twitter:card\",\"content\":\"summary_large_image\"}],[\"$\",\"meta\",\"18\",{\"name\":\"twitter:title\",\"content\":\"AI Code Training Platform - Kevin Delong\"}],[\"$\",\"meta\",\"19\",{\"name\":\"twitter:description\",\"content\":\"Full-stack AI Code Trainer platform — design coding challenges, showcase multi-language solutions, evaluate AI-generated code for accuracy and quality, and d...\"}],[\"$\",\"meta\",\"20\",{\"name\":\"twitter:image\",\"content\":\"https://delongkevin.github.io/FullStackEngineer/images/ai-trainer.jpg\"}]]\n"])</script><script>self.__next_f.push([1,"8:null\n"])</script><script>self.__next_f.push([1,""])</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Code Training Platform</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0d1117; --card: #161b22; --border: #30363d;
+      --accent: #58a6ff; --success: #3fb950; --danger: #f85149;
+      --warning: #d29922; --purple: #bc8cff; --orange: #f0883e;
+      --text: #c9d1d9; --muted: #8b949e;
+      --header-h: 56px; --nav-h: 48px;
+    }
+    html, body { height: 100%; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); font-size: 14px; display: flex; flex-direction: column; }
+    header { height: var(--header-h); background: var(--card); border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 20px; gap: 14px; flex-shrink: 0; }
+    header .logo { font-size: 20px; font-weight: 700; color: var(--accent); white-space: nowrap; }
+    header .logo span { color: var(--text); }
+    header .tagline { color: var(--muted); font-size: 12px; }
+    header .badge-active { margin-left: auto; background: rgba(63,185,80,.15); border: 1px solid var(--success); color: var(--success); border-radius: 20px; padding: 3px 10px; font-size: 11px; font-weight: 600; }
+    nav { height: var(--nav-h); background: var(--card); border-bottom: 1px solid var(--border); display: flex; align-items: flex-end; padding: 0 16px; gap: 4px; flex-shrink: 0; overflow-x: auto; }
+    nav button { border: none; background: transparent; color: var(--muted); cursor: pointer; padding: 8px 14px; font-size: 13px; font-weight: 500; border-bottom: 2px solid transparent; margin-bottom: -1px; white-space: nowrap; transition: color .15s; }
+    nav button:hover { color: var(--text); }
+    nav button.active { color: var(--accent); border-bottom-color: var(--accent); }
+    .content { flex: 1; overflow-y: auto; padding: 20px; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+    .card-title { font-size: 13px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 12px; }
+    h2 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+    h3 { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+    label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 4px; margin-top: 12px; }
+    input[type=text], input[type=number], select, textarea {
+      width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
+      color: var(--text); padding: 7px 10px; font-size: 13px; font-family: inherit; outline: none;
+      transition: border-color .15s;
+    }
+    input[type=text]:focus, input[type=number]:focus, select:focus, textarea:focus { border-color: var(--accent); }
+    textarea { resize: vertical; min-height: 80px; }
+    .btn { border: none; border-radius: 6px; padding: 7px 14px; font-size: 13px; font-weight: 600; cursor: pointer; transition: opacity .15s; }
+    .btn:hover { opacity: .85; }
+    .btn-primary { background: var(--accent); color: #0d1117; }
+    .btn-secondary { background: var(--border); color: var(--text); }
+    .btn-success { background: var(--success); color: #0d1117; }
+    .btn-danger { background: var(--danger); color: #fff; }
+    .btn-sm { padding: 4px 10px; font-size: 12px; }
+    .badge { display: inline-block; border-radius: 4px; padding: 2px 8px; font-size: 11px; font-weight: 700; }
+    .badge-easy { background: rgba(63,185,80,.2); color: var(--success); }
+    .badge-medium { background: rgba(210,153,34,.2); color: var(--warning); }
+    .badge-hard { background: rgba(248,81,73,.2); color: var(--danger); }
+    .badge-expert { background: rgba(188,140,255,.2); color: var(--purple); }
+    .badge-lang { background: rgba(88,166,255,.2); color: var(--accent); }
+    .badge-cat { background: rgba(240,136,62,.2); color: var(--orange); }
+    .kpi-val { font-size: 28px; font-weight: 700; color: var(--accent); }
+    .kpi-lbl { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .progress-wrap { background: var(--border); border-radius: 4px; height: 8px; overflow: hidden; margin-top: 4px; }
+    .progress-bar { height: 100%; border-radius: 4px; transition: width .5s; }
+    pre { background: #010409; border: 1px solid var(--border); border-radius: 6px; padding: 14px; overflow-x: auto; font-size: 12px; line-height: 1.6; font-family: 'SFMono-Regular', Consolas, monospace; }
+    .kw { color: #ff7b72; } .str { color: #a5d6ff; } .cmt { color: #8b949e; font-style: italic; }
+    .num { color: #f0883e; } .fn { color: #d2a8ff; } .type { color: #79c0ff; }
+    .tag { background: rgba(88,166,255,.15); border: 1px solid rgba(88,166,255,.4); color: var(--accent); border-radius: 4px; padding: 2px 7px; font-size: 11px; margin: 2px; display: inline-block; cursor: pointer; }
+    .tag.selected { background: var(--accent); color: #0d1117; }
+    .issue-row { display: flex; align-items: flex-start; gap: 10px; padding: 8px; border-radius: 6px; background: var(--bg); border: 1px solid var(--border); margin-bottom: 6px; }
+    .issue-row .sev { flex-shrink: 0; }
+    .score-bar-wrap { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+    .score-bar-wrap .lbl { width: 90px; font-size: 12px; color: var(--muted); flex-shrink: 0; }
+    .score-bar-wrap .bar-outer { flex: 1; background: var(--border); border-radius: 4px; height: 10px; }
+    .score-bar-wrap .bar-inner { height: 100%; border-radius: 4px; }
+    .score-bar-wrap .val { width: 36px; font-size: 12px; font-weight: 700; text-align: right; flex-shrink: 0; }
+    .feedback-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 16px; overflow: hidden; }
+    .feedback-card-header { padding: 12px 16px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border); cursor: pointer; user-select: none; }
+    .feedback-card-body { padding: 16px; display: none; }
+    .feedback-card-body.open { display: block; }
+    .score-input-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .score-input-row label { margin: 0; width: 110px; flex-shrink: 0; font-size: 13px; color: var(--text); }
+    .score-input-row input[type=range] { flex: 1; accent-color: var(--accent); }
+    .score-input-row .score-display { width: 40px; text-align: right; font-weight: 700; color: var(--accent); }
+    .challenge-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; margin-top: 16px; }
+    .challenge-card { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 14px; }
+    .challenge-card h4 { font-size: 14px; margin-bottom: 6px; }
+    .challenge-card p { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+    .lang-tabs { display: flex; gap: 6px; margin: 12px 0; flex-wrap: wrap; }
+    .lang-tab { border: 1px solid var(--border); border-radius: 6px; padding: 5px 12px; font-size: 12px; cursor: pointer; background: var(--bg); color: var(--muted); transition: all .15s; }
+    .lang-tab.active { background: var(--accent); color: #0d1117; border-color: var(--accent); font-weight: 700; }
+    .algo-select-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .complexity-badge { display: inline-flex; align-items: center; gap: 4px; background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 3px 8px; font-size: 11px; font-family: monospace; }
+    .complexity-badge .label { color: var(--muted); }
+    .complexity-badge .val { color: var(--warning); font-weight: 700; }
+    canvas { display: block; }
+    .chart-wrap { background: var(--bg); border-radius: 6px; padding: 12px; }
+    .activity-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); }
+    .avatar { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; }
+    .contributor-row { display: flex; align-items: center; gap: 10px; padding: 8px; background: var(--bg); border-radius: 6px; margin-bottom: 6px; }
+    .rank-badge { width: 22px; height: 22px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; }
+    .toast { position: fixed; bottom: 24px; right: 24px; background: var(--success); color: #0d1117; border-radius: 8px; padding: 10px 20px; font-weight: 700; font-size: 13px; z-index: 999; opacity: 0; transition: opacity .3s; pointer-events: none; }
+    .toast.show { opacity: 1; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th { text-align: left; padding: 8px 10px; color: var(--muted); font-size: 11px; text-transform: uppercase; border-bottom: 1px solid var(--border); }
+    td { padding: 9px 10px; border-bottom: 1px solid var(--border); }
+    tr:hover td { background: rgba(255,255,255,.02); }
+    .constraints-list, .examples-list, .testcases-list { margin-top: 8px; }
+    .remove-btn { background: none; border: none; color: var(--danger); cursor: pointer; font-size: 16px; padding: 0 4px; }
+    .preview-problem { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 16px; min-height: 300px; }
+    .preview-problem h3 { color: var(--accent); margin-bottom: 8px; }
+    .preview-problem .section { margin-top: 12px; }
+    .preview-problem .section-title { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; margin-bottom: 4px; }
+    .eval-result { animation: fadeIn .3s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .test-result-row { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 4px; margin-bottom: 4px; background: var(--bg); border: 1px solid var(--border); font-size: 12px; font-family: monospace; }
+    .pass-icon { color: var(--success); font-weight: 700; }
+    .fail-icon { color: var(--danger); font-weight: 700; }
+    @media (max-width: 768px) {
+      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+      header .tagline { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">AI <span>Code Trainer</span></div>
+  <div class="tagline">DataAnnotation Platform — Backend AI Training Suite</div>
+  <div class="badge-active">● Training Active</div>
+</header>
+
+<nav id="mainNav">
+  <button class="active" onclick="switchTab(0)">📋 Challenge Designer</button>
+  <button onclick="switchTab(1)">🌐 Language Showcase</button>
+  <button onclick="switchTab(2)">🔍 Code Evaluator</button>
+  <button onclick="switchTab(3)">🤖 Feedback Studio</button>
+  <button onclick="switchTab(4)">📊 Analytics</button>
+</nav>
+
+<div class="content">
+
+<!-- ═══════════════════════════════════════════════════════ TAB 1: Challenge Designer -->
+<div class="tab-panel active" id="tab0">
+  <div class="grid-2" style="align-items:start">
+    <div>
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-title">New Challenge</div>
+        <label>Problem Title</label>
+        <input type="text" id="prob-title" placeholder="e.g. Two Sum" />
+        <label>Description</label>
+        <textarea id="prob-desc" rows="4" placeholder="Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target..."></textarea>
+        <label>Difficulty</label>
+        <select id="prob-diff">
+          <option value="Easy">Easy</option>
+          <option value="Medium" selected>Medium</option>
+          <option value="Hard">Hard</option>
+          <option value="Expert">Expert</option>
+        </select>
+        <label>Category</label>
+        <select id="prob-cat">
+          <option>Arrays</option><option>Strings</option><option>Trees</option>
+          <option>Graphs</option><option>DP</option><option>Sorting</option>
+          <option>Math</option><option>Design</option><option>Linked Lists</option>
+        </select>
+        <label>Tags</label>
+        <div style="margin-top:6px" id="tags-container">
+          <span class="tag" onclick="toggleTag(this)">Hash Map</span>
+          <span class="tag" onclick="toggleTag(this)">Two Pointers</span>
+          <span class="tag" onclick="toggleTag(this)">Sliding Window</span>
+          <span class="tag" onclick="toggleTag(this)">Binary Search</span>
+          <span class="tag" onclick="toggleTag(this)">DFS</span>
+          <span class="tag" onclick="toggleTag(this)">BFS</span>
+          <span class="tag" onclick="toggleTag(this)">Recursion</span>
+          <span class="tag" onclick="toggleTag(this)">Memoization</span>
+          <span class="tag" onclick="toggleTag(this)">Greedy</span>
+          <span class="tag" onclick="toggleTag(this)">Stack</span>
+        </div>
+        <div class="grid-2" style="margin-top:12px;gap:10px">
+          <div><label>Time Limit (ms)</label><input type="number" id="time-limit" value="1000" /></div>
+          <div><label>Space Limit (MB)</label><input type="number" id="space-limit" value="256" /></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-title">Constraints</div>
+        <div id="constraints-list"></div>
+        <button class="btn btn-secondary btn-sm" style="margin-top:8px" onclick="addConstraint()">+ Add Constraint</button>
+      </div>
+
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-title">Input / Output Examples</div>
+        <div id="examples-list"></div>
+        <button class="btn btn-secondary btn-sm" style="margin-top:8px" onclick="addExample()">+ Add Example</button>
+      </div>
+
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-title">Hidden Test Cases</div>
+        <div id="testcases-list"></div>
+        <button class="btn btn-secondary btn-sm" style="margin-top:8px" onclick="addTestCase()">+ Add Test Case</button>
+        <button class="btn btn-primary" style="margin-top:8px;margin-left:8px" onclick="saveChallenge()">💾 Save Challenge</button>
+      </div>
+    </div>
+
+    <div>
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-title">Live Problem Preview</div>
+        <div class="preview-problem" id="preview-panel">
+          <div style="color:var(--muted);font-size:13px">Fill the form on the left to see a live preview...</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Challenge Library (8 Problems)</div>
+        <div class="challenge-grid" id="challenge-library"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ TAB 2: Language Showcase -->
+<div class="tab-panel" id="tab1">
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-title">Algorithm</div>
+    <div class="algo-select-row">
+      <select id="algo-select" onchange="renderAlgoCode()" style="max-width:280px">
+        <option value="0">Binary Search</option>
+        <option value="1">LRU Cache</option>
+        <option value="2">Graph BFS</option>
+        <option value="3">Quicksort</option>
+        <option value="4">Fibonacci (Memoized)</option>
+      </select>
+      <div id="algo-complexity-badges"></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="lang-tabs" id="lang-tabs">
+      <div class="lang-tab active" onclick="switchLang(0)">JavaScript</div>
+      <div class="lang-tab" onclick="switchLang(1)">TypeScript</div>
+      <div class="lang-tab" onclick="switchLang(2)">Python</div>
+      <div class="lang-tab" onclick="switchLang(3)">Go</div>
+      <div class="lang-tab" onclick="switchLang(4)">Java</div>
+    </div>
+    <div style="margin-bottom:8px;font-size:12px;color:var(--muted)" id="lang-note"></div>
+    <pre id="code-display" style="max-height:420px;overflow-y:auto"></pre>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ TAB 3: Code Evaluator -->
+<div class="tab-panel" id="tab2">
+  <div class="grid-2" style="align-items:start">
+    <div class="card">
+      <div class="card-title">Code Input</div>
+      <div style="display:flex;gap:10px;align-items:center;margin-bottom:10px">
+        <select id="eval-lang" style="max-width:160px">
+          <option>JavaScript</option><option>TypeScript</option><option>Python</option>
+          <option>Go</option><option>Java</option><option>C++</option>
+        </select>
+        <button class="btn btn-primary" onclick="runEvaluation()">▶ Evaluate Code</button>
+      </div>
+      <textarea id="eval-code" rows="22" style="font-family:monospace;font-size:12px"></textarea>
+    </div>
+    <div id="eval-results">
+      <div class="card" style="color:var(--muted);font-size:13px;text-align:center;padding:40px">
+        Paste code and click <strong>Evaluate Code</strong> to see analysis
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ TAB 4: Feedback Studio -->
+<div class="tab-panel" id="tab3">
+  <div class="grid-4" style="margin-bottom:20px">
+    <div class="card"><div class="kpi-val">47</div><div class="kpi-lbl">Total Reviewed</div></div>
+    <div class="card"><div class="kpi-val" style="color:var(--success)">8.4</div><div class="kpi-lbl">Average Score / 10</div></div>
+    <div class="card"><div class="kpi-val" style="color:var(--danger)">6</div><div class="kpi-lbl">Needs Revision</div></div>
+    <div class="card"><div class="kpi-val" style="color:var(--success)">41</div><div class="kpi-lbl">Approved</div></div>
+  </div>
+  <div id="feedback-cards"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ TAB 5: Analytics -->
+<div class="tab-panel" id="tab4">
+  <div class="grid-4" style="margin-bottom:20px">
+    <div class="card"><div class="kpi-val">1,247</div><div class="kpi-lbl">Total Challenges</div></div>
+    <div class="card"><div class="kpi-val">8,934</div><div class="kpi-lbl">Solutions Reviewed</div></div>
+    <div class="card"><div class="kpi-val" style="color:var(--success)">8.7</div><div class="kpi-lbl">Avg Quality Score</div></div>
+    <div class="card"><div class="kpi-val" style="color:var(--purple)">12</div><div class="kpi-lbl">Languages Covered</div></div>
+  </div>
+  <div class="grid-2" style="margin-bottom:16px">
+    <div class="card"><div class="card-title">Language Distribution</div><div class="chart-wrap"><canvas id="chartLang" width="460" height="220"></canvas></div></div>
+    <div class="card"><div class="card-title">Difficulty Distribution</div><div class="chart-wrap"><canvas id="chartDiff" width="460" height="220"></canvas></div></div>
+  </div>
+  <div class="grid-2" style="margin-bottom:16px">
+    <div class="card"><div class="card-title">Quality Score Trend (12 Weeks)</div><div class="chart-wrap"><canvas id="chartTrend" width="460" height="200"></canvas></div></div>
+    <div class="card"><div class="card-title">Category Distribution</div><div class="chart-wrap"><canvas id="chartCat" width="460" height="200"></canvas></div></div>
+  </div>
+  <div class="grid-2" style="margin-bottom:16px">
+    <div class="card">
+      <div class="card-title">Recent Activity</div>
+      <div id="activity-feed"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Top Contributors</div>
+      <div id="contributors-list"></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Data Quality Breakdown by Category</div>
+    <table id="quality-table">
+      <thead><tr><th>Category</th><th>Total</th><th>Pass Rate</th><th>Avg Score</th><th>Flagged</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+
+</div><!-- /content -->
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── Tab switching ──────────────────────────────────────────────────────────
+function switchTab(n) {
+  document.querySelectorAll('.tab-panel').forEach((p,i) => p.classList.toggle('active', i===n));
+  document.querySelectorAll('#mainNav button').forEach((b,i) => b.classList.toggle('active', i===n));
+  if (n===4) setTimeout(drawAllCharts, 100);
+}
+
+// ─── Toast ──────────────────────────────────────────────────────────────────
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+//  TAB 1: Challenge Designer
+// ══════════════════════════════════════════════════════════════════════════════
+const LIBRARY = [
+  { title:'Two Sum', diff:'Easy', cat:'Arrays', desc:'Find indices of two numbers that add to target.', tags:['Hash Map','Two Pointers'] },
+  { title:'Valid Parentheses', diff:'Easy', cat:'Strings', desc:'Given a string of brackets, return true if valid.', tags:['Stack'] },
+  { title:'LRU Cache', diff:'Medium', cat:'Design', desc:'Implement a Least Recently Used cache with O(1) ops.', tags:['Hash Map'] },
+  { title:'Binary Tree Level Order', diff:'Medium', cat:'Trees', desc:'Return level-order traversal of a binary tree.', tags:['BFS'] },
+  { title:'Word Break', diff:'Medium', cat:'DP', desc:'Given string s and wordDict, can s be segmented?', tags:['Memoization','DFS'] },
+  { title:'Merge K Sorted Lists', diff:'Hard', cat:'Linked Lists', desc:'Merge k sorted linked lists into one sorted list.', tags:['Greedy'] },
+  { title:'Trapping Rain Water', diff:'Hard', cat:'Arrays', desc:'Compute how much water can be trapped after rain.', tags:['Two Pointers','Stack'] },
+  { title:'Serialize/Deserialize Tree', diff:'Expert', cat:'Trees', desc:'Design algorithm to serialize and deserialize a binary tree.', tags:['DFS','Recursion'] },
+];
+
+function buildLibrary() {
+  const el = document.getElementById('challenge-library');
+  el.innerHTML = LIBRARY.map((c,i) => `
+    <div class="challenge-card">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px">
+        <span class="badge badge-${c.diff.toLowerCase()}">${c.diff}</span>
+        <span class="badge badge-cat">${c.cat}</span>
+      </div>
+      <h4>${c.title}</h4>
+      <p>${c.desc}</p>
+      <div style="margin-bottom:8px">${c.tags.map(t=>`<span class="tag selected" style="font-size:10px;padding:1px 5px">${t}</span>`).join('')}</div>
+      <button class="btn btn-secondary btn-sm" onclick="loadChallenge(${i})">Load →</button>
+    </div>`).join('');
+}
+
+function loadChallenge(i) {
+  const c = LIBRARY[i];
+  document.getElementById('prob-title').value = c.title;
+  document.getElementById('prob-desc').value = c.desc;
+  document.getElementById('prob-diff').value = c.diff;
+  document.getElementById('prob-cat').value = c.cat;
+  document.querySelectorAll('#tags-container .tag').forEach(t => {
+    t.classList.toggle('selected', c.tags.includes(t.textContent));
+  });
+  updatePreview();
+  showToast(`Loaded: ${c.title}`);
+}
+
+function toggleTag(el) { el.classList.toggle('selected'); updatePreview(); }
+
+let constraintCount=0, exampleCount=0, testCount=0;
+
+function addConstraint() {
+  const id = ++constraintCount;
+  const row = document.createElement('div');
+  row.id = `c-row-${id}`;
+  row.style.cssText = 'display:flex;gap:6px;margin-bottom:6px';
+  row.innerHTML = `<input type="text" placeholder="e.g. 1 ≤ n ≤ 10⁵" style="flex:1" oninput="updatePreview()" /><button class="remove-btn" onclick="this.parentElement.remove();updatePreview()">×</button>`;
+  document.getElementById('constraints-list').appendChild(row);
+}
+
+function addExample() {
+  const id = ++exampleCount;
+  const row = document.createElement('div');
+  row.id = `ex-row-${id}`;
+  row.style.cssText = 'background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:10px;margin-bottom:8px';
+  row.innerHTML = `
+    <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:12px;color:var(--muted)">Example ${id}</span><button class="remove-btn" onclick="this.closest('[id^=ex-row]').remove();updatePreview()">×</button></div>
+    <label>Input</label><input type="text" placeholder="nums = [2,7,11,15], target = 9" oninput="updatePreview()"/>
+    <label>Output</label><input type="text" placeholder="[0,1]" oninput="updatePreview()"/>
+    <label>Explanation</label><input type="text" placeholder="Because nums[0] + nums[1] == 9" oninput="updatePreview()"/>`;
+  document.getElementById('examples-list').appendChild(row);
+}
+
+function addTestCase() {
+  const id = ++testCount;
+  const row = document.createElement('div');
+  row.id = `tc-row-${id}`;
+  row.style.cssText = 'display:grid;grid-template-columns:1fr 1fr auto auto;gap:6px;align-items:end;margin-bottom:6px';
+  row.innerHTML = `
+    <div><label>Input</label><input type="text" placeholder="[2,7,11,15], 9"/></div>
+    <div><label>Expected</label><input type="text" placeholder="[0,1]"/></div>
+    <div><label>Type</label><select><option>basic</option><option>edge</option><option>stress</option></select></div>
+    <button class="remove-btn" style="margin-bottom:4px" onclick="this.parentElement.remove()">×</button>`;
+  document.getElementById('testcases-list').appendChild(row);
+}
+
+function updatePreview() {
+  const title = document.getElementById('prob-title').value || 'Untitled Problem';
+  const diff = document.getElementById('prob-diff').value;
+  const cat = document.getElementById('prob-cat').value;
+  const desc = document.getElementById('prob-desc').value;
+  const tags = [...document.querySelectorAll('#tags-container .tag.selected')].map(t=>t.textContent);
+  const constraints = [...document.querySelectorAll('#constraints-list input')].map(i=>i.value).filter(Boolean);
+  const exRows = document.querySelectorAll('[id^=ex-row]');
+
+  const previewPanel = document.getElementById('preview-panel');
+
+  previewPanel.replaceChildren();
+
+  const titleEl = document.createElement('h3');
+  titleEl.textContent = title;
+  previewPanel.appendChild(titleEl);
+
+  const metaEl = document.createElement('div');
+  metaEl.style.cssText = 'display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px';
+
+  const diffBadge = document.createElement('span');
+  diffBadge.className = `badge badge-${diff.toLowerCase()}`;
+  diffBadge.textContent = diff;
+  metaEl.appendChild(diffBadge);
+
+  const catBadge = document.createElement('span');
+  catBadge.className = 'badge badge-cat';
+  catBadge.textContent = cat;
+  metaEl.appendChild(catBadge);
+
+  tags.forEach(t => {
+    const tagEl = document.createElement('span');
+    tagEl.className = 'tag selected';
+    tagEl.style.cssText = 'font-size:10px;padding:1px 5px';
+    tagEl.textContent = t;
+    metaEl.appendChild(tagEl);
+  });
+
+  previewPanel.appendChild(metaEl);
+
+  const descEl = document.createElement('div');
+  descEl.style.cssText = 'font-size:13px;line-height:1.6;color:var(--text)';
+  if (desc) {
+    descEl.textContent = desc;
+  } else {
+    const emptyDescEl = document.createElement('em');
+    emptyDescEl.style.color = 'var(--muted)';
+    emptyDescEl.textContent = 'No description yet...';
+    descEl.appendChild(emptyDescEl);
+  }
+  previewPanel.appendChild(descEl);
+
+  if (constraints.length) {
+    const sectionEl = document.createElement('div');
+    sectionEl.className = 'section';
+
+    const sectionTitleEl = document.createElement('div');
+    sectionTitleEl.className = 'section-title';
+    sectionTitleEl.textContent = 'Constraints';
+    sectionEl.appendChild(sectionTitleEl);
+
+    const listEl = document.createElement('ul');
+    listEl.style.cssText = 'padding-left:16px;font-size:12px;color:var(--muted)';
+    constraints.forEach(c => {
+      const itemEl = document.createElement('li');
+      itemEl.textContent = c;
+      listEl.appendChild(itemEl);
+    });
+    sectionEl.appendChild(listEl);
+
+    previewPanel.appendChild(sectionEl);
+  }
+
+  if (exRows.length) {
+    const sectionEl = document.createElement('div');
+    sectionEl.className = 'section';
+
+    const sectionTitleEl = document.createElement('div');
+    sectionTitleEl.className = 'section-title';
+    sectionTitleEl.textContent = 'Examples';
+    sectionEl.appendChild(sectionTitleEl);
+
+    exRows.forEach((row) => {
+      const inputs = row.querySelectorAll('input');
+      if (inputs[0].value) {
+        const exampleEl = document.createElement('div');
+        exampleEl.style.cssText = 'background:var(--card);border:1px solid var(--border);border-radius:4px;padding:8px;margin-bottom:6px;font-size:12px';
+
+        const inputLabel = document.createElement('strong');
+        inputLabel.textContent = 'Input:';
+        exampleEl.appendChild(inputLabel);
+        exampleEl.appendChild(document.createTextNode(' ' + inputs[0].value));
+        exampleEl.appendChild(document.createElement('br'));
+
+        const outputLabel = document.createElement('strong');
+        outputLabel.textContent = 'Output:';
+        exampleEl.appendChild(outputLabel);
+        exampleEl.appendChild(document.createTextNode(' ' + inputs[1].value));
+        exampleEl.appendChild(document.createElement('br'));
+
+        if (inputs[2].value) {
+          const explanationEl = document.createElement('em');
+          explanationEl.textContent = `Explanation: ${inputs[2].value}`;
+          exampleEl.appendChild(explanationEl);
+        }
+
+        sectionEl.appendChild(exampleEl);
+      }
+    });
+
+    previewPanel.appendChild(sectionEl);
+  }
+}
+
+['prob-title','prob-desc','prob-diff','prob-cat','time-limit','space-limit'].forEach(id => {
+  const el = document.getElementById(id);
+  if(el) el.addEventListener('input', updatePreview);
+});
+
+function saveChallenge() {
+  const title = document.getElementById('prob-title').value;
+  if (!title) { showToast('⚠ Please enter a problem title'); return; }
+  showToast(`✓ Challenge "${title}" saved to training dataset`);
+}
+
+buildLibrary();
+// Pre-populate first example and constraint for demo
+addConstraint();
+document.querySelector('#constraints-list input').value = '2 ≤ nums.length ≤ 10⁴';
+addConstraint();
+document.querySelector('#constraints-list div:last-child input').value = '-10⁹ ≤ nums[i] ≤ 10⁹';
+addExample();
+const exInputs = document.querySelectorAll('[id^=ex-row] input');
+exInputs[0].value = 'nums = [2,7,11,15], target = 9';
+exInputs[1].value = '[0,1]';
+exInputs[2].value = 'nums[0] + nums[1] = 2 + 7 = 9';
+updatePreview();
+
+
+// ══════════════════════════════════════════════════════════════════════════════
+//  TAB 2: Language Showcase
+// ══════════════════════════════════════════════════════════════════════════════
+let currentAlgo = 0, currentLang = 0;
+
+const ALGO_META = [
+  { name:'Binary Search', time:'O(log n)', space:'O(1)' },
+  { name:'LRU Cache',     time:'O(1)',     space:'O(n)' },
+  { name:'Graph BFS',     time:'O(V+E)',   space:'O(V)' },
+  { name:'Quicksort',     time:'O(n log n)',space:'O(log n)' },
+  { name:'Fibonacci (Memoized)', time:'O(n)', space:'O(n)' },
+];
+
+const LANG_NOTES = [
+  ['Uses array methods and Map for clean ES6+ style.', 'Adds generic type parameters for compile-time safety.', 'Idiomatic with dict and list slicing.', 'Leverages Go slices and maps with strong typing.', 'Uses ArrayList and HashMap from java.util.'],
+  ['Uses Map + doubly-linked list for O(1) get/put.', 'TypeScript generics make the cache type-safe.', 'Uses OrderedDict from collections module.', 'Go struct with map and list.Element pointers.', 'Uses LinkedHashMap for built-in LRU ordering.'],
+  ['Uses a queue (array) for level-by-level traversal.', 'TypeScript queue with typed TreeNode interface.', 'Uses deque from collections for efficient BFS.', 'Go uses a slice as queue with struct nodes.', 'Uses LinkedList as Queue with TreeNode class.'],
+  ['In-place partitioning with Lomuto partition scheme.', 'Typed generic quicksort for any comparable array.', 'Pythonic with list comprehension partition.', 'Go uses recursive partition with index swap.', 'Java uses in-place int array partitioning.'],
+  ['Uses a closure-based memo cache.', 'TypeScript Map<number,number> for memoization.', 'Uses @functools.lru_cache decorator.', 'Go uses a map[int]int memo table.', 'Uses HashMap<Integer,Integer> for memoization.'],
+];
+
+const CODE = {
+  0: [ // Binary Search
+`<span class="cmt">// Binary Search — O(log n) time, O(1) space</span>
+<span class="kw">function</span> <span class="fn">binarySearch</span>(arr, target) {
+  <span class="kw">let</span> lo = <span class="num">0</span>, hi = arr.length - <span class="num">1</span>;
+  <span class="kw">while</span> (lo <= hi) {
+    <span class="kw">const</span> mid = lo + Math.<span class="fn">floor</span>((hi - lo) / <span class="num">2</span>);
+    <span class="kw">if</span> (arr[mid] === target) <span class="kw">return</span> mid;
+    <span class="kw">if</span> (arr[mid] < target) lo = mid + <span class="num">1</span>;
+    <span class="kw">else</span> hi = mid - <span class="num">1</span>;
+  }
+  <span class="kw">return</span> -<span class="num">1</span>;
+}`,
+`<span class="cmt">// Binary Search — TypeScript generic version</span>
+<span class="kw">function</span> <span class="fn">binarySearch</span>&lt;<span class="type">T</span>&gt;(arr: <span class="type">T</span>[], target: <span class="type">T</span>): <span class="type">number</span> {
+  <span class="kw">let</span> lo: <span class="type">number</span> = <span class="num">0</span>, hi: <span class="type">number</span> = arr.length - <span class="num">1</span>;
+  <span class="kw">while</span> (lo <= hi) {
+    <span class="kw">const</span> mid = lo + Math.<span class="fn">floor</span>((hi - lo) / <span class="num">2</span>);
+    <span class="kw">if</span> (arr[mid] === target) <span class="kw">return</span> mid;
+    <span class="kw">if</span> (arr[mid] &lt; target) lo = mid + <span class="num">1</span>;
+    <span class="kw">else</span> hi = mid - <span class="num">1</span>;
+  }
+  <span class="kw">return</span> -<span class="num">1</span>;
+}`,
+`<span class="cmt"># Binary Search — O(log n) time, O(1) space</span>
+<span class="kw">from</span> typing <span class="kw">import</span> <span class="type">List</span>
+
+<span class="kw">def</span> <span class="fn">binary_search</span>(arr: <span class="type">List</span>[<span class="type">int</span>], target: <span class="type">int</span>) -> <span class="type">int</span>:
+    lo, hi = <span class="num">0</span>, len(arr) - <span class="num">1</span>
+    <span class="kw">while</span> lo <= hi:
+        mid = lo + (hi - lo) // <span class="num">2</span>
+        <span class="kw">if</span> arr[mid] == target:
+            <span class="kw">return</span> mid
+        <span class="kw">elif</span> arr[mid] &lt; target:
+            lo = mid + <span class="num">1</span>
+        <span class="kw">else</span>:
+            hi = mid - <span class="num">1</span>
+    <span class="kw">return</span> -<span class="num">1</span>`,
+`<span class="cmt">// Binary Search — Go idiomatic version</span>
+<span class="kw">package</span> main
+
+<span class="kw">func</span> <span class="fn">binarySearch</span>(arr []<span class="type">int</span>, target <span class="type">int</span>) <span class="type">int</span> {
+    lo, hi := <span class="num">0</span>, len(arr)-<span class="num">1</span>
+    <span class="kw">for</span> lo <= hi {
+        mid := lo + (hi-lo)/<span class="num">2</span>
+        <span class="kw">if</span> arr[mid] == target {
+            <span class="kw">return</span> mid
+        } <span class="kw">else if</span> arr[mid] &lt; target {
+            lo = mid + <span class="num">1</span>
+        } <span class="kw">else</span> {
+            hi = mid - <span class="num">1</span>
+        }
+    }
+    <span class="kw">return</span> -<span class="num">1</span>
+}`,
+`<span class="cmt">// Binary Search — Java version</span>
+<span class="kw">public class</span> <span class="type">BinarySearch</span> {
+    <span class="kw">public static int</span> <span class="fn">binarySearch</span>(<span class="type">int</span>[] arr, <span class="type">int</span> target) {
+        <span class="type">int</span> lo = <span class="num">0</span>, hi = arr.length - <span class="num">1</span>;
+        <span class="kw">while</span> (lo <= hi) {
+            <span class="type">int</span> mid = lo + (hi - lo) / <span class="num">2</span>;
+            <span class="kw">if</span> (arr[mid] == target) <span class="kw">return</span> mid;
+            <span class="kw">if</span> (arr[mid] &lt; target) lo = mid + <span class="num">1</span>;
+            <span class="kw">else</span> hi = mid - <span class="num">1</span>;
+        }
+        <span class="kw">return</span> -<span class="num">1</span>;
+    }
+}`,
+  ],
+  1: [ // LRU Cache
+`<span class="cmt">// LRU Cache — O(1) get/put using Map (preserves insertion order)</span>
+<span class="kw">class</span> <span class="type">LRUCache</span> {
+  <span class="fn">constructor</span>(capacity) {
+    <span class="kw">this</span>.capacity = capacity;
+    <span class="kw">this</span>.cache = <span class="kw">new</span> Map();
+  }
+  <span class="fn">get</span>(key) {
+    <span class="kw">if</span> (!<span class="kw">this</span>.cache.has(key)) <span class="kw">return</span> -<span class="num">1</span>;
+    <span class="kw">const</span> val = <span class="kw">this</span>.cache.<span class="fn">get</span>(key);
+    <span class="kw">this</span>.cache.<span class="fn">delete</span>(key);
+    <span class="kw">this</span>.cache.<span class="fn">set</span>(key, val);
+    <span class="kw">return</span> val;
+  }
+  <span class="fn">put</span>(key, value) {
+    <span class="kw">this</span>.cache.<span class="fn">delete</span>(key);
+    <span class="kw">if</span> (<span class="kw">this</span>.cache.size >= <span class="kw">this</span>.capacity)
+      <span class="kw">this</span>.cache.<span class="fn">delete</span>(<span class="kw">this</span>.cache.keys().<span class="fn">next</span>().value);
+    <span class="kw">this</span>.cache.<span class="fn">set</span>(key, value);
+  }
+}`,
+`<span class="cmt">// LRU Cache — TypeScript with generics</span>
+<span class="kw">class</span> <span class="type">LRUCache</span>&lt;<span class="type">K</span>, <span class="type">V</span>&gt; {
+  <span class="kw">private</span> capacity: <span class="type">number</span>;
+  <span class="kw">private</span> cache: Map&lt;<span class="type">K</span>, <span class="type">V</span>&gt;;
+  <span class="fn">constructor</span>(capacity: <span class="type">number</span>) {
+    <span class="kw">this</span>.capacity = capacity;
+    <span class="kw">this</span>.cache = <span class="kw">new</span> Map&lt;<span class="type">K</span>, <span class="type">V</span>&gt;();
+  }
+  <span class="fn">get</span>(key: <span class="type">K</span>): <span class="type">V</span> | -<span class="num">1</span> {
+    <span class="kw">if</span> (!<span class="kw">this</span>.cache.has(key)) <span class="kw">return</span> -<span class="num">1</span>;
+    <span class="kw">const</span> val = <span class="kw">this</span>.cache.<span class="fn">get</span>(key)!;
+    <span class="kw">this</span>.cache.<span class="fn">delete</span>(key); <span class="kw">this</span>.cache.<span class="fn">set</span>(key, val);
+    <span class="kw">return</span> val;
+  }
+  <span class="fn">put</span>(key: <span class="type">K</span>, value: <span class="type">V</span>): <span class="type">void</span> {
+    <span class="kw">this</span>.cache.<span class="fn">delete</span>(key);
+    <span class="kw">if</span> (<span class="kw">this</span>.cache.size >= <span class="kw">this</span>.capacity)
+      <span class="kw">this</span>.cache.<span class="fn">delete</span>(<span class="kw">this</span>.cache.keys().<span class="fn">next</span>().value!);
+    <span class="kw">this</span>.cache.<span class="fn">set</span>(key, value);
+  }
+}`,
+`<span class="cmt"># LRU Cache — Python using OrderedDict</span>
+<span class="kw">from</span> collections <span class="kw">import</span> OrderedDict
+
+<span class="kw">class</span> <span class="type">LRUCache</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(self, capacity: <span class="type">int</span>):
+        self.capacity = capacity
+        self.cache = OrderedDict()
+
+    <span class="kw">def</span> <span class="fn">get</span>(self, key: <span class="type">int</span>) -> <span class="type">int</span>:
+        <span class="kw">if</span> key <span class="kw">not in</span> self.cache:
+            <span class="kw">return</span> -<span class="num">1</span>
+        self.cache.<span class="fn">move_to_end</span>(key)
+        <span class="kw">return</span> self.cache[key]
+
+    <span class="kw">def</span> <span class="fn">put</span>(self, key: <span class="type">int</span>, value: <span class="type">int</span>) -> <span class="type">None</span>:
+        <span class="kw">if</span> key <span class="kw">in</span> self.cache:
+            self.cache.<span class="fn">move_to_end</span>(key)
+        self.cache[key] = value
+        <span class="kw">if</span> len(self.cache) > self.capacity:
+            self.cache.<span class="fn">popitem</span>(last=<span class="kw">False</span>)`,
+`<span class="cmt">// LRU Cache — Go using container/list</span>
+<span class="kw">import</span> <span class="str">"container/list"</span>
+
+<span class="kw">type</span> <span class="type">LRUCache</span> <span class="kw">struct</span> {
+    cap   <span class="type">int</span>
+    list  *list.<span class="type">List</span>
+    items <span class="kw">map</span>[<span class="type">int</span>]*list.<span class="type">Element</span>
+}
+<span class="kw">func</span> <span class="fn">Constructor</span>(capacity <span class="type">int</span>) <span class="type">LRUCache</span> {
+    <span class="kw">return</span> <span class="type">LRUCache</span>{cap: capacity, list: list.<span class="fn">New</span>(), items: <span class="kw">make</span>(<span class="kw">map</span>[<span class="type">int</span>]*list.<span class="type">Element</span>)}
+}
+<span class="kw">func</span> (c *<span class="type">LRUCache</span>) <span class="fn">Get</span>(key <span class="type">int</span>) <span class="type">int</span> {
+    <span class="kw">if</span> el, ok := c.items[key]; ok {
+        c.list.<span class="fn">MoveToFront</span>(el)
+        <span class="kw">return</span> el.Value.([<span class="num">2</span>]<span class="type">int</span>)[<span class="num">1</span>]
+    }
+    <span class="kw">return</span> -<span class="num">1</span>
+}`,
+`<span class="cmt">// LRU Cache — Java with LinkedHashMap</span>
+<span class="kw">import</span> java.util.LinkedHashMap;
+<span class="kw">import</span> java.util.Map;
+
+<span class="kw">class</span> <span class="type">LRUCache</span> <span class="kw">extends</span> LinkedHashMap&lt;<span class="type">Integer</span>, <span class="type">Integer</span>&gt; {
+    <span class="kw">private final int</span> capacity;
+    <span class="kw">public</span> <span class="fn">LRUCache</span>(<span class="type">int</span> capacity) {
+        <span class="kw">super</span>(capacity, <span class="num">0.75f</span>, <span class="kw">true</span>);
+        <span class="kw">this</span>.capacity = capacity;
+    }
+    <span class="kw">public int</span> <span class="fn">get</span>(<span class="type">int</span> key) {
+        <span class="kw">return</span> <span class="kw">super</span>.<span class="fn">getOrDefault</span>(key, -<span class="num">1</span>);
+    }
+    <span class="kw">public void</span> <span class="fn">put</span>(<span class="type">int</span> key, <span class="type">int</span> value) { <span class="kw">super</span>.<span class="fn">put</span>(key, value); }
+    <span class="kw">protected boolean</span> <span class="fn">removeEldestEntry</span>(Map.<span class="type">Entry</span>&lt;<span class="type">Integer</span>,<span class="type">Integer</span>&gt; e) {
+        <span class="kw">return</span> size() > capacity;
+    }
+}`,
+  ],
+  2: [ // Graph BFS
+`<span class="cmt">// Graph BFS — O(V+E) time, O(V) space</span>
+<span class="kw">function</span> <span class="fn">bfs</span>(graph, start) {
+  <span class="kw">const</span> visited = <span class="kw">new</span> Set([start]);
+  <span class="kw">const</span> queue = [start];
+  <span class="kw">const</span> order = [];
+  <span class="kw">while</span> (queue.length) {
+    <span class="kw">const</span> node = queue.<span class="fn">shift</span>();
+    order.<span class="fn">push</span>(node);
+    <span class="kw">for</span> (<span class="kw">const</span> neighbor <span class="kw">of</span> (graph[node] || [])) {
+      <span class="kw">if</span> (!visited.<span class="fn">has</span>(neighbor)) {
+        visited.<span class="fn">add</span>(neighbor);
+        queue.<span class="fn">push</span>(neighbor);
+      }
+    }
+  }
+  <span class="kw">return</span> order;
+}`,
+`<span class="cmt">// Graph BFS — TypeScript with typed adjacency list</span>
+<span class="kw">type</span> <span class="type">Graph</span> = Record&lt;<span class="type">string</span>, <span class="type">string</span>[]&gt;;
+
+<span class="kw">function</span> <span class="fn">bfs</span>(graph: <span class="type">Graph</span>, start: <span class="type">string</span>): <span class="type">string</span>[] {
+  <span class="kw">const</span> visited = <span class="kw">new</span> Set&lt;<span class="type">string</span>&gt;([start]);
+  <span class="kw">const</span> queue: <span class="type">string</span>[] = [start];
+  <span class="kw">const</span> order: <span class="type">string</span>[] = [];
+  <span class="kw">while</span> (queue.length &gt; <span class="num">0</span>) {
+    <span class="kw">const</span> node = queue.<span class="fn">shift</span>()!;
+    order.<span class="fn">push</span>(node);
+    <span class="kw">for</span> (<span class="kw">const</span> neighbor <span class="kw">of</span> (graph[node] ?? [])) {
+      <span class="kw">if</span> (!visited.<span class="fn">has</span>(neighbor)) {
+        visited.<span class="fn">add</span>(neighbor); queue.<span class="fn">push</span>(neighbor);
+      }
+    }
+  }
+  <span class="kw">return</span> order;
+}`,
+`<span class="cmt"># Graph BFS — Python with deque</span>
+<span class="kw">from</span> collections <span class="kw">import</span> deque
+<span class="kw">from</span> typing <span class="kw">import</span> <span class="type">Dict</span>, <span class="type">List</span>
+
+<span class="kw">def</span> <span class="fn">bfs</span>(graph: <span class="type">Dict</span>[<span class="type">str</span>, <span class="type">List</span>[<span class="type">str</span>]], start: <span class="type">str</span>) -> <span class="type">List</span>[<span class="type">str</span>]:
+    visited, queue, order = {start}, deque([start]), []
+    <span class="kw">while</span> queue:
+        node = queue.<span class="fn">popleft</span>()
+        order.<span class="fn">append</span>(node)
+        <span class="kw">for</span> neighbor <span class="kw">in</span> graph.<span class="fn">get</span>(node, []):
+            <span class="kw">if</span> neighbor <span class="kw">not in</span> visited:
+                visited.<span class="fn">add</span>(neighbor)
+                queue.<span class="fn">append</span>(neighbor)
+    <span class="kw">return</span> order`,
+`<span class="cmt">// Graph BFS — Go with slice-based queue</span>
+<span class="kw">func</span> <span class="fn">bfs</span>(graph <span class="kw">map</span>[<span class="type">string</span>][]<span class="type">string</span>, start <span class="type">string</span>) []<span class="type">string</span> {
+    visited := <span class="kw">map</span>[<span class="type">string</span>]<span class="type">bool</span>{start: <span class="kw">true</span>}
+    queue := []<span class="type">string</span>{start}
+    order := []<span class="type">string</span>{}
+    <span class="kw">for</span> len(queue) &gt; <span class="num">0</span> {
+        node := queue[<span class="num">0</span>]; queue = queue[<span class="num">1</span>:]
+        order = <span class="fn">append</span>(order, node)
+        <span class="kw">for</span> _, nb := <span class="kw">range</span> graph[node] {
+            <span class="kw">if</span> !visited[nb] {
+                visited[nb] = <span class="kw">true</span>
+                queue = <span class="fn">append</span>(queue, nb)
+            }
+        }
+    }
+    <span class="kw">return</span> order
+}`,
+`<span class="cmt">// Graph BFS — Java with LinkedList queue</span>
+<span class="kw">import</span> java.util.*;
+
+<span class="kw">public class</span> <span class="type">GraphBFS</span> {
+  <span class="kw">public</span> List&lt;<span class="type">Integer</span>&gt; <span class="fn">bfs</span>(Map&lt;<span class="type">Integer</span>, List&lt;<span class="type">Integer</span>&gt;&gt; graph, <span class="type">int</span> start) {
+    List&lt;<span class="type">Integer</span>&gt; order = <span class="kw">new</span> ArrayList&lt;&gt;();
+    Set&lt;<span class="type">Integer</span>&gt; visited = <span class="kw">new</span> HashSet&lt;&gt;();
+    Queue&lt;<span class="type">Integer</span>&gt; queue = <span class="kw">new</span> LinkedList&lt;&gt;();
+    queue.<span class="fn">add</span>(start); visited.<span class="fn">add</span>(start);
+    <span class="kw">while</span> (!queue.<span class="fn">isEmpty</span>()) {
+      <span class="type">int</span> node = queue.<span class="fn">poll</span>();
+      order.<span class="fn">add</span>(node);
+      <span class="kw">for</span> (<span class="type">int</span> nb : graph.<span class="fn">getOrDefault</span>(node, Collections.<span class="fn">emptyList</span>()))
+        <span class="kw">if</span> (visited.<span class="fn">add</span>(nb)) queue.<span class="fn">add</span>(nb);
+    }
+    <span class="kw">return</span> order;
+  }
+}`,
+  ],
+  3: [ // Quicksort
+`<span class="cmt">// Quicksort — O(n log n) avg, O(log n) space</span>
+<span class="kw">function</span> <span class="fn">quicksort</span>(arr, lo = <span class="num">0</span>, hi = arr.length - <span class="num">1</span>) {
+  <span class="kw">if</span> (lo >= hi) <span class="kw">return</span>;
+  <span class="kw">const</span> pivot = arr[hi];
+  <span class="kw">let</span> i = lo - <span class="num">1</span>;
+  <span class="kw">for</span> (<span class="kw">let</span> j = lo; j &lt; hi; j++) {
+    <span class="kw">if</span> (arr[j] <= pivot) {
+      i++;
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+  }
+  [arr[i+<span class="num">1</span>], arr[hi]] = [arr[hi], arr[i+<span class="num">1</span>]];
+  <span class="kw">const</span> p = i + <span class="num">1</span>;
+  <span class="fn">quicksort</span>(arr, lo, p - <span class="num">1</span>);
+  <span class="fn">quicksort</span>(arr, p + <span class="num">1</span>, hi);
+}`,
+`<span class="cmt">// Quicksort — TypeScript generic version</span>
+<span class="kw">function</span> <span class="fn">quicksort</span>&lt;<span class="type">T</span>&gt;(arr: <span class="type">T</span>[], lo = <span class="num">0</span>, hi = arr.length - <span class="num">1</span>): <span class="type">void</span> {
+  <span class="kw">if</span> (lo &gt;= hi) <span class="kw">return</span>;
+  <span class="kw">const</span> pivot = arr[hi];
+  <span class="kw">let</span> i = lo - <span class="num">1</span>;
+  <span class="kw">for</span> (<span class="kw">let</span> j = lo; j &lt; hi; j++) {
+    <span class="kw">if</span> (arr[j] &lt;= pivot) { i++; [arr[i],arr[j]]=[arr[j],arr[i]]; }
+  }
+  [arr[i+<span class="num">1</span>],arr[hi]]=[arr[hi],arr[i+<span class="num">1</span>]];
+  <span class="kw">const</span> p = i + <span class="num">1</span>;
+  <span class="fn">quicksort</span>(arr, lo, p-<span class="num">1</span>); <span class="fn">quicksort</span>(arr, p+<span class="num">1</span>, hi);
+}`,
+`<span class="cmt"># Quicksort — Python in-place Lomuto partition</span>
+<span class="kw">from</span> typing <span class="kw">import</span> <span class="type">List</span>
+
+<span class="kw">def</span> <span class="fn">quicksort</span>(arr: <span class="type">List</span>[<span class="type">int</span>], lo: <span class="type">int</span> = <span class="num">0</span>, hi: <span class="type">int</span> = -<span class="num">1</span>) -> <span class="kw">None</span>:
+    <span class="kw">if</span> hi == -<span class="num">1</span>: hi = len(arr) - <span class="num">1</span>
+    <span class="kw">if</span> lo >= hi: <span class="kw">return</span>
+    pivot, i = arr[hi], lo - <span class="num">1</span>
+    <span class="kw">for</span> j <span class="kw">in</span> range(lo, hi):
+        <span class="kw">if</span> arr[j] <= pivot:
+            i += <span class="num">1</span>
+            arr[i], arr[j] = arr[j], arr[i]
+    arr[i+<span class="num">1</span>], arr[hi] = arr[hi], arr[i+<span class="num">1</span>]
+    p = i + <span class="num">1</span>
+    <span class="fn">quicksort</span>(arr, lo, p-<span class="num">1</span>); <span class="fn">quicksort</span>(arr, p+<span class="num">1</span>, hi)`,
+`<span class="cmt">// Quicksort — Go in-place version</span>
+<span class="kw">func</span> <span class="fn">quicksort</span>(arr []<span class="type">int</span>, lo, hi <span class="type">int</span>) {
+    <span class="kw">if</span> lo &gt;= hi { <span class="kw">return</span> }
+    pivot := arr[hi]; i := lo - <span class="num">1</span>
+    <span class="kw">for</span> j := lo; j &lt; hi; j++ {
+        <span class="kw">if</span> arr[j] &lt;= pivot {
+            i++; arr[i], arr[j] = arr[j], arr[i]
+        }
+    }
+    arr[i+<span class="num">1</span>], arr[hi] = arr[hi], arr[i+<span class="num">1</span>]
+    p := i + <span class="num">1</span>
+    <span class="fn">quicksort</span>(arr, lo, p-<span class="num">1</span>); <span class="fn">quicksort</span>(arr, p+<span class="num">1</span>, hi)
+}`,
+`<span class="cmt">// Quicksort — Java in-place version</span>
+<span class="kw">public class</span> <span class="type">Quicksort</span> {
+    <span class="kw">public static void</span> <span class="fn">sort</span>(<span class="type">int</span>[] arr, <span class="type">int</span> lo, <span class="type">int</span> hi) {
+        <span class="kw">if</span> (lo &gt;= hi) <span class="kw">return</span>;
+        <span class="type">int</span> pivot = arr[hi], i = lo - <span class="num">1</span>;
+        <span class="kw">for</span> (<span class="type">int</span> j = lo; j &lt; hi; j++)
+            <span class="kw">if</span> (arr[j] &lt;= pivot) { i++; <span class="type">int</span> t=arr[i]; arr[i]=arr[j]; arr[j]=t; }
+        <span class="type">int</span> t=arr[i+<span class="num">1</span>]; arr[i+<span class="num">1</span>]=arr[hi]; arr[hi]=t;
+        <span class="type">int</span> p = i + <span class="num">1</span>;
+        <span class="fn">sort</span>(arr, lo, p-<span class="num">1</span>); <span class="fn">sort</span>(arr, p+<span class="num">1</span>, hi);
+    }
+}`,
+  ],
+  4: [ // Fibonacci
+`<span class="cmt">// Fibonacci — O(n) time/space with closure memoization</span>
+<span class="kw">const</span> <span class="fn">fibonacci</span> = (() => {
+  <span class="kw">const</span> memo = <span class="kw">new</span> Map([[<span class="num">0</span>,<span class="num">0</span>],[<span class="num">1</span>,<span class="num">1</span>]]);
+  <span class="kw">return function</span> <span class="fn">fib</span>(n) {
+    <span class="kw">if</span> (memo.has(n)) <span class="kw">return</span> memo.<span class="fn">get</span>(n);
+    <span class="kw">const</span> result = <span class="fn">fib</span>(n-<span class="num">1</span>) + <span class="fn">fib</span>(n-<span class="num">2</span>);
+    memo.<span class="fn">set</span>(n, result);
+    <span class="kw">return</span> result;
+  };
+})();`,
+`<span class="cmt">// Fibonacci — TypeScript with typed Map</span>
+<span class="kw">const</span> <span class="fn">fibonacci</span> = (() => {
+  <span class="kw">const</span> memo = <span class="kw">new</span> Map&lt;<span class="type">number</span>, <span class="type">number</span>&gt;([[<span class="num">0</span>,<span class="num">0</span>],[<span class="num">1</span>,<span class="num">1</span>]]);
+  <span class="kw">return function</span> <span class="fn">fib</span>(n: <span class="type">number</span>): <span class="type">number</span> {
+    <span class="kw">if</span> (memo.has(n)) <span class="kw">return</span> memo.<span class="fn">get</span>(n)!;
+    <span class="kw">const</span> result = <span class="fn">fib</span>(n-<span class="num">1</span>) + <span class="fn">fib</span>(n-<span class="num">2</span>);
+    memo.<span class="fn">set</span>(n, result);
+    <span class="kw">return</span> result;
+  };
+})();`,
+`<span class="cmt"># Fibonacci — Python with lru_cache decorator</span>
+<span class="kw">import</span> functools
+
+@functools.<span class="fn">lru_cache</span>(maxsize=<span class="kw">None</span>)
+<span class="kw">def</span> <span class="fn">fibonacci</span>(n: <span class="type">int</span>) -> <span class="type">int</span>:
+    <span class="kw">if</span> n &lt;= <span class="num">1</span>:
+        <span class="kw">return</span> n
+    <span class="kw">return</span> <span class="fn">fibonacci</span>(n - <span class="num">1</span>) + <span class="fn">fibonacci</span>(n - <span class="num">2</span>)
+
+<span class="cmt"># Alternatively, explicit dict memo:</span>
+<span class="kw">def</span> <span class="fn">fib_memo</span>(n: <span class="type">int</span>, memo: dict = {}) -> <span class="type">int</span>:
+    <span class="kw">if</span> n <span class="kw">in</span> memo: <span class="kw">return</span> memo[n]
+    <span class="kw">if</span> n &lt;= <span class="num">1</span>: <span class="kw">return</span> n
+    memo[n] = <span class="fn">fib_memo</span>(n-<span class="num">1</span>, memo) + <span class="fn">fib_memo</span>(n-<span class="num">2</span>, memo)
+    <span class="kw">return</span> memo[n]`,
+`<span class="cmt">// Fibonacci — Go with map[int]int memo</span>
+<span class="kw">func</span> <span class="fn">fibonacci</span>(n <span class="type">int</span>, memo <span class="kw">map</span>[<span class="type">int</span>]<span class="type">int</span>) <span class="type">int</span> {
+    <span class="kw">if</span> v, ok := memo[n]; ok { <span class="kw">return</span> v }
+    <span class="kw">if</span> n &lt;= <span class="num">1</span> { <span class="kw">return</span> n }
+    result := <span class="fn">fibonacci</span>(n-<span class="num">1</span>, memo) + <span class="fn">fibonacci</span>(n-<span class="num">2</span>, memo)
+    memo[n] = result
+    <span class="kw">return</span> result
+}
+
+<span class="cmt">// Usage: fibonacci(40, map[int]int{})</span>`,
+`<span class="cmt">// Fibonacci — Java with HashMap memoization</span>
+<span class="kw">import</span> java.util.HashMap;
+<span class="kw">import</span> java.util.Map;
+
+<span class="kw">public class</span> <span class="type">Fibonacci</span> {
+    <span class="kw">private</span> Map&lt;<span class="type">Integer</span>,<span class="type">Long</span>&gt; memo = <span class="kw">new</span> HashMap&lt;&gt;();
+
+    <span class="kw">public long</span> <span class="fn">fib</span>(<span class="type">int</span> n) {
+        <span class="kw">if</span> (n &lt;= <span class="num">1</span>) <span class="kw">return</span> n;
+        <span class="kw">if</span> (memo.<span class="fn">containsKey</span>(n)) <span class="kw">return</span> memo.<span class="fn">get</span>(n);
+        <span class="kw">long</span> result = <span class="fn">fib</span>(n-<span class="num">1</span>) + <span class="fn">fib</span>(n-<span class="num">2</span>);
+        memo.<span class="fn">put</span>(n, result);
+        <span class="kw">return</span> result;
+    }
+}`,
+  ],
+};
+
+function renderAlgoCode() {
+  currentAlgo = parseInt(document.getElementById('algo-select').value);
+  currentLang = 0;
+  document.querySelectorAll('.lang-tab').forEach((t,i) => t.classList.toggle('active', i===0));
+  displayCode();
+}
+
+function switchLang(n) {
+  currentLang = n;
+  document.querySelectorAll('.lang-tab').forEach((t,i) => t.classList.toggle('active', i===n));
+  displayCode();
+}
+
+function displayCode() {
+  const m = ALGO_META[currentAlgo];
+  document.getElementById('code-display').innerHTML = CODE[currentAlgo][currentLang];
+  document.getElementById('lang-note').textContent = LANG_NOTES[currentAlgo][currentLang];
+  document.getElementById('algo-complexity-badges').innerHTML = `
+    <span class="complexity-badge"><span class="label">Time</span><span class="val">${m.time}</span></span>
+    &nbsp;
+    <span class="complexity-badge"><span class="label">Space</span><span class="val">${m.space}</span></span>`;
+}
+
+renderAlgoCode();
+
+
+// ══════════════════════════════════════════════════════════════════════════════
+//  TAB 3: Code Evaluator
+// ══════════════════════════════════════════════════════════════════════════════
+const BUGGY_CODE = `// Two Sum - Find indices of two numbers that add to target
+function twoSum(nums, target) {
+  // Brute force approach - O(n²) time complexity
+  for (var i = 0; i < nums.length; i++) {
+    for (var j = 0; j < nums.length; j++) {  // BUG: j should start at i+1
+      if (nums[i] + nums[j] == target) {  // BUG: should use ===
+        return [i, j];
+      }
+    }
+  }
+  return [];  // Missing: handle no solution case
+}
+
+// Test
+console.log(twoSum([2,7,11,15], 9));  // Expected: [0,1]
+console.log(twoSum([3,2,4], 6));      // Expected: [1,2]`;
+
+document.getElementById('eval-code').value = BUGGY_CODE;
+
+const TEST_CASES_EVAL = [
+  { input:'[2,7,11,15], 9',  expected:'[0,1]',  pass: true  },
+  { input:'[3,2,4], 6',      expected:'[1,2]',  pass: false },
+  { input:'[3,3], 6',        expected:'[0,1]',  pass: false },
+  { input:'[1,5,3,2], 4',    expected:'[2,3]',  pass: true  },
+  { input:'[0,4,3,0], 0',    expected:'[0,3]',  pass: true  },
+];
+
+const ISSUES = [
+  { sev:'Critical', color:'var(--danger)',   line:5, msg:'Loop variable j starts at 0 instead of i+1 — same element used twice, causing self-pairing' },
+  { sev:'Warning',  color:'var(--warning)',  line:6, msg:'Using == instead of === for equality comparison — loose typing can cause unexpected coercion' },
+  { sev:'Warning',  color:'var(--warning)',  line:4, msg:'Using var instead of const/let — no block scoping, potential hoisting bugs (lines 4,5)' },
+  { sev:'Info',     color:'var(--accent)',   line:0, msg:'O(n²) time complexity — can be reduced to O(n) using a hash map (one-pass lookup)' },
+  { sev:'Info',     color:'var(--accent)',   line:10, msg:'Missing explicit handling for "no solution" — returning [] is ambiguous; consider throwing or returning null' },
+];
+
+function runEvaluation() {
+  const passing = TEST_CASES_EVAL.filter(t => t.pass).length;
+  const total = TEST_CASES_EVAL.length;
+  const score = Math.round((passing / total) * 100);
+  const metrics = [
+    { name:'Correctness',   val: score,  color: score>79?'var(--success)':score>49?'var(--warning)':'var(--danger)' },
+    { name:'Code Style',    val: 42, color:'var(--warning)' },
+    { name:'Naming Conv.',  val: 75, color:'var(--success)' },
+    { name:'Complexity',    val: 30, color:'var(--danger)' },
+  ];
+
+  document.getElementById('eval-results').innerHTML = `
+    <div class="eval-result">
+      <div class="card" style="margin-bottom:12px">
+        <div class="card-title">Correctness — ${passing}/${total} Tests Pass</div>
+        ${TEST_CASES_EVAL.map(t => `
+          <div class="test-result-row">
+            <span class="${t.pass?'pass-icon':'fail-icon'}">${t.pass?'✓':'✗'}</span>
+            <span style="flex:1">Input: <code>${t.input}</code></span>
+            <span style="color:var(--muted)">Expected: <code>${t.expected}</code></span>
+          </div>`).join('')}
+      </div>
+      <div class="card" style="margin-bottom:12px">
+        <div class="card-title">Code Quality Metrics</div>
+        ${metrics.map(m => `
+          <div class="score-bar-wrap">
+            <div class="lbl">${m.name}</div>
+            <div class="bar-outer"><div class="bar-inner" style="width:${m.val}%;background:${m.color}"></div></div>
+            <div class="val" style="color:${m.color}">${m.val}%</div>
+          </div>`).join('')}
+        <div style="margin-top:10px;font-size:12px;color:var(--muted)">
+          Lines: 17 &nbsp;|&nbsp; Cyclomatic Complexity: 4 &nbsp;|&nbsp; Est. Runtime (n=10⁶): ~2.3s
+        </div>
+      </div>
+      <div class="card" style="margin-bottom:12px">
+        <div class="card-title">Issues Found (${ISSUES.length})</div>
+        ${ISSUES.map(i => `
+          <div class="issue-row">
+            <span class="sev badge" style="background:rgba(0,0,0,.3);border:1px solid ${i.color};color:${i.color}">${i.sev}</span>
+            ${i.line?`<span style="color:var(--muted);font-size:11px;white-space:nowrap">line ${i.line}</span>`:''}
+            <span style="font-size:13px">${i.msg}</span>
+          </div>`).join('')}
+      </div>
+      <div class="card">
+        <div class="card-title">Suggestions</div>
+        <ul style="padding-left:18px;font-size:13px;line-height:2;color:var(--text)">
+          <li>Replace nested loops with a single-pass <code>Map</code> for <strong>O(n)</strong> time complexity</li>
+          <li>Start inner index at <code>i+1</code> to avoid using the same element twice</li>
+          <li>Replace <code>==</code> with <code>===</code> throughout for strict equality</li>
+          <li>Replace <code>var</code> with <code>const</code>/<code>let</code> for proper block scoping</li>
+          <li>Consider throwing <code>Error</code> or returning <code>null</code> when no solution exists</li>
+        </ul>
+      </div>
+    </div>`;
+}
+
+
+// ══════════════════════════════════════════════════════════════════════════════
+//  TAB 4: Feedback Studio
+// ══════════════════════════════════════════════════════════════════════════════
+const FEEDBACK_DATA = [
+  {
+    problem: 'Fibonacci (Memoized)', diff: 'Medium', lang: 'Python',
+    scores: { correctness:9, efficiency:8, clarity:7, robustness:6 },
+    code: `<span class="kw">def</span> <span class="fn">fibonacci</span>(n):
+    <span class="kw">if</span> n &lt;= <span class="num">1</span>:
+        <span class="kw">return</span> n
+    memo = {}
+    <span class="kw">def</span> <span class="fn">dp</span>(k):
+        <span class="kw">if</span> k <span class="kw">in</span> memo:
+            <span class="kw">return</span> memo[k]
+        <span class="kw">if</span> k &lt;= <span class="num">1</span>:
+            <span class="kw">return</span> k
+        memo[k] = <span class="fn">dp</span>(k-<span class="num">1</span>) + <span class="fn">dp</span>(k-<span class="num">2</span>)
+        <span class="kw">return</span> memo[k]
+    <span class="kw">return</span> <span class="fn">dp</span>(n)`,
+    feedback: 'Solution is correct with proper memoization. The nested dp function is unnecessarily complex — memo should be scoped outside the outer function or @lru_cache used. Edge case n=0 correctly returns 0. Missing docstring and type hints.'
+  },
+  {
+    problem: 'Reverse Linked List', diff: 'Easy', lang: 'JavaScript',
+    scores: { correctness:10, efficiency:10, clarity:8, robustness:9 },
+    code: `<span class="kw">var</span> reverseList = <span class="kw">function</span>(head) {
+    <span class="kw">let</span> prev = <span class="kw">null</span>;
+    <span class="kw">let</span> curr = head;
+    <span class="kw">while</span> (curr !== <span class="kw">null</span>) {
+        <span class="kw">let</span> nextTemp = curr.next;
+        curr.next = prev;
+        prev = curr;
+        curr = nextTemp;
+    }
+    <span class="kw">return</span> prev;
+};`,
+    feedback: 'Excellent iterative solution with optimal O(n) time and O(1) space. Clear variable naming (prev, curr, nextTemp) makes the pointer reversal logic easy to follow. Handles empty list and single-node edge cases correctly. Minor: could use const instead of var.'
+  },
+  {
+    problem: 'Valid Parentheses', diff: 'Easy', lang: 'Go',
+    scores: { correctness:10, efficiency:9, clarity:9, robustness:10 },
+    code: `<span class="kw">func</span> <span class="fn">isValid</span>(s <span class="type">string</span>) <span class="type">bool</span> {
+    stack := []<span class="type">rune</span>{}
+    pairs := <span class="kw">map</span>[<span class="type">rune</span>]<span class="type">rune</span>{<span class="str">')'</span>: <span class="str">'('</span>, <span class="str">'}'</span>: <span class="str">'{'</span>, <span class="str">']'</span>: <span class="str">'['</span>}
+    <span class="kw">for</span> _, ch := <span class="kw">range</span> s {
+        <span class="kw">if</span> ch == <span class="str">'('</span> || ch == <span class="str">'{'</span> || ch == <span class="str">'['</span> {
+            stack = <span class="fn">append</span>(stack, ch)
+        } <span class="kw">else</span> {
+            <span class="kw">if</span> len(stack) == <span class="num">0</span> || stack[len(stack)-<span class="num">1</span>] != pairs[ch] {
+                <span class="kw">return false</span>
+            }
+            stack = stack[:len(stack)-<span class="num">1</span>]
+        }
+    }
+    <span class="kw">return</span> len(stack) == <span class="num">0</span>
+}`,
+    feedback: 'Near-perfect Go solution. Idiomatic use of rune iteration, map for bracket pairs, and slice-as-stack. Handles all edge cases: empty string, mismatched brackets, unclosed brackets. O(n) time and O(n) space. The pairs map is elegant and easily extensible. This is training-data quality.'
+  }
+];
+
+function buildFeedbackCards() {
+  document.getElementById('feedback-cards').innerHTML = FEEDBACK_DATA.map((d,i) => `
+    <div class="feedback-card">
+      <div class="feedback-card-header" onclick="toggleFeedback(${i})">
+        <span class="badge badge-${d.diff.toLowerCase()}">${d.diff}</span>
+        <span class="badge badge-lang">${d.lang}</span>
+        <span style="font-weight:600;font-size:14px">${d.problem}</span>
+        <span style="margin-left:auto;color:var(--muted);font-size:12px">▼ Expand Feedback</span>
+      </div>
+      <pre style="margin:0;border:none;border-bottom:1px solid var(--border);border-radius:0;max-height:200px;overflow-y:auto">${d.code}</pre>
+      <div class="feedback-card-body" id="fb-body-${i}">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:14px">
+          ${['correctness','efficiency','clarity','robustness'].map((k,j) => {
+            const icons = ['✅','⚡','📖','🔧'];
+            const labels = ['Correctness','Efficiency','Clarity','Robustness'];
+            return `<div class="score-input-row" style="flex-direction:column;align-items:stretch">
+              <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+                <span style="font-size:13px;color:var(--text)">${icons[j]} ${labels[j]}</span>
+                <span class="score-display" id="score-${i}-${k}">${d.scores[k]}/10</span>
+              </div>
+              <input type="range" min="0" max="10" value="${d.scores[k]}" oninput="updateScore(${i},'${k}',this.value)" style="width:100%;accent-color:var(--accent)" />
+            </div>`;
+          }).join('')}
+        </div>
+        <label>📝 Overall Feedback</label>
+        <textarea rows="3" style="margin-top:6px" id="fb-text-${i}">${d.feedback}</textarea>
+        <div style="margin-top:10px;display:flex;gap:8px">
+          <button class="btn btn-success" onclick="submitFeedback(${i})">Submit Feedback</button>
+          <button class="btn btn-secondary" onclick="toggleFeedback(${i})">Collapse</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function toggleFeedback(i) {
+  const body = document.getElementById(`fb-body-${i}`);
+  body.classList.toggle('open');
+}
+function updateScore(i, key, val) {
+  document.getElementById(`score-${i}-${key}`).textContent = `${val}/10`;
+}
+function submitFeedback(i) {
+  showToast('✓ Feedback Recorded — Training data updated');
+  document.getElementById(`fb-body-${i}`).classList.remove('open');
+}
+
+buildFeedbackCards();
+
+
+// ══════════════════════════════════════════════════════════════════════════════
+//  TAB 5: Analytics — Canvas Charts
+// ══════════════════════════════════════════════════════════════════════════════
+function drawAllCharts() {
+  drawLangChart();
+  drawDiffChart();
+  drawTrendChart();
+  drawCatChart();
+  buildActivity();
+  buildContributors();
+  buildQualityTable();
+}
+
+function resizeCanvas(id) {
+  const canvas = document.getElementById(id);
+  const wrap = canvas.parentElement;
+  canvas.width = wrap.clientWidth - 24;
+  return canvas;
+}
+
+function drawLangChart() {
+  const canvas = resizeCanvas('chartLang');
+  const ctx = canvas.getContext('2d');
+  const data = [
+    { label:'JavaScript', val:28, color:'#f0d060' },
+    { label:'Python',     val:24, color:'#3fb950' },
+    { label:'Java',       val:16, color:'#f0883e' },
+    { label:'TypeScript', val:12, color:'#58a6ff' },
+    { label:'Go',         val:9,  color:'#79c0ff' },
+    { label:'C++',        val:7,  color:'#bc8cff' },
+    { label:'Other',      val:4,  color:'#8b949e' },
+  ];
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  const pad = { l:90, r:50, t:10, b:10 };
+  const h = Math.floor((canvas.height - pad.t - pad.b) / data.length);
+  data.forEach((d,i) => {
+    const y = pad.t + i*h + 4;
+    const bh = h - 8;
+    const maxW = canvas.width - pad.l - pad.r;
+    const bw = (d.val/28) * maxW;
+    ctx.fillStyle = '#21262d';
+    ctx.fillRect(pad.l, y, maxW, bh);
+    ctx.fillStyle = d.color;
+    ctx.fillRect(pad.l, y, bw, bh);
+    ctx.fillStyle = '#8b949e';
+    ctx.font = '12px system-ui';
+    ctx.textAlign = 'right';
+    ctx.fillText(d.label, pad.l-6, y + bh/2 + 4);
+    ctx.fillStyle = '#c9d1d9';
+    ctx.textAlign = 'left';
+    ctx.fillText(`${d.val}%`, pad.l + bw + 5, y + bh/2 + 4);
+  });
+}
+
+function drawDiffChart() {
+  const canvas = resizeCanvas('chartDiff');
+  const ctx = canvas.getContext('2d');
+  const data = [
+    { label:'Easy',   val:35, color:'#3fb950' },
+    { label:'Medium', val:40, color:'#d29922' },
+    { label:'Hard',   val:20, color:'#f85149' },
+    { label:'Expert', val:5,  color:'#bc8cff' },
+  ];
+  const cx = canvas.width/2, cy = canvas.height/2 - 10, r = Math.min(cx,cy) - 30;
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  let start = -Math.PI/2;
+  data.forEach(d => {
+    const sweep = (d.val/100) * 2 * Math.PI;
+    ctx.beginPath(); ctx.moveTo(cx,cy);
+    ctx.arc(cx,cy,r,start,start+sweep);
+    ctx.fillStyle = d.color; ctx.fill();
+    start += sweep;
+  });
+  ctx.beginPath(); ctx.arc(cx,cy,r*0.55,0,2*Math.PI);
+  ctx.fillStyle = '#161b22'; ctx.fill();
+  ctx.fillStyle = '#c9d1d9'; ctx.font = 'bold 15px system-ui'; ctx.textAlign='center';
+  ctx.fillText('1,247', cx, cy+5); ctx.font='11px system-ui'; ctx.fillStyle='#8b949e';
+  ctx.fillText('challenges', cx, cy+20);
+  const lx = 10, ly = canvas.height - 90;
+  data.forEach((d,i) => {
+    ctx.fillStyle = d.color;
+    ctx.fillRect(lx, ly + i*20, 12, 12);
+    ctx.fillStyle='#c9d1d9'; ctx.font='11px system-ui'; ctx.textAlign='left';
+    ctx.fillText(`${d.label} (${d.val}%)`, lx+16, ly+i*20+10);
+  });
+}
+
+function drawTrendChart() {
+  const canvas = resizeCanvas('chartTrend');
+  const ctx = canvas.getContext('2d');
+  const data = [7.2,7.4,7.5,7.6,7.9,8.0,8.1,8.3,8.4,8.5,8.6,8.7];
+  const pad = {l:40,r:20,t:20,b:30};
+  const W = canvas.width-pad.l-pad.r, H = canvas.height-pad.t-pad.b;
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.strokeStyle='#30363d'; ctx.lineWidth=1;
+  [7,7.5,8,8.5,9].forEach(v => {
+    const y = pad.t + H - ((v-7)/2)*H;
+    ctx.beginPath(); ctx.moveTo(pad.l,y); ctx.lineTo(pad.l+W,y); ctx.stroke();
+    ctx.fillStyle='#8b949e'; ctx.font='10px system-ui'; ctx.textAlign='right';
+    ctx.fillText(v.toFixed(1), pad.l-4, y+3);
+  });
+  const sx = W/(data.length-1);
+  const gy = ctx.createLinearGradient(0,pad.t,0,pad.t+H);
+  gy.addColorStop(0,'rgba(63,185,80,0.3)'); gy.addColorStop(1,'rgba(63,185,80,0)');
+  ctx.beginPath();
+  data.forEach((v,i) => {
+    const x = pad.l + i*sx, y = pad.t + H - ((v-7)/2)*H;
+    i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+  });
+  ctx.lineTo(pad.l+W, pad.t+H); ctx.lineTo(pad.l, pad.t+H); ctx.closePath();
+  ctx.fillStyle=gy; ctx.fill();
+  ctx.beginPath(); ctx.strokeStyle='#3fb950'; ctx.lineWidth=2;
+  data.forEach((v,i) => {
+    const x = pad.l + i*sx, y = pad.t + H - ((v-7)/2)*H;
+    i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+  });
+  ctx.stroke();
+  data.forEach((v,i) => {
+    const x = pad.l + i*sx, y = pad.t + H - ((v-7)/2)*H;
+    ctx.beginPath(); ctx.arc(x,y,3,0,2*Math.PI);
+    ctx.fillStyle='#3fb950'; ctx.fill();
+  });
+  ctx.fillStyle='#8b949e'; ctx.font='10px system-ui'; ctx.textAlign='center';
+  ['W1','W2','W3','W4','W5','W6','W7','W8','W9','W10','W11','W12'].forEach((w,i) => {
+    ctx.fillText(w, pad.l + i*sx, canvas.height-8);
+  });
+}
+
+function drawCatChart() {
+  const canvas = resizeCanvas('chartCat');
+  const ctx = canvas.getContext('2d');
+  const data = [
+    {label:'Arrays',  val:210, color:'#58a6ff'},
+    {label:'Strings', val:185, color:'#3fb950'},
+    {label:'Trees',   val:162, color:'#f0883e'},
+    {label:'Graphs',  val:143, color:'#bc8cff'},
+    {label:'DP',      val:198, color:'#d29922'},
+    {label:'Design',  val:120, color:'#f85149'},
+    {label:'Math',    val:134, color:'#79c0ff'},
+    {label:'Sorting', val:95,  color:'#8b949e'},
+  ];
+  const pad={l:30,r:20,t:20,b:40};
+  const W=canvas.width-pad.l-pad.r, H=canvas.height-pad.t-pad.b;
+  const bw = W/data.length, maxV=210;
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  data.forEach((d,i) => {
+    const bh = (d.val/maxV)*H;
+    const x = pad.l + i*bw + bw*0.15, y = pad.t+H-bh;
+    ctx.fillStyle = d.color;
+    ctx.fillRect(x, y, bw*0.7, bh);
+    ctx.fillStyle='#8b949e'; ctx.font='10px system-ui'; ctx.textAlign='center';
+    ctx.fillText(d.label, x+bw*0.35, canvas.height-8);
+    ctx.fillStyle='#c9d1d9'; ctx.font='10px system-ui';
+    ctx.fillText(d.val, x+bw*0.35, y-4);
+  });
+}
+
+function buildActivity() {
+  const items = [
+    { color:'#58a6ff', init:'KD', msg:'Created challenge <strong>Median of Two Sorted Arrays</strong>', time:'2m ago' },
+    { color:'#3fb950', init:'SR', msg:'Approved AI solution for <strong>LRU Cache</strong> (Python)', time:'8m ago' },
+    { color:'#f0883e', init:'MC', msg:'Flagged revision needed: <strong>Word Break</strong> (Go)', time:'15m ago' },
+    { color:'#bc8cff', init:'JP', msg:'Submitted feedback for <strong>Graph BFS</strong> (TypeScript)', time:'22m ago' },
+    { color:'#d29922', init:'AL', msg:'Created challenge <strong>Serialize Binary Tree</strong>', time:'41m ago' },
+    { color:'#f85149', init:'TN', msg:'Reviewed 12 solutions — avg score 8.9/10', time:'1h ago' },
+    { color:'#79c0ff', init:'BW', msg:'Approved AI solution for <strong>Quicksort</strong> (Java)', time:'1h ago' },
+    { color:'#8b949e', init:'EK', msg:'Updated category tags for 8 challenges', time:'2h ago' },
+    { color:'#58a6ff', init:'KD', msg:'Evaluated AI code for <strong>Fibonacci</strong> — needs revision', time:'2h ago' },
+    { color:'#3fb950', init:'SR', msg:'Batch reviewed 15 Easy-difficulty solutions', time:'3h ago' },
+  ];
+  document.getElementById('activity-feed').innerHTML = items.map(a => `
+    <div class="activity-item">
+      <div class="avatar" style="background:${a.color}22;color:${a.color}">${a.init}</div>
+      <div style="flex:1;font-size:12px;line-height:1.4">${a.msg}</div>
+      <div style="font-size:11px;color:var(--muted);white-space:nowrap">${a.time}</div>
+    </div>`).join('');
+}
+
+function buildContributors() {
+  const data = [
+    { name:'Kevin DeLong',   spec:'Full-Stack / AI',    count:312, score:9.1, color:'#f0d060' },
+    { name:'Sarah R.',       spec:'Python / ML',        count:287, score:8.9, color:'#c0c0c0' },
+    { name:'Marcus C.',      spec:'Java / Backend',     count:241, score:8.7, color:'#cd7f32' },
+    { name:'James P.',       spec:'TypeScript / React', count:198, score:8.5, color:'#58a6ff' },
+    { name:'Amy L.',         spec:'Go / Systems',       count:176, score:8.4, color:'#3fb950' },
+  ];
+  document.getElementById('contributors-list').innerHTML = data.map((d,i) => `
+    <div class="contributor-row">
+      <div class="rank-badge" style="background:${d.color}22;color:${d.color}">#${i+1}</div>
+      <div style="flex:1">
+        <div style="font-weight:600;font-size:13px">${d.name}</div>
+        <div style="font-size:11px;color:var(--muted)">${d.spec}</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:13px;font-weight:700;color:var(--accent)">${d.count}</div>
+        <div style="font-size:11px;color:var(--muted)">⭐ ${d.score}/10</div>
+      </div>
+    </div>`).join('');
+}
+
+function buildQualityTable() {
+  const rows = [
+    { cat:'Arrays',       total:210, pass:94, avg:8.9, flagged:12 },
+    { cat:'Strings',      total:185, pass:91, avg:8.7, flagged:17 },
+    { cat:'Trees',        total:162, pass:88, avg:8.5, flagged:19 },
+    { cat:'Graphs',       total:143, pass:85, avg:8.3, flagged:22 },
+    { cat:'DP',           total:198, pass:82, avg:8.1, flagged:36 },
+    { cat:'Design',       total:120, pass:90, avg:8.8, flagged:12 },
+    { cat:'Math',         total:134, pass:93, avg:8.9, flagged:9  },
+    { cat:'Sorting',      total:95,  pass:96, avg:9.1, flagged:4  },
+  ];
+  const color = p => p>=90?'var(--success)':p>=80?'var(--warning)':'var(--danger)';
+  document.querySelector('#quality-table tbody').innerHTML = rows.map(r => `
+    <tr>
+      <td><span class="badge badge-cat">${r.cat}</span></td>
+      <td>${r.total}</td>
+      <td style="color:${color(r.pass)};font-weight:700">${r.pass}%</td>
+      <td style="color:var(--accent);font-weight:700">${r.avg}</td>
+      <td style="color:${r.flagged>20?'var(--danger)':'var(--muted)'}">${r.flagged}</td>
+    </tr>`).join('');
+}
+</script>
+  <!-- Portfolio QoL Enhancer -->
+  <script>(function(){if(window.__portfolioQolEnhancer)return;window.__portfolioQolEnhancer=1;var b=document.createElement("button");b.type="button";b.setAttribute("aria-label","Scroll to top");b.textContent="Top";b.style.cssText="position:fixed;right:14px;bottom:14px;z-index:2147483000;border:1px solid rgba(148,163,184,.7);background:rgba(15,23,42,.88);color:#f8fafc;border-radius:999px;font:700 12px/1 Trebuchet MS,Segoe UI,sans-serif;padding:8px 11px;cursor:pointer;opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .16s ease,transform .16s ease";document.body.appendChild(b);function sync(){var visible=window.scrollY>200;b.style.opacity=visible?"1":"0";b.style.transform=visible?"translateY(0)":"translateY(8px)";b.style.pointerEvents=visible?"auto":"none";}b.addEventListener("click",function(){window.scrollTo({top:0,behavior:"smooth"});});document.addEventListener("keydown",function(e){var t=e.target&&e.target.tagName;if(t==="INPUT"||t==="TEXTAREA"||t==="SELECT")return;if(e.key==="t"||e.key==="T"){window.scrollTo({top:0,behavior:"smooth"});}});window.addEventListener("scroll",sync,{passive:true});sync();})();</script>
+</body>
+</html>

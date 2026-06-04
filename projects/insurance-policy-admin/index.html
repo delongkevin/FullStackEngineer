@@ -1,1 +1,871 @@
-<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="/_next/static/css/6bf4ff073c45ccdc.css" crossorigin="" data-precedence="next"/><link rel="preload" as="script" fetchPriority="low" href="/_next/static/chunks/webpack-6ca410362e9e7186.js" crossorigin=""/><script src="/_next/static/chunks/fd9d1056-456948113883b121.js" async="" crossorigin=""></script><script src="/_next/static/chunks/472-7ca237d430370e09.js" async="" crossorigin=""></script><script src="/_next/static/chunks/main-app-626cee463d6fe0c2.js" async="" crossorigin=""></script><script src="/_next/static/chunks/383-23d7520fe27f6da1.js" async=""></script><script src="/_next/static/chunks/413-0066863adaac6978.js" async=""></script><script src="/_next/static/chunks/689-0b1f225f0c141f4d.js" async=""></script><script src="/_next/static/chunks/565-63fc7560b8b16033.js" async=""></script><script src="/_next/static/chunks/app/projects/%5Bid%5D/page-e8b7be92ba49648e.js" async=""></script><title>Insurance Policy Administration System - Kevin Delong | Kevin Delong</title><meta name="description" content="Full-stack P&amp;C Insurance Policy Administration demo — policy builder, ISO bureau rate engine, ACORD XML/JSON form serialization, REST API studio, clean archi..."/><link rel="author" href="https://delongkevin.github.io/FullStackEngineer"/><meta name="author" content="Kevin Douglas Delong"/><meta name="keywords" content="Kevin Delong,Full Stack Engineer,React,Next.js,Mobile Development,Automotive Software"/><meta name="creator" content="Kevin Douglas Delong"/><meta name="publisher" content="Kevin Douglas Delong"/><meta name="robots" content="index, follow"/><meta name="googlebot" content="index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"/><link rel="canonical" href="https://delongkevin.github.io/FullStackEngineer/projects/insurance-policy-admin/"/><meta property="og:title" content="Insurance Policy Administration System - Kevin Delong"/><meta property="og:description" content="Full-stack P&amp;C Insurance Policy Administration demo — policy builder, ISO bureau rate engine, ACORD XML/JSON form serialization, REST API studio, clean archi..."/><meta property="og:url" content="https://delongkevin.github.io/FullStackEngineer/projects/insurance-policy-admin/"/><meta property="og:image" content="https://delongkevin.github.io/FullStackEngineer/images/insurance-policy-admin.png"/><meta property="og:type" content="article"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="Insurance Policy Administration System - Kevin Delong"/><meta name="twitter:description" content="Full-stack P&amp;C Insurance Policy Administration demo — policy builder, ISO bureau rate engine, ACORD XML/JSON form serialization, REST API studio, clean archi..."/><meta name="twitter:image" content="https://delongkevin.github.io/FullStackEngineer/images/insurance-policy-admin.png"/><script src="/_next/static/chunks/polyfills-c67a75d1b6f99dc8.js" crossorigin="" noModule=""></script></head><body><script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Kevin Douglas Delong","jobTitle":"Full-Stack Engineer","email":"mailto:delong.kevin@gmail.com","url":"https://delongkevin.github.io/FullStackEngineer","sameAs":["https://github.com/delongkevin","https://x.com/delongkevin1446"]}</script><a href="#main-content" class="skip-link">Skip to main content</a><div class="min-h-screen app-shell-bg"><header class="fixed top-0 w-full theme-header backdrop-blur-md z-50 border-b"><nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8" aria-label="Main navigation"><div class="flex justify-between items-center h-14 sm:h-16 gap-2"><div class="flex-shrink min-w-0"><a class="text-lg sm:text-2xl font-bold theme-accent-text truncate block" href="/">Kevin Delong</a></div><div class="hidden md:block"><div class="ml-10 flex items-baseline space-x-8"><a class="px-4 py-3 rounded-md text-sm font-medium transition-colors min-h-[44px] flex items-center theme-text-secondary hover:opacity-80" href="/">Home</a><a aria-current="page" class="px-4 py-3 rounded-md text-sm font-medium transition-colors min-h-[44px] flex items-center theme-accent-text surface-subtle" href="/projects/">Projects</a><a class="px-4 py-3 rounded-md text-sm font-medium transition-colors min-h-[44px] flex items-center theme-text-secondary hover:opacity-80" href="/resume/">Resume</a><a class="px-4 py-3 rounded-md text-sm font-medium transition-colors min-h-[44px] flex items-center theme-text-secondary hover:opacity-80" href="/about/">About</a><a class="px-4 py-3 rounded-md text-sm font-medium transition-colors min-h-[44px] flex items-center theme-text-secondary hover:opacity-80" href="/contact/">Contact</a></div></div><div class="hidden md:flex"><div class="flex items-center gap-2"><button type="button" class="inline-flex items-center gap-2 px-3 py-2 rounded-lg border theme-border text-sm font-semibold theme-text-primary hover:opacity-90 surface-card" aria-expanded="false" aria-controls="display-controls"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-monitor" aria-hidden="true"><rect width="20" height="14" x="2" y="3" rx="2"></rect><line x1="8" x2="16" y1="21" y2="21"></line><line x1="12" x2="12" y1="17" y2="21"></line></svg><span class="hidden sm:inline">Display</span></button></div></div><div class="md:hidden"><button class="theme-text-secondary hover:opacity-80 p-2 min-h-[44px] min-w-[44px]" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open navigation menu"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu" aria-hidden="true"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg></button></div></div></nav></header><script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Insurance Policy Administration System","applicationCategory":"fullstack","operatingSystem":"Web, Android, iOS","description":"Full-stack P&C Insurance Policy Administration demo — policy builder, ISO bureau rate engine, ACORD XML/JSON form serialization, REST API studio, clean architecture diagram, and SOLID principles showcase.","image":"https://delongkevin.github.io/FullStackEngineer/images/insurance-policy-admin.png","url":"https://delongkevin.github.io/FullStackEngineer/projects/insurance-policy-admin/","codeRepository":"https://github.com/delongkevin/FullStackEngineer","author":{"@type":"Person","name":"Kevin Douglas Delong"}}</script><main id="main-content" class="pt-24 pb-16 min-h-screen"><div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"><a class="inline-flex items-center gap-2 theme-accent-text hover:opacity-80 mb-6" aria-label="Back to all projects" href="/projects/"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left" aria-hidden="true"><path d="m12 19-7-7 7-7"></path><path d="M19 12H5"></path></svg>Back to Projects</a><div class="surface-card rounded-xl shadow-lg p-8 mb-8"><div class="flex flex-col lg:flex-row gap-8"><div class="lg:w-1/3"><div class="relative h-64 rounded-lg overflow-hidden"><img alt="Insurance Policy Administration System screenshot" loading="lazy" decoding="async" data-nimg="fill" class="object-cover" style="position:absolute;height:100%;width:100%;left:0;top:0;right:0;bottom:0;color:transparent" src="/images/insurance-policy-admin.png"/></div></div><div class="lg:w-2/3"><h1 class="text-3xl font-bold theme-text-primary mb-4">Insurance Policy Administration System</h1><p class="text-xl theme-text-secondary mb-6">A comprehensive Insurance Policy Administration System targeting the Insurity Full Stack Architect role. The application demonstrates six integrated capabilities: a Policy Dashboard with KPI cards (1,247 policies, $4.2M written premium, 58% loss ratio), Canvas-rendered monthly premium bar chart, line-of-business donut chart, and 8-row policy table with Active/Pending/Cancelled badges; a Policy Builder with all 50 US states, dynamic LOB-specific coverage checkboxes (Auto, Property, GL, Workers Comp), per-occurrence limit and deductible inputs, a JavaScript RateEngine class calculating premium via territory × SIC × deductible-credit factors, and one-click ACORD 130 XML and JSON export with syntax highlighting; a Rate Engine tab showing the ISO bureau rating flowchart, territory factor table (10 states), SIC class code table (8 codes), deductible credit schedule, and a live interactive step-by-step rate calculator; a Bureau Forms library with 10 ISO/ACORD forms (CG 00 01, CA 00 01, CP 00 10, etc.), clickable XML schema preview, edition diff viewer, JSON Schema explorer, and mock form validation; an Architecture tab with a CSS Clean Architecture layer diagram (Domain → Application → Infrastructure → Presentation), 5 SOLID principle cards with C# insurance domain code examples, 4 design pattern cards (Strategy, Factory, Repository, Observer), and Microsoft full-stack technology grid (.NET 8, ASP.NET Core, EF Core, SQL Server, Azure); and an API Studio with 7 REST endpoints, collapsible Try-It panels, editable JSON request bodies, 600ms simulated responses, and status-code badges.</p><div class="flex flex-wrap gap-4 mb-6"><span class="px-4 py-2 theme-chip rounded-full font-medium">C#</span><span class="px-4 py-2 theme-chip rounded-full font-medium">.NET 8</span><span class="px-4 py-2 theme-chip rounded-full font-medium">ASP.NET Core</span><span class="px-4 py-2 theme-chip rounded-full font-medium">Entity Framework Core</span><span class="px-4 py-2 theme-chip rounded-full font-medium">SQL Server</span><span class="px-4 py-2 theme-chip rounded-full font-medium">Azure</span><span class="px-4 py-2 theme-chip rounded-full font-medium">TypeScript</span><span class="px-4 py-2 theme-chip rounded-full font-medium">JavaScript</span><span class="px-4 py-2 theme-chip rounded-full font-medium">REST API</span><span class="px-4 py-2 theme-chip rounded-full font-medium">ACORD XML</span><span class="px-4 py-2 theme-chip rounded-full font-medium">JSON Schema</span><span class="px-4 py-2 theme-chip rounded-full font-medium">SOLID</span><span class="px-4 py-2 theme-chip rounded-full font-medium">Clean Architecture</span><span class="px-4 py-2 theme-chip rounded-full font-medium">Design Patterns</span><span class="px-4 py-2 theme-chip rounded-full font-medium">P&amp;C Insurance</span></div><div class="flex gap-4"><a href="/projects/insurance-policy-admin/index.html" class="btn-primary inline-flex items-center gap-2" target="_self" aria-label="Open interactive demo of Insurance Policy Administration System"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" x2="21" y1="14" y2="3"></line></svg>View Demo</a><a href="https://github.com/delongkevin/FullStackEngineer" class="btn-secondary inline-flex items-center gap-2" target="_blank" rel="noopener noreferrer" aria-label="View source code for Insurance Policy Administration System on GitHub"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg>View Code</a></div></div></div></div><div class="grid grid-cols-1 lg:grid-cols-3 gap-8"><div class="lg:col-span-2"><div class="surface-card rounded-xl shadow-lg p-6"><h2 class="text-2xl font-bold theme-text-primary mb-6">Interactive Demo</h2><div class="surface-subtle rounded-lg p-6 min-h-[600px]"><div class="flex flex-wrap items-center justify-between gap-3 mb-4"><p class="text-sm theme-text-secondary">Run the interactive demo directly in this page, or open it in a dedicated tab for full-screen testing.</p><div class="flex flex-wrap gap-2"><button type="button" class="inline-flex items-center gap-2 px-3 py-2 rounded-lg border theme-border text-sm theme-text-secondary hover:opacity-90 transition-colors surface-card"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-refresh-cw" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path><path d="M8 16H3v5"></path></svg>Reload Demo</button><a href="/projects/insurance-policy-admin/index.html" target="_self" rel="" class="inline-flex items-center gap-2 px-3 py-2 rounded-lg border theme-border theme-chip text-sm hover:opacity-90 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-external-link" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" x2="21" y1="14" y2="3"></line></svg>Open Demo</a><button type="button" class="inline-flex items-center gap-2 px-3 py-2 rounded-lg border theme-border text-sm theme-text-secondary hover:opacity-90 transition-colors surface-card" aria-live="polite"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>Copy Link</button></div></div><div class="mb-4 flex flex-wrap items-center gap-2"><p class="text-xs font-semibold uppercase tracking-wide theme-text-tertiary">Demo Size</p><button type="button" class="px-3 py-1.5 rounded-full border text-xs font-semibold surface-card theme-text-secondary theme-border hover:opacity-90">Short</button><button type="button" class="px-3 py-1.5 rounded-full border text-xs font-semibold bg-blue-600 text-white border-blue-600">Medium</button><button type="button" class="px-3 py-1.5 rounded-full border text-xs font-semibold surface-card theme-text-secondary theme-border hover:opacity-90">Tall</button><button type="button" class="px-3 py-1.5 rounded-full border text-xs font-semibold surface-card theme-text-secondary theme-border hover:opacity-90">Full</button></div><p id="demo-description" class="sr-only">This interactive demo allows you to try <!-- -->Insurance Policy Administration System<!-- -->. Use keyboard navigation to interact with the embedded content.</p><iframe src="/projects/insurance-policy-admin/index.html" class="w-full border-0 rounded-lg surface-card" title="Interactive demo of Insurance Policy Administration System - fullstack project" aria-describedby="demo-description" loading="lazy" sandbox="allow-forms allow-scripts allow-same-origin" style="min-height:680px;height:680px"></iframe></div></div></div><div class="space-y-6"><details open="" class="surface-card rounded-xl shadow-lg p-6"><summary class="text-lg font-semibold theme-text-primary mb-4 cursor-pointer">Project Information</summary><div class="space-y-3 mt-4"><div><span class="text-sm theme-text-tertiary">Category:</span><div class="font-medium theme-text-primary">Full Stack</div></div><div><span class="text-sm theme-text-tertiary">Status:</span><div class="font-medium text-green-600">Completed</div></div><div><span class="text-sm theme-text-tertiary">Type:</span><div class="font-medium theme-text-primary">Interactive Demo</div></div></div></details><details open="" class="surface-card rounded-xl shadow-lg p-6"><summary class="text-lg font-semibold theme-text-primary mb-4 cursor-pointer">Technology Stack</summary><div class="flex flex-wrap gap-2 mt-4"><span class="px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm">C#</span><span class="px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm">.NET 8</span><span class="px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm">ASP.NET Core</span><span class="px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm">Entity Framework Core</span><span class="px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm">SQL Server</span><span class="px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm">Azure</span><span class="px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm">TypeScript</span><span class="px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm">JavaScript</span><span class="px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm">REST API</span><span class="px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm">ACORD XML</span><span class="px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm">JSON Schema</span><span class="px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm">SOLID</span><span class="px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm">Clean Architecture</span><span class="px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm">Design Patterns</span><span class="px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm">P&amp;C Insurance</span></div></details></div></div><section class="surface-card rounded-xl shadow-lg p-6 mt-8" aria-label="Interactive tutorial"><div class="flex items-center gap-3 mb-4"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-500" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg><h2 class="text-2xl font-bold theme-text-primary">How to Use <!-- -->Insurance Policy Administration System</h2></div><p class="theme-text-secondary mb-6 text-sm">Follow this interactive guide to learn all the features and how to use this application effectively.</p><div class="flex items-center justify-center gap-2 mb-6"><button type="button" class="h-2 rounded-full transition-all w-8 bg-blue-500" aria-label="Go to step 1" aria-current="step"></button><button type="button" class="h-2 rounded-full transition-all w-2 bg-gray-300 hover:bg-gray-400" aria-label="Go to step 2"></button><button type="button" class="h-2 rounded-full transition-all w-2 bg-gray-300 hover:bg-gray-400" aria-label="Go to step 3"></button></div><div class="rounded-lg p-6 mb-6" style="background:var(--surface-2)"><div class="mb-4"><div class="flex items-center justify-between mb-2"><span class="text-sm font-semibold text-blue-600">Step <!-- -->1<!-- --> of <!-- -->3</span><span class="text-xs theme-text-tertiary">33<!-- -->% Complete</span></div><h3 class="text-2xl font-bold theme-text-primary mb-2">Policy Dashboard</h3><p class="theme-text-secondary">View P&amp;C insurance portfolio metrics.</p></div><div class="mb-6"><h4 class="text-lg font-semibold theme-text-primary mb-3 flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-green-500" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>Instructions</h4><ol class="space-y-3"><li class="flex items-start gap-3"><span class="flex-shrink-0 w-6 h-6 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-sm font-semibold"><span aria-hidden="true">1</span></span><span class="theme-text-secondary pt-0.5">See KPI cards: total policies, written premium, loss ratio, avg age</span></li><li class="flex items-start gap-3"><span class="flex-shrink-0 w-6 h-6 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-sm font-semibold"><span aria-hidden="true">2</span></span><span class="theme-text-secondary pt-0.5">Canvas bar chart shows 12-month premium trends</span></li><li class="flex items-start gap-3"><span class="flex-shrink-0 w-6 h-6 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-sm font-semibold"><span aria-hidden="true">3</span></span><span class="theme-text-secondary pt-0.5">Donut chart displays line-of-business split</span></li><li class="flex items-start gap-3"><span class="flex-shrink-0 w-6 h-6 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-sm font-semibold"><span aria-hidden="true">4</span></span><span class="theme-text-secondary pt-0.5">Review 8 realistic P&amp;C policies in table</span></li></ol></div><div class="rounded-lg p-4" style="background:var(--surface-1);border:1px solid var(--border-soft)"><h4 class="text-base font-semibold theme-text-primary mb-2 flex items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-yellow-500" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"></path><path d="M9 18h6"></path><path d="M10 22h4"></path></svg>Pro Tips</h4><ul class="space-y-2"><li class="flex items-start gap-2"><span class="text-yellow-500 mt-1" aria-hidden="true">💡</span><span class="theme-text-secondary text-sm">Policy table shows PolicyNumber, Insured, LOB, Premium</span></li><li class="flex items-start gap-2"><span class="text-yellow-500 mt-1" aria-hidden="true">💡</span><span class="theme-text-secondary text-sm">Status badges: Active/Pending/Cancelled</span></li></ul></div></div><div class="flex items-center justify-between"><button type="button" disabled="" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors bg-gray-200 text-gray-400 cursor-not-allowed" aria-label="Previous step"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>Previous</button><div class="text-center"><p class="text-sm theme-text-tertiary">Step <!-- -->1<!-- --> of <!-- -->3</p></div><button type="button" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors bg-blue-500 text-white hover:bg-blue-600" aria-label="Next step">Next<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg></button></div></section><section class="mt-10 space-y-6" aria-label="Project navigation and related work"><div class="surface-card rounded-xl shadow-lg p-6"><h2 class="text-xl font-bold theme-text-primary mb-4">Continue Exploring</h2><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><a class="block rounded-lg surface-subtle p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors" href="/projects/accessibility-qa-ai-trainer/"><p class="text-sm theme-text-tertiary">Previous project</p><p class="font-semibold theme-text-primary">Accessibility QA Engineer – AI Trainer Platform</p></a><a class="block rounded-lg surface-subtle p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors" href="/projects/capl-diagnostics-can-verification/"><p class="text-sm theme-text-tertiary">Next project</p><p class="font-semibold theme-text-primary">CAPL Diagnostics &amp; CAN Verification Demo</p></a></div></div><div class="surface-card rounded-xl shadow-lg p-6"><h2 class="text-xl font-bold theme-text-primary mb-4">Related Projects</h2><div class="grid grid-cols-1 md:grid-cols-3 gap-4"><a class="rounded-lg surface-subtle p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors" href="/projects/11/"><p class="font-semibold theme-text-primary">Online Grocery Order System</p><p class="text-sm theme-text-secondary mt-1 line-clamp-2">Full-stack retail ordering app with product catalog, cart, checkout form, and order persistence</p></a><a class="rounded-lg surface-subtle p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors" href="/projects/12/"><p class="font-semibold theme-text-primary">Task Manager</p><p class="text-sm theme-text-secondary mt-1 line-clamp-2">Full-stack task management app with CRUD, priority levels, filters, search, and localStorage sync</p></a><a class="rounded-lg surface-subtle p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors" href="/projects/kamps-smart-factory/"><p class="font-semibold theme-text-primary">Kamps Smart Factory Platform</p><p class="text-sm theme-text-secondary mt-1 line-clamp-2">Industry 4.0 mobile dashboard showcasing PLC integration, YOLOv8 pallet detection, K3s microservices, Prometheus/Grafana observability, MQTT pub/sub, and full CI/CD — built for Kamps</p></a></div></div></section></div></main><footer class="py-10 sm:py-12" aria-label="Site footer" style="background:var(--surface-1);color:var(--text-1);border-top:1px solid var(--border-soft)"><div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8"><div class="flex flex-col md:flex-row justify-between items-center"><div class="mb-6 md:mb-0 text-center md:text-left"><h3 class="text-xl sm:text-2xl font-bold theme-text-primary">Kevin Delong</h3><p class="theme-text-secondary mt-2">Full Stack &amp; Frontend Developer</p></div><div class="flex space-x-4 sm:space-x-6"><a href="https://github.com/delongkevin" class="theme-text-secondary hover:opacity-80 transition-colors w-11 h-11 rounded-full surface-subtle flex items-center justify-center" aria-label="GitHub" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg></a><a href="https://x.com/delongkevin1446" class="theme-text-secondary hover:opacity-80 transition-colors w-11 h-11 rounded-full surface-subtle flex items-center justify-center" aria-label="Twitter" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-twitter" aria-hidden="true"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg></a><a href="mailto:delong.kevin@gmail.com" class="theme-text-secondary hover:opacity-80 transition-colors w-11 h-11 rounded-full surface-subtle flex items-center justify-center" aria-label="Email" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg></a></div></div><div class="border-t theme-border mt-8 pt-8 text-center theme-text-secondary"><p>© <!-- -->2026<!-- --> Kevin Douglas Delong. All rights reserved.</p><p class="mt-2 text-sm">Phone: (810) 287-7409 | Email: delong.kevin@gmail.com</p></div></div></footer></div><script src="/_next/static/chunks/webpack-6ca410362e9e7186.js" crossorigin="" async=""></script><script>(self.__next_f=self.__next_f||[]).push([0]);self.__next_f.push([2,null])</script><script>self.__next_f.push([1,"1:HL[\"/_next/static/css/6bf4ff073c45ccdc.css\",\"style\",{\"crossOrigin\":\"\"}]\n0:\"$L2\"\n"])</script><script>self.__next_f.push([1,"3:I[3728,[],\"\"]\n5:I[9928,[],\"\"]\n6:I[6954,[],\"\"]\n7:I[7264,[],\"\"]\n9:I[4689,[\"383\",\"static/chunks/383-23d7520fe27f6da1.js\",\"413\",\"static/chunks/413-0066863adaac6978.js\",\"689\",\"static/chunks/689-0b1f225f0c141f4d.js\",\"565\",\"static/chunks/565-63fc7560b8b16033.js\",\"626\",\"static/chunks/app/projects/%5Bid%5D/page-e8b7be92ba49648e.js\"],\"\"]\na:I[2070,[\"383\",\"static/chunks/383-23d7520fe27f6da1.js\",\"413\",\"static/chunks/413-0066863adaac6978.js\",\"689\",\"static/chunks/689-0b1f225f0c141f4d.js\",\"565\",\"static/chunks/565-63fc756"])</script><script>self.__next_f.push([1,"0b8b16033.js\",\"626\",\"static/chunks/app/projects/%5Bid%5D/page-e8b7be92ba49648e.js\"],\"\"]\nb:I[8326,[\"383\",\"static/chunks/383-23d7520fe27f6da1.js\",\"413\",\"static/chunks/413-0066863adaac6978.js\",\"689\",\"static/chunks/689-0b1f225f0c141f4d.js\",\"565\",\"static/chunks/565-63fc7560b8b16033.js\",\"626\",\"static/chunks/app/projects/%5Bid%5D/page-e8b7be92ba49648e.js\"],\"\"]\nc:I[413,[\"383\",\"static/chunks/383-23d7520fe27f6da1.js\",\"413\",\"static/chunks/413-0066863adaac6978.js\",\"689\",\"static/chunks/689-0b1f225f0c141f4d.js\",\"565\",\"st"])</script><script>self.__next_f.push([1,"atic/chunks/565-63fc7560b8b16033.js\",\"626\",\"static/chunks/app/projects/%5Bid%5D/page-e8b7be92ba49648e.js\"],\"Image\"]\ne:I[4045,[\"383\",\"static/chunks/383-23d7520fe27f6da1.js\",\"413\",\"static/chunks/413-0066863adaac6978.js\",\"689\",\"static/chunks/689-0b1f225f0c141f4d.js\",\"565\",\"static/chunks/565-63fc7560b8b16033.js\",\"626\",\"static/chunks/app/projects/%5Bid%5D/page-e8b7be92ba49648e.js\"],\"\"]\nf:I[410,[\"383\",\"static/chunks/383-23d7520fe27f6da1.js\",\"413\",\"static/chunks/413-0066863adaac6978.js\",\"689\",\"static/chunks/689-0b"])</script><script>self.__next_f.push([1,"1f225f0c141f4d.js\",\"565\",\"static/chunks/565-63fc7560b8b16033.js\",\"626\",\"static/chunks/app/projects/%5Bid%5D/page-e8b7be92ba49648e.js\"],\"\"]\n10:I[5918,[\"383\",\"static/chunks/383-23d7520fe27f6da1.js\",\"413\",\"static/chunks/413-0066863adaac6978.js\",\"689\",\"static/chunks/689-0b1f225f0c141f4d.js\",\"565\",\"static/chunks/565-63fc7560b8b16033.js\",\"626\",\"static/chunks/app/projects/%5Bid%5D/page-e8b7be92ba49648e.js\"],\"\"]\nd:T649,"])</script><script>self.__next_f.push([1,"A comprehensive Insurance Policy Administration System targeting the Insurity Full Stack Architect role. The application demonstrates six integrated capabilities: a Policy Dashboard with KPI cards (1,247 policies, $4.2M written premium, 58% loss ratio), Canvas-rendered monthly premium bar chart, line-of-business donut chart, and 8-row policy table with Active/Pending/Cancelled badges; a Policy Builder with all 50 US states, dynamic LOB-specific coverage checkboxes (Auto, Property, GL, Workers Comp), per-occurrence limit and deductible inputs, a JavaScript RateEngine class calculating premium via territory × SIC × deductible-credit factors, and one-click ACORD 130 XML and JSON export with syntax highlighting; a Rate Engine tab showing the ISO bureau rating flowchart, territory factor table (10 states), SIC class code table (8 codes), deductible credit schedule, and a live interactive step-by-step rate calculator; a Bureau Forms library with 10 ISO/ACORD forms (CG 00 01, CA 00 01, CP 00 10, etc.), clickable XML schema preview, edition diff viewer, JSON Schema explorer, and mock form validation; an Architecture tab with a CSS Clean Architecture layer diagram (Domain → Application → Infrastructure → Presentation), 5 SOLID principle cards with C# insurance domain code examples, 4 design pattern cards (Strategy, Factory, Repository, Observer), and Microsoft full-stack technology grid (.NET 8, ASP.NET Core, EF Core, SQL Server, Azure); and an API Studio with 7 REST endpoints, collapsible Try-It panels, editable JSON request bodies, 600ms simulated responses, and status-code badges."])</script><script>self.__next_f.push([1,"2:[[[\"$\",\"link\",\"0\",{\"rel\":\"stylesheet\",\"href\":\"/_next/static/css/6bf4ff073c45ccdc.css\",\"precedence\":\"next\",\"crossOrigin\":\"\"}]],[\"$\",\"$L3\",null,{\"buildId\":\"UrAT3cg7EcLp7h1HMfPVi\",\"assetPrefix\":\"\",\"initialCanonicalUrl\":\"/projects/insurance-policy-admin/\",\"initialTree\":[\"\",{\"children\":[\"projects\",{\"children\":[[\"id\",\"insurance-policy-admin\",\"d\"],{\"children\":[\"__PAGE__?{\\\"id\\\":\\\"insurance-policy-admin\\\"}\",{}]}]}]},\"$undefined\",\"$undefined\",true],\"initialHead\":[false,\"$L4\"],\"globalErrorComponent\":\"$5\",\"children\":[null,[\"$\",\"html\",null,{\"lang\":\"en\",\"children\":[\"$\",\"body\",null,{\"children\":[null,[\"$\",\"script\",null,{\"type\":\"application/ld+json\",\"dangerouslySetInnerHTML\":{\"__html\":\"{\\\"@context\\\":\\\"https://schema.org\\\",\\\"@type\\\":\\\"Person\\\",\\\"name\\\":\\\"Kevin Douglas Delong\\\",\\\"jobTitle\\\":\\\"Full-Stack Engineer\\\",\\\"email\\\":\\\"mailto:delong.kevin@gmail.com\\\",\\\"url\\\":\\\"https://delongkevin.github.io/FullStackEngineer\\\",\\\"sameAs\\\":[\\\"https://github.com/delongkevin\\\",\\\"https://x.com/delongkevin1446\\\"]}\"}}],[\"$\",\"a\",null,{\"href\":\"#main-content\",\"className\":\"skip-link\",\"children\":\"Skip to main content\"}],[\"$\",\"div\",null,{\"className\":\"min-h-screen app-shell-bg\",\"children\":[\"$\",\"$L6\",null,{\"parallelRouterKey\":\"children\",\"segmentPath\":[\"children\"],\"loading\":\"$undefined\",\"loadingStyles\":\"$undefined\",\"loadingScripts\":\"$undefined\",\"hasLoading\":false,\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L7\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":[[\"$\",\"title\",null,{\"children\":\"404: This page could not be found.\"}],[\"$\",\"div\",null,{\"style\":{\"fontFamily\":\"system-ui,\\\"Segoe UI\\\",Roboto,Helvetica,Arial,sans-serif,\\\"Apple Color Emoji\\\",\\\"Segoe UI Emoji\\\"\",\"height\":\"100vh\",\"textAlign\":\"center\",\"display\":\"flex\",\"flexDirection\":\"column\",\"alignItems\":\"center\",\"justifyContent\":\"center\"},\"children\":[\"$\",\"div\",null,{\"children\":[[\"$\",\"style\",null,{\"dangerouslySetInnerHTML\":{\"__html\":\"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}\"}}],[\"$\",\"h1\",null,{\"className\":\"next-error-h1\",\"style\":{\"display\":\"inline-block\",\"margin\":\"0 20px 0 0\",\"padding\":\"0 23px 0 0\",\"fontSize\":24,\"fontWeight\":500,\"verticalAlign\":\"top\",\"lineHeight\":\"49px\"},\"children\":\"404\"}],[\"$\",\"div\",null,{\"style\":{\"display\":\"inline-block\"},\"children\":[\"$\",\"h2\",null,{\"style\":{\"fontSize\":14,\"fontWeight\":400,\"lineHeight\":\"49px\",\"margin\":0},\"children\":\"This page could not be found.\"}]}]]}]}]],\"notFoundStyles\":[],\"childProp\":{\"current\":[\"$\",\"$L6\",null,{\"parallelRouterKey\":\"children\",\"segmentPath\":[\"children\",\"projects\",\"children\"],\"loading\":\"$undefined\",\"loadingStyles\":\"$undefined\",\"loadingScripts\":\"$undefined\",\"hasLoading\":false,\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L7\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":\"$undefined\",\"notFoundStyles\":\"$undefined\",\"childProp\":{\"current\":[\"$\",\"$L6\",null,{\"parallelRouterKey\":\"children\",\"segmentPath\":[\"children\",\"projects\",\"children\",[\"id\",\"insurance-policy-admin\",\"d\"],\"children\"],\"loading\":\"$undefined\",\"loadingStyles\":\"$undefined\",\"loadingScripts\":\"$undefined\",\"hasLoading\":false,\"error\":\"$undefined\",\"errorStyles\":\"$undefined\",\"errorScripts\":\"$undefined\",\"template\":[\"$\",\"$L7\",null,{}],\"templateStyles\":\"$undefined\",\"templateScripts\":\"$undefined\",\"notFound\":\"$undefined\",\"notFoundStyles\":\"$undefined\",\"childProp\":{\"current\":[\"$L8\",[[\"$\",\"$L9\",null,{}],[\"$\",\"$La\",null,{\"projectId\":34}],[\"$\",\"script\",null,{\"type\":\"application/ld+json\",\"dangerouslySetInnerHTML\":{\"__html\":\"{\\\"@context\\\":\\\"https://schema.org\\\",\\\"@type\\\":\\\"SoftwareApplication\\\",\\\"name\\\":\\\"Insurance Policy Administration System\\\",\\\"applicationCategory\\\":\\\"fullstack\\\",\\\"operatingSystem\\\":\\\"Web, Android, iOS\\\",\\\"description\\\":\\\"Full-stack P\u0026C Insurance Policy Administration demo — policy builder, ISO bureau rate engine, ACORD XML/JSON form serialization, REST API studio, clean architecture diagram, and SOLID principles showcase.\\\",\\\"image\\\":\\\"https://delongkevin.github.io/FullStackEngineer/images/insurance-policy-admin.png\\\",\\\"url\\\":\\\"https://delongkevin.github.io/FullStackEngineer/projects/insurance-policy-admin/\\\",\\\"codeRepository\\\":\\\"https://github.com/delongkevin/FullStackEngineer\\\",\\\"author\\\":{\\\"@type\\\":\\\"Person\\\",\\\"name\\\":\\\"Kevin Douglas Delong\\\"}}\"}}],[\"$\",\"main\",null,{\"id\":\"main-content\",\"className\":\"pt-24 pb-16 min-h-screen\",\"children\":[\"$\",\"div\",null,{\"className\":\"max-w-6xl mx-auto px-4 sm:px-6 lg:px-8\",\"children\":[[\"$\",\"$Lb\",null,{\"href\":\"/projects\",\"className\":\"inline-flex items-center gap-2 theme-accent-text hover:opacity-80 mb-6\",\"aria-label\":\"Back to all projects\",\"children\":[[\"$\",\"svg\",null,{\"xmlns\":\"http://www.w3.org/2000/svg\",\"width\":20,\"height\":20,\"viewBox\":\"0 0 24 24\",\"fill\":\"none\",\"stroke\":\"currentColor\",\"strokeWidth\":2,\"strokeLinecap\":\"round\",\"strokeLinejoin\":\"round\",\"className\":\"lucide lucide-arrow-left\",\"aria-hidden\":\"true\",\"children\":[[\"$\",\"path\",\"1l729n\",{\"d\":\"m12 19-7-7 7-7\"}],[\"$\",\"path\",\"x3x0zl\",{\"d\":\"M19 12H5\"}],\"$undefined\"]}],\"Back to Projects\"]}],[\"$\",\"div\",null,{\"className\":\"surface-card rounded-xl shadow-lg p-8 mb-8\",\"children\":[\"$\",\"div\",null,{\"className\":\"flex flex-col lg:flex-row gap-8\",\"children\":[[\"$\",\"div\",null,{\"className\":\"lg:w-1/3\",\"children\":[\"$\",\"div\",null,{\"className\":\"relative h-64 rounded-lg overflow-hidden\",\"children\":[\"$\",\"$Lc\",null,{\"src\":\"/images/insurance-policy-admin.png\",\"alt\":\"Insurance Policy Administration System screenshot\",\"fill\":true,\"className\":\"object-cover\",\"sizes\":\"(max-width: 1024px) 100vw, 33vw\"}]}]}],[\"$\",\"div\",null,{\"className\":\"lg:w-2/3\",\"children\":[[\"$\",\"h1\",null,{\"className\":\"text-3xl font-bold theme-text-primary mb-4\",\"children\":\"Insurance Policy Administration System\"}],[\"$\",\"p\",null,{\"className\":\"text-xl theme-text-secondary mb-6\",\"children\":\"$d\"}],[\"$\",\"div\",null,{\"className\":\"flex flex-wrap gap-4 mb-6\",\"children\":[[\"$\",\"span\",\"C#\",{\"className\":\"px-4 py-2 theme-chip rounded-full font-medium\",\"children\":\"C#\"}],[\"$\",\"span\",\".NET 8\",{\"className\":\"px-4 py-2 theme-chip rounded-full font-medium\",\"children\":\".NET 8\"}],[\"$\",\"span\",\"ASP.NET Core\",{\"className\":\"px-4 py-2 theme-chip rounded-full font-medium\",\"children\":\"ASP.NET Core\"}],[\"$\",\"span\",\"Entity Framework Core\",{\"className\":\"px-4 py-2 theme-chip rounded-full font-medium\",\"children\":\"Entity Framework Core\"}],[\"$\",\"span\",\"SQL Server\",{\"className\":\"px-4 py-2 theme-chip rounded-full font-medium\",\"children\":\"SQL Server\"}],[\"$\",\"span\",\"Azure\",{\"className\":\"px-4 py-2 theme-chip rounded-full font-medium\",\"children\":\"Azure\"}],[\"$\",\"span\",\"TypeScript\",{\"className\":\"px-4 py-2 theme-chip rounded-full font-medium\",\"children\":\"TypeScript\"}],[\"$\",\"span\",\"JavaScript\",{\"className\":\"px-4 py-2 theme-chip rounded-full font-medium\",\"children\":\"JavaScript\"}],[\"$\",\"span\",\"REST API\",{\"className\":\"px-4 py-2 theme-chip rounded-full font-medium\",\"children\":\"REST API\"}],[\"$\",\"span\",\"ACORD XML\",{\"className\":\"px-4 py-2 theme-chip rounded-full font-medium\",\"children\":\"ACORD XML\"}],[\"$\",\"span\",\"JSON Schema\",{\"className\":\"px-4 py-2 theme-chip rounded-full font-medium\",\"children\":\"JSON Schema\"}],[\"$\",\"span\",\"SOLID\",{\"className\":\"px-4 py-2 theme-chip rounded-full font-medium\",\"children\":\"SOLID\"}],[\"$\",\"span\",\"Clean Architecture\",{\"className\":\"px-4 py-2 theme-chip rounded-full font-medium\",\"children\":\"Clean Architecture\"}],[\"$\",\"span\",\"Design Patterns\",{\"className\":\"px-4 py-2 theme-chip rounded-full font-medium\",\"children\":\"Design Patterns\"}],[\"$\",\"span\",\"P\u0026C Insurance\",{\"className\":\"px-4 py-2 theme-chip rounded-full font-medium\",\"children\":\"P\u0026C Insurance\"}]]}],[\"$\",\"div\",null,{\"className\":\"flex gap-4\",\"children\":[[\"$\",\"a\",null,{\"href\":\"/projects/insurance-policy-admin/index.html\",\"className\":\"btn-primary inline-flex items-center gap-2\",\"target\":\"_self\",\"rel\":\"$undefined\",\"aria-label\":\"Open interactive demo of Insurance Policy Administration System\",\"children\":[[\"$\",\"svg\",null,{\"xmlns\":\"http://www.w3.org/2000/svg\",\"width\":20,\"height\":20,\"viewBox\":\"0 0 24 24\",\"fill\":\"none\",\"stroke\":\"currentColor\",\"strokeWidth\":2,\"strokeLinecap\":\"round\",\"strokeLinejoin\":\"round\",\"className\":\"lucide lucide-external-link\",\"aria-hidden\":\"true\",\"children\":[[\"$\",\"path\",\"a6xqqp\",{\"d\":\"M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6\"}],[\"$\",\"polyline\",\"mznyad\",{\"points\":\"15 3 21 3 21 9\"}],[\"$\",\"line\",\"18c3s4\",{\"x1\":\"10\",\"x2\":\"21\",\"y1\":\"14\",\"y2\":\"3\"}],\"$undefined\"]}],\"View Demo\"]}],[\"$\",\"a\",null,{\"href\":\"https://github.com/delongkevin/FullStackEngineer\",\"className\":\"btn-secondary inline-flex items-center gap-2\",\"target\":\"_blank\",\"rel\":\"noopener noreferrer\",\"aria-label\":\"View source code for Insurance Policy Administration System on GitHub\",\"children\":[[\"$\",\"svg\",null,{\"xmlns\":\"http://www.w3.org/2000/svg\",\"width\":20,\"height\":20,\"viewBox\":\"0 0 24 24\",\"fill\":\"none\",\"stroke\":\"currentColor\",\"strokeWidth\":2,\"strokeLinecap\":\"round\",\"strokeLinejoin\":\"round\",\"className\":\"lucide lucide-github\",\"aria-hidden\":\"true\",\"children\":[[\"$\",\"path\",\"tonef\",{\"d\":\"M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4\"}],[\"$\",\"path\",\"9comsn\",{\"d\":\"M9 18c-4.51 2-5-2-7-2\"}],\"$undefined\"]}],\"View Code\"]}]]}],\"$undefined\"]}]]}]}],[\"$\",\"div\",null,{\"className\":\"grid grid-cols-1 lg:grid-cols-3 gap-8\",\"children\":[[\"$\",\"div\",null,{\"className\":\"lg:col-span-2\",\"children\":[\"$\",\"div\",null,{\"className\":\"surface-card rounded-xl shadow-lg p-6\",\"children\":[[\"$\",\"h2\",null,{\"className\":\"text-2xl font-bold theme-text-primary mb-6\",\"children\":\"Interactive Demo\"}],[\"$\",\"$Le\",null,{\"liveUrl\":\"/projects/insurance-policy-admin/index.html\",\"title\":\"Insurance Policy Administration System\",\"category\":\"fullstack\"}]]}]}],[\"$\",\"div\",null,{\"className\":\"space-y-6\",\"children\":[[\"$\",\"details\",null,{\"open\":true,\"className\":\"surface-card rounded-xl shadow-lg p-6\",\"children\":[[\"$\",\"summary\",null,{\"className\":\"text-lg font-semibold theme-text-primary mb-4 cursor-pointer\",\"children\":\"Project Information\"}],[\"$\",\"div\",null,{\"className\":\"space-y-3 mt-4\",\"children\":[[\"$\",\"div\",null,{\"children\":[[\"$\",\"span\",null,{\"className\":\"text-sm theme-text-tertiary\",\"children\":\"Category:\"}],[\"$\",\"div\",null,{\"className\":\"font-medium theme-text-primary\",\"children\":\"Full Stack\"}]]}],[\"$\",\"div\",null,{\"children\":[[\"$\",\"span\",null,{\"className\":\"text-sm theme-text-tertiary\",\"children\":\"Status:\"}],[\"$\",\"div\",null,{\"className\":\"font-medium text-green-600\",\"children\":\"Completed\"}]]}],[\"$\",\"div\",null,{\"children\":[[\"$\",\"span\",null,{\"className\":\"text-sm theme-text-tertiary\",\"children\":\"Type:\"}],[\"$\",\"div\",null,{\"className\":\"font-medium theme-text-primary\",\"children\":\"Interactive Demo\"}]]}],\"$undefined\"]}]]}],[\"$\",\"details\",null,{\"open\":true,\"className\":\"surface-card rounded-xl shadow-lg p-6\",\"children\":[[\"$\",\"summary\",null,{\"className\":\"text-lg font-semibold theme-text-primary mb-4 cursor-pointer\",\"children\":\"Technology Stack\"}],[\"$\",\"div\",null,{\"className\":\"flex flex-wrap gap-2 mt-4\",\"children\":[[\"$\",\"span\",\"C#\",{\"className\":\"px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm\",\"children\":\"C#\"}],[\"$\",\"span\",\".NET 8\",{\"className\":\"px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm\",\"children\":\".NET 8\"}],[\"$\",\"span\",\"ASP.NET Core\",{\"className\":\"px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm\",\"children\":\"ASP.NET Core\"}],[\"$\",\"span\",\"Entity Framework Core\",{\"className\":\"px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm\",\"children\":\"Entity Framework Core\"}],[\"$\",\"span\",\"SQL Server\",{\"className\":\"px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm\",\"children\":\"SQL Server\"}],[\"$\",\"span\",\"Azure\",{\"className\":\"px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm\",\"children\":\"Azure\"}],[\"$\",\"span\",\"TypeScript\",{\"className\":\"px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm\",\"children\":\"TypeScript\"}],[\"$\",\"span\",\"JavaScript\",{\"className\":\"px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm\",\"children\":\"JavaScript\"}],[\"$\",\"span\",\"REST API\",{\"className\":\"px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm\",\"children\":\"REST API\"}],[\"$\",\"span\",\"ACORD XML\",{\"className\":\"px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm\",\"children\":\"ACORD XML\"}],[\"$\",\"span\",\"JSON Schema\",{\"className\":\"px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm\",\"children\":\"JSON Schema\"}],[\"$\",\"span\",\"SOLID\",{\"className\":\"px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm\",\"children\":\"SOLID\"}],[\"$\",\"span\",\"Clean Architecture\",{\"className\":\"px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm\",\"children\":\"Clean Architecture\"}],[\"$\",\"span\",\"Design Patterns\",{\"className\":\"px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm\",\"children\":\"Design Patterns\"}],[\"$\",\"span\",\"P\u0026C Insurance\",{\"className\":\"px-3 py-1 surface-subtle theme-text-secondary rounded-full text-sm\",\"children\":\"P\u0026C Insurance\"}]]}]]}]]}]]}],[\"$\",\"$Lf\",null,{\"tutorial\":{\"projectId\":34,\"steps\":[{\"title\":\"Policy Dashboard\",\"description\":\"View P\u0026C insurance portfolio metrics.\",\"instructions\":[\"See KPI cards: total policies, written premium, loss ratio, avg age\",\"Canvas bar chart shows 12-month premium trends\",\"Donut chart displays line-of-business split\",\"Review 8 realistic P\u0026C policies in table\"],\"tips\":[\"Policy table shows PolicyNumber, Insured, LOB, Premium\",\"Status badges: Active/Pending/Cancelled\"]},{\"title\":\"Policy Builder\",\"description\":\"Create new P\u0026C insurance policies.\",\"instructions\":[\"Select from all 50 US states\",\"Choose LOB: Auto, Property, General Liability, Workers Comp\",\"Dynamic coverage checkboxes by LOB\",\"Auto: Liability/Collision/Comprehensive\",\"Property: Building/BPP/BI, GL: PremOps/Products, WC: Part A/B\"],\"tips\":[\"Coverage options change based on LOB selection\",\"ISO bureau rate engine calculates premium\"]},{\"title\":\"ACORD Forms \u0026 REST API\",\"description\":\"Serialize policies to ACORD XML/JSON.\",\"instructions\":[\"Generate ACORD 25 Certificate of Liability\",\"Export policies to XML or JSON format\",\"REST API studio for policy operations\",\"Clean architecture with SOLID principles\"],\"tips\":[\"ACORD is insurance industry standard\",\"API supports CRUD operations\"]}]},\"projectTitle\":\"Insurance Policy Administration System\"}],[\"$\",\"$L10\",null,{\"videoUrl\":\"$undefined\",\"projectTitle\":\"Insurance Policy Administration System\"}],[\"$\",\"section\",null,{\"className\":\"mt-10 space-y-6\",\"aria-label\":\"Project navigation and related work\",\"children\":[[\"$\",\"div\",null,{\"className\":\"surface-card rounded-xl shadow-lg p-6\",\"children\":[[\"$\",\"h2\",null,{\"className\":\"text-xl font-bold theme-text-primary mb-4\",\"children\":\"Continue Exploring\"}],[\"$\",\"div\",null,{\"className\":\"grid grid-cols-1 md:grid-cols-2 gap-4\",\"children\":[[\"$\",\"$Lb\",null,{\"href\":\"/projects/accessibility-qa-ai-trainer\",\"className\":\"block rounded-lg surface-subtle p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors\",\"children\":[[\"$\",\"p\",null,{\"className\":\"text-sm theme-text-tertiary\",\"children\":\"Previous project\"}],[\"$\",\"p\",null,{\"className\":\"font-semibold theme-text-primary\",\"children\":\"Accessibility QA Engineer – AI Trainer Platform\"}]]}],[\"$\",\"$Lb\",null,{\"href\":\"/projects/capl-diagnostics-can-verification\",\"className\":\"block rounded-lg surface-subtle p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors\",\"children\":[[\"$\",\"p\",null,{\"className\":\"text-sm theme-text-tertiary\",\"children\":\"Next project\"}],[\"$\",\"p\",null,{\"className\":\"font-semibold theme-text-primary\",\"children\":\"CAPL Diagnostics \u0026 CAN Verification Demo\"}]]}]]}]]}],[\"$\",\"div\",null,{\"className\":\"surface-card rounded-xl shadow-lg p-6\",\"children\":[[\"$\",\"h2\",null,{\"className\":\"text-xl font-bold theme-text-primary mb-4\",\"children\":\"Related Projects\"}],[\"$\",\"div\",null,{\"className\":\"grid grid-cols-1 md:grid-cols-3 gap-4\",\"children\":[[\"$\",\"$Lb\",\"11\",{\"href\":\"/projects/11\",\"className\":\"rounded-lg surface-subtle p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors\",\"children\":[[\"$\",\"p\",null,{\"className\":\"font-semibold theme-text-primary\",\"children\":\"Online Grocery Order System\"}],[\"$\",\"p\",null,{\"className\":\"text-sm theme-text-secondary mt-1 line-clamp-2\",\"children\":\"Full-stack retail ordering app with product catalog, cart, checkout form, and order persistence\"}]]}],[\"$\",\"$Lb\",\"12\",{\"href\":\"/projects/12\",\"className\":\"rounded-lg surface-subtle p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors\",\"children\":[[\"$\",\"p\",null,{\"className\":\"font-semibold theme-text-primary\",\"children\":\"Task Manager\"}],[\"$\",\"p\",null,{\"className\":\"text-sm theme-text-secondary mt-1 line-clamp-2\",\"children\":\"Full-stack task management app with CRUD, priority levels, filters, search, and localStorage sync\"}]]}],[\"$\",\"$Lb\",\"14\",{\"href\":\"/projects/kamps-smart-factory\",\"className\":\"rounded-lg surface-subtle p-4 hover:border-blue-400 hover:bg-blue-50 transition-colors\",\"children\":[[\"$\",\"p\",null,{\"className\":\"font-semibold theme-text-primary\",\"children\":\"Kamps Smart Factory Platform\"}],[\"$\",\"p\",null,{\"className\":\"text-sm theme-text-secondary mt-1 line-clamp-2\",\"children\":\"Industry 4.0 mobile dashboard showcasing PLC integration, YOLOv8 pallet detection, K3s microservices, Prometheus/Grafana observability, MQTT pub/sub, and full CI/CD — built for Kamps\"}]]}]]}]]}]]}]]}]}],[\"$\",\"footer\",null,{\"className\":\"py-10 sm:py-12\",\"aria-label\":\"Site footer\",\"style\":{\"background\":\"var(--surface-1)\",\"color\":\"var(--text-1)\",\"borderTop\":\"1px solid var(--border-soft)\"},\"children\":[\"$\",\"div\",null,{\"className\":\"max-w-6xl mx-auto px-4 sm:px-6 lg:px-8\",\"children\":[[\"$\",\"div\",null,{\"className\":\"flex flex-col md:flex-row justify-between items-center\",\"children\":[[\"$\",\"div\",null,{\"className\":\"mb-6 md:mb-0 text-center md:text-left\",\"children\":[[\"$\",\"h3\",null,{\"className\":\"text-xl sm:text-2xl font-bold theme-text-primary\",\"children\":\"Kevin Delong\"}],[\"$\",\"p\",null,{\"className\":\"theme-text-secondary mt-2\",\"children\":\"Full Stack \u0026 Frontend Developer\"}]]}],[\"$\",\"div\",null,{\"className\":\"flex space-x-4 sm:space-x-6\",\"children\":[[\"$\",\"a\",\"GitHub\",{\"href\":\"https://github.com/delongkevin\",\"className\":\"theme-text-secondary hover:opacity-80 transition-colors w-11 h-11 rounded-full surface-subtle flex items-center justify-center\",\"aria-label\":\"GitHub\",\"target\":\"_blank\",\"rel\":\"noopener noreferrer\",\"children\":[\"$\",\"svg\",null,{\"xmlns\":\"http://www.w3.org/2000/svg\",\"width\":24,\"height\":24,\"viewBox\":\"0 0 24 24\",\"fill\":\"none\",\"stroke\":\"currentColor\",\"strokeWidth\":2,\"strokeLinecap\":\"round\",\"strokeLinejoin\":\"round\",\"className\":\"lucide lucide-github\",\"aria-hidden\":\"true\",\"children\":[[\"$\",\"path\",\"tonef\",{\"d\":\"M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4\"}],[\"$\",\"path\",\"9comsn\",{\"d\":\"M9 18c-4.51 2-5-2-7-2\"}],\"$undefined\"]}]}],[\"$\",\"a\",\"Twitter\",{\"href\":\"https://x.com/delongkevin1446\",\"className\":\"theme-text-secondary hover:opacity-80 transition-colors w-11 h-11 rounded-full surface-subtle flex items-center justify-center\",\"aria-label\":\"Twitter\",\"target\":\"_blank\",\"rel\":\"noopener noreferrer\",\"children\":[\"$\",\"svg\",null,{\"xmlns\":\"http://www.w3.org/2000/svg\",\"width\":24,\"height\":24,\"viewBox\":\"0 0 24 24\",\"fill\":\"none\",\"stroke\":\"currentColor\",\"strokeWidth\":2,\"strokeLinecap\":\"round\",\"strokeLinejoin\":\"round\",\"className\":\"lucide lucide-twitter\",\"aria-hidden\":\"true\",\"children\":[[\"$\",\"path\",\"pff0z6\",{\"d\":\"M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z\"}],\"$undefined\"]}]}],[\"$\",\"a\",\"Email\",{\"href\":\"mailto:delong.kevin@gmail.com\",\"className\":\"theme-text-secondary hover:opacity-80 transition-colors w-11 h-11 rounded-full surface-subtle flex items-center justify-center\",\"aria-label\":\"Email\",\"target\":\"_blank\",\"rel\":\"noopener noreferrer\",\"children\":[\"$\",\"svg\",null,{\"xmlns\":\"http://www.w3.org/2000/svg\",\"width\":24,\"height\":24,\"viewBox\":\"0 0 24 24\",\"fill\":\"none\",\"stroke\":\"currentColor\",\"strokeWidth\":2,\"strokeLinecap\":\"round\",\"strokeLinejoin\":\"round\",\"className\":\"lucide lucide-mail\",\"aria-hidden\":\"true\",\"children\":[[\"$\",\"rect\",\"18n3k1\",{\"width\":\"20\",\"height\":\"16\",\"x\":\"2\",\"y\":\"4\",\"rx\":\"2\"}],[\"$\",\"path\",\"1ocrg3\",{\"d\":\"m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7\"}],\"$undefined\"]}]}]]}]]}],[\"$\",\"div\",null,{\"className\":\"border-t theme-border mt-8 pt-8 text-center theme-text-secondary\",\"children\":[[\"$\",\"p\",null,{\"children\":[\"© \",2026,\" Kevin Douglas Delong. All rights reserved.\"]}],[\"$\",\"p\",null,{\"className\":\"mt-2 text-sm\",\"children\":\"Phone: (810) 287-7409 | Email: delong.kevin@gmail.com\"}]]}]]}]}]],null],\"segment\":\"__PAGE__?{\\\"id\\\":\\\"insurance-policy-admin\\\"}\"},\"styles\":null}],\"segment\":[\"id\",\"insurance-policy-admin\",\"d\"]},\"styles\":null}],\"segment\":\"projects\"},\"styles\":null}]}]]}]}],null]}]]\n"])</script><script>self.__next_f.push([1,"4:[[\"$\",\"meta\",\"0\",{\"name\":\"viewport\",\"content\":\"width=device-width, initial-scale=1\"}],[\"$\",\"meta\",\"1\",{\"charSet\":\"utf-8\"}],[\"$\",\"title\",\"2\",{\"children\":\"Insurance Policy Administration System - Kevin Delong | Kevin Delong\"}],[\"$\",\"meta\",\"3\",{\"name\":\"description\",\"content\":\"Full-stack P\u0026C Insurance Policy Administration demo — policy builder, ISO bureau rate engine, ACORD XML/JSON form serialization, REST API studio, clean archi...\"}],[\"$\",\"link\",\"4\",{\"rel\":\"author\",\"href\":\"https://delongkevin.github.io/FullStackEngineer\"}],[\"$\",\"meta\",\"5\",{\"name\":\"author\",\"content\":\"Kevin Douglas Delong\"}],[\"$\",\"meta\",\"6\",{\"name\":\"keywords\",\"content\":\"Kevin Delong,Full Stack Engineer,React,Next.js,Mobile Development,Automotive Software\"}],[\"$\",\"meta\",\"7\",{\"name\":\"creator\",\"content\":\"Kevin Douglas Delong\"}],[\"$\",\"meta\",\"8\",{\"name\":\"publisher\",\"content\":\"Kevin Douglas Delong\"}],[\"$\",\"meta\",\"9\",{\"name\":\"robots\",\"content\":\"index, follow\"}],[\"$\",\"meta\",\"10\",{\"name\":\"googlebot\",\"content\":\"index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1\"}],[\"$\",\"link\",\"11\",{\"rel\":\"canonical\",\"href\":\"https://delongkevin.github.io/FullStackEngineer/projects/insurance-policy-admin/\"}],[\"$\",\"meta\",\"12\",{\"property\":\"og:title\",\"content\":\"Insurance Policy Administration System - Kevin Delong\"}],[\"$\",\"meta\",\"13\",{\"property\":\"og:description\",\"content\":\"Full-stack P\u0026C Insurance Policy Administration demo — policy builder, ISO bureau rate engine, ACORD XML/JSON form serialization, REST API studio, clean archi...\"}],[\"$\",\"meta\",\"14\",{\"property\":\"og:url\",\"content\":\"https://delongkevin.github.io/FullStackEngineer/projects/insurance-policy-admin/\"}],[\"$\",\"meta\",\"15\",{\"property\":\"og:image\",\"content\":\"https://delongkevin.github.io/FullStackEngineer/images/insurance-policy-admin.png\"}],[\"$\",\"meta\",\"16\",{\"property\":\"og:type\",\"content\":\"article\"}],[\"$\",\"meta\",\"17\",{\"name\":\"twitter:card\",\"content\":\"summary_large_image\"}],[\"$\",\"meta\",\"18\",{\"name\":\"twitter:title\",\"content\":\"Insurance Policy Administration System - Kevin Delong\"}],[\"$\",\"meta\",\"19\",{\"name\":\"twitter:description\",\"content\":\"Full-stack P\u0026C Insurance Policy Administration demo — policy builder, ISO bureau rate engine, ACORD XML/JSON form serialization, REST API studio, clean archi...\"}],[\"$\",\"meta\",\"20\",{\"name\":\"twitter:image\",\"content\":\"https://delongkevin.github.io/FullStackEngineer/images/insurance-policy-admin.png\"}]]\n"])</script><script>self.__next_f.push([1,"8:null\n"])</script><script>self.__next_f.push([1,""])</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Insurance Policy Administration System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0d1b2a;--panel:#1a2d44;--panel2:#1e3555;--accent:#2196f3;--success:#4caf50;--warn:#ff9800;--danger:#f44336;--text:#e8f4fd;--muted:#8cb4d2;--border:#2a4060}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px}
+.app-header{background:var(--panel);border-bottom:2px solid var(--accent);padding:12px 24px;display:flex;align-items:center;gap:16px}
+.app-logo{width:36px;height:36px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px}
+.app-title{font-size:18px;font-weight:700;color:var(--text)}
+.app-sub{font-size:12px;color:var(--muted);margin-left:auto}
+.tab-bar{background:var(--panel);border-bottom:1px solid var(--border);padding:0 24px;display:flex;gap:4px;overflow-x:auto}
+.tab-btn{padding:12px 20px;background:none;border:none;color:var(--muted);cursor:pointer;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;border-bottom:2px solid transparent;white-space:nowrap;transition:all .2s}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tab-content{display:none;padding:24px;animation:fadeIn .2s ease}
+.tab-content.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:20px}
+.card-title{font-size:13px;color:var(--muted);font-weight:500;margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px}
+.kpi-val{font-size:28px;font-weight:700;color:var(--text)}
+.kpi-sub{font-size:12px;color:var(--muted);margin-top:4px}
+.kpi-trend{font-size:12px;margin-top:6px}
+.kpi-trend.up{color:var(--success)}
+.kpi-trend.warn{color:var(--warn)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:10px 12px;color:var(--muted);font-weight:500;border-bottom:1px solid var(--border);font-size:12px;text-transform:uppercase;letter-spacing:.4px}
+td{padding:10px 12px;border-bottom:1px solid rgba(42,64,96,.4)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(33,150,243,.05)}
+.badge{display:inline-block;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.3px}
+.badge.active{background:rgba(76,175,80,.15);color:#4caf50;border:1px solid rgba(76,175,80,.3)}
+.badge.pending{background:rgba(255,152,0,.15);color:#ff9800;border:1px solid rgba(255,152,0,.3)}
+.badge.cancelled{background:rgba(244,67,54,.15);color:#f44336;border:1px solid rgba(244,67,54,.3)}
+.badge.get{background:rgba(33,150,243,.2);color:#64b5f6}
+.badge.post{background:rgba(76,175,80,.2);color:#81c784}
+.badge.put{background:rgba(255,152,0,.2);color:#ffb74d}
+.badge.delete{background:rgba(244,67,54,.2);color:#e57373}
+.badge.patch{background:rgba(156,39,176,.2);color:#ce93d8}
+.section-title{font-size:16px;font-weight:600;color:var(--text);margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group label{font-size:12px;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:.4px}
+.form-group input,.form-group select,.form-group textarea{background:var(--panel2);border:1px solid var(--border);border-radius:6px;padding:9px 12px;color:var(--text);font-family:'Inter',sans-serif;font-size:13px;outline:none;transition:border .2s}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--accent)}
+.form-group select option{background:var(--panel2)}
+.btn{padding:9px 20px;border:none;border-radius:6px;cursor:pointer;font-family:'Inter',sans-serif;font-size:13px;font-weight:600;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:#1976d2;transform:translateY(-1px)}
+.btn-success{background:var(--success);color:#fff}
+.btn-success:hover{background:#388e3c}
+.btn-warn{background:var(--warn);color:#fff}
+.btn-outline{background:none;border:1px solid var(--border);color:var(--muted)}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+.coverage-section{background:var(--panel2);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:12px}
+.coverage-title{font-size:13px;font-weight:600;color:var(--accent);margin-bottom:12px;text-transform:uppercase;letter-spacing:.4px}
+.coverage-item{display:grid;grid-template-columns:200px 1fr 1fr;align-items:center;gap:12px;margin-bottom:8px}
+.coverage-item:last-child{margin-bottom:0}
+.coverage-item label{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px}
+.coverage-item input[type=checkbox]{width:15px;height:15px;accent-color:var(--accent)}
+.coverage-item input[type=number]{background:var(--panel);border:1px solid var(--border);border-radius:4px;padding:6px 8px;color:var(--text);font-size:12px;width:100%;outline:none}
+.coverage-item input[type=number]:focus{border-color:var(--accent)}
+pre{font-family:'JetBrains Mono',monospace;font-size:12px;background:var(--panel2);border:1px solid var(--border);border-radius:8px;padding:16px;overflow-x:auto;line-height:1.6;white-space:pre-wrap;word-break:break-word}
+.xml-tag{color:#e06c75}
+.xml-attr{color:#e5c07b}
+.xml-val{color:#98c379}
+.xml-comment{color:#5c6370;font-style:italic}
+.json-key{color:#e06c75}
+.json-str{color:#98c379}
+.json-num{color:#d19a66}
+.json-bool{color:#56b6c2}
+canvas{display:block}
+.chart-wrap{position:relative}
+.flowchart{display:flex;flex-direction:column;gap:0;align-items:center}
+.flow-step{background:var(--panel2);border:2px solid var(--accent);border-radius:8px;padding:12px 24px;font-size:13px;font-weight:500;text-align:center;width:280px;position:relative}
+.flow-diamond{background:var(--panel2);border:2px solid var(--warn);border-radius:4px;padding:10px 20px;font-size:12px;font-weight:500;text-align:center;width:280px;transform:perspective(100px) rotateX(0deg);clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);padding:20px 40px}
+.flow-arrow{width:2px;height:24px;background:var(--muted);margin:0 auto;position:relative}
+.flow-arrow::after{content:'';position:absolute;bottom:-6px;left:-4px;border-left:5px solid transparent;border-right:5px solid transparent;border-top:6px solid var(--muted)}
+.arch-diagram{display:flex;align-items:center;justify-content:center;padding:20px}
+.arch-outer{position:relative;width:480px;height:480px;display:flex;align-items:center;justify-content:center}
+.arch-layer{position:absolute;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid}
+.arch-layer-label{position:absolute;top:12px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px}
+.l1{width:480px;height:480px;background:rgba(244,67,54,.08);border-color:rgba(244,67,54,.4);color:#ef9a9a}
+.l2{width:360px;height:360px;background:rgba(255,152,0,.08);border-color:rgba(255,152,0,.4);color:#ffcc80}
+.l3{width:240px;height:240px;background:rgba(33,150,243,.08);border-color:rgba(33,150,243,.4);color:#90caf9}
+.l4{width:120px;height:120px;background:rgba(76,175,80,.12);border-color:rgba(76,175,80,.5);color:#a5d6a7;font-size:12px;font-weight:700;text-align:center;line-height:1.3}
+.solid-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.solid-card{background:var(--panel2);border:1px solid var(--border);border-radius:8px;padding:16px}
+.solid-letter{font-size:28px;font-weight:700;color:var(--accent);font-family:'JetBrains Mono',monospace}
+.solid-name{font-size:13px;font-weight:600;color:var(--text);margin-bottom:6px}
+.solid-desc{font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:8px}
+.solid-code{font-family:'JetBrains Mono',monospace;font-size:11px;background:var(--panel);border-radius:4px;padding:8px;color:#98c379;white-space:pre}
+.pattern-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.pattern-card{background:var(--panel2);border:1px solid var(--border);border-radius:8px;padding:16px}
+.pattern-name{font-size:14px;font-weight:600;color:var(--warn);margin-bottom:6px}
+.tech-stack{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.tech-item{background:var(--panel2);border:1px solid var(--border);border-radius:8px;padding:14px;display:flex;align-items:center;gap:10px}
+.tech-icon{font-size:24px}
+.tech-name{font-size:13px;font-weight:600;color:var(--text)}
+.tech-ver{font-size:11px;color:var(--muted)}
+.endpoint{background:var(--panel2);border:1px solid var(--border);border-radius:8px;margin-bottom:8px;overflow:hidden}
+.endpoint-header{padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;user-select:none}
+.endpoint-header:hover{background:rgba(255,255,255,.03)}
+.endpoint-path{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--text);flex:1}
+.endpoint-desc{font-size:12px;color:var(--muted)}
+.endpoint-body{display:none;padding:0 16px 16px;border-top:1px solid var(--border)}
+.endpoint-body.open{display:block}
+.response-box{background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:12px;margin-top:10px}
+.status-200{color:var(--success)}
+.status-400{color:var(--warn)}
+.status-500{color:var(--danger)}
+.response-meta{display:flex;align-items:center;gap:12px;margin-bottom:8px;font-size:12px}
+.diff-wrap{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.diff-side{background:var(--panel2);border:1px solid var(--border);border-radius:8px;padding:12px}
+.diff-title{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.diff-add{background:rgba(76,175,80,.15);color:#81c784}
+.diff-del{background:rgba(244,67,54,.15);color:#e57373}
+.diff-line{font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.8;padding:1px 4px;border-radius:2px}
+.rate-inputs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.rate-result{background:var(--panel2);border:1px solid var(--border);border-radius:8px;padding:16px;margin-top:12px}
+.rate-result-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(42,64,96,.5);font-size:13px}
+.rate-result-row:last-child{border-bottom:none;font-weight:700;color:var(--accent);font-size:15px}
+.spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.form-validate{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.validate-item{display:flex;align-items:center;gap:8px;font-size:13px}
+.validate-ok{color:var(--success)}
+.validate-fail{color:var(--danger)}
+.mb-16{margin-bottom:16px}
+.mb-12{margin-bottom:12px}
+.mt-16{margin-top:16px}
+.flex{display:flex}
+.gap-8{gap:8px}
+.gap-12{gap:12px}
+.align-center{align-items:center}
+.justify-between{justify-content:space-between}
+.complexity-note{background:rgba(33,150,243,.08);border:1px solid rgba(33,150,243,.3);border-radius:8px;padding:14px;font-size:12px;color:var(--muted);line-height:1.6;margin-top:12px}
+.form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px}
+.full-width{grid-column:1/-1}
+</style>
+</head>
+<body>
+<div class="app-header">
+  <div class="app-logo">&#9810;</div>
+  <div>
+    <div class="app-title">PolicyCore&#8482; Administration System</div>
+    <div style="font-size:11px;color:var(--muted)">Enterprise Insurance Platform</div>
+  </div>
+  <div class="app-sub">v4.2.1 &nbsp;|&nbsp; Build 20240115 &nbsp;|&nbsp; .NET 8 / React 18</div>
+</div>
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="showTab('dashboard',this)">&#9676; Dashboard</button>
+  <button class="tab-btn" onclick="showTab('builder',this)">&#9998; Policy Builder</button>
+  <button class="tab-btn" onclick="showTab('rating',this)">&#9889; Rate Engine</button>
+  <button class="tab-btn" onclick="showTab('forms',this)">&#128196; Bureau Forms</button>
+  <button class="tab-btn" onclick="showTab('arch',this)">&#9956; Architecture</button>
+  <button class="tab-btn" onclick="showTab('api',this)">&#128640; API Studio</button>
+</div>
+
+<!-- TAB 1: DASHBOARD -->
+<div id="tab-dashboard" class="tab-content active">
+  <div class="grid-4 mb-16">
+    <div class="card">
+      <div class="card-title">Total Policies</div>
+      <div class="kpi-val">1,247</div>
+      <div class="kpi-sub">Across all lines</div>
+      <div class="kpi-trend up">&#9650; +43 this month</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Written Premium</div>
+      <div class="kpi-val">$4.2M</div>
+      <div class="kpi-sub">YTD annualized</div>
+      <div class="kpi-trend up">&#9650; +8.3% vs prior yr</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Loss Ratio</div>
+      <div class="kpi-val">58%</div>
+      <div class="kpi-sub">Incurred / Earned</div>
+      <div class="kpi-trend up">&#9660; -3pts improvement</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Avg Policy Age</div>
+      <div class="kpi-val">3.2 yrs</div>
+      <div class="kpi-sub">Retention indicator</div>
+      <div class="kpi-trend warn">&#8594; Stable</div>
+    </div>
+  </div>
+  <div class="grid-2 mb-16">
+    <div class="card">
+      <div class="card-title">Monthly Premium Written (12 Months)</div>
+      <canvas id="barChart" width="520" height="220"></canvas>
+    </div>
+    <div class="card">
+      <div class="card-title">Line of Business Distribution</div>
+      <div style="display:flex;align-items:center;gap:20px">
+        <canvas id="donutChart" width="200" height="200"></canvas>
+        <div style="flex:1">
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;align-items:center;gap:8px"><span style="width:12px;height:12px;background:#2196f3;border-radius:2px;display:inline-block"></span><span style="font-size:13px">Auto</span><span style="margin-left:auto;font-weight:600">35%</span></div>
+            <div style="display:flex;align-items:center;gap:8px"><span style="width:12px;height:12px;background:#4caf50;border-radius:2px;display:inline-block"></span><span style="font-size:13px">Property</span><span style="margin-left:auto;font-weight:600">28%</span></div>
+            <div style="display:flex;align-items:center;gap:8px"><span style="width:12px;height:12px;background:#ff9800;border-radius:2px;display:inline-block"></span><span style="font-size:13px">Gen. Liability</span><span style="margin-left:auto;font-weight:600">22%</span></div>
+            <div style="display:flex;align-items:center;gap:8px"><span style="width:12px;height:12px;background:#9c27b0;border-radius:2px;display:inline-block"></span><span style="font-size:13px">Workers Comp</span><span style="margin-left:auto;font-weight:600">15%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="section-title">Recent Policies</div>
+    <table>
+      <thead><tr><th>Policy Number</th><th>Insured Name</th><th>Line of Business</th><th>Effective Date</th><th>Premium</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td style="font-family:'JetBrains Mono',monospace">POL-2024-008821</td><td>Apex Manufacturing LLC</td><td>General Liability</td><td>2024-01-01</td><td>$18,450</td><td><span class="badge active">Active</span></td></tr>
+        <tr><td style="font-family:'JetBrains Mono',monospace">POL-2024-008820</td><td>Sunrise Retail Group</td><td>Property</td><td>2024-01-15</td><td>$42,200</td><td><span class="badge active">Active</span></td></tr>
+        <tr><td style="font-family:'JetBrains Mono',monospace">POL-2024-008819</td><td>Metro Transit Corp</td><td>Auto</td><td>2024-01-15</td><td>$67,800</td><td><span class="badge pending">Pending</span></td></tr>
+        <tr><td style="font-family:'JetBrains Mono',monospace">POL-2024-008818</td><td>Blue Ridge Contractors</td><td>Workers Comp</td><td>2023-12-01</td><td>$29,300</td><td><span class="badge active">Active</span></td></tr>
+        <tr><td style="font-family:'JetBrains Mono',monospace">POL-2024-008817</td><td>Pacific Foods Inc.</td><td>Property</td><td>2023-11-15</td><td>$88,500</td><td><span class="badge active">Active</span></td></tr>
+        <tr><td style="font-family:'JetBrains Mono',monospace">POL-2024-008816</td><td>Urban Logistics Co.</td><td>Auto</td><td>2023-11-01</td><td>$51,200</td><td><span class="badge cancelled">Cancelled</span></td></tr>
+        <tr><td style="font-family:'JetBrains Mono',monospace">POL-2024-008815</td><td>Harbor Medical Group</td><td>General Liability</td><td>2023-10-01</td><td>$24,700</td><td><span class="badge active">Active</span></td></tr>
+        <tr><td style="font-family:'JetBrains Mono',monospace">POL-2024-008814</td><td>Summit Tech Solutions</td><td>Workers Comp</td><td>2023-10-15</td><td>$15,900</td><td><span class="badge pending">Pending</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- TAB 2: POLICY BUILDER -->
+<div id="tab-builder" class="tab-content">
+  <div class="grid-2">
+    <div>
+      <div class="card mb-16">
+        <div class="section-title">Policy Information</div>
+        <div class="form-row">
+          <div class="form-group"><label>Insured Name</label><input type="text" id="pb-insured" placeholder="e.g. Apex Manufacturing LLC" value="Apex Manufacturing LLC"></div>
+          <div class="form-group"><label>Policy Number</label><input type="text" id="pb-polnum" placeholder="Auto-generated" value="POL-2024-009001"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Line of Business</label>
+            <select id="pb-lob" onchange="updateCoverages()">
+              <option value="auto">Commercial Auto</option>
+              <option value="property">Commercial Property</option>
+              <option value="gl">General Liability</option>
+              <option value="wc">Workers Compensation</option>
+            </select>
+          </div>
+          <div class="form-group"><label>State</label>
+            <select id="pb-state">
+              <option value="CA">California</option><option value="TX">Texas</option><option value="NY">New York</option><option value="FL">Florida</option><option value="IL">Illinois</option><option value="PA">Pennsylvania</option><option value="OH">Ohio</option><option value="GA">Georgia</option><option value="NC">North Carolina</option><option value="MI">Michigan</option><option value="NJ">New Jersey</option><option value="VA">Virginia</option><option value="WA">Washington</option><option value="AZ">Arizona</option><option value="MA">Massachusetts</option><option value="TN">Tennessee</option><option value="IN">Indiana</option><option value="MO">Missouri</option><option value="MD">Maryland</option><option value="WI">Wisconsin</option><option value="CO">Colorado</option><option value="MN">Minnesota</option><option value="SC">South Carolina</option><option value="AL">Alabama</option><option value="LA">Louisiana</option><option value="KY">Kentucky</option><option value="OR">Oregon</option><option value="OK">Oklahoma</option><option value="CT">Connecticut</option><option value="UT">Utah</option><option value="IA">Iowa</option><option value="NV">Nevada</option><option value="AR">Arkansas</option><option value="MS">Mississippi</option><option value="KS">Kansas</option><option value="NM">New Mexico</option><option value="NE">Nebraska</option><option value="WV">West Virginia</option><option value="ID">Idaho</option><option value="HI">Hawaii</option><option value="NH">New Hampshire</option><option value="ME">Maine</option><option value="MT">Montana</option><option value="RI">Rhode Island</option><option value="DE">Delaware</option><option value="SD">South Dakota</option><option value="ND">North Dakota</option><option value="AK">Alaska</option><option value="VT">Vermont</option><option value="WY">Wyoming</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Effective Date</label><input type="date" id="pb-eff" value="2024-02-01"></div>
+          <div class="form-group"><label>Expiration Date</label><input type="date" id="pb-exp" value="2025-02-01"></div>
+        </div>
+      </div>
+      <div class="card mb-16">
+        <div class="section-title">Coverage Builder</div>
+        <div id="coverages-container"></div>
+      </div>
+      <div style="display:flex;gap:10px">
+        <button class="btn btn-primary" onclick="calculatePremium()">&#9889; Calculate Premium</button>
+        <button class="btn btn-success" onclick="exportJSON()">&#128196; Export as JSON</button>
+        <button class="btn btn-outline" onclick="exportACORD()">&#128462; Export ACORD 130 XML</button>
+      </div>
+    </div>
+    <div>
+      <div class="card mb-16" id="premium-card" style="display:none">
+        <div class="section-title">Premium Breakdown</div>
+        <div id="premium-table"></div>
+      </div>
+      <div class="card" id="export-card" style="display:none">
+        <div class="section-title" id="export-title">Export Preview</div>
+        <pre id="export-pre"></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 3: RATE ENGINE -->
+<div id="tab-rating" class="tab-content">
+  <div class="grid-2 mb-16">
+    <div class="card">
+      <div class="section-title">Rating Algorithm Flowchart</div>
+      <div class="flowchart" style="padding:10px 0">
+        <div class="flow-step">1. Retrieve Policy Risk Characteristics</div>
+        <div class="flow-arrow"></div>
+        <div class="flow-step">2. Assign Territory Factor</div>
+        <div class="flow-arrow"></div>
+        <div class="flow-step">3. Lookup Class Code / SIC Factor</div>
+        <div class="flow-arrow"></div>
+        <div class="flow-step">4. Apply Coverage Limit Factor</div>
+        <div class="flow-arrow"></div>
+        <div class="flow-step">5. Apply Deductible Credit</div>
+        <div class="flow-arrow"></div>
+        <div class="flow-step" style="border-color:var(--warn)">6. Apply Experience Modification</div>
+        <div class="flow-arrow"></div>
+        <div class="flow-step" style="border-color:var(--success)">7. Compute Final Indicated Premium</div>
+      </div>
+      <div class="complexity-note" style="margin-top:16px">
+        <strong>Algorithm:</strong> P = BaseRate &times; TerritoryFactor &times; ClassFactor &times; LimitFactor &times; DeductibleCredit &times; ExpMod<br>
+        Time complexity: O(n) per coverage line &mdash; O(n&middot;m) for multi-line accounts.<br>
+        Bureau filings: ISO CGL, CA, CP rating manuals. State-specific deviations stored per jurisdiction table.
+      </div>
+    </div>
+    <div>
+      <div class="card mb-16">
+        <div class="section-title">Live Rate Calculator</div>
+        <div class="rate-inputs">
+          <div class="form-group"><label>LOB</label><select id="rc-lob"><option value="gl">General Liability</option><option value="auto">Commercial Auto</option><option value="prop">Property</option><option value="wc">Workers Comp</option></select></div>
+          <div class="form-group"><label>State</label><select id="rc-state"><option value="CA">California</option><option value="TX">Texas</option><option value="NY">New York</option><option value="FL">Florida</option><option value="IL">Illinois</option></select></div>
+          <div class="form-group"><label>Limit ($K)</label><input type="number" id="rc-limit" value="1000" min="100" max="10000" step="100"></div>
+          <div class="form-group"><label>Deductible ($)</label><input type="number" id="rc-ded" value="1000" min="0" max="50000" step="500"></div>
+          <div class="form-group"><label>Payroll / Revenue ($K)</label><input type="number" id="rc-base" value="500" min="100" step="50"></div>
+          <div class="form-group"><label>Exp. Mod</label><input type="number" id="rc-expmod" value="1.00" min="0.5" max="2.0" step="0.01"></div>
+        </div>
+        <button class="btn btn-primary" onclick="runRateCalc()">&#9889; Calculate Rate</button>
+        <div id="rate-result" class="rate-result" style="display:none"></div>
+      </div>
+    </div>
+  </div>
+  <div class="grid-3">
+    <div class="card">
+      <div class="section-title">Territory Factors</div>
+      <table><thead><tr><th>State</th><th>Territory Factor</th></tr></thead><tbody>
+        <tr><td>California (CA)</td><td>1.35</td></tr>
+        <tr><td>New York (NY)</td><td>1.42</td></tr>
+        <tr><td>Florida (FL)</td><td>1.28</td></tr>
+        <tr><td>Texas (TX)</td><td>1.15</td></tr>
+        <tr><td>Illinois (IL)</td><td>1.18</td></tr>
+        <tr><td>Pennsylvania (PA)</td><td>1.12</td></tr>
+        <tr><td>Ohio (OH)</td><td>1.05</td></tr>
+        <tr><td>Michigan (MI)</td><td>1.08</td></tr>
+        <tr><td>Georgia (GA)</td><td>1.10</td></tr>
+        <tr><td>All Other States</td><td>1.00</td></tr>
+      </tbody></table>
+    </div>
+    <div class="card">
+      <div class="section-title">Class Code (SIC) Factors</div>
+      <table><thead><tr><th>SIC Code</th><th>Description</th><th>Factor</th></tr></thead><tbody>
+        <tr><td style="font-family:'JetBrains Mono',monospace">2000</td><td>Food Manufacturing</td><td>1.15</td></tr>
+        <tr><td style="font-family:'JetBrains Mono',monospace">3490</td><td>Metal Services</td><td>1.38</td></tr>
+        <tr><td style="font-family:'JetBrains Mono',monospace">4213</td><td>Trucking (Long Haul)</td><td>1.72</td></tr>
+        <tr><td style="font-family:'JetBrains Mono',monospace">5411</td><td>Grocery Stores</td><td>1.08</td></tr>
+        <tr><td style="font-family:'JetBrains Mono',monospace">6411</td><td>Insurance Agents</td><td>0.85</td></tr>
+        <tr><td style="font-family:'JetBrains Mono',monospace">7372</td><td>Software Services</td><td>0.90</td></tr>
+        <tr><td style="font-family:'JetBrains Mono',monospace">8011</td><td>Medical Offices</td><td>1.22</td></tr>
+        <tr><td style="font-family:'JetBrains Mono',monospace">8742</td><td>Management Consulting</td><td>0.88</td></tr>
+      </tbody></table>
+    </div>
+    <div class="card">
+      <div class="section-title">Deductible Credit Schedule</div>
+      <table><thead><tr><th>Deductible</th><th>Credit %</th></tr></thead><tbody>
+        <tr><td>$0</td><td>0.0%</td></tr>
+        <tr><td>$500</td><td>3.5%</td></tr>
+        <tr><td>$1,000</td><td>6.0%</td></tr>
+        <tr><td>$2,500</td><td>10.5%</td></tr>
+        <tr><td>$5,000</td><td>15.0%</td></tr>
+        <tr><td>$10,000</td><td>21.0%</td></tr>
+        <tr><td>$25,000</td><td>28.0%</td></tr>
+        <tr><td>$50,000</td><td>34.0%</td></tr>
+      </tbody></table>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 4: BUREAU FORMS -->
+<div id="tab-forms" class="tab-content">
+  <div class="section-title">ISO / ACORD Bureau Forms Management</div>
+  <div class="grid-2 mb-16">
+    <div class="card">
+      <div class="card-title">Forms Library</div>
+      <table id="forms-table"><thead><tr><th>Form Number</th><th>Description</th><th>Edition</th><th>LOB</th></tr></thead><tbody>
+        <tr onclick="previewForm('CG0001','Commercial General Liability Coverage Form','12 19','GL')" style="cursor:pointer"><td style="font-family:'JetBrains Mono',monospace">CG 00 01</td><td>Commercial General Liability</td><td>12 19</td><td>GL</td></tr>
+        <tr onclick="previewForm('CA0001','Business Auto Coverage Form','10 13','Auto')" style="cursor:pointer"><td style="font-family:'JetBrains Mono',monospace">CA 00 01</td><td>Business Auto Coverage Form</td><td>10 13</td><td>Auto</td></tr>
+        <tr onclick="previewForm('CP0010','Building and Personal Property','10 12','Property')" style="cursor:pointer"><td style="font-family:'JetBrains Mono',monospace">CP 00 10</td><td>Building and Personal Property</td><td>10 12</td><td>Property</td></tr>
+        <tr onclick="previewForm('WC0001','Workers Compensation and EL','01 15','WC')" style="cursor:pointer"><td style="font-family:'JetBrains Mono',monospace">WC 00 00 00</td><td>Workers Compensation and EL</td><td>01 15</td><td>WC</td></tr>
+        <tr onclick="previewForm('CP0030','Business Income','10 12','Property')" style="cursor:pointer"><td style="font-family:'JetBrains Mono',monospace">CP 00 30</td><td>Business Income (and Extra Expense)</td><td>10 12</td><td>Property</td></tr>
+        <tr onclick="previewForm('CG2010','Additional Insured Endorsement','07 04','GL')" style="cursor:pointer"><td style="font-family:'JetBrains Mono',monospace">CG 20 10</td><td>Additional Insured – Scheduled</td><td>07 04</td><td>GL</td></tr>
+        <tr onclick="previewForm('IL0003','Calculation of Premium','07 02','All')" style="cursor:pointer"><td style="font-family:'JetBrains Mono',monospace">IL 00 03</td><td>Calculation of Premium</td><td>07 02</td><td>All</td></tr>
+        <tr onclick="previewForm('CA2001','Hired Auto Liability','10 13','Auto')" style="cursor:pointer"><td style="font-family:'JetBrains Mono',monospace">CA 20 01</td><td>Hired Auto – Specified as Covered</td><td>10 13</td><td>Auto</td></tr>
+        <tr onclick="previewForm('CP1030','Causes of Loss - Special Form','10 12','Property')" style="cursor:pointer"><td style="font-family:'JetBrains Mono',monospace">CP 10 30</td><td>Causes of Loss – Special Form</td><td>10 12</td><td>Property</td></tr>
+        <tr onclick="previewForm('ACORD130','ACORD Commercial Lines Application','01 2015','All')" style="cursor:pointer"><td style="font-family:'JetBrains Mono',monospace">ACORD 130</td><td>Commercial Lines Application</td><td>01/2015</td><td>All</td></tr>
+      </tbody></table>
+      <p style="font-size:11px;color:var(--muted);margin-top:8px">&#9432; Click a row to preview form schema</p>
+    </div>
+    <div class="card">
+      <div class="card-title" id="form-preview-title">Form Preview — Select a form</div>
+      <pre id="form-preview-content" style="max-height:320px;overflow-y:auto;font-size:11px">Click a form in the library to preview its XML schema.</pre>
+      <div style="margin-top:12px;display:none;gap:8px" id="form-actions">
+        <button class="btn btn-primary" onclick="validateForm()">&#10003; Validate Form</button>
+        <button class="btn btn-outline" onclick="showJSONSchema()">{ } JSON Schema</button>
+      </div>
+      <div id="validate-results" class="form-validate" style="display:none"></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="section-title">Edition Diff Viewer</div>
+    <div class="diff-wrap">
+      <div class="diff-side">
+        <div class="diff-title" style="color:var(--danger)">&#9660; Previous Edition (04 13)</div>
+        <div class="diff-line">&lt;CoverageLimit&gt;1000000&lt;/CoverageLimit&gt;</div>
+        <div class="diff-line diff-del">&lt;AggregateLimit&gt;2000000&lt;/AggregateLimit&gt;</div>
+        <div class="diff-line">&lt;MedicalExpense&gt;5000&lt;/MedicalExpense&gt;</div>
+        <div class="diff-line diff-del">&lt;PersonalInjury&gt;excluded&lt;/PersonalInjury&gt;</div>
+        <div class="diff-line">&lt;ProductsCompletedOps&gt;included&lt;/ProductsCompletedOps&gt;</div>
+        <div class="diff-line">&lt;PremisesOps&gt;included&lt;/PremisesOps&gt;</div>
+        <div class="diff-line diff-del">&lt;FireDamage&gt;100000&lt;/FireDamage&gt;</div>
+        <div class="diff-line">&lt;/CoverageSection&gt;</div>
+      </div>
+      <div class="diff-side">
+        <div class="diff-title" style="color:var(--success)">&#9650; Current Edition (12 19)</div>
+        <div class="diff-line">&lt;CoverageLimit&gt;1000000&lt;/CoverageLimit&gt;</div>
+        <div class="diff-line diff-add">&lt;AggregateLimit&gt;3000000&lt;/AggregateLimit&gt;</div>
+        <div class="diff-line">&lt;MedicalExpense&gt;5000&lt;/MedicalExpense&gt;</div>
+        <div class="diff-line diff-add">&lt;PersonalInjury&gt;included&lt;/PersonalInjury&gt;</div>
+        <div class="diff-line">&lt;ProductsCompletedOps&gt;included&lt;/ProductsCompletedOps&gt;</div>
+        <div class="diff-line">&lt;PremisesOps&gt;included&lt;/PremisesOps&gt;</div>
+        <div class="diff-line diff-add">&lt;FireDamage&gt;300000&lt;/FireDamage&gt;</div>
+        <div class="diff-line">&lt;/CoverageSection&gt;</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 5: ARCHITECTURE -->
+<div id="tab-arch" class="tab-content">
+  <div class="grid-2 mb-16">
+    <div class="card">
+      <div class="section-title">Clean Architecture — Dependency Diagram</div>
+      <div class="arch-diagram">
+        <div class="arch-outer">
+          <div class="arch-layer l1"><div class="arch-layer-label">Presentation Layer</div></div>
+          <div class="arch-layer l2"><div class="arch-layer-label">Infrastructure Layer</div></div>
+          <div class="arch-layer l3"><div class="arch-layer-label">Application Layer</div></div>
+          <div class="arch-layer l4">Domain<br>Layer<br><span style="font-size:10px;font-weight:400;opacity:.8">(Entities &amp; Rules)</span></div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px;font-size:11px">
+        <div style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:rgba(244,67,54,.5);display:inline-block"></span>Presentation: React/TypeScript, Razor Pages</div>
+        <div style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:rgba(255,152,0,.5);display:inline-block"></span>Infrastructure: EF Core, Service Bus, Blob</div>
+        <div style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:rgba(33,150,243,.5);display:inline-block"></span>Application: CQRS, MediatR, FluentValidation</div>
+        <div style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;border-radius:50%;background:rgba(76,175,80,.5);display:inline-block"></span>Domain: Policy, Coverage, Premium aggregates</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="section-title">Technology Stack</div>
+      <div class="tech-stack">
+        <div class="tech-item"><div class="tech-icon">&#9000;</div><div><div class="tech-name">C# / .NET 8</div><div class="tech-ver">LTS — Primary backend</div></div></div>
+        <div class="tech-item"><div class="tech-icon">&#127760;</div><div><div class="tech-name">ASP.NET Core</div><div class="tech-ver">Web API + Minimal API</div></div></div>
+        <div class="tech-item"><div class="tech-icon">&#128200;</div><div><div class="tech-name">Entity Framework Core</div><div class="tech-ver">v8 — SQL Server</div></div></div>
+        <div class="tech-item"><div class="tech-icon">&#9889;</div><div><div class="tech-name">Azure Service Bus</div><div class="tech-ver">Premium tier messaging</div></div></div>
+        <div class="tech-item"><div class="tech-icon">&#9881;</div><div><div class="tech-name">React + TypeScript</div><div class="tech-ver">v18 — SPA frontend</div></div></div>
+        <div class="tech-item"><div class="tech-icon">&#128274;</div><div><div class="tech-name">Azure AD B2C</div><div class="tech-ver">OAuth 2.0 / OIDC</div></div></div>
+        <div class="tech-item"><div class="tech-icon">&#128202;</div><div><div class="tech-name">Application Insights</div><div class="tech-ver">APM + distributed tracing</div></div></div>
+        <div class="tech-item"><div class="tech-icon">&#128640;</div><div><div class="tech-name">Azure Kubernetes</div><div class="tech-ver">AKS — Container orchestration</div></div></div>
+        <div class="tech-item"><div class="tech-icon">&#128196;</div><div><div class="tech-name">Azure Blob Storage</div><div class="tech-ver">Document management</div></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="card mb-16">
+    <div class="section-title">SOLID Principles — Insurance Domain Examples</div>
+    <div class="solid-cards">
+      <div class="solid-card"><div class="solid-letter">S</div><div class="solid-name">Single Responsibility Principle</div><div class="solid-desc">Each class has one reason to change. PremiumCalculator only calculates; PolicyRepository only persists.</div><div class="solid-code">class PremiumCalculator {
+  Calculate(policy: Policy): Money { ... }
+}
+class PolicyRepository {
+  Save(policy: Policy): void { ... }
+}</div></div>
+      <div class="solid-card"><div class="solid-letter">O</div><div class="solid-name">Open/Closed Principle</div><div class="solid-desc">Rating algorithms open for extension via strategy, closed for modification.</div><div class="solid-code">interface IRatingStrategy {
+  Rate(risk: RiskProfile): Premium;
+}
+class GLRatingStrategy : IRatingStrategy { }
+class AutoRatingStrategy : IRatingStrategy { }</div></div>
+      <div class="solid-card"><div class="solid-letter">L</div><div class="solid-name">Liskov Substitution Principle</div><div class="solid-desc">CommercialPolicy and PersonalPolicy are substitutable wherever Policy is expected.</div><div class="solid-code">abstract class Policy {
+  abstract CalculatePremium(): Money;
+}
+class CommercialPolicy : Policy { }
+class PersonalPolicy : Policy { }</div></div>
+      <div class="solid-card"><div class="solid-letter">I</div><div class="solid-name">Interface Segregation Principle</div><div class="solid-desc">Clients only depend on interfaces they use. Forms don't need rating interfaces.</div><div class="solid-code">interface IWritable { Write(): void; }
+interface IRatable { Rate(): Money; }
+interface IIssuable { Issue(): Policy; }
+// WC policy only implements needed ones</div></div>
+      <div class="solid-card" style="grid-column:1/-1"><div class="solid-letter">D</div><div class="solid-name">Dependency Inversion Principle</div><div class="solid-desc">High-level PolicyService depends on IFormSerializer abstraction, not concrete AcordXmlSerializer. Injection via constructor.</div><div class="solid-code">class PolicyService {
+  constructor(private serializer: IFormSerializer,
+              private rater: IRatingStrategy,
+              private repo: IPolicyRepository) { }
+}</div></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="section-title">Design Patterns in PolicyCore</div>
+    <div class="pattern-cards">
+      <div class="pattern-card"><div class="pattern-name">&#9889; Strategy Pattern</div><p style="font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:8px">Each LOB implements <code style="color:var(--accent)">IRatingStrategy</code>. The rating engine selects the correct strategy at runtime based on the policy type, enabling seamless addition of new LOBs without changing existing logic.</p><div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#e5c07b">RatingEngine.Rate(policy) → strategy.Calculate(risk)</div></div>
+      <div class="pattern-card"><div class="pattern-name">&#127981; Factory Pattern</div><p style="font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:8px"><code style="color:var(--accent)">PolicyFactory.Create(lob, state)</code> returns the correct policy aggregate with pre-configured coverages, default limits, and mandatory endorsements per jurisdiction.</p><div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#e5c07b">PolicyFactory.Create("GL","CA") → CommercialGLPolicy</div></div>
+      <div class="pattern-card"><div class="pattern-name">&#128200; Repository Pattern</div><p style="font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:8px">Abstracts EF Core persistence behind <code style="color:var(--accent)">IPolicyRepository</code>. Enables unit testing with in-memory fakes and future swap to Cosmos DB without domain changes.</p><div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#e5c07b">IPolicyRepository → EfCorePolicyRepository</div></div>
+      <div class="pattern-card"><div class="pattern-name">&#128276; Observer / Domain Events</div><p style="font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:8px">Domain events (<code style="color:var(--accent)">PolicyIssued</code>, <code style="color:var(--accent)">PremiumChanged</code>) dispatched via MediatR. Handlers trigger billing updates, document generation, and audit log entries independently.</p><div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#e5c07b">PolicyIssued → [BillingHandler, DocGenHandler]</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- TAB 6: API STUDIO -->
+<div id="tab-api" class="tab-content">
+  <div class="flex align-center justify-between mb-16">
+    <div><div class="section-title" style="margin:0;border:none">REST API Reference — PolicyCore v4</div><div style="font-size:12px;color:var(--muted);margin-top:4px">Base URL: <span style="font-family:'JetBrains Mono',monospace;color:var(--accent)">https://api.policycore.io/v4</span> &nbsp;|&nbsp; Auth: Bearer JWT</div></div>
+    <div style="font-size:11px;color:var(--muted);text-align:right">OpenAPI 3.0 Spec<br><span style="color:var(--success)">&#9679;</span> All endpoints operational</div>
+  </div>
+  <div id="endpoints-list"></div>
+</div>
+
+<script>
+// === TAB NAVIGATION ===
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+  if (id === 'dashboard') { setTimeout(() => { drawBarChart(); drawDonutChart(); }, 50); }
+}
+
+// === DASHBOARD CHARTS ===
+function drawBarChart() {
+  const canvas = document.getElementById('barChart');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const months = ['Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec','Jan'];
+  const vals = [318,342,295,380,365,410,388,402,355,422,398,415];
+  const W = canvas.width, H = canvas.height;
+  const pad = { top: 20, right: 20, bottom: 36, left: 56 };
+  ctx.clearRect(0, 0, W, H);
+  const maxV = 450, minV = 250;
+  const bw = (W - pad.left - pad.right) / months.length;
+  // Grid lines
+  for (let i = 0; i <= 4; i++) {
+    const y = pad.top + (H - pad.top - pad.bottom) * i / 4;
+    const v = maxV - (maxV - minV) * i / 4;
+    ctx.beginPath(); ctx.strokeStyle = 'rgba(42,64,96,0.7)'; ctx.lineWidth = 1;
+    ctx.moveTo(pad.left, y); ctx.lineTo(W - pad.right, y); ctx.stroke();
+    ctx.fillStyle = '#8cb4d2'; ctx.font = '10px Inter'; ctx.textAlign = 'right';
+    ctx.fillText('$' + Math.round(v) + 'K', pad.left - 6, y + 4);
+  }
+  // Bars with gradient
+  vals.forEach((v, i) => {
+    const bh = ((v - minV) / (maxV - minV)) * (H - pad.top - pad.bottom);
+    const x = pad.left + i * bw + bw * 0.15;
+    const y = H - pad.bottom - bh;
+    const grad = ctx.createLinearGradient(x, y, x, H - pad.bottom);
+    grad.addColorStop(0, '#2196f3'); grad.addColorStop(1, 'rgba(33,150,243,0.3)');
+    ctx.fillStyle = grad;
+    ctx.beginPath(); ctx.roundRect(x, y, bw * 0.7, bh, [3,3,0,0]); ctx.fill();
+    ctx.fillStyle = '#8cb4d2'; ctx.font = '10px Inter'; ctx.textAlign = 'center';
+    ctx.fillText(months[i], pad.left + i * bw + bw / 2, H - 8);
+  });
+}
+
+function drawDonutChart() {
+  const canvas = document.getElementById('donutChart');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  ctx.clearRect(0, 0, W, H);
+  const cx = W / 2, cy = H / 2, outer = 80, inner = 50;
+  const slices = [
+    { pct: 0.35, color: '#2196f3' }, { pct: 0.28, color: '#4caf50' },
+    { pct: 0.22, color: '#ff9800' }, { pct: 0.15, color: '#9c27b0' }
+  ];
+  let angle = -Math.PI / 2;
+  slices.forEach(s => {
+    const sweep = s.pct * 2 * Math.PI;
+    ctx.beginPath(); ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, outer, angle, angle + sweep);
+    ctx.arc(cx, cy, inner, angle + sweep, angle, true);
+    ctx.closePath(); ctx.fillStyle = s.color; ctx.fill();
+    angle += sweep;
+  });
+  ctx.beginPath(); ctx.arc(cx, cy, inner - 2, 0, 2 * Math.PI);
+  ctx.fillStyle = '#1a2d44'; ctx.fill();
+  ctx.fillStyle = '#e8f4fd'; ctx.font = 'bold 14px Inter'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillText('1,247', cx, cy - 6);
+  ctx.fillStyle = '#8cb4d2'; ctx.font = '10px Inter';
+  ctx.fillText('Policies', cx, cy + 10);
+}
+
+// Draw on page load
+window.addEventListener('load', () => { drawBarChart(); drawDonutChart(); });
+
+// === DOMAIN MODELS ===
+const COVERAGES = {
+  auto: [
+    { id: 'liability', label: 'Liability', defLimit: 1000000, defDed: 0 },
+    { id: 'collision', label: 'Collision', defLimit: 500000, defDed: 1000 },
+    { id: 'comp', label: 'Comprehensive', defLimit: 500000, defDed: 500 },
+    { id: 'um', label: 'Uninsured Motorist', defLimit: 500000, defDed: 0 },
+    { id: 'medpay', label: 'Medical Payments', defLimit: 10000, defDed: 0 }
+  ],
+  property: [
+    { id: 'building', label: 'Building', defLimit: 2000000, defDed: 5000 },
+    { id: 'bpp', label: 'Business Personal Property', defLimit: 500000, defDed: 2500 },
+    { id: 'bi', label: 'Business Income', defLimit: 250000, defDed: 72 },
+    { id: 'eq', label: 'Equipment Breakdown', defLimit: 100000, defDed: 1000 },
+    { id: 'im', label: 'Inland Marine', defLimit: 75000, defDed: 500 }
+  ],
+  gl: [
+    { id: 'premops', label: 'Premises Operations', defLimit: 1000000, defDed: 0 },
+    { id: 'products', label: 'Products Completed Ops', defLimit: 1000000, defDed: 0 },
+    { id: 'pai', label: 'Personal & Advertising Injury', defLimit: 1000000, defDed: 0 },
+    { id: 'medexp', label: 'Medical Expense', defLimit: 5000, defDed: 0 }
+  ],
+  wc: [
+    { id: 'partA', label: 'Part A — Statutory WC', defLimit: 0, defDed: 0 },
+    { id: 'partB', label: 'Part B — Employers Liability', defLimit: 500000, defDed: 0 },
+    { id: 'uslh', label: 'USL&H Coverage', defLimit: 500000, defDed: 0 }
+  ]
+};
+
+function updateCoverages() {
+  const lob = document.getElementById('pb-lob').value;
+  const covs = COVERAGES[lob];
+  const container = document.getElementById('coverages-container');
+  const lobNames = { auto: 'Commercial Auto', property: 'Commercial Property', gl: 'General Liability', wc: 'Workers Compensation' };
+  let html = '<div class="coverage-section"><div class="coverage-title">' + lobNames[lob] + ' Coverages</div>';
+  html += '<div style="display:grid;grid-template-columns:220px 1fr 1fr;gap:8px;margin-bottom:6px"><span style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px">Coverage</span><span style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px">Limit ($)</span><span style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px">Deductible ($)</span></div>';
+  covs.forEach(c => {
+    html += '<div class="coverage-item"><label><input type="checkbox" id="cov-' + c.id + '" checked> ' + c.label + '</label>';
+    html += '<input type="number" id="lim-' + c.id + '" value="' + c.defLimit + '" placeholder="Limit">';
+    html += '<input type="number" id="ded-' + c.id + '" value="' + c.defDed + '" placeholder="Deductible"></div>';
+  });
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+// === RATE ENGINE ===
+const DEFAULT_BASE_VALUE = 500;   // base exposure unit for premium calculation
+const DEFAULT_EXP_MOD = 1.0;     // default experience modification factor (unity)
+
+class RateEngine {
+  static territoryFactors = { CA:1.35, NY:1.42, FL:1.28, TX:1.15, IL:1.18, PA:1.12, OH:1.05, MI:1.08, GA:1.10 };
+  static baseRates = { auto: 0.0185, property: 0.0042, gl: 0.0068, wc: 0.0155 };
+  static limitFactors(limit) {
+    if (limit <= 500000) return 0.85;
+    if (limit <= 1000000) return 1.00;
+    if (limit <= 2000000) return 1.28;
+    if (limit <= 5000000) return 1.55;
+    return 1.80;
+  }
+  static dedCredit(ded) {
+    if (ded <= 0) return 0;
+    if (ded <= 500) return 0.035;
+    if (ded <= 1000) return 0.06;
+    if (ded <= 2500) return 0.105;
+    if (ded <= 5000) return 0.15;
+    if (ded <= 10000) return 0.21;
+    if (ded <= 25000) return 0.28;
+    return 0.34;
+  }
+  static calculate(lob, state, limit, ded, base, expmod) {
+    const tf = this.territoryFactors[state] || 1.00;
+    const br = this.baseRates[lob] || 0.01;
+    const lf = this.limitFactors(limit);
+    const dc = this.dedCredit(ded);
+    const indicated = base * 1000 * br * tf * lf * (1 - dc) * expmod;
+    return { base: base * 1000 * br, territory: tf, limit: lf, deductible: dc, expmod, total: indicated };
+  }
+}
+
+function calculatePremium() {
+  const lob = document.getElementById('pb-lob').value;
+  const state = document.getElementById('pb-state').value;
+  const covs = COVERAGES[lob];
+  let rows = '', grandTotal = 0;
+  rows += '<table><thead><tr><th>Coverage</th><th>Limit</th><th>Deductible</th><th>Premium</th></tr></thead><tbody>';
+  covs.forEach(c => {
+    const cb = document.getElementById('cov-' + c.id);
+    if (!cb || !cb.checked) return;
+    const limit = parseFloat(document.getElementById('lim-' + c.id).value) || c.defLimit;
+    const ded = parseFloat(document.getElementById('ded-' + c.id).value) || 0;
+    const result = RateEngine.calculate(lob, state, limit, ded, DEFAULT_BASE_VALUE, DEFAULT_EXP_MOD);
+    const prem = result.total / covs.length;
+    grandTotal += prem;
+    rows += '<tr><td>' + c.label + '</td><td>$' + limit.toLocaleString() + '</td><td>$' + ded.toLocaleString() + '</td><td>$' + Math.round(prem).toLocaleString() + '</td></tr>';
+  });
+  rows += '<tr style="font-weight:700;color:var(--accent)"><td colspan="3">Total Annual Premium</td><td>$' + Math.round(grandTotal).toLocaleString() + '</td></tr>';
+  rows += '</tbody></table>';
+  const card = document.getElementById('premium-card');
+  card.style.display = 'block';
+  document.getElementById('premium-table').innerHTML = rows;
+}
+
+function runRateCalc() {
+  const lob = document.getElementById('rc-lob').value;
+  const state = document.getElementById('rc-state').value;
+  const limit = parseFloat(document.getElementById('rc-limit').value) * 1000;
+  const ded = parseFloat(document.getElementById('rc-ded').value);
+  const base = parseFloat(document.getElementById('rc-base').value);
+  const expmod = parseFloat(document.getElementById('rc-expmod').value);
+  const r = RateEngine.calculate(lob, state, limit, ded, base, expmod);
+  const div = document.getElementById('rate-result');
+  div.style.display = 'block';
+  div.innerHTML = '<div class="rate-result-row"><span>Base Rate Premium</span><span>$' + Math.round(r.base).toLocaleString() + '</span></div>'
+    + '<div class="rate-result-row"><span>Territory Factor (' + escHTML(state) + ')</span><span>&times; ' + r.territory.toFixed(2) + '</span></div>'
+    + '<div class="rate-result-row"><span>Limit Factor</span><span>&times; ' + r.limit.toFixed(2) + '</span></div>'
+    + '<div class="rate-result-row"><span>Deductible Credit</span><span>&#8722; ' + (r.deductible * 100).toFixed(1) + '%</span></div>'
+    + '<div class="rate-result-row"><span>Experience Mod</span><span>&times; ' + r.expmod.toFixed(2) + '</span></div>'
+    + '<div class="rate-result-row"><span>Indicated Annual Premium</span><span>$' + Math.round(r.total).toLocaleString() + '</span></div>';
+}
+
+// === FORM SERIALIZER ===
+class FormSerializer {
+  static toJSON(policy) {
+    const lob = document.getElementById('pb-lob').value;
+    const covs = COVERAGES[lob];
+    const selected = [];
+    covs.forEach(c => {
+      const cb = document.getElementById('cov-' + c.id);
+      if (cb && cb.checked) {
+        selected.push({ coverage: c.label, limit: parseFloat(document.getElementById('lim-' + c.id).value) || c.defLimit, deductible: parseFloat(document.getElementById('ded-' + c.id).value) || 0 });
+      }
+    });
+    return { policyNumber: document.getElementById('pb-polnum').value, insuredName: document.getElementById('pb-insured').value, lineOfBusiness: lob, state: document.getElementById('pb-state').value, effectiveDate: document.getElementById('pb-eff').value, expirationDate: document.getElementById('pb-exp').value, coverages: selected, createdAt: new Date().toISOString() };
+  }
+  static toACORD130XML(obj) {
+    const covXML = (obj.coverages || []).map(c =>
+      `        <Coverage>\n          <CoverageCode>${escXML(c.coverage)}</CoverageCode>\n          <Limit><FormatInteger>${c.limit}</FormatInteger></Limit>\n          <Deductible><FormatInteger>${c.deductible}</FormatInteger></Deductible>\n        </Coverage>`
+    ).join('\n');
+    return `<?xml version="1.0" encoding="UTF-8"?>\n<ACORD>\n  <SignonRq>\n    <SignonTransport>\n      <CustId><CustLoginId>PolicyCore</CustLoginId></CustId>\n    </SignonTransport>\n  </SignonRq>\n  <InsuranceSvcRq>\n    <RqUID>${generateMockRequestId()}</RqUID>\n    <TransactionRequestDt>${new Date().toISOString()}</TransactionRequestDt>\n    <CommlLineBusiness>\n      <CommlLineBusinessInfo>\n        <PolicyNumber>${escXML(obj.policyNumber)}</PolicyNumber>\n        <LOBCd>${escXML(obj.lineOfBusiness)}</LOBCd>\n        <EffectiveDt>${escXML(obj.effectiveDate)}</EffectiveDt>\n        <ExpirationDt>${escXML(obj.expirationDate)}</ExpirationDt>\n        <StateProvCd>${escXML(obj.state)}</StateProvCd>\n      </CommlLineBusinessInfo>\n      <GeneralLiabilityLineBusiness>\n        <InsuredInfo>\n          <GeneralPartyInfo>\n            <NameInfo><CommercialName>${escXML(obj.insuredName)}</CommercialName></NameInfo>\n          </GeneralPartyInfo>\n        </InsuredInfo>\n        <CoverageSection>\n${covXML}\n        </CoverageSection>\n      </GeneralLiabilityLineBusiness>\n    </CommlLineBusiness>\n  </InsuranceSvcRq>\n</ACORD>`;
+  }
+}
+
+function escXML(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function escHTML(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function generateMockRequestId() { return 'xxxx-xxxx-xxxx'.replace(/x/g, () => Math.floor(Math.random()*16).toString(16)); }
+
+function syntaxHighlightJSON(json) {
+  return json.replace(/(".*?")\s*:/g, '<span class="json-key">$1</span>:')
+    .replace(/:\s*(".*?")/g, ': <span class="json-str">$1</span>')
+    .replace(/:\s*(\d+\.?\d*)/g, ': <span class="json-num">$1</span>')
+    .replace(/:\s*(true|false|null)/g, ': <span class="json-bool">$1</span>');
+}
+
+function syntaxHighlightXML(xml) {
+  return xml.replace(/(&lt;\/?[\w:]+)(\s[^&]*?)?(&gt;)/g, (m, tag, attrs, end) => {
+    let out = '<span class="xml-tag">' + tag + '</span>';
+    if (attrs) out += attrs.replace(/([\w:]+)="([^"]*)"/g, '<span class="xml-attr">$1</span>="<span class="xml-val">$2</span>"');
+    out += '<span class="xml-tag">' + end + '</span>';
+    return out;
+  });
+}
+
+function exportJSON() {
+  const obj = FormSerializer.toJSON();
+  const json = JSON.stringify(obj, null, 2);
+  document.getElementById('export-title').textContent = 'JSON Export';
+  document.getElementById('export-pre').innerHTML = syntaxHighlightJSON(escHTML(json));
+  document.getElementById('export-card').style.display = 'block';
+}
+
+function exportACORD() {
+  const obj = FormSerializer.toJSON();
+  const xml = FormSerializer.toACORD130XML(obj);
+  const escaped = xml.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  document.getElementById('export-title').textContent = 'ACORD 130 XML Export';
+  document.getElementById('export-pre').innerHTML = syntaxHighlightXML(escaped);
+  document.getElementById('export-card').style.display = 'block';
+}
+
+// === BUREAU FORMS ===
+const FORM_SCHEMAS = {
+  CG0001: `<?xml version="1.0" encoding="UTF-8"?>\n<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"\n  targetNamespace="urn:iso:cg0001:12-19">\n  <xs:element name="CG0001Form">\n    <xs:complexType>\n      <xs:sequence>\n        <xs:element name="PolicyNumber" type="xs:string"/>\n        <xs:element name="InsuredName" type="xs:string"/>\n        <xs:element name="CoverageSection">\n          <xs:complexType>\n            <xs:sequence>\n              <xs:element name="EachOccurrenceLimit" type="xs:decimal"/>\n              <xs:element name="GeneralAggregateLimit" type="xs:decimal"/>\n              <xs:element name="ProductsCompletedOpsLimit" type="xs:decimal"/>\n              <xs:element name="MedicalExpenseLimit" type="xs:decimal"/>\n              <xs:element name="FireDamageLegalLimit" type="xs:decimal"/>\n            </xs:sequence>\n          </xs:complexType>\n        </xs:element>\n        <xs:element name="EffectiveDate" type="xs:date"/>\n        <xs:element name="ExpirationDate" type="xs:date"/>\n      </xs:sequence>\n    </xs:complexType>\n  </xs:element>\n</xs:schema>`,
+  CA0001: `<?xml version="1.0" encoding="UTF-8"?>\n<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"\n  targetNamespace="urn:iso:ca0001:10-13">\n  <xs:element name="CA0001Form">\n    <xs:complexType>\n      <xs:sequence>\n        <xs:element name="PolicyNumber" type="xs:string"/>\n        <xs:element name="NamedInsured" type="xs:string"/>\n        <xs:element name="AutoCoverageSection">\n          <xs:complexType>\n            <xs:sequence>\n              <xs:element name="LiabilityLimit" type="xs:decimal"/>\n              <xs:element name="CollisionDeductible" type="xs:decimal"/>\n              <xs:element name="ComprehensiveDeductible" type="xs:decimal"/>\n              <xs:element name="UMBILimit" type="xs:decimal"/>\n              <xs:element name="MedPayLimit" type="xs:decimal"/>\n              <xs:element name="VehicleSchedule" type="xs:anyType"/>\n            </xs:sequence>\n          </xs:complexType>\n        </xs:element>\n      </xs:sequence>\n    </xs:complexType>\n  </xs:element>\n</xs:schema>`,
+  ACORD130: `<?xml version="1.0" encoding="UTF-8"?>\n<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"\n  targetNamespace="urn:acord:130:01-2015">\n  <xs:element name="ACORD130Application">\n    <xs:complexType>\n      <xs:sequence>\n        <xs:element name="Applicant">\n          <xs:complexType>\n            <xs:sequence>\n              <xs:element name="CommercialName" type="xs:string"/>\n              <xs:element name="FEIN" type="xs:string" minOccurs="0"/>\n              <xs:element name="Address" type="AddressType"/>\n              <xs:element name="YearsInBusiness" type="xs:integer"/>\n            </xs:sequence>\n          </xs:complexType>\n        </xs:element>\n        <xs:element name="RequestedCoverages" type="xs:anyType"/>\n        <xs:element name="LossHistory" type="xs:anyType"/>\n      </xs:sequence>\n    </xs:complexType>\n  </xs:element>\n</xs:schema>`
+};
+
+function previewForm(id, name, edition, lob) {
+  const schema = FORM_SCHEMAS[id] || `<?xml version="1.0" encoding="UTF-8"?>\n<!-- Schema for ${name} (${edition}) -->\n<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">\n  <xs:element name="Form_${id}">\n    <xs:complexType>\n      <xs:sequence>\n        <xs:element name="PolicyNumber" type="xs:string"/>\n        <xs:element name="EffectiveDate" type="xs:date"/>\n        <xs:element name="CoverageData" type="xs:anyType"/>\n      </xs:sequence>\n    </xs:complexType>\n  </xs:element>\n</xs:schema>`;
+  document.getElementById('form-preview-title').textContent = id + ' — ' + name + ' (' + edition + ')';
+  const escaped = schema.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  document.getElementById('form-preview-content').innerHTML = syntaxHighlightXML(escaped);
+  document.getElementById('form-actions').style.display = 'flex';
+  document.getElementById('validate-results').style.display = 'none';
+}
+
+function validateForm() {
+  const div = document.getElementById('validate-results');
+  div.style.display = 'flex';
+  div.innerHTML = '<div style="margin-bottom:6px;font-size:12px;font-weight:600;color:var(--muted)">Validation Results</div>'
+    + '<div class="validate-item"><span class="validate-ok">&#10003;</span> XML Schema is well-formed</div>'
+    + '<div class="validate-item"><span class="validate-ok">&#10003;</span> Namespace declaration valid</div>'
+    + '<div class="validate-item"><span class="validate-ok">&#10003;</span> All required elements present</div>'
+    + '<div class="validate-item"><span class="validate-ok">&#10003;</span> Data types conform to ISO standard</div>'
+    + '<div class="validate-item"><span class="validate-ok">&#10003;</span> Edition reference matches bureau filing</div>'
+    + '<div style="margin-top:8px;padding:8px;background:rgba(76,175,80,.1);border-radius:6px;font-size:12px;color:var(--success)">&#10003; Form validation passed — 5/5 checks</div>';
+}
+
+function showJSONSchema() {
+  const obj = { "$schema": "http://json-schema.org/draft-07/schema#", "title": "InsuranceForm", "type": "object", "required": ["policyNumber","effectiveDate","coverages"], "properties": { "policyNumber": { "type": "string", "pattern": "^POL-\\d{4}-\\d{6}$" }, "effectiveDate": { "type": "string", "format": "date" }, "insuredName": { "type": "string", "maxLength": 200 }, "coverages": { "type": "array", "items": { "type": "object", "properties": { "coverageCode": { "type": "string" }, "limit": { "type": "number", "minimum": 0 }, "deductible": { "type": "number", "minimum": 0 } } } } } };
+  document.getElementById('form-preview-title').textContent = 'JSON Schema';
+  document.getElementById('form-preview-content').innerHTML = syntaxHighlightJSON(JSON.stringify(obj, null, 2));
+}
+
+// === API ENDPOINTS ===
+const ENDPOINTS = [
+  { method:'GET', path:'/policies', desc:'List all policies with pagination and filtering', body:'{\n  "page": 1,\n  "pageSize": 20,\n  "lob": "gl",\n  "status": "active"\n}',
+    response:'{\n  "data": [\n    {\n      "policyNumber": "POL-2024-008821",\n      "insuredName": "Apex Manufacturing LLC",\n      "lineOfBusiness": "gl",\n      "status": "active",\n      "writtenPremium": 18450.00,\n      "effectiveDate": "2024-01-01"\n    }\n  ],\n  "pagination": { "page": 1, "pageSize": 20, "total": 1247 }\n}' },
+  { method:'POST', path:'/policies', desc:'Create a new insurance policy', body:'{\n  "insuredName": "New Business LLC",\n  "lineOfBusiness": "gl",\n  "state": "TX",\n  "effectiveDate": "2024-03-01",\n  "expirationDate": "2025-03-01",\n  "coverages": [\n    { "coverageCode": "premops", "limit": 1000000, "deductible": 0 }\n  ]\n}',
+    response:'{\n  "policyNumber": "POL-2024-009002",\n  "status": "pending",\n  "writtenPremium": 12340.00,\n  "createdAt": "2024-01-15T10:30:00Z",\n  "message": "Policy created successfully"\n}' },
+  { method:'GET', path:'/policies/{id}', desc:'Retrieve a specific policy by policy number', body:'{\n  "id": "POL-2024-008821"\n}',
+    response:'{\n  "policyNumber": "POL-2024-008821",\n  "insuredName": "Apex Manufacturing LLC",\n  "lineOfBusiness": "gl",\n  "state": "CA",\n  "effectiveDate": "2024-01-01",\n  "expirationDate": "2025-01-01",\n  "status": "active",\n  "writtenPremium": 18450.00,\n  "coverages": [\n    { "code": "premops", "limit": 1000000, "premium": 9225.00 },\n    { "code": "products", "limit": 1000000, "premium": 9225.00 }\n  ]\n}' },
+  { method:'PUT', path:'/policies/{id}', desc:'Update policy details or coverages', body:'{\n  "id": "POL-2024-008821",\n  "coverages": [\n    { "coverageCode": "premops", "limit": 2000000, "deductible": 1000 }\n  ]\n}',
+    response:'{\n  "policyNumber": "POL-2024-008821",\n  "status": "active",\n  "revisedPremium": 21800.00,\n  "endorsementNumber": "END-2024-0042",\n  "updatedAt": "2024-01-15T11:00:00Z"\n}' },
+  { method:'POST', path:'/policies/{id}/rate', desc:'Re-rate a policy with current bureau factors', body:'{\n  "id": "POL-2024-008821",\n  "effectiveDate": "2024-01-01",\n  "experienceMod": 0.95\n}',
+    response:'{\n  "baseRate": 9800.00,\n  "territoryFactor": 1.35,\n  "limitFactor": 1.00,\n  "deductibleCredit": 0.06,\n  "experienceMod": 0.95,\n  "indicatedPremium": 11812.35,\n  "ratingDate": "2024-01-15"\n}' },
+  { method:'GET', path:'/forms/{formNumber}', desc:'Retrieve bureau form schema and metadata', body:'{\n  "formNumber": "CG0001",\n  "edition": "12-19"\n}',
+    response:'{\n  "formNumber": "CG 00 01",\n  "description": "Commercial General Liability Coverage Form",\n  "edition": "12 19",\n  "bureau": "ISO",\n  "lineOfBusiness": "gl",\n  "xmlSchemaUrl": "/schemas/cg0001-12-19.xsd",\n  "approvedStates": ["AL","AK","AZ","AR","CA"]\n}' },
+  { method:'DELETE', path:'/policies/{id}', desc:'Cancel / void a policy (soft delete)', body:'{\n  "id": "POL-2024-008816",\n  "reason": "Insured request — business closed",\n  "effectiveDate": "2024-01-15"\n}',
+    response:'{\n  "policyNumber": "POL-2024-008816",\n  "status": "cancelled",\n  "cancellationDate": "2024-01-15",\n  "returnPremium": 24300.00,\n  "message": "Policy cancelled pro-rata"\n}' }
+];
+
+function buildAPIStudio() {
+  const container = document.getElementById('endpoints-list');
+  let html = '';
+  ENDPOINTS.forEach((ep, i) => {
+    const m = ep.method.toLowerCase();
+    html += '<div class="endpoint">';
+    html += '<div class="endpoint-header" onclick="toggleEndpoint(' + i + ')">';
+    html += '<span class="badge ' + m + '">' + ep.method + '</span>';
+    html += '<span class="endpoint-path">' + ep.path + '</span>';
+    html += '<span class="endpoint-desc">' + ep.desc + '</span>';
+    html += '<span style="color:var(--muted);font-size:18px;margin-left:8px">&#8964;</span></div>';
+    html += '<div class="endpoint-body" id="ep-body-' + i + '">';
+    html += '<div style="margin-top:12px"><div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px">Request Body / Parameters</div>';
+    html += '<textarea id="ep-req-' + i + '" style="width:100%;height:100px;background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:10px;color:var(--text);font-family:JetBrains Mono,monospace;font-size:12px;resize:vertical;outline:none">' + ep.body + '</textarea></div>';
+    html += '<div style="margin-top:8px"><button class="btn btn-primary" onclick="sendRequest(' + i + ', &quot;' + m + '&quot;)">&#9654; Send Request</button></div>';
+    html += '<div id="ep-res-' + i + '" class="response-box" style="display:none"></div>';
+    html += '</div></div>';
+  });
+  container.innerHTML = html;
+}
+
+function toggleEndpoint(i) {
+  const body = document.getElementById('ep-body-' + i);
+  body.classList.toggle('open');
+}
+
+function sendRequest(i, method) {
+  const resBox = document.getElementById('ep-res-' + i);
+  resBox.style.display = 'block';
+  resBox.innerHTML = '<div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted)"><div class="spinner"></div> Sending request...</div>';
+  const start = Date.now();
+  setTimeout(() => {
+    const elapsed = Date.now() - start;
+    const ep = ENDPOINTS[i];
+    const statusCode = method === 'delete' ? 200 : (method === 'post' ? 201 : 200);
+    resBox.innerHTML = '<div class="response-meta"><span class="status-200">&#9679; ' + statusCode + ' ' + (statusCode === 201 ? 'Created' : 'OK') + '</span><span style="color:var(--muted)">' + elapsed + 'ms</span><span style="color:var(--muted)">Content-Type: application/json</span></div>'
+      + '<pre style="margin:0;max-height:200px;overflow-y:auto">' + syntaxHighlightJSON(ep.response) + '</pre>';
+  }, 600);
+}
+
+// Initialize
+updateCoverages();
+buildAPIStudio();
+</script>
+</body>
+</html>
