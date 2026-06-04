@@ -176,6 +176,20 @@ describe('projects data', () => {
   });
 
   describe('routing helpers', () => {
+    const normalizeToExportIndexPath = (value: string): string | null => {
+      if (!value.startsWith('/')) {
+        return null;
+      }
+
+      const [withoutQueryOrHash] = value.split(/[?#]/, 1);
+      if (withoutQueryOrHash.endsWith('.html')) {
+        return withoutQueryOrHash;
+      }
+
+      const trimmed = withoutQueryOrHash.replace(/\/+$/, '');
+      return `${trimmed}/index.html`;
+    };
+
     it.each(projects)('should generate project href for "$title"', (project) => {
       const href = getProjectHref(project);
       expect(href.startsWith('/projects/')).toBe(true);
@@ -199,11 +213,14 @@ describe('projects data', () => {
       expect(projectWithSlug).toBeDefined();
 
       const routeKey = getProjectRouteKey(projectWithSlug!);
-      expect(routeKey).toBe(projectWithSlug!.slug);
-      expect(getProjectHref(projectWithSlug!)).toBe(`/projects/${projectWithSlug!.slug}`);
+      expect(routeKey).toBe(`detail-${projectWithSlug!.slug}`);
+      expect(getProjectHref(projectWithSlug!)).toBe(`/projects/detail-${projectWithSlug!.slug}`);
 
       const resolvedBySlug = findProjectByRouteParam(projectWithSlug!.slug!);
       expect(resolvedBySlug?.id).toBe(projectWithSlug!.id);
+
+      const resolvedByNamespacedSlug = findProjectByRouteParam(routeKey);
+      expect(resolvedByNamespacedSlug?.id).toBe(projectWithSlug!.id);
 
       const resolvedById = findProjectByRouteParam(projectWithSlug!.id.toString());
       expect(resolvedById?.id).toBe(projectWithSlug!.id);
@@ -213,6 +230,23 @@ describe('projects data', () => {
       const firstProject = projects[0];
       const resolved = findProjectById(firstProject.id);
       expect(resolved?.id).toBe(firstProject.id);
+    });
+
+    it('should avoid route and demo path collisions across all projects', () => {
+      projects.forEach((project) => {
+        const detailPath = normalizeToExportIndexPath(getProjectHref(project));
+        expect(detailPath).toBeTruthy();
+
+        const candidateDemoPaths = [project.liveUrl, project.projectPath]
+          .filter((candidate): candidate is string => typeof candidate === 'string')
+          .filter((candidate) => /^\/(projects|demos)\//i.test(candidate));
+
+        candidateDemoPaths.forEach((candidatePath) => {
+          const normalizedDemoPath = normalizeToExportIndexPath(candidatePath);
+          expect(normalizedDemoPath).toBeTruthy();
+          expect(normalizedDemoPath).not.toBe(detailPath);
+        });
+      });
     });
   });
 

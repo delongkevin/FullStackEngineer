@@ -1053,7 +1053,7 @@ export const getProjectHref = (project: Project): string => {
 export const getProjectRouteKey = (project: Project): string => {
   const normalizedSlug = project.slug?.trim();
   if (normalizedSlug) {
-    return normalizedSlug;
+    return `detail-${normalizedSlug}`;
   }
 
   return project.id.toString();
@@ -1061,10 +1061,14 @@ export const getProjectRouteKey = (project: Project): string => {
 
 export const findProjectByRouteParam = (param: string): Project | undefined => {
   const normalized = param.toLowerCase();
+  const detailPrefix = 'detail-';
+  const normalizedSlug = normalized.startsWith(detailPrefix)
+    ? normalized.slice(detailPrefix.length)
+    : normalized;
   const asNumber = Number.parseInt(param, 10);
 
   return projects.find((project) => {
-    if (project.slug && project.slug.toLowerCase() === normalized) {
+    if (project.slug && project.slug.toLowerCase() === normalizedSlug) {
       return true;
     }
 
