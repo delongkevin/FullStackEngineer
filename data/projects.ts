@@ -1005,10 +1005,21 @@ const searchableProjectFields = (project: Project) => {
 export const normalizeProjectLiveUrl = (rawUrl: string): string => {
   const FALLBACK_URL = '/';
   const withoutWrappingQuotes = rawUrl.trim().replace(/^(['"])([\s\S]*)\1$/, '$2');
-  const decodedEntities = withoutWrappingQuotes
-    .replace(/&amp;/gi, '&')
-    .replace(/&quot;|&#34;/gi, '"')
-    .replace(/&apos;|&#39;/gi, "'");
+
+  // Decode HTML entities in a single pass to prevent double-unescaping
+  const decodedEntities = withoutWrappingQuotes.replace(
+    /&(?:amp|quot|apos|#34|#39);/gi,
+    (match) => {
+      switch (match.toLowerCase()) {
+        case '&amp;': return '&';
+        case '&quot;':
+        case '&#34;': return '"';
+        case '&apos;':
+        case '&#39;': return "'";
+        default: return match;
+      }
+    }
+  );
 
   const normalized = decodedEntities.replace(/\\\//g, '/').replace(/\\/g, '/');
   const withLeadingSlash =

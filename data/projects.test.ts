@@ -96,6 +96,17 @@ describe('projects data', () => {
       );
     });
 
+    it('should handle double-encoded entities without double-unescaping', () => {
+      // Double-encoded &amp;amp; should decode to &amp; (not to &)
+      expect(normalizeProjectLiveUrl('/projects/demo.html?a=1&amp;amp;b=2')).toBe(
+        '/projects/demo.html?a=1&amp;b=2'
+      );
+      // Double-encoded &#34; sequences should only decode once
+      expect(normalizeProjectLiveUrl('/projects/demo.html?text=&amp;quot;hello&amp;quot;')).toBe(
+        '/projects/demo.html?text=&quot;hello&quot;'
+      );
+    });
+
     it('should reject unsafe live URLs after normalization', () => {
       expect(normalizeProjectLiveUrl('javascript:alert(1)')).toBe('/');
       expect(normalizeProjectLiveUrl('/projects/../secrets/index.html')).toBe('/');
