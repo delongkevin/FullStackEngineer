@@ -989,6 +989,33 @@ export const projects: Project[] = [
     embeddable: true,
     projectPath: '/projects/enterprise-erp-workbench',
   },
+  {
+    id: 39,
+    slug: 'wireless-audio-platform',
+    title: 'Wireless Audio Platform',
+    description: 'Full-stack wireless audio streaming platform — TypeScript/Node.js microservices, AWS Lambda, MongoDB, S3, C++ DSP firmware, REST/GraphQL APIs, and Angular enterprise UI for a global audio equipment manufacturer.',
+    fullDescription: 'An interactive demo showcasing Sr. Software Engineer capabilities for a leading global audio equipment manufacturer. The platform demonstrates end-to-end development of wireless audio streaming services: TypeScript/Node.js microservices for multi-room audio sync, device pairing, and firmware OTA; AWS Lambda serverless compute for event processing and analytics; MongoDB Atlas for device registry, stream sessions, and telemetry; S3 for firmware binaries and asset delivery; C++ DSP pipeline and transport layer for low-latency audio on hardware; RESTful APIs and a GraphQL gateway for flexible client queries; and an Angular 17 enterprise front-end for device management, streaming control, and admin dashboards. Covers both consumer and enterprise product lines with full CI/CD pipeline.',
+    image: '/images/wireless-audio-platform.svg',
+    tech: ['TypeScript', 'Node.js', 'AWS Lambda', 'MongoDB', 'S3', 'C++', 'RESTful APIs', 'GraphQL', 'Angular', 'Express', 'Docker', 'MQTT'],
+    liveUrl: '/projects/wireless-audio-platform/index.html',
+    githubUrl: 'https://github.com/delongkevin/FullStackEngineer',
+    featured: true,
+    category: 'fullstack',
+    features: [
+      'TypeScript/Node.js microservices: audio-streaming, device-pairing, firmware-OTA, content-delivery, user-auth, and analytics services with Express',
+      'AWS Lambda serverless functions: audioProcessorFn, deviceEventHandlerFn, firmwareValidatorFn, analyticsAggregatorFn with SQS triggers',
+      'MongoDB Atlas collections: 284K devices, 1.4M stream sessions, 52M analytics events with TTL indexes and aggregation pipelines',
+      'S3 storage: firmware binaries, audio assets, analytics data lake, and CloudFront CDN distribution',
+      'C++ firmware DSP pipeline: 48kHz/24-bit audio processing, EQ, dynamic range, multi-room sync, BT/Wi-Fi transport',
+      'RESTful API: device management, stream CRUD, OTA triggers, product catalog, and analytics ingestion endpoints',
+      'GraphQL gateway: flexible queries for devices, streams, rooms, and firmware with Apollo Server and real-time subscriptions',
+      'Angular 17 front-end: standalone components, RxJS observables, Apollo Angular GraphQL client, device dashboard, streaming controls',
+      'Real-time platform dashboard: connected devices, active streams, latency metrics, service health, and audio visualizer',
+      'Full CI/CD: TypeScript strict compilation, Jest/Supertest 94% coverage, Docker multi-stage builds, SAM Lambda deploys, Angular CDN deploy',
+    ],
+    embeddable: true,
+    projectPath: '/projects/wireless-audio-platform',
+  },
 ];
 
 const searchableProjectFields = (project: Project) => {

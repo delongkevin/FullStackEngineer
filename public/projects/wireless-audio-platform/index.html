@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wireless Audio Platform – Sr. Software Engineer Demo</title>
+  <style>
+    /* ── Variables ─────────────────────────────────────────────── */
+    :root {
+      --primary: #6366f1;
+      --primary-d: #4f46e5;
+      --accent: #06b6d4;
+      --accent-d: #0891b2;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --bg: #0f172a;
+      --card: #1e293b;
+      --card-alt: #334155;
+      --text: #f1f5f9;
+      --sub: #94a3b8;
+      --border: #334155;
+      --radius: 12px;
+      --shadow: 0 4px 24px rgba(0,0,0,.3);
+      --nav-h: 56px;
+    }
+
+    /* ── Reset ──────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      height: 100%;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── Layout ──────────────────────────────────────────────────── */
+    #app {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    /* ── Header ─────────────────────────────────────────────────── */
+    .header {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-left { display: flex; align-items: center; gap: 12px; }
+    .header-logo {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; color: #fff; font-size: 14px;
+    }
+    .header-title { font-size: 18px; font-weight: 700; color: var(--text); }
+    .header-subtitle { font-size: 12px; color: var(--sub); margin-top: 2px; }
+    .header-right { display: flex; align-items: center; gap: 10px; }
+    .status-badge {
+      font-size: 11px; font-weight: 600;
+      padding: 4px 10px; border-radius: 20px;
+      letter-spacing: .3px;
+    }
+    .badge-online { background: var(--success); color: #fff; }
+    .badge-streaming { background: var(--accent); color: #fff; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1}50%{opacity:.7} }
+
+    /* ── Navigation ────────────────────────────────────────────── */
+    .nav {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .nav::-webkit-scrollbar { display: none; }
+    .nav-btn {
+      background: none; border: none;
+      color: var(--sub);
+      font-size: 13px; font-weight: 500;
+      padding: 12px 18px;
+      white-space: nowrap;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all .2s;
+    }
+    .nav-btn:hover { color: var(--text); }
+    .nav-btn.active { color: var(--primary); border-bottom-color: var(--primary); }
+
+    /* ── Main Content ──────────────────────────────────────────── */
+    .content {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    .hidden { display: none !important; }
+
+    /* ── Cards ────────────────────────────────────────────────── */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .card-title {
+      font-size: 15px; font-weight: 700;
+      color: var(--text); margin-bottom: 12px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .card-title .icon { font-size: 18px; }
+
+    /* ── Grid ──────────────────────────────────────────────────── */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    @media(max-width:768px) {
+      .grid-2,.grid-3,.grid-4 { grid-template-columns: 1fr; }
+    }
+
+    /* ── KPI Cards ────────────────────────────────────────────── */
+    .kpi {
+      background: var(--card-alt);
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+    }
+    .kpi-value { font-size: 24px; font-weight: 800; color: var(--text); }
+    .kpi-label { font-size: 11px; color: var(--sub); margin-top: 4px; text-transform: uppercase; letter-spacing: .5px; }
+    .kpi-trend { font-size: 11px; margin-top: 6px; }
+    .trend-up { color: var(--success); }
+    .trend-down { color: var(--danger); }
+
+    /* ── Tech Stack Chips ─────────────────────────────────────── */
+    .chip-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip {
+      background: var(--card-alt);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      display: flex; align-items: center; gap: 6px;
+      transition: transform .15s;
+    }
+    .chip:hover { transform: translateY(-1px); }
+    .chip-ts { border-color: #3178c6; color: #3178c6; }
+    .chip-node { border-color: #68a063; color: #68a063; }
+    .chip-aws { border-color: #ff9900; color: #ff9900; }
+    .chip-mongo { border-color: #47a248; color: #47a248; }
+    .chip-graphql { border-color: #e535ab; color: #e535ab; }
+    .chip-angular { border-color: #dd0031; color: #dd0031; }
+    .chip-cpp { border-color: #00599c; color: #00599c; }
+    .chip-rest { border-color: #06b6d4; color: #06b6d4; }
+    .chip-s3 { border-color: #569a31; color: #569a31; }
+    .chip-lambda { border-color: #ff9900; color: #ff9900; }
+
+    /* ── Code Block ────────────────────────────────────────────── */
+    .code-block {
+      background: #0d1117;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      font-family: 'Fira Code', 'Courier New', monospace;
+      font-size: 12px;
+      line-height: 1.6;
+      overflow-x: auto;
+      color: #c9d1d9;
+    }
+    .code-block .keyword { color: #ff7b72; }
+    .code-block .type { color: #79c0ff; }
+    .code-block .string { color: #a5d6ff; }
+    .code-block .comment { color: #8b949e; font-style: italic; }
+    .code-block .fn { color: #d2a8ff; }
+    .code-block .const { color: #ffa657; }
+
+    /* ── Service List ─────────────────────────────────────────── */
+    .service-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 16px;
+      background: var(--card-alt);
+      border-radius: 8px;
+      margin-bottom: 8px;
+    }
+    .service-status {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .status-healthy { background: var(--success); box-shadow: 0 0 8px var(--success); }
+    .status-degraded { background: var(--warning); box-shadow: 0 0 8px var(--warning); }
+    .status-down { background: var(--danger); box-shadow: 0 0 8px var(--danger); }
+    .service-name { font-size: 13px; font-weight: 600; flex: 1; }
+    .service-meta { font-size: 11px; color: var(--sub); }
+
+    /* ── API Endpoint Panel ───────────────────────────────────── */
+    .endpoint-row {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 14px;
+      background: var(--card-alt);
+      border-radius: 8px;
+      margin-bottom: 8px;
+      font-family: monospace;
+      font-size: 12px;
+    }
+    .method-badge {
+      font-size: 10px; font-weight: 700;
+      padding: 3px 8px; border-radius: 4px;
+      min-width: 50px; text-align: center;
+    }
+    .method-get { background: #16a34a33; color: var(--success); }
+    .method-post { background: #eab30833; color: var(--warning); }
+    .method-put { background: #6366f133; color: var(--primary); }
+    .method-delete { background: #ef444433; color: var(--danger); }
+    .endpoint-path { flex: 1; color: var(--text); }
+    .endpoint-desc { font-size: 11px; color: var(--sub); font-family: sans-serif; }
+
+    /* ── Lambda Functions ──────────────────────────────────────── */
+    .lambda-card {
+      background: var(--card-alt);
+      border-radius: 10px;
+      padding: 14px;
+      border-left: 3px solid #ff9900;
+    }
+    .lambda-name { font-size: 13px; font-weight: 700; color: var(--text); }
+    .lambda-runtime { font-size: 11px; color: var(--sub); margin-top: 4px; }
+    .lambda-stats { display: flex; gap: 16px; margin-top: 10px; }
+    .lambda-stat { font-size: 11px; color: var(--sub); }
+    .lambda-stat span { color: var(--text); font-weight: 600; }
+
+    /* ── MongoDB Collections ────────────────────────────────────── */
+    .mongo-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+    .mongo-table th {
+      text-align: left;
+      padding: 10px 12px;
+      background: var(--card-alt);
+      color: var(--sub);
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 10px;
+      letter-spacing: .5px;
+    }
+    .mongo-table td {
+      padding: 10px 12px;
+      border-top: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    /* ── GraphQL Panel ─────────────────────────────────────────── */
+    .graphql-panel {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media(max-width:768px) { .graphql-panel { grid-template-columns: 1fr; } }
+    .graphql-query, .graphql-response {
+      background: #0d1117;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      font-family: monospace;
+      font-size: 12px;
+      line-height: 1.6;
+      overflow-x: auto;
+    }
+    .graphql-query { color: #e535ab; }
+    .graphql-response { color: #a5d6ff; }
+
+    /* ── Audio Visualizer ──────────────────────────────────────── */
+    .audio-viz {
+      display: flex; align-items: flex-end; justify-content: center;
+      gap: 3px; height: 60px; padding: 10px 0;
+    }
+    .audio-bar {
+      width: 4px; border-radius: 2px;
+      background: linear-gradient(to top, var(--primary), var(--accent));
+      animation: audioWave 1.2s ease-in-out infinite;
+    }
+    @keyframes audioWave {
+      0%,100%{ height: 10px; }
+      50%{ height: var(--h, 40px); }
+    }
+
+    /* ── Streaming Metrics ────────────────────────────────────── */
+    .metric-bar {
+      height: 6px;
+      background: var(--card-alt);
+      border-radius: 3px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+    .metric-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width .5s ease;
+    }
+
+    /* ── C++ Section ───────────────────────────────────────────── */
+    .firmware-panel {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    }
+    @media(max-width:768px) { .firmware-panel { grid-template-columns: 1fr; } }
+    .firmware-metric {
+      background: var(--card-alt);
+      border-radius: 8px;
+      padding: 14px;
+      text-align: center;
+    }
+    .firmware-value { font-size: 20px; font-weight: 800; color: var(--accent); }
+    .firmware-label { font-size: 11px; color: var(--sub); margin-top: 4px; }
+
+    /* ── Buttons ───────────────────────────────────────────────── */
+    .btn {
+      background: var(--primary);
+      color: #fff;
+      border: none; border-radius: 8px;
+      padding: 10px 18px;
+      font-size: 13px; font-weight: 600;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .btn:hover { background: var(--primary-d); }
+    .btn-sm { padding: 6px 12px; font-size: 11px; }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+    }
+    .btn-outline:hover { background: var(--primary); color: #fff; }
+
+    /* ── Console Log ───────────────────────────────────────────── */
+    .console {
+      background: #0d1117;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      font-family: monospace;
+      font-size: 11px;
+      max-height: 200px;
+      overflow-y: auto;
+      line-height: 1.8;
+    }
+    .log-info { color: #58a6ff; }
+    .log-success { color: #3fb950; }
+    .log-warn { color: #d29922; }
+    .log-error { color: #f85149; }
+    .log-time { color: #8b949e; }
+
+    /* ── Tab-specific ──────────────────────────────────────────── */
+    .section-title {
+      font-size: 18px; font-weight: 700;
+      color: var(--text); margin-bottom: 16px;
+    }
+    .section-desc {
+      font-size: 13px; color: var(--sub);
+      margin-bottom: 20px; line-height: 1.6;
+    }
+
+    /* ── Architecture Diagram ──────────────────────────────────── */
+    .arch-layer {
+      background: var(--card-alt);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 12px;
+      position: relative;
+    }
+    .arch-layer::after {
+      content: '↓';
+      position: absolute;
+      bottom: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--sub);
+      font-size: 16px;
+    }
+    .arch-layer:last-child::after { display: none; }
+    .arch-label { font-size: 12px; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: .5px; }
+    .arch-items { font-size: 12px; color: var(--sub); margin-top: 6px; }
+
+    /* ── S3 Bucket Panel ───────────────────────────────────────── */
+    .bucket-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 14px;
+      background: var(--card-alt);
+      border-radius: 8px;
+      margin-bottom: 8px;
+    }
+    .bucket-icon { font-size: 18px; }
+    .bucket-name { font-size: 13px; font-weight: 600; flex: 1; }
+    .bucket-size { font-size: 11px; color: var(--sub); }
+  </style>
+</head>
+<body>
+<div id="app">
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <div class="header-logo">AP</div>
+      <div>
+        <div class="header-title">Wireless Audio Platform</div>
+        <div class="header-subtitle">Sr. Software Engineer – Full Stack</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <span class="status-badge badge-streaming">&#9835; Streaming</span>
+      <span class="status-badge badge-online">All Systems Online</span>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="nav" role="tablist" aria-label="Platform sections">
+    <button class="nav-btn active" id="tab-btn-dashboard" data-tab="dashboard" role="tab" aria-selected="true" aria-controls="tab-dashboard">Dashboard</button>
+    <button class="nav-btn" id="tab-btn-services" data-tab="services" role="tab" aria-selected="false" aria-controls="tab-services">Microservices</button>
+    <button class="nav-btn" id="tab-btn-api" data-tab="api" role="tab" aria-selected="false" aria-controls="tab-api">REST &amp; GraphQL</button>
+    <button class="nav-btn" id="tab-btn-aws" data-tab="aws" role="tab" aria-selected="false" aria-controls="tab-aws">AWS Cloud</button>
+    <button class="nav-btn" id="tab-btn-firmware" data-tab="firmware" role="tab" aria-selected="false" aria-controls="tab-firmware">C++ Firmware</button>
+    <button class="nav-btn" id="tab-btn-angular" data-tab="angular" role="tab" aria-selected="false" aria-controls="tab-angular">Angular UI</button>
+    <button class="nav-btn" id="tab-btn-arch" data-tab="arch" role="tab" aria-selected="false" aria-controls="tab-arch">Architecture</button>
+  </nav>
+
+  <!-- Content -->
+  <div class="content">
+
+    <!-- ══ DASHBOARD TAB ══ -->
+    <div id="tab-dashboard" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-dashboard">
+      <div class="section-title">Platform Overview</div>
+      <div class="section-desc">Real-time monitoring of the wireless audio streaming platform. TypeScript/Node.js back-end services powering multi-room audio, device pairing, firmware OTA, and content delivery across consumer and enterprise product lines.</div>
+
+      <!-- KPIs -->
+      <div class="grid-4" style="margin-bottom:20px">
+        <div class="kpi">
+          <div class="kpi-value" id="kpi-devices">2,847</div>
+          <div class="kpi-label">Connected Devices</div>
+          <div class="kpi-trend trend-up">&#9650; 12% this week</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-value" id="kpi-streams">14.2K</div>
+          <div class="kpi-label">Active Streams</div>
+          <div class="kpi-trend trend-up">&#9650; 8% today</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-value" id="kpi-latency">18ms</div>
+          <div class="kpi-label">Avg Latency</div>
+          <div class="kpi-trend trend-up">&#9660; 3ms improved</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-value" id="kpi-uptime">99.97%</div>
+          <div class="kpi-label">Platform Uptime</div>
+          <div class="kpi-trend trend-up">SLA: 99.9%</div>
+        </div>
+      </div>
+
+      <!-- Audio Visualizer -->
+      <div class="card">
+        <div class="card-title"><span class="icon">&#9835;</span> Live Audio Stream – Multi-Room Sync</div>
+        <div class="audio-viz" id="audio-viz"></div>
+        <div style="display:flex;justify-content:space-between;margin-top:10px">
+          <span style="font-size:11px;color:var(--sub)">Codec: AAC-LC 256kbps / 48kHz</span>
+          <span style="font-size:11px;color:var(--success)">&#9679; Synced: 4 rooms</span>
+        </div>
+      </div>
+
+      <!-- Tech Stack -->
+      <div class="card">
+        <div class="card-title"><span class="icon">&#128736;</span> Technology Stack</div>
+        <div class="chip-grid">
+          <div class="chip chip-ts">&#9671; TypeScript</div>
+          <div class="chip chip-node">&#9673; Node.js</div>
+          <div class="chip chip-aws">&#9729; AWS Lambda</div>
+          <div class="chip chip-mongo">&#9707; MongoDB</div>
+          <div class="chip chip-s3">&#128230; AWS S3</div>
+          <div class="chip chip-cpp">&#9881; C++</div>
+          <div class="chip chip-rest">&#8596; RESTful APIs</div>
+          <div class="chip chip-graphql">&#9670; GraphQL</div>
+          <div class="chip chip-angular">&#9651; Angular</div>
+          <div class="chip chip-lambda">&#955; Serverless</div>
+        </div>
+      </div>
+
+      <!-- Service Health -->
+      <div class="card">
+        <div class="card-title"><span class="icon">&#9889;</span> Service Health</div>
+        <div class="service-item"><div class="service-status status-healthy"></div><div class="service-name">audio-streaming-service</div><div class="service-meta">Node.js · 4 replicas · p99: 12ms</div></div>
+        <div class="service-item"><div class="service-status status-healthy"></div><div class="service-name">device-pairing-service</div><div class="service-meta">TypeScript · 2 replicas · p99: 24ms</div></div>
+        <div class="service-item"><div class="service-status status-healthy"></div><div class="service-name">firmware-ota-service</div><div class="service-meta">Node.js · 2 replicas · p99: 45ms</div></div>
+        <div class="service-item"><div class="service-status status-healthy"></div><div class="service-name">content-delivery-api</div><div class="service-meta">Lambda · auto-scale · p99: 8ms</div></div>
+        <div class="service-item"><div class="service-status status-degraded"></div><div class="service-name">analytics-pipeline</div><div class="service-meta">TypeScript · 1 replica · p99: 120ms</div></div>
+        <div class="service-item"><div class="service-status status-healthy"></div><div class="service-name">user-auth-service</div><div class="service-meta">Node.js · 3 replicas · p99: 15ms</div></div>
+      </div>
+    </div>
+
+    <!-- ══ MICROSERVICES TAB ══ -->
+    <div id="tab-services" class="tab-panel hidden" role="tabpanel" aria-labelledby="tab-btn-services">
+      <div class="section-title">Microservices Architecture</div>
+      <div class="section-desc">TypeScript/Node.js back-end services built with Express, deployed as containerized microservices. Each service owns its domain, communicates via REST/GraphQL, and publishes events to an MQTT broker for real-time device updates.</div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">&#128225;</span> Audio Streaming Service</div>
+        <div class="code-block">
+<span class="comment">// audio-streaming-service/src/controllers/stream.controller.ts</span>
+<span class="keyword">import</span> { <span class="type">Request</span>, <span class="type">Response</span> } <span class="keyword">from</span> <span class="string">'express'</span>;
+<span class="keyword">import</span> { <span class="type">StreamService</span> } <span class="keyword">from</span> <span class="string">'../services/stream.service'</span>;
+<span class="keyword">import</span> { <span class="type">AudioCodec</span>, <span class="type">StreamConfig</span> } <span class="keyword">from</span> <span class="string">'../types/audio.types'</span>;
+
+<span class="keyword">export class</span> <span class="type">StreamController</span> {
+  <span class="keyword">constructor</span>(<span class="keyword">private</span> streamService: <span class="type">StreamService</span>) {}
+
+  <span class="keyword">async</span> <span class="fn">createMultiRoomStream</span>(req: <span class="type">Request</span>, res: <span class="type">Response</span>) {
+    <span class="keyword">const</span> config: <span class="type">StreamConfig</span> = {
+      codec: <span class="type">AudioCodec</span>.AAC_LC,
+      bitrate: <span class="const">256000</span>,
+      sampleRate: <span class="const">48000</span>,
+      channels: req.body.roomIds.length,
+      syncMode: <span class="string">'tight'</span>,
+    };
+
+    <span class="keyword">const</span> stream = <span class="keyword">await</span> <span class="keyword">this</span>.streamService.<span class="fn">initializeStream</span>(config);
+    <span class="keyword">await</span> <span class="keyword">this</span>.streamService.<span class="fn">syncRooms</span>(stream.id, req.body.roomIds);
+
+    <span class="keyword">return</span> res.status(<span class="const">201</span>).json({ streamId: stream.id, status: <span class="string">'active'</span> });
+  }
+}
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">&#128279;</span> Device Pairing Service</div>
+        <div class="code-block">
+<span class="comment">// device-pairing-service/src/handlers/pairing.handler.ts</span>
+<span class="keyword">import</span> { <span class="type">DeviceRepository</span> } <span class="keyword">from</span> <span class="string">'../repositories/device.repository'</span>;
+<span class="keyword">import</span> { <span class="type">MQTTBroker</span> } <span class="keyword">from</span> <span class="string">'../infrastructure/mqtt.broker'</span>;
+
+<span class="keyword">interface</span> <span class="type">PairingRequest</span> {
+  deviceId: <span class="type">string</span>;
+  productLine: <span class="string">'consumer'</span> | <span class="string">'enterprise'</span>;
+  firmwareVersion: <span class="type">string</span>;
+  protocolVersion: <span class="type">number</span>;
+}
+
+<span class="keyword">export class</span> <span class="type">PairingHandler</span> {
+  <span class="keyword">async</span> <span class="fn">initiatePairing</span>(request: <span class="type">PairingRequest</span>): <span class="type">Promise</span>&lt;<span class="type">PairingResult</span>&gt; {
+    <span class="keyword">const</span> device = <span class="keyword">await</span> <span class="keyword">this</span>.deviceRepo.<span class="fn">findOrCreate</span>(request.deviceId);
+    <span class="keyword">const</span> token = <span class="keyword">await</span> <span class="keyword">this</span>.<span class="fn">generateSecureToken</span>(device);
+
+    <span class="keyword">await</span> <span class="keyword">this</span>.mqtt.<span class="fn">publish</span>(<span class="string">`devices/</span>${device.id}<span class="string">/paired`</span>, {
+      token, expiresAt: Date.now() + <span class="const">3600000</span>,
+    });
+
+    <span class="keyword">return</span> { success: <span class="const">true</span>, token, deviceId: device.id };
+  }
+}
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">&#128190;</span> Firmware OTA Update Service</div>
+        <div class="code-block">
+<span class="comment">// firmware-ota-service/src/services/ota.service.ts</span>
+<span class="keyword">import</span> { <span class="type">S3Client</span>, <span class="type">GetObjectCommand</span> } <span class="keyword">from</span> <span class="string">'@aws-sdk/client-s3'</span>;
+<span class="keyword">import</span> { <span class="type">DeviceModel</span> } <span class="keyword">from</span> <span class="string">'../models/device.model'</span>;
+
+<span class="keyword">export class</span> <span class="type">OTAService</span> {
+  <span class="keyword">private</span> s3: <span class="type">S3Client</span>;
+
+  <span class="keyword">async</span> <span class="fn">checkForUpdate</span>(deviceId: <span class="type">string</span>, currentVersion: <span class="type">string</span>) {
+    <span class="keyword">const</span> device = <span class="keyword">await</span> <span class="type">DeviceModel</span>.<span class="fn">findById</span>(deviceId);
+    <span class="keyword">const</span> latest = <span class="keyword">await</span> <span class="keyword">this</span>.<span class="fn">getLatestFirmware</span>(device.productLine);
+
+    <span class="keyword">if</span> (<span class="keyword">this</span>.<span class="fn">isNewerVersion</span>(latest.version, currentVersion)) {
+      <span class="keyword">const</span> signedUrl = <span class="keyword">await</span> <span class="keyword">this</span>.<span class="fn">generatePresignedUrl</span>(latest.s3Key);
+      <span class="keyword">return</span> { updateAvailable: <span class="const">true</span>, version: latest.version, url: signedUrl };
+    }
+    <span class="keyword">return</span> { updateAvailable: <span class="const">false</span> };
+  }
+}
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ REST & GRAPHQL TAB ══ -->
+    <div id="tab-api" class="tab-panel hidden" role="tabpanel" aria-labelledby="tab-btn-api">
+      <div class="section-title">RESTful APIs &amp; GraphQL</div>
+      <div class="section-desc">Dual API layer: RESTful endpoints for CRUD operations and device management, plus a GraphQL gateway for flexible client queries across the wireless audio product suite.</div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">&#8596;</span> REST API Endpoints</div>
+        <div class="endpoint-row"><span class="method-badge method-get">GET</span><span class="endpoint-path">/api/v1/devices</span><span class="endpoint-desc">List paired devices</span></div>
+        <div class="endpoint-row"><span class="method-badge method-post">POST</span><span class="endpoint-path">/api/v1/devices/pair</span><span class="endpoint-desc">Initiate device pairing</span></div>
+        <div class="endpoint-row"><span class="method-badge method-get">GET</span><span class="endpoint-path">/api/v1/streams/:id</span><span class="endpoint-desc">Get stream status</span></div>
+        <div class="endpoint-row"><span class="method-badge method-post">POST</span><span class="endpoint-path">/api/v1/streams/multiroom</span><span class="endpoint-desc">Create multi-room session</span></div>
+        <div class="endpoint-row"><span class="method-badge method-put">PUT</span><span class="endpoint-path">/api/v1/devices/:id/firmware</span><span class="endpoint-desc">Trigger OTA update</span></div>
+        <div class="endpoint-row"><span class="method-badge method-get">GET</span><span class="endpoint-path">/api/v1/products/:line/catalog</span><span class="endpoint-desc">Product catalog</span></div>
+        <div class="endpoint-row"><span class="method-badge method-delete">DELETE</span><span class="endpoint-path">/api/v1/streams/:id</span><span class="endpoint-desc">End stream session</span></div>
+        <div class="endpoint-row"><span class="method-badge method-post">POST</span><span class="endpoint-path">/api/v1/analytics/events</span><span class="endpoint-desc">Ingest usage events</span></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">&#9670;</span> GraphQL Gateway</div>
+        <div class="graphql-panel">
+          <div class="graphql-query">
+<pre>query GetDeviceStream($deviceId: ID!) {
+  device(id: $deviceId) {
+    id
+    name
+    productLine
+    firmwareVersion
+    activeStream {
+      id
+      codec
+      bitrate
+      rooms {
+        id
+        name
+        volume
+        syncOffset
+      }
+      latencyMs
+      status
+    }
+    lastSeen
+  }
+}</pre>
+          </div>
+          <div class="graphql-response">
+<pre>{
+  "data": {
+    "device": {
+      "id": "dev_a4f82c",
+      "name": "Living Room Speaker",
+      "productLine": "consumer",
+      "firmwareVersion": "3.2.1",
+      "activeStream": {
+        "id": "str_7b3e9a",
+        "codec": "AAC-LC",
+        "bitrate": 256000,
+        "rooms": [
+          { "id": "rm_01", "name": "Living Room", "volume": 72, "syncOffset": 0 },
+          { "id": "rm_02", "name": "Kitchen", "volume": 55, "syncOffset": 2 }
+        ],
+        "latencyMs": 18,
+        "status": "STREAMING"
+      },
+      "lastSeen": "2024-01-15T14:32:01Z"
+    }
+  }
+}</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">&#128300;</span> API Response Simulation</div>
+        <div style="display:flex;gap:10px;margin-bottom:14px">
+          <button class="btn btn-sm" onclick="simulateApi('GET /devices')">GET /devices</button>
+          <button class="btn btn-sm" onclick="simulateApi('POST /pair')">POST /pair</button>
+          <button class="btn btn-sm" onclick="simulateApi('POST /stream')">POST /stream</button>
+        </div>
+        <div class="console" id="api-console">
+          <div class="log-time">[Ready] Click a button to simulate an API call...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ AWS TAB ══ -->
+    <div id="tab-aws" class="tab-panel hidden" role="tabpanel" aria-labelledby="tab-btn-aws">
+      <div class="section-title">AWS Cloud Infrastructure</div>
+      <div class="section-desc">Serverless compute with Lambda functions, persistent storage with MongoDB Atlas, and content/firmware delivery through S3 with CloudFront CDN.</div>
+
+      <!-- Lambda Functions -->
+      <div class="card">
+        <div class="card-title"><span class="icon">&#955;</span> Lambda Functions</div>
+        <div class="grid-2">
+          <div class="lambda-card">
+            <div class="lambda-name">audioProcessorFn</div>
+            <div class="lambda-runtime">Runtime: Node.js 20.x · 512MB · 15s timeout</div>
+            <div class="lambda-stats">
+              <div class="lambda-stat">Invocations: <span>42.3K/day</span></div>
+              <div class="lambda-stat">Avg: <span>45ms</span></div>
+            </div>
+          </div>
+          <div class="lambda-card">
+            <div class="lambda-name">deviceEventHandlerFn</div>
+            <div class="lambda-runtime">Runtime: Node.js 20.x · 256MB · 10s timeout</div>
+            <div class="lambda-stats">
+              <div class="lambda-stat">Invocations: <span>128.7K/day</span></div>
+              <div class="lambda-stat">Avg: <span>12ms</span></div>
+            </div>
+          </div>
+          <div class="lambda-card">
+            <div class="lambda-name">firmwareValidatorFn</div>
+            <div class="lambda-runtime">Runtime: Node.js 20.x · 1024MB · 30s timeout</div>
+            <div class="lambda-stats">
+              <div class="lambda-stat">Invocations: <span>850/day</span></div>
+              <div class="lambda-stat">Avg: <span>2.1s</span></div>
+            </div>
+          </div>
+          <div class="lambda-card">
+            <div class="lambda-name">analyticsAggregatorFn</div>
+            <div class="lambda-runtime">Runtime: Node.js 20.x · 512MB · 60s timeout</div>
+            <div class="lambda-stats">
+              <div class="lambda-stat">Invocations: <span>24/day (scheduled)</span></div>
+              <div class="lambda-stat">Avg: <span>8.4s</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MongoDB -->
+      <div class="card">
+        <div class="card-title"><span class="icon">&#9707;</span> MongoDB Atlas – Collections</div>
+        <table class="mongo-table">
+          <thead>
+            <tr><th>Collection</th><th>Documents</th><th>Avg Size</th><th>Indexes</th><th>Usage</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>devices</td><td>284,712</td><td>1.2 KB</td><td>4</td><td>Registered devices &amp; configs</td></tr>
+            <tr><td>streams</td><td>1,420,000</td><td>0.8 KB</td><td>6</td><td>Active/historical stream sessions</td></tr>
+            <tr><td>firmwareVersions</td><td>342</td><td>4.8 KB</td><td>3</td><td>Firmware metadata &amp; changelogs</td></tr>
+            <tr><td>userProfiles</td><td>189,450</td><td>2.1 KB</td><td>5</td><td>User preferences &amp; rooms</td></tr>
+            <tr><td>analyticsEvents</td><td>52,000,000</td><td>0.3 KB</td><td>8</td><td>Usage telemetry (TTL: 90d)</td></tr>
+            <tr><td>productCatalog</td><td>156</td><td>6.4 KB</td><td>3</td><td>Products across all lines</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- S3 Buckets -->
+      <div class="card">
+        <div class="card-title"><span class="icon">&#128230;</span> S3 Buckets</div>
+        <div class="bucket-item"><span class="bucket-icon">&#127925;</span><span class="bucket-name">audio-platform-firmware</span><span class="bucket-size">2.4 GB · 342 objects</span></div>
+        <div class="bucket-item"><span class="bucket-icon">&#128247;</span><span class="bucket-name">audio-platform-assets</span><span class="bucket-size">18.7 GB · 12,450 objects</span></div>
+        <div class="bucket-item"><span class="bucket-icon">&#128202;</span><span class="bucket-name">audio-platform-analytics</span><span class="bucket-size">45.2 GB · partitioned by date</span></div>
+        <div class="bucket-item"><span class="bucket-icon">&#128218;</span><span class="bucket-name">audio-platform-logs</span><span class="bucket-size">8.1 GB · lifecycle: 30d expire</span></div>
+      </div>
+
+      <!-- Lambda Code -->
+      <div class="card">
+        <div class="card-title"><span class="icon">&#128187;</span> Lambda Handler – Device Event Processor</div>
+        <div class="code-block">
+<span class="comment">// lambdas/device-event-handler/index.ts</span>
+<span class="keyword">import</span> { <span class="type">SQSEvent</span>, <span class="type">Context</span> } <span class="keyword">from</span> <span class="string">'aws-lambda'</span>;
+<span class="keyword">import</span> { <span class="type">MongoClient</span> } <span class="keyword">from</span> <span class="string">'mongodb'</span>;
+<span class="keyword">import</span> { <span class="fn">publishToIoT</span> } <span class="keyword">from</span> <span class="string">'./iot-publisher'</span>;
+
+<span class="keyword">const</span> client = <span class="keyword">new</span> <span class="type">MongoClient</span>(process.env.MONGO_URI!);
+
+<span class="keyword">export const</span> <span class="fn">handler</span> = <span class="keyword">async</span> (event: <span class="type">SQSEvent</span>, ctx: <span class="type">Context</span>) =&gt; {
+  <span class="keyword">const</span> db = client.<span class="fn">db</span>(<span class="string">'audio-platform'</span>);
+
+  <span class="keyword">for</span> (<span class="keyword">const</span> record <span class="keyword">of</span> event.Records) {
+    <span class="keyword">const</span> payload = JSON.<span class="fn">parse</span>(record.body);
+
+    <span class="keyword">switch</span> (payload.eventType) {
+      <span class="keyword">case</span> <span class="string">'DEVICE_CONNECTED'</span>:
+        <span class="keyword">await</span> db.<span class="fn">collection</span>(<span class="string">'devices'</span>).<span class="fn">updateOne</span>(
+          { deviceId: payload.deviceId },
+          { $set: { lastSeen: <span class="keyword">new</span> <span class="type">Date</span>(), status: <span class="string">'online'</span> } }
+        );
+        <span class="keyword">break</span>;
+      <span class="keyword">case</span> <span class="string">'STREAM_STARTED'</span>:
+        <span class="keyword">await</span> <span class="fn">publishToIoT</span>(payload.deviceId, { action: <span class="string">'sync'</span> });
+        <span class="keyword">break</span>;
+    }
+  }
+
+  <span class="keyword">return</span> { statusCode: <span class="const">200</span>, processed: event.Records.length };
+};
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ C++ FIRMWARE TAB ══ -->
+    <div id="tab-firmware" class="tab-panel hidden" role="tabpanel" aria-labelledby="tab-btn-firmware">
+      <div class="section-title">C++ Firmware &amp; DSP Layer</div>
+      <div class="section-desc">Low-level audio processing firmware written in C++ for the wireless audio hardware. Handles codec negotiation, DSP effects, Bluetooth/Wi-Fi transport, and real-time audio buffer management.</div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">&#9881;</span> Firmware Metrics</div>
+        <div class="firmware-panel">
+          <div class="firmware-metric"><div class="firmware-value">48kHz</div><div class="firmware-label">Sample Rate</div></div>
+          <div class="firmware-metric"><div class="firmware-value">5.2ms</div><div class="firmware-label">DSP Latency</div></div>
+          <div class="firmware-metric"><div class="firmware-value">24-bit</div><div class="firmware-label">Bit Depth</div></div>
+          <div class="firmware-metric"><div class="firmware-value">-92dB</div><div class="firmware-label">Noise Floor</div></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">&#128187;</span> Audio DSP Pipeline (C++)</div>
+        <div class="code-block">
+<span class="comment">// firmware/src/audio/dsp_pipeline.hpp</span>
+<span class="keyword">#pragma once</span>
+<span class="keyword">#include</span> <span class="string">&lt;cstdint&gt;</span>
+<span class="keyword">#include</span> <span class="string">&lt;array&gt;</span>
+<span class="keyword">#include</span> <span class="string">"codec_interface.hpp"</span>
+<span class="keyword">#include</span> <span class="string">"transport_layer.hpp"</span>
+
+<span class="keyword">namespace</span> audio {
+
+<span class="keyword">class</span> <span class="type">DSPPipeline</span> {
+<span class="keyword">public</span>:
+  <span class="keyword">struct</span> <span class="type">Config</span> {
+    uint32_t sampleRate = <span class="const">48000</span>;
+    uint8_t  bitDepth   = <span class="const">24</span>;
+    uint8_t  channels   = <span class="const">2</span>;
+    uint16_t bufferSize = <span class="const">256</span>;  <span class="comment">// frames per buffer</span>
+  };
+
+  <span class="keyword">explicit</span> <span class="fn">DSPPipeline</span>(<span class="keyword">const</span> <span class="type">Config</span>&amp; cfg);
+
+  <span class="comment">// Process audio buffer through DSP chain</span>
+  <span class="keyword">void</span> <span class="fn">processBlock</span>(float* input, float* output, size_t numFrames);
+
+  <span class="comment">// Apply EQ settings from cloud profile</span>
+  <span class="keyword">void</span> <span class="fn">setEqualizer</span>(<span class="keyword">const</span> std::array&lt;float, <span class="const">10</span>&gt;&amp; bands);
+
+  <span class="comment">// Multi-room synchronization offset</span>
+  <span class="keyword">void</span> <span class="fn">setSyncOffset</span>(int64_t microseconds);
+
+<span class="keyword">private</span>:
+  <span class="type">Config</span> m_config;
+  std::array&lt;float, <span class="const">10</span>&gt; m_eqBands;
+  <span class="type">CodecInterface</span>* m_codec;
+  <span class="type">TransportLayer</span>* m_transport;
+
+  <span class="keyword">void</span> <span class="fn">applyEQ</span>(float* buffer, size_t frames);
+  <span class="keyword">void</span> <span class="fn">applyDynamicRange</span>(float* buffer, size_t frames);
+  <span class="keyword">void</span> <span class="fn">resample</span>(float* input, float* output, size_t inFrames, size_t outFrames);
+};
+
+} <span class="comment">// namespace audio</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">&#128225;</span> Bluetooth/Wi-Fi Transport (C++)</div>
+        <div class="code-block">
+<span class="comment">// firmware/src/transport/wifi_streamer.cpp</span>
+<span class="keyword">#include</span> <span class="string">"wifi_streamer.hpp"</span>
+<span class="keyword">#include</span> <span class="string">"ring_buffer.hpp"</span>
+
+<span class="keyword">void</span> <span class="type">WiFiStreamer</span>::<span class="fn">startStream</span>(<span class="keyword">const</span> <span class="type">StreamParams</span>&amp; params) {
+  m_ringBuffer = std::make_unique&lt;<span class="type">RingBuffer</span>&gt;(
+    params.bufferSize * params.channels * <span class="keyword">sizeof</span>(float)
+  );
+
+  m_socket.<span class="fn">connect</span>(params.endpoint, params.port);
+  m_socket.<span class="fn">setNonBlocking</span>(<span class="const">true</span>);
+  m_socket.<span class="fn">setNoDelay</span>(<span class="const">true</span>);  <span class="comment">// TCP_NODELAY for low-latency</span>
+
+  m_thread = std::thread([<span class="keyword">this</span>]() {
+    <span class="keyword">while</span> (m_running.<span class="fn">load</span>()) {
+      <span class="keyword">auto</span> chunk = m_ringBuffer-&gt;<span class="fn">read</span>(m_chunkSize);
+      <span class="keyword">if</span> (chunk.size() &gt; <span class="const">0</span>) {
+        m_socket.<span class="fn">send</span>(chunk.data(), chunk.size());
+        m_bytesSent += chunk.size();
+      }
+      std::this_thread::<span class="fn">sleep_for</span>(std::chrono::<span class="fn">microseconds</span>(<span class="const">100</span>));
+    }
+  });
+}
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ ANGULAR UI TAB ══ -->
+    <div id="tab-angular" class="tab-panel hidden" role="tabpanel" aria-labelledby="tab-btn-angular">
+      <div class="section-title">Angular Front-End Application</div>
+      <div class="section-desc">Enterprise Angular 17 application providing device management, streaming control, analytics dashboards, and admin panels for the audio product suite.</div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">&#9651;</span> Angular Component – Device Dashboard</div>
+        <div class="code-block">
+<span class="comment">// src/app/features/devices/device-dashboard.component.ts</span>
+<span class="keyword">import</span> { <span class="type">Component</span>, <span class="type">OnInit</span>, <span class="type">inject</span> } <span class="keyword">from</span> <span class="string">'@angular/core'</span>;
+<span class="keyword">import</span> { <span class="type">DeviceService</span> } <span class="keyword">from</span> <span class="string">'../../services/device.service'</span>;
+<span class="keyword">import</span> { <span class="type">Device</span> } <span class="keyword">from</span> <span class="string">'../../models/device.model'</span>;
+<span class="keyword">import</span> { <span class="type">Observable</span> } <span class="keyword">from</span> <span class="string">'rxjs'</span>;
+
+@<span class="fn">Component</span>({
+  selector: <span class="string">'app-device-dashboard'</span>,
+  standalone: <span class="const">true</span>,
+  template: <span class="string">`
+    &lt;div class="dashboard-grid"&gt;
+      @for (device of devices$ | async; track device.id) {
+        &lt;app-device-card
+          [device]="device"
+          (onStream)="startStream($event)"
+          (onUpdate)="triggerOTA($event)" /&gt;
+      }
+    &lt;/div&gt;
+  `</span>,
+})
+<span class="keyword">export class</span> <span class="type">DeviceDashboardComponent</span> <span class="keyword">implements</span> <span class="type">OnInit</span> {
+  <span class="keyword">private</span> deviceService = <span class="fn">inject</span>(<span class="type">DeviceService</span>);
+  devices$: <span class="type">Observable</span>&lt;<span class="type">Device</span>[]&gt;;
+
+  <span class="fn">ngOnInit</span>() {
+    <span class="keyword">this</span>.devices$ = <span class="keyword">this</span>.deviceService.<span class="fn">getConnectedDevices</span>();
+  }
+
+  <span class="fn">startStream</span>(deviceId: <span class="type">string</span>) {
+    <span class="keyword">this</span>.deviceService.<span class="fn">createStream</span>(deviceId).<span class="fn">subscribe</span>();
+  }
+
+  <span class="fn">triggerOTA</span>(deviceId: <span class="type">string</span>) {
+    <span class="keyword">this</span>.deviceService.<span class="fn">initiateOTA</span>(deviceId).<span class="fn">subscribe</span>();
+  }
+}
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">&#128296;</span> Angular Service – GraphQL Integration</div>
+        <div class="code-block">
+<span class="comment">// src/app/services/device.service.ts</span>
+<span class="keyword">import</span> { <span class="type">Injectable</span>, <span class="type">inject</span> } <span class="keyword">from</span> <span class="string">'@angular/core'</span>;
+<span class="keyword">import</span> { <span class="type">Apollo</span>, gql } <span class="keyword">from</span> <span class="string">'apollo-angular'</span>;
+<span class="keyword">import</span> { <span class="type">HttpClient</span> } <span class="keyword">from</span> <span class="string">'@angular/common/http'</span>;
+<span class="keyword">import</span> { map } <span class="keyword">from</span> <span class="string">'rxjs/operators'</span>;
+
+<span class="keyword">const</span> GET_DEVICES = gql<span class="string">`
+  query GetDevices($productLine: ProductLine) {
+    devices(filter: { productLine: $productLine, status: ONLINE }) {
+      id name firmwareVersion productLine
+      activeStream { id codec bitrate rooms { name volume } }
+    }
+  }
+`</span>;
+
+@<span class="fn">Injectable</span>({ providedIn: <span class="string">'root'</span> })
+<span class="keyword">export class</span> <span class="type">DeviceService</span> {
+  <span class="keyword">private</span> apollo = <span class="fn">inject</span>(<span class="type">Apollo</span>);
+  <span class="keyword">private</span> http = <span class="fn">inject</span>(<span class="type">HttpClient</span>);
+
+  <span class="fn">getConnectedDevices</span>(line?: <span class="type">string</span>) {
+    <span class="keyword">return</span> <span class="keyword">this</span>.apollo.<span class="fn">watchQuery</span>({
+      query: GET_DEVICES,
+      variables: { productLine: line },
+      pollInterval: <span class="const">5000</span>,
+    }).valueChanges.<span class="fn">pipe</span>(<span class="fn">map</span>(r =&gt; r.data.devices));
+  }
+
+  <span class="fn">createStream</span>(deviceId: <span class="type">string</span>) {
+    <span class="keyword">return</span> <span class="keyword">this</span>.http.<span class="fn">post</span>(<span class="string">'/api/v1/streams/multiroom'</span>, { deviceId });
+  }
+
+  <span class="fn">initiateOTA</span>(deviceId: <span class="type">string</span>) {
+    <span class="keyword">return</span> <span class="keyword">this</span>.http.<span class="fn">put</span>(<span class="string">`/api/v1/devices/</span>${deviceId}<span class="string">/firmware`</span>, {});
+  }
+}
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">&#127912;</span> Angular Module Structure</div>
+        <div class="code-block">
+<span class="comment">// Application module layout</span>
+src/app/
+├── core/
+│   ├── interceptors/       <span class="comment">// Auth, error, retry interceptors</span>
+│   ├── guards/             <span class="comment">// Route guards for enterprise admin</span>
+│   └── services/           <span class="comment">// Singleton services</span>
+├── features/
+│   ├── devices/            <span class="comment">// Device management feature</span>
+│   ├── streaming/          <span class="comment">// Audio streaming controls</span>
+│   ├── firmware/           <span class="comment">// OTA management dashboard</span>
+│   ├── analytics/          <span class="comment">// Usage analytics &amp; charts</span>
+│   └── admin/              <span class="comment">// Enterprise admin panel</span>
+├── shared/
+│   ├── components/         <span class="comment">// Reusable UI components</span>
+│   ├── pipes/              <span class="comment">// Custom pipes (format, filter)</span>
+│   └── directives/         <span class="comment">// Custom directives</span>
+└── graphql/
+    ├── queries/            <span class="comment">// GraphQL query definitions</span>
+    ├── mutations/          <span class="comment">// GraphQL mutation definitions</span>
+    └── fragments/          <span class="comment">// Shared GraphQL fragments</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ ARCHITECTURE TAB ══ -->
+    <div id="tab-arch" class="tab-panel hidden" role="tabpanel" aria-labelledby="tab-btn-arch">
+      <div class="section-title">System Architecture</div>
+      <div class="section-desc">End-to-end wireless audio platform architecture spanning from C++ firmware on devices, through Node.js/TypeScript middleware and AWS serverless compute, to Angular front-end applications.</div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">&#127959;</span> Platform Layers</div>
+        <div class="arch-layer">
+          <div class="arch-label">Presentation Layer – Angular 17</div>
+          <div class="arch-items">Device Dashboard &bull; Streaming Control &bull; Admin Panel &bull; Analytics &bull; OTA Management</div>
+        </div>
+        <div class="arch-layer">
+          <div class="arch-label">API Gateway – GraphQL + REST</div>
+          <div class="arch-items">Apollo Server &bull; Express.js &bull; JWT Auth &bull; Rate Limiting &bull; Request Validation</div>
+        </div>
+        <div class="arch-layer">
+          <div class="arch-label">Microservices – TypeScript / Node.js</div>
+          <div class="arch-items">Audio Streaming &bull; Device Pairing &bull; Firmware OTA &bull; Content Delivery &bull; User Management &bull; Analytics</div>
+        </div>
+        <div class="arch-layer">
+          <div class="arch-label">Serverless Compute – AWS Lambda</div>
+          <div class="arch-items">Event Processing &bull; Audio Transcoding &bull; Firmware Validation &bull; Analytics Aggregation &bull; Notification Dispatch</div>
+        </div>
+        <div class="arch-layer">
+          <div class="arch-label">Data Layer – MongoDB + S3</div>
+          <div class="arch-items">MongoDB Atlas (devices, streams, users) &bull; S3 (firmware, assets, logs) &bull; ElastiCache (sessions) &bull; SQS (events)</div>
+        </div>
+        <div class="arch-layer">
+          <div class="arch-label">Hardware / Firmware – C++</div>
+          <div class="arch-items">DSP Pipeline &bull; Codec Engine &bull; BT/Wi-Fi Transport &bull; Multi-Room Sync &bull; OTA Bootloader</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">&#128640;</span> Deployment Pipeline</div>
+        <div class="service-item"><div class="service-status status-healthy"></div><div class="service-name">1. TypeScript Compilation &amp; Lint</div><div class="service-meta">tsc --strict + ESLint</div></div>
+        <div class="service-item"><div class="service-status status-healthy"></div><div class="service-name">2. Unit &amp; Integration Tests</div><div class="service-meta">Jest + Supertest · 94% coverage</div></div>
+        <div class="service-item"><div class="service-status status-healthy"></div><div class="service-name">3. Docker Build &amp; Push</div><div class="service-meta">ECR · multi-stage builds</div></div>
+        <div class="service-item"><div class="service-status status-healthy"></div><div class="service-name">4. Lambda Deploy</div><div class="service-meta">SAM / CDK · canary deploys</div></div>
+        <div class="service-item"><div class="service-status status-healthy"></div><div class="service-name">5. Angular Build &amp; CDN Deploy</div><div class="service-meta">ng build · CloudFront</div></div>
+        <div class="service-item"><div class="service-status status-healthy"></div><div class="service-name">6. E2E Smoke Tests</div><div class="service-meta">Cypress · critical paths</div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">&#128272;</span> Security &amp; Compliance</div>
+        <div class="grid-2">
+          <div class="kpi"><div class="kpi-value" style="font-size:16px">OAuth 2.0 + JWT</div><div class="kpi-label">Authentication</div></div>
+          <div class="kpi"><div class="kpi-value" style="font-size:16px">AES-256</div><div class="kpi-label">Encryption at Rest</div></div>
+          <div class="kpi"><div class="kpi-value" style="font-size:16px">TLS 1.3</div><div class="kpi-label">Transport Security</div></div>
+          <div class="kpi"><div class="kpi-value" style="font-size:16px">SOC 2 Type II</div><div class="kpi-label">Compliance</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /app -->
+
+<script>
+// ── Navigation ─────────────────────────────────────────────────
+document.querySelectorAll('.nav-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.nav-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+    btn.classList.add('active');
+    btn.setAttribute('aria-selected','true');
+
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+    document.getElementById('tab-' + btn.dataset.tab).classList.remove('hidden');
+  });
+});
+
+// ── Audio Visualizer ────────────────────────────────────────────
+(function initAudioViz() {
+  const container = document.getElementById('audio-viz');
+  for (let i = 0; i < 32; i++) {
+    const bar = document.createElement('div');
+    bar.className = 'audio-bar';
+    bar.style.setProperty('--h', (15 + Math.random() * 40) + 'px');
+    bar.style.animationDelay = (Math.random() * 1.2) + 's';
+    container.appendChild(bar);
+  }
+})();
+
+// ── KPI Animation ───────────────────────────────────────────────
+setInterval(() => {
+  const devEl = document.getElementById('kpi-devices');
+  const val = parseInt(devEl.textContent.replace(/,/g,''));
+  devEl.textContent = (val + Math.floor(Math.random()*5 - 2)).toLocaleString();
+
+  const streamEl = document.getElementById('kpi-streams');
+  const sVal = parseFloat(streamEl.textContent);
+  streamEl.textContent = (sVal + (Math.random()*0.2 - 0.1)).toFixed(1) + 'K';
+
+  const latEl = document.getElementById('kpi-latency');
+  const lVal = parseInt(latEl.textContent);
+  latEl.textContent = Math.max(12, Math.min(25, lVal + Math.floor(Math.random()*3-1))) + 'ms';
+}, 3000);
+
+// ── API Simulation ──────────────────────────────────────────────
+function simulateApi(endpoint) {
+  const consoleEl = document.getElementById('api-console');
+  const ts = new Date().toLocaleTimeString();
+
+  const responses = {
+    'GET /devices': {
+      log: `<div><span class="log-time">[${ts}]</span> <span class="log-info">GET /api/v1/devices</span></div><div><span class="log-time">[${ts}]</span> <span class="log-success">200 OK</span> — 14 devices returned (12ms)</div>`,
+    },
+    'POST /pair': {
+      log: `<div><span class="log-time">[${ts}]</span> <span class="log-info">POST /api/v1/devices/pair</span></div><div><span class="log-time">[${ts}]</span> <span class="log-warn">Validating device firmware...</span></div><div><span class="log-time">[${ts}]</span> <span class="log-success">201 Created</span> — Device paired: dev_f82a4c (24ms)</div>`,
+    },
+    'POST /stream': {
+      log: `<div><span class="log-time">[${ts}]</span> <span class="log-info">POST /api/v1/streams/multiroom</span></div><div><span class="log-time">[${ts}]</span> <span class="log-warn">Syncing 4 rooms...</span></div><div><span class="log-time">[${ts}]</span> <span class="log-success">201 Created</span> — Stream str_7b3e9a active, codec AAC-LC 256kbps (45ms)</div>`,
+    },
+  };
+
+  consoleEl.innerHTML += responses[endpoint].log;
+  consoleEl.scrollTop = consoleEl.scrollHeight;
+}
+</script>
+</body>
+</html>

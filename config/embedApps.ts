@@ -24,5 +24,9 @@ export const embedAppsConfig = {
     weatherInsights: {
         url: '/projects/weather-insights/index.html',
         apiKey: 'WEATHER_INSIGHTS_DEMO_KEY'
+    },
+    wirelessAudioPlatform: {
+        url: '/projects/wireless-audio-platform/index.html',
+        apiKey: 'WIRELESS_AUDIO_PLATFORM_DEMO_KEY'
     }
 };
