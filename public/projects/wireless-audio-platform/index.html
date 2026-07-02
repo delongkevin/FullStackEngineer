@@ -427,20 +427,20 @@
 
   <!-- Navigation -->
   <nav class="nav" role="tablist" aria-label="Platform sections">
-    <button class="nav-btn active" data-tab="dashboard" role="tab" aria-selected="true">Dashboard</button>
-    <button class="nav-btn" data-tab="services" role="tab" aria-selected="false">Microservices</button>
-    <button class="nav-btn" data-tab="api" role="tab" aria-selected="false">REST &amp; GraphQL</button>
-    <button class="nav-btn" data-tab="aws" role="tab" aria-selected="false">AWS Cloud</button>
-    <button class="nav-btn" data-tab="firmware" role="tab" aria-selected="false">C++ Firmware</button>
-    <button class="nav-btn" data-tab="angular" role="tab" aria-selected="false">Angular UI</button>
-    <button class="nav-btn" data-tab="arch" role="tab" aria-selected="false">Architecture</button>
+    <button class="nav-btn active" id="tab-btn-dashboard" data-tab="dashboard" role="tab" aria-selected="true" aria-controls="tab-dashboard">Dashboard</button>
+    <button class="nav-btn" id="tab-btn-services" data-tab="services" role="tab" aria-selected="false" aria-controls="tab-services">Microservices</button>
+    <button class="nav-btn" id="tab-btn-api" data-tab="api" role="tab" aria-selected="false" aria-controls="tab-api">REST &amp; GraphQL</button>
+    <button class="nav-btn" id="tab-btn-aws" data-tab="aws" role="tab" aria-selected="false" aria-controls="tab-aws">AWS Cloud</button>
+    <button class="nav-btn" id="tab-btn-firmware" data-tab="firmware" role="tab" aria-selected="false" aria-controls="tab-firmware">C++ Firmware</button>
+    <button class="nav-btn" id="tab-btn-angular" data-tab="angular" role="tab" aria-selected="false" aria-controls="tab-angular">Angular UI</button>
+    <button class="nav-btn" id="tab-btn-arch" data-tab="arch" role="tab" aria-selected="false" aria-controls="tab-arch">Architecture</button>
   </nav>
 
   <!-- Content -->
   <div class="content">
 
     <!-- ══ DASHBOARD TAB ══ -->
-    <div id="tab-dashboard" class="tab-panel">
+    <div id="tab-dashboard" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-dashboard">
       <div class="section-title">Platform Overview</div>
       <div class="section-desc">Real-time monitoring of the wireless audio streaming platform. TypeScript/Node.js back-end services powering multi-room audio, device pairing, firmware OTA, and content delivery across consumer and enterprise product lines.</div>
 
@@ -508,7 +508,7 @@
     </div>
 
     <!-- ══ MICROSERVICES TAB ══ -->
-    <div id="tab-services" class="tab-panel hidden">
+    <div id="tab-services" class="tab-panel hidden" role="tabpanel" aria-labelledby="tab-btn-services">
       <div class="section-title">Microservices Architecture</div>
       <div class="section-desc">TypeScript/Node.js back-end services built with Express, deployed as containerized microservices. Each service owns its domain, communicates via REST/GraphQL, and publishes events to an MQTT broker for real-time device updates.</div>
 
@@ -596,7 +596,7 @@
     </div>
 
     <!-- ══ REST & GRAPHQL TAB ══ -->
-    <div id="tab-api" class="tab-panel hidden">
+    <div id="tab-api" class="tab-panel hidden" role="tabpanel" aria-labelledby="tab-btn-api">
       <div class="section-title">RESTful APIs &amp; GraphQL</div>
       <div class="section-desc">Dual API layer: RESTful endpoints for CRUD operations and device management, plus a GraphQL gateway for flexible client queries across the wireless audio product suite.</div>
 
@@ -680,7 +680,7 @@
     </div>
 
     <!-- ══ AWS TAB ══ -->
-    <div id="tab-aws" class="tab-panel hidden">
+    <div id="tab-aws" class="tab-panel hidden" role="tabpanel" aria-labelledby="tab-btn-aws">
       <div class="section-title">AWS Cloud Infrastructure</div>
       <div class="section-desc">Serverless compute with Lambda functions, persistent storage with MongoDB Atlas, and content/firmware delivery through S3 with CloudFront CDN.</div>
 
@@ -787,7 +787,7 @@
     </div>
 
     <!-- ══ C++ FIRMWARE TAB ══ -->
-    <div id="tab-firmware" class="tab-panel hidden">
+    <div id="tab-firmware" class="tab-panel hidden" role="tabpanel" aria-labelledby="tab-btn-firmware">
       <div class="section-title">C++ Firmware &amp; DSP Layer</div>
       <div class="section-desc">Low-level audio processing firmware written in C++ for the wireless audio hardware. Handles codec negotiation, DSP effects, Bluetooth/Wi-Fi transport, and real-time audio buffer management.</div>
 
@@ -880,7 +880,7 @@
     </div>
 
     <!-- ══ ANGULAR UI TAB ══ -->
-    <div id="tab-angular" class="tab-panel hidden">
+    <div id="tab-angular" class="tab-panel hidden" role="tabpanel" aria-labelledby="tab-btn-angular">
       <div class="section-title">Angular Front-End Application</div>
       <div class="section-desc">Enterprise Angular 17 application providing device management, streaming control, analytics dashboards, and admin panels for the audio product suite.</div>
 
@@ -996,7 +996,7 @@ src/app/
     </div>
 
     <!-- ══ ARCHITECTURE TAB ══ -->
-    <div id="tab-arch" class="tab-panel hidden">
+    <div id="tab-arch" class="tab-panel hidden" role="tabpanel" aria-labelledby="tab-btn-arch">
       <div class="section-title">System Architecture</div>
       <div class="section-desc">End-to-end wireless audio platform architecture spanning from C++ firmware on devices, through Node.js/TypeScript middleware and AWS serverless compute, to Angular front-end applications.</div>
 
@@ -1034,7 +1034,7 @@ src/app/
         <div class="service-item"><div class="service-status status-healthy"></div><div class="service-name">2. Unit &amp; Integration Tests</div><div class="service-meta">Jest + Supertest · 94% coverage</div></div>
         <div class="service-item"><div class="service-status status-healthy"></div><div class="service-name">3. Docker Build &amp; Push</div><div class="service-meta">ECR · multi-stage builds</div></div>
         <div class="service-item"><div class="service-status status-healthy"></div><div class="service-name">4. Lambda Deploy</div><div class="service-meta">SAM / CDK · canary deploys</div></div>
-        <div class="service-item"><div class="service-status status-healthy"></div><div class="service-name">5. Angular Build &amp; CDN Deploy</div><div class="service-meta">ng build --prod · CloudFront</div></div>
+        <div class="service-item"><div class="service-status status-healthy"></div><div class="service-name">5. Angular Build &amp; CDN Deploy</div><div class="service-meta">ng build · CloudFront</div></div>
         <div class="service-item"><div class="service-status status-healthy"></div><div class="service-name">6. E2E Smoke Tests</div><div class="service-meta">Cypress · critical paths</div></div>
       </div>
 
