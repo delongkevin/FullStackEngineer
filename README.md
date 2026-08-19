@@ -37,6 +37,25 @@ The `insurance-policy-admin` project is a full-stack demo with real persistence 
 - **Android**: `android/insurance-app/` — WebView-wrapped APK, built by `scripts/build-all-android-apks.sh`
 - **Windows/macOS desktop**: `desktop/insurance-admin-desktop/` — Electron shell, installers built by `.github/workflows/release-desktop.yml` and published to the `desktop-artifacts-latest` GitHub Release
 
+### Other cross-platform fullstack demos (Android + Windows/macOS desktop)
+The same WebView-wrapper (Android) + Electron-shell (desktop) pattern used for PolicyCore has also been applied to:
+
+| Project | Android module | Desktop app |
+|---|---|---|
+| Online Grocery Order System | `android/order-system/` | `desktop/order-system-desktop/` (ShopQuick) |
+| Task Manager | `android/task-manager/` | `desktop/task-manager-desktop/` (TaskFlow) |
+| Avionics Test Systems Engineer | `android/avionics-test/` | `desktop/avionics-test-desktop/` (AvionicsTest) |
+| SQL & XML Data Operations Platform | `android/om-platform/` | `desktop/om-platform-desktop/` (OMPlatform) |
+| System Integration Test Management Dashboard | `android/sit-dashboard/` | `desktop/sit-dashboard-desktop/` (SITDashboard) |
+| Software QA Analyst Platform | `android/qa-dashboard/` | `desktop/qa-dashboard-desktop/` (QADashboard) |
+| AI Code Training Platform | `android/ai-trainer/` | `desktop/ai-trainer-desktop/` (AICodeTrainer) |
+| Accessibility QA Engineer – AI Trainer Platform | `android/a11y-qa-trainer/` | `desktop/a11y-qa-trainer-desktop/` (A11yQATrainer) |
+| SAP Test Manager Greenfield Command Center | `android/sap-test-manager/` | `desktop/sap-test-manager-desktop/` (SAPTestManager) |
+| Enterprise ERP Workbench | `android/erp-workbench/` | `desktop/erp-workbench-desktop/` (ERPWorkbench) |
+| Wireless Audio Platform | `android/wireless-audio/` | `desktop/wireless-audio-desktop/` (WirelessAudio) |
+
+All Android modules are built together by `scripts/build-all-android-apks.sh`, and all desktop apps are built by the `.github/workflows/release-desktop.yml` matrix workflow, publishing installers to the rolling `desktop-artifacts-latest` GitHub Release.
+
 ### Preview Production Build
 ```bash
 npx serve out

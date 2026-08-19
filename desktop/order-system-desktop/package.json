@@ -1,0 +1,43 @@
+{
+  "name": "order-system-desktop",
+  "version": "1.0.0",
+  "description": "ShopQuick Online Grocery Order System — Windows/macOS desktop shell",
+  "main": "main.js",
+  "author": "Kevin Delong",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dist:win": "electron-builder --win",
+    "dist:mac": "electron-builder --mac",
+    "dist": "electron-builder --win --mac"
+  },
+  "devDependencies": {
+    "electron": "^30.0.0",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.portfolio.ordersystemapp.desktop",
+    "productName": "ShopQuick",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "offline.html",
+      "package.json"
+    ],
+    "win": {
+      "target": "nsis",
+      "artifactName": "ShopQuick-Windows-Setup.${ext}"
+    },
+    "mac": {
+      "target": "dmg",
+      "artifactName": "ShopQuick-macOS.${ext}",
+      "category": "public.app-category.business"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}

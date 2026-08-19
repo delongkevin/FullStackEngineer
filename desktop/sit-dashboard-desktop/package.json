@@ -1,0 +1,43 @@
+{
+  "name": "sit-dashboard-desktop",
+  "version": "1.0.0",
+  "description": "SITDashboard System Integration Test Management Dashboard — Windows/macOS desktop shell",
+  "main": "main.js",
+  "author": "Kevin Delong",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dist:win": "electron-builder --win",
+    "dist:mac": "electron-builder --mac",
+    "dist": "electron-builder --win --mac"
+  },
+  "devDependencies": {
+    "electron": "^30.0.0",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.portfolio.sitdashboardapp.desktop",
+    "productName": "SITDashboard",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "offline.html",
+      "package.json"
+    ],
+    "win": {
+      "target": "nsis",
+      "artifactName": "SITDashboard-Windows-Setup.${ext}"
+    },
+    "mac": {
+      "target": "dmg",
+      "artifactName": "SITDashboard-macOS.${ext}",
+      "category": "public.app-category.business"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}

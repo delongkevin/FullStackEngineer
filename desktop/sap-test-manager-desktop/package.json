@@ -1,0 +1,43 @@
+{
+  "name": "sap-test-manager-desktop",
+  "version": "1.0.0",
+  "description": "SAPTestManager SAP Test Manager Greenfield Command Center — Windows/macOS desktop shell",
+  "main": "main.js",
+  "author": "Kevin Delong",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dist:win": "electron-builder --win",
+    "dist:mac": "electron-builder --mac",
+    "dist": "electron-builder --win --mac"
+  },
+  "devDependencies": {
+    "electron": "^30.0.0",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.portfolio.saptestmanagerapp.desktop",
+    "productName": "SAPTestManager",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "offline.html",
+      "package.json"
+    ],
+    "win": {
+      "target": "nsis",
+      "artifactName": "SAPTestManager-Windows-Setup.${ext}"
+    },
+    "mac": {
+      "target": "dmg",
+      "artifactName": "SAPTestManager-macOS.${ext}",
+      "category": "public.app-category.business"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}

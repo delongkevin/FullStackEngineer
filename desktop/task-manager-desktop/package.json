@@ -1,0 +1,43 @@
+{
+  "name": "task-manager-desktop",
+  "version": "1.0.0",
+  "description": "TaskFlow Task Manager — Windows/macOS desktop shell",
+  "main": "main.js",
+  "author": "Kevin Delong",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "dist:win": "electron-builder --win",
+    "dist:mac": "electron-builder --mac",
+    "dist": "electron-builder --win --mac"
+  },
+  "devDependencies": {
+    "electron": "^30.0.0",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.portfolio.taskmanagerapp.desktop",
+    "productName": "TaskFlow",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "offline.html",
+      "package.json"
+    ],
+    "win": {
+      "target": "nsis",
+      "artifactName": "TaskFlow-Windows-Setup.${ext}"
+    },
+    "mac": {
+      "target": "dmg",
+      "artifactName": "TaskFlow-macOS.${ext}",
+      "category": "public.app-category.business"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}

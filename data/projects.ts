@@ -244,6 +244,7 @@ export const projects: Project[] = [
   },
   {
     id: 11,
+    slug: "order-system",
     title: "Online Grocery Order System",
     description: "Full-stack retail ordering app with product catalog, cart, checkout form, and order persistence",
     fullDescription: "ShopQuick is a full-stack grocery ordering demo. Browse 22 products across six categories, manage quantities in a slide-out cart, complete a validated multi-field checkout form with payment fields, and see order confirmation — with order history stored in localStorage.",
@@ -253,6 +254,9 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/delongkevin/FullStackEngineer",
     featured: true,
     category: "fullstack",
+    androidUrl: '/apk-artifacts/order-system-debug.apk',
+    windowsUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/desktop-artifacts-latest/ShopQuick-Windows-Setup.exe',
+    macUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/desktop-artifacts-latest/ShopQuick-macOS.dmg',
     features: [
       "22 products across 6 category tabs",
       "Slide-out cart with quantity controls and free-delivery threshold",
@@ -265,6 +269,7 @@ export const projects: Project[] = [
   },
   {
     id: 12,
+    slug: "task-manager",
     title: "Task Manager",
     description: "Full-stack task management app with CRUD, priority levels, filters, search, and localStorage sync",
     fullDescription: "TaskFlow is a complete task management application. Create, edit, and delete tasks with titles, descriptions, priorities (High / Medium / Low), and categories. Filter by status or priority, search, sort, and track completion progress — all persisted in localStorage.",
@@ -274,6 +279,9 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/delongkevin/FullStackEngineer",
     featured: false,
     category: "fullstack",
+    androidUrl: '/apk-artifacts/task-manager-debug.apk',
+    windowsUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/desktop-artifacts-latest/TaskFlow-Windows-Setup.exe',
+    macUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/desktop-artifacts-latest/TaskFlow-macOS.dmg',
     features: [
       "Create, edit, and delete tasks (full CRUD)",
       "Priority levels: High, Medium, Low with color coding",
@@ -435,6 +443,9 @@ export const projects: Project[] = [
     githubUrl: 'https://github.com/delongkevin/FullStackEngineer',
     featured: true,
     category: 'fullstack',
+    androidUrl: '/apk-artifacts/avionics-test-debug.apk',
+    windowsUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/desktop-artifacts-latest/AvionicsTest-Windows-Setup.exe',
+    macUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/desktop-artifacts-latest/AvionicsTest-macOS.dmg',
     features: [
       'NI TestStand sequence runner: LRU Functional, ARINC 429, Power Supply, CAN Bus, RS-422 tests with animated step-by-step execution',
       'Live ARINC 429 bus monitor: label decode (Alt, IAS, Heading, Accel), SSM/SDI fields, parity check with scrolling bus log',
@@ -461,6 +472,9 @@ export const projects: Project[] = [
     githubUrl: 'https://github.com/delongkevin/FullStackEngineer',
     featured: true,
     category: 'fullstack',
+    androidUrl: '/apk-artifacts/om-platform-debug.apk',
+    windowsUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/desktop-artifacts-latest/OMPlatform-Windows-Setup.exe',
+    macUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/desktop-artifacts-latest/OMPlatform-macOS.dmg',
     features: [
       'SQL Console: execute complex JOINs, subqueries, GROUP BY aggregations, reconciliation queries, and EXPLAIN plans against 500-row in-memory relational DB',
       'XML Ingestion Pipeline: 5-stage animated pipeline (Ingest → Parse → Validate → Transform → Load) using native DOMParser with real schema validation and error detection',
@@ -487,6 +501,9 @@ export const projects: Project[] = [
     githubUrl: 'https://github.com/delongkevin/FullStackEngineer',
     featured: true,
     category: 'fullstack',
+    androidUrl: '/apk-artifacts/sit-dashboard-debug.apk',
+    windowsUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/desktop-artifacts-latest/SITDashboard-Windows-Setup.exe',
+    macUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/desktop-artifacts-latest/SITDashboard-macOS.dmg',
     features: [
       'Test Plan Manager: create and track Acceptance, Regression, Performance, and Volume test plans with engineer assignment, target system, dates, and completion progress bars',
       'Test Case Tracker: full CRUD for test cases organized by functional area (Conveyor Control, Sortation, WMS, PLC, Safety, HMI, Network, Database) with priority and status filtering',
@@ -512,6 +529,9 @@ export const projects: Project[] = [
     githubUrl: 'https://github.com/delongkevin/FullStackEngineer',
     featured: true,
     category: 'fullstack',
+    androidUrl: '/apk-artifacts/qa-dashboard-debug.apk',
+    windowsUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/desktop-artifacts-latest/QADashboard-Windows-Setup.exe',
+    macUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/desktop-artifacts-latest/QADashboard-macOS.dmg',
     features: [
       'Test Case Manager: create, filter, and run manual tests across Login & Auth, API, Database, UI Regression, and CI/CD suites with pass/fail/pending/blocked status cycling',
       'Kanban Defect Tracker: log defects with severity/component fields, advance tickets through Open → In Progress → Resolved → Closed columns',
@@ -537,6 +557,9 @@ export const projects: Project[] = [
     githubUrl: 'https://github.com/delongkevin/FullStackEngineer',
     featured: true,
     category: 'fullstack',
+    androidUrl: '/apk-artifacts/ai-trainer-debug.apk',
+    windowsUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/desktop-artifacts-latest/AICodeTrainer-Windows-Setup.exe',
+    macUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/desktop-artifacts-latest/AICodeTrainer-macOS.dmg',
     features: [
       'Challenge Designer: author coding problems with constraints, I/O examples, and hidden test cases; live preview panel renders the formatted problem statement in real time',
       'Challenge Library: 8 pre-seeded problems (Two Sum → Serialize Binary Tree) spanning Easy/Medium/Hard/Expert difficulty with one-click load into the editor',
@@ -837,6 +860,9 @@ export const projects: Project[] = [
     githubUrl: 'https://github.com/delongkevin/FullStackEngineer',
     featured: true,
     category: 'fullstack',
+    androidUrl: '/apk-artifacts/a11y-qa-trainer-debug.apk',
+    windowsUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/desktop-artifacts-latest/A11yQATrainer-Windows-Setup.exe',
+    macUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/desktop-artifacts-latest/A11yQATrainer-macOS.dmg',
     features: [
       'Accessibility Auditor: live WCAG 2.1 color-contrast ratio calculator with AA/AAA pass/fail badges for foreground and background hex colors',
       'ARIA Validator: paste any HTML snippet and receive a parsed ARIA tree with critical/warning/pass issue annotations',
@@ -930,6 +956,9 @@ export const projects: Project[] = [
     githubUrl: 'https://github.com/delongkevin/FullStackEngineer',
     featured: true,
     category: 'fullstack',
+    androidUrl: '/apk-artifacts/sap-test-manager-debug.apk',
+    windowsUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/desktop-artifacts-latest/SAPTestManager-Windows-Setup.exe',
+    macUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/desktop-artifacts-latest/SAPTestManager-macOS.dmg',
     features: [
       'Executive Overview module with dynamic KPIs, risk index scoring, and steering-committee narrative generation',
       'Program Test Strategy and Governance module with editable SIT/E2E/UAT/cutover/hyper-care master plan progress and quality gate decisions',
@@ -986,6 +1015,9 @@ export const projects: Project[] = [
     githubUrl: 'https://github.com/delongkevin/FullStackEngineer',
     featured: true,
     category: 'fullstack',
+    androidUrl: '/apk-artifacts/erp-workbench-debug.apk',
+    windowsUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/desktop-artifacts-latest/ERPWorkbench-Windows-Setup.exe',
+    macUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/desktop-artifacts-latest/ERPWorkbench-macOS.dmg',
     features: [
       'WPF desktop shell with MVVM navigation, commands, and reusable view models for enterprise workflow screens',
       'Manufacturing ERP/MRP modules for work orders, inventory, purchasing, production scheduling, and quality holds',
@@ -1011,6 +1043,9 @@ export const projects: Project[] = [
     githubUrl: 'https://github.com/delongkevin/FullStackEngineer',
     featured: true,
     category: 'fullstack',
+    androidUrl: '/apk-artifacts/wireless-audio-debug.apk',
+    windowsUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/desktop-artifacts-latest/WirelessAudio-Windows-Setup.exe',
+    macUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/desktop-artifacts-latest/WirelessAudio-macOS.dmg',
     features: [
       'TypeScript/Node.js microservices: audio-streaming, device-pairing, firmware-OTA, content-delivery, user-auth, and analytics services with Express',
       'AWS Lambda serverless functions: audioProcessorFn, deviceEventHandlerFn, firmwareValidatorFn, analyticsAggregatorFn with SQS triggers',

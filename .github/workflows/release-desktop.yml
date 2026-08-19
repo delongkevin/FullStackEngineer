@@ -17,11 +17,39 @@ env:
 
 jobs:
   build-windows:
-    name: Build Windows Installer
+    name: Build Windows Installer (${{ matrix.product }})
     runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - dir: insurance-admin-desktop
+            product: PolicyCore
+          - dir: order-system-desktop
+            product: ShopQuick
+          - dir: task-manager-desktop
+            product: TaskFlow
+          - dir: avionics-test-desktop
+            product: AvionicsTest
+          - dir: om-platform-desktop
+            product: OMPlatform
+          - dir: sit-dashboard-desktop
+            product: SITDashboard
+          - dir: qa-dashboard-desktop
+            product: QADashboard
+          - dir: ai-trainer-desktop
+            product: AICodeTrainer
+          - dir: a11y-qa-trainer-desktop
+            product: A11yQATrainer
+          - dir: sap-test-manager-desktop
+            product: SAPTestManager
+          - dir: erp-workbench-desktop
+            product: ERPWorkbench
+          - dir: wireless-audio-desktop
+            product: WirelessAudio
     defaults:
       run:
-        working-directory: desktop/insurance-admin-desktop
+        working-directory: desktop/${{ matrix.dir }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -40,16 +68,44 @@ jobs:
       - name: Upload Windows artifact
         uses: actions/upload-artifact@v4
         with:
-          name: desktop-windows
-          path: desktop/insurance-admin-desktop/dist/PolicyCore-Windows-Setup.exe
+          name: desktop-windows-${{ matrix.product }}
+          path: desktop/${{ matrix.dir }}/dist/${{ matrix.product }}-Windows-Setup.exe
           retention-days: 7
 
   build-macos:
-    name: Build macOS Installer
+    name: Build macOS Installer (${{ matrix.product }})
     runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - dir: insurance-admin-desktop
+            product: PolicyCore
+          - dir: order-system-desktop
+            product: ShopQuick
+          - dir: task-manager-desktop
+            product: TaskFlow
+          - dir: avionics-test-desktop
+            product: AvionicsTest
+          - dir: om-platform-desktop
+            product: OMPlatform
+          - dir: sit-dashboard-desktop
+            product: SITDashboard
+          - dir: qa-dashboard-desktop
+            product: QADashboard
+          - dir: ai-trainer-desktop
+            product: AICodeTrainer
+          - dir: a11y-qa-trainer-desktop
+            product: A11yQATrainer
+          - dir: sap-test-manager-desktop
+            product: SAPTestManager
+          - dir: erp-workbench-desktop
+            product: ERPWorkbench
+          - dir: wireless-audio-desktop
+            product: WirelessAudio
     defaults:
       run:
-        working-directory: desktop/insurance-admin-desktop
+        working-directory: desktop/${{ matrix.dir }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -70,8 +126,8 @@ jobs:
       - name: Upload macOS artifact
         uses: actions/upload-artifact@v4
         with:
-          name: desktop-macos
-          path: desktop/insurance-admin-desktop/dist/PolicyCore-macOS.dmg
+          name: desktop-macos-${{ matrix.product }}
+          path: desktop/${{ matrix.dir }}/dist/${{ matrix.product }}-macOS.dmg
           retention-days: 7
 
   publish-release:
@@ -82,17 +138,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Download Windows artifact
+      - name: Download all artifacts
         uses: actions/download-artifact@v4
         with:
-          name: desktop-windows
           path: release-desktop
-
-      - name: Download macOS artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: desktop-macos
-          path: release-desktop
+          pattern: desktop-*
+          merge-multiple: true
 
       - name: Create or update GitHub Release
         env:
@@ -100,16 +151,11 @@ jobs:
         run: |
           TAG="${{ env.RELEASE_TAG }}"
 
-          NOTES="## 🖥️ PolicyCore Desktop Downloads
+          NOTES="## 🖥️ Portfolio Desktop Downloads
 
-          Native Windows and macOS installers for the Insurance Policy Administration System dashboard.
+          Native Windows and macOS installers for the portfolio's full-stack demo apps, built automatically from \`desktop/*\` via GitHub Actions.
 
-          | Platform | Installer | Notes |
-          |----------|-----------|-------|
-          | 🪟 Windows | \`PolicyCore-Windows-Setup.exe\` | Unsigned installer — Windows SmartScreen may warn on first run (More info → Run anyway) |
-          | 🍏 macOS | \`PolicyCore-macOS.dmg\` | Unsigned/unnotarized — right-click the app → Open on first launch to bypass Gatekeeper |
-
-          Built automatically from \`desktop/insurance-admin-desktop\` via GitHub Actions."
+          Each app ships an unsigned Windows installer (SmartScreen may warn on first run — More info → Run anyway) and an unsigned/unnotarized macOS \`.dmg\` (right-click the app → Open on first launch to bypass Gatekeeper)."
 
           if gh release view "$TAG" &>/dev/null; then
             echo "Release $TAG already exists — uploading installers..."
@@ -117,6 +163,7 @@ jobs:
           else
             echo "Creating release $TAG..."
             gh release create "$TAG" release-desktop/*.exe release-desktop/*.dmg \
-              --title "PolicyCore Desktop (Rolling Build)" \
+              --title "Portfolio Desktop Apps (Rolling Build)" \
               --notes "$NOTES"
           fi
+

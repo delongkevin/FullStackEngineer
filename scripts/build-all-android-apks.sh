@@ -122,6 +122,17 @@ APKS=(
   "medical-iot-monitor/medical-iot-monitor-debug.apk"
   "poker-app/poker-app-debug.apk"
   "insurance-app/insurance-app-debug.apk"
+  "order-system/order-system-debug.apk"
+  "task-manager/task-manager-debug.apk"
+  "avionics-test/avionics-test-debug.apk"
+  "om-platform/om-platform-debug.apk"
+  "sit-dashboard/sit-dashboard-debug.apk"
+  "qa-dashboard/qa-dashboard-debug.apk"
+  "ai-trainer/ai-trainer-debug.apk"
+  "a11y-qa-trainer/a11y-qa-trainer-debug.apk"
+  "sap-test-manager/sap-test-manager-debug.apk"
+  "erp-workbench/erp-workbench-debug.apk"
+  "wireless-audio/wireless-audio-debug.apk"
 )
 
 mkdir -p "$ARTIFACT_DIR"
