@@ -170,13 +170,13 @@ canvas{display:block}
   <div class="grid-4 mb-16">
     <div class="card">
       <div class="card-title">Total Policies</div>
-      <div class="kpi-val">1,247</div>
+      <div class="kpi-val" id="kpi-total-policies">1,247</div>
       <div class="kpi-sub">Across all lines</div>
-      <div class="kpi-trend up">&#9650; +43 this month</div>
+      <div class="kpi-trend up" id="kpi-total-trend">&#9650; +43 this month</div>
     </div>
     <div class="card">
       <div class="card-title">Written Premium</div>
-      <div class="kpi-val">$4.2M</div>
+      <div class="kpi-val" id="kpi-written-premium">$4.2M</div>
       <div class="kpi-sub">YTD annualized</div>
       <div class="kpi-trend up">&#9650; +8.3% vs prior yr</div>
     </div>
@@ -214,19 +214,13 @@ canvas{display:block}
     </div>
   </div>
   <div class="card">
-    <div class="section-title">Recent Policies</div>
+    <div class="section-title flex justify-between align-center" style="display:flex">
+      <span>Recent Policies</span>
+      <span style="font-size:11px;color:var(--muted);font-weight:400">Data persists in your browser (localStorage)</span>
+    </div>
     <table>
-      <thead><tr><th>Policy Number</th><th>Insured Name</th><th>Line of Business</th><th>Effective Date</th><th>Premium</th><th>Status</th></tr></thead>
-      <tbody>
-        <tr><td style="font-family:'JetBrains Mono',monospace">POL-2024-008821</td><td>Apex Manufacturing LLC</td><td>General Liability</td><td>2024-01-01</td><td>$18,450</td><td><span class="badge active">Active</span></td></tr>
-        <tr><td style="font-family:'JetBrains Mono',monospace">POL-2024-008820</td><td>Sunrise Retail Group</td><td>Property</td><td>2024-01-15</td><td>$42,200</td><td><span class="badge active">Active</span></td></tr>
-        <tr><td style="font-family:'JetBrains Mono',monospace">POL-2024-008819</td><td>Metro Transit Corp</td><td>Auto</td><td>2024-01-15</td><td>$67,800</td><td><span class="badge pending">Pending</span></td></tr>
-        <tr><td style="font-family:'JetBrains Mono',monospace">POL-2024-008818</td><td>Blue Ridge Contractors</td><td>Workers Comp</td><td>2023-12-01</td><td>$29,300</td><td><span class="badge active">Active</span></td></tr>
-        <tr><td style="font-family:'JetBrains Mono',monospace">POL-2024-008817</td><td>Pacific Foods Inc.</td><td>Property</td><td>2023-11-15</td><td>$88,500</td><td><span class="badge active">Active</span></td></tr>
-        <tr><td style="font-family:'JetBrains Mono',monospace">POL-2024-008816</td><td>Urban Logistics Co.</td><td>Auto</td><td>2023-11-01</td><td>$51,200</td><td><span class="badge cancelled">Cancelled</span></td></tr>
-        <tr><td style="font-family:'JetBrains Mono',monospace">POL-2024-008815</td><td>Harbor Medical Group</td><td>General Liability</td><td>2023-10-01</td><td>$24,700</td><td><span class="badge active">Active</span></td></tr>
-        <tr><td style="font-family:'JetBrains Mono',monospace">POL-2024-008814</td><td>Summit Tech Solutions</td><td>Workers Comp</td><td>2023-10-15</td><td>$15,900</td><td><span class="badge pending">Pending</span></td></tr>
-      </tbody>
+      <thead><tr><th>Policy Number</th><th>Insured Name</th><th>Line of Business</th><th>Effective Date</th><th>Premium</th><th>Status</th><th></th></tr></thead>
+      <tbody id="policies-tbody"></tbody>
     </table>
   </div>
 </div>
@@ -268,9 +262,11 @@ canvas{display:block}
       </div>
       <div style="display:flex;gap:10px">
         <button class="btn btn-primary" onclick="calculatePremium()">&#9889; Calculate Premium</button>
+        <button class="btn btn-success" onclick="savePolicyToDashboard()">&#128190; Save Policy</button>
         <button class="btn btn-success" onclick="exportJSON()">&#128196; Export as JSON</button>
         <button class="btn btn-outline" onclick="exportACORD()">&#128462; Export ACORD 130 XML</button>
       </div>
+      <div id="save-status" style="display:none;margin-top:10px;padding:10px 14px;border-radius:8px;background:rgba(76,175,80,.12);color:var(--success);font-size:13px"></div>
     </div>
     <div>
       <div class="card mb-16" id="premium-card" style="display:none">
@@ -523,7 +519,7 @@ function showTab(id, btn) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + id).classList.add('active');
   btn.classList.add('active');
-  if (id === 'dashboard') { setTimeout(() => { drawBarChart(); drawDonutChart(); }, 50); }
+  if (id === 'dashboard') { renderDashboard(); setTimeout(() => { drawBarChart(); drawDonutChart(); }, 50); }
 }
 
 // === DASHBOARD CHARTS ===
@@ -590,7 +586,121 @@ function drawDonutChart() {
 }
 
 // Draw on page load
-window.addEventListener('load', () => { drawBarChart(); drawDonutChart(); });
+window.addEventListener('load', () => { drawBarChart(); drawDonutChart(); PolicyStore.init(); renderDashboard(); });
+
+// === POLICY STORE (localStorage-backed persistence) ===
+const PolicyStore = (() => {
+  const KEY = 'policycore_policies_v1';
+  const SEED = [
+    { policyNumber: 'POL-2024-008821', insuredName: 'Apex Manufacturing LLC', lineOfBusiness: 'General Liability', effectiveDate: '2024-01-01', premium: 18450, status: 'active' },
+    { policyNumber: 'POL-2024-008820', insuredName: 'Sunrise Retail Group', lineOfBusiness: 'Property', effectiveDate: '2024-01-15', premium: 42200, status: 'active' },
+    { policyNumber: 'POL-2024-008819', insuredName: 'Metro Transit Corp', lineOfBusiness: 'Auto', effectiveDate: '2024-01-15', premium: 67800, status: 'pending' },
+    { policyNumber: 'POL-2024-008818', insuredName: 'Blue Ridge Contractors', lineOfBusiness: 'Workers Comp', effectiveDate: '2023-12-01', premium: 29300, status: 'active' },
+    { policyNumber: 'POL-2024-008817', insuredName: 'Pacific Foods Inc.', lineOfBusiness: 'Property', effectiveDate: '2023-11-15', premium: 88500, status: 'active' },
+    { policyNumber: 'POL-2024-008816', insuredName: 'Urban Logistics Co.', lineOfBusiness: 'Auto', effectiveDate: '2023-11-01', premium: 51200, status: 'cancelled' },
+    { policyNumber: 'POL-2024-008815', insuredName: 'Harbor Medical Group', lineOfBusiness: 'General Liability', effectiveDate: '2023-10-01', premium: 24700, status: 'active' },
+    { policyNumber: 'POL-2024-008814', insuredName: 'Summit Tech Solutions', lineOfBusiness: 'Workers Comp', effectiveDate: '2023-10-15', premium: 15900, status: 'pending' }
+  ];
+  let policies = [];
+
+  function persist() {
+    try { localStorage.setItem(KEY, JSON.stringify(policies)); } catch (e) { /* storage unavailable — state stays in-memory */ }
+  }
+
+  return {
+    init() {
+      try {
+        const raw = localStorage.getItem(KEY);
+        policies = raw ? JSON.parse(raw) : SEED.slice();
+      } catch (e) {
+        policies = SEED.slice();
+      }
+      if (!Array.isArray(policies) || policies.length === 0) policies = SEED.slice();
+      persist();
+    },
+    getAll() { return policies.slice(); },
+    getByNumber(num) { return policies.find(p => p.policyNumber === num) || null; },
+    add(policy) { policies.unshift(policy); persist(); return policy; },
+    update(num, patch) {
+      const idx = policies.findIndex(p => p.policyNumber === num);
+      if (idx === -1) return null;
+      policies[idx] = { ...policies[idx], ...patch };
+      persist();
+      return policies[idx];
+    },
+    remove(num) {
+      const before = policies.length;
+      policies = policies.filter(p => p.policyNumber !== num);
+      persist();
+      return policies.length < before;
+    }
+  };
+})();
+
+const LOB_LABELS = { auto: 'Auto', property: 'Property', gl: 'General Liability', wc: 'Workers Comp' };
+
+function renderDashboard() {
+  const all = PolicyStore.getAll();
+  const tbody = document.getElementById('policies-tbody');
+  if (tbody) {
+    tbody.innerHTML = all.map(p => (
+      "<tr><td style=\"font-family:'JetBrains Mono',monospace\">" + escHTML(p.policyNumber) + '</td>' +
+      '<td>' + escHTML(p.insuredName) + '</td>' +
+      '<td>' + escHTML(p.lineOfBusiness) + '</td>' +
+      '<td>' + escHTML(p.effectiveDate) + '</td>' +
+      '<td>$' + Math.round(p.premium).toLocaleString() + '</td>' +
+      '<td><span class="badge ' + p.status + '">' + p.status.charAt(0).toUpperCase() + p.status.slice(1) + '</span></td>' +
+      '<td><button class="btn btn-outline" style="padding:4px 10px;font-size:11px" onclick="deletePolicy(&quot;' + escHTML(p.policyNumber) + '&quot;)">Delete</button></td></tr>'
+    )).join('');
+  }
+  const totalEl = document.getElementById('kpi-total-policies');
+  const premEl = document.getElementById('kpi-written-premium');
+  if (totalEl) totalEl.textContent = all.length.toLocaleString();
+  if (premEl) {
+    const totalPrem = all.reduce((sum, p) => sum + (p.premium || 0), 0);
+    premEl.textContent = totalPrem >= 1000000 ? '$' + (totalPrem / 1000000).toFixed(1) + 'M' : '$' + Math.round(totalPrem).toLocaleString();
+  }
+}
+
+function deletePolicy(policyNumber) {
+  if (!confirm('Delete policy ' + policyNumber + '? This removes it from your local PolicyCore data.')) return;
+  PolicyStore.remove(policyNumber);
+  renderDashboard();
+}
+
+function savePolicyToDashboard() {
+  const lob = document.getElementById('pb-lob').value;
+  const state = document.getElementById('pb-state').value;
+  const covs = COVERAGES[lob];
+  let total = 0;
+  covs.forEach(c => {
+    const cb = document.getElementById('cov-' + c.id);
+    if (!cb || !cb.checked) return;
+    const limit = parseFloat(document.getElementById('lim-' + c.id).value) || c.defLimit;
+    const ded = parseFloat(document.getElementById('ded-' + c.id).value) || 0;
+    const result = RateEngine.calculate(lob, state, limit, ded, DEFAULT_BASE_VALUE, DEFAULT_EXP_MOD);
+    total += result.total / covs.length;
+  });
+  const policyNumber = document.getElementById('pb-polnum').value || ('POL-' + new Date().getFullYear() + '-' + Math.floor(100000 + Math.random() * 900000));
+  const policy = {
+    policyNumber,
+    insuredName: document.getElementById('pb-insured').value || 'New Insured',
+    lineOfBusiness: LOB_LABELS[lob] || lob,
+    effectiveDate: document.getElementById('pb-eff').value,
+    premium: Math.round(total),
+    status: 'pending'
+  };
+  if (PolicyStore.getByNumber(policyNumber)) {
+    PolicyStore.update(policyNumber, policy);
+  } else {
+    PolicyStore.add(policy);
+  }
+  renderDashboard();
+  const status = document.getElementById('save-status');
+  status.style.display = 'block';
+  status.textContent = '✓ Saved ' + policyNumber + ' to Recent Policies — $' + policy.premium.toLocaleString() + ' annual premium. View it on the Dashboard tab.';
+}
+
 
 // === DOMAIN MODELS ===
 const COVERAGES = {
@@ -854,12 +964,59 @@ function sendRequest(i, method) {
   resBox.style.display = 'block';
   resBox.innerHTML = '<div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted)"><div class="spinner"></div> Sending request...</div>';
   const start = Date.now();
+  const ep = ENDPOINTS[i];
   setTimeout(() => {
     const elapsed = Date.now() - start;
-    const ep = ENDPOINTS[i];
-    const statusCode = method === 'delete' ? 200 : (method === 'post' ? 201 : 200);
-    resBox.innerHTML = '<div class="response-meta"><span class="status-200">&#9679; ' + statusCode + ' ' + (statusCode === 201 ? 'Created' : 'OK') + '</span><span style="color:var(--muted)">' + elapsed + 'ms</span><span style="color:var(--muted)">Content-Type: application/json</span></div>'
-      + '<pre style="margin:0;max-height:200px;overflow-y:auto">' + syntaxHighlightJSON(ep.response) + '</pre>';
+    let statusCode = method === 'delete' ? 200 : (method === 'post' ? 201 : 200);
+    let responseBody = ep.response;
+    let reqBody = {};
+    try { reqBody = JSON.parse(document.getElementById('ep-req-' + i).value); } catch (e) { reqBody = {}; }
+
+    // Live-wire the policy endpoints against the real PolicyStore instead of static mock text
+    try {
+      if (ep.path === '/policies' && method === 'get') {
+        const all = PolicyStore.getAll();
+        responseBody = JSON.stringify({ data: all, pagination: { page: 1, pageSize: all.length, total: all.length } }, null, 2);
+      } else if (ep.path === '/policies' && method === 'post') {
+        const policyNumber = 'POL-' + new Date().getFullYear() + '-' + Math.floor(100000 + Math.random() * 900000);
+        const created = PolicyStore.add({
+          policyNumber,
+          insuredName: reqBody.insuredName || 'New Business LLC',
+          lineOfBusiness: LOB_LABELS[reqBody.lineOfBusiness] || reqBody.lineOfBusiness || 'General Liability',
+          effectiveDate: reqBody.effectiveDate || new Date().toISOString().slice(0, 10),
+          premium: 12340,
+          status: 'pending'
+        });
+        renderDashboard();
+        responseBody = JSON.stringify({ ...created, message: 'Policy created successfully and saved to PolicyCore' }, null, 2);
+      } else if (ep.path === '/policies/{id}' && method === 'get') {
+        const found = PolicyStore.getByNumber(reqBody.id);
+        responseBody = found ? JSON.stringify(found, null, 2) : JSON.stringify({ error: 'Policy not found', id: reqBody.id }, null, 2);
+        statusCode = found ? 200 : 404;
+      } else if (ep.path === '/policies/{id}' && method === 'put') {
+        const updated = PolicyStore.update(reqBody.id, { premium: reqBody.premium || undefined });
+        renderDashboard();
+        responseBody = updated ? JSON.stringify({ ...updated, message: 'Policy updated' }, null, 2) : JSON.stringify({ error: 'Policy not found', id: reqBody.id }, null, 2);
+        statusCode = updated ? 200 : 404;
+      } else if (ep.path === '/policies/{id}' && method === 'delete') {
+        const removed = PolicyStore.remove(reqBody.id);
+        renderDashboard();
+        responseBody = JSON.stringify({ policyNumber: reqBody.id, status: removed ? 'cancelled' : 'not_found', message: removed ? 'Policy cancelled and removed from PolicyCore' : 'Policy not found' }, null, 2);
+        statusCode = removed ? 200 : 404;
+      } else if (ep.path === '/policies/{id}/rate' && method === 'post') {
+        const found = PolicyStore.getByNumber(reqBody.id);
+        const expMod = parseFloat(reqBody.experienceMod) || 1.0;
+        const rated = { baseRate: found ? found.premium * 0.8 : 9800, territoryFactor: 1.35, limitFactor: 1.0, deductibleCredit: 0.06, experienceMod: expMod, indicatedPremium: Math.round((found ? found.premium : 12435) * expMod), ratingDate: new Date().toISOString().slice(0, 10) };
+        responseBody = JSON.stringify(rated, null, 2);
+      }
+    } catch (e) {
+      // fall back to the static mock response if live data isn't shaped as expected
+    }
+
+    const statusClass = statusCode >= 500 ? 'status-500' : statusCode >= 400 ? 'status-400' : 'status-200';
+    const statusText = statusCode === 201 ? 'Created' : statusCode === 404 ? 'Not Found' : 'OK';
+    resBox.innerHTML = '<div class="response-meta"><span class="' + statusClass + '">&#9679; ' + statusCode + ' ' + statusText + '</span><span style="color:var(--muted)">' + elapsed + 'ms</span><span style="color:var(--muted)">Content-Type: application/json</span></div>'
+      + '<pre style="margin:0;max-height:200px;overflow-y:auto">' + syntaxHighlightJSON(escHTML(responseBody)) + '</pre>';
   }, 600);
 }
 
