@@ -23,9 +23,6 @@ env:
   RELEASE_TAG: android-artifacts-latest
   EXPO_ANDROID_COMPILE_SDK: '35'
   EXPO_ANDROID_BUILD_TOOLS: '35.0.0'
-  EXPO_ANDROID_AGP: '8.6.0'
-  EXPO_ANDROID_KOTLIN: '1.9.24'
-  EXPO_ANDROID_GRADLE: '8.7'
 
 jobs:
   build-native-android:
@@ -132,36 +129,29 @@ jobs:
         run: |
           set -euo pipefail
 
+          # Only bump compileSdk/targetSdk/buildTools here. Leaving AGP/Gradle/Kotlin at
+          # each app's own react-native-declared defaults avoids a Kotlin-metadata mismatch
+          # between a forced newer Gradle and node_modules/@react-native/gradle-plugin's
+          # own hardcoded apiVersion (see git history for the compileKotlin failure this caused).
           patch_toolchain_versions() {
             version_catalog="$1"
 
             sed -i "s/^compileSdk = \".*\"/compileSdk = \"${EXPO_ANDROID_COMPILE_SDK}\"/" "$version_catalog"
             sed -i "s/^targetSdk = \".*\"/targetSdk = \"${EXPO_ANDROID_COMPILE_SDK}\"/" "$version_catalog"
             sed -i "s/^buildTools = \".*\"/buildTools = \"${EXPO_ANDROID_BUILD_TOOLS}\"/" "$version_catalog"
-            sed -i "s/^agp = \".*\"/agp = \"${EXPO_ANDROID_AGP}\"/" "$version_catalog"
           }
 
-          # node_modules/@react-native/gradle-plugin builds its own Kotlin sources with a
-          # hardcoded apiVersion; bumping its "kotlin" catalog entry desyncs the stdlib
-          # metadata version from that apiVersion and breaks :gradle-plugin:compileKotlin.
-          # Only the app-facing react-native catalog needs the kotlinVersion bump.
-          app_version_catalog="node_modules/react-native/gradle/libs.versions.toml"
-          plugin_version_catalog="node_modules/@react-native/gradle-plugin/gradle/libs.versions.toml"
-
           found_version_catalog=false
-
-          if [ -f "$app_version_catalog" ]; then
-            echo "Patching Android toolchain catalog: $app_version_catalog"
-            patch_toolchain_versions "$app_version_catalog"
-            sed -i "s/^kotlin = \".*\"/kotlin = \"${EXPO_ANDROID_KOTLIN}\"/" "$app_version_catalog"
-            found_version_catalog=true
-          fi
-
-          if [ -f "$plugin_version_catalog" ]; then
-            echo "Patching Android toolchain catalog: $plugin_version_catalog"
-            patch_toolchain_versions "$plugin_version_catalog"
-            found_version_catalog=true
-          fi
+          for version_catalog in \
+            node_modules/react-native/gradle/libs.versions.toml \
+            node_modules/@react-native/gradle-plugin/gradle/libs.versions.toml
+          do
+            if [ -f "$version_catalog" ]; then
+              echo "Patching Android toolchain catalog: $version_catalog"
+              patch_toolchain_versions "$version_catalog"
+              found_version_catalog=true
+            fi
+          done
 
           if [ "$found_version_catalog" = false ]; then
             echo "No React Native version catalog found; using the app's default Android toolchain."
@@ -192,7 +182,6 @@ jobs:
           set_property android.compileSdkVersion "$EXPO_ANDROID_COMPILE_SDK"
           set_property android.targetSdkVersion "$EXPO_ANDROID_COMPILE_SDK"
           set_property android.buildToolsVersion "$EXPO_ANDROID_BUILD_TOOLS"
-          set_property android.kotlinVersion "$EXPO_ANDROID_KOTLIN"
           set_property org.gradle.java.home "$JAVA_HOME"
           set_property android.suppressUnsupportedCompileSdk "$EXPO_ANDROID_COMPILE_SDK"
 
@@ -218,25 +207,13 @@ jobs:
                   r"(targetSdkVersion = Integer\.parseInt\(findProperty\('android\.targetSdkVersion'\) \?: ')[^']+('\))",
                   rf"\g<1>{os.environ['EXPO_ANDROID_COMPILE_SDK']}\g<2>",
               ),
-              (
-                  r"(kotlinVersion = findProperty\('android\.kotlinVersion'\) \?: ')[^']+(')",
-                  rf"\g<1>{os.environ['EXPO_ANDROID_KOTLIN']}\g<2>",
-              ),
           ]
 
           for pattern, replacement in substitutions:
               text = re.sub(pattern, replacement, text)
 
-          text = re.sub(
-              r"com\.android\.tools\.build:gradle:[0-9.]+",
-              f"com.android.tools.build:gradle:{os.environ['EXPO_ANDROID_AGP']}",
-              text,
-          )
-
           path.write_text(text)
           PY
-
-          sed -i "s#distributionUrl=.*#distributionUrl=https\\://services.gradle.org/distributions/gradle-${EXPO_ANDROID_GRADLE}-all.zip#" gradle/wrapper/gradle-wrapper.properties
 
           splash_file="app/src/main/res/drawable/splashscreen.xml"
           colors_file="app/src/main/res/values/colors.xml"
