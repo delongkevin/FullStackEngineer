@@ -215,6 +215,22 @@ jobs:
           path.write_text(text)
           PY
 
+          # Unpinned transitive androidx.core releases can require a newer AGP than the
+          # app's default (see git history); force a version this toolchain supports
+          # instead of chasing ever-newer AGP/Gradle, which breaks compileKotlin (see
+          # git history for the compileKotlin Kotlin-metadata failure that caused).
+          cat >> build.gradle <<'GRADLE'
+
+          allprojects {
+              configurations.all {
+                  resolutionStrategy {
+                      force 'androidx.core:core:1.13.1'
+                      force 'androidx.core:core-ktx:1.13.1'
+                  }
+              }
+          }
+          GRADLE
+
           splash_file="app/src/main/res/drawable/splashscreen.xml"
           colors_file="app/src/main/res/values/colors.xml"
 
