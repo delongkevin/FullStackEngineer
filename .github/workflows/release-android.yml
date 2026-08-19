@@ -235,27 +235,27 @@ jobs:
           if [ -f "$splash_file" ] && grep -q '@color/splashscreen_background' "$splash_file"; then
             mkdir -p "$(dirname "$colors_file")"
             python - "$colors_file" <<'PY'
-            from pathlib import Path
-            import sys
-            import xml.etree.ElementTree as ET
+          from pathlib import Path
+          import sys
+          import xml.etree.ElementTree as ET
 
-            path = Path(sys.argv[1])
-            try:
-                root = ET.fromstring(path.read_text()) if path.exists() else ET.Element("resources")
-                if root.tag != "resources":
-                    raise ValueError("Unexpected root element")
-            except Exception:
-                root = ET.Element("resources")
+          path = Path(sys.argv[1])
+          try:
+              root = ET.fromstring(path.read_text()) if path.exists() else ET.Element("resources")
+              if root.tag != "resources":
+                  raise ValueError("Unexpected root element")
+          except Exception:
+              root = ET.Element("resources")
 
-            has_splash_background = any(
-                child.tag == "color" and child.attrib.get("name") == "splashscreen_background"
-                for child in root
-            )
-            if not has_splash_background:
-                color = ET.SubElement(root, "color", {"name": "splashscreen_background"})
-                color.text = "#ffffff"
-                path.write_text(ET.tostring(root, encoding="unicode") + "\n")
-            PY
+          has_splash_background = any(
+              child.tag == "color" and child.attrib.get("name") == "splashscreen_background"
+              for child in root
+          )
+          if not has_splash_background:
+              color = ET.SubElement(root, "color", {"name": "splashscreen_background"})
+              color.text = "#ffffff"
+              path.write_text(ET.tostring(root, encoding="unicode") + "\n")
+          PY
           fi
 
       - name: Build debug APK
