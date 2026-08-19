@@ -30,7 +30,7 @@ function isGithubReleaseTagUrl(url: string): boolean {
 }
 
 function isGithubReleaseDownloadUrl(url: string): boolean {
-  return /^https:\/\/github\.com\/[^/]+\/[^/]+\/releases\/download\/.+\/.+\.(apk|zip)$/i.test(url);
+  return /^https:\/\/github\.com\/[^/]+\/[^/]+\/releases\/download\/.+\/.+\.(apk|zip|exe|dmg)$/i.test(url);
 }
 
 function isGithubWorkflowUrl(url: string): boolean {
@@ -112,6 +112,27 @@ describe('link integrity', () => {
         if (localPath) {
           expect(existsSync(localPath)).toBe(true);
         }
+
+        const workflowPath = getLocalPathFromWorkflowUrl(url);
+        if (workflowPath) {
+          expect(existsSync(workflowPath)).toBe(true);
+        }
+      });
+    }
+  );
+
+  it.each(projects.filter((p) => p.windowsUrl || p.macUrl))(
+    'desktop links for "$title" have a valid format',
+    (project) => {
+      const desktopUrls = [project.windowsUrl, project.macUrl].filter(Boolean) as string[];
+
+      desktopUrls.forEach((url) => {
+        const validShape =
+          isGithubReleaseDownloadUrl(url) ||
+          isGithubReleaseTagUrl(url) ||
+          isGithubWorkflowUrl(url) ||
+          isLocalSitePath(url);
+        expect(validShape).toBe(true);
 
         const workflowPath = getLocalPathFromWorkflowUrl(url);
         if (workflowPath) {

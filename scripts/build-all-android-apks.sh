@@ -121,6 +121,7 @@ APKS=(
   "kamps-factory/kamps-factory-debug.apk"
   "medical-iot-monitor/medical-iot-monitor-debug.apk"
   "poker-app/poker-app-debug.apk"
+  "insurance-app/insurance-app-debug.apk"
 )
 
 mkdir -p "$ARTIFACT_DIR"

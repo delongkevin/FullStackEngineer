@@ -73,7 +73,7 @@ export default function ProjectCard({
           </div>
         )}
         {(project.androidUrl || project.iosUrl) && project.embeddable && (
-          <div className="absolute bottom-4 left-4 flex gap-1 z-10">
+          <div className="absolute bottom-4 left-4 flex flex-wrap gap-1 z-10">
             {project.androidUrl && project.iosUrl && project.androidUrl === project.iosUrl ? (
               <span className="bg-blue-700 text-white px-2 py-0.5 rounded-full text-xs font-medium">📱 RN Source</span>
             ) : (
@@ -89,6 +89,12 @@ export default function ProjectCard({
                   </span>
                 )}
               </>
+            )}
+            {project.windowsUrl && (
+              <span className="bg-sky-700 text-white px-2 py-0.5 rounded-full text-xs font-medium">🪟 Windows</span>
+            )}
+            {project.macUrl && (
+              <span className="bg-slate-700 text-white px-2 py-0.5 rounded-full text-xs font-medium">🍏 macOS</span>
             )}
           </div>
         )}

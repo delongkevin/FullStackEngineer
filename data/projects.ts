@@ -18,6 +18,10 @@ export interface Project {
   androidUrl?: string;
   /** TestFlight invite URL or Apple App Store link */
   iosUrl?: string;
+  /** Direct Windows installer (.exe) download URL */
+  windowsUrl?: string;
+  /** Direct macOS installer (.dmg) download URL */
+  macUrl?: string;
   /** YouTube or Vimeo embed URL for a technical overview video */
   videoUrl?: string;
 }
@@ -859,12 +863,18 @@ export const projects: Project[] = [
     description: 'Full-stack P&C Insurance Policy Administration demo — policy builder, ISO bureau rate engine, ACORD XML/JSON form serialization, REST API studio, clean architecture diagram, and SOLID principles showcase.',
     fullDescription: 'A comprehensive Insurance Policy Administration System targeting the Insurity Full Stack Architect role. The application demonstrates six integrated capabilities: a Policy Dashboard with KPI cards (1,247 policies, $4.2M written premium, 58% loss ratio), Canvas-rendered monthly premium bar chart, line-of-business donut chart, and 8-row policy table with Active/Pending/Cancelled badges; a Policy Builder with all 50 US states, dynamic LOB-specific coverage checkboxes (Auto, Property, GL, Workers Comp), per-occurrence limit and deductible inputs, a JavaScript RateEngine class calculating premium via territory × SIC × deductible-credit factors, and one-click ACORD 130 XML and JSON export with syntax highlighting; a Rate Engine tab showing the ISO bureau rating flowchart, territory factor table (10 states), SIC class code table (8 codes), deductible credit schedule, and a live interactive step-by-step rate calculator; a Bureau Forms library with 10 ISO/ACORD forms (CG 00 01, CA 00 01, CP 00 10, etc.), clickable XML schema preview, edition diff viewer, JSON Schema explorer, and mock form validation; an Architecture tab with a CSS Clean Architecture layer diagram (Domain → Application → Infrastructure → Presentation), 5 SOLID principle cards with C# insurance domain code examples, 4 design pattern cards (Strategy, Factory, Repository, Observer), and Microsoft full-stack technology grid (.NET 8, ASP.NET Core, EF Core, SQL Server, Azure); and an API Studio with 7 REST endpoints, collapsible Try-It panels, editable JSON request bodies, 600ms simulated responses, and status-code badges.',
     image: '/images/insurance-policy-admin.png',
-    tech: ['C#', '.NET 8', 'ASP.NET Core', 'Entity Framework Core', 'SQL Server', 'Azure', 'TypeScript', 'JavaScript', 'REST API', 'ACORD XML', 'JSON Schema', 'SOLID', 'Clean Architecture', 'Design Patterns', 'P&C Insurance'],
+    tech: ['C#', '.NET 8', 'ASP.NET Core', 'Entity Framework Core', 'SQL Server', 'Azure', 'TypeScript', 'JavaScript', 'REST API', 'ACORD XML', 'JSON Schema', 'SOLID', 'Clean Architecture', 'Design Patterns', 'P&C Insurance', 'Node.js', 'Express', 'Electron', 'Android'],
     liveUrl: '/projects/insurance-policy-admin/index.html',
-    githubUrl: 'https://github.com/delongkevin/FullStackEngineer',
+    githubUrl: 'https://github.com/delongkevin/FullStackEngineer/tree/main/insurance-backend',
     featured: true,
     category: 'fullstack',
+    androidUrl: '/apk-artifacts/insurance-app-debug.apk',
+    windowsUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/desktop-artifacts-latest/PolicyCore-Windows-Setup.exe',
+    macUrl: 'https://github.com/delongkevin/FullStackEngineer/releases/download/desktop-artifacts-latest/PolicyCore-macOS.dmg',
     features: [
+      'Fully functional client-side data layer: policies persist in the browser (localStorage-backed PolicyStore), so creating, rating, and deleting a policy actually updates the dashboard and KPI totals',
+      'Standalone insurance-backend/ REST API (Node.js/Express) implementing the same policy, rating, and forms endpoints shown in the API Studio — runnable locally for real client/server testing',
+      'Downloadable native shells: Android APK (WebView-wrapped) and Windows/macOS desktop apps (Electron) so the dashboard can be installed and used offline like a real desktop/mobile app',
       'Policy Dashboard: KPI cards (total policies, written premium, loss ratio, avg policy age) with Canvas bar chart for 12-month premium and donut chart for line-of-business split',
       'Policy table: 8 realistic P&C policies with PolicyNumber, Insured Name, LOB, Effective Date, Premium, and color-coded Active/Pending/Cancelled status badges',
       'Policy Builder: form with all 50 US states, dynamic LOB-specific coverage checkboxes (Auto: Liability/Collision/Comprehensive; Property: Building/BPP/BI; GL: PremOps/Products; WC: Part A/Part B)',

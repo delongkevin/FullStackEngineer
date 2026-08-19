@@ -30,6 +30,13 @@ This command writes downloadable APKs to `public/apk-artifacts/` so portfolio An
 Useful flags:
 - `--skip-clean` skip `clean` and run only `assembleDebug`
 
+### Insurance Policy Administration System (PolicyCore) — cross-platform app
+The `insurance-policy-admin` project is a full-stack demo with real persistence and downloadable native shells:
+- **Live demo**: `public/projects/insurance-policy-admin/index.html` — data persists in the browser via `localStorage`
+- **Backend API**: `insurance-backend/` — standalone Express + file-store REST API (`npm install && npm start`)
+- **Android**: `android/insurance-app/` — WebView-wrapped APK, built by `scripts/build-all-android-apks.sh`
+- **Windows/macOS desktop**: `desktop/insurance-admin-desktop/` — Electron shell, installers built by `.github/workflows/release-desktop.yml` and published to the `desktop-artifacts-latest` GitHub Release
+
 ### Preview Production Build
 ```bash
 npx serve out

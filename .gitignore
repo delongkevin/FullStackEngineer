@@ -57,3 +57,13 @@ android-sdk/
 **/.gradle/
 android/apk-artifacts/
 public/apk-artifacts/*.apk
+
+# Insurance backend runtime data
+insurance-backend/db.json
+insurance-backend/db.test.json
+
+# Desktop app build output
+desktop/**/dist/
+desktop/**/node_modules/
+public/desktop-artifacts/*.exe
+public/desktop-artifacts/*.dmg
