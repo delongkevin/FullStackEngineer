@@ -1,5 +1,5 @@
-1:HL["/_next/static/css/2a5b3f77dcd5f1e1.css","style",{"crossOrigin":""}]
-0:["eyXVi87cLqTEPXVx5qvaj",[[["",{"children":["projects",{"children":[["id","detail-weather-insights-app","d"],{"children":["__PAGE__?{\"id\":\"detail-weather-insights-app\"}",{}]}]}]},"$undefined","$undefined",true],"$L2",[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/css/2a5b3f77dcd5f1e1.css","precedence":"next","crossOrigin":""}]],"$L3"]]]]
+1:HL["/_next/static/css/7f44487b7fdf8707.css","style",{"crossOrigin":""}]
+0:["r_gGL3t3JgX0pzfMVQpNV",[[["",{"children":["projects",{"children":[["id","detail-weather-insights-app","d"],{"children":["__PAGE__?{\"id\":\"detail-weather-insights-app\"}",{}]}]}]},"$undefined","$undefined",true],"$L2",[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/css/7f44487b7fdf8707.css","precedence":"next","crossOrigin":""}]],"$L3"]]]]
 4:I[6954,[],""]
 5:I[7264,[],""]
 7:I[4689,["383","static/chunks/383-23d7520fe27f6da1.js","413","static/chunks/413-0066863adaac6978.js","689","static/chunks/689-e89ada6adeb1f0a2.js","565","static/chunks/565-882ee06b0a7d5ad6.js","626","static/chunks/app/projects/%5Bid%5D/page-e8b7be92ba49648e.js"],""]
