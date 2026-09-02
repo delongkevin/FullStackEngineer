@@ -1,5 +1,5 @@
-1:HL["/_next/static/css/63e558f8ac52cdbc.css","style",{"crossOrigin":""}]
-0:["d7lWzFhPI-WBPMsaB7UHb",[[["",{"children":["projects",{"children":[["id","detail-computer-store-app","d"],{"children":["__PAGE__?{\"id\":\"detail-computer-store-app\"}",{}]}]}]},"$undefined","$undefined",true],"$L2",[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/css/63e558f8ac52cdbc.css","precedence":"next","crossOrigin":""}]],"$L3"]]]]
+1:HL["/_next/static/css/fa7f1c998d7c407c.css","style",{"crossOrigin":""}]
+0:["RodgP4CG4NW1UWT9c7JdS",[[["",{"children":["projects",{"children":[["id","detail-computer-store-app","d"],{"children":["__PAGE__?{\"id\":\"detail-computer-store-app\"}",{}]}]}]},"$undefined","$undefined",true],"$L2",[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/css/fa7f1c998d7c407c.css","precedence":"next","crossOrigin":""}]],"$L3"]]]]
 4:I[6954,[],""]
 5:I[7264,[],""]
 7:I[4689,["383","static/chunks/383-23d7520fe27f6da1.js","413","static/chunks/413-0066863adaac6978.js","689","static/chunks/689-0b1f225f0c141f4d.js","565","static/chunks/565-882ee06b0a7d5ad6.js","626","static/chunks/app/projects/%5Bid%5D/page-e8b7be92ba49648e.js"],""]
