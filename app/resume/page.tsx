@@ -1,6 +1,6 @@
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
-import { Mail, Phone, MapPin, ExternalLink } from 'lucide-react';
+import { Mail, Phone, MapPin, ExternalLink, FileText } from 'lucide-react';
 import Image from 'next/image';
 
 export default function ResumePage() {
@@ -167,6 +167,15 @@ export default function ResumePage() {
                     </a>
                   ))}
                 </div>
+                <a
+                  href="/Kevin-Delong-Resume.docx"
+                  download
+                  className="mt-5 flex items-center gap-3 theme-text-secondary hover:opacity-80 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded"
+                  aria-label="Download Kevin Delong's resume as a Word document"
+                >
+                  <FileText size={18} className="flex-shrink-0" aria-hidden="true" />
+                  <span className="text-sm">Download Word resume</span>
+                </a>
               </section>
 
               {/* Skills */}
