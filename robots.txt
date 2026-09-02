@@ -2,5 +2,5 @@ User-Agent: *
 Allow: /
 Disallow: /admin/
 
-Host: https://delongkevin.github.io/FullStackEngineer
-Sitemap: https://delongkevin.github.io/FullStackEngineer/sitemap.xml
+Host: https://kevindouglasdelong.net
+Sitemap: https://kevindouglasdelong.net/sitemap.xml
