@@ -31,7 +31,7 @@ export default function BlogPage() {
               <PenLine size={16} aria-hidden="true" />
               Notes from the workbench
             </div>
-            <h1 id="blog-heading" className="text-4xl sm:text-5xl font-bold theme-text-primary mb-5">The build log</h1>
+            <h1 id="blog-heading" className="text-4xl sm:text-5xl font-bold theme-text-primary mb-5">Notes &amp; Updates</h1>
             <p className="text-lg sm:text-xl theme-text-secondary leading-relaxed">
               Thoughts on building useful software, learning across platforms, and the decisions behind the projects.
             </p>
