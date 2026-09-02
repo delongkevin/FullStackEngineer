@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import Header from '../../../components/Header';
 import Footer from '../../../components/Footer';
 import BlogAudioControls from '../../../components/BlogAudioControls';
+import BlogComments from '../../../components/BlogComments';
 import { blogPosts, getBlogPost } from '../../../data/blog';
 
 interface BlogPostPageProps {
@@ -88,6 +89,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
               </ul>
             </aside>
           </div>
+          <BlogComments postSlug={post.slug} />
         </article>
       </main>
       <Footer />
