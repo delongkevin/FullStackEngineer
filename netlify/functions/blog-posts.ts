@@ -25,11 +25,16 @@ export const handler: Handler = async (event) => {
   if (!sql) return json(500, { error: 'Database not configured' });
 
   if (event.httpMethod === 'GET' && !authorized(event)) {
-    const posts = await sql`
-      SELECT slug, title, excerpt, category, published_at AS "publishedAt", reading_time AS "readingTime", sections, takeaways
-      FROM blog_posts WHERE is_published = true ORDER BY published_at DESC, id DESC
-    `;
-    return json(200, posts);
+    try {
+      const posts = await sql`
+        SELECT slug, title, excerpt, category, published_at AS "publishedAt", reading_time AS "readingTime", sections, takeaways
+        FROM blog_posts WHERE is_published = true ORDER BY published_at DESC, id DESC
+      `;
+      return json(200, posts);
+    } catch (error) {
+      console.error('blog-posts public query failed', error);
+      return json(503, { error: 'Blog is temporarily unavailable' });
+    }
   }
 
   if (!authorized(event)) return json(401, { error: 'Unauthorized' });

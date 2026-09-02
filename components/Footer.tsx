@@ -45,7 +45,7 @@ export default function Footer() {
         </div>
         
         <div className="border-t theme-border mt-8 pt-8 text-center theme-text-secondary">
-          <p>&copy; {new Date().getFullYear()} Kevin Douglas Delong. All rights reserved.</p>
+          <p><a href="/admin/blog/" className="focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-blue-500" style={{ color: 'inherit' }} aria-label="Open private blog editor">&copy;</a> {new Date().getFullYear()} Kevin Douglas Delong. All rights reserved.</p>
           <p className="mt-2 text-sm">Phone: (810) 287-7409 | Email: delong.kevin@gmail.com</p>
         </div>
       </div>

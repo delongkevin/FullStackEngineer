@@ -19,12 +19,20 @@ const blankPost: EditablePost = {
   slug: '', title: '', excerpt: '', category: 'Engineering Notes', publishedAt: new Date().toISOString().slice(0, 10), readingTime: '3 min read', sections: [{ heading: '', paragraphs: [''] }], takeaways: [], isPublished: false,
 };
 
-const postToForm = (post: EditablePost): EditablePost => ({ ...post, sections: post.sections?.length ? post.sections : blankPost.sections });
+const sectionsToText = (sections: EditablePost['sections']) => sections
+  .map((section) => `${section.heading}\n${section.paragraphs.join('\n')}`)
+  .join('\n\n');
+
+const postToForm = (post: EditablePost): EditablePost => ({
+  ...post,
+  sections: post.sections?.length ? post.sections : blankPost.sections,
+});
 
 export default function BlogAdminPage() {
   const [token, setToken] = useState('');
   const [posts, setPosts] = useState<EditablePost[]>([]);
   const [post, setPost] = useState<EditablePost>(blankPost);
+  const [sectionsText, setSectionsText] = useState(sectionsToText(blankPost.sections));
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -53,11 +61,15 @@ export default function BlogAdminPage() {
   async function savePost(event: FormEvent<HTMLFormElement>) {
     event.preventDefault(); setLoading(true); setError(''); setMessage('');
     try {
+      const sections = sectionsText.split(/\n\s*\n/).map((block) => {
+        const lines = block.split('\n');
+        return { heading: lines.shift()?.trim() ?? '', paragraphs: lines.map((line) => line.trim()).filter(Boolean) };
+      }).filter((section) => section.heading || section.paragraphs.length > 0);
       const response = await fetch(`/.netlify/functions/blog-posts${post.id ? `?id=${post.id}` : ''}`, {
-        method: post.id ? 'PUT' : 'POST', headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify(post),
+        method: post.id ? 'PUT' : 'POST', headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ ...post, sections }),
       });
       if (!response.ok) throw new Error((await response.json()).error || 'Could not save post.');
-      setMessage(post.id ? 'Post updated.' : 'Post created.'); await loadPosts(); setPost(blankPost);
+      setMessage(post.id ? 'Post updated.' : 'Post created.'); await loadPosts(); setPost(blankPost); setSectionsText(sectionsToText(blankPost.sections));
     } catch (err) { setError(err instanceof Error ? err.message : 'Could not save post.'); }
     finally { setLoading(false); }
   }
@@ -65,7 +77,7 @@ export default function BlogAdminPage() {
   async function deletePost(id: number) {
     if (!window.confirm('Delete this post?')) return;
     const response = await fetch(`/.netlify/functions/blog-posts?id=${id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } });
-    if (response.ok) { setMessage('Post deleted.'); await loadPosts(); if (post.id === id) setPost(blankPost); }
+    if (response.ok) { setMessage('Post deleted.'); await loadPosts(); if (post.id === id) { setPost(blankPost); setSectionsText(sectionsToText(blankPost.sections)); } }
     else setError('Could not delete post.');
   }
 
@@ -86,10 +98,10 @@ export default function BlogAdminPage() {
       {message ? <p role="status" className="theme-accent-text mb-5">{message}</p> : null}
       {authorized ? (
         <div className="grid lg:grid-cols-[240px_1fr] gap-8">
-          <aside><button type="button" onClick={() => setPost(blankPost)} className="btn-primary w-full mb-4">New post</button><div className="space-y-2">{posts.map((item) => <div key={item.id} className="surface-card rounded-lg p-3"><button type="button" className="text-left theme-text-primary font-semibold w-full" onClick={() => setPost(postToForm(item))}>{item.title}</button><p className="theme-text-secondary text-sm mt-1">{item.isPublished ? 'Published' : 'Draft'}</p><button type="button" className="text-red-600 text-sm mt-2" onClick={() => item.id && deletePost(item.id)}>Delete</button></div>)}</div></aside>
+          <aside><button type="button" onClick={() => { setPost(blankPost); setSectionsText(sectionsToText(blankPost.sections)); }} className="btn-primary w-full mb-4">New post</button><div className="space-y-2">{posts.map((item) => <div key={item.id} className="surface-card rounded-lg p-3"><button type="button" className="text-left theme-text-primary font-semibold w-full" onClick={() => { const nextPost = postToForm(item); setPost(nextPost); setSectionsText(sectionsToText(nextPost.sections)); }}>{item.title}</button><p className="theme-text-secondary text-sm mt-1">{item.isPublished ? 'Published' : 'Draft'}</p><button type="button" className="text-red-600 text-sm mt-2" onClick={() => item.id && deletePost(item.id)}>Delete</button></div>)}</div></aside>
           <form onSubmit={savePost} className="surface-card rounded-xl p-6 space-y-5">
             {(['title', 'slug', 'excerpt', 'category', 'publishedAt', 'readingTime'] as const).map((field) => <label key={field} className="block theme-text-primary font-semibold capitalize">{field === 'publishedAt' ? 'Published date' : field}<input type={field === 'publishedAt' ? 'date' : 'text'} value={post[field]} onChange={(event) => setPost({ ...post, [field]: event.target.value })} className="mt-2 w-full px-4 py-3 theme-input rounded-lg font-normal" required /></label>)}
-            <label className="block theme-text-primary font-semibold">Sections<textarea value={post.sections.map((section) => `${section.heading}\n${section.paragraphs.join('\n')}`).join('\n\n')} onChange={(event) => setPost({ ...post, sections: [{ heading: 'Entry', paragraphs: event.target.value.split('\n').filter(Boolean) }] })} className="mt-2 w-full min-h-48 px-4 py-3 theme-input rounded-lg font-normal" required /></label>
+            <label className="block theme-text-primary font-semibold">Sections<textarea value={sectionsText} onChange={(event) => setSectionsText(event.target.value)} className="mt-2 w-full min-h-48 px-4 py-3 theme-input rounded-lg font-normal" required /></label>
             <label className="block theme-text-primary font-semibold">Takeaways<input value={post.takeaways.join(', ')} onChange={(event) => setPost({ ...post, takeaways: event.target.value.split(',').map((item) => item.trim()).filter(Boolean) })} className="mt-2 w-full px-4 py-3 theme-input rounded-lg font-normal" /></label>
             <label className="inline-flex items-center gap-3 theme-text-primary font-semibold"><input type="checkbox" checked={post.isPublished} onChange={(event) => setPost({ ...post, isPublished: event.target.checked })} /> Publish this post</label>
             <div><button type="submit" className="btn-primary" disabled={loading}>{loading ? 'Saving...' : post.id ? 'Update post' : 'Create post'}</button></div>

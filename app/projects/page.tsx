@@ -3,7 +3,7 @@ import Footer from '../../components/Footer';
 import ProjectsClient from '../../components/ProjectsClient';
 import type { Metadata } from 'next';
 
-const siteUrl = 'https://delongkevin.github.io/FullStackEngineer';
+const siteUrl = 'https://kevindouglasdelong.net';
 
 export const metadata: Metadata = {
   title: 'Projects',

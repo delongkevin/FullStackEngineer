@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next';
 import { getProjectRouteKey, projects } from '../data/projects';
 import { blogPosts } from '../data/blog';
 
-const siteUrl = 'https://delongkevin.github.io/FullStackEngineer';
+const siteUrl = 'https://kevindouglasdelong.net';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages: MetadataRoute.Sitemap = [

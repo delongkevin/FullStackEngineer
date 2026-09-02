@@ -19,7 +19,7 @@ import Image from 'next/image';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-const siteUrl = 'https://delongkevin.github.io/FullStackEngineer';
+const siteUrl = 'https://kevindouglasdelong.net';
 
 interface PageProps {
   params: {

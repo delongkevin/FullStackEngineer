@@ -3,7 +3,7 @@ import Script from 'next/script';
 import VisitLogger from '../components/VisitLogger';
 import './globals.css';
 
-const siteUrl = 'https://delongkevin.github.io/FullStackEngineer';
+const siteUrl = 'https://kevindouglasdelong.net';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

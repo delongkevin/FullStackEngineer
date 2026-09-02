@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next';
 
-const siteUrl = 'https://delongkevin.github.io/FullStackEngineer';
+const siteUrl = 'https://kevindouglasdelong.net';
 
 export default function robots(): MetadataRoute.Robots {
   return {
