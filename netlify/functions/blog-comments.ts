@@ -13,6 +13,25 @@ function authorized(event: Parameters<Handler>[0]) {
   return Boolean(adminToken && token === adminToken);
 }
 
+async function notifyNewComment(comment: { postSlug: string; authorName: string; commentBody: string }) {
+  const apiKey = process.env.RESEND_API_KEY;
+  const recipient = process.env.COMMENT_NOTIFICATION_EMAIL;
+  const sender = process.env.EMAIL_FROM;
+  if (!apiKey || !recipient || !sender) return;
+
+  const response = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      from: sender,
+      to: [recipient],
+      subject: `New blog comment: ${comment.postSlug}`,
+      text: `A new comment from ${comment.authorName} is waiting for review on ${comment.postSlug}.\n\n${comment.commentBody}\n\nReview comments: https://kevindouglasdelong.net/admin/comments/`,
+    }),
+  });
+  if (!response.ok) console.error('comment notification failed', response.status);
+}
+
 function validComment(body: any) {
   return body && typeof body.postSlug === 'string' && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(body.postSlug)
     && typeof body.authorName === 'string' && body.authorName.trim().length >= 2 && body.authorName.trim().length <= 80
@@ -49,6 +68,7 @@ export const handler: Handler = async (event) => {
         INSERT INTO blog_comments (post_slug, author_name, author_email, comment_body)
         VALUES (${body.postSlug}, ${body.authorName.trim()}, ${body.authorEmail.trim().toLowerCase()}, ${body.commentBody.trim()})
       `;
+      await notifyNewComment({ postSlug: body.postSlug, authorName: body.authorName.trim(), commentBody: body.commentBody.trim() }).catch((error) => console.error('comment notification request failed', error));
       return json(201, { submitted: true });
     }
 
