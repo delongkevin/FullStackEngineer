@@ -17,80 +17,51 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
-    slug: 'building-software-that-feels-finished',
-    title: 'Building software that feels finished',
-    excerpt: 'The last ten percent of a project is where thoughtful details turn a working demo into something people trust.',
+    slug: 'starting-a-3d-printing-project',
+    title: 'Starting a 3D printing project: from idea to first print',
+    excerpt: 'I am starting a small 3D printing project to turn digital ideas into desk toys, decorative objects, and abstract designs that are interesting to look at and satisfying to hold.',
     category: 'Behind the Build',
     publishedAt: '2026-09-02',
-    readingTime: '4 min read',
+    readingTime: '6 min read',
     featured: true,
     sections: [
       {
-        heading: 'The gap between working and ready',
+        heading: 'What I want to make',
         paragraphs: [
-          'A feature can work perfectly and still feel unfinished. The gap usually shows up in the moments around the happy path: an empty state, a slow connection, a keyboard user, or a person returning to the screen after a week away.',
-          'When I build a project, I try to spend as much time on those moments as I do on the central interaction. Clear feedback, sensible defaults, and graceful failure are not polish added at the end. They are part of the feature itself.',
+          'The idea is simple: design small objects that can live on a desk or tabletop. Some may be playful toys, while others may be abstract shapes, geometric studies, or objects inspired by technology and everyday mechanisms. I want them to look intentional from different angles, not just from the view shown in a render.',
+          'This will be an experiment in moving between digital design and physical form. A model that looks good on a screen still has to print reliably, stand on its own, feel comfortable to handle, and make sense at its intended scale.',
         ],
       },
       {
-        heading: 'A practical finishing pass',
+        heading: 'Hardware I need to get started',
         paragraphs: [
-          'My finishing pass starts with a short list: what happens before data arrives, when there is no data, when an action fails, and when the viewport is narrow? I also check the page with a keyboard and read the important content aloud. Those checks catch surprisingly different problems than a desktop mouse pass.',
-          'This approach has changed how I think about portfolio projects. A project should show the underlying engineering, but it should also communicate care. The interface is evidence of how I make decisions when requirements are incomplete.',
+          'The core setup is a 3D printer, filament, a computer, and a way to move the finished print from the computer to the printer. For a first project, a dependable FDM printer is a practical starting point because it uses affordable thermoplastic filament and is well suited to small prototypes and decorative pieces.',
+          'I will also need PLA filament, a level and stable surface, spare nozzles, a scraper or removal tool, flush cutters, and basic cleaning supplies. Safety matters too: the printer needs ventilation, supervision while learning, and enough space around hot and moving parts. I will follow the manufacturer instructions rather than treating the printer like an unattended appliance.',
+        ],
+      },
+      {
+        heading: 'Software from sketch to printable file',
+        paragraphs: [
+          'The workflow begins with a modeling tool. Blender is a strong option for organic shapes, abstract designs, and sculptural forms. A CAD tool such as FreeCAD or Fusion can be better for precise dimensions, repeated parts, and mechanical features. I can use either approach depending on the object instead of forcing every idea into one tool.',
+          'The finished model is exported as an STL or 3MF file and opened in a slicer such as PrusaSlicer, OrcaSlicer, or Cura. The slicer converts the model into printer instructions, called G-code. This is where I choose layer height, infill, wall thickness, supports, print speed, and temperature. The slicer preview is important because it can reveal floating geometry, unsupported overhangs, thin walls, or a print that will take far longer than expected.',
+        ],
+      },
+      {
+        heading: 'My first-print workflow',
+        paragraphs: [
+          'I plan to start with a small, uncomplicated object rather than a large showcase piece. First I will sketch a few silhouettes, choose one that can sit securely on a desk, and build a simple watertight model. Before printing the complete design, I can print a small section or low-detail version to check scale, balance, and surface quality.',
+          'After preparing the printer, I will load PLA, confirm the build plate is clean and level, slice the model, and inspect the preview layer by layer. During the first print I will watch the initial layers closely because poor adhesion can ruin the rest of the job. Once it finishes and cools, I will remove it carefully, clean up small supports or strings, and record what I would change in the next version.',
+        ],
+      },
+      {
+        heading: 'What I will learn from each version',
+        paragraphs: [
+          'The most useful part of this project will probably be the iteration. I want to compare model changes with physical results: how a thicker base affects stability, how a sharper angle changes supports, and how scale affects the way a form reads on a desk. I will keep notes and photographs so the project becomes a record of decisions rather than just a collection of finished objects.',
+          'This is a starting point, not a final plan. Future updates can cover the printer I choose, the first successful print, failed attempts, filament tests, finishing techniques, and the designs that are worth making again. For now, the goal is to get from an idea on a screen to one real object I can place on a table.',
         ],
       },
     ],
-    takeaways: ['Design the edge states early', 'Test the real interaction, not just the code path', 'Treat accessibility as product quality'],
-  },
-  {
-    slug: 'why-i-keep-building-across-platforms',
-    title: 'Why I keep building across platforms',
-    excerpt: 'Web, mobile, desktop, and embedded work each sharpen a different part of the engineering craft.',
-    category: 'Engineering Notes',
-    publishedAt: '2026-08-18',
-    readingTime: '3 min read',
-    sections: [
-      {
-        heading: 'Different constraints, better instincts',
-        paragraphs: [
-          'A web application teaches you to think about reach and performance. A mobile app makes interruptions and touch targets impossible to ignore. Desktop software brings installation and offline behavior into the conversation. Embedded and automotive systems make timing and reliability feel very concrete.',
-          'Working across those environments is not about collecting technology badges. It is about learning which assumptions belong to a platform and which assumptions belong to the problem.',
-        ],
-      },
-      {
-        heading: 'The common thread',
-        paragraphs: [
-          'The projects in this portfolio look different on the surface, but the questions underneath are similar: who is using this, what do they need to accomplish, and what can go wrong? Those questions guide the architecture more reliably than a favorite framework ever could.',
-          'I keep building across platforms because the constraints keep me curious. Each new environment gives me another way to practice making software understandable, resilient, and useful.',
-        ],
-      },
-    ],
-    takeaways: ['Constraints are design input', 'Choose tools around the problem', 'Transfer principles, not assumptions'],
-  },
-  {
-    slug: 'a-small-portfolio-is-still-a-real-product',
-    title: 'A small portfolio is still a real product',
-    excerpt: 'A personal site is more than a list of links. It is an opportunity to practice clarity, performance, and honest communication.',
-    category: 'Career',
-    publishedAt: '2026-08-05',
-    readingTime: '3 min read',
-    sections: [
-      {
-        heading: 'Showing the work behind the work',
-        paragraphs: [
-          'A project title and a repository link tell only part of the story. The more useful question is what changed because the project exists: which problem it solves, what tradeoffs shaped it, and what I would improve with another week.',
-          'That is why I am gradually treating this site as a product of its own. It needs a clear information architecture, dependable links, responsive layouts, and content that sounds like a person rather than a template.',
-        ],
-      },
-      {
-        heading: 'A place to keep learning in public',
-        paragraphs: [
-          'The blog is a space for the context that does not fit neatly into a project card. I can use it to document decisions, share lessons from experiments, and give people a better sense of how I approach engineering work.',
-          'I do not expect every post to be a definitive tutorial. A useful update can be a careful observation, a postmortem, or a small idea worth testing. Consistency and honesty matter more than trying to sound finished.',
-        ],
-      },
-    ],
-    takeaways: ['Context makes projects memorable', 'Personal sites deserve product thinking', 'Progress is worth documenting'],
+    takeaways: ['Start with a small, stable design', 'Use a slicer preview before printing', 'Record each version and what changed', 'Treat heat, motion, and ventilation seriously'],
   },
 ];
 
