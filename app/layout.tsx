@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Script from 'next/script';
+import VisitLogger from '../components/VisitLogger';
 import './globals.css';
 
 const siteUrl = 'https://delongkevin.github.io/FullStackEngineer';
@@ -50,6 +51,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const plausibleDomain = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN;
+  const visitLoggingEnabled = process.env.NEXT_PUBLIC_ENABLE_VISIT_LOGGING === 'true';
   const personJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Person',
@@ -73,6 +75,7 @@ export default function RootLayout({
             src="https://plausible.io/js/script.js"
           />
         ) : null}
+        {visitLoggingEnabled ? <VisitLogger /> : null}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
